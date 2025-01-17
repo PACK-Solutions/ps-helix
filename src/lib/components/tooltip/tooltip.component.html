@@ -1,0 +1,19 @@
+<div class="tooltip-wrapper">
+  <div class="tooltip-trigger">
+    <ng-content></ng-content>
+  </div>
+  
+  @if (isVisible) {
+    <div 
+      class="tooltip"
+      [class.light]="variant === 'light'"
+      [class.dark]="variant === 'dark'"
+      [class]="position"
+      [style.max-width.px]="maxWidth"
+      role="tooltip"
+    >
+      {{ content | translate }}
+      <div class="tooltip-arrow"></div>
+    </div>
+  }
+</div>

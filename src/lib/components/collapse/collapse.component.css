@@ -1,0 +1,108 @@
+.collapse {
+  width: 100%;
+  border-radius: var(--border-radius);
+  background: var(--surface-card);
+  overflow: hidden;
+}
+
+.collapse.outline {
+  background: transparent;
+  border: 1px solid var(--surface-border);
+}
+
+.collapse-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--surface-ground);
+  border: none;
+  cursor: pointer;
+  color: var(--text-color);
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid var(--surface-border);
+  text-align: left;
+}
+
+.collapse-header:hover {
+  background: var(--surface-hover);
+}
+
+.header-content {
+  font-weight: 500;
+  text-align: left;
+}
+
+.collapse-header i {
+  color: var(--primary-color);
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.collapse-header i.expanded {
+  transform: rotate(180deg);
+}
+
+.collapse-content {
+  height: 0;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.collapse.expanded .collapse-content {
+  height: auto;
+}
+
+.content-wrapper {
+  padding: var(--spacing-lg);
+  padding-top: var(--spacing-md);
+  color: var(--text-color-secondary);
+  text-align: left;
+  transform: translateY(-10px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.collapse.expanded .content-wrapper {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Sizes */
+.collapse.small .collapse-header {
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-sm);
+}
+
+.collapse.small .collapse-header i {
+  font-size: 1rem;
+}
+
+.collapse.small .content-wrapper {
+  padding: var(--spacing-md);
+  padding-top: var(--spacing-sm);
+}
+
+.collapse.large .collapse-header {
+  padding: var(--spacing-lg) var(--spacing-xl);
+  font-size: var(--font-size-lg);
+}
+
+.collapse.large .collapse-header i {
+  font-size: 1.4rem;
+}
+
+.collapse.large .content-wrapper {
+  padding: var(--spacing-xl);
+  padding-top: var(--spacing-lg);
+}
+
+/* Disabled state */
+.collapse.disabled .collapse-header {
+  cursor: not-allowed;
+  opacity: 0.6;
+  background: var(--surface-ground);
+}

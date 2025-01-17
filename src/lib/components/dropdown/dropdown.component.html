@@ -1,0 +1,54 @@
+<div 
+  class="dropdown-container"
+  [class.open]="isOpen"
+  [class.disabled]="disabled"
+  [class]="size"
+>
+  <button
+    class="dropdown-trigger"
+    [class]="variant"
+    (click)="toggleDropdown()"
+    [attr.aria-label]="'DROPDOWN.TOGGLE' | translate"
+    [attr.aria-expanded]="isOpen"
+    [attr.aria-disabled]="disabled"
+    type="button"
+  >
+    <span class="trigger-content">
+      @if (icon) {
+        <i class="ph ph-{{ icon }}" aria-hidden="true"></i>
+      }
+      @if (label) {
+        <span class="trigger-label">{{ 'DROPDOWN.VARIANTS.' + variant.toUpperCase() | translate }}</span>
+      }
+      <i 
+        class="ph ph-caret-down trigger-arrow"
+        [class.open]="isOpen"
+        aria-hidden="true"
+      ></i>
+    </span>
+  </button>
+
+  @if (isOpen) {
+    <div 
+      class="dropdown-menu"
+      [class]="placement"
+      role="menu"
+      (click)="$event.stopPropagation()"
+    >
+      @for (item of items; track item.value) {
+        <button
+          class="dropdown-item"
+          [class.disabled]="item.disabled"
+          [class.active]="item.active"
+          (click)="selectItem(item)"
+          role="menuitem"
+          [attr.aria-disabled]="item.disabled">
+          @if (item.icon) {
+            <i class="ph ph-{{ item.icon }}" aria-hidden="true"></i>
+          }
+          <span class="item-label">{{ item.label | translate }}</span>
+        </button>
+      }
+    </div>
+  }
+</div>

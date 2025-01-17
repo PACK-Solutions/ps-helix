@@ -1,0 +1,34 @@
+<div 
+  class="spinloader"
+  [class.small]="size === 'small'"
+  [class.large]="size === 'large'"
+  [attr.aria-label]="label ? (label | translate) : ('SPINLOADER.LOADING' | translate)"
+  role="status"
+>
+  @switch (variant) {
+    @case ('circle') {
+      <div 
+        class="spinner-circle"
+        [class]="color"
+      ></div>
+    }
+    @case ('dots') {
+      <div class="spinner-dots" [class]="color">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    }
+    @case ('pulse') {
+      <div class="spinner-pulse" [class]="color">
+        <div class="pulse"></div>
+        <div class="pulse"></div>
+        <div class="pulse"></div>
+      </div>
+    }
+  }
+  
+  @if (label) {
+    <span class="spinner-label">{{ label | translate }}</span>
+  }
+</div>

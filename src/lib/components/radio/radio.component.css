@@ -1,0 +1,120 @@
+.radio-container {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.radio-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  cursor: pointer;
+  user-select: none;
+  color: var(--text-color);
+}
+
+.radio-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.radio-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--surface-border);
+  border-radius: 50%;
+  background: var(--surface-card);
+  transition: all 0.2s ease;
+}
+
+.radio-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary-color-text);
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.2s ease;
+}
+
+.radio-input:checked + .radio-control {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.radio-input:checked + .radio-control .radio-dot {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.radio-input:focus + .radio-control {
+  box-shadow: 0 0 0 2px rgba(var(--primary-color-rgb), 0.2);
+}
+
+/* States */
+.radio-container.disabled .radio-label {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.radio-container.error .radio-control {
+  border-color: var(--danger-color);
+}
+
+.radio-input:checked + .radio-control.error {
+  background: var(--danger-color);
+  border-color: var(--danger-color);
+}
+
+.radio-container.success .radio-control {
+  border-color: var(--success-color);
+}
+
+.radio-input:checked + .radio-control.success {
+  background: var(--success-color);
+  border-color: var(--success-color);
+}
+
+.radio-error {
+  font-size: var(--font-size-sm);
+  color: var(--danger-color);
+}
+
+.radio-success {
+  font-size: var(--font-size-sm);
+  color: var(--success-color);
+}
+
+/* Sizes */
+.radio-container.small .radio-control {
+  width: 16px;
+  height: 16px;
+}
+
+.radio-container.small .radio-dot {
+  width: 6px;
+  height: 6px;
+}
+
+.radio-container.small .radio-text {
+  font-size: var(--font-size-sm);
+}
+
+.radio-container.large .radio-control {
+  width: 22px;
+  height: 22px;
+}
+
+.radio-container.large .radio-dot {
+  width: 10px;
+  height: 10px;
+}
+
+.radio-container.large .radio-text {
+  font-size: var(--font-size-lg);
+}

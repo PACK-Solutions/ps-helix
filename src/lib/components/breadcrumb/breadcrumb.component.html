@@ -1,0 +1,36 @@
+<nav 
+  class="breadcrumb"
+  [class.small]="size() === 'small'"
+  [class.large]="size() === 'large'"
+  [class.outline]="variant() === 'outline'"
+  role="navigation"
+  [attr.aria-label]="computedAriaLabel()"
+  [ngStyle]="customStyles()"
+>
+  <ol>
+    @for (item of items(); track item.label; let last = $last) {
+      <li [class.active]="last">
+        @if (!last) {
+          <span
+            class="breadcrumb-link"
+            [attr.aria-current]="last ? 'page' : null"
+            [attr.aria-label]="getItemAriaLabel(item, last)"
+          >
+            @if (item.icon) {
+              <i class="ph ph-{{ item.icon }}" aria-hidden="true"></i>
+            }
+            {{ item.label | translate }}
+          </span>
+          <i class="ph ph-{{ separator() }} separator" aria-hidden="true"></i>
+        } @else {
+          <span [attr.aria-current]="'page'" [attr.aria-label]="getItemAriaLabel(item, last)">
+            @if (item.icon) {
+              <i class="ph ph-{{ item.icon }}" aria-hidden="true"></i>
+            }
+            {{ item.label | translate }}
+          </span>
+        }
+      </li>
+    }
+  </ol>
+</nav>

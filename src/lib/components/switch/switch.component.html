@@ -1,0 +1,42 @@
+<div 
+  class="switch-container"
+  [attr.aria-describedby]="error ? 'error-message' : success ? 'success-message' : null"
+  [class.disabled]="disabled"
+  [class.error]="error"
+  [class.success]="success"
+  [class.small]="size === 'small'"
+  [class.large]="size === 'large'"
+>
+  <label class="switch-label">
+    <input
+      type="checkbox"
+      class="switch-input"
+      [checked]="checked"
+      [attr.aria-label]="label | translate"
+      [disabled]="disabled"
+      [required]="required"
+      [attr.aria-required]="required"
+      [attr.aria-invalid]="!!error"
+      [attr.aria-checked]="checked"
+      (change)="toggle()"
+    />
+    <span class="switch-control">
+      <span class="switch-thumb"></span>
+    </span>
+    @if (label) {
+      <span class="switch-text">{{ label | translate }}</span>
+    }
+  </label>
+
+  @if (error) {
+    <div id="error-message" class="switch-error" role="alert">
+      {{ error | translate }}
+    </div>
+  }
+
+  @if (success) {
+    <div id="success-message" class="switch-success" role="status">
+      {{ success | translate }}
+    </div>
+  }
+</div>

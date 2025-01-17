@@ -1,0 +1,32 @@
+<div 
+  class="tag"
+  [class.primary]="variant === 'primary'"
+  [class.secondary]="variant === 'secondary'"
+  [class.success]="variant === 'success'"
+  [class.warning]="variant === 'warning'"
+  [class.danger]="variant === 'danger'"
+  [class.small]="size === 'small'"
+  [class.large]="size === 'large'"
+  [class.disabled]="disabled"
+  [attr.aria-disabled]="disabled"
+  role="status"
+  (click)="handleClick($event)"
+>
+  @if (icon) {
+    <i class="ph ph-{{ icon }}" aria-hidden="true"></i>
+  }
+  <span class="tag-content">
+    <ng-content></ng-content>
+  </span>
+  @if (closable) {
+    <button
+      type="button"
+      class="tag-close"
+      (click)="handleClose($event)"
+      [attr.aria-label]="'TAG.CLOSE' | translate"
+      [disabled]="disabled"
+    >
+      <i class="ph ph-x" aria-hidden="true"></i>
+    </button>
+  }
+</div>

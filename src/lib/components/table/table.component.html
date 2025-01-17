@@ -1,0 +1,82 @@
+<div 
+  class="table-wrapper"
+  [class.striped]="striped"
+  [class.hoverable]="hoverable"
+  [class.bordered]="bordered"
+  [class.small]="size === 'small'"
+  [class.large]="size === 'large'"
+  [class.outline]="variant === 'outline'"
+>
+  @if (globalSearch) {
+    <div class="global-search">
+      <input
+        type="text"
+        [attr.placeholder]="globalSearchPlaceholder | translate"
+        [value]="globalSearchValue"
+        (input)="handleGlobalSearch($event)"
+        [attr.aria-label]="globalSearchPlaceholder | translate"
+      />
+      <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
+    </div>
+  }
+
+  <table role="table">
+    <thead>
+      <tr>
+        @for (column of columns; track column.key) {
+          <th 
+            [style.width]="column.width"
+            [attr.aria-sort]="column.sortable ? (currentSort?.key === column.key ? currentSort?.direction : 'none') : null"
+            [class.sortable]="column.sortable" 
+            (click)="handleSort(column)"
+          >
+            <div class="th-content">
+              {{ column.label | translate }}
+              @if (column.sortable) {
+                <i 
+                  [class]="'ph ph-sort-' + (currentSort?.key === column.key && currentSort?.direction === 'desc' ? 'descending' : 'ascending')"
+                  aria-hidden="true">
+                </i>
+              }
+            </div>
+          </th>
+        }
+      </tr>
+    </thead>
+    
+    <tbody>
+      @if (loading) {
+        <tr class="loading-row">
+          <td [attr.colspan]="columns.length">
+            <div class="loading-indicator">
+              <div class="spinner"></div>
+            </div>
+          </td>
+        </tr>
+      } @else if (data.length === 0) {
+        <tr class="empty-row">
+          <td [attr.colspan]="columns.length">
+            {{ emptyMessage | translate }}
+          </td>
+        </tr>
+      } @else {
+        @for (row of data; track row.id) {
+          <tr>
+            @for (column of columns; track column.key) {
+              <td>
+                @if (column.template) {
+                  <ng-container 
+                    [ngTemplateOutlet]="column.template"
+                    [ngTemplateOutletContext]="{ $implicit: row }"
+                  ></ng-container>
+                } @else {
+                  {{ row[column.key] }}
+                }
+              </td>
+            }
+          </tr>
+        }
+      }
+    </tbody>
+  </table>
+</div>

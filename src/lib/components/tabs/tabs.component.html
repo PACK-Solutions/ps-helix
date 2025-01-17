@@ -1,0 +1,44 @@
+<div 
+  class="tabs-container"
+  [class.small]="size === 'small'"
+  [class.large]="size === 'large'"
+  role="tablist"
+>
+  <div class="tabs-header" [class]="variant">
+    @for (panel of panels; track panel; let i = $index) {
+      <button
+        class="tab-button"
+        role="tab"
+        [class.active]="i === activeIndex"
+        [attr.aria-selected]="i === activeIndex"
+        [attr.aria-label]="panel.header | translate"
+        [attr.aria-controls]="'panel-' + i"
+        [attr.id]="'tab-' + i"
+        [tabindex]="i === activeIndex ? 0 : -1"
+        (click)="$event.preventDefault(); selectTab(i)"
+        (keydown)="handleKeyDown($event, i)"
+      >
+        @if (panel.icon) {
+          <i class="ph ph-{{ panel.icon }}" aria-hidden="true"></i>
+        }
+        {{ panel.header | translate }}
+      </button>
+    }
+  </div>
+
+  <div class="tabs-content">
+    @for (panel of panels; track panel; let i = $index) {
+      <div
+        class="tab-panel"
+        role="tabpanel"
+        [class.active]="i === activeIndex"
+        [attr.aria-labelledby]="'tab-' + i"
+        [attr.id]="'panel-' + i"
+        [attr.tabindex]="i === activeIndex ? 0 : -1"
+        [attr.hidden]="i !== activeIndex"
+      >
+        <ng-container *ngTemplateOutlet="panel.content"></ng-container>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,45 @@
+/* Reset styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Remove default styles */
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+}
+
+/* Remove list styles */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+  line-height: var(--line-height-normal);
+  font-family: var(--font-family);
+  color: var(--text-color);
+  background: var(--body-gradient);
+  overflow-y: scroll;
+}
+
+/* Modal styles */
+body.modal-open {
+  overflow: hidden;
+  padding-right: var(--scrollbar-width);
+}
+
+.demo-navigation {
+  padding-right: var(--scrollbar-width);
+}

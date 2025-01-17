@@ -1,0 +1,59 @@
+<div 
+  class="input-container"
+  [class.small]="size === 'small'"
+  [class.large]="size === 'large'"
+  [class.filled]="variant === 'filled'"
+  [class.outline]="variant === 'outline'"
+  [class.error]="error"
+  [class.success]="success"
+  [class.disabled]="disabled"
+  [class.readonly]="readonly"
+  [class.with-icon]="icon"
+  [class.icon-left]="icon && iconPosition === 'left'"
+  [class.icon-right]="icon && iconPosition === 'right'"
+>
+  <div class="input-wrapper" [class.icon-left]="icon && iconPosition === 'left'" [class.icon-right]="icon && iconPosition === 'right'">
+    @if (icon && iconPosition === 'left') {
+      <i class="ph ph-{{ icon }}" [attr.aria-label]="'INPUT.ICON.' + icon | translate" aria-hidden="true"></i>
+    }
+    
+    <input
+      [type]="type"
+      [value]="value"
+      [placeholder]="placeholder | translate"
+      [disabled]="disabled"
+      [readonly]="readonly"
+      [value]="readonly ? ('INPUT.VALUE.READONLY' | translate) : value"
+      [required]="required"
+      [attr.aria-invalid]="error ? 'true' : null"
+      [attr.aria-required]="required"
+      [attr.aria-label]="'INPUT.LABEL.' + (label || placeholder) | translate"
+      [attr.aria-describedby]="error ? 'error-message' : success ? 'success-message' : hint ? 'hint-message' : null"
+      (input)="!readonly && handleInput($event)"
+      (focus)="handleFocus($event)"
+      (blur)="handleBlur($event)"
+    />
+    
+    @if (icon && iconPosition === 'right') {
+      <i class="ph ph-{{ icon }}" [attr.aria-label]="'INPUT.ICON.' + icon | translate" aria-hidden="true"></i>
+    }
+  </div>
+  
+  @if (error) {
+    <div id="error-message" class="message error-message" role="alert">
+      {{ error | translate }}
+    </div>
+  }
+  
+  @if (success) {
+    <div id="success-message" class="message success-message" role="status">
+      {{ success | translate }}
+    </div>
+  }
+  
+  @if (hint) {
+    <div id="hint-message" class="message hint-message">
+      {{ hint | translate }}
+    </div>
+  }
+</div>

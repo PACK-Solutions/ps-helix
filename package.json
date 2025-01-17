@@ -1,0 +1,67 @@
+{
+  "name": "@ps/helix",
+  "version": "1.0.0",
+  "description": "Helix Design System - A modern Angular component library",
+  "keywords": ["angular", "design-system", "components", "ui-library"],
+  "author": "Fabrice PEREZ",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pack-solutions/helix"
+  },
+  "peerDependencies": {
+    "@angular/common": "^19.0.0",
+    "@angular/core": "^19.0.0",
+    "@angular/cdk": "^19.0.0",
+    "@angular/forms": "^19.0.0",
+    "@angular/platform-browser": "^19.0.0",
+    "@angular/platform-browser-dynamic": "^19.0.0",
+    "@angular/router": "^19.0.0",
+    "@ngx-translate/core": "^15.0.0",
+    "@phosphor-icons/web": "^2.0.3",
+    "rxjs": "^7.8.1"
+  },
+  "peerDependenciesMeta": {
+    "@phosphor-icons/web": {
+      "optional": true
+    }
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^19.1.1",
+    "ng-packagr": "^19.1.0",
+    "tslib": "^2.6.0"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "ng build",
+    "test": "ng test",
+    "prepublishOnly": "ng build --configuration production",
+    "pack": "cd dist/ps-helix && npm pack"
+  },
+  "exports": {
+    "./styles/index": {
+      "style": "./styles/index.css"
+    },
+    "./styles/themes/dark": {
+      "style": "./styles/themes/dark.css"
+    },
+    "./styles/themes/light": {
+      "style": "./styles/themes/light.css"
+    },
+    "./styles/utils/animations": {
+      "style": "./styles/utils/animations.css"
+    },
+    "./styles/utils/spacing": {
+      "style": "./styles/utils/spacing.css"
+    },
+    "./styles/utils/typography": {
+      "style": "./styles/utils/typography.css"
+    },
+    "./styles/reset": {
+      "style": "./styles/reset.css"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
