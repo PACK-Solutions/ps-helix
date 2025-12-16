@@ -1,0 +1,108 @@
+.code-snippet-wrapper {
+  position: relative;
+  margin: var(--spacing-md) 0;
+}
+
+.code-snippet-wrapper pre {
+  margin: 0;
+  padding: var(--spacing-lg);
+  padding-top: calc(var(--spacing-lg) + 40px);
+  background: var(--surface-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  overflow-x: auto;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+.code-snippet-wrapper code {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  background: transparent;
+  padding: 0;
+}
+
+.copy-button {
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: var(--surface-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  color: var(--text-color-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 1;
+}
+
+.copy-button:hover {
+  background: var(--surface-hover);
+  color: var(--text-color);
+  border-color: var(--border-color-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.copy-button:active {
+  transform: translateY(0);
+}
+
+.copy-button:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.copy-button i {
+  font-size: 16px;
+  transition: transform 0.2s ease;
+}
+
+.copy-button.copied {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+.copy-button.copied i {
+  animation: checkmark 0.3s ease;
+}
+
+@keyframes checkmark {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.copy-button-text {
+  font-family: var(--font-family);
+}
+
+@media (max-width: 768px) {
+  .copy-button-text {
+    display: none;
+  }
+
+  .copy-button {
+    padding: var(--spacing-xs);
+    min-width: 36px;
+    justify-content: center;
+  }
+}

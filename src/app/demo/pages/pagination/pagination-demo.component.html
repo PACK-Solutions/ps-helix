@@ -1,0 +1,486 @@
+<ds-demo-page-layout
+  title="Système de Pagination"
+  introText="La pagination permet de naviguer efficacement à travers de grandes quantités de données en les divisant en pages. Elle offre différentes tailles, variantes visuelles et une accessibilité complète avec support du clavier."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Variantes de Pagination - Section Pleine Largeur -->
+    <section class="pagination-variants-section">
+      <h3 class="section-title">Variantes de Pagination</h3>
+      <div class="variants-container">
+        <div class="variants-intro">
+          <p>Les paginations offrent deux styles visuels pour s'adapter à différents contextes d'utilisation et niveaux de hiérarchie visuelle.</p>
+        </div>
+        <div class="variants-grid">
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-pagination
+                [(currentPage)]="defaultCurrentPage"
+                [(totalPages)]="defaultTotalPages"
+                variant="default"
+                [firstLabel]="labels.first"
+                [previousLabel]="labels.previous"
+                [nextLabel]="labels.next"
+                [lastLabel]="labels.last"
+                [pageLabel]="labels.page"
+                (pageChange)="handlePageChange('default', $event)"
+              ></psh-pagination>
+            </div>
+            <div class="variant-info">
+              <h4>Default</h4>
+              <p>Style avec fond plein et couleur d'accent. Idéale pour la navigation principale dans les tableaux et listes de données.</p>
+              <ds-code-snippet [code]="defaultVariantCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-pagination
+                [(currentPage)]="outlineCurrentPage"
+                [(totalPages)]="outlineTotalPages"
+                variant="outline"
+                [firstLabel]="labels.first"
+                [previousLabel]="labels.previous"
+                [nextLabel]="labels.next"
+                [lastLabel]="labels.last"
+                [pageLabel]="labels.page"
+                (pageChange)="handlePageChange('outline', $event)"
+              ></psh-pagination>
+            </div>
+            <div class="variant-info">
+              <h4>Outline</h4>
+              <p>Style avec bordure sans fond, plus discret visuellement. Parfaite pour les interfaces épurées et les contenus secondaires.</p>
+              <ds-code-snippet [code]="outlineVariantCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tailles - Section Pleine Largeur -->
+    <section class="pagination-sizes-section">
+      <h3 class="section-title">Tailles Disponibles</h3>
+      <div class="sizes-container">
+        <div class="sizes-intro">
+          <p>Trois tailles sont disponibles pour s'adapter à différents contextes d'utilisation, des interfaces denses aux écrans larges.</p>
+        </div>
+        <div class="sizes-grid">
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-pagination
+                [(currentPage)]="smallCurrentPage"
+                [(totalPages)]="sizesTotalPages"
+                size="small"
+                [firstLabel]="labels.first"
+                [previousLabel]="labels.previous"
+                [nextLabel]="labels.next"
+                [lastLabel]="labels.last"
+                [pageLabel]="labels.page"
+                (pageChange)="handlePageChange('small', $event)"
+              ></psh-pagination>
+            </div>
+            <div class="size-info">
+              <h4>Small</h4>
+              <p>Version compacte pour interfaces denses, tableaux avec peu d'espace ou appareils mobiles.</p>
+              <ds-code-snippet [code]="smallSizeCode" />
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-pagination
+                [(currentPage)]="mediumCurrentPage"
+                [(totalPages)]="sizesTotalPages"
+                size="medium"
+                [firstLabel]="labels.first"
+                [previousLabel]="labels.previous"
+                [nextLabel]="labels.next"
+                [lastLabel]="labels.last"
+                [pageLabel]="labels.page"
+                (pageChange)="handlePageChange('medium', $event)"
+              ></psh-pagination>
+            </div>
+            <div class="size-info">
+              <h4>Medium (Par défaut)</h4>
+              <p>Taille équilibrée pour la plupart des cas d'utilisation standard dans les tableaux et listes.</p>
+              <ds-code-snippet [code]="mediumSizeCode" />
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-pagination
+                [(currentPage)]="largeCurrentPage"
+                [(totalPages)]="sizesTotalPages"
+                size="large"
+                [firstLabel]="labels.first"
+                [previousLabel]="labels.previous"
+                [nextLabel]="labels.next"
+                [lastLabel]="labels.last"
+                [pageLabel]="labels.page"
+                (pageChange)="handlePageChange('large', $event)"
+              ></psh-pagination>
+            </div>
+            <div class="size-info">
+              <h4>Large</h4>
+              <p>Grande taille pour écrans larges, haute résolution et accessibilité renforcée.</p>
+              <ds-code-snippet [code]="largeSizeCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fonctionnalités Avancées - Section Pleine Largeur -->
+    <section class="pagination-features-section">
+      <h3 class="section-title">Fonctionnalités Avancées</h3>
+      <div class="features-container">
+        <div class="features-intro">
+          <p>La pagination offre des fonctionnalités avancées pour une expérience utilisateur optimale : sélecteur d'éléments par page, configuration flexible des boutons et navigation au clavier.</p>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-preview">
+              <psh-pagination
+                [(currentPage)]="itemsPerPageCurrent"
+                [(totalPages)]="itemsPerPageTotal"
+                [(itemsPerPage)]="itemsPerPage"
+                [showItemsPerPage]="true"
+                [itemsPerPageOptions]="itemsPerPageOptions"
+                [firstLabel]="labels.first"
+                [previousLabel]="labels.previous"
+                [nextLabel]="labels.next"
+                [lastLabel]="labels.last"
+                [pageLabel]="labels.page"
+                [itemsLabel]="labels.items"
+                [itemsPerPageLabel]="labels.itemsPerPage"
+                (pageChange)="handlePageChange('itemsPerPage', $event)"
+                (itemsPerPageChange)="handleItemsPerPageChange($event)"
+              ></psh-pagination>
+            </div>
+            <div class="feature-info">
+              <h4>Sélecteur d'Éléments par Page</h4>
+              <p>Permet aux utilisateurs de choisir le nombre d'éléments affichés par page. Idéal pour les tableaux de données avec beaucoup d'entrées.</p>
+              <ul class="feature-list">
+                <li><strong>Options personnalisables</strong> : Définissez vos propres valeurs (5, 10, 25, 50, 100...)</li>
+                <li><strong>Two-way binding</strong> : Synchronisation automatique avec [(itemsPerPage)]</li>
+                <li><strong>Événement itemsPerPageChange</strong> : Réagissez aux changements</li>
+              </ul>
+              <ds-code-snippet [code]="itemsPerPageCode" />
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-preview">
+              <psh-pagination
+                [(currentPage)]="customNavCurrent"
+                [(totalPages)]="customNavTotal"
+                [showFirstLast]="false"
+                [maxVisiblePages]="3"
+                [firstLabel]="labels.first"
+                [previousLabel]="labels.previous"
+                [nextLabel]="labels.next"
+                [lastLabel]="labels.last"
+                [pageLabel]="labels.page"
+                (pageChange)="handlePageChange('customNav', $event)"
+              ></psh-pagination>
+            </div>
+            <div class="feature-info">
+              <h4>Navigation Personnalisée</h4>
+              <p>Contrôlez précisément quels boutons de navigation afficher et combien de pages sont visibles simultanément.</p>
+              <ul class="feature-list">
+                <li><strong>showFirstLast</strong> : Afficher/masquer les boutons Premier/Dernier</li>
+                <li><strong>showPrevNext</strong> : Afficher/masquer les boutons Précédent/Suivant</li>
+                <li><strong>maxVisiblePages</strong> : Contrôler le nombre de pages affichées (3, 5, 7...)</li>
+              </ul>
+              <ds-code-snippet [code]="customNavigationCode" />
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-preview">
+              <div class="keyboard-demo">
+                <div class="keyboard-info">
+                  <p><strong>Navigation au Clavier Active</strong></p>
+                  <p>Essayez les touches suivantes :</p>
+                  <ul class="keyboard-shortcuts">
+                    <li><kbd>←</kbd> Page précédente</li>
+                    <li><kbd>→</kbd> Page suivante</li>
+                    <li><kbd>Home</kbd> Première page</li>
+                    <li><kbd>End</kbd> Dernière page</li>
+                    <li><kbd>Tab</kbd> Navigation entre boutons</li>
+                  </ul>
+                </div>
+                <psh-pagination
+                  [(currentPage)]="keyboardCurrent"
+                  [(totalPages)]="keyboardTotal"
+                  [firstLabel]="labels.first"
+                  [previousLabel]="labels.previous"
+                  [nextLabel]="labels.next"
+                  [lastLabel]="labels.last"
+                  [pageLabel]="labels.page"
+                  ariaLabel="Démonstration de la navigation au clavier"
+                  (pageChange)="handlePageChange('keyboard', $event)"
+                ></psh-pagination>
+              </div>
+            </div>
+            <div class="feature-info">
+              <h4>Navigation au Clavier</h4>
+              <p>Support complet de la navigation au clavier pour une accessibilité optimale et une meilleure expérience utilisateur.</p>
+              <ul class="feature-list">
+                <li><strong>Flèches directionnelles</strong> : Navigation rapide entre les pages</li>
+                <li><strong>Home/End</strong> : Accès direct à la première/dernière page</li>
+                <li><strong>Tab</strong> : Navigation séquentielle entre les contrôles</li>
+                <li><strong>Entrée/Espace</strong> : Activation du bouton en focus</li>
+                <li><strong>Focus visible</strong> : Indicateur clair pour le clavier</li>
+              </ul>
+              <ds-code-snippet [code]="keyboardNavigationCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Accessibilité - Section Pleine Largeur -->
+    <section class="pagination-accessibility-section">
+      <h3 class="section-title">Accessibilité</h3>
+      <div class="accessibility-container">
+        <div class="accessibility-intro">
+          <p>Le composant pagination implémente toutes les bonnes pratiques d'accessibilité WCAG 2.1 AA avec support ARIA complet, annonces vocales et gestion intelligente des états.</p>
+        </div>
+        <div class="accessibility-content">
+          <div class="accessibility-features">
+            <div class="accessibility-feature">
+              <h4>
+                <i class="ph ph-speaker-high" aria-hidden="true"></i>
+                Annonces Vocales
+              </h4>
+              <p>Les changements de page sont automatiquement annoncés aux lecteurs d'écran via <code>aria-live="polite"</code>.</p>
+              <div class="example-box">
+                <p class="example-label">Exemple d'annonce :</p>
+                <p class="example-text">"Page 3 sur 10"</p>
+              </div>
+            </div>
+
+            <div class="accessibility-feature">
+              <h4>
+                <i class="ph ph-lock-key" aria-hidden="true"></i>
+                Attributs ARIA
+              </h4>
+              <ul>
+                <li><code>role="navigation"</code> identifie la zone de pagination</li>
+                <li><code>aria-label</code> décrit la navigation (personnalisable)</li>
+                <li><code>aria-current="page"</code> indique la page active</li>
+                <li><code>aria-disabled</code> pour les boutons désactivés</li>
+                <li>ID uniques auto-générés pour chaque instance</li>
+              </ul>
+            </div>
+
+            <div class="accessibility-feature">
+              <h4>
+                <i class="ph ph-eye" aria-hidden="true"></i>
+                Focus Visible
+              </h4>
+              <p>Tous les éléments interactifs affichent un indicateur de focus clair et conforme aux standards WCAG pour la navigation au clavier.</p>
+            </div>
+
+            <div class="accessibility-feature">
+              <h4>
+                <i class="ph ph-prohibit" aria-hidden="true"></i>
+                États Désactivés
+              </h4>
+              <p>Les boutons de navigation sont automatiquement désactivés quand ils ne sont pas applicables :</p>
+              <ul>
+                <li>Premier/Précédent désactivés sur la première page</li>
+                <li>Suivant/Dernier désactivés sur la dernière page</li>
+                <li>Indication visuelle et attribut <code>disabled</code></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="accessibility-demo">
+            <h4>Démo d'Accessibilité</h4>
+            <p>Cette pagination démontre toutes les fonctionnalités d'accessibilité :</p>
+            <psh-pagination
+              [(currentPage)]="accessibilityCurrent"
+              [(totalPages)]="accessibilityTotal"
+              [firstLabel]="labels.first"
+              [previousLabel]="labels.previous"
+              [nextLabel]="labels.next"
+              [lastLabel]="labels.last"
+              [pageLabel]="labels.page"
+              ariaLabel="Démonstration des fonctionnalités d'accessibilité"
+              (pageChange)="handlePageChange('accessibility', $event)"
+            ></psh-pagination>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- API Documentation - Section Pleine Largeur -->
+    <section class="pagination-api-section">
+      <h3 class="section-title">Documentation API</h3>
+      <div class="api-container">
+        <div class="api-intro">
+          <p>Le composant Pagination utilise des <strong>model inputs</strong> avec two-way binding et des <strong>input signals</strong> pour une API simple et performante, conforme aux standards Angular 20.</p>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Model Inputs (Two-way Binding)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>currentPage</code></td>
+                <td><code>number</code></td>
+                <td><code>1</code></td>
+                <td>Page actuellement affichée (utilisez [(currentPage)])</td>
+              </tr>
+              <tr>
+                <td><code>totalPages</code></td>
+                <td><code>number</code></td>
+                <td><code>1</code></td>
+                <td>Nombre total de pages disponibles (utilisez [(totalPages)])</td>
+              </tr>
+              <tr>
+                <td><code>itemsPerPage</code></td>
+                <td><code>number</code></td>
+                <td><code>10</code></td>
+                <td>Nombre d'éléments par page (utilisez [(itemsPerPage)])</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Regular Inputs (Configuration)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>size</code></td>
+                <td><code>PaginationSize</code></td>
+                <td><code>'medium'</code></td>
+                <td>'small' | 'medium' | 'large'</td>
+              </tr>
+              <tr>
+                <td><code>variant</code></td>
+                <td><code>PaginationVariant</code></td>
+                <td><code>'default'</code></td>
+                <td>'default' | 'outline'</td>
+              </tr>
+              <tr>
+                <td><code>showFirstLast</code></td>
+                <td><code>boolean</code></td>
+                <td><code>true</code></td>
+                <td>Affiche les boutons Premier/Dernier</td>
+              </tr>
+              <tr>
+                <td><code>showPrevNext</code></td>
+                <td><code>boolean</code></td>
+                <td><code>true</code></td>
+                <td>Affiche les boutons Précédent/Suivant</td>
+              </tr>
+              <tr>
+                <td><code>maxVisiblePages</code></td>
+                <td><code>number</code></td>
+                <td><code>5</code></td>
+                <td>Nombre maximum de pages visibles</td>
+              </tr>
+              <tr>
+                <td><code>showItemsPerPage</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Affiche le sélecteur d'éléments par page</td>
+              </tr>
+              <tr>
+                <td><code>itemsPerPageOptions</code></td>
+                <td><code>number[]</code></td>
+                <td><code>[5, 10, 25, 50]</code></td>
+                <td>Options du sélecteur d'éléments par page</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Outputs (Événements)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Événement</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>pageChange</code></td>
+                <td><code>EventEmitter&lt;number&gt;</code></td>
+                <td>Émis lors du changement de page</td>
+              </tr>
+              <tr>
+                <td><code>itemsPerPageChange</code></td>
+                <td><code>EventEmitter&lt;number&gt;</code></td>
+                <td>Émis lors du changement d'éléments par page</td>
+              </tr>
+              <tr>
+                <td><code>navigationError</code></td>
+                <td><code>EventEmitter&lt;{{ '{' }}action, reason{{ '}' }}&gt;</code></td>
+                <td>Émis lors d'une tentative de navigation invalide</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Méthodes Publiques</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Méthode</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>goToPage(page: number)</code></td>
+                <td>Navigue vers une page spécifique avec validation</td>
+              </tr>
+              <tr>
+                <td><code>goToFirstPage()</code></td>
+                <td>Navigue vers la première page</td>
+              </tr>
+              <tr>
+                <td><code>goToLastPage()</code></td>
+                <td>Navigue vers la dernière page</td>
+              </tr>
+              <tr>
+                <td><code>goToNextPage()</code></td>
+                <td>Navigue vers la page suivante (si disponible)</td>
+              </tr>
+              <tr>
+                <td><code>goToPreviousPage()</code></td>
+                <td>Navigue vers la page précédente (si disponible)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

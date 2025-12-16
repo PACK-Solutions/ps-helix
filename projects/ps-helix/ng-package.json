@@ -1,0 +1,17 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/ps-helix",
+  "lib": {
+    "entryFile": "src/public-api.ts"
+  },
+  "allowedNonPeerDependencies": [
+    "date-fns",
+    "@phosphor-icons/web"
+  ],
+  "assets": [
+    "src/lib/styles",
+    "styles.css",
+    "README.md",
+    "THEME.md"
+  ]
+}

@@ -1,0 +1,161 @@
+<!-- Page Terminologie avec le langage ubiquitaire et DDD -->
+<ds-demo-page-layout
+  title="Terminologie et Langage Ubiquitaire"
+  introText="Le langage ubiquitaire (Ubiquitous Language) est un vocabulaire partagé et précis utilisé par tous les membres d'une équipe projet. Il élimine les ambiguïtés de communication et assure que le code reflète fidèlement les concepts métier."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Concepts Fondamentaux du Langage Ubiquitaire -->
+    <section class="definition-section">
+      <h3 class="section-title">Concepts Fondamentaux du Langage Ubiquitaire</h3>
+      <div class="definition-container">
+        @for (concept of ubiquitousLanguageConcepts; track concept.title) {
+          <div class="concept-card">
+            <div class="concept-header">
+              <i class="ph ph-{{ concept.icon }}" aria-hidden="true"></i>
+              <h4>{{ concept.title }}</h4>
+            </div>
+            <p>{{ concept.description }}</p>
+            <ul class="concept-benefits">
+              @for (benefit of concept.benefits; track benefit) {
+                <li>{{ benefit }}</li>
+              }
+            </ul>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- Intégration avec le Domain-Driven Design -->
+    <section class="ddd-section">
+      <h3 class="section-title">Intégration avec le Domain-Driven Design (DDD)</h3>
+      <div class="ddd-container">
+        <div class="ddd-intro">
+          <p class="ddd-description">
+            Le langage ubiquitaire est l'un des piliers fondamentaux du Domain-Driven Design. 
+            Il permet de créer un pont entre les experts métier et les développeurs, garantissant 
+            que le code reflète fidèlement les processus et règles du domaine d'activité.
+          </p>
+        </div>
+        <div class="ddd-grid">
+          @for (concept of dddConcepts; track concept.title; let i = $index) {
+            <div class="ddd-card" [class.ddd-card-bounded-context]="i === 0" [class.ddd-card-domain-modeling]="i === 1">
+              <div class="ddd-card-header">
+                <i class="ph ph-{{ concept.icon }}" aria-hidden="true"></i>
+                <h4>{{ concept.title }}</h4>
+              </div>
+              <p class="ddd-card-description">{{ concept.description }}</p>
+              <div class="ddd-examples">
+                <h5>Exemples concrets :</h5>
+                <ul>
+                  @for (example of concept.examples; track example) {
+                    <li>{{ example }}</li>
+                  }
+                </ul>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Structure d'un Glossaire Efficace -->
+    <section class="glossary-section">
+      <h3 class="section-title">Éléments d'un Glossaire Efficace</h3>
+      <div class="glossary-container">
+        <div class="glossary-intro">
+          <p>
+            Un glossaire métier efficace est structuré autour d'éléments clés qui garantissent 
+            la précision, la cohérence et l'évolutivité du langage ubiquitaire.
+          </p>
+        </div>
+        <div class="glossary-table-wrapper">
+          <table class="glossary-table">
+            <thead>
+              <tr>
+                <th>Élément</th>
+                <th>Description</th>
+                <th>Exemple</th>
+                <th>Importance</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (element of glossaryElements; track element.name) {
+                <tr>
+                  <td>
+                    <div class="element-name">
+                      <i class="ph ph-{{ element.icon }}" aria-hidden="true"></i>
+                      {{ element.name }}
+                    </div>
+                  </td>
+                  <td>{{ element.description }}</td>
+                  <td>
+                    <span class="element-example">{{ element.example }}</span>
+                  </td>
+                  <td>
+                    <span class="importance-level {{ element.importance }}">
+                      {{ element.importance }}
+                    </span>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mise en Pratique -->
+    <section class="implementation-section">
+      <h3 class="section-title">Mise en Pratique</h3>
+      <div class="implementation-grid">
+        @for (practice of bestPractices; track practice.category) {
+          <div class="practice-card">
+            <div class="practice-header">
+              <i class="ph ph-{{ practice.icon }}" aria-hidden="true"></i>
+              <h4>{{ practice.category }}</h4>
+            </div>
+            <div class="practice-content">
+              <p>{{ practice.description }}</p>
+              <ul class="practice-list">
+                @for (item of practice.practices; track item) {
+                  <li>{{ item }}</li>
+                }
+              </ul>
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- Ressources et Documentation -->
+    <section class="resources-section">
+      <h3 class="section-title">Ressources et Documentation</h3>
+      <div class="resources-container">
+        <div class="resource-card primary">
+          <div class="resource-header">
+            <i class="ph ph-book-open" aria-hidden="true"></i>
+            <h4>Glossaire Métier</h4>
+          </div>
+          <div class="resource-content">
+            <p>
+              Consultez notre glossaire métier complet sur Confluence pour accéder 
+              aux définitions détaillées et aux exemples d'usage dans votre contexte.
+            </p>
+            <div class="resource-actions">
+              <psh-button 
+                appearance="filled" 
+                variant="primary"
+                icon="arrow-square-out"
+                iconPosition="right"
+                (clicked)="openConfluence()"
+              >
+                Consulter le glossaire
+              </psh-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

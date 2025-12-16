@@ -1,0 +1,131 @@
+:host {
+  --progressbar-height-sm: var(--size-1);  /* 4px */
+  --progressbar-height-md: var(--size-2);  /* 8px */
+  --progressbar-height-lg: var(--size-3);  /* 12px */
+  --progressbar-stripe-opacity: 0.15;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+:host.label-bottom {
+  flex-direction: column-reverse;
+}
+
+:host.label-inline {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.progressbar {
+  position: relative;
+  width: 100%;
+  height: var(--progressbar-height-md);
+  background: var(--surface-ground);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.progress-track {
+  height: 100%;
+  border-radius: var(--border-radius);
+  transition: width var(--animation-duration-default) var(--animation-easing-smooth);
+}
+
+/* Variants */
+.progress-track.primary {
+  background: var(--primary-gradient);
+}
+
+.progress-track.secondary {
+  background: var(--secondary-color);
+}
+
+.progress-track.success {
+  background: var(--success-color);
+}
+
+.progress-track.warning {
+  background: var(--warning-color);
+}
+
+.progress-track.danger {
+  background: var(--danger-color);
+}
+
+/* Sizes */
+:host.small .progressbar {
+  height: var(--progressbar-height-sm);
+}
+
+:host.large .progressbar {
+  height: var(--progressbar-height-lg);
+}
+
+/* Label */
+.progress-label {
+  display: block;
+  text-align: right;
+  font-size: var(--font-size-sm);
+  color: var(--text-color);
+  font-weight: var(--font-weight-medium);
+}
+
+:host.small .progress-label {
+  font-size: var(--font-size-xs);
+}
+
+:host.large .progress-label {
+  font-size: var(--font-size-base);
+}
+
+:host.label-inline .progress-label {
+  text-align: left;
+  min-width: fit-content;
+}
+
+/* Striped */
+.progressbar.striped .progress-track {
+  background-image: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, var(--progressbar-stripe-opacity)) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, var(--progressbar-stripe-opacity)) 50%,
+    rgba(255, 255, 255, var(--progressbar-stripe-opacity)) 75%,
+    transparent 75%,
+    transparent
+  );
+  background-size: var(--size-4) var(--size-4);
+}
+
+/* Animated */
+.progressbar.animated .progress-track {
+  animation: progress-animation var(--animation-duration-slow) linear infinite;
+}
+
+/* Indeterminate */
+.progressbar.indeterminate .progress-track {
+  width: 50% !important;
+  animation: indeterminate 1.5s var(--animation-easing-in-out) infinite;
+}
+
+@keyframes progress-animation {
+  0% {
+    background-position: var(--size-4) 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+@keyframes indeterminate {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}

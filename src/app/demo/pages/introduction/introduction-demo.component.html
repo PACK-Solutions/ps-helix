@@ -1,0 +1,179 @@
+<ds-demo-page-layout
+  title="Guide Complet du Design System Helix"
+  introText="Helix est un Design System moderne basé sur Angular 20, conçu pour créer des interfaces utilisateur cohérentes, accessibles et performantes. Ce guide vous accompagne étape par étape dans l'installation et la configuration complète du système."
+>
+  <div demo-content>
+    <!-- Hero Section -->
+    <div class="intro-hero">
+      <div class="hero-content">
+        <div class="logo-section">
+          <img
+            src="https://i.goopics.net/7p9v36.png"
+            alt="Helix Logo"
+            class="helix-logo"
+          />
+          <div class="brand-text">
+            <h1 class="brand-title">Helix</h1>
+            <p class="brand-subtitle">Design System</p>
+          </div>
+        </div>
+        <div class="hero-badges">
+          <a [href]="npmUrl" target="_blank" rel="noopener noreferrer" class="npm-badge">
+            <i class="ph ph-package" aria-hidden="true"></i>
+            <span class="badge-text">
+              <span class="badge-label">npm package</span>
+              <span class="badge-version">v{{ npmVersion }}</span>
+            </span>
+          </a>
+          <div class="info-badge">
+            <i class="ph ph-cube" aria-hidden="true"></i>
+            <span class="badge-text">
+              <span class="badge-label">28 Components</span>
+            </span>
+          </div>
+          <div class="info-badge">
+            <i class="ph ph-git-branch" aria-hidden="true"></i>
+            <span class="badge-text">
+              <span class="badge-label">MIT License</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Key Features -->
+    <div class="key-features">
+      <h3 class="features-title">Pourquoi Choisir Helix ?</h3>
+      <div class="features-grid">
+        @for (feature of keyFeatures; track feature.title) {
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="ph ph-{{ feature.icon }}" aria-hidden="true"></i>
+            </div>
+            <div class="feature-content">
+              <h4>{{ feature.title }}</h4>
+              <p>{{ feature.description }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Installation Section -->
+    <div class="getting-started">
+      <h3 class="getting-started-title">Installation et Configuration</h3>
+
+      <div class="setup-steps">
+        @for (step of setupSteps; track step.number) {
+          <div class="setup-step">
+            <div class="step-header">
+              <div class="step-number-badge">{{ step.number }}</div>
+              <h4 class="step-title">{{ step.title }}</h4>
+            </div>
+            <p class="step-description">{{ step.description }}</p>
+            @if (step.codeSnippet) {
+              <div class="code-snippet">
+                <div class="code-header">
+                  <span class="code-label">{{ step.codeLabel }}</span>
+                </div>
+                <pre><code>{{ step.codeSnippet }}</code></pre>
+              </div>
+            }
+            @if (step.note) {
+              <div class="step-note">
+                <i class="ph ph-info" aria-hidden="true"></i>
+                <span>{{ step.note }}</span>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Quick Start Examples -->
+    <div class="quick-examples">
+      <h3 class="section-title">Exemples d'Utilisation</h3>
+      <div class="examples-grid">
+        @for (example of quickExamples; track example.title) {
+          <div class="example-card">
+            <div class="example-header">
+              <i class="ph ph-{{ example.icon }}" aria-hidden="true"></i>
+              <h4>{{ example.title }}</h4>
+            </div>
+            <p class="example-description">{{ example.description }}</p>
+            <div class="code-snippet">
+              <pre><code>{{ example.code }}</code></pre>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Services Configuration -->
+    <div class="services-section">
+      <h3 class="section-title">Configuration des Services</h3>
+
+      <div class="service-cards">
+        @for (service of services; track service.name) {
+          <div class="service-card">
+            <div class="service-header">
+              <i class="ph ph-{{ service.icon }}" aria-hidden="true"></i>
+              <h4>{{ service.name }}</h4>
+            </div>
+            <p class="service-description">{{ service.description }}</p>
+            <div class="service-features">
+              <h5>Fonctionnalités clés :</h5>
+              <ul>
+                @for (feature of service.features; track feature) {
+                  <li>{{ feature }}</li>
+                }
+              </ul>
+            </div>
+            <div class="code-snippet">
+              <div class="code-header">
+                <span class="code-label">{{ service.codeLabel }}</span>
+              </div>
+              <pre><code>{{ service.codeExample }}</code></pre>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Icons Section -->
+    <div class="icons-section">
+      <h3 class="section-title">Icônes Phosphor</h3>
+      <p class="section-intro">Helix utilise Phosphor Icons, une bibliothèque d'icônes moderne et flexible avec plusieurs variantes de poids.</p>
+
+      <div class="icon-weights">
+        <h4>Variantes disponibles :</h4>
+        <div class="weights-grid">
+          @for (weight of iconWeights; track weight.class) {
+            <div class="weight-card">
+              <i [class]="weight.fullClass" aria-hidden="true"></i>
+              <div class="weight-info">
+                <strong>{{ weight.name }}</strong>
+                <code>{{ weight.class }}</code>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="code-snippet">
+        <div class="code-header">
+          <span class="code-label">CDN Configuration (index.html)</span>
+        </div>
+        <pre><code>{{ phosphorCdnCode }}</code></pre>
+      </div>
+
+      <div class="icon-usage">
+        <h4>Utilisation dans les templates :</h4>
+        <div class="code-snippet">
+          <pre><code>{{ iconUsageCode }}</code></pre>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</ds-demo-page-layout>

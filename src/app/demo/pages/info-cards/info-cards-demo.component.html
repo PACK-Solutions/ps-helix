@@ -1,0 +1,558 @@
+<ds-demo-page-layout
+  title="Cartes d'Information"
+  introText="Les cartes d'information permettent d'afficher des données structurées sous forme de paires label-valeur. Idéales pour les profils utilisateurs, les détails de commande ou les informations système avec un design cohérent et accessible."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Variantes de Base -->
+    <section class="info-card-variants-section">
+      <h3 class="section-title">Variantes de Base</h3>
+      <div class="variants-container">
+        <div class="variants-intro">
+          <p>Les cartes d'information héritent des trois styles visuels des cartes de base pour s'adapter à différents contextes d'utilisation.</p>
+        </div>
+        <div class="variants-grid">
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-info-card
+                title="Profil Utilisateur"
+                [data]="userProfileData"
+                cardVariant="elevated"
+                icon="user-circle"
+              ></psh-info-card>
+            </div>
+            <div class="variant-info">
+              <h4>Elevated</h4>
+              <p>Variante avec ombre portée. Idéale pour mettre en avant des informations importantes.</p>
+              <ds-code-snippet [code]="elevatedVariantCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-info-card
+                title="Détails de Commande"
+                [data]="orderDetailsData"
+                cardVariant="outlined"
+                icon="shopping-cart"
+              ></psh-info-card>
+            </div>
+            <div class="variant-info">
+              <h4>Outlined</h4>
+              <p>Variante avec bordure. Parfaite pour les interfaces épurées et les contenus structurés.</p>
+              <ds-code-snippet [code]="outlinedVariantCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-info-card
+                title="Informations Système"
+                [data]="systemInfoData"
+                cardVariant="default"
+                icon="gear"
+              ></psh-info-card>
+            </div>
+            <div class="variant-info">
+              <h4>Default</h4>
+              <p>Variante par défaut sans décoration. Utilisée pour les contenus intégrés.</p>
+              <ds-code-snippet [code]="defaultVariantCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cas d'Usage Pratiques -->
+    <section class="info-card-usage-section">
+      <h3 class="section-title">Cas d'Usage Pratiques</h3>
+      <div class="usage-container">
+        <div class="usage-intro">
+          <p>Découvrez comment utiliser les cartes d'information dans différents contextes métier avec des exemples concrets.</p>
+        </div>
+        <div class="usage-grid">
+          <div class="usage-card">
+            <h4>Profil Utilisateur Complet</h4>
+            <psh-info-card
+              title="Informations Personnelles"
+              [data]="userProfileData"
+              cardVariant="elevated"
+              icon="identification-card"
+              [hoverable]="true"
+            >
+              <div card-actions>
+                <psh-button variant="primary" appearance="outline">Modifier</psh-button>
+              </div>
+            </psh-info-card>
+            <p class="usage-description">
+              Affichage complet d'un profil utilisateur avec possibilité d'édition. Utilise l'icône "identification-card" et inclut des actions.
+            </p>
+          </div>
+
+          <div class="usage-card">
+            <h4>Suivi de Commande</h4>
+            <psh-info-card
+              title="Ma Commande"
+              [data]="orderDetailsData"
+              cardVariant="outlined"
+              icon="package"
+              [hoverable]="true"
+            >
+              <div card-actions>
+                <psh-button variant="primary">Suivre</psh-button>
+                <psh-button variant="secondary" appearance="text">Détails</psh-button>
+              </div>
+            </psh-info-card>
+            <p class="usage-description">
+              Carte de suivi de commande avec informations essentielles et actions de suivi rapide.
+            </p>
+          </div>
+
+          <div class="usage-card">
+            <h4>Informations Système</h4>
+            <psh-info-card
+              title="État du Système"
+              [data]="systemInfoData"
+              cardVariant="elevated"
+              icon="monitor"
+            ></psh-info-card>
+            <p class="usage-description">
+              Affichage des métriques système pour un tableau de bord d'administration.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- États et Interactions -->
+    <section class="info-card-states-section">
+      <h3 class="section-title">États et Interactions</h3>
+      <div class="states-container">
+        <div class="states-intro">
+          <p>Les cartes d'information supportent différents états pour communiquer l'activité et la disponibilité des données.</p>
+        </div>
+        <div class="states-content">
+          <div class="states-demo">
+            <div class="state-group">
+              <h4>État de Chargement</h4>
+              <div class="state-examples">
+                <psh-info-card
+                  title="Données en Chargement"
+                  [data]="userProfileData"
+                  cardVariant="outlined"
+                  icon="circle-notch"
+                  [loading]="isLoading"
+                ></psh-info-card>
+                <psh-button
+                  variant="primary"
+                  appearance="outline"
+                  (clicked)="handleSimulateLoading()"
+                  [disabled]="isLoading"
+                >
+                  {{ isLoading ? 'Chargement...' : 'Simuler Chargement' }}
+                </psh-button>
+              </div>
+              <p class="state-description">
+                Affiche l'état de chargement pendant la récupération des données asynchrones.
+              </p>
+            </div>
+
+            <div class="state-group">
+              <h4>État Vide</h4>
+              <div class="state-examples">
+                <psh-info-card
+                  title="Aucune Donnée"
+                  [data]="emptyData"
+                  cardVariant="outlined"
+                  icon="x-circle"
+                  [options]="{ showEmptyState: true, emptyStateMessage: 'Aucune information disponible pour le moment' }"
+                ></psh-info-card>
+              </div>
+              <p class="state-description">
+                Affiche un message personnalisé lorsqu'aucune donnée n'est disponible.
+              </p>
+            </div>
+
+            <div class="state-group">
+              <h4>Carte Interactive</h4>
+              <div class="state-examples">
+                <psh-info-card
+                  title="Cliquez-moi"
+                  [data]="compactData"
+                  cardVariant="elevated"
+                  icon="hand-pointing"
+                  [interactive]="true"
+                  [hoverable]="true"
+                ></psh-info-card>
+              </div>
+              <p class="state-description">
+                Carte cliquable avec effet de survol pour des interactions complètes.
+              </p>
+            </div>
+          </div>
+          <div class="states-doc">
+            <h4>Caractéristiques des États</h4>
+            <ul class="feature-list">
+              <li><strong>Loading</strong> : Opacité réduite avec <code>[loading]="true"</code></li>
+              <li><strong>Empty</strong> : Message personnalisable via <code>options.emptyStateMessage</code></li>
+              <li><strong>Interactive</strong> : Rend la carte cliquable avec <code>[interactive]="true"</code></li>
+              <li><strong>Hoverable</strong> : Effet de survol avec <code>[hoverable]="true"</code></li>
+              <li><strong>Disabled</strong> : Désactive toutes les interactions</li>
+            </ul>
+            <ds-code-snippet [code]="statesCode" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Personnalisation -->
+    <section class="info-card-customization-section">
+      <h3 class="section-title">Options de Personnalisation</h3>
+      <div class="customization-container">
+        <div class="customization-intro">
+          <p>Personnalisez l'apparence et le comportement des cartes d'information selon vos besoins.</p>
+        </div>
+        <div class="customization-grid">
+          <div class="customization-card">
+            <h4>Largeurs Personnalisées</h4>
+            <psh-info-card
+              title="Largeurs Custom"
+              [data]="customWidthData"
+              cardVariant="outlined"
+              icon="arrows-horizontal"
+            ></psh-info-card>
+            <div class="code-example">
+              <pre>const data: InfoCardData[] = [
+  &#123;
+    label: 'Libellé court',
+    value: 'Valeur longue...',
+    labelWidth: '30%',
+    valueWidth: '70%'
+  &#125;
+];</pre>
+            </div>
+          </div>
+
+          <div class="customization-card">
+            <h4>Carte Compacte</h4>
+            <psh-info-card
+              title="Données Compactes"
+              [data]="compactData"
+              cardVariant="outlined"
+              icon="list-bullets"
+            ></psh-info-card>
+            <p class="customization-description">
+              Affichage compact avec peu de données pour une utilisation dans des espaces réduits.
+            </p>
+          </div>
+
+          <div class="customization-card">
+            <h4>Avec Actions</h4>
+            <psh-info-card
+              title="Actions Multiples"
+              [data]="compactData"
+              cardVariant="elevated"
+              icon="check-circle"
+            >
+              <div card-actions>
+                <psh-button variant="primary">Valider</psh-button>
+                <psh-button variant="secondary" appearance="outline">Annuler</psh-button>
+                <psh-button variant="secondary" appearance="text">Aide</psh-button>
+              </div>
+            </psh-info-card>
+            <p class="customization-description">
+              Ajoutez des actions avec le slot <code>card-actions</code> pour des interactions complexes.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Layout en Grille -->
+    <section class="info-card-grid-section">
+      <h3 class="section-title">Layout en Grille</h3>
+      <div class="grid-container">
+        <div class="grid-intro">
+          <p>Organisez plusieurs cartes d'information dans une grille responsive pour créer des tableaux de bord complets.</p>
+        </div>
+        <div class="info-cards-grid">
+          <psh-info-card
+            title="Profil"
+            [data]="compactData"
+            cardVariant="elevated"
+            icon="user"
+            [hoverable]="true"
+          ></psh-info-card>
+
+          <psh-info-card
+            title="Statistiques"
+            [data]="compactData"
+            cardVariant="elevated"
+            icon="chart-bar"
+            [hoverable]="true"
+          ></psh-info-card>
+
+          <psh-info-card
+            title="Notifications"
+            [data]="compactData"
+            cardVariant="elevated"
+            icon="bell"
+            [hoverable]="true"
+          ></psh-info-card>
+
+          <psh-info-card
+            title="Paramètres"
+            [data]="compactData"
+            cardVariant="elevated"
+            icon="gear"
+            [hoverable]="true"
+          ></psh-info-card>
+        </div>
+      </div>
+    </section>
+
+    <!-- Documentation API -->
+    <section class="api-section">
+      <h3 class="section-title">Documentation API</h3>
+      <div class="api-container">
+        <div class="api-intro">
+          <p>Le composant Info Card utilise des <strong>input signals</strong> pour une API simple et performante, conforme aux standards Angular 20.</p>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Input Signals)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>title</code></td>
+                <td><code>string</code></td>
+                <td><code>''</code></td>
+                <td>Titre affiché dans le header de la carte</td>
+              </tr>
+              <tr>
+                <td><code>data</code></td>
+                <td><code>InfoCardData[]</code></td>
+                <td><code>[]</code></td>
+                <td>Tableau de paires label-valeur à afficher</td>
+              </tr>
+              <tr>
+                <td><code>icon</code></td>
+                <td><code>string</code></td>
+                <td><code>'circle-dashed'</code></td>
+                <td>Nom de l'icône Phosphor (sans préfixe 'ph-')</td>
+              </tr>
+              <tr>
+                <td><code>cardVariant</code></td>
+                <td><code>InfoCardVariant</code></td>
+                <td><code>'outlined'</code></td>
+                <td>'elevated' | 'outlined' | 'default'</td>
+              </tr>
+              <tr>
+                <td><code>options</code></td>
+                <td><code>InfoCardOptions</code></td>
+                <td><code>object</code></td>
+                <td>Options de configuration (voir détails ci-dessous)</td>
+              </tr>
+              <tr>
+                <td><code>interactive</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Rend la carte cliquable</td>
+              </tr>
+              <tr>
+                <td><code>hoverable</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Ajoute un effet de survol</td>
+              </tr>
+              <tr>
+                <td><code>loading</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Affiche l'état de chargement</td>
+              </tr>
+              <tr>
+                <td><code>disabled</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Désactive la carte</td>
+              </tr>
+              <tr>
+                <td><code>ariaLabel</code></td>
+                <td><code>string</code></td>
+                <td><code>undefined</code></td>
+                <td>Label ARIA personnalisé pour l'accessibilité</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Interface InfoCardData</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Requis</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>label</code></td>
+                <td><code>string</code></td>
+                <td>Oui</td>
+                <td>Texte du label affiché à gauche</td>
+              </tr>
+              <tr>
+                <td><code>value</code></td>
+                <td><code>string | number | boolean | null</code></td>
+                <td>Oui</td>
+                <td>Valeur affichée à droite</td>
+              </tr>
+              <tr>
+                <td><code>labelWidth</code></td>
+                <td><code>string</code></td>
+                <td>Non</td>
+                <td>Largeur personnalisée pour le label (ex: '30%')</td>
+              </tr>
+              <tr>
+                <td><code>valueWidth</code></td>
+                <td><code>string</code></td>
+                <td>Non</td>
+                <td>Largeur personnalisée pour la valeur (ex: '70%')</td>
+              </tr>
+              <tr>
+                <td><code>customClass</code></td>
+                <td><code>string</code></td>
+                <td>Non</td>
+                <td>Classe CSS personnalisée pour la ligne</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Interface InfoCardOptions</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>showEmptyState</code></td>
+                <td><code>boolean</code></td>
+                <td><code>true</code></td>
+                <td>Affiche un message si aucune donnée</td>
+              </tr>
+              <tr>
+                <td><code>emptyStateMessage</code></td>
+                <td><code>string</code></td>
+                <td><code>'Aucune information...'</code></td>
+                <td>Message personnalisé pour l'état vide</td>
+              </tr>
+              <tr>
+                <td><code>labelWidth</code></td>
+                <td><code>string</code></td>
+                <td><code>undefined</code></td>
+                <td>Largeur par défaut pour tous les labels</td>
+              </tr>
+              <tr>
+                <td><code>valueWidth</code></td>
+                <td><code>string</code></td>
+                <td><code>undefined</code></td>
+                <td>Largeur par défaut pour toutes les valeurs</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Slots Disponibles</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Slot</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>card-actions</code></td>
+                <td>Boutons d'action en bas de carte avec alignement automatique</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-usage-example">
+          <h4>Exemple d'Utilisation Complète</h4>
+          <div class="code-block">
+            <pre>import &#123; PshInfoCardComponent, PshButtonComponent &#125; from 'ps-helix';
+import &#123; InfoCardData &#125; from 'ps-helix';
+
+&#64;Component(&#123;
+  imports: [PshInfoCardComponent, PshButtonComponent],
+  template: `
+    &lt;psh-info-card
+      title="Profil Utilisateur"
+      [data]="userData"
+      icon="user-circle"
+      cardVariant="elevated"
+      [hoverable]="true"
+      [loading]="isLoading"
+      ariaLabel="Informations du profil utilisateur"
+    &gt;
+      &lt;div card-actions&gt;
+        &lt;psh-button variant="primary"&gt;Modifier&lt;/psh-button&gt;
+        &lt;psh-button variant="secondary" appearance="outline"&gt;
+          Partager
+        &lt;/psh-button&gt;
+      &lt;/div&gt;
+    &lt;/psh-info-card&gt;
+  `
+&#125;)
+export class MyComponent &#123;
+  isLoading = false;
+
+  userData: InfoCardData[] = [
+    &#123; label: 'Nom', value: 'Marie Dubois' &#125;,
+    &#123; label: 'Email', value: 'marie&#64;example.com' &#125;,
+    &#123; label: 'Téléphone', value: '+33 6 12 34 56 78' &#125;,
+    &#123; label: 'Ville', value: 'Paris' &#125;
+  ];
+&#125;</pre>
+          </div>
+        </div>
+
+        <div class="api-best-practices">
+          <h4>Bonnes Pratiques</h4>
+          <ul class="best-practices-list">
+            <li><strong>Données typées</strong> : Utilisez toujours l'interface <code>InfoCardData</code> pour garantir la cohérence des données</li>
+            <li><strong>Titre explicite</strong> : Fournissez un titre clair qui décrit le contenu de la carte</li>
+            <li><strong>Icônes pertinentes</strong> : Choisissez des icônes Phosphor qui renforcent la compréhension du contenu</li>
+            <li><strong>État de chargement</strong> : Utilisez <code>[loading]="true"</code> pendant les opérations asynchrones</li>
+            <li><strong>État vide</strong> : Personnalisez le message d'état vide pour guider l'utilisateur</li>
+            <li><strong>Accessibilité</strong> : Fournissez un <code>ariaLabel</code> descriptif pour les lecteurs d'écran</li>
+            <li><strong>Responsive</strong> : La carte s'adapte automatiquement aux petits écrans (colonnes empilées sur mobile)</li>
+            <li><strong>Actions contextuelles</strong> : Placez les actions pertinentes dans le slot <code>card-actions</code></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

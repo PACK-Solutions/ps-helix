@@ -1,0 +1,581 @@
+<ds-demo-page-layout
+  title="Système de Champs de Saisie"
+  introText="Les champs de saisie permettent aux utilisateurs d'entrer et de modifier du texte. Ils sont essentiels pour la collecte de données et l'interaction avec les formulaires, offrant différentes variantes et états pour s'adapter à tous les contextes."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Variantes d'Input - Section Pleine Largeur -->
+    <section class="input-variants-section">
+      <h3 class="section-title">Variantes d'Input</h3>
+      <div class="variants-container">
+        <div class="variants-intro">
+          <p>Les champs de saisie offrent deux variantes distinctes pour s'adapter à différents contextes d'interface et niveaux de densité visuelle.</p>
+        </div>
+        <div class="variants-grid">
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-input
+                variant="outlined"
+                placeholder="{{ 'INPUT.PLACEHOLDER.DEFAULT' | translate }}"
+              >
+                <span input-label>{{ 'INPUT.LABEL.DEFAULT' | translate }}</span>
+                <span input-hint>{{ 'INPUT.HINT.DEFAULT' | translate }}</span>
+              </psh-input>
+            </div>
+            <div class="variant-info">
+              <h4>Outlined</h4>
+              <p>Style par défaut avec bordure prononcée. Idéal pour les formulaires où une délimitation claire des champs est nécessaire.</p>
+              <ds-code-snippet [code]="outlinedVariantCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-input
+                variant="filled"
+                placeholder="{{ 'INPUT.PLACEHOLDER.DEFAULT' | translate }}"
+              >
+                <span input-label>{{ 'INPUT.LABEL.FILLED' | translate }}</span>
+                <span input-hint>{{ 'INPUT.HINT.DEFAULT' | translate }}</span>
+              </psh-input>
+            </div>
+            <div class="variant-info">
+              <h4>Filled</h4>
+              <p>Style avec fond coloré. Parfait pour les interfaces denses et les formulaires modernes nécessitant une apparence plus subtile.</p>
+              <ds-code-snippet [code]="filledVariantCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tailles d'Input - Section Pleine Largeur -->
+    <section class="input-sizes-section">
+      <h3 class="section-title">Tailles Disponibles</h3>
+      <div class="sizes-container">
+        <div class="sizes-intro">
+          <p>Trois tailles sont disponibles pour s'adapter à différents contextes d'utilisation et densités d'interface.</p>
+        </div>
+        <div class="sizes-grid">
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-input
+                size="small"
+                placeholder="{{ 'INPUT.PLACEHOLDER.DEFAULT' | translate }}"
+              >
+                <span input-label>{{ 'INPUT.LABEL.DEFAULT' | translate }}</span>
+              </psh-input>
+            </div>
+            <div class="size-info">
+              <h4>Small</h4>
+              <div class="size-specs">
+                <span class="size-dimension">32px de hauteur</span>
+                <code class="size-code">size="small"</code>
+              </div>
+              <p class="size-usage">Idéal pour les interfaces denses, les tableaux de données ou les formulaires compacts nécessitant peu d'espace.</p>
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-input
+                size="medium"
+                placeholder="{{ 'INPUT.PLACEHOLDER.DEFAULT' | translate }}"
+              >
+                <span input-label>{{ 'INPUT.LABEL.DEFAULT' | translate }}</span>
+              </psh-input>
+            </div>
+            <div class="size-info">
+              <h4>Medium (Défaut)</h4>
+              <div class="size-specs">
+                <span class="size-dimension">40px de hauteur</span>
+                <code class="size-code">size="medium"</code>
+              </div>
+              <p class="size-usage">Taille par défaut, équilibrée pour la plupart des cas d'usage et une bonne lisibilité sur tous les appareils.</p>
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-input
+                size="large"
+                placeholder="{{ 'INPUT.PLACEHOLDER.DEFAULT' | translate }}"
+              >
+                <span input-label>{{ 'INPUT.LABEL.DEFAULT' | translate }}</span>
+              </psh-input>
+            </div>
+            <div class="size-info">
+              <h4>Large</h4>
+              <div class="size-specs">
+                <span class="size-dimension">48px de hauteur</span>
+                <code class="size-code">size="large"</code>
+              </div>
+              <p class="size-usage">Pour les formulaires importants, les interfaces mobiles ou les champs nécessitant une grande visibilité et une accessibilité tactile optimale.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- États des Inputs - Section Pleine Largeur -->
+    <section class="input-states-section">
+      <h3 class="section-title">États des Inputs</h3>
+      <div class="states-container">
+        <div class="states-intro">
+          <p>Les champs de saisie supportent différents états pour communiquer clairement leur disponibilité, leur statut de validation et leur état d'exécution.</p>
+        </div>
+        <div class="states-content">
+          <div class="states-demo">
+            <div class="state-group">
+              <h4>État Désactivé</h4>
+              <div class="state-examples">
+                <psh-input
+                  [disabled]="true"
+                  placeholder="{{ 'INPUT.PLACEHOLDER.DEFAULT' | translate }}"
+                >
+                  <span input-label>{{ 'INPUT.LABEL.DISABLED' | translate }}</span>
+                </psh-input>
+              </div>
+              <p class="state-description">Champ temporairement non modifiable. Utilisé pour les données en lecture seule ou les formulaires incomplets.</p>
+            </div>
+
+            <div class="state-group">
+              <h4>État Lecture Seule</h4>
+              <div class="state-examples">
+                <psh-input
+                  [readonly]="true"
+                  value="Valeur en lecture seule"
+                >
+                  <span input-label>{{ 'INPUT.LABEL.READONLY' | translate }}</span>
+                </psh-input>
+              </div>
+              <p class="state-description">Champ visible mais non modifiable. Permet de copier le contenu tout en empêchant les modifications.</p>
+            </div>
+
+            <div class="state-group">
+              <h4>État Erreur</h4>
+              <div class="state-examples">
+                <psh-input
+                  error="{{ 'INPUT.ERROR.REQUIRED' | translate }}"
+                >
+                  <span input-label>Champ en erreur</span>
+                  <span input-error>
+                    <i class="ph ph-warning"></i>
+                    {{ 'INPUT.ERROR.REQUIRED' | translate }}
+                  </span>
+                </psh-input>
+              </div>
+              <p class="state-description">Indique une validation échouée avec un message d'erreur descriptif pour guider l'utilisateur.</p>
+            </div>
+
+            <div class="state-group">
+              <h4>État Succès</h4>
+              <div class="state-examples">
+                <psh-input
+                  success="{{ 'INPUT.SUCCESS.VALID' | translate }}"
+                  value="contact@exemple.fr"
+                >
+                  <span input-label>{{ 'INPUT.LABEL.SUCCESS' | translate }}</span>
+                  <span input-success>{{ 'INPUT.SUCCESS.VALID' | translate }}</span>
+                </psh-input>
+              </div>
+              <p class="state-description">Confirme une validation réussie avec un message de succès rassurant pour l'utilisateur.</p>
+            </div>
+
+            <div class="state-group">
+              <h4>État Chargement</h4>
+              <div class="state-examples">
+                <psh-input
+                  [loading]="true"
+                  placeholder="Vérification en cours..."
+                >
+                  <span input-label>Validation en cours</span>
+                </psh-input>
+              </div>
+              <p class="state-description">Affiche un indicateur de chargement pendant une opération asynchrone comme une validation serveur.</p>
+            </div>
+          </div>
+
+          <div class="states-doc">
+            <h4>Caractéristiques des États</h4>
+            <ul class="feature-list">
+              <li><strong>Hover</strong> : Changement visuel au survol pour indiquer l'interactivité</li>
+              <li><strong>Focus</strong> : Indicateur de focus visible avec anneau coloré pour la navigation au clavier</li>
+              <li><strong>Disabled</strong> : Curseur <code>not-allowed</code> et opacité réduite</li>
+              <li><strong>Readonly</strong> : Curseur <code>default</code> et fond distinct</li>
+              <li><strong>Error</strong> : Bordure rouge avec message d'erreur et icône optionnelle</li>
+              <li><strong>Success</strong> : Bordure verte avec message de confirmation</li>
+              <li><strong>Loading</strong> : Spinloader animé avec <code>aria-busy="true"</code></li>
+            </ul>
+            <ds-code-snippet [code]="statesCode" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Inputs avec Icônes - Section Pleine Largeur -->
+    <section class="input-icons-section">
+      <h3 class="section-title">Inputs avec Icônes</h3>
+      <div class="icons-container">
+        <div class="icons-intro">
+          <p>Les icônes renforcent la compréhension visuelle du type de données attendu et améliorent l'expérience utilisateur. Utilisez des icônes pertinentes pour chaque contexte.</p>
+        </div>
+        <div class="icons-grid">
+          <div class="icon-card">
+            <div class="icon-preview">
+              <psh-input
+                iconStart="magnifying-glass"
+                placeholder="{{ 'INPUT.PLACEHOLDER.SEARCH' | translate }}"
+                [(value)]="searchValue"
+              >
+                <span input-label>{{ 'INPUT.LABEL.SEARCH' | translate }}</span>
+              </psh-input>
+            </div>
+            <div class="icon-info">
+              <h4>Icône de Recherche</h4>
+              <code class="icon-code">iconStart="magnifying-glass"</code>
+              <p class="icon-usage">Icône standard pour les champs de recherche. Position à gauche pour indiquer immédiatement la fonction.</p>
+            </div>
+          </div>
+
+          <div class="icon-card">
+            <div class="icon-preview">
+              <psh-input
+                iconStart="envelope"
+                type="email"
+                [required]="true"
+                placeholder="{{ 'INPUT.PLACEHOLDER.EMAIL' | translate }}"
+                [(value)]="emailValue"
+              >
+                <span input-label>{{ 'INPUT.LABEL.EMAIL' | translate }}</span>
+                <span input-hint>{{ 'INPUT.HINT.EMAIL' | translate }}</span>
+              </psh-input>
+            </div>
+            <div class="icon-info">
+              <h4>Icône Email</h4>
+              <code class="icon-code">iconStart="envelope"</code>
+              <p class="icon-usage">Icône envelope pour identifier visuellement un champ email avec validation de format.</p>
+            </div>
+          </div>
+
+          <div class="icon-card">
+            <div class="icon-preview">
+              <psh-input
+                iconStart="phone"
+                type="tel"
+                placeholder="{{ 'INPUT.PLACEHOLDER.PHONE' | translate }}"
+                [(value)]="phoneValue"
+              >
+                <span input-label>{{ 'INPUT.LABEL.PHONE' | translate }}</span>
+              </psh-input>
+            </div>
+            <div class="icon-info">
+              <h4>Icône Téléphone</h4>
+              <code class="icon-code">iconStart="phone"</code>
+              <p class="icon-usage">Icône téléphone pour les champs de numéro avec clavier numérique sur mobile.</p>
+            </div>
+          </div>
+
+          <div class="icon-card">
+            <div class="icon-preview">
+              <psh-input
+                type="password"
+                placeholder="{{ 'INPUT.PLACEHOLDER.PASSWORD' | translate }}"
+                [(value)]="passwordValue"
+              >
+                <span input-label>{{ 'INPUT.LABEL.PASSWORD' | translate }}</span>
+                <span input-hint>{{ 'INPUT.HINT.PASSWORD' | translate }}</span>
+              </psh-input>
+            </div>
+            <div class="icon-info">
+              <h4>Type Password</h4>
+              <code class="icon-code">type="password"</code>
+              <p class="icon-usage">Bouton toggle automatique pour afficher/masquer le mot de passe avec icône eye/eye-slash.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Autocomplete - Section Pleine Largeur -->
+    <section class="input-autocomplete-section">
+      <h3 class="section-title">Autocomplete et Suggestions</h3>
+      <div class="autocomplete-container">
+        <div class="autocomplete-intro">
+          <p>Les suggestions d'autocomplete améliorent l'expérience utilisateur en proposant des options pertinentes pendant la saisie, avec support complet du clavier et des lecteurs d'écran.</p>
+        </div>
+        <div class="autocomplete-content">
+          <div class="autocomplete-demo">
+            <div class="autocomplete-group">
+              <h4>Suggestions Statiques</h4>
+              <psh-input
+                iconStart="map-pin"
+                placeholder="Rechercher une ville"
+                [suggestions]="cities"
+                (suggestionSelect)="handleCitySelect($event)"
+              >
+                <span input-label>Ville</span>
+                <span input-hint>Commencez à taper pour voir les suggestions</span>
+              </psh-input>
+              <p class="autocomplete-description">Liste de suggestions prédéfinies filtrées en temps réel pendant la saisie.</p>
+            </div>
+
+            <div class="autocomplete-group">
+              <h4>Suggestions Dynamiques</h4>
+              <psh-input
+                iconStart="map-pin"
+                placeholder="Rechercher une ville"
+                [suggestions]="fetchCities"
+                [autocompleteConfig]="{ minLength: 2, debounceTime: 300 }"
+              >
+                <span input-label>Ville (avec délai)</span>
+                <span input-hint>Minimum 2 caractères, délai de 300ms</span>
+              </psh-input>
+              <p class="autocomplete-description">Suggestions chargées dynamiquement avec debounce pour optimiser les performances.</p>
+            </div>
+          </div>
+
+          <div class="autocomplete-doc">
+            <h4>Fonctionnalités d'Autocomplete</h4>
+            <ul class="feature-list">
+              <li><strong>Navigation clavier</strong> : <code>↑</code> <code>↓</code> pour parcourir, <code>Enter</code> pour sélectionner, <code>Escape</code> pour fermer</li>
+              <li><strong>Filtrage intelligent</strong> : Recherche insensible à la casse dans toute la chaîne</li>
+              <li><strong>Debounce</strong> : Délai configurable pour les requêtes asynchrones</li>
+              <li><strong>Minimum de caractères</strong> : Seuil configurable avant d'afficher les suggestions</li>
+              <li><strong>ARIA</strong> : Support complet avec <code>role="listbox"</code> et <code>role="option"</code></li>
+              <li><strong>Performance</strong> : Gestion optimisée des timeouts et cleanup automatique</li>
+            </ul>
+            <ds-code-snippet [code]="autocompleteCode" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Documentation API - Section Pleine Largeur -->
+    <section class="api-section">
+      <h3 class="section-title">Documentation API</h3>
+      <div class="api-container">
+        <div class="api-intro">
+          <p>Le composant Input utilise des <strong>model inputs</strong> et des <strong>input signals</strong> pour une API simple et performante, conforme aux standards Angular 19.</p>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Model Inputs)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>value</code></td>
+                <td><code>string</code></td>
+                <td><code>''</code></td>
+                <td>Valeur du champ de saisie (two-way binding)</td>
+              </tr>
+              <tr>
+                <td><code>variant</code></td>
+                <td><code>InputVariant</code></td>
+                <td><code>'outlined'</code></td>
+                <td>'outlined' | 'filled'</td>
+              </tr>
+              <tr>
+                <td><code>size</code></td>
+                <td><code>InputSize</code></td>
+                <td><code>'medium'</code></td>
+                <td>'small' | 'medium' | 'large'</td>
+              </tr>
+              <tr>
+                <td><code>disabled</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Désactive le champ et empêche toute interaction</td>
+              </tr>
+              <tr>
+                <td><code>readonly</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Champ visible mais non modifiable</td>
+              </tr>
+              <tr>
+                <td><code>loading</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Affiche un indicateur de chargement</td>
+              </tr>
+              <tr>
+                <td><code>fullWidth</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Étend le champ sur toute la largeur du conteneur</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Input Signals)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>type</code></td>
+                <td><code>InputType</code></td>
+                <td><code>'text'</code></td>
+                <td>'text' | 'email' | 'password' | 'tel' | 'url' | 'search' | 'number'</td>
+              </tr>
+              <tr>
+                <td><code>required</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Marque le champ comme obligatoire avec astérisque</td>
+              </tr>
+              <tr>
+                <td><code>placeholder</code></td>
+                <td><code>string</code></td>
+                <td><code>''</code></td>
+                <td>Texte d'indication dans le champ vide</td>
+              </tr>
+              <tr>
+                <td><code>iconStart</code></td>
+                <td><code>string</code></td>
+                <td><code>undefined</code></td>
+                <td>Nom de l'icône Phosphor à afficher à gauche</td>
+              </tr>
+              <tr>
+                <td><code>iconEnd</code></td>
+                <td><code>string</code></td>
+                <td><code>undefined</code></td>
+                <td>Nom de l'icône Phosphor à afficher à droite</td>
+              </tr>
+              <tr>
+                <td><code>error</code></td>
+                <td><code>string | null</code></td>
+                <td><code>null</code></td>
+                <td>Message d'erreur à afficher</td>
+              </tr>
+              <tr>
+                <td><code>success</code></td>
+                <td><code>string | null</code></td>
+                <td><code>null</code></td>
+                <td>Message de succès à afficher</td>
+              </tr>
+              <tr>
+                <td><code>hint</code></td>
+                <td><code>string | null</code></td>
+                <td><code>null</code></td>
+                <td>Texte d'aide à afficher sous le champ</td>
+              </tr>
+              <tr>
+                <td><code>suggestions</code></td>
+                <td><code>string[] | Function</code></td>
+                <td><code>[]</code></td>
+                <td>Liste de suggestions ou fonction pour charger dynamiquement</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Événements (Outputs)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Événement</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>valueChange</code></td>
+                <td><code>EventEmitter&lt;string&gt;</code></td>
+                <td>Émis lors de chaque changement de valeur</td>
+              </tr>
+              <tr>
+                <td><code>inputFocus</code></td>
+                <td><code>EventEmitter&lt;void&gt;</code></td>
+                <td>Émis lorsque le champ reçoit le focus</td>
+              </tr>
+              <tr>
+                <td><code>inputBlur</code></td>
+                <td><code>EventEmitter&lt;void&gt;</code></td>
+                <td>Émis lorsque le champ perd le focus</td>
+              </tr>
+              <tr>
+                <td><code>suggestionSelect</code></td>
+                <td><code>EventEmitter&lt;string&gt;</code></td>
+                <td>Émis lorsqu'une suggestion est sélectionnée</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-usage-example">
+          <h4>Exemple d'Utilisation Complète</h4>
+          <div class="code-block">
+            <pre><code>import &#123; PshInputComponent &#125; from 'ps-helix';
+
+&#64;Component(&#123;
+  standalone: true,
+  imports: [PshInputComponent],
+  template: `
+    &lt;psh-input
+      variant="outlined"
+      size="medium"
+      type="email"
+      iconStart="envelope"
+      [required]="true"
+      [disabled]="isSubmitting"
+      [loading]="isValidating"
+      [error]="errorMessage"
+      [success]="successMessage"
+      [(value)]="emailValue"
+      (valueChange)="handleChange($event)"
+    &gt;
+      &lt;span input-label&gt;Email&lt;/span&gt;
+      &lt;span input-hint&gt;Nous ne partagerons jamais votre email&lt;/span&gt;
+    &lt;/psh-input&gt;
+  `
+&#125;)
+export class MyComponent &#123;
+  emailValue = '';
+  isSubmitting = false;
+  isValidating = false;
+  errorMessage: string | null = null;
+  successMessage: string | null = null;
+
+  handleChange(value: string): void &#123;
+    console.log('Email changed:', value);
+  &#125;
+&#125;</code></pre>
+          </div>
+        </div>
+
+        <div class="api-best-practices">
+          <h4>Bonnes Pratiques d'Accessibilité</h4>
+          <ul class="best-practices-list">
+            <li><strong>Labels descriptifs</strong> : Utilisez toujours un label clair décrivant le type de données attendu</li>
+            <li><strong>Messages d'erreur</strong> : Fournissez des messages d'erreur clairs et actionnables avec <code>role="alert"</code></li>
+            <li><strong>Support clavier</strong> : Les champs sont automatiquement accessibles via <code>Tab</code> et touches standard</li>
+            <li><strong>Attributs ARIA</strong> : <code>aria-required</code>, <code>aria-invalid</code>, et <code>aria-describedby</code> sont gérés automatiquement</li>
+            <li><strong>Focus visible</strong> : Maintenez un indicateur de focus visible avec un ratio de contraste minimum de 3:1</li>
+            <li><strong>Autocomplete</strong> : Les suggestions utilisent <code>role="listbox"</code> et <code>role="option"</code></li>
+            <li><strong>Placeholder</strong> : Ne remplace pas le label, utilisez-le uniquement pour des exemples supplémentaires</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

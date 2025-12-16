@@ -1,0 +1,579 @@
+<ds-demo-page-layout
+  title="Système de Tables"
+  introText="Les tables permettent d'afficher des données structurées de manière organisée et accessible. Elles offrent des fonctionnalités de tri, de filtrage et différentes options de personnalisation pour s'adapter à tous les contextes d'utilisation."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Variantes de Tables - Section Pleine Largeur -->
+    <section class="table-variants-section">
+      <h3 class="section-title">Variantes de Tables</h3>
+      <div class="variants-container">
+        <div class="variants-intro">
+          <p>Les tables offrent deux variantes principales et plusieurs options de style pour s'adapter à différents contextes d'utilisation et besoins de design.</p>
+        </div>
+        <div class="variants-grid">
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-table
+                [columns]="basicColumns"
+                [data]="basicData"
+              ></psh-table>
+            </div>
+            <div class="variant-info">
+              <h4>Default</h4>
+              <p>Variante par défaut avec arrière-plan solide. Idéale pour la plupart des cas d'usage et offre une bonne lisibilité.</p>
+              <div class="code-example">
+                <pre><code>&lt;psh-table
+  [columns]="columns"
+  [data]="data"
+&gt;&lt;/psh-table&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-table
+                [columns]="basicColumns"
+                [data]="basicData"
+                variant="outline"
+              ></psh-table>
+            </div>
+            <div class="variant-info">
+              <h4>Outline</h4>
+              <p>Style avec bordure légère sans fond solide. Parfait pour les interfaces épurées et les designs minimalistes.</p>
+              <div class="code-example">
+                <pre><code>&lt;psh-table
+  variant="outline"
+  [columns]="columns"
+  [data]="data"
+&gt;&lt;/psh-table&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-table
+                [columns]="basicColumns"
+                [data]="basicData"
+                [striped]="true"
+              ></psh-table>
+            </div>
+            <div class="variant-info">
+              <h4>Striped (Lignes Alternées)</h4>
+              <p>Améliore la lisibilité avec des lignes alternées. Facilite le suivi visuel des données sur des tables longues.</p>
+              <div class="code-example">
+                <pre><code>&lt;psh-table
+  [striped]="true"
+  [columns]="columns"
+  [data]="data"
+&gt;&lt;/psh-table&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-table
+                [columns]="basicColumns"
+                [data]="basicData"
+                [hoverable]="true"
+              ></psh-table>
+            </div>
+            <div class="variant-info">
+              <h4>Hoverable (Effet au Survol)</h4>
+              <p>Ajoute un effet visuel au survol des lignes. Améliore l'interactivité et indique les lignes cliquables.</p>
+              <div class="code-example">
+                <pre><code>&lt;psh-table
+  [hoverable]="true"
+  [columns]="columns"
+  [data]="data"
+&gt;&lt;/psh-table&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-table
+                [columns]="basicColumns"
+                [data]="basicData"
+                [bordered]="true"
+              ></psh-table>
+            </div>
+            <div class="variant-info">
+              <h4>Bordered (Avec Bordures)</h4>
+              <p>Ajoute des bordures autour de chaque cellule. Crée une séparation claire entre les données pour une structure visible.</p>
+              <div class="code-example">
+                <pre><code>&lt;psh-table
+  [bordered]="true"
+  [columns]="columns"
+  [data]="data"
+&gt;&lt;/psh-table&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-table
+                [columns]="basicColumns"
+                [data]="basicData"
+                [striped]="true"
+                [hoverable]="true"
+                [bordered]="true"
+              ></psh-table>
+            </div>
+            <div class="variant-info">
+              <h4>Combinaison de Styles</h4>
+              <p>Tous les styles peuvent être combinés pour créer l'apparence exacte souhaitée selon vos besoins spécifiques.</p>
+              <div class="code-example">
+                <pre><code>&lt;psh-table
+  [striped]="true"
+  [hoverable]="true"
+  [bordered]="true"
+  [columns]="columns"
+  [data]="data"
+&gt;&lt;/psh-table&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tailles de Tables - Section Pleine Largeur -->
+    <section class="table-sizes-section">
+      <h3 class="section-title">Tailles Disponibles</h3>
+      <div class="sizes-container">
+        <div class="sizes-intro">
+          <p>Trois tailles sont disponibles pour s'adapter à différents contextes d'utilisation, des interfaces denses aux présentations nécessitant une grande lisibilité.</p>
+        </div>
+        <div class="sizes-grid">
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-table
+                [columns]="compactColumns"
+                [data]="compactData"
+                size="small"
+              ></psh-table>
+            </div>
+            <div class="size-info">
+              <h4>Small</h4>
+              <div class="size-specs">
+                <span class="size-dimension">Hauteur de ligne réduite</span>
+                <code class="size-code">size="small"</code>
+              </div>
+              <p class="size-usage">Idéale pour les interfaces denses, les tableaux de bord avec beaucoup de données ou les espaces limités nécessitant une vue compacte.</p>
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-table
+                [columns]="compactColumns"
+                [data]="compactData"
+                size="medium"
+              ></psh-table>
+            </div>
+            <div class="size-info">
+              <h4>Medium (Défaut)</h4>
+              <div class="size-specs">
+                <span class="size-dimension">Hauteur de ligne standard</span>
+                <code class="size-code">size="medium"</code>
+              </div>
+              <p class="size-usage">Taille par défaut, équilibrée pour la plupart des cas d'usage. Offre un bon compromis entre densité et lisibilité.</p>
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-table
+                [columns]="compactColumns"
+                [data]="compactData"
+                size="large"
+              ></psh-table>
+            </div>
+            <div class="size-info">
+              <h4>Large</h4>
+              <div class="size-specs">
+                <span class="size-dimension">Hauteur de ligne généreuse</span>
+                <code class="size-code">size="large"</code>
+              </div>
+              <p class="size-usage">Pour une meilleure lisibilité et accessibilité. Idéale pour les interfaces tactiles et les présentations nécessitant du confort visuel.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tri et Recherche - Section Pleine Largeur -->
+    <section class="table-features-section">
+      <h3 class="section-title">Tri et Recherche</h3>
+      <div class="features-container">
+        <div class="features-intro">
+          <p>Les tables supportent le tri des colonnes et la recherche globale pour faciliter la navigation et l'analyse des données.</p>
+        </div>
+        <div class="features-content">
+          <div class="feature-demo">
+            <h4>Table Interactive avec Tri et Recherche</h4>
+            <psh-table
+              [columns]="sortableColumns"
+              [data]="extendedData"
+              [globalSearch]="true"
+              [hoverable]="true"
+              [striped]="true"
+              emptyMessage="Aucune donnée disponible"
+              noResultsMessage="Aucun résultat trouvé pour"
+              globalSearchPlaceholder="Rechercher dans toutes les colonnes..."
+            ></psh-table>
+          </div>
+          <div class="feature-doc">
+            <h4>Fonctionnalités Interactives</h4>
+            <ul class="feature-list">
+              <li><strong>Tri de Colonnes</strong> : Cliquez sur les en-têtes de colonnes marquées comme triables pour basculer entre tri croissant et décroissant</li>
+              <li><strong>Indicateurs Visuels</strong> : Icônes de flèches indiquant la direction du tri actuel pour chaque colonne</li>
+              <li><strong>Recherche Globale</strong> : Barre de recherche intégrée filtrant les données dans toutes les colonnes en temps réel</li>
+              <li><strong>Messages Contextuels</strong> : Affichage intelligent de messages selon l'état (table vide, aucun résultat trouvé)</li>
+              <li><strong>Accessibilité</strong> : Attributs ARIA appropriés (<code>aria-sort</code>, <code>role="table"</code>) pour les lecteurs d'écran</li>
+            </ul>
+            <div class="code-example">
+              <pre><code>&lt;psh-table
+  [columns]="sortableColumns"
+  [data]="data"
+  [globalSearch]="true"
+  [hoverable]="true"
+  globalSearchPlaceholder="Rechercher..."
+  (sortChange)="handleSort($event)"
+  (globalSearchChange)="handleSearch($event)"
+&gt;&lt;/psh-table&gt;</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- États de Table - Section Pleine Largeur -->
+    <section class="table-states-section">
+      <h3 class="section-title">États de Table</h3>
+      <div class="states-container">
+        <div class="states-intro">
+          <p>Les tables supportent différents états pour communiquer clairement leur statut et gérer les cas limites de manière élégante.</p>
+        </div>
+        <div class="states-grid">
+          <div class="state-card">
+            <div class="state-preview">
+              <psh-table
+                [columns]="basicColumns"
+                [data]="[]"
+                emptyMessage="Aucune donnée disponible"
+              ></psh-table>
+            </div>
+            <div class="state-info">
+              <h4>État Vide</h4>
+              <p>Affiche un message personnalisé lorsque aucune donnée n'est disponible. Message clair et centré pour guider l'utilisateur.</p>
+              <div class="code-example">
+                <pre><code>&lt;psh-table
+  [columns]="columns"
+  [data]="[]"
+  emptyMessage="Aucune donnée"
+&gt;&lt;/psh-table&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="state-card">
+            <div class="state-preview">
+              <psh-table
+                [columns]="basicColumns"
+                [data]="basicData"
+                [loading]="true"
+              ></psh-table>
+            </div>
+            <div class="state-info">
+              <h4>État de Chargement</h4>
+              <p>Indicateur visuel pendant le chargement des données. Spinner animé centré communiquant clairement l'état de progression.</p>
+              <div class="code-example">
+                <pre><code>&lt;psh-table
+  [columns]="columns"
+  [data]="data"
+  [loading]="true"
+&gt;&lt;/psh-table&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="state-card">
+            <div class="state-preview">
+              <psh-table
+                [columns]="basicColumns"
+                [data]="[]"
+                [globalSearch]="true"
+                noResultsMessage="Aucun résultat trouvé pour"
+              ></psh-table>
+            </div>
+            <div class="state-info">
+              <h4>Aucun Résultat</h4>
+              <p>Message spécifique lorsque la recherche ne retourne aucun résultat. Affiche le terme recherché pour contexte.</p>
+              <div class="code-example">
+                <pre><code>&lt;psh-table
+  [globalSearch]="true"
+  noResultsMessage="Aucun résultat"
+&gt;&lt;/psh-table&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Documentation API - Section Pleine Largeur -->
+    <section class="api-section">
+      <h3 class="section-title">Documentation API</h3>
+      <div class="api-container">
+        <div class="api-intro">
+          <p>Le composant Table utilise des <strong>model inputs</strong> et des <strong>input signals</strong> pour une API simple et performante, conforme aux standards Angular 20.</p>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Model Inputs)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>variant</code></td>
+                <td><code>'default' | 'outline'</code></td>
+                <td><code>'default'</code></td>
+                <td>Style de la table (fond solide ou bordure légère)</td>
+              </tr>
+              <tr>
+                <td><code>size</code></td>
+                <td><code>'small' | 'medium' | 'large'</code></td>
+                <td><code>'medium'</code></td>
+                <td>Taille de la table et hauteur des lignes</td>
+              </tr>
+              <tr>
+                <td><code>striped</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Active les lignes alternées pour améliorer la lisibilité</td>
+              </tr>
+              <tr>
+                <td><code>hoverable</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Active l'effet de survol sur les lignes</td>
+              </tr>
+              <tr>
+                <td><code>bordered</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Ajoute des bordures autour de chaque cellule</td>
+              </tr>
+              <tr>
+                <td><code>loading</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Affiche un indicateur de chargement</td>
+              </tr>
+              <tr>
+                <td><code>globalSearch</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Active la barre de recherche globale</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Input Signals)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>columns</code></td>
+                <td><code>TableColumn[]</code></td>
+                <td><code>[]</code></td>
+                <td>Configuration des colonnes (clé, label, largeur, tri)</td>
+              </tr>
+              <tr>
+                <td><code>data</code></td>
+                <td><code>TableRow[]</code></td>
+                <td><code>[]</code></td>
+                <td>Données à afficher dans la table</td>
+              </tr>
+              <tr>
+                <td><code>emptyMessage</code></td>
+                <td><code>string</code></td>
+                <td><code>'No data available'</code></td>
+                <td>Message affiché lorsque la table est vide</td>
+              </tr>
+              <tr>
+                <td><code>noResultsMessage</code></td>
+                <td><code>string</code></td>
+                <td><code>'No results found'</code></td>
+                <td>Message affiché lorsque la recherche ne retourne aucun résultat</td>
+              </tr>
+              <tr>
+                <td><code>globalSearchPlaceholder</code></td>
+                <td><code>string</code></td>
+                <td><code>'Search in all columns...'</code></td>
+                <td>Placeholder de la barre de recherche globale</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Événements (Outputs)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Événement</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>sortChange</code></td>
+                <td><code>EventEmitter&lt;TableSort&gt;</code></td>
+                <td>Émis lorsque l'utilisateur clique sur un en-tête de colonne triable</td>
+              </tr>
+              <tr>
+                <td><code>globalSearchChange</code></td>
+                <td><code>EventEmitter&lt;string&gt;</code></td>
+                <td>Émis lors de la saisie dans la barre de recherche globale</td>
+              </tr>
+              <tr>
+                <td><code>rowClick</code></td>
+                <td><code>EventEmitter&lt;TableRowClickEvent&gt;</code></td>
+                <td>Émis lorsque l'utilisateur clique sur une ligne</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Types et Interfaces</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Propriétés</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>TableColumn</code></td>
+                <td>key, label, path?, width?, sortable?, template?, sortFn?</td>
+                <td>Configuration d'une colonne avec tri et template personnalisés</td>
+              </tr>
+              <tr>
+                <td><code>TableRow</code></td>
+                <td>id, [key: string]: any</td>
+                <td>Ligne de données avec identifiant unique et propriétés dynamiques</td>
+              </tr>
+              <tr>
+                <td><code>TableSort</code></td>
+                <td>key, direction: 'asc' | 'desc'</td>
+                <td>État de tri d'une colonne</td>
+              </tr>
+              <tr>
+                <td><code>TableRowClickEvent</code></td>
+                <td>id, row: TableRow</td>
+                <td>Événement émis lors du clic sur une ligne</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-usage-example">
+          <h4>Exemple d'Utilisation Complète</h4>
+          <div class="code-block">
+            <pre><code>import &#123; PshTableComponent &#125; from 'ps-helix';
+import &#123; TableColumn, TableRow, TableSort &#125; from 'ps-helix';
+
+&#64;Component(&#123;
+  standalone: true,
+  imports: [PshTableComponent],
+  template: `
+    &lt;psh-table
+      [columns]="columns"
+      [data]="users"
+      [striped]="true"
+      [hoverable]="true"
+      [globalSearch]="true"
+      size="medium"
+      variant="default"
+      emptyMessage="Aucun utilisateur trouvé"
+      noResultsMessage="Aucun résultat pour"
+      globalSearchPlaceholder="Rechercher un utilisateur..."
+      (sortChange)="handleSort($event)"
+      (globalSearchChange)="handleSearch($event)"
+      (rowClick)="handleRowClick($event)"
+    &gt;&lt;/psh-table&gt;
+  `
+&#125;)
+export class UsersComponent &#123;
+  columns: TableColumn[] = [
+    &#123; key: 'id', label: 'ID', width: '80px', sortable: true &#125;,
+    &#123; key: 'name', label: 'Nom', sortable: true &#125;,
+    &#123; key: 'email', label: 'Email', sortable: true &#125;,
+    &#123; key: 'role', label: 'Rôle', sortable: false &#125;
+  ];
+
+  users: TableRow[] = [
+    &#123; id: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin' &#125;,
+    &#123; id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'User' &#125;
+  ];
+
+  handleSort(sort: TableSort): void &#123;
+    console.log('Sort:', sort.key, sort.direction);
+  &#125;
+
+  handleSearch(term: string): void &#123;
+    console.log('Search term:', term);
+  &#125;
+
+  handleRowClick(event: TableRowClickEvent): void &#123;
+    console.log('Row clicked:', event.id, event.row);
+  &#125;
+&#125;</code></pre>
+          </div>
+        </div>
+
+        <div class="api-best-practices">
+          <h4>Bonnes Pratiques d'Accessibilité</h4>
+          <ul class="best-practices-list">
+            <li><strong>Rôles ARIA</strong> : Le composant utilise automatiquement <code>role="table"</code> pour la sémantique appropriée</li>
+            <li><strong>Tri Accessible</strong> : Les colonnes triables incluent <code>aria-sort</code> indiquant la direction du tri (ascending, descending, none)</li>
+            <li><strong>Labels Descriptifs</strong> : Assurez-vous que les labels de colonnes sont clairs et descriptifs pour les lecteurs d'écran</li>
+            <li><strong>Messages Contextuels</strong> : Utilisez des messages personnalisés pour les états vides afin de guider les utilisateurs</li>
+            <li><strong>Navigation Clavier</strong> : Les éléments interactifs (en-têtes triables, recherche) sont accessibles via <kbd>Tab</kbd>, <kbd>Enter</kbd> et <kbd>Space</kbd></li>
+            <li><strong>Indicateurs Visuels</strong> : Les icônes de tri sont marquées <code>aria-hidden="true"</code> car l'information est fournie via <code>aria-sort</code></li>
+            <li><strong>Contraste</strong> : Vérifiez que le texte respecte un ratio de contraste minimum de 4.5:1 (WCAG AA) sur tous les arrière-plans</li>
+            <li><strong>État de Chargement</strong> : L'indicateur de chargement communique visuellement l'état, considérez l'ajout d'un message textuel pour les lecteurs d'écran</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

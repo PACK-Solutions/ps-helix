@@ -1,0 +1,201 @@
+[data-theme="dark"] {
+  /* Surface Colors */
+  --surface-0: #0a0d16;
+  --surface-50: #141a27;
+  --surface-100: #1e293b;
+  --surface-200: #334155;
+  --surface-300: #475569;
+  --surface-400: #64748b;
+  --surface-500: #94a3b8;
+  --surface-600: #cbd5e1;
+  --surface-700: #e2e8f0;
+  --surface-800: #f1f5f9;
+  --surface-900: #f8fafc;
+  --surface-900-rgb: 248, 250, 252;
+
+  /* Teal Palette */
+  --teal-50: #134E4A;
+  --teal-100: #115E59;
+  --teal-200: #0F766E;
+  --teal-300: #0D9488;
+  --teal-400: #14B8A6;
+  --teal-500: #2DD4BF;
+  --teal-600: #5EEAD4;
+  --teal-700: #99F6E4;
+  --teal-800: #CCFBF1;
+  --teal-900: #F0FDFA;
+
+  /* Emerald Palette */
+  --emerald-50: #064E3B;
+  --emerald-100: #065F46;
+  --emerald-200: #047857;
+  --emerald-300: #059669;
+  --emerald-400: #10B981;
+  --emerald-500: #34D399;
+  --emerald-600: #6EE7B7;
+  --emerald-700: #A7F3D0;
+  --emerald-800: #D1FAE5;
+  --emerald-900: #ECFDF5;
+
+  /* Indigo Palette */
+  --indigo-50: #312E81;
+  --indigo-100: #3730A3;
+  --indigo-200: #4338CA;
+  --indigo-300: #4F46E5;
+  --indigo-400: #6366F1;
+  --indigo-500: #818CF8;
+  --indigo-600: #A5B4FC;
+  --indigo-700: #C7D2FE;
+  --indigo-800: #E0E7FF;
+  --indigo-900: #EEF2FF;
+
+  /* Purple Palette */
+  --purple-50: #581C87;
+  --purple-100: #6B21A8;
+  --purple-200: #7C3AED;
+  --purple-300: #9333EA;
+  --purple-400: #A855F7;
+  --purple-500: #C084FC;
+  --purple-600: #D8B4FE;
+  --purple-700: #E9D5FF;
+  --purple-800: #F3E8FF;
+  --purple-900: #FAF5FF;
+
+  /* Fuchsia Palette */
+  --fuchsia-50: #701A75;
+  --fuchsia-100: #86198F;
+  --fuchsia-200: #A21CAF;
+  --fuchsia-300: #C026D3;
+  --fuchsia-400: #D946EF;
+  --fuchsia-500: #E879F9;
+  --fuchsia-600: #F0ABFC;
+  --fuchsia-700: #F5D0FE;
+  --fuchsia-800: #FAE8FF;
+  --fuchsia-900: #FDF4FF;
+
+  /* Rose Palette */
+  --rose-50: #881337;
+  --rose-100: #9F1239;
+  --rose-200: #BE123C;
+  --rose-300: #E11D48;
+  --rose-400: #F43F5E;
+  --rose-500: #FB7185;
+  --rose-600: #FDA4AF;
+  --rose-700: #FECDD3;
+  --rose-800: #FFE4E6;
+  --rose-900: #FFF1F2;
+
+  /* Amber Palette */
+  --amber-50: #78350F;
+  --amber-100: #92400E;
+  --amber-200: #B45309;
+  --amber-300: #D97706;
+  --amber-400: #F59E0B;
+  --amber-500: #FBBF24;
+  --amber-600: #FCD34D;
+  --amber-700: #FDE68A;
+  --amber-800: #FEF3C7;
+  --amber-900: #FFFBEB;
+
+  /* Pink Palette */
+  --pink-50: #831843;
+  --pink-100: #9D174D;
+  --pink-200: #BE185D;
+  --pink-300: #DB2777;
+  --pink-400: #EC4899;
+  --pink-500: #F472B6;
+  --pink-600: #F9A8D4;
+  --pink-700: #FBCFE8;
+  --pink-800: #FCE7F3;
+  --pink-900: #FDF2F8;
+
+  /* Functional Colors */
+  --surface-ground: var(--surface-0);
+  --surface-section: var(--surface-50);
+  
+  /* Alert Colors */
+  --alert-info-bg: rgba(107, 95, 227, 0.15);
+  --alert-info-border-color: #6B5FE3;
+  --alert-info-text-color: #A5B4FC;
+  
+  --surface-card: var(--surface-50);
+  --surface-overlay: var(--surface-200);
+  --surface-border: var(--surface-300);
+  --surface-hover: rgba(255, 255, 255, 0.05);
+
+  /* Text Colors */
+  --text-color: rgba(255, 255, 255, 0.95);
+  --text-color-secondary: rgba(255, 255, 255, 0.75);
+  --text-color-tertiary: rgba(255, 255, 255, 0.6);
+  --text-color-disabled: rgba(255, 255, 255, 0.4);
+
+  /* Text on colored backgrounds */
+  --text-on-primary: #FFFFFF;
+  --text-on-secondary: #FFFFFF;
+  --text-on-success: #000000;
+  --text-on-warning: #000000;
+  --text-on-danger: #000000;
+  --text-on-surface: var(--text-color);
+  --text-on-dark: #FFFFFF;
+  --text-on-light: #0a0d16;
+
+  /* Primary Colors - Use insurer context with fallbacks (lighter shades for dark theme contrast) */
+  --primary-color: var(--insurer-primary-color, #8178F7);
+  --primary-color-light: var(--insurer-primary-color-light, #8A7FED);
+  --primary-color-lighter: var(--insurer-primary-color-lighter, #A99FF7);
+  --primary-color-dark: var(--insurer-primary-color-dark, #4A3FD9);
+  --primary-color-darker: var(--insurer-primary-color-darker, #3730A3);
+  --primary-color-text: var(--insurer-primary-color-text, #FFFFFF);
+  --primary-color-rgb: var(--insurer-primary-color-rgb, 107, 95, 227);
+
+  /* Primary Gradients - Automatically adapt to custom colors */
+  --primary-gradient: linear-gradient(to right, var(--primary-color), var(--primary-color-light));
+  --primary-gradient-hover: linear-gradient(to right, var(--primary-color), var(--primary-color-lighter));
+  --primary-gradient-reversed: linear-gradient(to left, var(--primary-color-dark), var(--primary-color-light));
+
+  /* Secondary Colors - Use insurer context with fallbacks (gray tones for dark theme) */
+  --secondary-color: var(--insurer-secondary-color, #5B5A5A);
+  --secondary-color-light: var(--insurer-secondary-color-light, #838181);
+  --secondary-color-lighter: var(--insurer-secondary-color-lighter, #9E9D9D);
+  --secondary-color-dark: var(--insurer-secondary-color-dark, #4E4D4D);
+  --secondary-color-darker: var(--insurer-secondary-color-darker, #3D3838);
+  --secondary-color-text: var(--insurer-secondary-color-text, #FFFFFF);
+  --secondary-color-rgb: var(--insurer-secondary-color-rgb, 48, 48, 48);
+
+  /* Success Colors */
+  --success-color: #12B94F;
+  --success-color-light: #10A547;
+  --success-color-dark: #0C6D2F;
+  --success-color-rgb: 18, 185, 79;
+  --success-color-text: #000000;
+
+  /* Warning Colors */
+  --warning-color: #E07518;
+  --warning-color-light: #D46817;
+  --warning-color-dark: #8A3F0C;
+  --warning-color-rgb: 224, 117, 24;
+  --warning-color-text: #000000;
+
+  /* Danger Colors */
+  --danger-color: #FF4040;
+  --danger-color-light: #F03030;
+  --danger-color-dark: #B51E1E;
+  --danger-color-rgb: 255, 64, 64;
+  --danger-color-text: #000000;
+
+  /* Chart Colors */
+  --chart-text-color: var(--text-color);
+  --chart-grid-color: var(--surface-border);
+  --chart-primary-color: var(--primary-color);
+  --chart-secondary-color: var(--secondary-color);
+  --chart-success-color: var(--success-color);
+  --chart-warning-color: var(--warning-color);
+  --chart-danger-color: var(--danger-color);
+  --chart-tooltip-background: var(--surface-card);
+  --chart-tooltip-text: var(--text-color);
+  --chart-legend-text: var(--text-color);
+
+  /* Background */
+  --background-opacity: 0.3;
+  --body-gradient: radial-gradient(325.86% 141.42% at 100% 0%, #1A1F33 0%, #0A0D16 100%);
+}

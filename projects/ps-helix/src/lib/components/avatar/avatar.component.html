@@ -1,0 +1,28 @@
+<div 
+  class="avatar"
+  [class.circle]="shape() === 'circle'"
+  [class.square]="shape() === 'square'"
+  [class.small]="size() === 'small'"
+  [class.large]="size() === 'large'"
+  [class.xlarge]="size() === 'xlarge'"
+  role="img"
+  [attr.aria-label]="computedAriaLabel()"
+  [attr.data-state]="state()"
+>
+  @if (hasImage()) {
+    <img [src]="src()" [attr.alt]="alt()" class="avatar-image" />
+  } @else if (hasInitials()) {
+    <span class="avatar-initials">{{ initials() }}</span>
+  } @else if (hasIcon()) {
+    <i class="ph ph-{{ icon() }}" aria-hidden="true"></i>
+  }
+
+  @if (status()) {
+    <span 
+      class="avatar-status"
+      [class]="status()"
+      [style.background-color]="statusColor()"
+      [attr.aria-label]="status()"
+    ></span>
+  }
+</div>

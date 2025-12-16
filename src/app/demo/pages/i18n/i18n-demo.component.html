@@ -1,0 +1,323 @@
+<ds-demo-page-layout
+  title="Service de Traduction"
+  introText="Le Design System Helix fournit un service de traduction flexible basé sur une abstraction injectable. Par défaut, il utilise ngx-translate, mais peut être remplacé par n'importe quelle solution de traduction tiers."
+  [showTechnicalSection]="true"
+  technicalTitle="Documentation Technique et API"
+>
+  <div demo-content>
+    <!-- Section Démonstration Interactive -->
+    <section class="translation-demo-section">
+      <h3 class="section-title">Démonstration Interactive</h3>
+      <div class="translation-demo-intro">
+        <p>Testez le service de traduction en temps réel en changeant la langue ci-dessous. Les traductions sont appliquées instantanément à tous les éléments de la page.</p>
+      </div>
+      <div class="translation-demo-card">
+        <div class="demo-controls">
+          <button
+            class="lang-button"
+            [class.active]="translationProvider.getCurrentLanguage() === 'en'"
+            (click)="translationProvider.setLanguage('en')"
+            aria-label="Switch to English"
+          >
+            <i class="ph ph-globe" aria-hidden="true"></i>
+            English
+          </button>
+          <button
+            class="lang-button"
+            [class.active]="translationProvider.getCurrentLanguage() === 'fr'"
+            (click)="translationProvider.setLanguage('fr')"
+            aria-label="Passer en Français"
+          >
+            <i class="ph ph-globe" aria-hidden="true"></i>
+            Français
+          </button>
+        </div>
+        <div class="translated-content">
+          <h4>{{ 'DESIGN_SYSTEM.TITLE' | translate }}</h4>
+          <p>{{ 'BUTTON.PRIMARY' | translate }}</p>
+          <p>{{ 'ALERT.SUCCESS' | translate }}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Utilisation dans les Templates -->
+    <section class="usage-section">
+      <h3 class="section-title">Utilisation dans les Templates</h3>
+      <div class="usage-grid">
+        <div class="usage-card">
+          <div class="usage-header">
+            <i class="ph ph-code" aria-hidden="true"></i>
+            <h4>Pipe Translate</h4>
+          </div>
+          <p class="usage-description">Le pipe translate est disponible dans tous les templates et permet de traduire des clés directement.</p>
+          <ul class="usage-features">
+            <li>Traduction simple avec interpolation</li>
+            <li>Support des paramètres dynamiques</li>
+            <li>Compatible avec tous les bindings Angular</li>
+            <li>Mise à jour automatique lors du changement de langue</li>
+          </ul>
+          <div class="code-example">
+            <pre><code>&lt;h1&gt;&#123;&#123; 'WELCOME.TITLE' | translate &#125;&#125;&lt;/h1&gt;
+&lt;p&gt;&#123;&#123; 'MESSAGE' | translate: &#123; name: 'John' &#125; &#125;&#125;&lt;/p&gt;</code></pre>
+          </div>
+        </div>
+
+        <div class="usage-card">
+          <div class="usage-header">
+            <i class="ph ph-brackets-curly" aria-hidden="true"></i>
+            <h4>Attributs HTML</h4>
+          </div>
+          <p class="usage-description">Utilisez le pipe translate dans les attributs HTML pour l'accessibilité et les tooltips.</p>
+          <ul class="usage-features">
+            <li>Labels ARIA traduits</li>
+            <li>Attributs title et placeholder</li>
+            <li>Tous attributs HTML supportés</li>
+            <li>Garantit l'accessibilité multilingue</li>
+          </ul>
+          <div class="code-example">
+            <pre><code>&lt;button [attr.aria-label]="'BUTTON.SAVE' | translate"&gt;
+  &#123;&#123; 'BUTTON.SAVE' | translate &#125;&#125;
+&lt;/button&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Service Injectable -->
+    <section class="service-section">
+      <h3 class="section-title">Service Injectable</h3>
+      <div class="service-intro">
+        <p>Le service de traduction peut être injecté dans vos composants pour une utilisation programmatique. Utilisez la fonction inject() pour accéder au service.</p>
+      </div>
+      <div class="service-grid">
+        <div class="service-card">
+          <div class="service-header">
+            <i class="ph ph-syringe" aria-hidden="true"></i>
+            <h4>Injection du Service</h4>
+          </div>
+          <p>Injectez le service dans vos composants avec la fonction inject().</p>
+          <div class="code-example">
+            <pre><code>import &#123; inject &#125; from '@angular/core';
+import &#123; TRANSLATION_PROVIDER &#125; from '@lib/services';
+
+export class MyComponent &#123;
+  translationProvider = inject(TRANSLATION_PROVIDER);
+&#125;</code></pre>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-header">
+            <i class="ph ph-function" aria-hidden="true"></i>
+            <h4>Méthodes Disponibles</h4>
+          </div>
+          <p>Le service expose plusieurs méthodes pour gérer les traductions.</p>
+          <ul class="service-methods">
+            <li><code>translate(key, params?)</code> - Traduction synchrone</li>
+            <li><code>translateAsync(key, params?)</code> - Traduction asynchrone</li>
+            <li><code>setLanguage(lang)</code> - Changer la langue</li>
+            <li><code>getCurrentLanguage()</code> - Langue actuelle</li>
+            <li><code>onLangChange()</code> - Observable des changements</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Personnalisation -->
+    <section class="customization-section">
+      <h3 class="section-title">Service Personnalisé</h3>
+      <div class="customization-intro">
+        <p>Le service de traduction est une abstraction injectable qui permet d'utiliser n'importe quelle solution de traduction. Vous pouvez facilement remplacer l'implémentation par défaut.</p>
+      </div>
+      <div class="customization-grid">
+        <div class="customization-card">
+          <div class="customization-header">
+            <i class="ph ph-wrench" aria-hidden="true"></i>
+            <h4>Implémentation Personnalisée</h4>
+          </div>
+          <p>Implémentez l'interface TranslationProvider pour créer votre propre service.</p>
+          <div class="code-example">
+            <pre><code>&#64;Injectable()
+export class CustomTranslation implements TranslationProvider &#123;
+  translate(key: string, params?: any): string &#123;
+    return this.myLogic(key, params);
+  &#125;
+
+  setLanguage(lang: string): void &#123; &#125;
+  getCurrentLanguage(): string &#123; return 'fr'; &#125;
+&#125;</code></pre>
+          </div>
+        </div>
+
+        <div class="customization-card">
+          <div class="customization-header">
+            <i class="ph ph-plug" aria-hidden="true"></i>
+            <h4>Intégration Tierce</h4>
+          </div>
+          <p>Intégrez facilement des solutions comme i18next ou Transloco.</p>
+          <div class="code-example">
+            <pre><code>&#64;Component(&#123;
+  providers: [
+    &#123;
+      provide: TRANSLATION_PROVIDER,
+      useClass: CustomTranslation
+    &#125;
+  ]
+&#125;)</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div technical-content>
+    <div class="demo-code-block">
+      <h3>Interface TranslationProvider</h3>
+      <p>L'interface définit le contrat que toute implémentation de traduction doit respecter.</p>
+      <pre><code>interface TranslationProvider &#123;
+  // Traduction synchrone (recommandée)
+  translate(key: string, params?: Record&lt;string, any&gt;): string;
+
+  // Traduction asynchrone (pour le chargement dynamique)
+  translateAsync(key: string, params?: Record&lt;string, any&gt;): Observable&lt;string&gt;;
+
+  // Gestion des langues
+  setLanguage(lang: string): void;
+  getCurrentLanguage(): string;
+  onLangChange(): Observable&lt;string&gt;;
+&#125;</code></pre>
+    </div>
+
+    <div class="demo-code-block">
+      <h3>Exemples d'Utilisation dans les Templates</h3>
+      <pre ngNonBindable><code>&lt;!-- Traduction simple --&gt;
+&lt;h1&gt;&#123;&#123; 'WELCOME.TITLE' | translate &#125;&#125;&lt;/h1&gt;
+
+&lt;!-- Avec paramètres --&gt;
+&lt;p&gt;&#123;&#123; 'WELCOME.MESSAGE' | translate: &#123; name: 'John' &#125; &#125;&#125;&lt;/p&gt;
+
+&lt;!-- Dans les attributs --&gt;
+&lt;button [attr.aria-label]="'BUTTON.SAVE' | translate"&gt;
+  &#123;&#123; 'BUTTON.SAVE' | translate &#125;&#125;
+&lt;/button&gt;
+
+&lt;!-- Avec conditions --&gt;
+&lt;span&gt;&#123;&#123; isActive ? ('STATUS.ACTIVE' | translate) : ('STATUS.INACTIVE' | translate) &#125;&#125;&lt;/span&gt;</code></pre>
+    </div>
+
+    <div class="demo-code-block">
+      <h3>Utilisation Programmatique</h3>
+      <pre><code>import &#123; Component, inject, OnInit &#125; from '@angular/core';
+import &#123; TRANSLATION_PROVIDER &#125; from '@lib/services';
+
+export class ExampleComponent implements OnInit &#123;
+  private translationProvider = inject(TRANSLATION_PROVIDER);
+  message = '';
+
+  ngOnInit() &#123;
+    // Traduction synchrone
+    this.message = this.translationProvider.translate('WELCOME.MESSAGE', &#123;
+      name: 'John'
+    &#125;);
+
+    // Écouter les changements de langue
+    this.translationProvider.onLangChange().subscribe(lang =&gt; &#123;
+      this.updateMessages();
+    &#125;);
+  &#125;
+
+  private updateMessages() &#123;
+    this.message = this.translationProvider.translate('WELCOME.MESSAGE');
+  &#125;
+&#125;</code></pre>
+    </div>
+
+    <div class="demo-code-block">
+      <h3>Implémentation d'un Service Personnalisé</h3>
+      <pre><code>// 1. Implémentez l'interface TranslationProvider
+&#64;Injectable()
+export class CustomTranslationService implements TranslationProvider &#123;
+  private currentLang = 'fr';
+  private translations = &#123;
+    'fr': &#123; 'HELLO': 'Bonjour' &#125;,
+    'en': &#123; 'HELLO': 'Hello' &#125;
+  &#125;;
+
+  translate(key: string, params?: Record&lt;string, any&gt;): string &#123;
+    let value = this.translations[this.currentLang][key] || key;
+
+    // Remplacer les paramètres
+    if (params) &#123;
+      Object.keys(params).forEach(param =&gt; &#123;
+        const placeholder = '&#123;&#123;' + param + '&#125;&#125;';
+        value = value.replace(placeholder, params[param]);
+      &#125;);
+    &#125;
+
+    return value;
+  &#125;
+
+  setLanguage(lang: string): void &#123;
+    this.currentLang = lang;
+  &#125;
+
+  getCurrentLanguage(): string &#123;
+    return this.currentLang;
+  &#125;
+&#125;
+
+// 2. Configurez votre application
+&#64;Component(&#123;
+  providers: [
+    &#123; provide: TRANSLATION_PROVIDER, useClass: CustomTranslationService &#125;
+  ]
+&#125;)</code></pre>
+    </div>
+
+    <div class="demo-code-block">
+      <h3>Intégration avec Solutions Tierces</h3>
+      <pre><code>// Exemple avec i18next
+&#64;Injectable()
+export class I18nextProvider implements TranslationProvider &#123;
+  translate(key: string, params?: any): string &#123;
+    return i18next.t(key, params);
+  &#125;
+
+  setLanguage(lang: string): void &#123;
+    i18next.changeLanguage(lang);
+  &#125;
+
+  getCurrentLanguage(): string &#123;
+    return i18next.language;
+  &#125;
+&#125;
+
+// Exemple avec Transloco
+&#64;Injectable()
+export class TranslocoProvider implements TranslationProvider &#123;
+  constructor(private translocoService: TranslocoService) &#123;&#125;
+
+  translate(key: string, params?: any): string &#123;
+    return this.translocoService.translate(key, params);
+  &#125;
+
+  setLanguage(lang: string): void &#123;
+    this.translocoService.setActiveLang(lang);
+  &#125;
+&#125;</code></pre>
+    </div>
+
+    <div class="api-best-practices">
+      <h3>Bonnes Pratiques</h3>
+      <ul class="best-practices-list">
+        <li><strong>Clés hiérarchiques</strong> : Utilisez une structure logique <code>MODULE.SECTION.KEY</code> pour organiser vos traductions</li>
+        <li><strong>Traduction synchrone</strong> : Préférez <code>translate()</code> à <code>translateAsync()</code> pour de meilleures performances</li>
+        <li><strong>Paramètres typés</strong> : Définissez des interfaces TypeScript pour les paramètres de traduction</li>
+        <li><strong>Gestion des erreurs</strong> : Gérez les clés manquantes avec des valeurs par défaut appropriées</li>
+        <li><strong>Lazy loading</strong> : Chargez les traductions à la demande pour les applications volumineuses</li>
+        <li><strong>Tests unitaires</strong> : Mockez le service <code>TRANSLATION_PROVIDER</code> dans vos tests</li>
+        <li><strong>Accessibilité</strong> : N'oubliez pas de traduire les attributs ARIA et les labels</li>
+      </ul>
+    </div>
+  </div>
+</ds-demo-page-layout>

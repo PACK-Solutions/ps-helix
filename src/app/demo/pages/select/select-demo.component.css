@@ -1,0 +1,367 @@
+/* States Section Layout */
+.states-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-xl);
+}
+
+.states-demo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.state-group {
+  background: var(--surface-card);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xl);
+}
+
+.state-group h4 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-color);
+  margin-bottom: var(--spacing-md);
+}
+
+.state-examples {
+  width: 100%;
+}
+
+.state-description {
+  margin-top: var(--spacing-md);
+  color: var(--text-color-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
+}
+
+.states-doc {
+  background: var(--surface-card);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xl);
+}
+
+.states-doc h4 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-color);
+  margin-bottom: var(--spacing-md);
+}
+
+.feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--spacing-lg);
+}
+
+.feature-list li {
+  padding: var(--spacing-sm) 0;
+  color: var(--text-color-secondary);
+  line-height: 1.6;
+}
+
+.feature-list li strong {
+  color: var(--text-color);
+  font-weight: var(--font-weight-semibold);
+}
+
+.feature-list li code {
+  background: var(--surface-ground);
+  padding: 2px 6px;
+  border-radius: var(--border-radius-sm);
+  font-family: 'Courier New', monospace;
+  font-size: var(--font-size-sm);
+  color: var(--primary-color);
+}
+
+/* Keyboard Section Styles */
+.keyboard-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--spacing-2xl);
+}
+
+.keyboard-shortcuts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-lg);
+  min-width: 0;
+  width: 100%;
+}
+
+.shortcut-card {
+  display: flex;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  background: var(--surface-card);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--border-radius-lg);
+  transition: all 0.3s ease;
+  align-items: flex-start;
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.shortcut-card:hover {
+  border-color: var(--primary-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.shortcut-key {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  align-items: center;
+}
+
+.shortcut-key kbd {
+  display: inline-block;
+  min-width: 40px;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: var(--surface-ground);
+  border: 2px solid var(--surface-border);
+  border-radius: var(--border-radius-sm);
+  box-shadow: 0 2px 0 var(--surface-border);
+  font-family: 'Courier New', monospace;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-color);
+  text-align: center;
+}
+
+.shortcut-description {
+  flex: 1;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  overflow: hidden;
+}
+
+.shortcut-description h4 {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-color);
+  margin: 0 0 var(--spacing-xs);
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  max-width: 100%;
+}
+
+.shortcut-description p {
+  font-size: var(--font-size-sm);
+  color: var(--text-color-secondary);
+  margin: 0;
+  line-height: 1.6;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  max-width: 100%;
+}
+
+.keyboard-demo {
+  background: var(--surface-card);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  height: fit-content;
+  position: sticky;
+  top: var(--spacing-xl);
+}
+
+.keyboard-demo h4 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-color);
+  margin: 0 0 var(--spacing-md);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .keyboard-content {
+    grid-template-columns: 1fr;
+  }
+
+  .keyboard-demo {
+    position: static;
+  }
+
+  .keyboard-shortcuts {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .states-content {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+}
+
+@media (max-width: 640px) {
+  .state-group,
+  .states-doc {
+    padding: var(--spacing-md);
+  }
+
+  .shortcut-card {
+    padding: var(--spacing-md);
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 100%;
+  }
+
+  .shortcut-key {
+    flex-direction: row;
+    max-width: 100%;
+  }
+
+  .shortcut-description {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .keyboard-demo {
+    padding: var(--spacing-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .states-content {
+    gap: var(--spacing-md);
+  }
+
+  .state-group,
+  .states-doc {
+    padding: var(--spacing-sm) var(--spacing-md);
+    overflow: hidden;
+  }
+
+  .keyboard-shortcuts {
+    gap: var(--spacing-md);
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .shortcut-card {
+    padding: var(--spacing-sm) var(--spacing-md);
+    gap: var(--spacing-sm);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .shortcut-key kbd {
+    min-width: 28px;
+    padding: 4px 6px;
+    font-size: calc(var(--font-size-sm) * 0.85);
+    white-space: nowrap;
+  }
+
+  .shortcut-description {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .shortcut-description h4 {
+    font-size: var(--font-size-sm);
+    max-width: 100%;
+    word-break: break-word;
+  }
+
+  .shortcut-description p {
+    font-size: calc(var(--font-size-sm) * 0.9);
+    max-width: 100%;
+    word-break: break-word;
+  }
+
+  .keyboard-demo {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .keyboard-demo h4 {
+    font-size: var(--font-size-base);
+  }
+
+  .state-group h4 {
+    font-size: var(--font-size-base);
+  }
+
+  .states-doc h4 {
+    font-size: var(--font-size-base);
+  }
+
+  .feature-list {
+    margin-bottom: var(--spacing-md);
+  }
+
+  .feature-list li {
+    font-size: var(--font-size-sm);
+  }
+
+  .feature-list li code {
+    font-size: calc(var(--font-size-sm) * 0.9);
+  }
+}
+
+@media (max-width: 375px) {
+  .shortcut-key kbd {
+    min-width: 24px;
+    padding: 2px 4px;
+    font-size: calc(var(--font-size-sm) * 0.8);
+  }
+
+  .shortcut-card {
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+
+  .shortcut-description h4 {
+    font-size: calc(var(--font-size-sm) * 0.95);
+  }
+
+  .shortcut-description p {
+    font-size: calc(var(--font-size-sm) * 0.85);
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 320px) {
+  .shortcut-key kbd {
+    min-width: 18px;
+    padding: 2px 3px;
+    font-size: 9px;
+  }
+
+  .keyboard-shortcuts {
+    gap: var(--spacing-sm);
+    width: 100%;
+  }
+
+  .shortcut-card {
+    padding: var(--spacing-xs) var(--spacing-xs);
+    gap: var(--spacing-xxs);
+  }
+
+  .shortcut-description h4 {
+    font-size: calc(var(--font-size-sm) * 0.85);
+    line-height: 1.3;
+  }
+
+  .shortcut-description p {
+    font-size: calc(var(--font-size-sm) * 0.8);
+    line-height: 1.4;
+  }
+}

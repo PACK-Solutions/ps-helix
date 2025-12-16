@@ -1,0 +1,106 @@
+:host {
+  display: contents;
+}
+
+.sidebar {
+  background: var(--surface-card);
+  display: flex;
+  flex-direction: column;
+  transition: all var(--animation-duration-default) var(--animation-easing-smooth);
+}
+
+/* Position variants - only for overlay mode */
+.sidebar.overlay.left {
+  left: 0;
+}
+
+.sidebar.overlay.right {
+  right: 0;
+}
+
+/* Mode variants */
+.sidebar.fixed {
+  position: relative;
+  height: 100%;
+  width: var(--sidebar-width);
+  border: var(--border-width-1) solid var(--surface-border);
+  flex-shrink: 0;
+}
+
+.sidebar.fixed.left {
+  border-right: var(--border-width-1) solid var(--surface-border);
+  border-left: none;
+}
+
+.sidebar.fixed.right {
+  border-left: var(--border-width-1) solid var(--surface-border);
+  border-right: none;
+}
+
+.sidebar.overlay {
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  z-index: var(--z-index-modal);
+  box-shadow: var(--shadow-lg);
+  transition: transform var(--animation-duration-default) var(--animation-easing-smooth);
+}
+
+.sidebar.overlay.left {
+  transform: translateX(-100%);
+}
+
+.sidebar.overlay.right {
+  transform: translateX(100%);
+}
+
+.sidebar.overlay.open {
+  transform: translateX(0);
+}
+
+/* Open state - only affects fixed mode visibility */
+.sidebar.fixed:not(.open) {
+  display: none;
+}
+
+/* Content */
+.sidebar-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: var(--spacing-md);
+  transition: all var(--animation-duration-default) var(--animation-easing-smooth);
+  min-width: var(--sidebar-width);
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Backdrop */
+.sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(var(--surface-900-rgb), 0.5);
+  backdrop-filter: blur(var(--size-1));
+  z-index: var(--z-index-modal-backdrop);
+  animation: fadeIn var(--animation-duration-default) var(--animation-easing-default);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    width: min(var(--sidebar-width), 100vw) !important;
+  }
+}

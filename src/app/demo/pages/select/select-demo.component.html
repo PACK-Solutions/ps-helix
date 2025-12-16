@@ -1,0 +1,660 @@
+<ds-demo-page-layout
+  title="Système de Sélection"
+  introText="Le composant Select permet aux utilisateurs de choisir une ou plusieurs options dans une liste déroulante. Il offre une interface accessible avec recherche, sélection multiple, navigation au clavier et personnalisation complète."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Variantes de Select - Section Pleine Largeur -->
+    <section class="select-variants-section doc-section">
+      <h3 class="section-title">Variantes de Select</h3>
+      <div class="variants-container">
+        <div class="doc-section-intro">
+          <p>Le composant Select offre plusieurs variantes pour s'adapter à différents cas d'usage, de la sélection simple à la recherche avancée avec sélections multiples.</p>
+        </div>
+        <div class="doc-grid">
+          <div class="doc-card">
+            <div class="doc-card-preview">
+              <psh-select
+                [options]="basicOptions"
+                [(value)]="selectedBasic"
+                placeholder="Choisir une option"
+                [clearable]="true"
+                label="Sélection basique"
+              >
+                <span select-hint>Sélectionnez une option dans la liste</span>
+              </psh-select>
+            </div>
+            <div class="doc-card-info">
+              <h4>Select Basique</h4>
+              <p>Sélection simple d'une option dans une liste. Idéal pour les choix uniques avec un nombre limité d'options.</p>
+              <ds-code-snippet [code]="basicSelectCode" />
+            </div>
+          </div>
+
+          <div class="doc-card">
+            <div class="doc-card-preview">
+              <psh-select
+                [options]="countryOptions"
+                [(value)]="selectedCountry"
+                [searchable]="true"
+                [clearable]="true"
+                placeholder="Rechercher un pays"
+                (searched)="handleSearch($event)"
+                label="Select avec recherche"
+              >
+                <span select-hint>Utilisez la recherche pour filtrer les pays</span>
+              </psh-select>
+            </div>
+            <div class="doc-card-info">
+              <h4>Select avec Recherche</h4>
+              <p>Recherche en temps réel dans les options. Parfait pour les listes longues nécessitant un filtrage rapide.</p>
+              <ds-code-snippet [code]="searchableSelectCode" />
+            </div>
+          </div>
+
+          <div class="doc-card">
+            <div class="doc-card-preview">
+              <psh-select
+                [options]="languageOptions"
+                [(value)]="selectedLanguages"
+                [multiple]="true"
+                [searchable]="true"
+                [clearable]="true"
+                placeholder="Sélectionner des langages"
+                multiplePlaceholder="Sélectionner des langages"
+                label="Sélection multiple"
+              >
+                <span select-hint>Vous pouvez sélectionner plusieurs options</span>
+              </psh-select>
+            </div>
+            <div class="doc-card-info">
+              <h4>Sélection Multiple</h4>
+              <p>Permet de sélectionner plusieurs options simultanément avec compteur. Combinable avec la recherche pour plus d'efficacité.</p>
+              <ds-code-snippet [code]="multipleSelectCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tailles de Select - Section Pleine Largeur -->
+    <section class="select-sizes-section doc-section">
+      <h3 class="section-title">Tailles Disponibles</h3>
+      <div class="sizes-container">
+        <div class="doc-section-intro">
+          <p>Trois tailles sont disponibles pour s'adapter à différents contextes d'utilisation et densités d'interface.</p>
+        </div>
+        <div class="doc-grid-small">
+          <div class="doc-card">
+            <div class="doc-card-preview">
+              <psh-select
+                [options]="sizeOptions"
+                [(value)]="selectedSize"
+                size="small"
+                placeholder="Taille Small"
+                label="Select Small"
+              ></psh-select>
+            </div>
+            <div class="doc-card-info">
+              <h4>Small</h4>
+              <div class="doc-size-specs">
+                <span class="doc-size-dimension">32px de hauteur</span>
+                <code class="doc-size-code">size="small"</code>
+              </div>
+              <p class="doc-size-usage">Idéal pour les interfaces denses, les tableaux de données ou les formulaires compacts nécessitant peu d'espace.</p>
+            </div>
+          </div>
+
+          <div class="doc-card">
+            <div class="doc-card-preview">
+              <psh-select
+                [options]="sizeOptions"
+                [(value)]="selectedSize"
+                size="medium"
+                placeholder="Taille Medium"
+                label="Select Medium"
+              ></psh-select>
+            </div>
+            <div class="doc-card-info">
+              <h4>Medium (Défaut)</h4>
+              <div class="doc-size-specs">
+                <span class="doc-size-dimension">40px de hauteur</span>
+                <code class="doc-size-code">size="medium"</code>
+              </div>
+              <p class="doc-size-usage">Taille par défaut, équilibrée pour la plupart des cas d'usage et une bonne lisibilité sur tous les appareils.</p>
+            </div>
+          </div>
+
+          <div class="doc-card">
+            <div class="doc-card-preview">
+              <psh-select
+                [options]="sizeOptions"
+                [(value)]="selectedSize"
+                size="large"
+                placeholder="Taille Large"
+                label="Select Large"
+              ></psh-select>
+            </div>
+            <div class="doc-card-info">
+              <h4>Large</h4>
+              <div class="doc-size-specs">
+                <span class="doc-size-dimension">48px de hauteur</span>
+                <code class="doc-size-code">size="large"</code>
+              </div>
+              <p class="doc-size-usage">Pour les formulaires importants, les interfaces mobiles ou les champs nécessitant une grande visibilité et accessibilité tactile.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- États des Select - Section Pleine Largeur -->
+    <section class="select-states-section doc-section">
+      <h3 class="section-title">États des Select</h3>
+      <div class="states-container">
+        <div class="doc-section-intro">
+          <p>Les composants Select supportent différents états pour communiquer clairement leur disponibilité, leur statut de validation et leur état d'exécution.</p>
+        </div>
+        <div class="states-content">
+          <div class="states-demo">
+            <div class="state-group">
+              <h4>État Normal</h4>
+              <div class="state-examples">
+                <psh-select
+                  [options]="fruitOptions"
+                  [(value)]="selectedFruit"
+                  placeholder="Sélectionner un fruit"
+                  label="Select Normal"
+                >
+                  <span select-hint>État par défaut, prêt à recevoir les interactions</span>
+                </psh-select>
+              </div>
+            </div>
+
+            <div class="state-group">
+              <h4>État Désactivé</h4>
+              <div class="state-examples">
+                <psh-select
+                  [options]="fruitOptions"
+                  [(value)]="selectedDisabled"
+                  [disabled]="true"
+                  placeholder="Select désactivé"
+                  label="Select Désactivé"
+                >
+                  <span select-hint>Temporairement non modifiable</span>
+                </psh-select>
+              </div>
+            </div>
+
+            <div class="state-group">
+              <h4>État de Chargement</h4>
+              <div class="state-examples">
+                <psh-select
+                  [options]="fruitOptions"
+                  [loading]="isLoading"
+                  placeholder="Chargement..."
+                  label="Select en Chargement"
+                >
+                  <span select-hint>Opération en cours d'exécution</span>
+                </psh-select>
+                <psh-button
+                  variant="secondary"
+                  size="small"
+                  (click)="simulateLoading()"
+                  [disabled]="isLoading"
+                >
+                  {{ isLoading ? 'Chargement...' : 'Simuler le chargement' }}
+                </psh-button>
+              </div>
+            </div>
+
+            <div class="state-group">
+              <h4>État Erreur</h4>
+              <div class="state-examples">
+                <psh-select
+                  [options]="fruitOptions"
+                  [(value)]="selectedError"
+                  error="Ce champ est requis"
+                  placeholder="Sélection requise"
+                  label="Select en Erreur"
+                ></psh-select>
+              </div>
+            </div>
+
+            <div class="state-group">
+              <h4>État Succès</h4>
+              <div class="state-examples">
+                <psh-select
+                  [options]="contactOptions"
+                  [(value)]="selectedSuccess"
+                  success="Méthode de contact validée"
+                  placeholder="Méthode de contact"
+                  label="Select Validé"
+                ></psh-select>
+              </div>
+            </div>
+          </div>
+
+          <div class="states-doc">
+            <h4>Caractéristiques des États</h4>
+            <ul class="feature-list">
+              <li><strong>Hover</strong> : Changement visuel au survol pour indiquer l'interactivité</li>
+              <li><strong>Focus</strong> : Indicateur de focus visible avec anneau coloré pour la navigation au clavier</li>
+              <li><strong>Disabled</strong> : Curseur <code>not-allowed</code> et opacité réduite</li>
+              <li><strong>Loading</strong> : Spinloader animé avec <code>aria-busy="true"</code></li>
+              <li><strong>Error</strong> : Bordure rouge avec message d'erreur descriptif</li>
+              <li><strong>Success</strong> : Bordure verte avec message de confirmation</li>
+            </ul>
+            <ds-code-snippet [code]="selectStatesCode" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Options avec Icônes et Descriptions - Section Pleine Largeur -->
+    <section class="select-options-section doc-section">
+      <h3 class="section-title">Options Enrichies</h3>
+      <div class="options-container">
+        <div class="doc-section-intro">
+          <p>Les options peuvent être enrichies avec des icônes, des descriptions et des états désactivés pour améliorer l'expérience utilisateur et la clarté.</p>
+        </div>
+        <div class="doc-grid">
+          <div class="doc-card">
+            <div class="doc-card-preview">
+              <psh-select
+                [options]="countryOptions"
+                [(value)]="selectedCountry"
+                placeholder="Sélectionner un pays"
+                label="Options avec Descriptions"
+              >
+                <span select-hint>Chaque option affiche une description détaillée</span>
+              </psh-select>
+            </div>
+            <div class="doc-card-info">
+              <h4>Options avec Descriptions</h4>
+              <p>Ajoutez des descriptions pour fournir plus de contexte et aider l'utilisateur à faire le bon choix.</p>
+              <ds-code-snippet [code]="optionsWithDescriptionsCode" />
+            </div>
+          </div>
+
+          <div class="doc-card">
+            <div class="doc-card-preview">
+              <psh-select
+                [options]="basicOptions"
+                placeholder="Sélectionner une option"
+                label="Options avec Icônes"
+              >
+                <span select-hint>Icônes Phosphor pour renforcer la compréhension visuelle</span>
+              </psh-select>
+            </div>
+            <div class="doc-card-info">
+              <h4>Options avec Icônes</h4>
+              <p>Les icônes renforcent la compréhension visuelle et facilitent l'identification rapide des options.</p>
+              <ds-code-snippet [code]="optionsWithIconsCode" />
+            </div>
+          </div>
+
+          <div class="doc-card">
+            <div class="doc-card-preview">
+              <psh-select
+                [options]="groupedOptions"
+                placeholder="Sélectionner un aliment"
+                label="Options Groupées"
+              >
+                <span select-hint>Les options sont organisées en catégories</span>
+              </psh-select>
+            </div>
+            <div class="doc-card-info">
+              <h4>Options Groupées</h4>
+              <p>Organisez les options en groupes logiques pour une meilleure navigation dans les longues listes.</p>
+              <ds-code-snippet [code]="groupedOptionsCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation Clavier - Section Pleine Largeur -->
+    <section class="select-keyboard-section doc-section">
+      <h3 class="section-title">Navigation au Clavier</h3>
+      <div class="keyboard-container">
+        <div class="doc-section-intro">
+          <p>Le composant Select offre une navigation au clavier complète pour une accessibilité optimale, permettant aux utilisateurs de naviguer et sélectionner sans souris. Le focus visuel est clairement indiqué avec un contour coloré.</p>
+        </div>
+        <div class="keyboard-content">
+          <div class="keyboard-shortcuts">
+            <div class="shortcut-card">
+              <div class="shortcut-key">
+                <kbd>Tab</kbd>
+              </div>
+              <div class="shortcut-description">
+                <h4>Navigation</h4>
+                <p>Déplacer le focus vers le select ou le quitter</p>
+              </div>
+            </div>
+
+            <div class="shortcut-card">
+              <div class="shortcut-key">
+                <kbd>Enter</kbd> / <kbd>Space</kbd>
+              </div>
+              <div class="shortcut-description">
+                <h4>Ouverture / Sélection</h4>
+                <p>Ouvrir le menu ou sélectionner l'option en focus</p>
+              </div>
+            </div>
+
+            <div class="shortcut-card">
+              <div class="shortcut-key">
+                <kbd>↑</kbd> <kbd>↓</kbd>
+              </div>
+              <div class="shortcut-description">
+                <h4>Navigation Options</h4>
+                <p>Parcourir les options avec un focus visuel clair</p>
+              </div>
+            </div>
+
+            <div class="shortcut-card">
+              <div class="shortcut-key">
+                <kbd>Escape</kbd>
+              </div>
+              <div class="shortcut-description">
+                <h4>Fermeture</h4>
+                <p>Fermer le menu sans sélectionner</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="keyboard-demo">
+            <h4>Essayez la Navigation</h4>
+            <psh-select
+              [options]="fruitOptions"
+              placeholder="Utilisez le clavier pour naviguer"
+              label="Démonstration Navigation"
+            >
+              <span select-hint>Utilisez Tab, Flèches, Enter et Escape pour voir le focus visuel</span>
+            </psh-select>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Largeur du Select - Section Pleine Largeur -->
+    <section class="select-width-section doc-section">
+      <h3 class="section-title">Contrôle de la Largeur</h3>
+      <div class="width-container">
+        <div class="doc-section-intro">
+          <p>Le composant Select a une largeur minimale définie pour éviter les redimensionnements et peut être étendu sur toute la largeur de son conteneur.</p>
+        </div>
+        <div class="doc-grid">
+          <div class="doc-card">
+            <div class="doc-card-preview">
+              <psh-select
+                [options]="basicOptions"
+                placeholder="Largeur par défaut"
+                label="Select Standard"
+              >
+                <span select-hint>Largeur minimale de 12rem, contenu stable</span>
+              </psh-select>
+            </div>
+            <div class="doc-card-info">
+              <h4>Largeur par Défaut</h4>
+              <p>Le select a une largeur minimale de 12rem pour éviter le redimensionnement en fonction du contenu sélectionné.</p>
+              <ds-code-snippet [code]="defaultWidthCode" />
+            </div>
+          </div>
+
+          <div class="doc-card">
+            <div class="doc-card-preview">
+              <psh-select
+                [options]="countryOptions"
+                [fullWidth]="true"
+                placeholder="Pleine largeur"
+                label="Select Pleine Largeur"
+              >
+                <span select-hint>S'étend sur tout l'espace disponible</span>
+              </psh-select>
+            </div>
+            <div class="doc-card-info">
+              <h4>Pleine Largeur</h4>
+              <p>Utilisez fullWidth pour étendre le select sur toute la largeur de son conteneur, idéal pour les formulaires responsives.</p>
+              <ds-code-snippet [code]="fullWidthCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Documentation API - Section Pleine Largeur -->
+    <section class="api-section">
+      <h3 class="section-title">Documentation API</h3>
+      <div class="api-container">
+        <div class="api-intro">
+          <p>Le composant Select utilise des <strong>model inputs</strong> et des <strong>input signals</strong> pour une API simple et performante, conforme aux standards Angular 20.</p>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Model Inputs)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>value</code></td>
+                <td><code>T | T[] | null</code></td>
+                <td><code>null</code></td>
+                <td>Valeur sélectionnée (two-way binding)</td>
+              </tr>
+              <tr>
+                <td><code>disabled</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Désactive le select et empêche toute interaction</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Input Signals)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>size</code></td>
+                <td><code>SelectSize</code></td>
+                <td><code>'medium'</code></td>
+                <td>'small' | 'medium' | 'large'</td>
+              </tr>
+              <tr>
+                <td><code>searchable</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Active la recherche dans les options</td>
+              </tr>
+              <tr>
+                <td><code>multiple</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Permet la sélection multiple</td>
+              </tr>
+              <tr>
+                <td><code>clearable</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Affiche un bouton pour effacer la sélection</td>
+              </tr>
+              <tr>
+                <td><code>loading</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Affiche un indicateur de chargement</td>
+              </tr>
+              <tr>
+                <td><code>fullWidth</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Étend le select sur toute la largeur</td>
+              </tr>
+              <tr>
+                <td><code>virtualScroll</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Active le scroll virtuel pour grandes listes</td>
+              </tr>
+              <tr>
+                <td><code>required</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Marque le champ comme obligatoire</td>
+              </tr>
+              <tr>
+                <td><code>options</code></td>
+                <td><code>SelectOption[] | SelectOptionGroup[]</code></td>
+                <td><code>[]</code></td>
+                <td>Liste des options ou groupes d'options</td>
+              </tr>
+              <tr>
+                <td><code>label</code></td>
+                <td><code>string</code></td>
+                <td><code>''</code></td>
+                <td>Label du select</td>
+              </tr>
+              <tr>
+                <td><code>placeholder</code></td>
+                <td><code>string</code></td>
+                <td><code>'Sélectionner'</code></td>
+                <td>Texte affiché quand aucune sélection</td>
+              </tr>
+              <tr>
+                <td><code>error</code></td>
+                <td><code>string</code></td>
+                <td><code>''</code></td>
+                <td>Message d'erreur à afficher</td>
+              </tr>
+              <tr>
+                <td><code>success</code></td>
+                <td><code>string</code></td>
+                <td><code>''</code></td>
+                <td>Message de succès à afficher</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Événements (Outputs)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Événement</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>valueChange</code></td>
+                <td><code>EventEmitter&lt;T | T[] | null&gt;</code></td>
+                <td>Émis lors de chaque changement de valeur</td>
+              </tr>
+              <tr>
+                <td><code>opened</code></td>
+                <td><code>EventEmitter&lt;void&gt;</code></td>
+                <td>Émis lorsque le menu s'ouvre</td>
+              </tr>
+              <tr>
+                <td><code>closed</code></td>
+                <td><code>EventEmitter&lt;void&gt;</code></td>
+                <td>Émis lorsque le menu se ferme</td>
+              </tr>
+              <tr>
+                <td><code>searched</code></td>
+                <td><code>EventEmitter&lt;string&gt;</code></td>
+                <td>Émis lors de la recherche (mode searchable)</td>
+              </tr>
+              <tr>
+                <td><code>scrollEnd</code></td>
+                <td><code>EventEmitter&lt;void&gt;</code></td>
+                <td>Émis à la fin du scroll (lazy loading)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-usage-example">
+          <h4>Exemple d'Utilisation Complète</h4>
+          <div class="code-block">
+            <pre><code>import &#123; PshSelectComponent &#125; from 'ps-helix';
+
+&#64;Component(&#123;
+  standalone: true,
+  imports: [PshSelectComponent],
+  template: `
+    &lt;psh-select
+      [options]="countries"
+      [(value)]="selectedCountry"
+      size="medium"
+      [searchable]="true"
+      [clearable]="true"
+      [disabled]="isSubmitting"
+      [loading]="isLoading"
+      error="Veuillez sélectionner un pays"
+      placeholder="Sélectionner un pays"
+      label="Pays de résidence"
+      (valueChange)="handleChange($event)"
+      (opened)="handleOpen()"
+      (searched)="handleSearch($event)"
+    &gt;
+      &lt;span select-hint&gt;Choisissez votre pays&lt;/span&gt;
+    &lt;/psh-select&gt;
+  `
+&#125;)
+export class MyComponent &#123;
+  selectedCountry: string | null = null;
+  isSubmitting = false;
+  isLoading = false;
+
+  countries: SelectOption&lt;string&gt;[] = [
+    &#123; label: 'France', value: 'FR', icon: 'flag' &#125;
+  ];
+
+  handleChange(value: string | null): void &#123;
+    console.log('Selected:', value);
+  &#125;
+
+  handleSearch(term: string): void &#123;
+    console.log('Searching:', term);
+  &#125;
+&#125;</code></pre>
+          </div>
+        </div>
+
+        <div class="api-best-practices">
+          <h4>Bonnes Pratiques d'Accessibilité</h4>
+          <ul class="best-practices-list">
+            <li><strong>Labels descriptifs</strong> : Utilisez toujours un label clair décrivant le type de choix attendu</li>
+            <li><strong>Navigation clavier</strong> : Le composant supporte <kbd>Tab</kbd>, <kbd>Enter</kbd>, <kbd>Space</kbd>, <kbd>↑</kbd>, <kbd>↓</kbd>, et <kbd>Escape</kbd></li>
+            <li><strong>ARIA</strong> : Les attributs <code>role="combobox"</code>, <code>aria-expanded</code>, et <code>aria-activedescendant</code> sont gérés automatiquement</li>
+            <li><strong>Focus visible</strong> : Maintenez un indicateur de focus visible avec un ratio de contraste minimum de 3:1 selon WCAG 2.1</li>
+            <li><strong>Messages d'erreur</strong> : Fournissez des messages d'erreur clairs et actionnables avec <code>role="alert"</code></li>
+            <li><strong>Searchable</strong> : Activez <code>searchable</code> pour les listes de plus de 7 options</li>
+            <li><strong>Multiple sélection</strong> : Affichez clairement le compteur de sélections pour informer l'utilisateur</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

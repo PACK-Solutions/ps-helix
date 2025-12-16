@@ -1,0 +1,91 @@
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  min-width: 100px;
+}
+
+.button-content {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+/* Variants */
+.primary {
+  background: var(--primary-color);
+  color: var(--primary-color-text);
+}
+
+.primary:hover {
+  background: var(--primary-color-light);
+}
+
+.secondary {
+  background: var(--secondary-color);
+  color: var(--secondary-color-text);
+}
+
+.secondary:hover {
+  background: var(--secondary-color-light);
+}
+
+.text {
+  background: transparent;
+  color: var(--text-color);
+  padding: var(--spacing-xs);
+  min-width: auto;
+}
+
+.text:hover {
+  background: var(--surface-hover);
+}
+
+/* Sizes */
+.small {
+  padding: calc(var(--spacing-xs) * 1.5) var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  min-width: 80px;
+}
+
+.large {
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: var(--font-size-lg);
+  min-width: 120px;
+}
+
+/* Icon button */
+.icon-button {
+  min-width: 36px;
+  width: 36px;
+  height: 36px;
+  padding: var(--spacing-xs);
+}
+
+.icon-button.small {
+  min-width: 32px;
+  width: 32px;
+  height: 32px;
+}
+
+.icon-button.large {
+  min-width: 44px;
+  width: 44px;
+  height: 44px;
+}
+
+.icon-button .button-content {
+  justify-content: center;
+}
+
+.ph {
+  font-size: 1.2rem;
+}

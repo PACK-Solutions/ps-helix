@@ -1,0 +1,66 @@
+<div class="stepper-header" role="tablist">
+  @for (step of steps(); track $index; let i = $index) {
+    <div
+      class="step-header"
+      [class.active]="i === activeStep()"
+      [class.completed]="step.completed"
+      [class.disabled]="step.disabled"
+      [class.error]="!!step.error"
+      [class.warning]="!!step.warning"
+      [class.success]="!!step.success"
+    >
+      <div
+        class="step-indicator"
+        role="tab"
+        tabindex="0"
+        [attr.id]="'step-' + i"
+        [attr.aria-selected]="i === activeStep()"
+        [attr.aria-disabled]="step.disabled"
+        [attr.aria-label]="getStepAriaLabel(step, i)"
+        [attr.aria-current]="i === activeStep() ? 'step' : null"
+        [attr.aria-describedby]="getStepDescribedBy(step, i)"
+        [attr.aria-busy]="step.loading"
+        (click)="handleStepClick(i)"
+        (keydown)="handleKeydown($event, i)"
+      >
+        @if (step.loading && variant() === 'progress') {
+          <i class="ph ph-circle-notch spinner" aria-hidden="true"></i>
+        } @else if (step.completed) {
+          <i class="ph ph-check" aria-hidden="true"></i>
+        } @else if (variant() === 'numbered') {
+          {{ i + 1 }}
+        } @else if (step.icon) {
+          <i class="ph ph-{{ step.icon }}" aria-hidden="true"></i>
+        } @else {
+          <span class="step-dot"></span>
+        }
+      </div>
+
+      <div class="step-label">
+        <span class="step-title">{{ step.title }}</span>
+        @if (step.subtitle) {
+          <span class="step-subtitle">{{ step.subtitle }}</span>
+        }
+        @if (step.error) {
+          <span class="step-error" [id]="'error-' + i" role="alert" aria-live="polite">{{ step.error }}</span>
+        }
+        @if (step.warning) {
+          <span class="step-warning" [id]="'warning-' + i" role="status" aria-live="polite">{{ step.warning }}</span>
+        }
+        @if (step.success) {
+          <span class="step-success" [id]="'success-' + i" role="status" aria-live="polite">{{ step.success }}</span>
+        }
+      </div>
+
+      @if (i < steps().length - 1) {
+        <div class="step-connector" aria-hidden="true">
+          <span class="connector-line"></span>
+        </div>
+      }
+    </div>
+  }
+</div>
+
+<div class="stepper-content">
+  <ng-content />
+</div>

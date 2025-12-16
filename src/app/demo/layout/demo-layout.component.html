@@ -1,0 +1,38 @@
+<!-- Mobile header avec bouton menu -->
+<div class="mobile-header">
+  <h1 class="mobile-title">Helix Design System</h1>
+  <psh-button
+    appearance="text"
+    variant="primary"
+    icon="list"
+    iconPosition="only"
+    [attr.aria-label]="'Ouvrir le menu de navigation'"
+    (clicked)="toggleMobileSidebar()"
+    class="mobile-menu-button"
+  ></psh-button>
+</div>
+
+<!-- Backdrop mobile pour fermer la sidebar -->
+@if (isMobileSidebarOpen()) {
+  <div class="mobile-backdrop" (click)="closeMobileSidebar()"></div>
+}
+
+<div class="demo-layout">
+  <aside class="demo-sidebar" [class.mobile-open]="isMobileSidebarOpen()">
+    <!-- Bouton fermer sur mobile -->
+    <div class="mobile-close-button">
+      <psh-button
+        appearance="text"
+        variant="primary"
+        icon="x"
+        iconPosition="only"
+        [attr.aria-label]="'Fermer le menu de navigation'"
+        (clicked)="closeMobileSidebar()"
+      ></psh-button>
+    </div>
+    <ds-demo-navigation (navigationClick)="closeMobileSidebar()" />
+  </aside>
+  <main class="demo-content" (click)="closeMobileSidebar()">
+    <router-outlet />
+  </main>
+</div>

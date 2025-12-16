@@ -1,0 +1,30 @@
+<div
+  class="badge"
+  [class.primary]="variant() === 'primary'"
+  [class.secondary]="variant() === 'secondary'"
+  [class.success]="variant() === 'success'"
+  [class.warning]="variant() === 'warning'"
+  [class.danger]="variant() === 'danger'"
+  [class.info]="variant() === 'info'"
+  [class.disabled]="variant() === 'disabled'"
+  [class.dot]="displayType() === 'dot'"
+  [class.counter]="displayType() === 'counter'"
+  [class.overlap]="overlap()"
+  [class.small]="size() === 'small'"
+  [class.medium]="size() === 'medium'"
+  [class.large]="size() === 'large'"
+  [class.top-right]="position() === 'top-right'"
+  [class.top-left]="position() === 'top-left'"
+  [class.bottom-right]="position() === 'bottom-right'"
+  [class.bottom-left]="position() === 'bottom-left'"
+  [attr.role]="computedRole()"
+  [attr.aria-label]="computedAriaLabel()"
+  [attr.data-state]="state()"
+  (click)="onBadgeClick()"
+>
+  @if (displayType() === 'text') {
+    <ng-content></ng-content>
+  } @else if (displayType() === 'counter') {
+    {{ displayValue() }}
+  }
+</div>

@@ -1,0 +1,28 @@
+.container {
+  padding: var(--spacing-xl);
+}
+
+h1 {
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--spacing-lg);
+}
+
+button {
+  padding: var(--button-padding);
+  background: var(--primary-color);
+  color: var(--primary-color-text);
+  border: none;
+  border-radius: var(--border-radius);
+  font-weight: var(--button-font-weight);
+  cursor: pointer;
+  transition: var(--button-transition);
+}
+
+button:hover {
+  background: var(--primary-color-light);
+}
+
+p {
+  margin-top: var(--spacing-md);
+  color: var(--text-color-secondary);
+}

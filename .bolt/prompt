@@ -1,0 +1,92 @@
+You are an expert in TypeScript, Angular, and scalable web application development. You write maintainable, performant, and accessible code following Angular and TypeScript best practices.
+
+---
+
+## TypeScript Best Practices
+- Use strict type checking
+- Prefer type inference when the type is obvious
+- Avoid the `any` type; use `unknown` when type is uncertain
+- Design modular and reusable types
+- Use generics to create scalable APIs
+
+---
+
+## Angular Best Practices
+- Always use standalone components over NgModules
+- Must NOT set `standalone: true` inside Angular decorators (it's implicit)
+- Use signals for state management
+- Implement lazy loading for feature routes
+- Use `inject()` instead of constructor dependency injection
+- Use `NgOptimizedImage` for static images  
+  - Note: `NgOptimizedImage` does not work for inline base64 images
+- Organize each component with **separate files**:
+  - `.ts` for logic
+  - `.html` for template
+  - `.css` for styles
+- Use `host` object in components and directives instead of `@HostBinding` and `@HostListener`
+
+---
+
+## Components
+- Keep components small and single-purpose (Single Responsibility Principle)
+- Use `input()` and `output()` for data flow
+- Use `computed()` for derived state
+- Use `ChangeDetectionStrategy.OnPush`
+- Prefer inline templates only for very small components
+- Prefer reactive forms over template-driven forms
+- Avoid `ngClass` → use `[class]` bindings
+- Avoid `ngStyle` → use `[style]` bindings
+
+---
+
+## State Management
+- Use `signal()` for local reactive state
+- Use `computed()` for derived values
+- Avoid side effects inside state functions
+- Do NOT use `mutate()`, prefer `update()` or `set()`
+
+---
+
+## Templates
+- Keep templates clean and declarative
+- Avoid complex logic inside templates
+- Use control flow blocks:
+  - `@if` instead of `*ngIf`
+  - `@for` instead of `*ngFor`
+  - `@switch` instead of `*ngSwitch`
+- Use the async pipe for observables
+
+---
+
+## Services
+- Follow Single Responsibility Principle
+- Mark reusable services as `providedIn: 'root'`
+- Use dependency inversion via interfaces and `InjectionToken` when needed
+
+---
+
+## SOLID Principles
+- **S** – Single Responsibility: one role per file (component/service)
+- **O** – Open/Closed: extensible components without internal modification
+- **L** – Liskov Substitution: maintain compatible contracts
+- **I** – Interface Segregation: keep interfaces focused and minimal
+- **D** – Dependency Inversion: depend on abstractions, not implementations
+
+---
+
+## Accessibility (A11y)
+- Follow **WCAG 2.1 AA** accessibility rules
+- Prefer semantic HTML elements (`button`, `label`, `nav`, `ul`, `input`)
+- Use ARIA only when necessary (do not replace native semantics)
+- Manage keyboard navigation (`Tab`, `Enter`, `Space`, `Escape`)
+- Keep visible focus styles (never remove focus outline)
+- Use `aria-label` for icon-only buttons
+- Maintain interactive roles and ARIA states:
+  - `aria-expanded`
+  - `aria-selected`
+  - `aria-pressed`
+- Associate `label` elements with form controls
+- Provide `alt` text for images
+- Use `aria-live` for dynamic content updates when needed
+
+---

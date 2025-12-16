@@ -1,0 +1,204 @@
+<!-- Page Typographie restructurée selon les standards des pages de référence -->
+<ds-demo-page-layout 
+  title="Système Typographique Avancé"
+  introText="Notre système typographique va au-delà de simples variables CSS. Il constitue un langage visuel sophistiqué qui guide la perception, améliore la compréhension et renforce l'accessibilité. Chaque choix typographique est motivé par des principes d'ergonomie cognitive et d'inclusion universelle."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Principes Typographiques Fondamentaux - Section Pleine Largeur -->
+    <section class="principles-section">
+      <h3 class="section-title">Principes Typographiques Fondamentaux</h3>
+      <div class="principles-container">
+        @for (principle of typographyPrinciples; track principle.title) {
+          <div class="principle-card">
+            <div class="principle-header">
+              <i class="ph ph-{{ principle.icon }}" aria-hidden="true"></i>
+              <h4>{{ principle.title }}</h4>
+            </div>
+            <p>{{ principle.description }}</p>
+            <ul class="principle-benefits">
+              @for (benefit of principle.benefits; track benefit) {
+                <li>{{ benefit }}</li>
+              }
+            </ul>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- Échelle Typographique Interactive - Section Pleine Largeur -->
+    <section class="scale-section">
+      <h3 class="section-title">Échelle Typographique Interactive</h3>
+      <div class="scale-container">
+        <div class="scale-intro">
+          <p>Notre échelle typographique suit une progression harmonieuse basée sur des ratios mathématiques. Chaque niveau a été calibré pour des contextes d'usage spécifiques, garantissant lisibilité et impact visuel optimal.</p>
+        </div>
+        <div class="scale-examples">
+          @for (scaleItem of typographyScale; track scaleItem.variable) {
+            <div class="scale-item">
+              <div class="scale-preview">
+                <span 
+                  class="scale-text"
+                  [style.font-size]="'var(' + scaleItem.variable + ')'"
+                  [style.line-height]="'var(' + scaleItem.lineHeight + ')'"
+                  [style.font-weight]="'var(' + scaleItem.weight + ')'"
+                >
+                  {{ scaleItem.name }}
+                </span>
+              </div>
+              <div class="scale-details">
+                <div class="scale-name">{{ scaleItem.name }}</div>
+                <div class="scale-specs">
+                  <code class="scale-variable">{{ scaleItem.variable }}</code>
+                  <span class="scale-size">{{ scaleItem.size }} ({{ scaleItem.pixels }})</span>
+                </div>
+                <div class="scale-usage">{{ scaleItem.usage }}</div>
+                <div class="scale-examples-list">
+                  @for (example of scaleItem.examples; track example) {
+                    <span class="usage-example">{{ example }}</span>
+                  }
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Cas d'Usage Contextuels - Section Pleine Largeur -->
+    <section class="usage-section">
+      <h3 class="section-title">Application Contextuelle</h3>
+      <div class="usage-container">
+        <div class="usage-intro">
+          <p>La typographie s'adapte aux contextes d'usage pour maximiser l'efficacité et l'expérience utilisateur. Voici comment appliquer notre système dans les situations les plus courantes.</p>
+        </div>
+        <div class="usage-grid">
+          @for (usage of usageExamples; track usage.context) {
+            <div class="usage-card">
+              <div class="usage-header">
+                <i class="ph ph-{{ usage.icon }}" aria-hidden="true"></i>
+                <h4>{{ usage.context }}</h4>
+              </div>
+              <p class="usage-description">{{ usage.description }}</p>
+              
+              <div class="usage-guidelines">
+                <h5>Guidelines Spécifiques :</h5>
+                <ul class="guidelines-list">
+                  @for (guideline of usage.guidelines; track guideline) {
+                    <li>{{ guideline }}</li>
+                  }
+                </ul>
+              </div>
+              
+              <div class="usage-example">
+                <h5>{{ usage.example.title }} :</h5>
+                <div class="example-demo">{{ usage.example.demo }}</div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Règles et Bonnes Pratiques - Section Pleine Largeur -->
+    <section class="rules-section">
+      <h3 class="section-title">Règles et Standards</h3>
+      <div class="rules-container">
+        <div class="rules-intro">
+          <p>Ces règles garantissent la cohérence, l'accessibilité et la performance de notre système typographique à travers tous les projets et contextes d'usage.</p>
+        </div>
+        <div class="rules-grid">
+          @for (rule of typographyRules; track rule.category) {
+            <div class="rule-card">
+              <div class="rule-header">
+                <i class="ph ph-{{ rule.icon }}" aria-hidden="true"></i>
+                <h4>{{ rule.category }}</h4>
+              </div>
+              <p class="rule-description">{{ rule.description }}</p>
+              <ul class="rule-list">
+                @for (ruleItem of rule.rules; track ruleItem) {
+                  <li>{{ ruleItem }}</li>
+                }
+              </ul>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Outils et Ressources - Section Pleine Largeur -->
+    <section class="tools-section">
+      <h3 class="section-title">Outils et Ressources</h3>
+      <div class="tools-container">
+        <div class="tools-intro">
+          <p>Une sélection d'outils et ressources pour vous accompagner dans l'application et la validation de nos standards typographiques.</p>
+        </div>
+        <div class="tools-grid">
+          @for (tool of typographyTools; track tool.category) {
+            <div class="tool-card">
+              <div class="tool-header">
+                <i class="ph ph-{{ tool.icon }}" aria-hidden="true"></i>
+                <h4>{{ tool.category }}</h4>
+              </div>
+              <p class="tool-description">{{ tool.description }}</p>
+              <ul class="tool-list">
+                @for (toolItem of tool.tools; track toolItem) {
+                  <li>{{ toolItem }}</li>
+                }
+              </ul>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Démonstration Live - Section Interactive -->
+    <section class="demo-live-section">
+      <h3 class="section-title">Démonstration Interactive</h3>
+      <div class="demo-live-container">
+        <div class="demo-live-intro">
+          <p>Explorez notre système typographique en action avec ces exemples interactifs qui montrent l'application concrète de nos principes.</p>
+        </div>
+        
+        <!-- Exemple de hiérarchie -->
+        <div class="hierarchy-demo">
+          <div class="demo-content">
+            <h1 style="font-size: var(--font-size-3xl); font-weight: var(--font-weight-bold); color: var(--text-color); margin-bottom: var(--spacing-lg);">
+              Titre Principal de Page
+            </h1>
+            <p style="font-size: var(--font-size-lg); color: var(--text-color-secondary); margin-bottom: var(--spacing-xl); line-height: var(--line-height-relaxed);">
+              Introduction engageante qui utilise une taille plus grande pour capter l'attention et présenter le contexte de manière claire et accessible.
+            </p>
+            
+            <h2 style="font-size: var(--font-size-xl); font-weight: var(--font-weight-semibold); color: var(--text-color); margin-bottom: var(--spacing-md);">
+              Section Principale
+            </h2>
+            <p style="font-size: var(--font-size-base); color: var(--text-color); margin-bottom: var(--spacing-lg); line-height: var(--line-height-relaxed);">
+              Corps de texte standard qui utilise notre taille de base pour assurer une lecture confortable et une hiérarchie visuelle claire. L'espacement vertical suit notre système 8 points.
+            </p>
+            
+            <h3 style="font-size: var(--font-size-lg); font-weight: var(--font-weight-medium); color: var(--text-color); margin-bottom: var(--spacing-sm);">
+              Sous-section Détaillée
+            </h3>
+            <p style="font-size: var(--font-size-base); color: var(--text-color); margin-bottom: var(--spacing-sm); line-height: var(--line-height-relaxed);">
+              Contenu de la sous-section avec des informations plus spécifiques.
+            </p>
+            <p style="font-size: var(--font-size-sm); color: var(--text-color-secondary); line-height: var(--line-height-normal);">
+              Note complémentaire en taille réduite pour les informations secondaires ou les métadonnées.
+            </p>
+          </div>
+          
+          <div class="demo-analysis">
+            <h4>Analyse de cette Hiérarchie :</h4>
+            <ul class="analysis-list">
+              <li><strong>Contraste visuel :</strong> 3 niveaux de taille créent une hiérarchie claire</li>
+              <li><strong>Espacement rythmé :</strong> Marges basées sur notre système 8 points</li>
+              <li><strong>Poids équilibrés :</strong> Maximum 3 poids pour éviter la confusion</li>
+              <li><strong>Couleurs sémantiques :</strong> Texte principal vs secondaire</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

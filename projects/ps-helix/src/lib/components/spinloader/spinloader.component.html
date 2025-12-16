@@ -1,0 +1,23 @@
+@switch (variant()) {
+  @case ('circle') {
+    <div class="spinner-circle" [class]="color()"></div>
+  }
+  @case ('dots') {
+    <div class="spinner-dots" [class]="color()">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  }
+  @case ('pulse') {
+    <div class="spinner-pulse" [class]="color()">
+      <div class="pulse"></div>
+      <div class="pulse"></div>
+      <div class="pulse"></div>
+    </div>
+  }
+}
+
+@if (label()) {
+  <span class="spinner-label">{{ label() }}</span>
+}

@@ -1,0 +1,32 @@
+/* ============================================
+   HELIX DESIGN SYSTEM - MAIN STYLESHEET
+   ============================================ */
+
+/* 1. BASE - CSS Reset and Global Styles */
+@import './app/lib/styles/base/reset.css';
+@import './app/lib/styles/base/global.css';
+
+/* 2. DESIGN TOKENS - Primitive Values */
+@import './app/lib/styles/tokens/spacing.tokens.css';
+@import './app/lib/styles/tokens/sizing.tokens.css';
+@import './app/lib/styles/tokens/typography.tokens.css';
+@import './app/lib/styles/tokens/effects.tokens.css';
+@import './app/lib/styles/tokens/animations.tokens.css';
+@import './app/lib/styles/tokens/layout.tokens.css';
+
+/* 3. THEMES - Color Tokens and Theme Variables */
+@import './app/lib/styles/themes/light.css';
+@import './app/lib/styles/themes/dark.css';
+
+/* 4. UTILITY CLASSES - Functional Helpers */
+@import './app/lib/styles/utilities/spacing.utils.css';
+@import './app/lib/styles/utilities/typography.utils.css';
+@import './app/lib/styles/utilities/colors.utils.css';
+@import './app/lib/styles/utilities/layout.utils.css';
+@import './app/lib/styles/utilities/animations.utils.css';
+@import './app/lib/styles/utilities/focus.utils.css';
+@import './app/lib/styles/utilities/responsive.utils.css';
+
+@import "@phosphor-icons/web/regular";
+@import "@phosphor-icons/web/bold";
+@import "@phosphor-icons/web/light";

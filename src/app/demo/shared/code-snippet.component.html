@@ -1,0 +1,17 @@
+<div class="code-snippet-wrapper">
+  <button
+    class="copy-button"
+    type="button"
+    (click)="copyToClipboard()"
+    [attr.aria-label]="copied() ? 'Code copié' : 'Copier le code'"
+    [class.copied]="copied()"
+  >
+    @if (copied()) {
+      <i class="ph ph-check" aria-hidden="true"></i>
+    } @else {
+      <i class="ph ph-copy" aria-hidden="true"></i>
+    }
+    <span class="copy-button-text">{{ copied() ? 'Copié !' : 'Copier' }}</span>
+  </button>
+  <pre><code>{{ code() }}</code></pre>
+</div>

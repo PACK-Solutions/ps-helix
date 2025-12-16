@@ -1,0 +1,311 @@
+/* Container */
+.demo-nav {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  background: var(--surface-card);
+  width: 100%;
+  min-width: 0;
+  flex: 1;
+  padding: var(--spacing-md);
+}
+
+/* Search Component Container */
+.demo-nav-search {
+  padding: 0 var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.demo-nav-search ::ng-deep .search-container {
+  margin-bottom: 0;
+}
+
+.demo-nav-search ::ng-deep .search-results {
+  max-width: 100%;
+}
+
+/* Title */
+.demo-nav-title {
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--surface-border);
+  padding-left: var(--spacing-md);
+  padding-right: var(--spacing-md);
+}
+
+/* Controls */
+.demo-nav-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-xl);
+  justify-content: center;
+  padding: 0 var(--spacing-md);
+}
+
+.nav-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  width: 36px;
+  height: 36px;
+  padding: var(--spacing-xs);
+  border: none;
+  background: transparent;
+  color: var(--text-color-secondary);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+}
+
+.nav-toggle:hover {
+  color: var(--text-color);
+  background: var(--surface-hover);
+  transform: scale(1.1);
+}
+
+.nav-toggle:active {
+  transform: scale(0.95);
+}
+
+.nav-toggle:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(var(--primary-color-rgb), 0.3);
+}
+
+.nav-toggle i {
+  font-size: 1.2rem;
+  transition: transform 0.2s ease;
+}
+
+.nav-toggle:hover i {
+  transform: rotate(15deg);
+}
+
+/* Sections */
+.nav-section {
+  margin-bottom: var(--spacing-lg);
+  padding: 0 var(--spacing-md);
+}
+
+.nav-section:last-child {
+  margin-bottom: 0;
+}
+
+/* Section Title */
+.nav-section-title {
+  color: var(--text-color-secondary);
+  font-size: var(--font-size-sm);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  margin-bottom: var(--spacing-sm);
+  padding: var(--spacing-xs) 0;
+}
+
+/* Navigation Items */
+.nav-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xxs);
+}
+
+/* Navigation Links */
+.demo-nav-link {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  color: var(--text-color-secondary);
+  text-decoration: none;
+  border-radius: var(--border-radius);
+  transition: all 0.2s ease;
+  font-size: var(--font-size-base);
+}
+
+.demo-nav-link:hover {
+  background: var(--surface-hover);
+  color: var(--text-color);
+  transform: translateX(2px);
+}
+
+.demo-nav-link.active {
+  background: var(--primary-color);
+  color: var(--primary-color-text);
+  font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .demo-nav-title {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .demo-nav-controls {
+    margin-bottom: var(--spacing-md);
+    padding: 0 var(--spacing-sm);
+  }
+
+  .demo-nav-search {
+    padding: 0 var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .nav-section {
+    margin-bottom: var(--spacing-md);
+    padding: 0 var(--spacing-sm);
+  }
+
+  .demo-nav-link {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-sm);
+  }
+
+  .nav-section-title {
+    font-size: var(--font-size-xs);
+    margin-bottom: var(--spacing-xs);
+  }
+}
+
+/* Tablettes en mode paysage - interface compacte mais lisible */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .demo-nav {
+    padding: var(--spacing-sm);
+  }
+
+  .demo-nav-title {
+    font-size: var(--font-size-lg);
+    padding: var(--spacing-sm) var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .demo-nav-controls {
+    margin-bottom: var(--spacing-md);
+    padding: 0 var(--spacing-md);
+  }
+
+  .demo-nav-search {
+    padding: 0 var(--spacing-md);
+  }
+
+  .nav-section {
+    margin-bottom: var(--spacing-sm);
+    padding: 0 var(--spacing-md);
+  }
+
+  .nav-section-title {
+    font-size: var(--font-size-xs);
+    margin-bottom: var(--spacing-xs);
+    padding: var(--spacing-xs) 0;
+  }
+
+  .demo-nav-link {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-sm);
+  }
+
+  .nav-toggle {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+  }
+}
+
+@media (max-width: 900px) {
+  .demo-nav {
+    padding: var(--spacing-xs) 0;
+  }
+
+  .demo-nav-title {
+    font-size: var(--font-size-lg);
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+
+  .demo-nav-search {
+    padding: 0 var(--spacing-xs);
+  }
+
+  .nav-section {
+    padding: 0 var(--spacing-xs);
+  }
+
+  .demo-nav-link {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-sm);
+  }
+}
+
+@media (max-width: 768px) {
+  .demo-nav {
+    padding: var(--spacing-sm) 0;
+    padding-top: 0;
+    height: 100vh;
+    overflow: auto;
+  }
+
+  .demo-nav-title {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    margin-top: var(--spacing-lg);
+  }
+
+  .demo-nav-controls {
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .demo-nav-search {
+    padding: 0 var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .nav-section {
+    margin-bottom: var(--spacing-md);
+  }
+
+  .demo-nav-link {
+    padding: var(--spacing-md);
+    font-size: var(--font-size-base);
+  }
+}
+
+@media (max-width: 480px) {
+  .demo-nav {
+    padding: var(--spacing-xs) 0;
+  }
+
+  .demo-nav-title {
+    font-size: var(--font-size-lg);
+    padding-left: var(--spacing-sm);
+    padding-right: var(--spacing-sm);
+  }
+
+  .demo-nav-search {
+    padding: 0 var(--spacing-sm);
+  }
+
+  .nav-section {
+    padding: 0 var(--spacing-sm);
+  }
+
+  .demo-nav-link {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .nav-toggle {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+  }
+}

@@ -1,0 +1,55 @@
+<div
+  [class]="computedClasses()"
+  [ngStyle]="computedStyles()"
+  (click)="handleClick($event)"
+  (keydown)="handleKeydown($event)"
+  [attr.tabindex]="interactive() && !disabled() ? 0 : null"
+  [attr.aria-label]="computedAriaLabel()"
+  [attr.aria-disabled]="disabled() ? 'true' : null"
+  [attr.aria-busy]="loading() ? 'true' : null"
+  [attr.role]="interactive() ? 'button' : 'article'"
+>
+  @if (loading()) {
+    <div class="stat-loading">
+      <div class="skeleton-circle"></div>
+      <div class="skeleton-content">
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line short"></div>
+      </div>
+    </div>
+  } @else {
+    @if (rowDirection()) {
+      <div class="stat-card-body">
+        <div class="stat-icon" [style]="iconStyle()">
+          <i class="ph ph-{{ displayIcon }}" aria-hidden="true"></i>
+        </div>
+
+        <div class="stat-content">
+          <h3 class="stat-value">{{ displayValue }}</h3>
+          <p class="stat-description">{{ displayDescription }}</p>
+
+          @if (hasTag()) {
+            <psh-tag [variant]="displayTagVariant!">
+              {{ displayTagLabel }}
+            </psh-tag>
+          }
+        </div>
+      </div>
+    } @else {
+      <div class="stat-icon" [style]="iconStyle()">
+        <i class="ph ph-{{ displayIcon }}" aria-hidden="true"></i>
+      </div>
+
+      <div class="stat-content">
+        <h3 class="stat-value">{{ displayValue }}</h3>
+        <p class="stat-description">{{ displayDescription }}</p>
+
+        @if (hasTag()) {
+          <psh-tag [variant]="displayTagVariant!">
+            {{ displayTagLabel }}
+          </psh-tag>
+        }
+      </div>
+    }
+  }
+</div>

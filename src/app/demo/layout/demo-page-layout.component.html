@@ -1,0 +1,19 @@
+<section class="demo-section">
+  <h2>{{ title() }}</h2>
+  <p class="intro-text">{{ introText() }}</p>
+  
+  <div class="demo-grid">
+    <!-- Contenu principal des démonstrations -->
+    <ng-content select="[demo-content]"></ng-content>
+  </div>
+
+  <!-- Documentation technique (optionnelle) -->
+  @if (showTechnicalSection()) {
+    <div class="demo-technical">
+      <h2>{{ technicalTitle() }}</h2>
+      
+      <!-- Contenu technique personnalisé -->
+      <ng-content select="[technical-content]"></ng-content>
+    </div>
+  }
+</section>

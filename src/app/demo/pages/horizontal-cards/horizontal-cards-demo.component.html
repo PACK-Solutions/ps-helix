@@ -1,0 +1,416 @@
+<ds-demo-page-layout
+  title="Cartes Horizontales"
+  introText="Le composant horizontal-card permet de créer des cartes avec un layout horizontal pour des cas d'usage spécifiques comme les produits, profils ou articles. Le layout bascule automatiquement en vertical sur mobile pour une expérience optimale."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <section class="use-cases-section">
+      <h3 class="section-title">Cas d'Usage Principaux</h3>
+      <div class="use-cases-container">
+        <div class="use-cases-intro">
+          <p>Le composant horizontal-card est spécialement conçu pour trois cas d'usage principaux qui nécessitent une disposition horizontale avec contenu latéral.</p>
+        </div>
+        <div class="use-cases-grid">
+          <div class="use-case-item">
+            <div class="use-case-icon">
+              <i class="ph ph-shopping-bag" style="font-size: 2rem; color: var(--primary-color);"></i>
+            </div>
+            <h4>Cartes Produits</h4>
+            <p>Affichage de produits avec image latérale, informations détaillées et actions d'achat. Idéal pour les e-commerce et catalogues.</p>
+          </div>
+          <div class="use-case-item">
+            <div class="use-case-icon">
+              <i class="ph ph-user-circle" style="font-size: 2rem; color: var(--primary-color);"></i>
+            </div>
+            <h4>Profils Utilisateurs</h4>
+            <p>Présentation de profils avec avatar latéral, informations personnelles et métadonnées. Parfait pour les annuaires et équipes.</p>
+          </div>
+          <div class="use-case-item">
+            <div class="use-case-icon">
+              <i class="ph ph-article" style="font-size: 2rem; color: var(--primary-color);"></i>
+            </div>
+            <h4>Articles et Contenus</h4>
+            <p>Affichage d'articles avec illustration latérale, extrait et métadonnées. Adapté aux blogs et actualités.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="products-section">
+      <h3 class="section-title">Exemple : Cartes Produits</h3>
+      <div class="products-container">
+        <div class="products-intro">
+          <p>Les cartes produits utilisent le slot <code>horizontal-side</code> pour afficher une image ou un visuel, et les slots <code>horizontal-header</code> et <code>horizontal-actions</code> pour structurer le contenu.</p>
+        </div>
+        <div class="products-demo">
+          @for (product of products; track product.id) {
+            <psh-horizontal-card
+              [variant]="'elevated'"
+              [interactive]="true"
+              [hoverable]="true"
+              [sideWidth]="'var(--size-40)'"
+              [gap]="'var(--spacing-md)'"
+              (clicked)="handleCardClick($event, 'Product ' + product.id)"
+            >
+              <div horizontal-side>
+                <img [src]="product.image" [alt]="product.imageAlt" class="product-image">
+              </div>
+              <div horizontal-header>
+                <div class="product-header">
+                  <h4 class="product-title">{{ product.name }}</h4>
+                  <psh-tag [variant]="product.stock === 'En stock' ? 'success' : 'warning'" [size]="'small'">
+                    {{ product.stock }}
+                  </psh-tag>
+                </div>
+              </div>
+              <p class="product-description">{{ product.description }}</p>
+              <div class="product-meta">
+                <span class="product-category">{{ product.category }}</span>
+                <span class="product-price">{{ product.price }}</span>
+              </div>
+              <div horizontal-actions>
+                <psh-button [variant]="'primary'">Acheter</psh-button>
+                <psh-button [appearance]="'outline'" [variant]="'secondary'">Détails</psh-button>
+              </div>
+            </psh-horizontal-card>
+          }
+        </div>
+        <div class="code-example">
+          <h4>Code d'exemple</h4>
+          <ds-code-snippet [code]="productCardCode" />
+        </div>
+      </div>
+    </section>
+
+    <section class="users-section">
+      <h3 class="section-title">Exemple : Profils Utilisateurs</h3>
+      <div class="users-container">
+        <div class="users-intro">
+          <p>Les cartes de profil utilisent le contenu latéral pour afficher un avatar, tandis que le contenu principal présente les informations personnelles et professionnelles.</p>
+        </div>
+        <div class="users-demo">
+          @for (user of users; track user.id) {
+            <psh-horizontal-card
+              [variant]="'outlined'"
+              [interactive]="true"
+              [hoverable]="true"
+              [sideWidth]="'var(--size-32)'"
+              [gap]="'var(--spacing-lg)'"
+              (clicked)="handleCardClick($event, 'User ' + user.id)"
+            >
+              <div horizontal-side>
+                <div class="user-avatar-wrapper">
+                  <psh-avatar
+                    [initials]="user.avatar"
+                    [size]="'xlarge'"
+                  ></psh-avatar>
+                </div>
+              </div>
+              <div horizontal-header>
+                <div class="user-header">
+                  <h4 class="user-name">{{ user.name }}</h4>
+                  <psh-tag [variant]="user.status === 'Actif' ? 'success' : 'secondary'" [size]="'small'">
+                    {{ user.status }}
+                  </psh-tag>
+                </div>
+              </div>
+              <p class="user-role">{{ user.role }}</p>
+              <div class="user-meta">
+                <div class="user-info">
+                  <i class="ph ph-envelope"></i>
+                  <span>{{ user.email }}</span>
+                </div>
+                <div class="user-info">
+                  <i class="ph ph-map-pin"></i>
+                  <span>{{ user.location }}</span>
+                </div>
+                <div class="user-info">
+                  <i class="ph ph-folder"></i>
+                  <span>{{ user.projects }} projets</span>
+                </div>
+              </div>
+              <div horizontal-actions>
+                <psh-button [variant]="'primary'">Contacter</psh-button>
+                <psh-button [appearance]="'text'" [variant]="'secondary'">Voir profil</psh-button>
+              </div>
+            </psh-horizontal-card>
+          }
+        </div>
+        <div class="code-example">
+          <h4>Code d'exemple</h4>
+          <ds-code-snippet [code]="userCardCode" />
+        </div>
+      </div>
+    </section>
+
+    <section class="articles-section">
+      <h3 class="section-title">Exemple : Articles et Contenus</h3>
+      <div class="articles-container">
+        <div class="articles-intro">
+          <p>Les cartes d'articles combinent une illustration latérale avec un titre, un extrait et des métadonnées pour une présentation attractive du contenu.</p>
+        </div>
+        <div class="articles-demo">
+          @for (article of articles; track article.id) {
+            <psh-horizontal-card
+              [variant]="'elevated'"
+              [interactive]="true"
+              [hoverable]="true"
+              [sideWidth]="'var(--size-48)'"
+              [gap]="'var(--spacing-lg)'"
+              (clicked)="handleCardClick($event, 'Article ' + article.id)"
+            >
+              <div horizontal-side>
+                <div class="article-image" [style.background]="article.image"></div>
+              </div>
+              <div horizontal-header>
+                <div class="article-header">
+                  <psh-tag [variant]="'primary'" [size]="'small'">{{ article.category }}</psh-tag>
+                </div>
+              </div>
+              <h4 class="article-title">{{ article.title }}</h4>
+              <p class="article-excerpt">{{ article.excerpt }}</p>
+              <div class="article-meta">
+                <span class="article-date">
+                  <i class="ph ph-calendar"></i>
+                  {{ article.date }}
+                </span>
+                <span class="article-read-time">
+                  <i class="ph ph-clock"></i>
+                  {{ article.readTime }} de lecture
+                </span>
+              </div>
+              <div horizontal-actions>
+                <psh-button [variant]="'primary'">Lire l'article</psh-button>
+                <psh-button [appearance]="'text'" [variant]="'secondary'">Partager</psh-button>
+              </div>
+            </psh-horizontal-card>
+          }
+        </div>
+        <div class="code-example">
+          <h4>Code d'exemple</h4>
+          <ds-code-snippet [code]="articleCardCode" />
+        </div>
+      </div>
+    </section>
+
+    <section class="variants-section">
+      <h3 class="section-title">Variantes Visuelles</h3>
+      <div class="variants-container">
+        <div class="variants-intro">
+          <p>Le composant horizontal-card hérite des trois variantes visuelles de psh-card pour s'adapter à différents contextes de design.</p>
+        </div>
+        <div class="variants-demo">
+          <div class="variant-example">
+            <h4>Elevated</h4>
+            <psh-horizontal-card [variant]="'elevated'" [sideWidth]="'var(--size-32)'">
+              <div horizontal-side>
+                <div class="demo-side" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+              </div>
+              <div horizontal-header>
+                <h5>Carte avec ombre portée</h5>
+              </div>
+              <p>Idéale pour mettre en avant des contenus importants avec une élévation visuelle claire.</p>
+            </psh-horizontal-card>
+          </div>
+          <div class="variant-example">
+            <h4>Outlined</h4>
+            <psh-horizontal-card [variant]="'outlined'" [sideWidth]="'var(--size-32)'">
+              <div horizontal-side>
+                <div class="demo-side" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+              </div>
+              <div horizontal-header>
+                <h5>Carte avec bordure</h5>
+              </div>
+              <p>Parfaite pour les interfaces épurées et les contenus secondaires nécessitant moins d'emphase.</p>
+            </psh-horizontal-card>
+          </div>
+          <div class="variant-example">
+            <h4>Default</h4>
+            <psh-horizontal-card [variant]="'default'" [sideWidth]="'var(--size-32)'">
+              <div horizontal-side>
+                <div class="demo-side" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
+              </div>
+              <div horizontal-header>
+                <h5>Carte style par défaut</h5>
+              </div>
+              <p>Utilisée pour les contenus intégrés ou les designs minimalistes sans décoration.</p>
+            </psh-horizontal-card>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="api-section">
+      <h3 class="section-title">Documentation API</h3>
+      <div class="api-container">
+        <div class="api-intro">
+          <p>Le composant horizontal-card utilise des <strong>input signals</strong> pour une API réactive et performante, conforme aux standards Angular 20.</p>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>variant</code></td>
+                <td><code>HorizontalCardVariant</code></td>
+                <td><code>'default'</code></td>
+                <td>'default' | 'elevated' | 'outlined'</td>
+              </tr>
+              <tr>
+                <td><code>interactive</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Rend la carte cliquable</td>
+              </tr>
+              <tr>
+                <td><code>hoverable</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Ajoute un effet de survol</td>
+              </tr>
+              <tr>
+                <td><code>sideWidth</code></td>
+                <td><code>string</code></td>
+                <td><code>'var(--size-48)'</code></td>
+                <td>Largeur du contenu latéral (utiliser les design tokens)</td>
+              </tr>
+              <tr>
+                <td><code>gap</code></td>
+                <td><code>string</code></td>
+                <td><code>'var(--spacing-md)'</code></td>
+                <td>Espacement entre le contenu latéral et principal</td>
+              </tr>
+              <tr>
+                <td><code>sidePadding</code></td>
+                <td><code>string</code></td>
+                <td><code>'0'</code></td>
+                <td>Padding du contenu latéral</td>
+              </tr>
+              <tr>
+                <td><code>contentPadding</code></td>
+                <td><code>string</code></td>
+                <td><code>'var(--spacing-md)'</code></td>
+                <td>Padding du contenu principal</td>
+              </tr>
+              <tr>
+                <td><code>mobileHeight</code></td>
+                <td><code>string</code></td>
+                <td><code>'var(--size-48)'</code></td>
+                <td>Hauteur du contenu latéral sur mobile</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Événements (Outputs)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Événement</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>clicked</code></td>
+                <td><code>EventEmitter&lt;MouseEvent | KeyboardEvent&gt;</code></td>
+                <td>Émis lors du clic sur la carte (si interactive)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Slots Disponibles</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Slot</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>horizontal-side</code></td>
+                <td>Contenu latéral (image, avatar, icône)</td>
+              </tr>
+              <tr>
+                <td><code>horizontal-header</code></td>
+                <td>En-tête de la carte (titre, badges)</td>
+              </tr>
+              <tr>
+                <td><code>(default)</code></td>
+                <td>Contenu principal de la carte</td>
+              </tr>
+              <tr>
+                <td><code>horizontal-actions</code></td>
+                <td>Actions en bas de carte (boutons)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-usage-example">
+          <h4>Exemple d'Utilisation Complète</h4>
+          <div class="code-block">
+            <pre><code>import &#123; PshHorizontalCardComponent, PshButtonComponent &#125; from 'ps-helix';
+
+&#64;Component(&#123;
+  imports: [PshHorizontalCardComponent, PshButtonComponent],
+  template: `
+    &lt;psh-horizontal-card
+      [variant]="'elevated'"
+      [interactive]="true"
+      [hoverable]="true"
+      [sideWidth]="'var(--size-40)'"
+      [gap]="'var(--spacing-md)'"
+      [contentPadding]="'var(--spacing-lg)'"
+      (clicked)="handleClick($event)"
+    &gt;
+      &lt;div horizontal-side&gt;
+        &lt;img src="product.jpg" alt="Product"&gt;
+      &lt;/div&gt;
+      &lt;div horizontal-header&gt;
+        &lt;h4&gt;Produit Premium&lt;/h4&gt;
+      &lt;/div&gt;
+      &lt;p&gt;Description du produit avec détails.&lt;/p&gt;
+      &lt;div horizontal-actions&gt;
+        &lt;psh-button [variant]="'primary'"&gt;Acheter&lt;/psh-button&gt;
+      &lt;/div&gt;
+    &lt;/psh-horizontal-card&gt;
+  `
+&#125;)
+export class MyComponent &#123;
+  handleClick(event: MouseEvent | KeyboardEvent): void &#123;
+    console.log('Card clicked', event);
+  &#125;
+&#125;</code></pre>
+          </div>
+        </div>
+
+        <div class="api-best-practices">
+          <h4>Bonnes Pratiques</h4>
+          <ul class="best-practices-list">
+            <li><strong>Design tokens</strong> : Utilisez toujours les design tokens pour les dimensions (<code>var(--size-*)</code>) et espacements (<code>var(--spacing-*)</code>)</li>
+            <li><strong>Responsive</strong> : Le composant bascule automatiquement en layout vertical sur mobile, aucune configuration supplémentaire nécessaire</li>
+            <li><strong>Contenu latéral</strong> : Privilégiez des contenus visuels carrés ou avec ratio 1:1 pour le slot <code>horizontal-side</code></li>
+            <li><strong>Accessibilité</strong> : Utilisez toujours des alternatives textuelles pour les images et contenus visuels</li>
+            <li><strong>Interactivité</strong> : Activez <code>[interactive]="true"</code> uniquement si la carte entière doit être cliquable</li>
+            <li><strong>Actions</strong> : Limitez à 2-3 boutons dans le slot <code>horizontal-actions</code> pour éviter la surcharge visuelle</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

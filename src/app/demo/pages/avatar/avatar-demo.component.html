@@ -1,0 +1,353 @@
+<ds-demo-page-layout
+  title="Système d'Avatar"
+  introText="Les avatars représentent des utilisateurs ou des entités via des images, des initiales ou des icônes. Ils constituent un élément essentiel d'identification visuelle dans les interfaces modernes."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Variantes d'Avatar - Section Pleine Largeur -->
+    <section class="avatar-variants-section">
+      <h3 class="section-title">Variantes d'Avatar</h3>
+      <div class="variants-container">
+        <div class="variants-intro">
+          <p>Les avatars supportent trois types de contenu différents avec un système de fallback automatique pour garantir une expérience cohérente.</p>
+        </div>
+        <div class="variants-grid">
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-avatar
+                src="https://i.pravatar.cc/300?img=1"
+                alt="John Doe"
+                ariaLabel="Photo de profil de John Doe"
+              ></psh-avatar>
+            </div>
+            <div class="variant-info">
+              <h4>Avatar Image</h4>
+              <p>Utilise l'attribut <code>src</code> pour afficher une photo de profil.</p>
+              <ds-code-snippet [code]="avatarImageCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-avatar
+                initials="JD"
+                alt="John Doe"
+                ariaLabel="Initiales de John Doe"
+              ></psh-avatar>
+            </div>
+            <div class="variant-info">
+              <h4>Avatar Initiales</h4>
+              <p>Utilise l'attribut <code>initials</code> pour afficher les initiales de l'utilisateur.</p>
+              <ds-code-snippet [code]="avatarInitialsCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-avatar
+                icon="user"
+                alt="Utilisateur"
+                ariaLabel="Icône utilisateur par défaut"
+              ></psh-avatar>
+            </div>
+            <div class="variant-info">
+              <h4>Avatar Icône</h4>
+              <p>Utilise l'attribut <code>icon</code> pour afficher une icône Phosphor par défaut.</p>
+              <ds-code-snippet [code]="avatarIconCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tailles d'Avatar - Section Pleine Largeur -->
+    <section class="avatar-sizes-section">
+      <h3 class="section-title">Tailles Disponibles</h3>
+      <div class="sizes-container">
+        <div class="sizes-intro">
+          <p>Quatre tailles sont disponibles pour s'adapter à différents contextes d'utilisation, de l'interface dense aux profils mis en avant.</p>
+        </div>
+        <div class="sizes-grid">
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-avatar
+                src="https://i.pravatar.cc/300?img=6"
+                alt="Emma Davis"
+                size="small"
+              ></psh-avatar>
+            </div>
+            <div class="size-info">
+              <h4>Small</h4>
+              <div class="size-specs">
+                <span class="size-dimension">32px × 32px</span>
+                <code class="size-code">size="small"</code>
+              </div>
+              <p class="size-usage">Idéal pour les interfaces denses, les listes compactes ou les mentions rapides.</p>
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-avatar
+                src="https://i.pravatar.cc/300?img=7"
+                alt="Frank Miller"
+                size="medium"
+              ></psh-avatar>
+            </div>
+            <div class="size-info">
+              <h4>Medium (Défaut)</h4>
+              <div class="size-specs">
+                <span class="size-dimension">40px × 40px</span>
+                <code class="size-code">size="medium"</code>
+              </div>
+              <p class="size-usage">Taille par défaut, équilibrée pour la plupart des contextes d'interface.</p>
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-avatar
+                src="https://i.pravatar.cc/300?img=8"
+                alt="Grace Taylor"
+                size="large"
+              ></psh-avatar>
+            </div>
+            <div class="size-info">
+              <h4>Large</h4>
+              <div class="size-specs">
+                <span class="size-dimension">48px × 48px</span>
+                <code class="size-code">size="large"</code>
+              </div>
+              <p class="size-usage">Pour une meilleure visibilité dans les en-têtes ou les cartes de profil.</p>
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-avatar
+                src="https://i.pravatar.cc/300?img=9"
+                alt="Henry Wilson"
+                size="xlarge"
+              ></psh-avatar>
+            </div>
+            <div class="size-info">
+              <h4>XLarge</h4>
+              <div class="size-specs">
+                <span class="size-dimension">64px × 64px</span>
+                <code class="size-code">size="xlarge"</code>
+              </div>
+              <p class="size-usage">Pour les profils mis en avant ou les pages de détail utilisateur.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Formes d'Avatar - Section Pleine Largeur -->
+    <section class="avatar-shapes-section">
+      <h3 class="section-title">Formes Disponibles</h3>
+      <div class="shapes-container">
+        <div class="shapes-intro">
+          <p>Deux formes sont disponibles pour s'adapter aux différentes identités visuelles et besoins de design.</p>
+        </div>
+        <div class="shapes-grid">
+          <div class="shape-card">
+            <div class="shape-preview">
+              <psh-avatar
+                src="https://i.pravatar.cc/300?img=10"
+                alt="Iris Clark"
+                size="large"
+                shape="circle"
+              ></psh-avatar>
+            </div>
+            <div class="shape-info">
+              <h4>Circle (Défaut)</h4>
+              <code class="shape-code">shape="circle"</code>
+              <p class="shape-usage">Style classique et universel, idéal pour les photos de profil utilisateur. C'est la forme par défaut appliquée automatiquement.</p>
+            </div>
+          </div>
+
+          <div class="shape-card">
+            <div class="shape-preview">
+              <psh-avatar
+                src="https://i.pravatar.cc/300?img=11"
+                alt="Jack Adams"
+                size="large"
+                shape="square"
+              ></psh-avatar>
+            </div>
+            <div class="shape-info">
+              <h4>Square</h4>
+              <code class="shape-code">shape="square"</code>
+              <p class="shape-usage">Style moderne avec coins arrondis, adapté aux logos ou identités visuelles alternatives.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Indicateurs de Statut - Section Pleine Largeur -->
+    <section class="avatar-status-section">
+      <h3 class="section-title">Indicateurs de Statut</h3>
+      <div class="status-container">
+        <div class="status-intro">
+          <p>Les avatars peuvent afficher un indicateur de statut pour communiquer la disponibilité de l'utilisateur en temps réel.</p>
+        </div>
+        <div class="status-grid">
+          <div class="status-card">
+            <div class="status-preview">
+              <psh-avatar
+                src="https://i.pravatar.cc/300?img=2"
+                alt="Alice Smith"
+                size="large"
+                status="online"
+              ></psh-avatar>
+            </div>
+            <div class="status-info">
+              <h4>Online</h4>
+              <code class="status-code">status="online"</code>
+              <p class="status-description">L'utilisateur est connecté et disponible.</p>
+            </div>
+          </div>
+
+          <div class="status-card">
+            <div class="status-preview">
+              <psh-avatar
+                src="https://i.pravatar.cc/300?img=4"
+                alt="Carol Wilson"
+                size="large"
+                status="away"
+              ></psh-avatar>
+            </div>
+            <div class="status-info">
+              <h4>Away</h4>
+              <code class="status-code">status="away"</code>
+              <p class="status-description">L'utilisateur est absent temporairement.</p>
+            </div>
+          </div>
+
+          <div class="status-card">
+            <div class="status-preview">
+              <psh-avatar
+                src="https://i.pravatar.cc/300?img=5"
+                alt="David Brown"
+                size="large"
+                status="busy"
+              ></psh-avatar>
+            </div>
+            <div class="status-info">
+              <h4>Busy</h4>
+              <code class="status-code">status="busy"</code>
+              <p class="status-description">L'utilisateur est occupé et ne souhaite pas être dérangé.</p>
+            </div>
+          </div>
+
+          <div class="status-card">
+            <div class="status-preview">
+              <psh-avatar
+                src="https://i.pravatar.cc/300?img=3"
+                alt="Bob Johnson"
+                size="large"
+                status="offline"
+              ></psh-avatar>
+            </div>
+            <div class="status-info">
+              <h4>Offline</h4>
+              <code class="status-code">status="offline"</code>
+              <p class="status-description">L'utilisateur est déconnecté.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Documentation API - Section Pleine Largeur -->
+    <section class="api-section">
+      <h3 class="section-title">Documentation API</h3>
+      <div class="api-container">
+        <div class="api-intro">
+          <p>Le composant Avatar utilise des <strong>input signals</strong> pour une API simple et performante, conforme aux standards Angular 20.</p>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Input Signals)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>src</code></td>
+                <td><code>string | undefined</code></td>
+                <td><code>undefined</code></td>
+                <td>URL de l'image avatar. Priorité la plus haute dans le fallback.</td>
+              </tr>
+              <tr>
+                <td><code>alt</code></td>
+                <td><code>string</code></td>
+                <td><code>'User avatar'</code></td>
+                <td>Texte alternatif pour l'accessibilité (attribut alt de l'image).</td>
+              </tr>
+              <tr>
+                <td><code>size</code></td>
+                <td><code>'small' | 'medium' | 'large' | 'xlarge'</code></td>
+                <td><code>'medium'</code></td>
+                <td>Taille de l'avatar (32px, 40px, 48px, 64px).</td>
+              </tr>
+              <tr>
+                <td><code>shape</code></td>
+                <td><code>'circle' | 'square'</code></td>
+                <td><code>'circle'</code></td>
+                <td>Forme de l'avatar (rond ou carré avec coins arrondis).</td>
+              </tr>
+              <tr>
+                <td><code>initials</code></td>
+                <td><code>string</code></td>
+                <td><code>''</code></td>
+                <td>Initiales à afficher si aucune image n'est fournie.</td>
+              </tr>
+              <tr>
+                <td><code>icon</code></td>
+                <td><code>string</code></td>
+                <td><code>'user'</code></td>
+                <td>Nom de l'icône Phosphor à afficher en dernier recours.</td>
+              </tr>
+              <tr>
+                <td><code>status</code></td>
+                <td><code>'online' | 'offline' | 'away' | 'busy' | undefined</code></td>
+                <td><code>undefined</code></td>
+                <td>Indicateur de statut affiché en badge sur l'avatar.</td>
+              </tr>
+              <tr>
+                <td><code>ariaLabel</code></td>
+                <td><code>string | undefined</code></td>
+                <td><code>undefined</code></td>
+                <td>Label ARIA personnalisé (fallback vers alt si non défini).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-usage-example">
+          <h4>Exemple d'Utilisation Complète</h4>
+          <ds-code-snippet [code]="fullExampleCode" language="typescript" />
+        </div>
+
+        <div class="api-fallback">
+          <h4>Système de Fallback</h4>
+          <p>Le composant applique une logique de fallback automatique pour garantir un affichage cohérent :</p>
+          <ol class="fallback-list">
+            <li><strong>Image</strong> (<code>src</code>) : Si fournie et valide</li>
+            <li><strong>Initiales</strong> (<code>initials</code>) : Si pas d'image valide</li>
+            <li><strong>Icône</strong> (<code>icon</code>) : En dernier recours (défaut: 'user')</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

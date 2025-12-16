@@ -1,0 +1,569 @@
+<ds-demo-page-layout
+  title="Sidebar Navigation System"
+  introText="The sidebar component provides a flexible navigation container with three distinct modes: fixed, overlay, and collapsible. It includes responsive behavior, accessibility features, keyboard navigation, and automatic focus management for an optimal user experience."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Application-Level Sidebar Demos -->
+    <!-- Fixed Sidebar Demo -->
+    <psh-sidebar
+      [(open)]="isFixedOpen"
+      mode="fixed"
+      [position]="fixedPosition"
+      width="250px"
+      (toggle)="handleToggle($event, 'fixed')"
+    >
+      <div class="sidebar-content">
+        <div class="sidebar-header">
+          <h3>Navigation</h3>
+        </div>
+        <psh-menu [items]="menuItems"></psh-menu>
+      </div>
+    </psh-sidebar>
+
+    <!-- Overlay Sidebar Demo -->
+    <psh-sidebar
+      [(open)]="isOverlayOpen"
+      mode="overlay"
+      [position]="overlayPosition"
+      width="320px"
+      (toggle)="handleToggle($event, 'overlay')"
+      (opened)="onSidebarOpened()"
+      (closed)="onSidebarClosed()"
+      (transitionStart)="onTransitionStart($event)"
+      ariaLabel="Filters and options panel"
+    >
+      <div class="sidebar-content">
+        <div class="sidebar-header">
+          <h3>Filters</h3>
+          <psh-button
+            appearance="text"
+            variant="primary"
+            icon="x"
+            size="small"
+            iconPosition="only"
+            (clicked)="isOverlayOpen = false"
+            ariaLabel="Close sidebar"
+          >
+          </psh-button>
+        </div>
+        <div class="sidebar-body">
+          <psh-input placeholder="Search..." [fullWidth]="true"></psh-input>
+          <psh-select placeholder="Category" [fullWidth]="true"></psh-select>
+          <div class="checkbox-group">
+            <psh-checkbox>Show archived items</psh-checkbox>
+            <psh-checkbox>Include drafts</psh-checkbox>
+            <psh-checkbox>Display hidden</psh-checkbox>
+          </div>
+        </div>
+      </div>
+    </psh-sidebar>
+
+
+    <!-- Sidebar Modes Overview -->
+    <section class="sidebar-modes-section">
+      <h3 class="section-title">Sidebar Modes</h3>
+      <div class="modes-container">
+        <div class="modes-intro">
+          <p>The sidebar supports three distinct modes to accommodate different layout requirements and user interaction patterns. Each mode offers unique benefits tailored to specific use cases.</p>
+        </div>
+        <div class="modes-grid">
+          <div class="mode-card">
+            <div class="mode-preview">
+              <div class="preview-wrapper">
+                <div class="sidebar-visual fixed-visual">
+                  <div class="sidebar-mock"></div>
+                  <div class="content-mock">
+                    <div class="content-line"></div>
+                    <div class="content-line"></div>
+                    <div class="content-line"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mode-info">
+              <h4>Fixed Mode</h4>
+              <p>Always visible and occupies dedicated layout space. The sidebar remains persistently open, pushing main content to the side. Perfect for desktop applications requiring constant access to navigation.</p>
+              <ds-code-snippet [code]="fixedModeCode" />
+            </div>
+          </div>
+
+          <div class="mode-card">
+            <div class="mode-preview">
+              <div class="preview-wrapper">
+                <div class="sidebar-visual overlay-visual">
+                  <div class="backdrop-mock"></div>
+                  <div class="sidebar-mock overlay"></div>
+                  <div class="content-mock">
+                    <div class="content-line"></div>
+                    <div class="content-line"></div>
+                    <div class="content-line"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mode-info">
+              <h4>Overlay Mode</h4>
+              <p>Appears on top of content with a backdrop. Closes when clicking outside or pressing Escape. Ideal for temporary actions like filters, settings panels, or mobile navigation menus.</p>
+              <ds-code-snippet [code]="overlayModeCode" />
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Demonstrations -->
+    <section class="sidebar-demos-section">
+      <h3 class="section-title">Interactive Demonstrations</h3>
+      <div class="demos-container">
+        <div class="demos-intro">
+          <p>Experience each sidebar mode in action with interactive controls. Toggle positions, open and close sidebars, and see how different configurations behave in real-time.</p>
+        </div>
+
+        <div class="demos-grid">
+        <!-- Fixed Sidebar Demo -->
+        <div class="demo-showcase">
+          <h4 class="demo-title">Fixed Sidebar</h4>
+          <div class="demo-card">
+            <div class="demo-controls">
+              <div class="control-group">
+                <label class="control-label">Position:</label>
+                <div class="button-group">
+                  <psh-button
+                    appearance="outline"
+                    variant="primary"
+                    size="small"
+                    [appearance]="fixedPosition === 'left' ? 'filled' : 'outline'"
+                    (clicked)="fixedPosition = 'left'"
+                  >
+                    Left
+                  </psh-button>
+                  <psh-button
+                    appearance="outline"
+                    variant="primary"
+                    size="small"
+                    [appearance]="fixedPosition === 'right' ? 'filled' : 'outline'"
+                    (clicked)="fixedPosition = 'right'"
+                  >
+                    Right
+                  </psh-button>
+                </div>
+              </div>
+              <div class="control-group">
+                <psh-button
+                  appearance="filled"
+                  variant="secondary"
+                  size="small"
+                  (clicked)="toggleFixed()"
+                >
+                  {{ isFixedOpen ? 'Close' : 'Open' }} Sidebar
+                </psh-button>
+              </div>
+            </div>
+            <div class="demo-preview">
+              <div class="demo-status-content">
+                <div class="status-icon">
+                  <i class="ph ph-sidebar"></i>
+                </div>
+                <h4>Fixed Sidebar Demo</h4>
+                <p>The fixed sidebar will be displayed at the <strong>{{ fixedPosition }}</strong> side of the entire application when opened. It remains persistently visible and pushes the main content aside.</p>
+                <div class="status-info">
+                  <div class="status-item">
+                    <span class="status-label">Current State:</span>
+                    <span class="status-value" [class.state-open]="isFixedOpen" [class.state-closed]="!isFixedOpen">
+                      {{ isFixedOpen ? 'Open' : 'Closed' }}
+                    </span>
+                  </div>
+                  <div class="status-item">
+                    <span class="status-label">Position:</span>
+                    <span class="status-value">{{ fixedPosition }}</span>
+                  </div>
+                  <div class="status-item">
+                    <span class="status-label">Width:</span>
+                    <span class="status-value">250px</span>
+                  </div>
+                </div>
+                <p class="demo-instruction">Use the controls above to toggle the sidebar open/closed and change its position. The sidebar is rendered at the application level and affects the entire layout.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Overlay Sidebar Demo -->
+        <div class="demo-showcase">
+          <h4 class="demo-title">Overlay Sidebar</h4>
+          <div class="demo-card">
+            <div class="demo-controls">
+              <div class="control-group">
+                <label class="control-label">Position:</label>
+                <div class="button-group">
+                  <psh-button
+                    appearance="outline"
+                    variant="primary"
+                    size="small"
+                    [appearance]="overlayPosition === 'left' ? 'filled' : 'outline'"
+                    (clicked)="setOverlayPosition('left')"
+                  >
+                    Left
+                  </psh-button>
+                  <psh-button
+                    appearance="outline"
+                    variant="primary"
+                    size="small"
+                    [appearance]="overlayPosition === 'right' ? 'filled' : 'outline'"
+                    (clicked)="setOverlayPosition('right')"
+                  >
+                    Right
+                  </psh-button>
+                </div>
+              </div>
+              <div class="control-group">
+                <psh-button
+                  appearance="filled"
+                  variant="secondary"
+                  size="small"
+                  (clicked)="isOverlayOpen = true"
+                >
+                  Open Overlay Sidebar
+                </psh-button>
+              </div>
+            </div>
+            <div class="demo-preview">
+              <div class="demo-status-content">
+                <div class="status-icon">
+                  <i class="ph ph-sidebar"></i>
+                </div>
+                <h4>Overlay Sidebar Demo</h4>
+                <p>Click the button above to open the overlay sidebar from the <strong>{{ overlayPosition }}</strong> side. The sidebar will appear on top of all content with a backdrop.</p>
+                <div class="status-info">
+                  <div class="status-item">
+                    <span class="status-label">Current State:</span>
+                    <span class="status-value" [class.state-open]="isOverlayOpen" [class.state-closed]="!isOverlayOpen">
+                      {{ isOverlayOpen ? 'Open' : 'Closed' }}
+                    </span>
+                  </div>
+                  <div class="status-item">
+                    <span class="status-label">Position:</span>
+                    <span class="status-value">{{ overlayPosition }}</span>
+                  </div>
+                  <div class="status-item">
+                    <span class="status-label">Width:</span>
+                    <span class="status-value">320px</span>
+                  </div>
+                </div>
+                <div class="feature-highlight">
+                  <h5>Interactive Features:</h5>
+                  <ul>
+                    <li><i class="ph ph-mouse-simple"></i> Click outside the sidebar to close</li>
+                    <li><i class="ph ph-keyboard"></i> Press <kbd>Escape</kbd> to dismiss</li>
+                    <li><i class="ph ph-lock"></i> Focus trap prevents background interaction</li>
+                    <li><i class="ph ph-eye"></i> Backdrop overlay dims the content</li>
+                  </ul>
+                </div>
+                <p class="demo-instruction">When the overlay sidebar is open, it will appear at the application level with full z-index layering and backdrop support.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Configuration Options -->
+    <section class="sidebar-config-section">
+      <h3 class="section-title">Configuration Options</h3>
+      <div class="config-container">
+        <div class="config-intro">
+          <p>The sidebar component offers extensive configuration options to customize its behavior, appearance, and interaction patterns. All properties are reactive and can be changed dynamically.</p>
+        </div>
+        <div class="config-grid">
+          <div class="config-card">
+            <div class="config-icon">
+              <i class="ph ph-arrows-left-right"></i>
+            </div>
+            <div class="config-info">
+              <h4>Width Customization</h4>
+              <p>Control the sidebar width. Supports any valid CSS width value including pixels, percentages, and viewport units.</p>
+              <div class="config-example">
+                <code>width="280px"</code>
+              </div>
+            </div>
+          </div>
+
+          <div class="config-card">
+            <div class="config-icon">
+              <i class="ph ph-devices"></i>
+            </div>
+            <div class="config-info">
+              <h4>Responsive Breakpoint</h4>
+              <p>Define the viewport width at which the sidebar automatically switches to overlay mode on mobile devices. Ensures optimal mobile experience.</p>
+              <div class="config-example">
+                <code>breakpoint="768px"</code>
+              </div>
+            </div>
+          </div>
+
+          <div class="config-card">
+            <div class="config-icon">
+              <i class="ph ph-cursor-click"></i>
+            </div>
+            <div class="config-info">
+              <h4>Auto Focus</h4>
+              <p>Automatically focus the first interactive element when the sidebar opens. Improves keyboard navigation and accessibility for users relying on assistive technologies.</p>
+              <div class="config-example">
+                <code>[autoFocus]="true"</code>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="config-card">
+            <div class="config-icon">
+              <i class="ph ph-ear"></i>
+            </div>
+            <div class="config-info">
+              <h4>ARIA Labels</h4>
+              <p>Provide custom accessibility labels for screen readers. Essential for ensuring all users can navigate and understand the sidebar's purpose and current state.</p>
+              <div class="config-example">
+                <code>ariaLabel="Main navigation"</code>
+              </div>
+            </div>
+          </div>
+
+          <div class="config-card">
+            <div class="config-icon">
+              <i class="ph ph-arrows-out-cardinal"></i>
+            </div>
+            <div class="config-info">
+              <h4>Position Control</h4>
+              <p>Place the sidebar on either the left or right side of the layout. The position is fully reactive and can be changed dynamically based on user preferences or layout requirements.</p>
+              <div class="config-example">
+                <code>position="left"</code>
+                <code>position="right"</code>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- API Documentation -->
+    <section class="api-section">
+      <h3 class="section-title">API Documentation</h3>
+      <div class="api-container">
+        <div class="api-intro">
+          <p>The Sidebar component uses <strong>model inputs</strong> for two-way data binding and <strong>input signals</strong> for reactive properties, providing a modern, performant API that leverages Angular 20's latest features.</p>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Model Inputs (Two-Way Binding)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Property</th>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>open</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Controls the open/closed state of the sidebar (two-way bindable with [(open)])</td>
+              </tr>
+              <tr>
+                <td><code>mode</code></td>
+                <td><code>SidebarMode</code></td>
+                <td><code>'fixed'</code></td>
+                <td>'fixed' | 'overlay' - Display mode of the sidebar</td>
+              </tr>
+              <tr>
+                <td><code>position</code></td>
+                <td><code>SidebarPosition</code></td>
+                <td><code>'left'</code></td>
+                <td>'left' | 'right' - Position of the sidebar in the layout</td>
+              </tr>
+              <tr>
+                <td><code>width</code></td>
+                <td><code>string</code></td>
+                <td><code>'250px'</code></td>
+                <td>Width of the sidebar when expanded (any valid CSS width value)</td>
+              </tr>
+              <tr>
+                <td><code>breakpoint</code></td>
+                <td><code>string</code></td>
+                <td><code>'768px'</code></td>
+                <td>Viewport width at which sidebar switches to overlay mode on mobile</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Input Signals</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Property</th>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>autoFocus</code></td>
+                <td><code>boolean</code></td>
+                <td><code>true</code></td>
+                <td>Automatically focus first interactive element when sidebar opens</td>
+              </tr>
+              <tr>
+                <td><code>ariaLabel</code></td>
+                <td><code>string</code></td>
+                <td><code>'Sidebar navigation'</code></td>
+                <td>Accessible label for screen readers describing sidebar purpose</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Output Events</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Event</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>toggle</code></td>
+                <td><code>EventEmitter&lt;boolean&gt;</code></td>
+                <td>Emitted when sidebar state changes, passes new open/closed state</td>
+              </tr>
+              <tr>
+                <td><code>opened</code></td>
+                <td><code>EventEmitter&lt;void&gt;</code></td>
+                <td>Emitted when sidebar has fully opened (after transition completes)</td>
+              </tr>
+              <tr>
+                <td><code>closed</code></td>
+                <td><code>EventEmitter&lt;void&gt;</code></td>
+                <td>Emitted when sidebar has fully closed (after transition completes)</td>
+              </tr>
+              <tr>
+                <td><code>transitionStart</code></td>
+                <td><code>EventEmitter&lt;boolean&gt;</code></td>
+                <td>Emitted when open/close transition begins, passes target state (true=opening, false=closing)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-usage-example">
+          <h4>Complete Usage Example</h4>
+          <div class="code-block">
+            <pre><code>import &#123; PshSidebarComponent, PshMenuComponent &#125; from 'ps-helix';
+
+&#64;Component(&#123;
+  standalone: true,
+  imports: [PshSidebarComponent, PshMenuComponent],
+  template: `
+    &lt;psh-sidebar
+      [(open)]="isSidebarOpen"
+      mode="overlay"
+      position="left"
+      width="280px"
+      breakpoint="768px"
+      [autoFocus]="true"
+      ariaLabel="Main navigation menu"
+      (toggle)="handleSidebarToggle($event)"
+      (opened)="onSidebarOpened()"
+      (closed)="onSidebarClosed()"
+      (transitionStart)="onTransitionStart($event)"
+    &gt;
+      &lt;div class="sidebar-header"&gt;
+        &lt;h3&gt;Navigation&lt;/h3&gt;
+      &lt;/div&gt;
+      &lt;psh-menu [items]="navigationItems"&gt;&lt;/psh-menu&gt;
+    &lt;/psh-sidebar&gt;
+
+    &lt;button (click)="isSidebarOpen = !isSidebarOpen"&gt;
+      Toggle Sidebar
+    &lt;/button&gt;
+  `
+&#125;)
+export class AppComponent &#123;
+  isSidebarOpen = false;
+
+  navigationItems = [
+    &#123; id: 'dashboard', content: 'Dashboard', icon: 'chart-line' &#125;,
+    &#123; id: 'users', content: 'Users', icon: 'users' &#125;,
+    &#123; id: 'settings', content: 'Settings', icon: 'gear' &#125;
+  ];
+
+  handleSidebarToggle(isOpen: boolean): void &#123;
+    console.log('Sidebar toggled:', isOpen);
+  &#125;
+
+  onSidebarOpened(): void &#123;
+    console.log('Sidebar is now fully open');
+  &#125;
+
+  onSidebarClosed(): void &#123;
+    console.log('Sidebar is now fully closed');
+  &#125;
+
+  onTransitionStart(opening: boolean): void &#123;
+    console.log('Transition started:', opening ? 'opening' : 'closing');
+  &#125;
+&#125;</code></pre>
+          </div>
+        </div>
+
+        <div class="api-usage-example">
+          <h4>Configuration Injection Token</h4>
+          <div class="code-block">
+            <pre><code>import &#123; SIDEBAR_CONFIG &#125; from 'ps-helix';
+
+// Provide custom default configuration at root level
+bootstrapApplication(AppComponent, &#123;
+  providers: [
+    &#123;
+      provide: SIDEBAR_CONFIG,
+      useValue: &#123;
+        mode: 'fixed',
+        position: 'left',
+        width: '280px',
+        breakpoint: '1024px',
+        autoFocus: true,
+        ariaLabel: 'Application navigation'
+      &#125;
+    &#125;
+  ]
+&#125;);</code></pre>
+          </div>
+        </div>
+
+        <div class="api-best-practices">
+          <h4>Accessibility Best Practices</h4>
+          <ul class="best-practices-list">
+            <li><strong>Semantic Role</strong>: The sidebar automatically uses <code>role="complementary"</code> which is appropriate for navigation sidebars. For overlay mode, <code>aria-modal="true"</code> is added automatically.</li>
+            <li><strong>ARIA Labels</strong>: Always provide a descriptive <code>ariaLabel</code> that clearly explains the sidebar's purpose. Avoid generic labels like "sidebar" - use specific descriptions like "Main navigation menu" or "Filters panel".</li>
+            <li><strong>Keyboard Navigation</strong>: The sidebar supports full keyboard navigation with <kbd>Tab</kbd> for focus movement, <kbd>Escape</kbd> to close overlay mode, and automatic focus trapping in overlay mode to prevent focus escaping.</li>
+            <li><strong>Focus Management</strong>: When <code>autoFocus</code> is enabled, the first focusable element receives focus on open. On close, focus returns to the triggering element, maintaining proper focus flow.</li>
+            <li><strong>State Communication</strong>: The sidebar's state is communicated via <code>aria-expanded</code> and <code>aria-hidden</code> attributes, ensuring screen readers announce state changes to users.</li>
+            <li><strong>Mobile Considerations</strong>: The automatic breakpoint behavior ensures mobile users get the overlay experience by default, which is more touch-friendly and follows mobile UX best practices.</li>
+            <li><strong>Color Contrast</strong>: Ensure sidebar content maintains WCAG AA contrast ratios (4.5:1 for text, 3:1 for interactive elements) against the sidebar background.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

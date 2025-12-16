@@ -1,0 +1,74 @@
+<ds-demo-page-layout 
+  title="Principes de Design"
+  introText="Nos principes de design guident la création d'interfaces cohérentes, accessibles et performantes. Ils constituent le fondement de notre approche de conception et assurent une expérience utilisateur optimale."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Principles Section - Full Width -->
+    <section class="principles-section">
+      <h3 class="principles-title">Nos 6 Principes Fondamentaux</h3>
+      <div class="principles-grid">
+        @for (principle of principles; track principle.title) {
+          <div class="principle-card">
+            <div class="principle-header">
+              <i class="ph ph-{{ principle.icon }}" aria-hidden="true"></i>
+              <h4>{{ principle.title }}</h4>
+            </div>
+            <p class="principle-description">{{ principle.description }}</p>
+            <ul class="principle-examples">
+              @for (example of principle.examples; track example) {
+                <li>{{ example }}</li>
+              }
+            </ul>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- Application Section - Full Width -->
+    <section class="application-section">
+      <h3 class="section-title">Application Pratique</h3>
+      <div class="application-grid">
+        <div class="application-card">
+          <div class="application-header">
+            <i class="ph ph-code" aria-hidden="true"></i>
+            <h4>Dans le Code</h4>
+          </div>
+          <ul class="application-list">
+            <li>Utilisation systématique des variables CSS</li>
+            <li>Patterns de composants cohérents</li>
+            <li>Documentation technique intégrée</li>
+            <li>Tests d'accessibilité automatisés</li>
+          </ul>
+        </div>
+        
+        <div class="application-card">
+          <div class="application-header">
+            <i class="ph ph-paint-brush" aria-hidden="true"></i>
+            <h4>Dans le Design</h4>
+          </div>
+          <ul class="application-list">
+            <li>Grille de base 8 points respectée</li>
+            <li>Hiérarchie typographique claire</li>
+            <li>Palette de couleurs sémantique</li>
+            <li>Iconographie cohérente</li>
+          </ul>
+        </div>
+        
+        <div class="application-card">
+          <div class="application-header">
+            <i class="ph ph-users" aria-hidden="true"></i>
+            <h4>Dans l'Expérience</h4>
+          </div>
+          <ul class="application-list">
+            <li>Feedback immédiat et clair</li>
+            <li>Navigation intuitive</li>
+            <li>Charge cognitive réduite</li>
+            <li>Inclusion pour tous les utilisateurs</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+</ds-demo-page-layout>

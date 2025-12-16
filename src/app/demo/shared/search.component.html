@@ -1,0 +1,67 @@
+<div class="search-container">
+  <div class="search-input-wrapper">
+    <i class="ph ph-magnifying-glass search-icon" aria-hidden="true"></i>
+    <input
+      type="text"
+      class="search-input"
+      [placeholder]="'SEARCH.PLACEHOLDER' | translate"
+      [value]="searchQuery()"
+      (input)="onSearchInput($event)"
+      (keydown)="handleKeyDown($event)"
+      [attr.aria-label]="'SEARCH.ARIA_LABEL' | translate"
+      [attr.aria-expanded]="hasResults()"
+      [attr.aria-controls]="hasResults() ? 'search-results' : null"
+      role="combobox"
+      aria-autocomplete="list"
+    />
+    @if (searchQuery()) {
+      <button
+        class="search-clear"
+        (click)="clearSearch()"
+        [attr.aria-label]="'SEARCH.CLEAR' | translate"
+        type="button"
+      >
+        <i class="ph ph-x" aria-hidden="true"></i>
+      </button>
+    }
+    <kbd class="search-shortcut">Ctrl+K</kbd>
+  </div>
+
+  @if (hasResults()) {
+    <div
+      class="search-results"
+      id="search-results"
+      role="listbox"
+      [attr.aria-label]="'SEARCH.RESULTS_LABEL' | translate"
+    >
+      @for (result of filteredResults(); track result.item.path; let i = $index) {
+        <button
+          class="search-result"
+          [class.selected]="i === selectedIndex()"
+          (click)="selectResult(result.item.path)"
+          role="option"
+          [attr.aria-selected]="i === selectedIndex()"
+          type="button"
+        >
+          <div class="search-result-content">
+            <span class="search-result-label">{{ result.item.label | translate }}</span>
+            <span class="search-result-section">{{ result.sectionTranslated }}</span>
+          </div>
+          <i class="ph ph-arrow-right search-result-icon" aria-hidden="true"></i>
+        </button>
+      }
+      <div class="search-results-footer">
+        <span class="search-results-count">
+          {{ 'SEARCH.RESULTS_COUNT' | translate: { count: filteredResults().length } }}
+        </span>
+      </div>
+    </div>
+  }
+
+  @if (showNoResults()) {
+    <div class="search-no-results">
+      <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
+      <p>{{ 'SEARCH.NO_RESULTS' | translate }}</p>
+    </div>
+  }
+</div>

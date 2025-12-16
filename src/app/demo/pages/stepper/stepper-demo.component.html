@@ -1,0 +1,581 @@
+<ds-demo-page-layout
+  title="Système de Stepper"
+  introText="Le stepper guide les utilisateurs à travers un processus en plusieurs étapes de manière intuitive et accessible. Il offre une navigation claire, une validation progressive et une excellente expérience utilisateur."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Stepper Basique - Section Pleine Largeur -->
+    <section class="stepper-basic-section">
+      <h3 class="section-title">Stepper Basique</h3>
+      <div class="basic-container">
+        <div class="basic-intro">
+          <p>Le stepper basique permet de guider l'utilisateur à travers un processus multi-étapes avec une navigation intuitive et une progression visuelle claire.</p>
+        </div>
+        <div class="basic-content">
+          <div class="basic-demo">
+            <psh-stepper
+              #basicStepper
+              [(activeStep)]="activeStep"
+              [linear]="false"
+              (stepChange)="handleStepChange($event)"
+              (completed)="handleComplete()"
+            >
+              <psh-step title="Informations" icon="user">
+                <div class="step-content-demo">
+                  <h4>Informations Personnelles</h4>
+                  <p>Collectez les informations de base de l'utilisateur. Cette première étape établit le contexte du processus.</p>
+                  <div class="step-actions">
+                    <psh-button appearance="filled" variant="primary" (clicked)="nextStep()">
+                      Suivant
+                    </psh-button>
+                  </div>
+                </div>
+              </psh-step>
+
+              <psh-step title="Configuration" icon="gear">
+                <div class="step-content-demo">
+                  <h4>Configuration du Compte</h4>
+                  <p>Configurez les paramètres essentiels. Les utilisateurs peuvent personnaliser leur expérience.</p>
+                  <div class="step-actions">
+                    <psh-button appearance="text" variant="primary" (clicked)="previousStep()">
+                      Retour
+                    </psh-button>
+                    <psh-button appearance="filled" variant="primary" (clicked)="nextStep()">
+                      Suivant
+                    </psh-button>
+                  </div>
+                </div>
+              </psh-step>
+
+              <psh-step title="Confirmation" icon="check">
+                <div class="step-content-demo">
+                  <h4>Confirmation</h4>
+                  <p>Vérifiez et confirmez les informations saisies avant de finaliser le processus.</p>
+                  <div class="step-actions">
+                    <psh-button appearance="text" variant="primary" (clicked)="previousStep()">
+                      Retour
+                    </psh-button>
+                    <psh-button appearance="filled" variant="success" (clicked)="completeProcess()">
+                      Terminer
+                    </psh-button>
+                  </div>
+                </div>
+              </psh-step>
+            </psh-stepper>
+          </div>
+          <div class="basic-doc">
+            <h4>Caractéristiques</h4>
+            <ul class="feature-list">
+              <li><strong>Navigation</strong> : Navigation bidirectionnelle entre les étapes</li>
+              <li><strong>Progression</strong> : Indicateur visuel clair de l'avancement</li>
+              <li><strong>Validation</strong> : Support de validation par étape</li>
+              <li><strong>Accessibilité</strong> : Navigation au clavier complète (flèches, Home, End)</li>
+            </ul>
+            <ds-code-snippet [code]="basicStepperCode" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Validation de Formulaires - Section Pleine Largeur -->
+    <section class="stepper-forms-section">
+      <h3 class="section-title">Validation de Formulaires</h3>
+      <div class="forms-container">
+        <div class="forms-intro">
+          <p>Le stepper peut être intégré avec des formulaires pour valider les données à chaque étape et empêcher la progression si les informations sont invalides.</p>
+        </div>
+        <div class="forms-content">
+          <div class="forms-demo">
+            <psh-stepper
+              #formStepper
+              [(activeStep)]="formActiveStep"
+              [linear]="true"
+              [beforeStepChange]="validateStepChange.bind(this)"
+            >
+              <psh-step
+                title="Informations Personnelles"
+                icon="user"
+                [completed]="isStep1Valid()"
+                [error]="!isStep1Valid() && step1Form.touched ? 'Veuillez remplir tous les champs requis' : undefined"
+              >
+                <form [formGroup]="step1Form" class="step-content-demo">
+                  <div class="form-group">
+                    <label for="firstName">Prénom *</label>
+                    <input id="firstName" type="text" formControlName="firstName">
+                  </div>
+                  <div class="form-group">
+                    <label for="lastName">Nom *</label>
+                    <input id="lastName" type="text" formControlName="lastName">
+                  </div>
+                  <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input id="email" type="email" formControlName="email">
+                  </div>
+                  <div class="step-actions">
+                    <psh-button
+                      appearance="filled"
+                      variant="primary"
+                      [disabled]="!step1Form.valid"
+                      (clicked)="step1Form.markAllAsTouched(); formNextStep()"
+                    >
+                      Suivant
+                    </psh-button>
+                  </div>
+                </form>
+              </psh-step>
+
+              <psh-step
+                title="Adresse"
+                icon="map-pin"
+                [completed]="isStep2Valid()"
+                [disabled]="!isStep1Valid()"
+              >
+                <form [formGroup]="step2Form" class="step-content-demo">
+                  <div class="form-group">
+                    <label for="address">Adresse *</label>
+                    <input id="address" type="text" formControlName="address">
+                  </div>
+                  <div class="form-group">
+                    <label for="city">Ville *</label>
+                    <input id="city" type="text" formControlName="city">
+                  </div>
+                  <div class="form-group">
+                    <label for="country">Pays *</label>
+                    <input id="country" type="text" formControlName="country">
+                  </div>
+                  <div class="step-actions">
+                    <psh-button appearance="text" variant="primary" (clicked)="formPreviousStep()">
+                      Retour
+                    </psh-button>
+                    <psh-button
+                      appearance="filled"
+                      variant="success"
+                      [disabled]="!step2Form.valid"
+                      (clicked)="step2Form.markAllAsTouched(); submitForms()"
+                    >
+                      Terminer
+                    </psh-button>
+                  </div>
+                </form>
+              </psh-step>
+            </psh-stepper>
+          </div>
+          <div class="forms-doc">
+            <h4>Fonctionnalités de Validation</h4>
+            <ul class="feature-list">
+              <li><strong>Mode linéaire</strong> : Force la validation séquentielle avec <code>[linear]="true"</code></li>
+              <li><strong>Validation asynchrone</strong> : Support de <code>beforeStepChange</code> pour validation async</li>
+              <li><strong>États visuels</strong> : Indicateurs <code>completed</code>, <code>error</code>, <code>disabled</code></li>
+              <li><strong>Intégration forms</strong> : Compatible avec les Reactive Forms Angular</li>
+            </ul>
+            <ds-code-snippet [code]="validationStepperCode" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Variantes - Section Pleine Largeur -->
+    <section class="stepper-variants-section">
+      <h3 class="section-title">Variantes de Stepper</h3>
+      <div class="variants-container">
+        <div class="variants-intro">
+          <p>Trois variantes visuelles sont disponibles pour s'adapter à différents contextes d'interface et besoins de design.</p>
+        </div>
+        <div class="variants-grid">
+          <div class="variant-card">
+            <div class="variant-preview">
+              <h4>Default</h4>
+              <psh-stepper variant="default">
+                <psh-step title="Étape 1" icon="user" [completed]="true">
+                  <p class="variant-content">Style par défaut avec icônes personnalisables.</p>
+                </psh-step>
+                <psh-step title="Étape 2" icon="gear">
+                  <p class="variant-content">Étape active en cours.</p>
+                </psh-step>
+                <psh-step title="Étape 3" icon="check">
+                  <p class="variant-content">Étape en attente.</p>
+                </psh-step>
+              </psh-stepper>
+            </div>
+            <div class="variant-info">
+              <p><strong>Usage</strong> : Processus standard avec icônes contextuelles</p>
+              <code class="variant-code">variant="default"</code>
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <h4>Numbered</h4>
+              <psh-stepper variant="numbered">
+                <psh-step title="Configuration" [completed]="true">
+                  <p class="variant-content">Numérotation automatique des étapes.</p>
+                </psh-step>
+                <psh-step title="Validation">
+                  <p class="variant-content">Étape numérotée active.</p>
+                </psh-step>
+                <psh-step title="Finalisation">
+                  <p class="variant-content">Dernière étape.</p>
+                </psh-step>
+              </psh-stepper>
+            </div>
+            <div class="variant-info">
+              <p><strong>Usage</strong> : Processus séquentiels et formulaires multi-pages</p>
+              <code class="variant-code">variant="numbered"</code>
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <h4>Progress</h4>
+              <psh-stepper
+                #progressStepper
+                variant="progress"
+                [(activeStep)]="progressActiveStep"
+                [linear]="false"
+              >
+                <psh-step
+                  title="Début"
+                  [completed]="progressStep1Completed()"
+                  [loading]="isProgressLoading() && progressActiveStep() === 0"
+                >
+                  <div class="variant-content">
+                    @if (isProgressLoading() && progressActiveStep() === 0) {
+                      <p><strong>Chargement en cours...</strong></p>
+                      <p>Simulation d'une opération asynchrone comme un appel API ou un upload de fichier.</p>
+                    } @else {
+                      <p>Indicateur de progression visuel pour processus asynchrones.</p>
+                      <psh-button
+                        appearance="filled"
+                        variant="primary"
+                        size="small"
+                        [disabled]="isProgressLoading()"
+                        (clicked)="simulateProgressLoading()"
+                      >
+                        Simuler le chargement
+                      </psh-button>
+                    }
+                  </div>
+                </psh-step>
+                <psh-step
+                  title="Milieu"
+                  [completed]="progressStep2Completed()"
+                  [loading]="isProgressLoading() && progressActiveStep() === 1"
+                >
+                  <div class="variant-content">
+                    @if (isProgressLoading() && progressActiveStep() === 1) {
+                      <p><strong>Chargement en cours...</strong></p>
+                      <p>Traitement des données en arrière-plan...</p>
+                    } @else {
+                      <p>Animation de progression pendant les opérations longues.</p>
+                      <psh-button
+                        appearance="filled"
+                        variant="primary"
+                        size="small"
+                        [disabled]="isProgressLoading()"
+                        (clicked)="simulateProgressLoading()"
+                      >
+                        Simuler le chargement
+                      </psh-button>
+                    }
+                  </div>
+                </psh-step>
+                <psh-step
+                  title="Fin"
+                  [completed]="progressActiveStep() === 2"
+                >
+                  <div class="variant-content">
+                    <p><strong>Processus terminé avec succès!</strong></p>
+                    <p>Toutes les étapes ont été complétées.</p>
+                  </div>
+                </psh-step>
+              </psh-stepper>
+            </div>
+            <div class="variant-info">
+              <p><strong>Usage</strong> : Onboarding, processus d'installation et opérations asynchrones</p>
+              <p><strong>Fonctionnalité</strong> : Affiche un spinner rotatif dans le step header pendant le chargement avec <code>[loading]="true"</code></p>
+              <code class="variant-code">variant="progress"</code>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Documentation API - Section Pleine Largeur -->
+    <section class="api-section">
+      <h3 class="section-title">Documentation API</h3>
+      <div class="api-container">
+        <div class="api-intro">
+          <p>Le composant Stepper utilise une API moderne avec <strong>model inputs</strong>, <strong>signals</strong> et <strong>contentChildren</strong> pour une intégration optimale avec Angular 20.</p>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés Stepper (Model Inputs)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>activeStep</code></td>
+                <td><code>number</code></td>
+                <td><code>0</code></td>
+                <td>Index de l'étape active (0-based). Support two-way binding</td>
+              </tr>
+              <tr>
+                <td><code>variant</code></td>
+                <td><code>StepperVariant</code></td>
+                <td><code>'default'</code></td>
+                <td>'default' | 'numbered' | 'progress'</td>
+              </tr>
+              <tr>
+                <td><code>linear</code></td>
+                <td><code>boolean</code></td>
+                <td><code>true</code></td>
+                <td>Force la progression séquentielle des étapes</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés Stepper (Input Signals)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>ariaLabels</code></td>
+                <td><code>Record&lt;string, string&gt;</code></td>
+                <td><code>undefined</code></td>
+                <td>Labels ARIA personnalisés pour l'accessibilité</td>
+              </tr>
+              <tr>
+                <td><code>beforeStepChange</code></td>
+                <td><code>Function</code></td>
+                <td><code>undefined</code></td>
+                <td>(from, to) => boolean | Promise&lt;boolean&gt; - Validation avant changement</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés Step (Inputs)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>title</code></td>
+                <td><code>string</code></td>
+                <td><code>required</code></td>
+                <td>Titre de l'étape affiché dans le header</td>
+              </tr>
+              <tr>
+                <td><code>subtitle</code></td>
+                <td><code>string</code></td>
+                <td><code>undefined</code></td>
+                <td>Sous-titre optionnel pour plus de contexte</td>
+              </tr>
+              <tr>
+                <td><code>icon</code></td>
+                <td><code>string</code></td>
+                <td><code>undefined</code></td>
+                <td>Nom de l'icône Phosphor à afficher</td>
+              </tr>
+              <tr>
+                <td><code>completed</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Marque l'étape comme complétée</td>
+              </tr>
+              <tr>
+                <td><code>disabled</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Désactive l'accès à l'étape</td>
+              </tr>
+              <tr>
+                <td><code>loading</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Affiche un spinner de chargement dans le header (uniquement pour variant="progress")</td>
+              </tr>
+              <tr>
+                <td><code>error</code></td>
+                <td><code>string</code></td>
+                <td><code>undefined</code></td>
+                <td>Message d'erreur affiché sous le titre</td>
+              </tr>
+              <tr>
+                <td><code>warning</code></td>
+                <td><code>string</code></td>
+                <td><code>undefined</code></td>
+                <td>Message d'avertissement affiché sous le titre</td>
+              </tr>
+              <tr>
+                <td><code>success</code></td>
+                <td><code>string</code></td>
+                <td><code>undefined</code></td>
+                <td>Message de succès affiché sous le titre</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Événements (Outputs)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Événement</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>stepChange</code></td>
+                <td><code>EventEmitter&lt;number&gt;</code></td>
+                <td>Émis lors du changement d'étape active</td>
+              </tr>
+              <tr>
+                <td><code>completed</code></td>
+                <td><code>EventEmitter&lt;void&gt;</code></td>
+                <td>Émis lorsque la dernière étape est complétée</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Méthodes Publiques</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Méthode</th>
+                <th>Signature</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>next()</code></td>
+                <td><code>(): Promise&lt;void&gt;</code></td>
+                <td>Navigue vers l'étape suivante si possible</td>
+              </tr>
+              <tr>
+                <td><code>previous()</code></td>
+                <td><code>(): Promise&lt;void&gt;</code></td>
+                <td>Navigue vers l'étape précédente</td>
+              </tr>
+              <tr>
+                <td><code>goToStep()</code></td>
+                <td><code>(index: number): Promise&lt;void&gt;</code></td>
+                <td>Navigue vers une étape spécifique par index</td>
+              </tr>
+              <tr>
+                <td><code>canGoNext()</code></td>
+                <td><code>(): boolean</code></td>
+                <td>Vérifie si la navigation vers l'étape suivante est possible</td>
+              </tr>
+              <tr>
+                <td><code>canGoPrevious()</code></td>
+                <td><code>(): boolean</code></td>
+                <td>Vérifie si la navigation vers l'étape précédente est possible</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-usage-example">
+          <h4>Exemple d'Utilisation Complète</h4>
+          <div class="code-block">
+            <pre><code>import &#123; PshStepperComponent, PshStepComponent &#125; from 'ps-helix';
+
+&#64;Component(&#123;
+  standalone: true,
+  imports: [PshStepperComponent, PshStepComponent],
+  template: `
+    &lt;psh-stepper
+      [(activeStep)]="currentStep"
+      [linear]="true"
+      [beforeStepChange]="validateStep"
+      (stepChange)="handleStepChange($event)"
+      (completed)="handleComplete()"
+    &gt;
+      &lt;psh-step
+        title="Informations"
+        subtitle="Données personnelles"
+        icon="user"
+        [completed]="step1Valid"
+        [error]="step1Error"
+      &gt;
+        &lt;!-- Contenu étape 1 --&gt;
+      &lt;/psh-step&gt;
+
+      &lt;psh-step
+        title="Confirmation"
+        icon="check"
+        [disabled]="!step1Valid"
+      &gt;
+        &lt;!-- Contenu étape 2 --&gt;
+      &lt;/psh-step&gt;
+    &lt;/psh-stepper&gt;
+  `
+&#125;)
+export class MyComponent &#123;
+  currentStep = signal(0);
+  step1Valid = computed(() => this.form.valid);
+
+  async validateStep(from: number, to: number): Promise&lt;boolean&gt; &#123;
+    if (from === 0 && !this.step1Valid()) &#123;
+      return false;
+    &#125;
+    return true;
+  &#125;
+
+  handleStepChange(step: number): void &#123;
+    console.log('Navigated to step:', step);
+  &#125;
+
+  handleComplete(): void &#123;
+    console.log('Process completed!');
+  &#125;
+&#125;</code></pre>
+          </div>
+        </div>
+
+        <div class="api-best-practices">
+          <h4>Bonnes Pratiques d'Accessibilité</h4>
+          <ul class="best-practices-list">
+            <li><strong>Navigation au clavier</strong> : Support complet des touches fléchées, Home, End, Enter et Espace pour naviguer entre les étapes</li>
+            <li><strong>Rôles ARIA</strong> : Utilisation de <code>role="tablist"</code>, <code>role="tab"</code> et <code>role="tabpanel"</code> pour une structure sémantique</li>
+            <li><strong>États ARIA</strong> : <code>aria-selected</code>, <code>aria-current</code>, <code>aria-disabled</code> et <code>aria-describedby</code> pour communiquer l'état</li>
+            <li><strong>Annonces dynamiques</strong> : Messages d'erreur avec <code>aria-live="polite"</code> pour les lecteurs d'écran</li>
+            <li><strong>Labels descriptifs</strong> : Fournissez des titres clairs et des sous-titres explicites pour chaque étape</li>
+            <li><strong>Indicateurs visuels</strong> : Outline de focus visible avec ratio de contraste minimum 3:1 selon WCAG 2.1</li>
+            <li><strong>Validation progressive</strong> : Validez chaque étape individuellement plutôt que tout à la fin pour réduire la charge cognitive</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

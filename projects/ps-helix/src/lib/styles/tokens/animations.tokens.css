@@ -1,0 +1,21 @@
+/* Design Tokens - Animation System */
+
+:root {
+  /* Animation durations */
+  --animation-duration-fast: 0.15s;
+  --animation-duration-normal: 0.2s;
+  --animation-duration-default: 0.3s;
+  --animation-duration-slow: 0.5s;
+
+  /* Animation easing functions */
+  --animation-easing-default: ease;
+  --animation-easing-in: ease-in;
+  --animation-easing-out: ease-out;
+  --animation-easing-in-out: ease-in-out;
+  --animation-easing-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Animation distances */
+  --animation-distance-sm: 10px;
+  --animation-distance-md: 20px;
+  --animation-distance-lg: 30px;
+}

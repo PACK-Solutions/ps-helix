@@ -1,0 +1,41 @@
+/* ============================================
+   HELIX DESIGN SYSTEM - DEMO STYLESHEET
+   ============================================ */
+
+/* 1. PHOSPHOR ICONS - Local imports */
+@import '@phosphor-icons/web/regular';
+@import '@phosphor-icons/web/fill';
+@import '@phosphor-icons/web/bold';
+@import '@phosphor-icons/web/light';
+
+/* 2. BASE - CSS Reset and Global Styles */
+@import '../projects/ps-helix/src/lib/styles/base/reset.css';
+@import '../projects/ps-helix/src/lib/styles/base/global.css';
+
+/* 3. DESIGN TOKENS - Primitive Values */
+@import '../projects/ps-helix/src/lib/styles/tokens/spacing.tokens.css';
+@import '../projects/ps-helix/src/lib/styles/tokens/sizing.tokens.css';
+@import '../projects/ps-helix/src/lib/styles/tokens/typography.tokens.css';
+@import '../projects/ps-helix/src/lib/styles/tokens/effects.tokens.css';
+@import '../projects/ps-helix/src/lib/styles/tokens/animations.tokens.css';
+@import '../projects/ps-helix/src/lib/styles/tokens/layout.tokens.css';
+
+/* 4. THEMES - Color Tokens and Theme Variables */
+@import '../projects/ps-helix/src/lib/styles/themes/light.css';
+@import '../projects/ps-helix/src/lib/styles/themes/dark.css';
+
+/* 5. UTILITY CLASSES - Functional Helpers */
+@import '../projects/ps-helix/src/lib/styles/utilities/spacing.utils.css';
+@import '../projects/ps-helix/src/lib/styles/utilities/typography.utils.css';
+@import '../projects/ps-helix/src/lib/styles/utilities/colors.utils.css';
+@import '../projects/ps-helix/src/lib/styles/utilities/layout.utils.css';
+@import '../projects/ps-helix/src/lib/styles/utilities/animations.utils.css';
+@import '../projects/ps-helix/src/lib/styles/utilities/focus.utils.css';
+@import '../projects/ps-helix/src/lib/styles/utilities/responsive.utils.css';
+
+/* Demo application utility classes only - all component-specific styles moved to demo-page-layout.component.css */
+
+.inputs-column {
+  flex-direction: column;
+  align-items: stretch;
+}

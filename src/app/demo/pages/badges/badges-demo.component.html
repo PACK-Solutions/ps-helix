@@ -1,0 +1,479 @@
+<ds-demo-page-layout
+  title="Système de Badges"
+  introText="Les badges permettent d'afficher des compteurs, des statuts ou des indicateurs de manière concise et visuelle. Ils sont parfaits pour les notifications, les statuts et les indicateurs numériques."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Variantes de Badges - Section Pleine Largeur -->
+    <section class="badge-variants-section">
+      <h3 class="section-title">Variantes de Badges</h3>
+      <div class="variants-container">
+        <div class="variants-intro">
+          <p>Les badges offrent différentes variantes visuelles pour communiquer des niveaux d'importance et de sémantique adaptés à chaque contexte.</p>
+        </div>
+        <div class="variants-grid">
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-badge variant="primary" displayType="text">
+                {{ 'BADGE.STATUS.IN_PROGRESS' | translate }}
+              </psh-badge>
+            </div>
+            <div class="variant-info">
+              <h4>Primary</h4>
+              <p>Pour les notifications générales et les compteurs d'informations standards.</p>
+              <ds-code-snippet [code]="badgePrimaryCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-badge variant="success" displayType="text">
+                {{ 'BADGE.STATUS.ACTIVE' | translate }}
+              </psh-badge>
+            </div>
+            <div class="variant-info">
+              <h4>Success</h4>
+              <p>Indique des états positifs, des confirmations et des statuts actifs.</p>
+              <ds-code-snippet [code]="badgeSuccessCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-badge variant="warning" displayType="text">
+                {{ 'BADGE.STATUS.PENDING' | translate }}
+              </psh-badge>
+            </div>
+            <div class="variant-info">
+              <h4>Warning</h4>
+              <p>Pour les états nécessitant attention ou les actions en attente.</p>
+              <ds-code-snippet [code]="badgeWarningCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-badge variant="danger" displayType="text">
+                {{ 'BADGE.STATUS.INACTIVE' | translate }}
+              </psh-badge>
+            </div>
+            <div class="variant-info">
+              <h4>Danger</h4>
+              <p>Pour les erreurs, les alertes critiques et les états négatifs.</p>
+              <ds-code-snippet [code]="badgeDangerCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-badge variant="disabled" displayType="text">
+                {{ 'BADGE.STATUS.DISABLED' | translate }}
+              </psh-badge>
+            </div>
+            <div class="variant-info">
+              <h4>Disabled</h4>
+              <p>Pour les états désactivés ou les fonctionnalités non disponibles.</p>
+              <ds-code-snippet [code]="badgeDisabledCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Types d'Affichage - Section Pleine Largeur -->
+    <section class="badge-types-section">
+      <h3 class="section-title">Types d'Affichage</h3>
+      <div class="types-container">
+        <div class="types-intro">
+          <p>Trois types d'affichage sont disponibles pour s'adapter à différents besoins de présentation de l'information.</p>
+        </div>
+        <div class="types-grid">
+          <div class="type-card">
+            <div class="type-preview">
+              <psh-badge
+                variant="primary"
+                displayType="dot"
+                ariaLabel="Statut actif"
+              ></psh-badge>
+            </div>
+            <div class="type-info">
+              <h4>Dot</h4>
+              <div class="type-specs">
+                <code class="type-code">displayType="dot"</code>
+              </div>
+              <p class="type-usage">Point indicateur simple pour les statuts binaires. Idéal pour les indicateurs de présence, disponibilité ou états actifs/inactifs.</p>
+            </div>
+          </div>
+
+          <div class="type-card">
+            <div class="type-preview">
+              <psh-badge
+                variant="primary"
+                displayType="counter"
+                [value]="demoValues.notifications"
+                ariaLabel="5 notifications"
+              ></psh-badge>
+            </div>
+            <div class="type-info">
+              <h4>Counter</h4>
+              <div class="type-specs">
+                <code class="type-code">displayType="counter"</code>
+              </div>
+              <p class="type-usage">Affichage numérique pour les compteurs de notifications, messages ou éléments. Supporte le formatage personnalisé et la limite maximale.</p>
+            </div>
+          </div>
+
+          <div class="type-card">
+            <div class="type-preview">
+              <psh-badge
+                variant="success"
+                displayType="text"
+              >Nouveau</psh-badge>
+            </div>
+            <div class="type-info">
+              <h4>Text</h4>
+              <div class="type-specs">
+                <code class="type-code">displayType="text"</code>
+              </div>
+              <p class="type-usage">Texte libre pour les étiquettes et les statuts descriptifs. Parfait pour afficher des états textuels courts et explicites.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tailles de Badges - Section Pleine Largeur -->
+    <section class="badge-sizes-section">
+      <h3 class="section-title">Tailles Disponibles</h3>
+      <div class="sizes-container">
+        <div class="sizes-intro">
+          <p>Trois tailles sont disponibles pour s'adapter à différents contextes d'utilisation et niveaux de hiérarchie visuelle.</p>
+        </div>
+        <div class="sizes-grid">
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-badge
+                variant="primary"
+                displayType="text"
+                size="small"
+              >Small</psh-badge>
+            </div>
+            <div class="size-info">
+              <h4>Small</h4>
+              <div class="size-specs">
+                <code class="size-code">size="small"</code>
+              </div>
+              <p class="size-usage">Taille compacte pour les interfaces denses, les listes détaillées ou les indicateurs discrets.</p>
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-badge
+                variant="primary"
+                displayType="text"
+                size="medium"
+              >Medium</psh-badge>
+            </div>
+            <div class="size-info">
+              <h4>Medium (Défaut)</h4>
+              <div class="size-specs">
+                <code class="size-code">size="medium"</code>
+              </div>
+              <p class="size-usage">Taille par défaut, équilibrée pour la plupart des cas d'usage et une bonne lisibilité.</p>
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-badge
+                variant="primary"
+                displayType="text"
+                size="large"
+              >Large</psh-badge>
+            </div>
+            <div class="size-info">
+              <h4>Large</h4>
+              <div class="size-specs">
+                <code class="size-code">size="large"</code>
+              </div>
+              <p class="size-usage">Taille emphase pour les indicateurs importants nécessitant une grande visibilité.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Formatage Personnalisé - Section Pleine Largeur -->
+    <section class="badge-formatting-section">
+      <h3 class="section-title">Formatage Personnalisé</h3>
+      <div class="formatting-container">
+        <div class="formatting-intro">
+          <p>Les badges supportent des fonctions de formatage personnalisées pour adapter l'affichage des valeurs selon vos besoins spécifiques.</p>
+        </div>
+        <div class="formatting-grid">
+          <div class="format-card">
+            <div class="format-preview">
+              <psh-badge
+                variant="primary"
+                displayType="counter"
+                [value]="demoValues.price"
+                [formatter]="priceFormatter"
+                ariaLabel="Prix: 42.99€"
+              ></psh-badge>
+            </div>
+            <div class="format-info">
+              <h4>Formatage Monétaire</h4>
+              <p>Affichage de prix avec formatage décimal et symbole de devise.</p>
+              <ds-code-snippet [code]="priceFormatterCode" language="typescript" />
+            </div>
+          </div>
+
+          <div class="format-card">
+            <div class="format-preview">
+              <psh-badge
+                variant="primary"
+                displayType="counter"
+                [value]="demoValues.messages"
+                [formatter]="numberFormatter"
+                ariaLabel="1250 messages"
+              ></psh-badge>
+            </div>
+            <div class="format-info">
+              <h4>Grands Nombres</h4>
+              <p>Simplification des grands nombres avec suffixes K, M pour une meilleure lisibilité.</p>
+              <ds-code-snippet [code]="numberFormatterCode" language="typescript" />
+            </div>
+          </div>
+
+          <div class="format-card">
+            <div class="format-preview">
+              <psh-badge
+                variant="success"
+                displayType="counter"
+                [value]="demoValues.progress"
+                [formatter]="percentageFormatter"
+                ariaLabel="Progression: 85%"
+              ></psh-badge>
+            </div>
+            <div class="format-info">
+              <h4>Pourcentages</h4>
+              <p>Affichage de valeurs en pourcentage avec symbole.</p>
+              <ds-code-snippet [code]="percentageFormatterCode" language="typescript" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Badges Superposés - Section Pleine Largeur -->
+    <section class="badge-overlap-section">
+      <h3 class="section-title">Badges Superposés</h3>
+      <div class="overlap-container">
+        <div class="overlap-intro">
+          <p>Les badges peuvent être superposés sur d'autres éléments comme des icônes ou des images avec un contrôle précis du positionnement.</p>
+        </div>
+        <div class="overlap-content">
+          <div class="overlap-demo">
+            <div class="overlap-examples">
+              <div class="overlap-example">
+                <div class="icon-wrapper">
+                  <i class="ph ph-bell"></i>
+                  <psh-badge
+                    variant="danger"
+                    displayType="counter"
+                    [value]="3"
+                    [overlap]="true"
+                    position="top-right"
+                    ariaLabel="3 notifications urgentes"
+                  ></psh-badge>
+                </div>
+                <span class="example-label">Notifications</span>
+              </div>
+
+              <div class="overlap-example">
+                <div class="icon-wrapper">
+                  <i class="ph ph-envelope"></i>
+                  <psh-badge
+                    variant="primary"
+                    displayType="counter"
+                    [value]="demoValues.messages"
+                    [overlap]="true"
+                    position="top-right"
+                    [formatter]="numberFormatter"
+                    ariaLabel="1250 messages non lus"
+                  ></psh-badge>
+                </div>
+                <span class="example-label">Messages</span>
+              </div>
+
+              <div class="overlap-example">
+                <div class="icon-wrapper">
+                  <i class="ph ph-user"></i>
+                  <psh-badge
+                    variant="success"
+                    displayType="dot"
+                    [overlap]="true"
+                    position="bottom-right"
+                    ariaLabel="Utilisateur en ligne"
+                  ></psh-badge>
+                </div>
+                <span class="example-label">Statut</span>
+              </div>
+
+              <div class="overlap-example">
+                <div class="icon-wrapper">
+                  <i class="ph ph-shopping-cart"></i>
+                  <psh-badge
+                    variant="primary"
+                    displayType="counter"
+                    [value]="7"
+                    [overlap]="true"
+                    position="top-left"
+                    ariaLabel="7 articles dans le panier"
+                  ></psh-badge>
+                </div>
+                <span class="example-label">Panier</span>
+              </div>
+            </div>
+          </div>
+          <div class="overlap-doc">
+            <h4>Positions Disponibles</h4>
+            <ul class="position-list">
+              <li><code>top-right</code> : Coin supérieur droit (défaut)</li>
+              <li><code>top-left</code> : Coin supérieur gauche</li>
+              <li><code>bottom-right</code> : Coin inférieur droit</li>
+              <li><code>bottom-left</code> : Coin inférieur gauche</li>
+            </ul>
+            <ds-code-snippet [code]="overlapBadgeCode" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Documentation API - Section Pleine Largeur -->
+    <section class="api-section">
+      <h3 class="section-title">Documentation API</h3>
+      <div class="api-container">
+        <div class="api-intro">
+          <p>Le composant Badge utilise des <strong>model inputs</strong> et des <strong>input signals</strong> pour une API simple et performante, conforme aux standards Angular 20.</p>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Model Inputs)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>variant</code></td>
+                <td><code>BadgeVariant</code></td>
+                <td><code>'primary'</code></td>
+                <td>'primary' | 'success' | 'warning' | 'danger' | 'disabled'</td>
+              </tr>
+              <tr>
+                <td><code>size</code></td>
+                <td><code>BadgeSize</code></td>
+                <td><code>'medium'</code></td>
+                <td>'small' | 'medium' | 'large'</td>
+              </tr>
+              <tr>
+                <td><code>displayType</code></td>
+                <td><code>BadgeDisplayType</code></td>
+                <td><code>'text'</code></td>
+                <td>'dot' | 'counter' | 'text'</td>
+              </tr>
+              <tr>
+                <td><code>content</code></td>
+                <td><code>string</code></td>
+                <td><code>''</code></td>
+                <td>Contenu textuel du badge</td>
+              </tr>
+              <tr>
+                <td><code>value</code></td>
+                <td><code>T</code></td>
+                <td><code>undefined</code></td>
+                <td>Valeur numérique pour le type counter</td>
+              </tr>
+              <tr>
+                <td><code>max</code></td>
+                <td><code>number</code></td>
+                <td><code>99</code></td>
+                <td>Valeur maximale avant affichage du suffixe +</td>
+              </tr>
+              <tr>
+                <td><code>showZero</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Afficher le badge quand la valeur est 0</td>
+              </tr>
+              <tr>
+                <td><code>position</code></td>
+                <td><code>BadgePosition</code></td>
+                <td><code>'top-right'</code></td>
+                <td>Position pour le mode overlap</td>
+              </tr>
+              <tr>
+                <td><code>visible</code></td>
+                <td><code>boolean</code></td>
+                <td><code>true</code></td>
+                <td>Contrôle la visibilité du badge</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Input Signals)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>overlap</code></td>
+                <td><code>boolean</code></td>
+                <td>Active le mode superposition sur l'élément parent</td>
+              </tr>
+              <tr>
+                <td><code>ariaLabel</code></td>
+                <td><code>string | undefined</code></td>
+                <td>Label ARIA personnalisé pour l'accessibilité</td>
+              </tr>
+              <tr>
+                <td><code>formatter</code></td>
+                <td><code>(value: T) => string</code></td>
+                <td>Fonction de formatage personnalisée pour la valeur</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-usage-example">
+          <h4>Exemple d'Utilisation Complète</h4>
+          <ds-code-snippet [code]="fullExampleCode" language="typescript" />
+        </div>
+
+        <div class="api-best-practices">
+          <h4>Bonnes Pratiques d'Accessibilité</h4>
+          <ul class="best-practices-list">
+            <li><strong>Labels ARIA</strong> : Fournissez toujours un <code>ariaLabel</code> descriptif pour les badges numériques et les points indicateurs</li>
+            <li><strong>Contexte</strong> : Assurez-vous que le badge est toujours accompagné d'un élément visuel ou textuel qui donne le contexte</li>
+            <li><strong>Role sémantique</strong> : Le badge utilise automatiquement <code>role="status"</code> pour les compteurs et <code>role="img"</code> pour les points</li>
+            <li><strong>Contraste</strong> : Vérifiez que les couleurs des badges respectent les ratios de contraste WCAG AA (4.5:1 minimum)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

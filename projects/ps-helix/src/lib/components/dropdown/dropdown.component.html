@@ -1,0 +1,67 @@
+<div 
+  class="dropdown-container"
+  [class.open]="isOpen()"
+  [class.disabled]="disabled()"
+  [attr.data-state]="state()"
+>
+  <button
+    class="dropdown-trigger"
+    [class]="variant()"
+    (click)="toggleDropdown()"
+    (keydown)="handleTriggerKeyDown($event)"
+    [attr.aria-expanded]="isOpen()"
+    [attr.aria-disabled]="disabled()"
+    [attr.aria-label]="computedAriaLabel()"
+    [attr.aria-haspopup]="'menu'"
+    type="button"
+    [disabled]="disabled()"
+  >
+    <span class="trigger-content">
+      @if (icon()) {
+        <i class="ph ph-{{ icon() }}" aria-hidden="true"></i>
+      }
+      <ng-content select="[dropdown-trigger]">
+        @if (label()) {
+          {{ label() }}
+        }
+      </ng-content>
+      <i 
+        class="ph ph-caret-down trigger-arrow"
+        [class.open]="isOpen()"
+        aria-hidden="true"
+      ></i>
+    </span>
+  </button>
+
+  @if (isOpen()) {
+    <div 
+      class="dropdown-menu"
+      [class]="placement()"
+      role="menu"
+      (click)="$event.stopPropagation()"
+    >
+      <ng-content select="[dropdown-menu]">
+        @for (item of items(); track item.value; let i = $index) {
+          <button
+            type="button"
+            class="dropdown-item"
+            [class.disabled]="item.disabled"
+            [class.active]="selectedItem() === item"
+            [attr.data-dropdown-item-index]="i"
+            (click)="selectItem(item)"
+            (keydown)="handleItemKeyDown($event, item, i)"
+            role="menuitem"
+            [attr.aria-disabled]="item.disabled"
+            [disabled]="item.disabled"
+            [attr.tabindex]="item.disabled ? -1 : 0"
+          >
+            @if (item.icon) {
+              <i class="ph ph-{{ item.icon }}" aria-hidden="true"></i>
+            }
+            <span class="item-label">{{ item.content }}</span>
+          </button>
+        }
+      </ng-content>
+    </div>
+  }
+</div>

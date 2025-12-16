@@ -1,0 +1,23 @@
+<nav class="tab-bar">
+  @for (item of items(); track item.id; let i = $index) {
+    <button
+      class="tab-item"
+      [class.active]="activeIndex() === i"
+      [class.disabled]="disabled() || item.disabled"
+      role="tab"
+      [attr.aria-selected]="activeIndex() === i"
+      [attr.aria-disabled]="disabled() || item.disabled"
+      [attr.aria-label]="item.label"
+      (click)="selectTab(i)"
+    >
+      <i 
+        [class]="activeIndex() === i ? 'ph-fill ph-' + item.icon : 'ph ph-' + item.icon"
+        aria-hidden="true"
+      ></i>
+      <span class="tab-label">{{ item.label }}</span>
+      @if (item.badge) {
+        <span class="tab-badge">{{ item.badge }}</span>
+      }
+    </button>
+  }
+</nav>

@@ -1,0 +1,179 @@
+<!-- Page Icons avec structure cohérente -->
+<ds-demo-page-layout 
+  title="Système d'Icônes Phosphor"
+  introText="Phosphor est une bibliothèque d'icônes flexible et cohérente, parfaitement adaptée aux interfaces modernes. Avec plus de 900 icônes couvrant tous les besoins courants, elle offre une expérience de développement exceptionnelle et une cohérence visuelle remarquable."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Avantages Clés - Section Pleine Largeur -->
+    <section class="advantages-section">
+      <h3 class="section-title">Pourquoi Choisir Phosphor ?</h3>
+      <div class="advantages-grid">
+        @for (feature of keyFeatures; track feature.title) {
+          <div class="advantage-card">
+            <div class="advantage-header">
+              <i class="ph ph-{{ feature.icon }}" aria-hidden="true"></i>
+              <h4>{{ feature.title }}</h4>
+            </div>
+            <p>{{ feature.description }}</p>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- Variantes de Style - Section Pleine Largeur -->
+    <section class="variants-section">
+      <h3 class="section-title">Variantes de Style</h3>
+      <div class="variants-container">
+        <div class="variants-intro">
+          <p>Phosphor offre plusieurs variantes de style pour chaque icône, permettant une adaptation parfaite à votre design et à vos besoins d'emphase visuelle.</p>
+        </div>
+        <div class="variants-grid">
+          @for (variant of styleVariants; track variant.name) {
+            <div class="variant-card">
+              <div class="variant-preview">
+                <i class="{{ getIconClass(variant.type) }}" aria-hidden="true"></i>
+              </div>
+              <div class="variant-info">
+                <span class="variant-name">{{ variant.name }}</span>
+                <code class="variant-class">ph-{{ variant.type }}</code>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Exemples d'Utilisation - Section Pleine Largeur -->
+    <section class="examples-section">
+      <h3 class="section-title">Exemples d'Utilisation</h3>
+      <div class="examples-container">
+        <div class="examples-intro">
+          <p>Les icônes Phosphor sont conçues pour être intuitives et couvrir tous les besoins d'interface moderne. Voici une sélection d'icônes organisées par catégorie d'usage.</p>
+        </div>
+        <div class="examples-grid">
+          @for (icon of iconExamples; track icon.name) {
+            <div class="icon-example-card">
+              <div class="icon-preview">
+                <i class="ph ph-{{ icon.name }}" aria-hidden="true"></i>
+              </div>
+              <div class="icon-details">
+                <code class="icon-name">ph-{{ icon.name }}</code>
+                <span class="icon-category">{{ icon.category }}</span>
+                <span class="icon-usage">{{ icon.usage }}</span>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Installation et Usage - Section Pleine Largeur -->
+    <section class="installation-section">
+      <h3 class="section-title">Installation et Utilisation</h3>
+      <div class="installation-grid">
+        <div class="installation-card primary">
+          <div class="installation-header">
+            <i class="ph ph-download" aria-hidden="true"></i>
+            <h4>Installation Locale (Recommandée)</h4>
+          </div>
+          <div class="installation-content">
+            <p>Installation du package pour une utilisation hors-ligne et des performances optimales :</p>
+            <div class="code-block">
+              <pre><code>npm install &#64;phosphor-icons/web</code></pre>
+            </div>
+            <div class="code-block">
+              <pre><code>&#64;import 'node_modules/&#64;phosphor-icons/web/css/regular.css';</code></pre>
+            </div>
+            <ul class="installation-benefits">
+              <li>Utilisation hors-ligne</li>
+              <li>Performances de chargement optimales</li>
+              <li>Contrôle des versions</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="installation-card secondary">
+          <div class="installation-header">
+            <i class="ph ph-globe" aria-hidden="true"></i>
+            <h4>Alternative CDN</h4>
+          </div>
+          <div class="installation-content">
+            <p>Pour les prototypes et développements rapides :</p>
+            <div class="code-block">
+              <pre><code>&lt;link rel="stylesheet" href="https://unpkg.com/&#64;phosphor-icons/web&#64;2.0.3/src/regular/style.css"&gt;</code></pre>
+            </div>
+            <ul class="installation-benefits">
+              <li>Intégration rapide</li>
+              <li>Parfait pour les prototypes</li>
+              <li>Tests et maquettes</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bonnes Pratiques - Section Pleine Largeur -->
+    <section class="best-practices-section">
+      <h3 class="section-title">Bonnes Pratiques</h3>
+      <div class="practices-grid">
+        <div class="practice-card">
+          <div class="practice-header">
+            <i class="ph ph-code" aria-hidden="true"></i>
+            <h4>Utilisation HTML</h4>
+          </div>
+          <div class="practice-content">
+            <div class="code-block">
+              <pre><code>&lt;i class="ph ph-house" aria-hidden="true"&gt;&lt;/i&gt;</code></pre>
+            </div>
+            <ul class="practice-list">
+              <li>Toujours utiliser aria-hidden="true" pour les icônes décoratives</li>
+              <li>Respecter la nomenclature ph-[nom-icône]</li>
+              <li>Préférer les icônes sémantiques</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="practice-card">
+          <div class="practice-header">
+            <i class="ph ph-wheelchair" aria-hidden="true"></i>
+            <h4>Accessibilité</h4>
+          </div>
+          <div class="practice-content">
+            <div class="code-block">
+              <pre><code>&lt;button aria-label="Paramètres"&gt;
+  &lt;i class="ph ph-gear" aria-hidden="true"&gt;&lt;/i&gt;
+&lt;/button&gt;</code></pre>
+            </div>
+            <ul class="practice-list">
+              <li>Fournir un aria-label pour les éléments interactifs</li>
+              <li>Masquer les icônes décoratives des lecteurs d'écran</li>
+              <li>Assurer un contraste suffisant</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="practice-card">
+          <div class="practice-header">
+            <i class="ph ph-palette" aria-hidden="true"></i>
+            <h4>Personnalisation</h4>
+          </div>
+          <div class="practice-content">
+            <div class="code-block">
+              <pre><code>.ph &#123;
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  transition: color 0.2s ease;
+&#125;</code></pre>
+            </div>
+            <ul class="practice-list">
+              <li>Utiliser les variables CSS pour la cohérence</li>
+              <li>Maintenir des tailles cohérentes</li>
+              <li>Ajouter des transitions fluides</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

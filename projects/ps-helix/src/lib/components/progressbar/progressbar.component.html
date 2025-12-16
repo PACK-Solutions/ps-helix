@@ -1,0 +1,20 @@
+@if (showLabel() && !isIndeterminate()) {
+  <span class="progress-label">{{ displayLabel() }}</span>
+}
+<div
+  class="progressbar"
+  [class.striped]="isStriped()"
+  [class.animated]="isAnimated()"
+  [class.indeterminate]="isIndeterminate()"
+  role="progressbar"
+  [attr.aria-valuenow]="isIndeterminate() ? null : value()"
+  [attr.aria-valuemin]="0"
+  [attr.aria-valuemax]="max()"
+  [attr.aria-valuetext]="computedAriaValueText()"
+>
+  <div
+    class="progress-track"
+    [class]="variant()"
+    [style.width.%]="isIndeterminate() ? 100 : percentage()"
+  ></div>
+</div>

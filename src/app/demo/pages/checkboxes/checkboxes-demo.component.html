@@ -1,0 +1,351 @@
+<ds-demo-page-layout
+  title="Système de Checkbox"
+  introText="Les checkboxes sont des composants essentiels pour permettre aux utilisateurs de sélectionner une ou plusieurs options dans une liste. Elles offrent différents états, tailles et positions de label pour s'adapter à tous les contextes."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Variantes de Checkbox - Section Pleine Largeur -->
+    <section class="checkbox-variants-section">
+      <h3 class="section-title">Positions du Label</h3>
+      <div class="variants-container">
+        <div class="variants-intro">
+          <p>Les checkboxes permettent de positionner le label à droite ou à gauche de la case à cocher pour s'adapter à différentes configurations de mise en page.</p>
+        </div>
+        <div class="variants-grid">
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-checkbox
+                [(checked)]="standardChecked"
+                labelPosition="right"
+              >
+                {{ 'CHECKBOX.BASIC' | translate }}
+              </psh-checkbox>
+            </div>
+            <div class="variant-info">
+              <h4>Label à Droite (Standard)</h4>
+              <p>Position standard avec le label placé à droite de la case à cocher. C'est le comportement par défaut.</p>
+              <ds-code-snippet [code]="labelRightCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-checkbox
+                [(checked)]="leftLabelChecked"
+                labelPosition="left"
+              >
+                {{ 'CHECKBOX.BASIC' | translate }}
+              </psh-checkbox>
+            </div>
+            <div class="variant-info">
+              <h4>Label à Gauche</h4>
+              <p>Position alternative avec le label placé à gauche de la case à cocher. Utile pour certaines mises en page spécifiques.</p>
+              <ds-code-snippet [code]="labelLeftCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-checkbox
+                [(checked)]="noLabelChecked"
+              >
+              </psh-checkbox>
+            </div>
+            <div class="variant-info">
+              <h4>Sans Label Visible</h4>
+              <p>Checkbox sans contenu projeté. Assurez-vous de fournir un <code>ariaLabel</code> pour l'accessibilité.</p>
+              <ds-code-snippet [code]="noLabelCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- États de Checkbox - Section Pleine Largeur -->
+    <section class="checkbox-states-section">
+      <h3 class="section-title">États de Checkbox</h3>
+      <div class="states-container">
+        <div class="states-intro">
+          <p>Les checkboxes supportent plusieurs états pour communiquer différentes informations visuelles et contextuelles aux utilisateurs.</p>
+        </div>
+        <div class="states-grid">
+          <div class="state-card">
+            <div class="state-preview">
+              <psh-checkbox
+                [disabled]="true"
+                [(checked)]="disabledChecked"
+              >
+                {{ 'CHECKBOX.DISABLED' | translate }}
+              </psh-checkbox>
+            </div>
+            <div class="state-info">
+              <h4>Désactivé</h4>
+              <p>État désactivé pour les options non disponibles ou non modifiables.</p>
+              <ds-code-snippet [code]="disabledCode" />
+            </div>
+          </div>
+
+          <div class="state-card">
+            <div class="state-preview">
+              <psh-checkbox
+                [error]="'CHECKBOX.MESSAGES.REQUIRED' | translate"
+                [(checked)]="errorChecked"
+              >
+                {{ 'CHECKBOX.ERROR' | translate }}
+              </psh-checkbox>
+            </div>
+            <div class="state-info">
+              <h4>Erreur</h4>
+              <p>État d'erreur avec message pour indiquer une validation échouée.</p>
+              <ds-code-snippet [code]="errorCode" />
+            </div>
+          </div>
+
+          <div class="state-card">
+            <div class="state-preview">
+              <psh-checkbox
+                [checked]="true"
+                [success]="'CHECKBOX.MESSAGES.VALID' | translate"
+              >
+                {{ 'CHECKBOX.SUCCESS' | translate }}
+              </psh-checkbox>
+            </div>
+            <div class="state-info">
+              <h4>Succès</h4>
+              <p>État de succès avec message pour confirmer une sélection valide.</p>
+              <ds-code-snippet [code]="successCode" />
+            </div>
+          </div>
+
+          <div class="state-card">
+            <div class="state-preview">
+              <psh-checkbox
+                [indeterminate]="true"
+              >
+                {{ 'CHECKBOX.INDETERMINATE' | translate }}
+              </psh-checkbox>
+            </div>
+            <div class="state-info">
+              <h4>Indéterminé</h4>
+              <p>État indéterminé pour les sélections partielles ou ambiguës. Utile pour les listes hiérarchiques.</p>
+              <ds-code-snippet [code]="indeterminateCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tailles de Checkbox - Section Pleine Largeur -->
+    <section class="checkbox-sizes-section">
+      <h3 class="section-title">Tailles Disponibles</h3>
+      <div class="sizes-container">
+        <div class="sizes-intro">
+          <p>Trois tailles sont disponibles pour s'adapter à différents contextes d'utilisation et niveaux de hiérarchie visuelle.</p>
+        </div>
+        <div class="sizes-grid">
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-checkbox
+                size="small"
+                [(checked)]="smallChecked"
+              >
+                {{ 'CHECKBOX.SMALL' | translate }}
+              </psh-checkbox>
+            </div>
+            <div class="size-info">
+              <h4>Small</h4>
+              <div class="size-specs">
+                <span class="size-dimension">16px × 16px</span>
+                <code class="size-code">size="small"</code>
+              </div>
+              <p class="size-usage">Taille compacte pour les interfaces denses, les tableaux de données ou les listes détaillées.</p>
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-checkbox
+                size="medium"
+                [(checked)]="mediumChecked"
+              >
+                {{ 'CHECKBOX.MEDIUM' | translate }}
+              </psh-checkbox>
+            </div>
+            <div class="size-info">
+              <h4>Medium (Défaut)</h4>
+              <div class="size-specs">
+                <span class="size-dimension">20px × 20px</span>
+                <code class="size-code">size="medium"</code>
+              </div>
+              <p class="size-usage">Taille par défaut, équilibrée pour la plupart des cas d'usage et une bonne lisibilité.</p>
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-checkbox
+                size="large"
+                [(checked)]="largeChecked"
+              >
+                {{ 'CHECKBOX.LARGE' | translate }}
+              </psh-checkbox>
+            </div>
+            <div class="size-info">
+              <h4>Large</h4>
+              <div class="size-specs">
+                <span class="size-dimension">24px × 24px</span>
+                <code class="size-code">size="large"</code>
+              </div>
+              <p class="size-usage">Taille emphase pour les éléments importants nécessitant une grande visibilité ou pour les interfaces tactiles.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Documentation API - Section Pleine Largeur -->
+    <section class="api-section">
+      <h3 class="section-title">Documentation API</h3>
+      <div class="api-container">
+        <div class="api-intro">
+          <p>Le composant Checkbox utilise des <strong>model inputs</strong> bidirectionnels pour une synchronisation automatique de l'état, conforme aux standards Angular 20.</p>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Model Inputs (Bidirectionnels)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>checked</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>État coché de la checkbox. Utiliser avec [(checked)]</td>
+              </tr>
+              <tr>
+                <td><code>disabled</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>État désactivé de la checkbox</td>
+              </tr>
+              <tr>
+                <td><code>required</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Indique si la checkbox est requise</td>
+              </tr>
+              <tr>
+                <td><code>indeterminate</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>État indéterminé pour sélections partielles</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Input Signals)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>label</code></td>
+                <td><code>string</code></td>
+                <td><code>''</code></td>
+                <td>Label de la checkbox (alternative au contenu projeté)</td>
+              </tr>
+              <tr>
+                <td><code>error</code></td>
+                <td><code>string</code></td>
+                <td><code>''</code></td>
+                <td>Message d'erreur à afficher</td>
+              </tr>
+              <tr>
+                <td><code>success</code></td>
+                <td><code>string</code></td>
+                <td><code>''</code></td>
+                <td>Message de succès à afficher</td>
+              </tr>
+              <tr>
+                <td><code>ariaLabel</code></td>
+                <td><code>string | undefined</code></td>
+                <td><code>undefined</code></td>
+                <td>Label ARIA personnalisé pour l'accessibilité</td>
+              </tr>
+              <tr>
+                <td><code>size</code></td>
+                <td><code>CheckboxSize</code></td>
+                <td><code>'medium'</code></td>
+                <td>'small' | 'medium' | 'large'</td>
+              </tr>
+              <tr>
+                <td><code>labelPosition</code></td>
+                <td><code>'left' | 'right'</code></td>
+                <td><code>'right'</code></td>
+                <td>Position du label par rapport à la checkbox</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-usage-example">
+          <h4>Exemple d'Utilisation Complète</h4>
+          <div class="code-block">
+            <pre><code>import &#123; PshCheckboxComponent &#125; from 'ps-helix';
+
+&#64;Component(&#123;
+  standalone: true,
+  imports: [PshCheckboxComponent],
+  template: `
+    &lt;psh-checkbox
+      [(checked)]="isAccepted"
+      [(required)]="isRequired"
+      [(disabled)]="isDisabled"
+      size="medium"
+      labelPosition="right"
+      [error]="errorMessage"
+      ariaLabel="Accepter les conditions d'utilisation"
+    &gt;
+      J'accepte les conditions
+    &lt;/psh-checkbox&gt;
+  `
+&#125;)
+export class MyComponent &#123;
+  isAccepted = false;
+  isRequired = true;
+  isDisabled = false;
+  errorMessage = '';
+&#125;</code></pre>
+          </div>
+        </div>
+
+        <div class="api-best-practices">
+          <h4>Bonnes Pratiques d'Accessibilité</h4>
+          <ul class="best-practices-list">
+            <li><strong>Navigation clavier</strong> : Les checkboxes supportent la navigation par <kbd>Tab</kbd>, <kbd>Espace</kbd> et <kbd>Entrée</kbd></li>
+            <li><strong>Focus visible</strong> : Un anneau de focus visible entoure la checkbox lors de la navigation au clavier</li>
+            <li><strong>ARIA automatique</strong> : Les attributs <code>aria-checked</code>, <code>aria-invalid</code> et <code>aria-required</code> sont gérés automatiquement</li>
+            <li><strong>Labels</strong> : Toujours fournir un label via contenu projeté, input <code>label</code> ou <code>ariaLabel</code></li>
+            <li><strong>Messages</strong> : Les messages d'erreur/succès sont liés à la checkbox via des IDs uniques pour les lecteurs d'écran</li>
+            <li><strong>État indéterminé</strong> : L'état <code>aria-checked="mixed"</code> est utilisé pour l'état indéterminé</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

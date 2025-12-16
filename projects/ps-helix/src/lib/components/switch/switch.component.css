@@ -1,0 +1,144 @@
+.switch-wrapper {
+  display: inline-block;
+}
+
+.switch-container {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.switch-label {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  color: var(--text-color);
+  width: 100%;
+}
+
+.switch-label.label-right {
+  flex-direction: row;
+  gap: var(--spacing-sm);
+}
+
+.switch-label.label-left {
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+}
+
+.switch-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switch-control {
+  position: relative;
+  display: inline-block;
+  width: var(--size-10);
+  height: var(--size-5-5);
+  background: var(--surface-border);
+  border-radius: var(--radius-full);
+  transition: background var(--animation-duration-fast) var(--animation-easing-default),
+              border-color var(--animation-duration-fast) var(--animation-easing-default);
+}
+
+.switch-thumb {
+  position: absolute;
+  top: var(--size-0-5);
+  left: var(--size-0-5);
+  width: var(--size-4-5);
+  height: var(--size-4-5);
+  background: var(--surface-card);
+  border-radius: var(--radius-full);
+  transition: transform var(--animation-duration-fast) var(--animation-easing-default),
+              left var(--animation-duration-fast) var(--animation-easing-default);
+}
+
+.switch-input:checked + .switch-control {
+  background: var(--primary-color);
+}
+
+.switch-input:checked + .switch-control .switch-thumb {
+  left: calc(100% - var(--size-4-5) - var(--size-0-5));
+}
+
+.switch-input:focus-visible + .switch-control {
+  outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color);
+  outline-offset: var(--focus-outline-offset);
+  box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
+}
+
+/* States */
+.switch-wrapper.switch-disabled .switch-label {
+  opacity: var(--opacity-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.switch-wrapper.switch-error .switch-input:not(:checked) + .switch-control {
+  background: color-mix(in srgb, var(--danger-color) 15%, var(--surface-border));
+  border: var(--border-width-2) solid var(--danger-color);
+}
+
+.switch-wrapper.switch-error .switch-input:focus-visible + .switch-control {
+  box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-error);
+}
+
+.switch-wrapper.switch-success .switch-input:checked + .switch-control {
+  background: var(--success-color);
+}
+
+.switch-wrapper.switch-success .switch-input:focus-visible + .switch-control {
+  box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-success);
+}
+
+.switch-error {
+  font-size: var(--font-size-sm);
+  color: var(--danger-color);
+}
+
+.switch-success {
+  font-size: var(--font-size-sm);
+  color: var(--success-color);
+}
+
+/* Sizes */
+.switch-container.small .switch-control {
+  width: var(--size-8-5);
+  height: var(--size-5);
+}
+
+.switch-container.small .switch-thumb {
+  width: var(--size-4);
+  height: var(--size-4);
+}
+
+.switch-container.small .switch-input:checked + .switch-control .switch-thumb {
+  left: calc(100% - var(--size-4) - var(--size-0-5));
+}
+
+.switch-container.large .switch-control {
+  width: var(--size-12);
+  height: var(--size-6-5);
+}
+
+.switch-container.large .switch-thumb {
+  width: var(--size-5-5);
+  height: var(--size-5-5);
+}
+
+.switch-container.large .switch-input:checked + .switch-control .switch-thumb {
+  left: calc(100% - var(--size-5-5) - var(--size-0-5));
+}
+
+/* Accessibilité - Respect des préférences utilisateur */
+@media (prefers-reduced-motion: reduce) {
+  .switch-control,
+  .switch-thumb {
+    transition: none;
+  }
+}

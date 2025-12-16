@@ -1,0 +1,28 @@
+/* Global Application Styles */
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+  line-height: var(--line-height-normal);
+  font-family: var(--font-family);
+  color: var(--text-color);
+  background: var(--body-gradient);
+  overflow-y: auto;
+}
+
+/* Mobile specific body styles */
+@media (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
+
+/* Modal open state */
+body.modal-open {
+  overflow: hidden;
+  padding-right: var(--scrollbar-width);
+}
+

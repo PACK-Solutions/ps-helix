@@ -1,0 +1,484 @@
+<ds-demo-page-layout
+  title="Fenêtres Modales"
+  introText="Les fenêtres modales sont des composants essentiels pour afficher du contenu qui nécessite l'attention de l'utilisateur. Elles offrent différentes tailles, options de configuration et une excellente accessibilité avec gestion du focus et du clavier."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Types de Modales - Section Pleine Largeur -->
+    <section class="modal-types-section">
+      <h3 class="section-title">Types de Modales</h3>
+      <div class="types-container">
+        <div class="types-intro">
+          <p>Les modales peuvent être configurées pour différents cas d'usage, de la simple confirmation à l'affichage de contenu complexe.</p>
+        </div>
+        <div class="types-grid">
+          <div class="type-card">
+            <div class="type-preview">
+              <psh-button appearance="filled" variant="primary" (clicked)="basicModalOpen = true">
+                Modale Basique
+              </psh-button>
+              <psh-modal
+                [(open)]="basicModalOpen"
+                title="{{ 'MODAL.BASIC_TITLE' | translate }}"
+                (confirmed)="handleConfirm()"
+                confirmLabel="{{ 'MODAL.CONFIRM' | translate }}"
+                cancelLabel="{{ 'MODAL.CANCEL' | translate }}"
+              >
+                <p>{{ 'MODAL.BASIC.CONTENT' | translate }}</p>
+                <p>{{ 'MODAL.BASIC.CLOSE_METHODS' | translate }}</p>
+                <ul>
+                  <li>{{ 'MODAL.BASIC.CLOSE_BUTTON' | translate }}</li>
+                  <li>{{ 'MODAL.BASIC.BACKDROP_CLICK' | translate }}</li>
+                  <li>{{ 'MODAL.BASIC.ESCAPE_KEY' | translate }}</li>
+                </ul>
+              </psh-modal>
+            </div>
+            <div class="type-info">
+              <h4>Modale Basique</h4>
+              <p>Configuration standard avec titre, contenu et boutons d'action par défaut. Idéale pour les confirmations et messages simples.</p>
+              <ds-code-snippet [code]="basicModalCode" />
+            </div>
+          </div>
+
+          <div class="type-card">
+            <div class="type-preview">
+              <psh-button appearance="filled" variant="primary" (clicked)="confirmationModalOpen = true">
+                Modale de Confirmation
+              </psh-button>
+              <psh-modal
+                [(open)]="confirmationModalOpen"
+                title="Confirmer l'action"
+                size="small"
+                (confirmed)="handleConfirmAction()"
+                confirmLabel="Confirmer"
+                cancelLabel="Annuler"
+              >
+                <p>Êtes-vous sûr de vouloir effectuer cette action ? Cette opération ne peut pas être annulée.</p>
+              </psh-modal>
+            </div>
+            <div class="type-info">
+              <h4>Modale de Confirmation</h4>
+              <p>Modale de petite taille pour confirmer des actions importantes. Utilise généralement la taille 'small' pour rester focalisée.</p>
+              <ds-code-snippet [code]="confirmationModalCode" />
+            </div>
+          </div>
+
+          <div class="type-card">
+            <div class="type-preview">
+              <psh-button appearance="filled" variant="primary" (clicked)="customModalOpen = true">
+                Footer Personnalisé
+              </psh-button>
+              <psh-modal #customModal [(open)]="customModalOpen" title="{{ 'MODAL.CUSTOM_FOOTER_TITLE' | translate }}">
+                <p>{{ 'MODAL.CUSTOM_FOOTER_CONTENT' | translate }}</p>
+                <div modal-footer #modalFooter>
+                  <psh-button appearance="text" [fullWidth]="customModal.isMobileScreen()" (clicked)="customModalOpen = false">
+                    {{ 'MODAL.CANCEL' | translate }}
+                  </psh-button>
+                  <psh-button appearance="filled" variant="success" [fullWidth]="customModal.isMobileScreen()" (clicked)="handleCustomConfirm()">
+                    {{ 'MODAL.SAVE' | translate }}
+                  </psh-button>
+                  <psh-button appearance="filled" variant="primary" [fullWidth]="customModal.isMobileScreen()" (clicked)="handleCustomConfirm()">
+                    {{ 'MODAL.PUBLISH' | translate }}
+                  </psh-button>
+                </div>
+              </psh-modal>
+            </div>
+            <div class="type-info">
+              <h4>Footer Personnalisé</h4>
+              <p>Permet d'ajouter des actions spécifiques avec des boutons personnalisés. Utilisez l'attribut modal-footer pour projeter votre contenu.</p>
+              <ds-code-snippet [code]="customFooterCode" />
+            </div>
+          </div>
+
+          <div class="type-card">
+            <div class="type-preview">
+              <psh-button appearance="filled" variant="primary" (clicked)="noFooterModalOpen = true">
+                Sans Footer
+              </psh-button>
+              <psh-modal
+                [(open)]="noFooterModalOpen"
+                title="{{ 'MODAL.NO_FOOTER_TITLE' | translate }}"
+                [showFooter]="false"
+              >
+                <p>{{ 'MODAL.NO_FOOTER_CONTENT_1' | translate }}</p>
+                <p>{{ 'MODAL.NO_FOOTER_CONTENT_2' | translate }}</p>
+              </psh-modal>
+            </div>
+            <div class="type-info">
+              <h4>Sans Footer</h4>
+              <p>Modale simplifiée sans boutons d'action, idéale pour l'affichage d'informations pures. Fermable uniquement via la croix ou l'arrière-plan.</p>
+              <ds-code-snippet [code]="noFooterCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tailles de Modales - Section Pleine Largeur -->
+    <section class="modal-sizes-section">
+      <h3 class="section-title">Tailles Disponibles</h3>
+      <div class="sizes-container">
+        <div class="sizes-intro">
+          <p>Trois tailles sont disponibles pour s'adapter à différents volumes de contenu, des messages courts aux formulaires complexes.</p>
+        </div>
+        <div class="sizes-grid">
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-button appearance="filled" variant="primary" (clicked)="smallModalOpen = true">
+                {{ 'MODAL.SMALL_MODAL' | translate }}
+              </psh-button>
+              <psh-modal [(open)]="smallModalOpen" title="{{ 'MODAL.SMALL_MODAL_TITLE' | translate }}" size="small">
+                <p>{{ 'MODAL.SMALL_MODAL_CONTENT' | translate }}</p>
+              </psh-modal>
+            </div>
+            <div class="size-info">
+              <h4>Small</h4>
+              <div class="size-specs">
+                <span class="size-dimension">Max 400px de largeur</span>
+                <code class="size-code">size="small"</code>
+              </div>
+              <p class="size-usage">Idéale pour les confirmations simples, les alertes et les messages courts nécessitant peu d'espace.</p>
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-button appearance="filled" variant="primary" (clicked)="mediumModalOpen = true">
+                Modale Medium
+              </psh-button>
+              <psh-modal [(open)]="mediumModalOpen" title="Modale Medium" size="medium">
+                <p>Une modale de taille moyenne, parfaite pour la plupart des cas d'usage standard.</p>
+                <p>Elle offre un bon équilibre entre espace disponible et encombrement visuel.</p>
+              </psh-modal>
+            </div>
+            <div class="size-info">
+              <h4>Medium (Défaut)</h4>
+              <div class="size-specs">
+                <span class="size-dimension">Max 600px de largeur</span>
+                <code class="size-code">size="medium"</code>
+              </div>
+              <p class="size-usage">Taille par défaut, équilibrée pour la majorité des cas d'usage avec formulaires standards et contenus variés.</p>
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-button appearance="filled" variant="primary" (clicked)="largeModalOpen = true">
+                {{ 'MODAL.LARGE_MODAL' | translate }}
+              </psh-button>
+              <psh-modal [(open)]="largeModalOpen" title="{{ 'MODAL.LARGE_MODAL_TITLE' | translate }}" size="large">
+                <p>{{ 'MODAL.LARGE_MODAL_CONTENT' | translate }}</p>
+                <div
+                  style="height: 300px; display: flex; align-items: center; justify-content: center; background: var(--surface-ground); border-radius: var(--border-radius); margin-top: var(--spacing-md);"
+                >
+                  {{ 'MODAL.EXTENDED_CONTENT_AREA' | translate }}
+                </div>
+              </psh-modal>
+            </div>
+            <div class="size-info">
+              <h4>Large</h4>
+              <div class="size-specs">
+                <span class="size-dimension">Max 800px de largeur</span>
+                <code class="size-code">size="large"</code>
+              </div>
+              <p class="size-usage">Pour les formulaires complexes, les tableaux de données, ou tout contenu riche nécessitant plus d'espace visuel.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Options de Configuration - Section Pleine Largeur -->
+    <section class="modal-options-section">
+      <h3 class="section-title">Options de Configuration</h3>
+      <div class="options-container">
+        <div class="options-intro">
+          <p>Les modales supportent diverses options pour contrôler leur comportement et personnaliser l'expérience utilisateur.</p>
+        </div>
+        <div class="options-content">
+          <div class="options-demo">
+            <div class="option-group">
+              <h4>Fermeture sur l'Arrière-plan</h4>
+              <p class="option-description">Contrôle si la modale se ferme en cliquant sur l'arrière-plan sombre.</p>
+              <psh-button appearance="filled" variant="primary" (clicked)="noBackdropModalOpen = true">
+                Modale sans fermeture backdrop
+              </psh-button>
+              <psh-modal
+                [(open)]="noBackdropModalOpen"
+                title="Modale Persistante"
+                [closeOnBackdrop]="false"
+                [closeOnEscape]="false"
+                [showClose]="true"
+              >
+                <p>Cette modale ne peut être fermée qu'en cliquant sur le bouton de fermeture ou les boutons d'action.</p>
+                <p>Le clic sur l'arrière-plan et la touche Échap sont désactivés.</p>
+              </psh-modal>
+              <ds-code-snippet [code]="closeOptionsCode" />
+            </div>
+
+            <div class="option-group">
+              <h4>Bouton de Fermeture</h4>
+              <p class="option-description">Active ou désactive l'affichage du bouton de fermeture dans l'en-tête.</p>
+              <ds-code-snippet [code]="showCloseCode" />
+            </div>
+
+            <div class="option-group">
+              <h4>Prévention du Scroll</h4>
+              <p class="option-description">Empêche le défilement de la page en arrière-plan lorsque la modale est ouverte.</p>
+              <ds-code-snippet [code]="preventScrollCode" />
+            </div>
+          </div>
+          <div class="options-doc">
+            <h4>Caractéristiques des Options</h4>
+            <ul class="feature-list">
+              <li><strong>closeOnBackdrop</strong> : Ferme la modale au clic sur l'arrière-plan (défaut: true)</li>
+              <li><strong>closeOnEscape</strong> : Ferme la modale avec la touche Échap (défaut: true)</li>
+              <li><strong>showClose</strong> : Affiche le bouton de fermeture (défaut: true)</li>
+              <li><strong>preventScroll</strong> : Empêche le scroll de la page (défaut: true)</li>
+              <li><strong>showFooter</strong> : Affiche le footer par défaut (défaut: true)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Documentation API - Section Pleine Largeur -->
+    <section class="api-section">
+      <h3 class="section-title">Documentation API</h3>
+      <div class="api-container">
+        <div class="api-intro">
+          <p>Le composant Modal utilise des <strong>model inputs</strong> et des <strong>input signals</strong> pour une API simple et performante, conforme aux standards Angular 20.</p>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Model Inputs & Signals)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>open</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Contrôle la visibilité de la modale (two-way binding)</td>
+              </tr>
+              <tr>
+                <td><code>title</code></td>
+                <td><code>string</code></td>
+                <td><code>'Modal Title'</code></td>
+                <td>Titre affiché dans l'en-tête de la modale</td>
+              </tr>
+              <tr>
+                <td><code>size</code></td>
+                <td><code>ModalSize</code></td>
+                <td><code>'medium'</code></td>
+                <td>'small' | 'medium' | 'large' - Taille de la modale</td>
+              </tr>
+              <tr>
+                <td><code>showClose</code></td>
+                <td><code>boolean</code></td>
+                <td><code>true</code></td>
+                <td>Affiche le bouton de fermeture dans l'en-tête</td>
+              </tr>
+              <tr>
+                <td><code>closeOnBackdrop</code></td>
+                <td><code>boolean</code></td>
+                <td><code>true</code></td>
+                <td>Ferme la modale au clic sur l'arrière-plan</td>
+              </tr>
+              <tr>
+                <td><code>closeOnEscape</code></td>
+                <td><code>boolean</code></td>
+                <td><code>true</code></td>
+                <td>Ferme la modale avec la touche Échap</td>
+              </tr>
+              <tr>
+                <td><code>preventScroll</code></td>
+                <td><code>boolean</code></td>
+                <td><code>true</code></td>
+                <td>Empêche le défilement de la page en arrière-plan</td>
+              </tr>
+              <tr>
+                <td><code>showFooter</code></td>
+                <td><code>boolean</code></td>
+                <td><code>true</code></td>
+                <td>Affiche le footer par défaut avec boutons d'action</td>
+              </tr>
+              <tr>
+                <td><code>dismissLabel</code></td>
+                <td><code>string</code></td>
+                <td><code>'Close'</code></td>
+                <td>Label accessible pour le bouton de fermeture</td>
+              </tr>
+              <tr>
+                <td><code>confirmLabel</code></td>
+                <td><code>string</code></td>
+                <td><code>'Confirm'</code></td>
+                <td>Label du bouton de confirmation dans le footer</td>
+              </tr>
+              <tr>
+                <td><code>cancelLabel</code></td>
+                <td><code>string</code></td>
+                <td><code>'Cancel'</code></td>
+                <td>Label du bouton d'annulation dans le footer</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Événements (Outputs)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Événement</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>closed</code></td>
+                <td><code>EventEmitter&lt;void&gt;</code></td>
+                <td>Émis lorsque la modale est fermée</td>
+              </tr>
+              <tr>
+                <td><code>confirmed</code></td>
+                <td><code>EventEmitter&lt;void&gt;</code></td>
+                <td>Émis lors du clic sur le bouton de confirmation</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-usage-example">
+          <h4>Exemple d'Utilisation Complète</h4>
+          <div class="code-block">
+            <pre><code>import &#123; PshModalComponent, PshButtonComponent &#125; from 'ps-helix';
+
+&#64;Component(&#123;
+  standalone: true,
+  imports: [PshModalComponent, PshButtonComponent],
+  template: `
+    &lt;psh-button (clicked)="isModalOpen = true"&gt;
+      Ouvrir la modale
+    &lt;/psh-button&gt;
+
+    &lt;!-- Modale avec footer par défaut --&gt;
+    &lt;psh-modal
+      [(open)]="isModalOpen"
+      title="Confirmer l'action"
+      size="medium"
+      [closeOnBackdrop]="true"
+      [closeOnEscape]="true"
+      [showClose]="true"
+      [showFooter]="true"
+      confirmLabel="Confirmer"
+      cancelLabel="Annuler"
+      (confirmed)="handleConfirm()"
+      (closed)="handleClose()"
+    &gt;
+      &lt;p&gt;Êtes-vous sûr de vouloir continuer ?&lt;/p&gt;
+    &lt;/psh-modal&gt;
+
+    &lt;!-- Modale avec footer personnalisé responsive --&gt;
+    &lt;psh-modal #customModal [(open)]="isCustomModalOpen" title="Actions Multiples"&gt;
+      &lt;p&gt;Choisissez une action à effectuer.&lt;/p&gt;
+      &lt;div modal-footer&gt;
+        &lt;psh-button
+          appearance="text"
+          [fullWidth]="customModal.isMobileScreen()"
+          (clicked)="isCustomModalOpen = false"
+        &gt;
+          Annuler
+        &lt;/psh-button&gt;
+        &lt;psh-button
+          appearance="filled"
+          variant="success"
+          [fullWidth]="customModal.isMobileScreen()"
+          (clicked)="handleSave()"
+        &gt;
+          Enregistrer
+        &lt;/psh-button&gt;
+        &lt;psh-button
+          appearance="filled"
+          variant="primary"
+          [fullWidth]="customModal.isMobileScreen()"
+          (clicked)="handlePublish()"
+        &gt;
+          Publier
+        &lt;/psh-button&gt;
+      &lt;/div&gt;
+    &lt;/psh-modal&gt;
+  `
+&#125;)
+export class MyComponent &#123;
+  isModalOpen = false;
+  isCustomModalOpen = false;
+
+  handleConfirm(): void &#123;
+    console.log('Action confirmée');
+    this.isModalOpen = false;
+  &#125;
+
+  handleClose(): void &#123;
+    console.log('Modale fermée');
+  &#125;
+
+  handleSave(): void &#123;
+    console.log('Enregistrement...');
+    this.isCustomModalOpen = false;
+  &#125;
+
+  handlePublish(): void &#123;
+    console.log('Publication...');
+    this.isCustomModalOpen = false;
+  &#125;
+&#125;</code></pre>
+          </div>
+        </div>
+
+        <div class="api-best-practices">
+          <h4>Bonnes Pratiques d'Accessibilité</h4>
+          <ul class="best-practices-list">
+            <li><strong>Focus Management</strong> : Le focus est automatiquement placé sur le premier élément focusable à l'ouverture et restauré à la fermeture</li>
+            <li><strong>Focus Trap</strong> : La navigation au clavier (Tab) reste confinée dans la modale, empêchant l'accès aux éléments en arrière-plan</li>
+            <li><strong>Attributs ARIA</strong> : La modale utilise <code>role="dialog"</code>, <code>aria-labelledby</code> pour le titre et <code>aria-describedby</code> pour le contenu</li>
+            <li><strong>Touche Échap</strong> : Permet de fermer la modale rapidement (désactivable si nécessaire pour les confirmations critiques)</li>
+            <li><strong>Scroll Lock</strong> : La page en arrière-plan est verrouillée pour éviter les conflits de navigation et maintenir l'attention</li>
+            <li><strong>Backdrop Sémantique</strong> : L'arrière-plan sombre indique visuellement que le contenu est modal et nécessite une action</li>
+            <li><strong>Labels Descriptifs</strong> : Utilisez toujours des titres clairs et des labels de boutons explicites décrivant l'action</li>
+            <li><strong>Utilisation Modérée</strong> : Évitez les modales imbriquées et limitez leur usage aux interactions nécessitant vraiment l'attention complète</li>
+            <li><strong>Footer Personnalisé Responsive</strong> : Pour les footers personnalisés, utilisez toujours <code>[fullWidth]="modal.isMobileScreen()"</code> sur vos boutons pour garantir une expérience mobile cohérente (breakpoint: 768px)</li>
+          </ul>
+        </div>
+
+        <div class="api-service-info">
+          <h4>Service de Gestion des Modales</h4>
+          <p>Le composant fournit un <code>ModalService</code> pour gérer globalement les instances de modales et leur configuration.</p>
+          <div class="code-block">
+            <pre><code>// Configuration globale des modales
+import &#123; MODAL_CONFIG &#125; from 'ps-helix';
+
+providers: [
+  &#123;
+    provide: MODAL_CONFIG,
+    useValue: &#123;
+      size: 'large',
+      closeOnBackdrop: false,
+      preventScroll: true
+    &#125;
+  &#125;
+]</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

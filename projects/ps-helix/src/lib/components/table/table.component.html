@@ -1,0 +1,92 @@
+<div 
+  class="table-wrapper"
+  [class.striped]="striped()"
+  [class.hoverable]="hoverable()"
+  [class.bordered]="bordered()"
+  [class.small]="size() === 'small'"
+  [class.large]="size() === 'large'"
+  [class.outline]="variant() === 'outline'"
+  [attr.data-state]="state()"
+>
+  @if (globalSearch()) {
+    <div class="global-search">
+      <input
+        type="text"
+        [attr.placeholder]="globalSearchPlaceholder()"
+        [value]="searchTerm()"
+        (input)="handleGlobalSearch($event)"
+        [attr.aria-label]="globalSearchPlaceholder()"
+      />
+      <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
+    </div>
+  }
+
+  <table role="table">
+    <thead>
+      <tr>
+        @for (column of columns(); track column.key) {
+          <th 
+            [style.width]="column.width"
+            [attr.aria-sort]="column.sortable ? (currentSort()?.key === column.key ? currentSort()?.direction : 'none') : null"
+            [class.sortable]="column.sortable" 
+            (click)="handleSort(column)"
+          >
+            <div class="th-content">
+              {{ column.label }}
+              @if (column.sortable) {
+                @if (currentSort()?.key === column.key) {
+                  <i
+                    [class]="'ph ' + (currentSort()?.direction === 'desc' ? 'ph-sort-descending' : 'ph-sort-ascending')"
+                    [attr.aria-label]="'Sort ' + currentSort()?.direction"
+                    aria-hidden="true">
+                  </i>
+                } @else {
+                  <i
+                    class="ph ph-arrows-down-up sort-icon-neutral"
+                    aria-label="Sortable"
+                    aria-hidden="true">
+                  </i>
+                }
+              }
+            </div>
+          </th>
+        }
+      </tr>
+    </thead>
+    
+    <tbody>
+      @if (loading()) {
+        <tr class="loading-row">
+          <td [attr.colspan]="columns().length">
+            <div class="loading-indicator">
+              <div class="spinner"></div>
+            </div>
+          </td>
+        </tr>
+      } @else if (filteredData().length === 0) {
+        <tr class="empty-row">
+          <td [attr.colspan]="columns().length">
+            {{ computedEmptyMessage() }}
+          </td>
+        </tr>
+      } @else {
+        @for (row of filteredData(); track row.id) {
+          <tr (click)="handleRowClick(row)">
+            @for (column of columns(); track column.key) {
+              <td>
+                @if (column.template) {
+                  <ng-container
+                    [ngTemplateOutlet]="column.template"
+                    [ngTemplateOutletContext]="{ $implicit: row, column: column }"
+                  ></ng-container>
+                } @else {
+                  {{ getCellValue(row, column) }}
+                }
+              </td>
+            }
+          </tr>
+        }
+      }
+    </tbody>
+  </table>
+</div>

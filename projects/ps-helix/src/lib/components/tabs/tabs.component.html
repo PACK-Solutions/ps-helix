@@ -1,0 +1,46 @@
+<div
+  class="tabs-container"
+  [class.animated]="animated()"
+  role="tablist"
+  [attr.aria-orientation]="ariaOrientation()"
+>
+  <div class="tabs-header" [class]="variant()">
+    @for (tab of tabsToDisplay(); track $index; let i = $index) {
+      <button
+        class="tab-button"
+        role="tab"
+        [class.active]="i === activeIndex()"
+        [attr.aria-selected]="i === activeIndex()"
+        [attr.aria-disabled]="tab.disabled || null"
+        [attr.aria-controls]="'panel-' + i"
+        [attr.aria-label]="tab.ariaLabel || tab.header"
+        [attr.id]="'tab-' + i"
+        [tabindex]="i === activeIndex() ? 0 : -1"
+        [disabled]="tab.disabled"
+        (click)="$event.preventDefault(); selectTab(i)"
+        (keydown)="handleKeyDown($event, i)"
+      >
+        @if (tab.icon) {
+          <i class="ph ph-{{ tab.icon }}" aria-hidden="true"></i>
+        }
+        {{ tab.header }}
+      </button>
+    }
+  </div>
+
+  <div class="tabs-content">
+    @for (tab of tabsToDisplay(); track $index; let i = $index) {
+      <div
+        class="tab-panel"
+        role="tabpanel"
+        [class.active]="i === activeIndex()"
+        [attr.aria-labelledby]="'tab-' + i"
+        [attr.id]="'panel-' + i"
+        [attr.tabindex]="i === activeIndex() ? 0 : -1"
+        [attr.hidden]="i !== activeIndex() || null"
+      >
+        <div [innerHTML]="tab.content"></div>
+      </div>
+    }
+  </div>
+</div>

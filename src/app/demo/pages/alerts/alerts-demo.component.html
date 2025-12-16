@@ -1,0 +1,376 @@
+<ds-demo-page-layout
+  title="Système d'Alertes"
+  introText="Les alertes sont des composants essentiels pour communiquer des messages importants aux utilisateurs. Elles offrent différents niveaux de sévérité, des options de personnalisation et une excellente accessibilité."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Variantes d'Alertes - Section Pleine Largeur -->
+    <section class="alert-variants-section">
+      <h3 class="section-title">Variantes d'Alertes</h3>
+      <div class="variants-container">
+        <div class="variants-intro">
+          <p>Les alertes standard permettent de communiquer différents types de messages avec des niveaux de sévérité adaptés à chaque situation.</p>
+        </div>
+        <div class="variants-grid">
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-alert
+                type="info"
+                role="status"
+                ariaLive="polite"
+                ariaLabel="Message d'information"
+              >{{ 'ALERT.INFO' | translate }}</psh-alert>
+            </div>
+            <div class="variant-info">
+              <h4>Info</h4>
+              <p>Messages informatifs généraux qui apportent un contexte ou une aide supplémentaire.</p>
+              <ds-code-snippet [code]="infoCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-alert
+                type="success"
+                role="status"
+                ariaLive="polite"
+                ariaLabel="Message de succès"
+              >{{ 'ALERT.SUCCESS' | translate }}</psh-alert>
+            </div>
+            <div class="variant-info">
+              <h4>Success</h4>
+              <p>Confirmation d'actions réussies ou de processus terminés avec succès.</p>
+              <ds-code-snippet [code]="successCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-alert
+                type="warning"
+                role="alert"
+                ariaLive="assertive"
+                ariaLabel="Message d'avertissement"
+              >{{ 'ALERT.WARNING' | translate }}</psh-alert>
+            </div>
+            <div class="variant-info">
+              <h4>Warning</h4>
+              <p>Avertissements et précautions nécessitant l'attention de l'utilisateur.</p>
+              <ds-code-snippet [code]="warningCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-alert
+                type="danger"
+                role="alert"
+                ariaLive="assertive"
+                ariaLabel="Message d'erreur"
+              >{{ 'ALERT.DANGER' | translate }}</psh-alert>
+            </div>
+            <div class="variant-info">
+              <h4>Danger</h4>
+              <p>Erreurs et problèmes critiques nécessitant une action immédiate.</p>
+              <ds-code-snippet [code]="dangerCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Icônes Personnalisées - Section Pleine Largeur -->
+    <section class="alert-icons-section">
+      <h3 class="section-title">Icônes Personnalisées</h3>
+      <div class="icons-container">
+        <div class="icons-intro">
+          <p>Les icônes renforcent le message visuel et améliorent la compréhension instantanée du type d'alerte. Utilisez des icônes pertinentes pour chaque contexte.</p>
+        </div>
+        <div class="icons-grid">
+          <div class="icon-card">
+            <div class="icon-preview">
+              <psh-alert
+                type="info"
+                icon="bell"
+                ariaLabel="Nouvelle notification"
+              >{{ 'ALERT.NOTIFICATION' | translate }}</psh-alert>
+            </div>
+            <div class="icon-info">
+              <h4>Icône Bell</h4>
+              <code class="icon-code">icon="bell"</code>
+              <p class="icon-usage">Idéal pour les notifications et les nouveaux messages.</p>
+            </div>
+          </div>
+
+          <div class="icon-card">
+            <div class="icon-preview">
+              <psh-alert
+                type="success"
+                icon="check-circle"
+                ariaLabel="Profil mis à jour"
+              >{{ 'ALERT.PROFILE_UPDATED' | translate }}</psh-alert>
+            </div>
+            <div class="icon-info">
+              <h4>Icône Check Circle</h4>
+              <code class="icon-code">icon="check-circle"</code>
+              <p class="icon-usage">Pour confirmer la réussite d'une action ou d'un processus.</p>
+            </div>
+          </div>
+
+          <div class="icon-card">
+            <div class="icon-preview">
+              <psh-alert
+                type="warning"
+                icon="clock"
+                iconPosition="left"
+                ariaLabel="Session expire bientôt"
+              >{{ 'ALERT.SESSION_EXPIRING' | translate }}</psh-alert>
+            </div>
+            <div class="icon-info">
+              <h4>Icône Clock</h4>
+              <code class="icon-code">icon="clock"</code>
+              <p class="icon-usage">Pour les alertes temporelles et les délais.</p>
+            </div>
+          </div>
+
+          <div class="icon-card">
+            <div class="icon-preview">
+              <psh-alert
+                type="danger"
+                icon="lock"
+                iconPosition="left"
+                ariaLabel="Accès refusé"
+              >{{ 'ALERT.ACCESS_DENIED' | translate }}</psh-alert>
+            </div>
+            <div class="icon-info">
+              <h4>Icône Lock</h4>
+              <code class="icon-code">icon="lock"</code>
+              <p class="icon-usage">Pour les problèmes de sécurité et d'accès.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tailles d'Alertes - Section Pleine Largeur -->
+    <section class="alert-sizes-section">
+      <h3 class="section-title">Tailles Disponibles</h3>
+      <div class="sizes-container">
+        <div class="sizes-intro">
+          <p>Trois tailles sont disponibles pour s'adapter à différents contextes d'utilisation, des interfaces denses aux messages critiques mis en avant.</p>
+        </div>
+        <div class="sizes-grid">
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-alert
+                type="info"
+                size="small"
+                ariaLabel="Alerte petite taille"
+              >{{ 'ALERT.SMALL' | translate }}</psh-alert>
+            </div>
+            <div class="size-info">
+              <h4>Small</h4>
+              <div class="size-specs">
+                <span class="size-dimension">32px de hauteur</span>
+                <code class="size-code">size="small"</code>
+              </div>
+              <p class="size-usage">Idéal pour les interfaces denses, les notifications discrètes ou les messages système compacts.</p>
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-alert
+                type="info"
+                size="medium"
+                ariaLabel="Alerte taille moyenne"
+              >{{ 'ALERT.MEDIUM' | translate }}</psh-alert>
+            </div>
+            <div class="size-info">
+              <h4>Medium (Défaut)</h4>
+              <div class="size-specs">
+                <span class="size-dimension">40px de hauteur</span>
+                <code class="size-code">size="medium"</code>
+              </div>
+              <p class="size-usage">Taille par défaut, équilibrée pour la plupart des cas d'usage et messages standards.</p>
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-alert
+                type="info"
+                size="large"
+                ariaLabel="Alerte grande taille"
+              >{{ 'ALERT.LARGE' | translate }}</psh-alert>
+            </div>
+            <div class="size-info">
+              <h4>Large</h4>
+              <div class="size-specs">
+                <span class="size-dimension">48px de hauteur</span>
+                <code class="size-code">size="large"</code>
+              </div>
+              <p class="size-usage">Pour les messages critiques, les notifications importantes ou le contenu riche nécessitant plus d'espace.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Alertes Dismissible - Section Pleine Largeur -->
+    <section class="alert-dismissible-section">
+      <h3 class="section-title">Alertes Dismissible</h3>
+      <div class="dismissible-container">
+        <div class="dismissible-intro">
+          <p>Les alertes peuvent être rendues fermables pour permettre aux utilisateurs de les masquer une fois le message lu et compris.</p>
+        </div>
+        <div class="dismissible-content">
+          <div class="dismissible-demo">
+            @if (showDismissibleAlert) {
+            <psh-alert
+              type="info"
+              [closable]="true"
+              (closed)="handleDismiss()"
+              ariaLabel="Alerte fermable"
+            >{{ 'ALERT.DISMISSIBLE' | translate }}</psh-alert>
+            }
+            <div class="dismissible-actions">
+              <psh-button
+                variant="primary"
+                [disabled]="showDismissibleAlert"
+                (clicked)="resetDismissibleAlert()"
+              >
+                Réafficher l'alerte
+              </psh-button>
+            </div>
+          </div>
+          <div class="dismissible-doc">
+            <h4>Caractéristiques</h4>
+            <ul class="feature-list">
+              <li><strong>Interaction</strong> : Bouton de fermeture accessible au clavier et à la souris</li>
+              <li><strong>État</strong> : Gestion de l'état via l'événement <code>closed</code></li>
+              <li><strong>Accessibilité</strong> : Label traduit automatiquement pour le bouton de fermeture</li>
+              <li><strong>Animation</strong> : Transition fluide lors de la fermeture avec effet de fade-out</li>
+            </ul>
+            <ds-code-snippet [code]="dismissibleCode" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Documentation API - Section Pleine Largeur -->
+    <section class="api-section">
+      <h3 class="section-title">Documentation API</h3>
+      <div class="api-container">
+        <div class="api-intro">
+          <p>Le composant Alert utilise des <strong>model inputs</strong> et des <strong>input signals</strong> pour une API simple et performante, conforme aux standards Angular 20.</p>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Model Inputs & Signals)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>type</code></td>
+                <td><code>AlertType</code></td>
+                <td><code>required</code></td>
+                <td>'info' | 'success' | 'warning' | 'danger'</td>
+              </tr>
+              <tr>
+                <td><code>icon</code></td>
+                <td><code>string | undefined</code></td>
+                <td><code>undefined</code></td>
+                <td>Nom de l'icône Phosphor à afficher</td>
+              </tr>
+              <tr>
+                <td><code>iconPosition</code></td>
+                <td><code>IconPosition</code></td>
+                <td><code>'left'</code></td>
+                <td>'left' | 'right' - Position de l'icône</td>
+              </tr>
+              <tr>
+                <td><code>closable</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Rend l'alerte fermable avec un bouton de fermeture</td>
+              </tr>
+              <tr>
+                <td><code>size</code></td>
+                <td><code>AlertSize</code></td>
+                <td><code>'medium'</code></td>
+                <td>'small' | 'medium' | 'large'</td>
+              </tr>
+              <tr>
+                <td><code>showIcon</code></td>
+                <td><code>boolean</code></td>
+                <td><code>true</code></td>
+                <td>Affiche ou masque l'icône de l'alerte</td>
+              </tr>
+              <tr>
+                <td><code>role</code></td>
+                <td><code>AlertRole</code></td>
+                <td><code>'alert'</code></td>
+                <td>'alert' | 'status' - Rôle ARIA de l'alerte</td>
+              </tr>
+              <tr>
+                <td><code>ariaLabel</code></td>
+                <td><code>string | undefined</code></td>
+                <td><code>undefined</code></td>
+                <td>Label ARIA personnalisé pour l'accessibilité</td>
+              </tr>
+              <tr>
+                <td><code>ariaLive</code></td>
+                <td><code>'polite' | 'assertive'</code></td>
+                <td><code>'polite'</code></td>
+                <td>Niveau de politesse pour les lecteurs d'écran</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Événements (Outputs)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Événement</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>closed</code></td>
+                <td><code>EventEmitter&lt;void&gt;</code></td>
+                <td>Émis lorsque l'alerte est fermée par l'utilisateur</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-usage-example">
+          <h4>Exemple d'Utilisation Complète</h4>
+          <ds-code-snippet [code]="fullExampleCode" language="typescript" />
+        </div>
+
+        <div class="api-best-practices">
+          <h4>Bonnes Pratiques d'Accessibilité</h4>
+          <ul class="best-practices-list">
+            <li><strong>Role ARIA</strong> : Utilisez <code>role="alert"</code> pour les messages urgents (warning, danger) et <code>role="status"</code> pour les messages informatifs (info, success)</li>
+            <li><strong>Aria-live</strong> : Utilisez <code>ariaLive="assertive"</code> pour les messages critiques et <code>ariaLive="polite"</code> pour les autres</li>
+            <li><strong>Labels</strong> : Fournissez toujours un <code>ariaLabel</code> descriptif pour aider les utilisateurs de lecteurs d'écran</li>
+            <li><strong>Icônes</strong> : Les icônes sont automatiquement masquées des lecteurs d'écran avec <code>aria-hidden="true"</code></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

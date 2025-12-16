@@ -1,0 +1,39 @@
+<div
+  [class]="computedClasses()"
+  [ngStyle]="computedStyles()"
+  (click)="handleClick($event)"
+  (keydown)="handleKeydown($event)"
+  role="article"
+  [attr.tabindex]="interactive() && !disabled() ? 0 : null"
+  [attr.aria-disabled]="disabled() ? 'true' : null"
+  [attr.aria-busy]="loading() ? 'true' : null"
+>
+  <!-- Contenu latéral -->
+  <div class="horizontal-side">
+    @if (loading()) {
+      <div class="horizontal-skeleton"></div>
+    } @else {
+      <ng-content select="[horizontal-side]"></ng-content>
+    }
+  </div>
+
+  <!-- Contenu principal -->
+  <div class="horizontal-content">
+    @if (loading()) {
+      <div class="horizontal-loading">
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line short"></div>
+      </div>
+    } @else {
+      <!-- Header optionnel -->
+      <ng-content select="[horizontal-header]"></ng-content>
+
+      <!-- Contenu principal -->
+      <ng-content></ng-content>
+
+      <!-- Actions optionnelles -->
+      <ng-content select="[horizontal-actions]"></ng-content>
+    }
+  </div>
+</div>

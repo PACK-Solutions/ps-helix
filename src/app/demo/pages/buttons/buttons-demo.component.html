@@ -1,0 +1,507 @@
+<ds-demo-page-layout
+  title="Système de Boutons"
+  introText="Les boutons permettent aux utilisateurs d'effectuer des actions avec un seul clic. Ils communiquent clairement les actions disponibles et constituent l'élément interactif principal des interfaces."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Apparences de Boutons - Section Pleine Largeur -->
+    <section class="button-appearances-section">
+      <h3 class="section-title">Apparences de Boutons</h3>
+      <div class="appearances-container">
+        <div class="appearances-intro">
+          <p>Les boutons offrent quatre apparences distinctes pour s'adapter à différents contextes d'utilisation et niveaux de hiérarchie visuelle.</p>
+        </div>
+        <div class="appearances-grid">
+          <div class="appearance-card">
+            <div class="appearance-preview">
+              <psh-button appearance="filled" variant="primary">Filled Button</psh-button>
+            </div>
+            <div class="appearance-info">
+              <h4>Filled</h4>
+              <p>Style par défaut avec fond plein. Idéal pour les actions principales et les CTA qui nécessitent une forte visibilité.</p>
+              <ds-code-snippet [code]="filledAppearanceCode" />
+            </div>
+          </div>
+
+          <div class="appearance-card">
+            <div class="appearance-preview">
+              <psh-button appearance="outline" variant="primary">Outline Button</psh-button>
+            </div>
+            <div class="appearance-info">
+              <h4>Outline</h4>
+              <p>Style avec bordure sans fond. Parfait pour les actions secondaires et les interfaces épurées nécessitant moins de poids visuel.</p>
+              <ds-code-snippet [code]="outlineAppearanceCode" />
+            </div>
+          </div>
+
+          <div class="appearance-card">
+            <div class="appearance-preview">
+              <psh-button appearance="rounded" variant="primary">Rounded Button</psh-button>
+            </div>
+            <div class="appearance-info">
+              <h4>Rounded</h4>
+              <p>Style avec coins complètement arrondis. Adapté aux designs modernes et interfaces ludiques nécessitant une touche distinctive.</p>
+              <ds-code-snippet [code]="roundedAppearanceCode" />
+            </div>
+          </div>
+
+          <div class="appearance-card">
+            <div class="appearance-preview">
+              <psh-button appearance="text" variant="primary">Text Button</psh-button>
+            </div>
+            <div class="appearance-info">
+              <h4>Text</h4>
+              <p>Style minimaliste sans fond ni bordure. Utilisé pour les actions tertiaires, la navigation et les menus où la discrétion est nécessaire.</p>
+              <ds-code-snippet [code]="textAppearanceCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Variantes de Boutons - Section Pleine Largeur -->
+    <section class="button-variants-section">
+      <h3 class="section-title">Variantes de Boutons</h3>
+      <div class="variants-container">
+        <div class="variants-intro">
+          <p>Chaque apparence supporte cinq variantes de couleur pour communiquer différents niveaux d'importance et de sémantique adaptés à chaque action.</p>
+        </div>
+        <div class="variants-grid">
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-button appearance="filled" variant="primary">Primary</psh-button>
+              <psh-button appearance="outline" variant="primary">Primary</psh-button>
+              <psh-button appearance="rounded" variant="primary">Primary</psh-button>
+              <psh-button appearance="text" variant="primary">Primary</psh-button>
+            </div>
+            <div class="variant-info">
+              <h4>Primary</h4>
+              <p>Actions principales de l'application, CTA et conversions. Utilisé avec parcimonie pour guider l'utilisateur vers l'action la plus importante.</p>
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-button appearance="filled" variant="secondary">Secondary</psh-button>
+              <psh-button appearance="outline" variant="secondary">Secondary</psh-button>
+              <psh-button appearance="rounded" variant="secondary">Secondary</psh-button>
+              <psh-button appearance="text" variant="secondary">Secondary</psh-button>
+            </div>
+            <div class="variant-info">
+              <h4>Secondary</h4>
+              <p>Actions secondaires et alternatives. Offre une option complémentaire sans rivaliser avec l'action principale.</p>
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-button appearance="filled" variant="success">Success</psh-button>
+              <psh-button appearance="outline" variant="success">Success</psh-button>
+              <psh-button appearance="rounded" variant="success">Success</psh-button>
+              <psh-button appearance="text" variant="success">Success</psh-button>
+            </div>
+            <div class="variant-info">
+              <h4>Success</h4>
+              <p>Actions positives et confirmations. Utilisé pour valider des modifications, créer de nouveaux éléments ou confirmer des actions bénéfiques.</p>
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-button appearance="filled" variant="warning">Warning</psh-button>
+              <psh-button appearance="outline" variant="warning">Warning</psh-button>
+              <psh-button appearance="rounded" variant="warning">Warning</psh-button>
+              <psh-button appearance="text" variant="warning">Warning</psh-button>
+            </div>
+            <div class="variant-info">
+              <h4>Warning</h4>
+              <p>Actions nécessitant attention ou prudence. Alerte l'utilisateur sur des conséquences potentielles sans être destructif.</p>
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-button appearance="filled" variant="danger">Danger</psh-button>
+              <psh-button appearance="outline" variant="danger">Danger</psh-button>
+              <psh-button appearance="rounded" variant="danger">Danger</psh-button>
+              <psh-button appearance="text" variant="danger">Danger</psh-button>
+            </div>
+            <div class="variant-info">
+              <h4>Danger</h4>
+              <p>Actions destructives et irréversibles. Réservé aux suppressions, annulations définitives et actions à haut risque nécessitant confirmation.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tailles de Boutons - Section Pleine Largeur -->
+    <section class="button-sizes-section">
+      <h3 class="section-title">Tailles Disponibles</h3>
+      <div class="sizes-container">
+        <div class="sizes-intro">
+          <p>Trois tailles sont disponibles pour s'adapter à différents contextes d'utilisation et densités d'interface.</p>
+        </div>
+        <div class="sizes-grid">
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-button appearance="filled" variant="primary" size="small">Petit Bouton</psh-button>
+            </div>
+            <div class="size-info">
+              <h4>Small</h4>
+              <div class="size-specs">
+                <span class="size-dimension">32px de hauteur</span>
+                <code class="size-code">size="small"</code>
+              </div>
+              <p class="size-usage">Idéal pour les interfaces denses, les tableaux de données ou les actions compactes nécessitant peu d'espace.</p>
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-button appearance="filled" variant="primary" size="medium">Bouton Moyen</psh-button>
+            </div>
+            <div class="size-info">
+              <h4>Medium (Défaut)</h4>
+              <div class="size-specs">
+                <span class="size-dimension">40px de hauteur</span>
+                <code class="size-code">size="medium"</code>
+              </div>
+              <p class="size-usage">Taille par défaut, équilibrée pour la plupart des cas d'usage et une bonne lisibilité sur tous les appareils.</p>
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-button appearance="filled" variant="primary" size="large">Grand Bouton</psh-button>
+            </div>
+            <div class="size-info">
+              <h4>Large</h4>
+              <div class="size-specs">
+                <span class="size-dimension">48px de hauteur</span>
+                <code class="size-code">size="large"</code>
+              </div>
+              <p class="size-usage">Pour les CTA importants, les interfaces mobiles ou les actions nécessitant une grande visibilité et une accessibilité tactile optimale.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Boutons avec Icônes - Section Pleine Largeur -->
+    <section class="button-icons-section">
+      <h3 class="section-title">Boutons avec Icônes</h3>
+      <div class="icons-container">
+        <div class="icons-intro">
+          <p>Les icônes renforcent la compréhension visuelle des actions et améliorent la reconnaissance. Utilisez des icônes pertinentes pour chaque contexte.</p>
+        </div>
+        <div class="icons-grid">
+          <div class="icon-card">
+            <div class="icon-preview">
+              <psh-button appearance="filled" variant="primary" icon="arrow-right" iconPosition="left">
+                Icône à gauche
+              </psh-button>
+            </div>
+            <div class="icon-info">
+              <h4>Icône à Gauche (Défaut)</h4>
+              <code class="icon-code">iconPosition="left"</code>
+              <p class="icon-usage">Position standard pour la plupart des actions. L'icône précède le texte dans l'ordre de lecture.</p>
+              <ds-code-snippet [code]="iconLeftCode" />
+            </div>
+          </div>
+
+          <div class="icon-card">
+            <div class="icon-preview">
+              <psh-button appearance="filled" variant="primary" icon="arrow-right" iconPosition="right">
+                Icône à droite
+              </psh-button>
+            </div>
+            <div class="icon-info">
+              <h4>Icône à Droite</h4>
+              <code class="icon-code">iconPosition="right"</code>
+              <p class="icon-usage">Utilisé pour les actions de navigation forward, les téléchargements ou les actions qui suggèrent un mouvement vers la droite.</p>
+              <ds-code-snippet [code]="iconRightCode" />
+            </div>
+          </div>
+
+          <div class="icon-card">
+            <div class="icon-preview">
+              <psh-button appearance="filled" variant="primary" icon="plus" iconPosition="only" ariaLabel="Ajouter un élément"></psh-button>
+            </div>
+            <div class="icon-info">
+              <h4>Icône Seule</h4>
+              <code class="icon-code">iconPosition="only"</code>
+              <p class="icon-usage">Bouton circulaire avec icône uniquement. Nécessite toujours un ariaLabel descriptif pour l'accessibilité.</p>
+              <ds-code-snippet [code]="iconOnlyCode" />
+            </div>
+          </div>
+
+          <div class="icon-card">
+            <div class="icon-preview">
+              <div class="icon-examples">
+                <psh-button appearance="filled" variant="primary" icon="check" iconPosition="left">Valider</psh-button>
+                <psh-button appearance="filled" variant="danger" icon="trash" iconPosition="left">Supprimer</psh-button>
+                <psh-button appearance="filled" variant="secondary" icon="download" iconPosition="right">Télécharger</psh-button>
+              </div>
+            </div>
+            <div class="icon-info">
+              <h4>Icônes Contextuelles</h4>
+              <p class="icon-usage">Sélectionnez des icônes qui renforcent visuellement l'action décrite. Les icônes doivent être immédiatement reconnaissables.</p>
+              <ul class="icon-recommendations">
+                <li><code>check</code> pour valider ou confirmer</li>
+                <li><code>trash</code> pour supprimer</li>
+                <li><code>download</code> pour télécharger</li>
+                <li><code>plus</code> pour créer ou ajouter</li>
+                <li><code>arrow-*</code> pour naviguer</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- États des Boutons - Section Pleine Largeur -->
+    <section class="button-states-section">
+      <h3 class="section-title">États des Boutons</h3>
+      <div class="states-container">
+        <div class="states-intro">
+          <p>Les boutons supportent différents états pour communiquer clairement leur disponibilité et leur statut d'exécution.</p>
+        </div>
+        <div class="states-content">
+          <div class="states-demo">
+            <div class="state-group">
+              <h4>État Normal</h4>
+              <div class="state-examples">
+                <psh-button appearance="filled" variant="primary">Bouton normal</psh-button>
+                <psh-button appearance="outline" variant="primary">Bouton normal</psh-button>
+              </div>
+              <p class="state-description">État par défaut du bouton, prêt à recevoir les interactions utilisateur.</p>
+            </div>
+
+            <div class="state-group">
+              <h4>État Désactivé</h4>
+              <div class="state-examples">
+                <psh-button appearance="filled" variant="primary" [disabled]="true">Bouton désactivé</psh-button>
+                <psh-button appearance="outline" variant="primary" [disabled]="true">Bouton désactivé</psh-button>
+              </div>
+              <p class="state-description">Action temporairement indisponible. Le bouton n'accepte aucune interaction et communique visuellement son indisponibilité.</p>
+            </div>
+
+            <div class="state-group">
+              <h4>État de Chargement</h4>
+              <div class="state-examples">
+                <psh-button appearance="filled" variant="primary" [loading]="true">Chargement</psh-button>
+                <psh-button appearance="outline" variant="primary" [loading]="true">Chargement</psh-button>
+              </div>
+              <p class="state-description">Action en cours d'exécution. Un indicateur de chargement remplace temporairement le contenu pour communiquer l'état de progression.</p>
+            </div>
+
+            <div class="state-group">
+              <h4>Bouton Pleine Largeur</h4>
+              <div class="state-examples">
+                <psh-button appearance="filled" variant="primary" [fullWidth]="true">Bouton pleine largeur</psh-button>
+              </div>
+              <p class="state-description">S'étend sur toute la largeur du conteneur parent. Idéal pour les formulaires et les actions principales sur mobile.</p>
+            </div>
+          </div>
+          <div class="states-doc">
+            <h4>Caractéristiques des États</h4>
+            <ul class="feature-list">
+              <li><strong>Hover</strong> : Changement visuel au survol pour indiquer l'interactivité</li>
+              <li><strong>Focus</strong> : Indicateur de focus visible pour la navigation au clavier</li>
+              <li><strong>Active</strong> : Feedback visuel lors du clic pour confirmer l'interaction</li>
+              <li><strong>Disabled</strong> : Curseur <code>not-allowed</code> et opacité réduite</li>
+              <li><strong>Loading</strong> : Spinloader animé avec <code>aria-busy="true"</code></li>
+            </ul>
+            <ds-code-snippet [code]="statesCode" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Documentation API - Section Pleine Largeur -->
+    <section class="api-section">
+      <h3 class="section-title">Documentation API</h3>
+      <div class="api-container">
+        <div class="api-intro">
+          <p>Le composant Button utilise des <strong>model inputs</strong> et des <strong>input signals</strong> pour une API simple et performante, conforme aux standards Angular 20.</p>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Model Inputs)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>appearance</code></td>
+                <td><code>ButtonAppearance</code></td>
+                <td><code>'filled'</code></td>
+                <td>'filled' | 'outline' | 'rounded' | 'text'</td>
+              </tr>
+              <tr>
+                <td><code>variant</code></td>
+                <td><code>ButtonVariant</code></td>
+                <td><code>'primary'</code></td>
+                <td>'primary' | 'secondary' | 'success' | 'warning' | 'danger'</td>
+              </tr>
+              <tr>
+                <td><code>size</code></td>
+                <td><code>ButtonSize</code></td>
+                <td><code>'medium'</code></td>
+                <td>'small' | 'medium' | 'large'</td>
+              </tr>
+              <tr>
+                <td><code>disabled</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Désactive le bouton et empêche toute interaction</td>
+              </tr>
+              <tr>
+                <td><code>loading</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Affiche un indicateur de chargement et désactive le bouton</td>
+              </tr>
+              <tr>
+                <td><code>fullWidth</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Étend le bouton sur toute la largeur du conteneur</td>
+              </tr>
+              <tr>
+                <td><code>iconPosition</code></td>
+                <td><code>ButtonIconPosition</code></td>
+                <td><code>'left'</code></td>
+                <td>'left' | 'right' | 'only' - Position de l'icône</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Input Signals)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>icon</code></td>
+                <td><code>string | undefined</code></td>
+                <td><code>undefined</code></td>
+                <td>Nom de l'icône Phosphor à afficher</td>
+              </tr>
+              <tr>
+                <td><code>ariaLabel</code></td>
+                <td><code>string | undefined</code></td>
+                <td><code>undefined</code></td>
+                <td>Label ARIA personnalisé pour l'accessibilité</td>
+              </tr>
+              <tr>
+                <td><code>loadingText</code></td>
+                <td><code>string</code></td>
+                <td><code>'Loading...'</code></td>
+                <td>Texte affiché lors de l'état de chargement</td>
+              </tr>
+              <tr>
+                <td><code>disabledText</code></td>
+                <td><code>string</code></td>
+                <td><code>'Unavailable'</code></td>
+                <td>Texte descriptif pour l'état désactivé</td>
+              </tr>
+              <tr>
+                <td><code>iconOnlyText</code></td>
+                <td><code>string | undefined</code></td>
+                <td><code>undefined</code></td>
+                <td>Label pour les boutons avec icône seule</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Événements (Outputs)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Événement</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>clicked</code></td>
+                <td><code>EventEmitter&lt;MouseEvent&gt;</code></td>
+                <td>Émis lors du clic sur le bouton (si non désactivé ou en chargement)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-usage-example">
+          <h4>Exemple d'Utilisation Complète</h4>
+          <div class="code-block">
+            <pre><code>import &#123; PshButtonComponent &#125; from 'ps-helix';
+
+&#64;Component(&#123;
+  standalone: true,
+  imports: [PshButtonComponent],
+  template: `
+    &lt;psh-button
+      appearance="filled"
+      variant="primary"
+      size="medium"
+      icon="arrow-right"
+      iconPosition="right"
+      [disabled]="isFormInvalid"
+      [loading]="isSubmitting"
+      [fullWidth]="false"
+      ariaLabel="Continuer vers l'étape suivante"
+      loadingText="Envoi en cours..."
+      (clicked)="handleSubmit($event)"
+    &gt;
+      Continuer
+    &lt;/psh-button&gt;
+  `
+&#125;)
+export class MyComponent &#123;
+  isFormInvalid = false;
+  isSubmitting = false;
+
+  handleSubmit(event: MouseEvent): void &#123;
+    this.isSubmitting = true;
+    // Logique de soumission
+  &#125;
+&#125;</code></pre>
+          </div>
+        </div>
+
+        <div class="api-best-practices">
+          <h4>Bonnes Pratiques d'Accessibilité</h4>
+          <ul class="best-practices-list">
+            <li><strong>Labels descriptifs</strong> : Utilisez un texte clair décrivant l'action (évitez "Cliquez ici" ou "En savoir plus" sans contexte)</li>
+            <li><strong>Attribut ariaLabel</strong> : Obligatoire pour les boutons avec <code>iconPosition="only"</code> pour communiquer l'action aux lecteurs d'écran</li>
+            <li><strong>États visuels</strong> : Maintenez un indicateur de focus visible avec un ratio de contraste minimum de 3:1 selon WCAG 2.1</li>
+            <li><strong>Support clavier</strong> : Les boutons sont automatiquement accessibles via <code>Tab</code> (navigation), <code>Enter</code> et <code>Space</code> (activation)</li>
+            <li><strong>Feedback d'état</strong> : Utilisez <code>aria-busy="true"</code> pendant le chargement et <code>aria-disabled="true"</code> pour l'état désactivé</li>
+            <li><strong>Hiérarchie visuelle</strong> : Limitez l'utilisation de la variante <code>primary</code> à une seule action principale par vue pour guider clairement l'utilisateur</li>
+            <li><strong>Contraste</strong> : Vérifiez que le ratio de contraste entre le texte et le fond respecte au minimum 4.5:1 (WCAG AA) pour tous les états</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

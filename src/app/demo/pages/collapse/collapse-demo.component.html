@@ -1,0 +1,475 @@
+<ds-demo-page-layout
+  title="Sections Pliables"
+  introText="Les sections pliables permettent d'organiser l'information de manière hiérarchique et d'optimiser l'espace d'affichage. Elles offrent différentes variantes, tailles et options de personnalisation pour s'adapter à tous les contextes."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Variantes de Collapse - Section Pleine Largeur -->
+    <section class="collapse-variants-section">
+      <h3 class="section-title">Variantes de Collapse</h3>
+      <div class="variants-container">
+        <div class="variants-intro">
+          <p>Les sections pliables permettent de masquer et afficher du contenu de manière interactive avec différents styles visuels.</p>
+        </div>
+        <div class="variants-grid">
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-collapse variant="default">
+                <div collapse-header>
+                  {{ 'COLLAPSE.VARIANTS.DEFAULT' | translate }}
+                </div>
+                {{ 'COLLAPSE.BASIC.CONTENT' | translate }}
+              </psh-collapse>
+            </div>
+            <div class="variant-info">
+              <h4>Default</h4>
+              <p>Style par défaut avec arrière-plan subtil. Idéal pour les sections FAQ et les paramètres utilisateur.</p>
+              <ds-code-snippet [code]="defaultVariantCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-collapse variant="outline">
+                <div collapse-header>
+                  {{ 'COLLAPSE.VARIANTS.OUTLINE' | translate }}
+                </div>
+                {{ 'COLLAPSE.BASIC.CONTENT' | translate }}
+              </psh-collapse>
+            </div>
+            <div class="variant-info">
+              <h4>Outline</h4>
+              <p>Style avec bordure pour une délimitation claire. Utile pour les sections dans des formulaires et les panneaux d'information.</p>
+              <ds-code-snippet [code]="outlineVariantCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tailles de Collapse - Section Pleine Largeur -->
+    <section class="collapse-sizes-section">
+      <h3 class="section-title">Tailles Disponibles</h3>
+      <div class="sizes-container">
+        <div class="sizes-intro">
+          <p>Trois tailles sont disponibles pour s'adapter à différents contextes d'utilisation et densités d'interface.</p>
+        </div>
+        <div class="sizes-grid">
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-collapse size="small">
+                <div collapse-header>
+                  {{ 'COLLAPSE.SIZES.SMALL' | translate }}
+                </div>
+                {{ 'COLLAPSE.BASIC.CONTENT' | translate }}
+              </psh-collapse>
+            </div>
+            <div class="size-info">
+              <h4>Small</h4>
+              <div class="size-specs">
+                <span class="size-dimension">Taille compacte</span>
+                <code class="size-code">size="small"</code>
+              </div>
+              <p class="size-usage">Idéal pour les interfaces denses, les sections secondaires ou les éléments compacts nécessitant peu d'espace.</p>
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-collapse size="medium">
+                <div collapse-header>
+                  {{ 'COLLAPSE.SIZES.MEDIUM' | translate }}
+                </div>
+                {{ 'COLLAPSE.BASIC.CONTENT' | translate }}
+              </psh-collapse>
+            </div>
+            <div class="size-info">
+              <h4>Medium (Défaut)</h4>
+              <div class="size-specs">
+                <span class="size-dimension">Taille standard</span>
+                <code class="size-code">size="medium"</code>
+              </div>
+              <p class="size-usage">Taille par défaut, équilibrée pour la plupart des cas d'usage et une bonne lisibilité.</p>
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-collapse size="large">
+                <div collapse-header>
+                  {{ 'COLLAPSE.SIZES.LARGE' | translate }}
+                </div>
+                {{ 'COLLAPSE.BASIC.CONTENT' | translate }}
+              </psh-collapse>
+            </div>
+            <div class="size-info">
+              <h4>Large</h4>
+              <div class="size-specs">
+                <span class="size-dimension">Grande taille</span>
+                <code class="size-code">size="large"</code>
+              </div>
+              <p class="size-usage">Pour les sections importantes nécessitant plus d'emphase et une grande visibilité.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- En-tête Personnalisé - Section Pleine Largeur -->
+    <section class="collapse-custom-section">
+      <h3 class="section-title">En-têtes Personnalisés</h3>
+      <div class="custom-container">
+        <div class="custom-intro">
+          <p>Personnalisez l'en-tête avec des icônes, des badges ou d'autres composants pour créer des interfaces riches et expressives.</p>
+        </div>
+        <div class="custom-grid">
+          <div class="custom-card">
+            <div class="custom-preview">
+              <psh-collapse>
+                <div collapse-header>
+                  <i class="ph ph-info"></i>
+                  {{ 'COLLAPSE.CUSTOM.TITLE' | translate }}
+                </div>
+                {{ 'COLLAPSE.CUSTOM.CONTENT' | translate }}
+              </psh-collapse>
+            </div>
+            <div class="custom-info">
+              <h4>Avec Icône</h4>
+              <p>Ajoutez des icônes pour enrichir visuellement l'en-tête et améliorer la compréhension du contenu.</p>
+              <ds-code-snippet [code]="customHeaderCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fonctionnalités Avancées - Section Pleine Largeur -->
+    <section class="collapse-advanced-section">
+      <h3 class="section-title">Fonctionnalités Avancées</h3>
+      <div class="advanced-container">
+        <div class="advanced-intro">
+          <p>Le composant Collapse offre des fonctionnalités avancées pour des cas d'usage spécifiques et un contrôle programmatique.</p>
+        </div>
+        <div class="advanced-grid">
+          <div class="advanced-card">
+            <div class="advanced-preview">
+              <psh-collapse [(expanded)]="controlledExpanded">
+                <div collapse-header>
+                  Collapse contrôlé ({{ controlledExpanded() ? 'Ouvert' : 'Fermé' }})
+                </div>
+                Contenu contrôlé programmatiquement depuis le composant parent.
+              </psh-collapse>
+
+              <div class="button-group">
+                <button (click)="controlledExpanded.set(true)" class="control-button">
+                  Ouvrir
+                </button>
+                <button (click)="controlledExpanded.set(false)" class="control-button">
+                  Fermer
+                </button>
+                <button (click)="toggleControlled()" class="control-button">
+                  Toggle
+                </button>
+              </div>
+            </div>
+            <div class="advanced-info">
+              <h4>Contrôle Programmatique</h4>
+              <p>Utilisez [(expanded)] pour contrôler l'état du collapse depuis votre composant avec le two-way binding.</p>
+              <ds-code-snippet [code]="controlledCode" />
+            </div>
+          </div>
+
+          <div class="advanced-card">
+            <div class="advanced-preview">
+              <psh-collapse [disableAnimation]="true">
+                <div collapse-header>
+                  Collapse sans animation
+                </div>
+                Ce collapse s'ouvre et se ferme instantanément sans transition.
+              </psh-collapse>
+            </div>
+            <div class="advanced-info">
+              <h4>Sans Animation</h4>
+              <p>Désactivez les animations pour des transitions instantanées si nécessaire pour les performances ou les tests.</p>
+              <ds-code-snippet [code]="noAnimationCode" />
+            </div>
+          </div>
+
+          <div class="advanced-card">
+            <div class="advanced-preview">
+              <psh-collapse maxHeight="300px">
+                <div collapse-header>
+                  Collapse avec hauteur max personnalisée
+                </div>
+                <div>
+                  <p>Ce collapse a une hauteur maximale de 300px.</p>
+                  <p>Contenu supplémentaire pour tester le scroll...</p>
+                  <p>Ligne 1</p>
+                  <p>Ligne 2</p>
+                  <p>Ligne 3</p>
+                  <p>Ligne 4</p>
+                  <p>Ligne 5</p>
+                </div>
+              </psh-collapse>
+            </div>
+            <div class="advanced-info">
+              <h4>Hauteur Personnalisée</h4>
+              <p>Contrôlez la hauteur maximale du contenu pour éviter les sections trop longues et permettre le scroll.</p>
+              <ds-code-snippet [code]="maxHeightCode" />
+            </div>
+          </div>
+
+          <div class="advanced-card">
+            <div class="advanced-preview">
+              <psh-collapse id="custom-collapse-id">
+                <div collapse-header>
+                  Collapse avec ID personnalisé
+                </div>
+                Ce collapse utilise des IDs personnalisés pour les tests E2E ou l'accessibilité.
+              </psh-collapse>
+            </div>
+            <div class="advanced-info">
+              <h4>ID Personnalisé</h4>
+              <p>Définissez un ID personnalisé pour faciliter les tests automatisés et améliorer l'accessibilité.</p>
+              <ds-code-snippet [code]="customIdCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Documentation API - Section Pleine Largeur -->
+    <section class="api-section">
+      <h3 class="section-title">Documentation API</h3>
+      <div class="api-container">
+        <div class="api-intro">
+          <p>Le composant Collapse utilise des <strong>model inputs</strong> et des <strong>input signals</strong> pour une API simple et performante, conforme aux standards Angular 20.</p>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Model Inputs & Signals)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>expanded</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>État d'ouverture du collapse (model input, supporte two-way binding)</td>
+              </tr>
+              <tr>
+                <td><code>variant</code></td>
+                <td><code>CollapseVariant</code></td>
+                <td><code>'default'</code></td>
+                <td>'default' | 'outline' - Style visuel du collapse</td>
+              </tr>
+              <tr>
+                <td><code>size</code></td>
+                <td><code>CollapseSize</code></td>
+                <td><code>'medium'</code></td>
+                <td>'small' | 'medium' | 'large' - Taille du collapse</td>
+              </tr>
+              <tr>
+                <td><code>disabled</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Désactive les interactions avec le collapse</td>
+              </tr>
+              <tr>
+                <td><code>icon</code></td>
+                <td><code>string</code></td>
+                <td><code>'caret-down'</code></td>
+                <td>Nom de l'icône Phosphor pour l'indicateur d'état</td>
+              </tr>
+              <tr>
+                <td><code>maxHeight</code></td>
+                <td><code>string</code></td>
+                <td><code>'1000px'</code></td>
+                <td>Hauteur maximale du contenu ouvert (avec scroll si dépassé)</td>
+              </tr>
+              <tr>
+                <td><code>disableAnimation</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Désactive les animations d'ouverture/fermeture</td>
+              </tr>
+              <tr>
+                <td><code>id</code></td>
+                <td><code>string | undefined</code></td>
+                <td><code>undefined</code></td>
+                <td>ID personnalisé pour les éléments (génère automatiquement header-id et content-id)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Événements (Outputs)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Événement</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>expandedChange</code></td>
+                <td><code>EventEmitter&lt;boolean&gt;</code></td>
+                <td>Émis lors du changement d'état (pour le two-way binding avec [(expanded)])</td>
+              </tr>
+              <tr>
+                <td><code>opened</code></td>
+                <td><code>EventEmitter&lt;void&gt;</code></td>
+                <td>Émis lorsque le collapse s'ouvre</td>
+              </tr>
+              <tr>
+                <td><code>closed</code></td>
+                <td><code>EventEmitter&lt;void&gt;</code></td>
+                <td>Émis lorsque le collapse se ferme</td>
+              </tr>
+              <tr>
+                <td><code>toggled</code></td>
+                <td><code>EventEmitter&lt;boolean&gt;</code></td>
+                <td>Émis à chaque changement d'état, avec la nouvelle valeur</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Méthodes Publiques</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Méthode</th>
+                <th>Signature</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>toggle()</code></td>
+                <td><code>void</code></td>
+                <td>Inverse l'état du collapse (ouvert ↔ fermé)</td>
+              </tr>
+              <tr>
+                <td><code>open()</code></td>
+                <td><code>void</code></td>
+                <td>Ouvre le collapse (ne fait rien s'il est déjà ouvert)</td>
+              </tr>
+              <tr>
+                <td><code>close()</code></td>
+                <td><code>void</code></td>
+                <td>Ferme le collapse (ne fait rien s'il est déjà fermé)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-usage-example">
+          <h4>Exemple d'Utilisation Complète</h4>
+          <div class="code-block">
+            <pre><code>import &#123; PshCollapseComponent &#125; from 'ps-helix';
+
+&#64;Component(&#123;
+  standalone: true,
+  imports: [PshCollapseComponent],
+  template: `
+    &lt;psh-collapse
+      variant="outline"
+      size="large"
+      [(expanded)]="isExpanded"
+      maxHeight="400px"
+      id="faq-section"
+      (opened)="handleOpen()"
+      (closed)="handleClose()"
+      (toggled)="handleToggle($event)"
+    &gt;
+      &lt;div collapse-header&gt;
+        &lt;i class="ph ph-question"&gt;&lt;/i&gt;
+        Questions Fréquentes
+      &lt;/div&gt;
+
+      &lt;div&gt;
+        &lt;p&gt;Contenu de la section FAQ...&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/psh-collapse&gt;
+
+    &lt;button (click)="toggleCollapse()"&gt;
+      Toggle programmatique
+    &lt;/button&gt;
+  `
+&#125;)
+export class MyComponent &#123;
+  isExpanded = signal(false);
+
+  handleOpen(): void &#123;
+    console.log('Section ouverte');
+  &#125;
+
+  handleClose(): void &#123;
+    console.log('Section fermée');
+  &#125;
+
+  handleToggle(state: boolean): void &#123;
+    console.log('Nouvel état:', state);
+  &#125;
+
+  toggleCollapse(): void &#123;
+    this.isExpanded.update(v => !v);
+  &#125;
+&#125;</code></pre>
+          </div>
+        </div>
+
+        <div class="api-slots">
+          <h4>Slots de Contenu</h4>
+          <p>Le composant utilise des content projections pour personnaliser son contenu :</p>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Slot</th>
+                <th>Sélecteur</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>collapse-header</code></td>
+                <td><code>[collapse-header]</code></td>
+                <td>Contenu de l'en-tête cliquable (titre, icônes, badges, etc.)</td>
+              </tr>
+              <tr>
+                <td>Contenu par défaut</td>
+                <td>-</td>
+                <td>Contenu principal qui apparaît/disparaît (tout contenu sans sélecteur spécifique)</td>
+              </tr>
+            </tbody>
+          </table>
+          <ds-code-snippet [code]="slotsCode" />
+        </div>
+
+        <div class="api-best-practices">
+          <h4>Bonnes Pratiques d'Accessibilité</h4>
+          <ul class="best-practices-list">
+            <li><strong>ARIA Automatique</strong> : Le composant gère automatiquement les attributs <code>aria-expanded</code>, <code>aria-controls</code> et <code>role="button"</code> sur l'en-tête</li>
+            <li><strong>Navigation Clavier</strong> : Support complet du clavier avec <code>Enter</code>, <code>Space</code> pour toggle et <code>Escape</code> pour fermer</li>
+            <li><strong>Sémantique</strong> : L'en-tête est un bouton accessible et le contenu utilise <code>role="region"</code> avec <code>aria-labelledby</code></li>
+            <li><strong>Focus Visible</strong> : Indicateurs de focus clairs pour la navigation au clavier</li>
+            <li><strong>IDs Uniques</strong> : Génération automatique d'IDs uniques pour les relations ARIA (ou utilisez l'input <code>id</code> pour contrôler)</li>
+            <li><strong>État Disabled</strong> : Utilisez <code>disabled</code> pour bloquer l'interaction, avec attributs ARIA appropriés</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

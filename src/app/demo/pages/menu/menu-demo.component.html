@@ -1,0 +1,549 @@
+<ds-demo-page-layout
+  title="Système de Menu"
+  introText="Les menus fournissent une navigation structurée et intuitive pour accéder aux différentes sections d'une application. Ils supportent les hiérarchies multi-niveaux, les icônes, les badges et plusieurs modes d'affichage."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Modes de Menu - Section Pleine Largeur -->
+    <section class="menu-modes-section">
+      <h3 class="section-title">Modes de Menu</h3>
+      <div class="modes-container">
+        <div class="modes-intro">
+          <p>Le menu peut être affiché en mode vertical pour les barres latérales ou en mode horizontal pour la navigation principale en en-tête.</p>
+        </div>
+        <div class="modes-grid">
+          <div class="mode-card">
+            <div class="mode-preview">
+              <div class="menu-wrapper vertical">
+                <psh-menu
+                  [items]="navigationItems"
+                  mode="vertical"
+                  (itemClick)="handleItemClick($event)"
+                ></psh-menu>
+              </div>
+            </div>
+            <div class="mode-info">
+              <h4>Mode Vertical (Défaut)</h4>
+              <p>Disposition verticale idéale pour les barres latérales et la navigation principale. Supporte les sous-menus hiérarchiques avec expansion/collapse.</p>
+              <ds-code-snippet [code]="verticalModeCode" />
+            </div>
+          </div>
+
+          <div class="mode-card">
+            <div class="mode-preview">
+              <div class="menu-wrapper horizontal">
+                <psh-menu
+                  [items]="horizontalItems"
+                  mode="horizontal"
+                  (itemClick)="handleItemClick($event)"
+                ></psh-menu>
+              </div>
+            </div>
+            <div class="mode-info">
+              <h4>Mode Horizontal</h4>
+              <p>Disposition horizontale pour les en-têtes et barres de navigation supérieures. Optimisé pour un affichage linéaire des items principaux.</p>
+              <ds-code-snippet [code]="horizontalModeCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Menu Pliable - Section Pleine Largeur -->
+    <section class="menu-collapsible-section">
+      <h3 class="section-title">Menu Pliable</h3>
+      <div class="collapsible-container">
+        <div class="collapsible-intro">
+          <p>Le menu pliable permet d'économiser de l'espace en affichant uniquement les icônes en mode replié. Idéal pour les barres latérales adaptatives.</p>
+        </div>
+        <div class="collapsible-content">
+          <div class="collapsible-demo">
+            <div class="menu-wrapper collapsible">
+              <psh-menu
+                [items]="collapsibleItems"
+                [collapsible]="true"
+                [(collapsed)]="controlledCollapsed"
+                (itemClick)="handleItemClick($event)"
+              ></psh-menu>
+            </div>
+            <div class="control-buttons">
+              <psh-button
+                appearance="filled"
+                variant="primary"
+                size="small"
+                (clicked)="controlledCollapsed.set(false)"
+              >
+                Déplier
+              </psh-button>
+              <psh-button
+                appearance="filled"
+                variant="secondary"
+                size="small"
+                (clicked)="controlledCollapsed.set(true)"
+              >
+                Replier
+              </psh-button>
+              <psh-button
+                appearance="outline"
+                variant="primary"
+                size="small"
+                (clicked)="toggleControlled()"
+              >
+                Toggle
+              </psh-button>
+            </div>
+          </div>
+          <div class="collapsible-doc">
+            <h4>Caractéristiques</h4>
+            <ul class="feature-list">
+              <li><strong>État replié</strong> : Affiche uniquement les icônes pour économiser l'espace horizontal</li>
+              <li><strong>État déplié</strong> : Affiche les icônes avec labels pour une navigation complète</li>
+              <li><strong>Contrôle bidirectionnel</strong> : Utilisez <code>[(collapsed)]</code> pour contrôler l'état depuis le parent</li>
+              <li><strong>Tooltips automatiques</strong> : Les labels apparaissent en tooltip en mode replié</li>
+              <li><strong>Transition fluide</strong> : Animation smooth lors du pliage/dépliage</li>
+            </ul>
+            <ds-code-snippet [code]="collapsibleCode" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Variantes de Menu - Section Pleine Largeur -->
+    <section class="menu-variants-section">
+      <h3 class="section-title">Variantes de Menu</h3>
+      <div class="variants-container">
+        <div class="variants-intro">
+          <p>Trois variantes sont disponibles pour adapter la densité et l'apparence du menu aux besoins de votre interface.</p>
+        </div>
+        <div class="variants-grid">
+          <div class="variant-card">
+            <div class="variant-preview">
+              <div class="menu-wrapper">
+                <psh-menu
+                  [items]="compactItems"
+                  variant="default"
+                  (itemClick)="handleItemClick($event)"
+                ></psh-menu>
+              </div>
+            </div>
+            <div class="variant-info">
+              <h4>Default</h4>
+              <p>Style par défaut équilibré, adapté à la plupart des cas d'usage avec un espacement confortable et une bonne lisibilité.</p>
+              <ds-code-snippet [code]="defaultVariantCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <div class="menu-wrapper">
+                <psh-menu
+                  [items]="compactItems"
+                  variant="compact"
+                  (itemClick)="handleItemClick($event)"
+                ></psh-menu>
+              </div>
+            </div>
+            <div class="variant-info">
+              <h4>Compact</h4>
+              <p>Version condensée pour les interfaces denses nécessitant d'afficher plus d'éléments dans un espace limité.</p>
+              <ds-code-snippet [code]="compactVariantCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <div class="menu-wrapper">
+                <psh-menu
+                  [items]="expandedItems"
+                  variant="expanded"
+                  (itemClick)="handleItemClick($event)"
+                ></psh-menu>
+              </div>
+            </div>
+            <div class="variant-info">
+              <h4>Expanded</h4>
+              <p>Version étendue avec espacement généreux pour une meilleure visibilité et accessibilité tactile optimale.</p>
+              <ds-code-snippet [code]="expandedVariantCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Éléments du Menu - Section Pleine Largeur -->
+    <section class="menu-elements-section">
+      <h3 class="section-title">Éléments du Menu</h3>
+      <div class="elements-container">
+        <div class="elements-intro">
+          <p>Le menu supporte différents types d'éléments pour enrichir la navigation : icônes, badges, séparateurs et sous-menus hiérarchiques.</p>
+        </div>
+        <div class="elements-grid">
+          <div class="element-card">
+            <div class="element-preview">
+              <div class="menu-wrapper">
+                <psh-menu
+                  [items]="iconItems"
+                  (itemClick)="handleItemClick($event)"
+                ></psh-menu>
+              </div>
+            </div>
+            <div class="element-info">
+              <h4>Items avec Icônes</h4>
+              <p>Ajoutez des icônes Phosphor pour améliorer la reconnaissance visuelle et la scannabilité du menu.</p>
+              <ds-code-snippet [code]="iconItemsCode" />
+            </div>
+          </div>
+
+          <div class="element-card">
+            <div class="element-preview">
+              <div class="menu-wrapper">
+                <psh-menu
+                  [items]="badgeItems"
+                  (itemClick)="handleItemClick($event)"
+                ></psh-menu>
+              </div>
+            </div>
+            <div class="element-info">
+              <h4>Items avec Badges</h4>
+              <p>Utilisez des badges pour afficher des compteurs de notifications ou des indicateurs de statut.</p>
+              <ds-code-snippet [code]="badgeItemsCode" />
+            </div>
+          </div>
+
+          <div class="element-card">
+            <div class="element-preview">
+              <div class="menu-wrapper">
+                <psh-menu
+                  [items]="dividerItems"
+                  (itemClick)="handleItemClick($event)"
+                ></psh-menu>
+              </div>
+            </div>
+            <div class="element-info">
+              <h4>Séparateurs</h4>
+              <p>Organisez visuellement les items du menu en groupes logiques avec des séparateurs.</p>
+              <ds-code-snippet [code]="dividerItemsCode" />
+            </div>
+          </div>
+
+          <div class="element-card">
+            <div class="element-preview">
+              <div class="menu-wrapper">
+                <psh-menu
+                  [items]="submenuItems"
+                  (itemClick)="handleItemClick($event)"
+                ></psh-menu>
+              </div>
+            </div>
+            <div class="element-info">
+              <h4>Sous-menus</h4>
+              <p>Créez des hiérarchies multi-niveaux avec la propriété <code>children</code> pour organiser la navigation complexe.</p>
+              <ds-code-snippet [code]="submenuItemsCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- États des Items - Section Pleine Largeur -->
+    <section class="menu-states-section">
+      <h3 class="section-title">États des Items</h3>
+      <div class="states-container">
+        <div class="states-intro">
+          <p>Les items du menu supportent différents états pour communiquer leur disponibilité et leur statut dans la navigation.</p>
+        </div>
+        <div class="states-content">
+          <div class="states-demo">
+            <div class="menu-wrapper">
+              <psh-menu
+                [items]="stateItems"
+                (itemClick)="handleItemClick($event)"
+              ></psh-menu>
+            </div>
+          </div>
+          <div class="states-doc">
+            <h4>Caractéristiques des États</h4>
+            <ul class="feature-list">
+              <li><strong>Normal</strong> : État par défaut, prêt à recevoir les interactions utilisateur</li>
+              <li><strong>Hover</strong> : Changement visuel au survol pour indiquer l'interactivité</li>
+              <li><strong>Active</strong> : Utilisez <code>active: true</code> pour indiquer la page ou section actuelle</li>
+              <li><strong>Disabled</strong> : Utilisez <code>disabled: true</code> pour les options temporairement indisponibles</li>
+              <li><strong>Focus</strong> : Indicateur de focus visible pour la navigation au clavier avec <code>Tab</code></li>
+            </ul>
+            <ds-code-snippet [code]="statesCode" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Documentation API - Section Pleine Largeur -->
+    <section class="api-section">
+      <h3 class="section-title">Documentation API</h3>
+      <div class="api-container">
+        <div class="api-intro">
+          <p>Le composant Menu utilise des <strong>model inputs</strong> et des <strong>input signals</strong> pour une API simple et performante, conforme aux standards Angular 20.</p>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Model Inputs)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>mode</code></td>
+                <td><code>MenuMode</code></td>
+                <td><code>'vertical'</code></td>
+                <td>'vertical' | 'horizontal' - Orientation du menu</td>
+              </tr>
+              <tr>
+                <td><code>variant</code></td>
+                <td><code>MenuVariant</code></td>
+                <td><code>'default'</code></td>
+                <td>'default' | 'compact' | 'expanded' - Style et densité du menu</td>
+              </tr>
+              <tr>
+                <td><code>collapsible</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Active la possibilité de replier le menu (icônes uniquement)</td>
+              </tr>
+              <tr>
+                <td><code>collapsed</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>État replié du menu (supporte two-way binding avec [(collapsed)])</td>
+              </tr>
+              <tr>
+                <td><code>ariaLabels</code></td>
+                <td><code>Record&lt;string, string&gt;</code></td>
+                <td><code>&#123;...&#125;</code></td>
+                <td>Labels ARIA personnalisables pour l'accessibilité</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Input Signals)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>items</code></td>
+                <td><code>MenuItem&lt;T&gt;[]</code></td>
+                <td><code>[]</code></td>
+                <td>Liste des éléments du menu avec support générique pour les valeurs</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Événements (Outputs)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Événement</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>itemClick</code></td>
+                <td><code>EventEmitter&lt;MenuItem&lt;T&gt;&gt;</code></td>
+                <td>Émis lors du clic sur un item du menu (sauf si désactivé)</td>
+              </tr>
+              <tr>
+                <td><code>collapsedChange</code></td>
+                <td><code>EventEmitter&lt;boolean&gt;</code></td>
+                <td>Émis lors du changement d'état collapsed (pour two-way binding)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Interface MenuItem&lt;T&gt;</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Obligatoire</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>id</code></td>
+                <td><code>string</code></td>
+                <td>Oui</td>
+                <td>Identifiant unique de l'item</td>
+              </tr>
+              <tr>
+                <td><code>content</code></td>
+                <td><code>string</code></td>
+                <td>Oui</td>
+                <td>Texte affiché dans le menu</td>
+              </tr>
+              <tr>
+                <td><code>icon</code></td>
+                <td><code>string | undefined</code></td>
+                <td>Non</td>
+                <td>Nom de l'icône Phosphor à afficher</td>
+              </tr>
+              <tr>
+                <td><code>path</code></td>
+                <td><code>string | undefined</code></td>
+                <td>Non</td>
+                <td>Chemin de navigation (à utiliser avec le routeur)</td>
+              </tr>
+              <tr>
+                <td><code>disabled</code></td>
+                <td><code>boolean | undefined</code></td>
+                <td>Non</td>
+                <td>Désactive l'item et empêche toute interaction</td>
+              </tr>
+              <tr>
+                <td><code>active</code></td>
+                <td><code>boolean | undefined</code></td>
+                <td>Non</td>
+                <td>Marque l'item comme actif (page/section courante)</td>
+              </tr>
+              <tr>
+                <td><code>children</code></td>
+                <td><code>MenuItem&lt;T&gt;[] | undefined</code></td>
+                <td>Non</td>
+                <td>Sous-menu hiérarchique (supporte multi-niveaux)</td>
+              </tr>
+              <tr>
+                <td><code>divider</code></td>
+                <td><code>boolean | undefined</code></td>
+                <td>Non</td>
+                <td>Affiche un séparateur visuel au lieu d'un item cliquable</td>
+              </tr>
+              <tr>
+                <td><code>badge</code></td>
+                <td><code>string | number | undefined</code></td>
+                <td>Non</td>
+                <td>Badge affiché à droite de l'item (compteur, notification)</td>
+              </tr>
+              <tr>
+                <td><code>value</code></td>
+                <td><code>T | undefined</code></td>
+                <td>Non</td>
+                <td>Valeur associée à l'item (type générique personnalisable)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-usage-example">
+          <h4>Exemple d'Utilisation Complète</h4>
+          <div class="code-block">
+            <pre><code>import &#123; PshMenuComponent, MenuItem &#125; from 'ps-helix';
+
+&#64;Component(&#123;
+  standalone: true,
+  imports: [PshMenuComponent],
+  template: `
+    &lt;psh-menu
+      [items]="navigationItems"
+      mode="vertical"
+      variant="default"
+      [collapsible]="true"
+      [(collapsed)]="isCollapsed"
+      (itemClick)="handleNavigation($event)"
+      (collapsedChange)="handleCollapsedChange($event)"
+    &gt;&lt;/psh-menu&gt;
+  `
+&#125;)
+export class MyComponent &#123;
+  isCollapsed = signal(false);
+
+  navigationItems: MenuItem[] = [
+    &#123;
+      id: 'dashboard',
+      content: 'Tableau de bord',
+      icon: 'chart-line',
+      path: '/dashboard',
+      active: true
+    &#125;,
+    &#123;
+      id: 'users',
+      content: 'Utilisateurs',
+      icon: 'users',
+      badge: '12',
+      children: [
+        &#123;
+          id: 'all-users',
+          content: 'Tous les utilisateurs',
+          path: '/users'
+        &#125;,
+        &#123;
+          id: 'add-user',
+          content: 'Ajouter un utilisateur',
+          path: '/users/new'
+        &#125;
+      ]
+    &#125;,
+    &#123;
+      id: 'divider1',
+      divider: true,
+      content: 'Section Admin'
+    &#125;,
+    &#123;
+      id: 'settings',
+      content: 'Paramètres',
+      icon: 'gear',
+      path: '/settings',
+      disabled: !canAccessSettings
+    &#125;
+  ];
+
+  handleNavigation(item: MenuItem): void &#123;
+    if (item.path) &#123;
+      this.router.navigate([item.path]);
+    &#125;
+    console.log('Navigation:', item);
+  &#125;
+
+  handleCollapsedChange(collapsed: boolean): void &#123;
+    console.log('Menu collapsed:', collapsed);
+  &#125;
+&#125;</code></pre>
+          </div>
+        </div>
+
+        <div class="api-best-practices">
+          <h4>Bonnes Pratiques d'Accessibilité</h4>
+          <ul class="best-practices-list">
+            <li><strong>ARIA Automatique</strong> : Le composant gère automatiquement <code>role="navigation"</code>, <code>aria-label</code>, <code>aria-expanded</code> pour les sous-menus</li>
+            <li><strong>Navigation Clavier</strong> : Support complet avec <kbd>Tab</kbd> (navigation), <kbd>Enter</kbd>/<kbd>Space</kbd> (activation), <kbd>ArrowUp</kbd>/<kbd>ArrowDown</kbd> (navigation verticale), <kbd>ArrowLeft</kbd>/<kbd>ArrowRight</kbd> (navigation horizontale)</li>
+            <li><strong>Focus Management</strong> : Indicateurs de focus visibles conformes WCAG 2.1 avec ratio de contraste 3:1 minimum</li>
+            <li><strong>Items Désactivés</strong> : Attribut <code>aria-disabled="true"</code> et curseur <code>not-allowed</code> pour communiquer l'indisponibilité</li>
+            <li><strong>Sous-menus</strong> : Annonce automatique avec <code>aria-haspopup="menu"</code> et gestion de l'état <code>aria-expanded</code></li>
+            <li><strong>Badges</strong> : Les compteurs sont annoncés aux lecteurs d'écran avec les labels appropriés</li>
+            <li><strong>Mode Collapsed</strong> : Tooltips automatiques affichant les labels quand le menu est replié pour maintenir l'accessibilité</li>
+            <li><strong>Landmarks</strong> : Le menu principal utilise <code>&lt;nav&gt;</code> comme landmark sémantique pour faciliter la navigation</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

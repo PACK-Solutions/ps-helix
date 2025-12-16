@@ -1,0 +1,164 @@
+<nav 
+  class="menu"
+  [class.vertical]="mode() === 'vertical'"
+  [class.horizontal]="mode() === 'horizontal'"
+  [class.compact]="variant() === 'compact'"
+  [class.expanded]="variant() === 'expanded'"
+  [class.collapsed]="collapsed()"
+  role="navigation"
+  [attr.aria-label]="'Navigation menu'"
+  [attr.data-state]="state()"
+>
+  @if (collapsible()) {
+    <button 
+      class="menu-collapse-button"
+      (click)="toggleCollapse()"
+      [attr.aria-expanded]="!collapsed()"
+      [attr.aria-label]="collapsed() ? ariaLabels()['expand'] : ariaLabels()['collapse']"
+    >
+      <i class="ph ph-caret-left" aria-hidden="true"></i>
+    </button>
+  }
+
+  <ul class="menu-list" role="menubar">
+    @for (item of items(); track item.id; let i = $index) {
+      @if (item.divider) {
+        <li class="menu-divider" role="separator"></li>
+      } @else {
+        <li
+          class="menu-item"
+          [class.has-children]="item.children?.length"
+          [class.expanded]="isExpanded(item)"
+          [class.disabled]="item.disabled"
+          role="none"
+        >
+          @if (item.path) {
+            <a
+              class="menu-link"
+              [attr.href]="item.path"
+              [attr.data-menu-item-id]="item.id"
+              [class.active]="item.active"
+              [attr.aria-disabled]="item.disabled"
+              [attr.aria-expanded]="item.children?.length ? isExpanded(item) : null"
+              [attr.aria-label]="getAriaLabel(item)"
+              (click)="toggleItem(item, $event)"
+              (keydown)="handleKeyDown($event, item, i)"
+              role="menuitem"
+              [attr.tabindex]="item.disabled ? -1 : 0"
+            >
+            @if (item.icon) {
+              <i class="ph ph-{{ item.icon }}" aria-hidden="true"></i>
+            }
+            
+            @if (!collapsed() || mode() === 'horizontal') {
+              <span class="menu-label">{{ item.content }}</span>
+            }
+
+            @if (item.badge) {
+              <span class="menu-badge" role="status">{{ item.badge }}</span>
+            }
+
+            @if (item.children?.length) {
+              <i
+                class="ph ph-caret-down menu-arrow"
+                [class.expanded]="isExpanded(item)"
+                aria-hidden="true"
+              ></i>
+            }
+            </a>
+          } @else {
+            <button
+              type="button"
+              class="menu-link"
+              [attr.data-menu-item-id]="item.id"
+              [class.active]="item.active"
+              [attr.aria-disabled]="item.disabled"
+              [attr.aria-expanded]="item.children?.length ? isExpanded(item) : null"
+              [attr.aria-label]="getAriaLabel(item)"
+              (click)="toggleItem(item, $event)"
+              (keydown)="handleKeyDown($event, item, i)"
+              role="menuitem"
+              [attr.tabindex]="item.disabled ? -1 : 0"
+              [disabled]="item.disabled"
+            >
+            @if (item.icon) {
+              <i class="ph ph-{{ item.icon }}" aria-hidden="true"></i>
+            }
+
+            @if (!collapsed() || mode() === 'horizontal') {
+              <span class="menu-label">{{ item.content }}</span>
+            }
+
+            @if (item.badge) {
+              <span class="menu-badge" role="status">{{ item.badge }}</span>
+            }
+
+            @if (item.children?.length) {
+              <i
+                class="ph ph-caret-down menu-arrow"
+                [class.expanded]="isExpanded(item)"
+                aria-hidden="true"
+              ></i>
+            }
+            </button>
+          }
+
+          @if (item.children?.length) {
+            <ul 
+              class="submenu" 
+              role="menu" 
+              [attr.aria-label]="item.content + ' submenu'"
+            >
+              @for (child of item.children; track child.id; let childIndex = $index) {
+                <li class="menu-item" role="none">
+                  @if (child.path) {
+                    <a
+                      class="menu-link"
+                      [attr.href]="child.path"
+                      [attr.data-menu-item-id]="child.id"
+                      [class.active]="child.active"
+                      [attr.aria-disabled]="child.disabled"
+                      [attr.aria-label]="getAriaLabel(child)"
+                      (click)="toggleItem(child, $event)"
+                      role="menuitem"
+                      [attr.tabindex]="child.disabled ? -1 : 0"
+                    >
+                      @if (child.icon) {
+                        <i class="ph ph-{{ child.icon }}" aria-hidden="true"></i>
+                      }
+                      <span class="menu-label">{{ child.content }}</span>
+                      @if (child.badge) {
+                        <span class="menu-badge" role="status">{{ child.badge }}</span>
+                      }
+                    </a>
+                  } @else {
+                    <button
+                      type="button"
+                      class="menu-link"
+                      [attr.data-menu-item-id]="child.id"
+                      [class.active]="child.active"
+                      [attr.aria-disabled]="child.disabled"
+                      [attr.aria-label]="getAriaLabel(child)"
+                      (click)="toggleItem(child, $event)"
+                      role="menuitem"
+                      [attr.tabindex]="child.disabled ? -1 : 0"
+                      [disabled]="child.disabled"
+                    >
+                      @if (child.icon) {
+                        <i class="ph ph-{{ child.icon }}" aria-hidden="true"></i>
+                      }
+                      <span class="menu-label">{{ child.content }}</span>
+                      @if (child.badge) {
+                        <span class="menu-badge" role="status">{{ child.badge }}</span>
+                      }
+                    </button>
+                  }
+                </li>
+              }
+            </ul>
+          }
+        </li>
+      }
+    }
+  </ul>
+</nav>

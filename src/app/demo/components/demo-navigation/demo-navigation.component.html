@@ -1,0 +1,48 @@
+<nav class="demo-nav">
+  <h2 class="demo-nav-title">Helix Design System</h2>
+  
+  <div class="demo-nav-controls">
+    <button
+      class="nav-toggle"
+      (click)="toggleTheme()"
+      [attr.aria-label]="themeLabel()"
+      [title]="themeLabel()"
+    >
+      <i class="ph ph-{{ themeIcon() }}" aria-hidden="true"></i>
+    </button>
+
+    <button
+      class="nav-toggle"
+      (click)="toggleLanguage()"
+      [attr.aria-label]="'DESIGN_SYSTEM.TOGGLE_LANGUAGE' | translate"
+    >
+      {{ translateService.currentLang === 'en' ? 'Fr' : 'En' }}
+    </button>
+  </div>
+
+  <div class="demo-nav-search">
+    <ds-search
+      (navigationClick)="onSearchNavigate($event)"
+    />
+  </div>
+
+  @for (section of navigationSections; track section.title) {
+    <div class="nav-section">
+      <h3 class="nav-section-title">{{ section.title | translate }}</h3>
+      <ul class="nav-items">
+        @for (item of section.items; track item.path) {
+          <li>
+            <a 
+              [routerLink]="item.path"
+              routerLinkActive="active"
+              class="demo-nav-link"
+              (click)="navigationClick.emit()"
+            >
+              {{ item.label | translate }}
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
+  }
+</nav>

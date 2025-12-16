@@ -1,0 +1,157 @@
+/* Utility Classes - Animations */
+
+/* Keyframe definitions */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(var(--animation-distance-md));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(calc(-1 * var(--animation-distance-md)));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(calc(-1 * var(--animation-distance-md)));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(var(--animation-distance-md));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(calc(-1 * var(--animation-distance-sm)));
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+/* Animation utility classes */
+.animate-fade-in {
+  animation: fadeIn var(--animation-duration-default) var(--animation-easing-default);
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp var(--animation-duration-default) var(--animation-easing-default);
+}
+
+.animate-slide-in {
+  animation: slideIn var(--animation-duration-default) var(--animation-easing-default);
+}
+
+.animate-slide-in-down {
+  animation: slideInDown var(--animation-duration-default) var(--animation-easing-default);
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft var(--animation-duration-default) var(--animation-easing-default);
+}
+
+.animate-slide-in-right {
+  animation: slideInRight var(--animation-duration-default) var(--animation-easing-default);
+}
+
+.animate-scale-in {
+  animation: scaleIn var(--animation-duration-fast) var(--animation-easing-smooth);
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.animate-bounce {
+  animation: bounce var(--animation-duration-slow) var(--animation-easing-default) infinite;
+}
+
+.animate-pulse {
+  animation: pulse var(--animation-duration-slow) var(--animation-easing-default) infinite;
+}
+
+/* Animation control utilities */
+.animate-fast {
+  animation-duration: var(--animation-duration-fast) !important;
+}
+
+.animate-slow {
+  animation-duration: var(--animation-duration-slow) !important;
+}
+
+.animate-smooth {
+  animation-timing-function: var(--animation-easing-smooth) !important;
+}

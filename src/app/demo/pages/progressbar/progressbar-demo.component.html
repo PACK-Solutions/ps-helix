@@ -1,0 +1,472 @@
+<ds-demo-page-layout
+  title="Barres de Progression"
+  introText="Les barres de progression fournissent un retour visuel sur l'avancement d'une opération ou d'une tâche. Elles permettent aux utilisateurs de comprendre l'état d'exécution et d'estimer le temps restant."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Variantes de Barres de Progression - Section Pleine Largeur -->
+    <section class="progressbar-variants-section">
+      <h3 class="section-title">Variantes de Barres de Progression</h3>
+      <div class="variants-container">
+        <div class="variants-intro">
+          <p>Les barres de progression offrent cinq variantes de couleur pour communiquer différents types d'opérations et niveaux de priorité adaptés à chaque contexte.</p>
+        </div>
+        <div class="variants-grid">
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-progressbar [value]="30" variant="primary"></psh-progressbar>
+            </div>
+            <div class="variant-info">
+              <h4>Primary</h4>
+              <p>Progression par défaut pour les opérations standards et les processus généraux de l'application.</p>
+              <ds-code-snippet [code]="primaryVariantCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-progressbar [value]="40" variant="secondary"></psh-progressbar>
+            </div>
+            <div class="variant-info">
+              <h4>Secondary</h4>
+              <p>Utilisé pour les opérations secondaires ou les processus d'arrière-plan de moindre priorité.</p>
+              <ds-code-snippet [code]="secondaryVariantCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-progressbar [value]="50" variant="success"></psh-progressbar>
+            </div>
+            <div class="variant-info">
+              <h4>Success</h4>
+              <p>Indique une progression positive, des opérations réussies ou des processus terminés avec succès.</p>
+              <ds-code-snippet [code]="successVariantCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-progressbar [value]="60" variant="warning"></psh-progressbar>
+            </div>
+            <div class="variant-info">
+              <h4>Warning</h4>
+              <p>Signale des opérations nécessitant attention ou des processus approchant des seuils critiques.</p>
+              <ds-code-snippet [code]="warningVariantCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-progressbar [value]="70" variant="danger"></psh-progressbar>
+            </div>
+            <div class="variant-info">
+              <h4>Danger</h4>
+              <p>Utilisé pour les opérations à risque, les processus en échec ou nécessitant une action immédiate.</p>
+              <ds-code-snippet [code]="dangerVariantCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tailles de Barres de Progression - Section Pleine Largeur -->
+    <section class="progressbar-sizes-section">
+      <h3 class="section-title">Tailles Disponibles</h3>
+      <div class="sizes-container">
+        <div class="sizes-intro">
+          <p>Trois tailles sont disponibles pour s'adapter à différents contextes d'utilisation et niveaux de hiérarchie visuelle dans l'interface.</p>
+        </div>
+        <div class="sizes-grid">
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-progressbar [value]="40" size="small"></psh-progressbar>
+            </div>
+            <div class="size-info">
+              <h4>Small</h4>
+              <div class="size-specs">
+                <span class="size-dimension">Hauteur réduite</span>
+                <code class="size-code">size="small"</code>
+              </div>
+              <p class="size-usage">Idéale pour les interfaces denses, les listes compactes ou les indicateurs discrets nécessitant peu d'espace vertical.</p>
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-progressbar [value]="60" size="medium"></psh-progressbar>
+            </div>
+            <div class="size-info">
+              <h4>Medium (Défaut)</h4>
+              <div class="size-specs">
+                <span class="size-dimension">Hauteur standard</span>
+                <code class="size-code">size="medium"</code>
+              </div>
+              <p class="size-usage">Taille par défaut, équilibrée pour la plupart des cas d'usage et une bonne visibilité sur tous les appareils.</p>
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-progressbar [value]="80" size="large"></psh-progressbar>
+            </div>
+            <div class="size-info">
+              <h4>Large</h4>
+              <div class="size-specs">
+                <span class="size-dimension">Hauteur augmentée</span>
+                <code class="size-code">size="large"</code>
+              </div>
+              <p class="size-usage">Pour les opérations importantes, les écrans de chargement principaux ou les indicateurs nécessitant une grande visibilité.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modes d'Affichage - Section Pleine Largeur -->
+    <section class="progressbar-modes-section">
+      <h3 class="section-title">Modes d'Affichage</h3>
+      <div class="modes-container">
+        <div class="modes-intro">
+          <p>Les barres de progression supportent plusieurs modes d'affichage pour différents types d'opérations et besoins visuels.</p>
+        </div>
+        <div class="modes-grid">
+          <div class="mode-card">
+            <div class="mode-preview">
+              <psh-progressbar [value]="50" mode="default"></psh-progressbar>
+            </div>
+            <div class="mode-info">
+              <h4>Default</h4>
+              <code class="mode-code">mode="default"</code>
+              <p class="mode-usage">Mode standard avec une barre de progression simple et épurée. Idéal pour la majorité des cas d'usage.</p>
+              <ds-code-snippet [code]="defaultModeCode" />
+            </div>
+          </div>
+
+          <div class="mode-card">
+            <div class="mode-preview">
+              <psh-progressbar [value]="60" mode="striped"></psh-progressbar>
+            </div>
+            <div class="mode-info">
+              <h4>Striped</h4>
+              <code class="mode-code">mode="striped"</code>
+              <p class="mode-usage">Motif strié statique ajoutant une texture visuelle distinctive. Utile pour différencier plusieurs barres de progression.</p>
+              <ds-code-snippet [code]="stripedModeCode" />
+            </div>
+          </div>
+
+          <div class="mode-card">
+            <div class="mode-preview">
+              <psh-progressbar [value]="70" mode="animated"></psh-progressbar>
+            </div>
+            <div class="mode-info">
+              <h4>Animated</h4>
+              <code class="mode-code">mode="animated"</code>
+              <p class="mode-usage">Stries animées donnant un retour visuel d'activité continue. Indique clairement qu'un processus est en cours.</p>
+              <ds-code-snippet [code]="animatedModeCode" />
+            </div>
+          </div>
+
+          <div class="mode-card">
+            <div class="mode-preview">
+              <psh-progressbar mode="indeterminate" label="Chargement..."></psh-progressbar>
+            </div>
+            <div class="mode-info">
+              <h4>Indeterminate</h4>
+              <code class="mode-code">mode="indeterminate"</code>
+              <p class="mode-usage">Animation continue pour les opérations dont la durée est inconnue. Utilisé lors des chargements sans progression mesurable.</p>
+              <ds-code-snippet [code]="indeterminateModeCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Position du Label - Section Pleine Largeur -->
+    <section class="progressbar-labels-section">
+      <h3 class="section-title">Positions du Label</h3>
+      <div class="labels-container">
+        <div class="labels-intro">
+          <p>Les labels de progression peuvent être positionnés de différentes manières pour s'adapter à votre mise en page et maximiser la clarté de l'information.</p>
+        </div>
+        <div class="labels-grid">
+          <div class="label-card">
+            <div class="label-preview">
+              <psh-progressbar [value]="65" labelPosition="top" [showLabel]="true"></psh-progressbar>
+            </div>
+            <div class="label-info">
+              <h4>Top (Défaut)</h4>
+              <code class="label-code">labelPosition="top"</code>
+              <p class="label-usage">Label affiché au-dessus de la barre. Position standard offrant une excellente lisibilité sans encombrement visuel.</p>
+            </div>
+          </div>
+
+          <div class="label-card">
+            <div class="label-preview">
+              <psh-progressbar [value]="65" labelPosition="bottom" [showLabel]="true"></psh-progressbar>
+            </div>
+            <div class="label-info">
+              <h4>Bottom</h4>
+              <code class="label-code">labelPosition="bottom"</code>
+              <p class="label-usage">Label affiché en dessous de la barre. Utile lorsque l'espace au-dessus est limité ou pour des raisons de design spécifiques.</p>
+            </div>
+          </div>
+
+          <div class="label-card">
+            <div class="label-preview">
+              <psh-progressbar [value]="65" labelPosition="inline" [showLabel]="true"></psh-progressbar>
+            </div>
+            <div class="label-info">
+              <h4>Inline</h4>
+              <code class="label-code">labelPosition="inline"</code>
+              <p class="label-usage">Label intégré à la barre de progression. Optimise l'espace vertical et crée une présentation plus compacte.</p>
+            </div>
+          </div>
+
+          <div class="label-card">
+            <div class="label-preview">
+              <psh-progressbar [value]="65" [showLabel]="false"></psh-progressbar>
+            </div>
+            <div class="label-info">
+              <h4>Sans Label</h4>
+              <code class="label-code">[showLabel]="false"</code>
+              <p class="label-usage">Barre de progression sans label visible. Utilisé lorsque le pourcentage n'est pas pertinent ou pour un design minimaliste.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Labels Personnalisés - Section Pleine Largeur -->
+    <section class="progressbar-custom-labels-section">
+      <h3 class="section-title">Labels Personnalisés</h3>
+      <div class="custom-labels-container">
+        <div class="custom-labels-intro">
+          <p>Au lieu d'afficher le pourcentage par défaut, vous pouvez fournir des labels personnalisés pour un contexte plus explicite et une meilleure expérience utilisateur.</p>
+        </div>
+        <div class="custom-labels-content">
+          <div class="custom-labels-demo">
+            <div class="custom-label-example">
+              <psh-progressbar
+                [value]="uploadProgress"
+                variant="primary"
+                label="Téléchargement en cours..."
+              ></psh-progressbar>
+            </div>
+
+            <div class="custom-label-example">
+              <psh-progressbar
+                [value]="processingProgress"
+                variant="success"
+                label="Traitement: étape 3 sur 4"
+              ></psh-progressbar>
+            </div>
+
+            <div class="custom-label-example">
+              <psh-progressbar
+                [value]="installProgress"
+                variant="warning"
+                label="Installation: 45 Mo sur 120 Mo"
+              ></psh-progressbar>
+            </div>
+          </div>
+          <div class="custom-labels-doc">
+            <h4>Cas d'Usage des Labels Personnalisés</h4>
+            <ul class="feature-list">
+              <li><strong>Téléchargements</strong> : Afficher la taille des fichiers ou le temps restant estimé</li>
+              <li><strong>Étapes de processus</strong> : Indiquer l'étape actuelle dans un workflow multi-étapes</li>
+              <li><strong>Installations</strong> : Communiquer l'état d'installation avec des détails contextuels</li>
+              <li><strong>Conversions</strong> : Afficher le type d'opération en cours (compression, encodage, etc.)</li>
+            </ul>
+            <ds-code-snippet [code]="customLabelCode" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Documentation API - Section Pleine Largeur -->
+    <section class="api-section">
+      <h3 class="section-title">Documentation API</h3>
+      <div class="api-container">
+        <div class="api-intro">
+          <p>Le composant Progressbar utilise des <strong>model inputs</strong> et des <strong>input signals</strong> pour une API simple et performante, conforme aux standards Angular 20.</p>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Model Inputs avec Two-Way Binding)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>value</code></td>
+                <td><code>number</code></td>
+                <td><code>0</code></td>
+                <td>Valeur actuelle de la progression. Supporte le two-way binding avec [(value)]</td>
+              </tr>
+              <tr>
+                <td><code>max</code></td>
+                <td><code>number</code></td>
+                <td><code>100</code></td>
+                <td>Valeur maximale de la progression. Supporte le two-way binding avec [(max)]</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Input Signals)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>variant</code></td>
+                <td><code>ProgressbarVariant</code></td>
+                <td><code>'primary'</code></td>
+                <td>'primary' | 'secondary' | 'success' | 'warning' | 'danger'</td>
+              </tr>
+              <tr>
+                <td><code>size</code></td>
+                <td><code>ProgressbarSize</code></td>
+                <td><code>'medium'</code></td>
+                <td>'small' | 'medium' | 'large' - Taille de la barre de progression</td>
+              </tr>
+              <tr>
+                <td><code>showLabel</code></td>
+                <td><code>boolean</code></td>
+                <td><code>true</code></td>
+                <td>Contrôle l'affichage du label de progression</td>
+              </tr>
+              <tr>
+                <td><code>mode</code></td>
+                <td><code>ProgressbarMode</code></td>
+                <td><code>'default'</code></td>
+                <td>'default' | 'striped' | 'animated' | 'indeterminate' - Mode d'affichage</td>
+              </tr>
+              <tr>
+                <td><code>label</code></td>
+                <td><code>string | undefined</code></td>
+                <td><code>undefined</code></td>
+                <td>Label personnalisé. Si non fourni, affiche le pourcentage calculé</td>
+              </tr>
+              <tr>
+                <td><code>labelPosition</code></td>
+                <td><code>ProgressbarLabelPosition</code></td>
+                <td><code>'top'</code></td>
+                <td>'top' | 'bottom' | 'inline' - Position du label par rapport à la barre</td>
+              </tr>
+              <tr>
+                <td><code>ariaLabel</code></td>
+                <td><code>string | undefined</code></td>
+                <td><code>undefined</code></td>
+                <td>Label ARIA personnalisé pour une meilleure accessibilité</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Événements (Outputs)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Événement</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>completed</code></td>
+                <td><code>EventEmitter&lt;void&gt;</code></td>
+                <td>Émis lorsque la valeur atteint ou dépasse la valeur maximale. Utile pour déclencher des actions une fois l'opération terminée</td>
+              </tr>
+              <tr>
+                <td><code>thresholdReached</code></td>
+                <td><code>EventEmitter&lt;number&gt;</code></td>
+                <td>Émis lorsque la progression atteint un seuil prédéfini (25%, 50%, 75%). Permet de réagir aux étapes intermédiaires</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-usage-example">
+          <h4>Exemple d'Utilisation Complète</h4>
+          <div class="code-block">
+            <pre><code>import &#123; PshProgressbarComponent &#125; from 'ps-helix';
+
+&#64;Component(&#123;
+  standalone: true,
+  imports: [PshProgressbarComponent],
+  template: `
+    &lt;psh-progressbar
+      [(value)]="uploadProgress"
+      [max]="100"
+      variant="primary"
+      size="medium"
+      mode="animated"
+      labelPosition="top"
+      [showLabel]="true"
+      label="Téléchargement en cours..."
+      ariaLabel="Progression du téléchargement"
+      (completed)="handleUploadComplete()"
+      (thresholdReached)="handleThreshold($event)"
+    &gt;&lt;/psh-progressbar&gt;
+  `
+&#125;)
+export class MyComponent &#123;
+  uploadProgress = 0;
+
+  ngOnInit() &#123;
+    this.simulateUpload();
+  &#125;
+
+  simulateUpload() &#123;
+    const interval = setInterval(() => &#123;
+      this.uploadProgress += 10;
+      if (this.uploadProgress >= 100) &#123;
+        clearInterval(interval);
+      &#125;
+    &#125;, 500);
+  &#125;
+
+  handleUploadComplete(): void &#123;
+    console.log('Upload terminé!');
+  &#125;
+
+  handleThreshold(threshold: number): void &#123;
+    console.log(`Seuil atteint: $&#123;threshold&#125;%`);
+  &#125;
+&#125;</code></pre>
+          </div>
+        </div>
+
+        <div class="api-best-practices">
+          <h4>Bonnes Pratiques d'Accessibilité</h4>
+          <ul class="best-practices-list">
+            <li><strong>Attributs ARIA</strong> : Le composant utilise automatiquement <code>role="progressbar"</code>, <code>aria-valuenow</code>, <code>aria-valuemin</code> et <code>aria-valuemax</code> pour une accessibilité optimale</li>
+            <li><strong>Label descriptif</strong> : Fournissez un <code>ariaLabel</code> personnalisé pour donner un contexte clair aux utilisateurs de lecteurs d'écran</li>
+            <li><strong>Annonces dynamiques</strong> : Le composant inclut <code>aria-live="polite"</code> pour annoncer les changements de progression sans interrompre l'utilisateur</li>
+            <li><strong>Mode indéterminé</strong> : Pour les opérations de durée inconnue, utilisez <code>mode="indeterminate"</code> avec un label explicite</li>
+            <li><strong>Feedback visuel</strong> : Associez toujours les barres de progression avec du texte explicatif ou des labels pour les utilisateurs malvoyants</li>
+            <li><strong>Contraste</strong> : Assurez-vous que les couleurs des variantes respectent un ratio de contraste minimum de 3:1 avec l'arrière-plan selon WCAG 2.1</li>
+            <li><strong>Événements</strong> : Utilisez les événements <code>completed</code> et <code>thresholdReached</code> pour fournir des notifications accessibles aux moments clés</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

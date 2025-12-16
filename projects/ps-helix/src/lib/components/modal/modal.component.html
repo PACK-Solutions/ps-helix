@@ -1,0 +1,82 @@
+<div
+  #modalBackdrop
+  class="modal-backdrop"
+  [class.open]="open()"
+  (click)="handleBackdropClick($event)"
+  role="dialog"
+  aria-modal="true"
+  [attr.aria-hidden]="!open()"
+  [attr.aria-labelledby]="modalDialogId() + '-title'"
+  [attr.aria-describedby]="modalDescriptionId()"
+  [attr.data-state]="state()"
+>
+  <div
+    class="modal-container"
+    [class.small]="size() === 'small'"
+    [class.medium]="size() === 'medium'"
+    [class.large]="size() === 'large'"
+    [attr.id]="modalDialogId()"
+    role="document"
+  >
+    <div class="modal-content-wrapper">
+      <div class="modal-header">
+        <h2 class="modal-title" [attr.id]="modalDialogId() + '-title'">
+          <ng-content select="[modal-title]">
+            @if (title()) {
+            {{ title() }}
+            } @else { Modal Title }
+          </ng-content>
+        </h2>
+        @if (showClose()) {
+        <button
+          type="button"
+          class="modal-close"
+          (click)="handleClose()"
+          [attr.aria-label]="dismissLabel()"
+        >
+          <i class="ph ph-x" aria-hidden="true"></i>
+        </button>
+        }
+      </div>
+
+      <div class="modal-content" [attr.id]="modalDescriptionId()">
+        <ng-content>
+          <p>
+            Modal content goes here. You can replace this with your own content.
+          </p>
+        </ng-content>
+      </div>
+
+      @if (showFooter() && !hasCustomFooter()) {
+      <div class="modal-footer">
+        <psh-button
+          appearance="outline"
+          variant="primary"
+          size="medium"
+          [fullWidth]="isMobileScreen()"
+          (clicked)="handleClose()">
+          {{ cancelLabel() }}
+        </psh-button>
+        <psh-button
+          appearance="filled"
+          variant="primary"
+          size="medium"
+          [fullWidth]="isMobileScreen()"
+          (clicked)="handleConfirm()">
+          {{ confirmLabel() }}
+        </psh-button>
+      </div>
+      } @if (showFooter() && hasCustomFooter()) {
+      <div class="modal-footer">
+        <!--
+          Note: When using a custom footer, buttons should also use [fullWidth]="isMobileScreen()"
+          to ensure proper responsive behavior on mobile devices.
+          Example:
+          <psh-button [fullWidth]="isMobileScreen()" (clicked)="action()">Custom Button</psh-button>
+        -->
+        <ng-content select="[modal-footer]" #modalFooter></ng-content>
+      </div>
+      }
+    </div>
+  </div>
+</div>

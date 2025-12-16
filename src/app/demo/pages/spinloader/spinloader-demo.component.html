@@ -1,0 +1,404 @@
+<ds-demo-page-layout
+  title="Indicateurs de Chargement"
+  introText="Les indicateurs de chargement fournissent un retour visuel pendant les états de chargement. Ils informent l'utilisateur qu'une action est en cours et améliorent l'expérience utilisateur en réduisant l'incertitude."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Variantes d'Indicateurs - Section Pleine Largeur -->
+    <section class="spinloader-variants-section">
+      <h3 class="section-title">Variantes d'Animation</h3>
+      <div class="variants-container">
+        <div class="variants-intro">
+          <p>Les indicateurs de chargement proposent plusieurs styles d'animation pour s'adapter à différents contextes d'utilisation et préférences de design.</p>
+        </div>
+        <div class="variants-grid">
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-spinloader
+                variant="circle"
+                color="primary"
+                size="medium"
+                ariaLabel="Chargement en cours avec animation circulaire"
+              ></psh-spinloader>
+            </div>
+            <div class="variant-info">
+              <h4>Circle</h4>
+              <p>Animation circulaire classique et reconnaissable, idéale pour la plupart des contextes de chargement.</p>
+              <ds-code-snippet [code]="circleVariantCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-spinloader
+                variant="dots"
+                color="primary"
+                size="medium"
+                ariaLabel="Chargement en cours avec animation de points"
+              ></psh-spinloader>
+            </div>
+            <div class="variant-info">
+              <h4>Dots</h4>
+              <p>Points rebondissants qui créent une animation rythmique et ludique, parfaite pour les interfaces modernes.</p>
+              <ds-code-snippet [code]="dotsVariantCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-spinloader
+                variant="pulse"
+                color="primary"
+                size="medium"
+                ariaLabel="Chargement en cours avec animation pulsante"
+              ></psh-spinloader>
+            </div>
+            <div class="variant-info">
+              <h4>Pulse</h4>
+              <p>Barres pulsantes qui créent un effet de progression visuelle, idéal pour les processus de chargement séquentiels.</p>
+              <ds-code-snippet [code]="pulseVariantCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Couleurs - Section Pleine Largeur -->
+    <section class="spinloader-colors-section">
+      <h3 class="section-title">Couleurs Contextuelles</h3>
+      <div class="colors-container">
+        <div class="colors-intro">
+          <p>Les indicateurs peuvent adopter différentes couleurs pour communiquer visuellement le type de processus en cours ou son état.</p>
+        </div>
+        <div class="colors-grid">
+          <div class="color-card">
+            <div class="color-preview">
+              <psh-spinloader
+                variant="circle"
+                color="primary"
+                size="medium"
+                ariaLabel="Chargement principal"
+              ></psh-spinloader>
+            </div>
+            <div class="color-info">
+              <h4>Primary</h4>
+              <code class="color-code">color="primary"</code>
+              <p class="color-usage">Utilisé pour les actions principales et les chargements standard de l'application.</p>
+            </div>
+          </div>
+
+          <div class="color-card">
+            <div class="color-preview">
+              <psh-spinloader
+                variant="circle"
+                color="secondary"
+                size="medium"
+                ariaLabel="Chargement secondaire"
+              ></psh-spinloader>
+            </div>
+            <div class="color-info">
+              <h4>Secondary</h4>
+              <code class="color-code">color="secondary"</code>
+              <p class="color-usage">Pour les actions et processus secondaires, moins prioritaires dans l'interface.</p>
+            </div>
+          </div>
+
+          <div class="color-card">
+            <div class="color-preview">
+              <psh-spinloader
+                variant="circle"
+                color="success"
+                size="medium"
+                ariaLabel="Chargement succès"
+              ></psh-spinloader>
+            </div>
+            <div class="color-info">
+              <h4>Success</h4>
+              <code class="color-code">color="success"</code>
+              <p class="color-usage">Indique un chargement lié à une opération réussie ou en cours de validation.</p>
+            </div>
+          </div>
+
+          <div class="color-card">
+            <div class="color-preview">
+              <psh-spinloader
+                variant="circle"
+                color="warning"
+                size="medium"
+                ariaLabel="Chargement avertissement"
+              ></psh-spinloader>
+            </div>
+            <div class="color-info">
+              <h4>Warning</h4>
+              <code class="color-code">color="warning"</code>
+              <p class="color-usage">Utilisé pour les processus nécessitant une attention particulière de l'utilisateur.</p>
+            </div>
+          </div>
+
+          <div class="color-card">
+            <div class="color-preview">
+              <psh-spinloader
+                variant="circle"
+                color="danger"
+                size="medium"
+                ariaLabel="Chargement erreur"
+              ></psh-spinloader>
+            </div>
+            <div class="color-info">
+              <h4>Danger</h4>
+              <code class="color-code">color="danger"</code>
+              <p class="color-usage">Pour les processus critiques ou les rechargements suite à une erreur.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tailles - Section Pleine Largeur -->
+    <section class="spinloader-sizes-section">
+      <h3 class="section-title">Tailles Disponibles</h3>
+      <div class="sizes-container">
+        <div class="sizes-intro">
+          <p>Trois tailles sont disponibles pour s'adapter à différents contextes d'utilisation, des petits espaces aux zones de chargement principales.</p>
+        </div>
+        <div class="sizes-grid">
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-spinloader
+                variant="circle"
+                color="primary"
+                size="small"
+                ariaLabel="Petit indicateur de chargement"
+              ></psh-spinloader>
+            </div>
+            <div class="size-info">
+              <h4>Small</h4>
+              <div class="size-specs">
+                <span class="size-dimension">24px de diamètre</span>
+                <code class="size-code">size="small"</code>
+              </div>
+              <p class="size-usage">Idéal pour les espaces réduits, les boutons, ou les indicateurs de chargement inline dans le texte.</p>
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-spinloader
+                variant="circle"
+                color="primary"
+                size="medium"
+                ariaLabel="Indicateur de chargement taille moyenne"
+              ></psh-spinloader>
+            </div>
+            <div class="size-info">
+              <h4>Medium (Défaut)</h4>
+              <div class="size-specs">
+                <span class="size-dimension">32px de diamètre</span>
+                <code class="size-code">size="medium"</code>
+              </div>
+              <p class="size-usage">Taille par défaut, équilibrée pour la plupart des cas d'usage et zones de chargement standards.</p>
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-spinloader
+                variant="circle"
+                color="primary"
+                size="large"
+                ariaLabel="Grand indicateur de chargement"
+              ></psh-spinloader>
+            </div>
+            <div class="size-info">
+              <h4>Large</h4>
+              <div class="size-specs">
+                <span class="size-dimension">48px de diamètre</span>
+                <code class="size-code">size="large"</code>
+              </div>
+              <p class="size-usage">Pour les chargements de page complète ou les zones nécessitant une forte visibilité de l'indicateur.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Combinaisons - Section Pleine Largeur -->
+    <section class="spinloader-combinations-section">
+      <h3 class="section-title">Exemples de Combinaisons</h3>
+      <div class="combinations-container">
+        <div class="combinations-intro">
+          <p>Découvrez comment combiner les différentes variantes, couleurs et tailles pour créer des indicateurs adaptés à vos besoins spécifiques.</p>
+        </div>
+        <div class="combinations-grid">
+          <div class="combination-card">
+            <div class="combination-preview">
+              <psh-spinloader
+                variant="dots"
+                color="success"
+                size="large"
+                ariaLabel="Chargement réussi"
+              ></psh-spinloader>
+            </div>
+            <div class="combination-info">
+              <h4>Dots + Success + Large</h4>
+              <p>Parfait pour confirmer visuellement qu'un processus de validation est en cours.</p>
+              <ds-code-snippet [code]="combination1Code" />
+            </div>
+          </div>
+
+          <div class="combination-card">
+            <div class="combination-preview">
+              <psh-spinloader
+                variant="pulse"
+                color="warning"
+                size="medium"
+                ariaLabel="Traitement en attente"
+              ></psh-spinloader>
+            </div>
+            <div class="combination-info">
+              <h4>Pulse + Warning + Medium</h4>
+              <p>Utilisé pour des processus nécessitant l'attention de l'utilisateur pendant le chargement.</p>
+              <ds-code-snippet [code]="combination2Code" />
+            </div>
+          </div>
+
+          <div class="combination-card">
+            <div class="combination-preview">
+              <psh-spinloader
+                variant="circle"
+                color="secondary"
+                size="small"
+                ariaLabel="Chargement en arrière-plan"
+              ></psh-spinloader>
+            </div>
+            <div class="combination-info">
+              <h4>Circle + Secondary + Small</h4>
+              <p>Idéal pour les processus discrets en arrière-plan ou dans des interfaces denses.</p>
+              <ds-code-snippet [code]="combination3Code" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Documentation API - Section Pleine Largeur -->
+    <section class="api-section">
+      <h3 class="section-title">Documentation API</h3>
+      <div class="api-container">
+        <div class="api-intro">
+          <p>Le composant SpinLoader utilise des <strong>input signals</strong> pour une API réactive et performante, conforme aux standards Angular 20.</p>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Input Signals)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>variant</code></td>
+                <td><code>SpinLoaderVariant</code></td>
+                <td><code>'circle'</code></td>
+                <td>'circle' | 'dots' | 'pulse' - Style d'animation de l'indicateur</td>
+              </tr>
+              <tr>
+                <td><code>size</code></td>
+                <td><code>SpinLoaderSize</code></td>
+                <td><code>'medium'</code></td>
+                <td>'small' | 'medium' | 'large' - Taille de l'indicateur</td>
+              </tr>
+              <tr>
+                <td><code>color</code></td>
+                <td><code>SpinLoaderColor</code></td>
+                <td><code>'primary'</code></td>
+                <td>'primary' | 'secondary' | 'success' | 'warning' | 'danger' - Couleur contextuelle</td>
+              </tr>
+              <tr>
+                <td><code>label</code></td>
+                <td><code>string | undefined</code></td>
+                <td><code>undefined</code></td>
+                <td>Label textuel optionnel affiché sous l'indicateur</td>
+              </tr>
+              <tr>
+                <td><code>ariaLabel</code></td>
+                <td><code>string</code></td>
+                <td><code>'Chargement en cours'</code></td>
+                <td>Label ARIA pour l'accessibilité, annoncé par les lecteurs d'écran</td>
+              </tr>
+              <tr>
+                <td><code>ariaLive</code></td>
+                <td><code>'polite' | 'assertive'</code></td>
+                <td><code>'polite'</code></td>
+                <td>Niveau de politesse pour les lecteurs d'écran (polite pour standard, assertive pour urgent)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-usage-example">
+          <h4>Exemple d'Utilisation Complète</h4>
+          <div class="code-block">
+            <pre><code>import &#123; PshSpinLoaderComponent &#125; from 'ps-helix';
+
+&#64;Component(&#123;
+  standalone: true,
+  imports: [PshSpinLoaderComponent],
+  template: `
+    &lt;div class="loading-container"&gt;
+      &lt;psh-spinloader
+        variant="circle"
+        color="primary"
+        size="large"
+        ariaLabel="Chargement des données utilisateur"
+        ariaLive="polite"
+      &gt;&lt;/psh-spinloader&gt;
+      &lt;p&gt;Chargement en cours...&lt;/p&gt;
+    &lt;/div&gt;
+  `
+&#125;)
+export class MyComponent &#123;&#125;</code></pre>
+          </div>
+        </div>
+
+        <div class="api-best-practices">
+          <h4>Bonnes Pratiques d'Accessibilité</h4>
+          <ul class="best-practices-list">
+            <li><strong>ARIA Label</strong> : Toujours fournir un <code>ariaLabel</code> descriptif qui explique clairement ce qui est en cours de chargement</li>
+            <li><strong>ARIA Live</strong> : Utilisez <code>ariaLive="polite"</code> pour les chargements standards et <code>ariaLive="assertive"</code> uniquement pour les chargements critiques</li>
+            <li><strong>Role Status</strong> : Le composant définit automatiquement <code>role="status"</code> et <code>aria-busy="true"</code> pour une accessibilité optimale</li>
+            <li><strong>Mouvement Réduit</strong> : Le composant détecte automatiquement la préférence <code>prefers-reduced-motion</code> et adapte les animations en conséquence</li>
+            <li><strong>Contexte Visuel</strong> : Accompagnez toujours l'indicateur d'un texte explicatif pour les utilisateurs qui ne peuvent pas voir l'animation</li>
+            <li><strong>Feedback Temps Réel</strong> : Pour les processus longs, envisagez d'ajouter un label dynamique avec la progression ou l'étape en cours</li>
+          </ul>
+        </div>
+
+        <div class="api-configuration">
+          <h4>Configuration Globale</h4>
+          <p>Vous pouvez configurer les valeurs par défaut globalement en fournissant <code>SPINLOADER_CONFIG</code> :</p>
+          <div class="code-block">
+            <pre><code>import &#123; SPINLOADER_CONFIG &#125; from 'ps-helix';
+
+bootstrapApplication(AppComponent, &#123;
+  providers: [
+    &#123;
+      provide: SPINLOADER_CONFIG,
+      useValue: &#123;
+        variant: 'dots',
+        size: 'medium',
+        color: 'primary'
+      &#125;
+    &#125;
+  ]
+&#125;);</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

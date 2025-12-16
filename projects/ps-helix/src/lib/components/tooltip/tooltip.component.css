@@ -1,0 +1,102 @@
+
+.tooltip {
+  position: absolute;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-tight);
+  white-space: normal;
+  word-wrap: break-word;
+  z-index: var(--z-index-tooltip);
+  animation: fadeIn var(--animation-duration-normal) var(--animation-easing-default);
+}
+
+/* Variants */
+.tooltip.dark {
+  background: var(--surface-800);
+  color: var(--surface-0);
+  border: 1px solid var(--surface-700);
+}
+
+.tooltip.light {
+  background: var(--surface-card);
+  color: var(--text-color);
+  border: 1px solid var(--surface-border);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Positions */
+.tooltip.top {
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(calc(-1 * var(--spacing-sm)));
+}
+
+.tooltip.bottom {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(var(--spacing-sm));
+}
+
+.tooltip.left {
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%) translateX(calc(-1 * var(--spacing-sm)));
+}
+
+.tooltip.right {
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%) translateX(var(--spacing-sm));
+}
+
+/* Arrows */
+.tooltip-arrow {
+  position: absolute;
+  width: var(--spacing-sm);
+  height: var(--spacing-sm);
+  transform: rotate(45deg);
+}
+
+.tooltip.dark .tooltip-arrow {
+  background: var(--surface-800);
+  border: inherit;
+}
+
+.tooltip.light .tooltip-arrow {
+  background: var(--surface-card);
+  border: inherit;
+}
+
+.tooltip.top .tooltip-arrow {
+  bottom: calc(-1 * var(--spacing-xs));
+  left: 50%;
+  margin-left: calc(-1 * var(--spacing-xs));
+  border-top: none;
+  border-left: none;
+}
+
+.tooltip.bottom .tooltip-arrow {
+  top: calc(-1 * var(--spacing-xs));
+  left: 50%;
+  margin-left: calc(-1 * var(--spacing-xs));
+  border-bottom: none;
+  border-right: none;
+}
+
+.tooltip.left .tooltip-arrow {
+  right: calc(-1 * var(--spacing-xs));
+  top: 50%;
+  margin-top: calc(-1 * var(--spacing-xs));
+  border-left: none;
+  border-bottom: none;
+}
+
+.tooltip.right .tooltip-arrow {
+  left: calc(-1 * var(--spacing-xs));
+  top: 50%;
+  margin-top: calc(-1 * var(--spacing-xs));
+  border-right: none;
+  border-top: none;
+}
+

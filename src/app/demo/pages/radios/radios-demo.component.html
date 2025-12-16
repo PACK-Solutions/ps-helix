@@ -1,0 +1,674 @@
+<ds-demo-page-layout
+  title="Système de Radio Buttons"
+  introText="Les radio buttons permettent aux utilisateurs de sélectionner une seule option parmi un ensemble de choix mutuellement exclusifs. Ils sont essentiels pour les formulaires et les configurations nécessitant un choix unique."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Positions du Label - Section Pleine Largeur -->
+    <section class="radio-variants-section">
+      <h3 class="section-title">Positions du Label</h3>
+      <div class="variants-container">
+        <div class="variants-intro">
+          <p>Les radio buttons permettent de positionner le label à droite ou à gauche du contrôle pour s'adapter à différentes configurations de mise en page.</p>
+        </div>
+        <div class="variants-grid">
+          <div class="variant-card">
+            <div class="variant-preview">
+              <div class="radio-group">
+                <psh-radio
+                  [(checked)]="labelPositionChecked"
+                  name="labelPosition"
+                  value="right"
+                  labelPosition="right"
+                >
+                  Label à droite (standard)
+                </psh-radio>
+                <psh-radio
+                  name="labelPosition"
+                  value="left"
+                  labelPosition="right"
+                >
+                  Option 2
+                </psh-radio>
+              </div>
+            </div>
+            <div class="variant-info">
+              <h4>Label à Droite (Standard)</h4>
+              <p>Position standard avec le label placé à droite du contrôle radio. C'est le comportement par défaut et le plus couramment utilisé.</p>
+              <ds-code-snippet [code]="labelRightCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <div class="radio-group">
+                <psh-radio
+                  name="labelPositionLeft"
+                  value="left1"
+                  labelPosition="left"
+                >
+                  Label à gauche
+                </psh-radio>
+                <psh-radio
+                  name="labelPositionLeft"
+                  value="left2"
+                  labelPosition="left"
+                >
+                  Option 2
+                </psh-radio>
+              </div>
+            </div>
+            <div class="variant-info">
+              <h4>Label à Gauche</h4>
+              <p>Position alternative avec le label placé à gauche du contrôle. Utile pour certaines mises en page spécifiques ou alignements particuliers.</p>
+              <ds-code-snippet [code]="labelLeftCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <div class="radio-group">
+                <psh-radio
+                  name="noLabel"
+                  value="nl1"
+                  ariaLabel="Option sans label visible 1"
+                >
+                </psh-radio>
+                <psh-radio
+                  name="noLabel"
+                  value="nl2"
+                  ariaLabel="Option sans label visible 2"
+                >
+                </psh-radio>
+              </div>
+            </div>
+            <div class="variant-info">
+              <h4>Sans Label Visible</h4>
+              <p>Radio button sans contenu projeté. Assurez-vous toujours de fournir un <code>ariaLabel</code> pour maintenir l'accessibilité.</p>
+              <ds-code-snippet [code]="noLabelCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- États de Radio - Section Pleine Largeur -->
+    <section class="radio-states-section">
+      <h3 class="section-title">États de Radio Button</h3>
+      <div class="states-container">
+        <div class="states-intro">
+          <p>Les radio buttons supportent plusieurs états pour communiquer différentes informations visuelles et contextuelles aux utilisateurs.</p>
+        </div>
+        <div class="states-grid">
+          <div class="state-card">
+            <div class="state-preview">
+              <div class="radio-group">
+                <psh-radio
+                  [disabled]="true"
+                  [checked]="true"
+                  name="disabledGroup"
+                  value="disabled1"
+                >
+                  Option désactivée cochée
+                </psh-radio>
+                <psh-radio
+                  [disabled]="true"
+                  name="disabledGroup"
+                  value="disabled2"
+                >
+                  Option désactivée
+                </psh-radio>
+              </div>
+            </div>
+            <div class="state-info">
+              <h4>Désactivé</h4>
+              <p>État désactivé pour les options non disponibles ou non modifiables. L'option reste visible mais non interactive.</p>
+              <ds-code-snippet [code]="disabledCode" />
+            </div>
+          </div>
+
+          <div class="state-card">
+            <div class="state-preview">
+              <div class="radio-group">
+                <psh-radio
+                  [error]="'Ce champ est requis'"
+                  name="errorGroup"
+                  value="error1"
+                >
+                  Option avec erreur
+                </psh-radio>
+                <psh-radio
+                  [error]="'Ce champ est requis'"
+                  name="errorGroup"
+                  value="error2"
+                >
+                  Autre option
+                </psh-radio>
+              </div>
+            </div>
+            <div class="state-info">
+              <h4>Erreur</h4>
+              <p>État d'erreur avec message pour indiquer une validation échouée ou un choix requis non effectué.</p>
+              <ds-code-snippet [code]="errorCode" />
+            </div>
+          </div>
+
+          <div class="state-card">
+            <div class="state-preview">
+              <div class="radio-group">
+                <psh-radio
+                  [checked]="true"
+                  [success]="'Sélection validée'"
+                  name="successGroup"
+                  value="success1"
+                >
+                  Option validée
+                </psh-radio>
+                <psh-radio
+                  [success]="'Sélection validée'"
+                  name="successGroup"
+                  value="success2"
+                >
+                  Autre option
+                </psh-radio>
+              </div>
+            </div>
+            <div class="state-info">
+              <h4>Succès</h4>
+              <p>État de succès avec message pour confirmer une sélection valide et acceptée par le système.</p>
+              <ds-code-snippet [code]="successCode" />
+            </div>
+          </div>
+
+          <div class="state-card">
+            <div class="state-preview">
+              <div class="radio-group">
+                <psh-radio
+                  [required]="true"
+                  name="requiredGroup"
+                  value="req1"
+                >
+                  Option requise
+                </psh-radio>
+                <psh-radio
+                  [required]="true"
+                  name="requiredGroup"
+                  value="req2"
+                >
+                  Autre option
+                </psh-radio>
+              </div>
+            </div>
+            <div class="state-info">
+              <h4>Requis</h4>
+              <p>État requis pour indiquer qu'une sélection dans ce groupe est obligatoire. Utiliser avec la validation de formulaire.</p>
+              <ds-code-snippet [code]="requiredCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tailles de Radio - Section Pleine Largeur -->
+    <section class="radio-sizes-section">
+      <h3 class="section-title">Tailles Disponibles</h3>
+      <div class="sizes-container">
+        <div class="sizes-intro">
+          <p>Trois tailles sont disponibles pour s'adapter à différents contextes d'utilisation et niveaux de hiérarchie visuelle.</p>
+        </div>
+        <div class="sizes-grid">
+          <div class="size-card">
+            <div class="size-preview">
+              <div class="radio-group">
+                <psh-radio
+                  size="small"
+                  [(checked)]="sizeSmallChecked"
+                  name="sizeGroup"
+                  value="small"
+                >
+                  Petit radio
+                </psh-radio>
+                <psh-radio
+                  size="small"
+                  name="sizeGroup"
+                  value="small2"
+                >
+                  Option 2
+                </psh-radio>
+              </div>
+            </div>
+            <div class="size-info">
+              <h4>Small</h4>
+              <div class="size-specs">
+                <span class="size-dimension">16px × 16px</span>
+                <code class="size-code">size="small"</code>
+              </div>
+              <p class="size-usage">Taille compacte pour les interfaces denses, les tableaux de données ou les listes détaillées nécessitant un affichage condensé.</p>
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <div class="radio-group">
+                <psh-radio
+                  size="medium"
+                  [(checked)]="sizeMediumChecked"
+                  name="sizeMediumGroup"
+                  value="medium1"
+                >
+                  Radio moyen
+                </psh-radio>
+                <psh-radio
+                  size="medium"
+                  name="sizeMediumGroup"
+                  value="medium2"
+                >
+                  Option 2
+                </psh-radio>
+              </div>
+            </div>
+            <div class="size-info">
+              <h4>Medium (Défaut)</h4>
+              <div class="size-specs">
+                <span class="size-dimension">20px × 20px</span>
+                <code class="size-code">size="medium"</code>
+              </div>
+              <p class="size-usage">Taille par défaut, équilibrée pour la plupart des cas d'usage et une bonne lisibilité dans les formulaires standards.</p>
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <div class="radio-group">
+                <psh-radio
+                  size="large"
+                  [(checked)]="sizeLargeChecked"
+                  name="sizeLargeGroup"
+                  value="large1"
+                >
+                  Grand radio
+                </psh-radio>
+                <psh-radio
+                  size="large"
+                  name="sizeLargeGroup"
+                  value="large2"
+                >
+                  Option 2
+                </psh-radio>
+              </div>
+            </div>
+            <div class="size-info">
+              <h4>Large</h4>
+              <div class="size-specs">
+                <span class="size-dimension">24px × 24px</span>
+                <code class="size-code">size="large"</code>
+              </div>
+              <p class="size-usage">Taille emphase pour les éléments importants nécessitant une grande visibilité ou pour les interfaces tactiles et mobiles.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Groupes de Radios - Section Pleine Largeur -->
+    <section class="radio-groups-section">
+      <h3 class="section-title">Groupes de Radio Buttons</h3>
+      <div class="groups-container">
+        <div class="groups-intro">
+          <p>Les radio buttons doivent être groupés par l'attribut <code>name</code> pour permettre une sélection mutuelle exclusive. Voici des exemples pratiques d'utilisation.</p>
+        </div>
+        <div class="groups-grid">
+          <div class="group-card">
+            <div class="group-header">
+              <h4>Mode de Paiement</h4>
+              <p class="selected-value">Sélection: <strong>{{ paymentMethod || 'Aucune' }}</strong></p>
+            </div>
+            <div class="group-preview">
+              <div class="radio-group">
+                <psh-radio
+                  name="payment"
+                  value="card"
+                  [(checked)]="paymentCardChecked"
+                  (valueChange)="handleValueChange($event)"
+                >
+                  Carte bancaire
+                </psh-radio>
+                <psh-radio
+                  name="payment"
+                  value="paypal"
+                  [(checked)]="paymentPaypalChecked"
+                  (valueChange)="handleValueChange($event)"
+                >
+                  PayPal
+                </psh-radio>
+                <psh-radio
+                  name="payment"
+                  value="transfer"
+                  [(checked)]="paymentTransferChecked"
+                  (valueChange)="handleValueChange($event)"
+                >
+                  Virement bancaire
+                </psh-radio>
+                <psh-radio
+                  name="payment"
+                  value="cash"
+                  [(checked)]="paymentCashChecked"
+                  (valueChange)="handleValueChange($event)"
+                >
+                  Espèces
+                </psh-radio>
+              </div>
+            </div>
+            <div class="group-code">
+              <ds-code-snippet [code]="paymentGroupCode" />
+            </div>
+          </div>
+
+          <div class="group-card">
+            <div class="group-header">
+              <h4>Thème de l'Application</h4>
+              <p class="selected-value">Sélection: <strong>{{ theme }}</strong></p>
+            </div>
+            <div class="group-preview">
+              <div class="radio-group">
+                <psh-radio
+                  name="theme"
+                  value="light"
+                  [(checked)]="themeLightChecked"
+                >
+                  Clair
+                </psh-radio>
+                <psh-radio
+                  name="theme"
+                  value="dark"
+                  [(checked)]="themeDarkChecked"
+                >
+                  Sombre
+                </psh-radio>
+                <psh-radio
+                  name="theme"
+                  value="auto"
+                  [(checked)]="themeAutoChecked"
+                >
+                  Automatique
+                </psh-radio>
+              </div>
+            </div>
+            <div class="group-code">
+              <ds-code-snippet [code]="themeGroupCode" />
+            </div>
+          </div>
+
+          <div class="group-card">
+            <div class="group-header">
+              <h4>Préférences de Notification</h4>
+              <p class="selected-value">Sélection: <strong>{{ notification }}</strong></p>
+            </div>
+            <div class="group-preview">
+              <div class="radio-group">
+                <psh-radio
+                  name="notification"
+                  value="email"
+                  [(checked)]="notificationEmailChecked"
+                  size="large"
+                >
+                  Email
+                </psh-radio>
+                <psh-radio
+                  name="notification"
+                  value="sms"
+                  [(checked)]="notificationSmsChecked"
+                  size="large"
+                >
+                  SMS
+                </psh-radio>
+                <psh-radio
+                  name="notification"
+                  value="push"
+                  [(checked)]="notificationPushChecked"
+                  size="large"
+                >
+                  Notification Push
+                </psh-radio>
+                <psh-radio
+                  name="notification"
+                  value="none"
+                  [(checked)]="notificationNoneChecked"
+                  size="large"
+                >
+                  Aucune notification
+                </psh-radio>
+              </div>
+            </div>
+            <div class="group-code">
+              <ds-code-snippet [code]="notificationGroupCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Documentation API - Section Pleine Largeur -->
+    <section class="api-section">
+      <h3 class="section-title">Documentation API</h3>
+      <div class="api-container">
+        <div class="api-intro">
+          <p>Le composant Radio utilise des <strong>model inputs</strong> bidirectionnels pour une synchronisation automatique de l'état, conforme aux standards Angular 20.</p>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Model Inputs (Bidirectionnels)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>checked</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>État coché du radio. Utiliser avec [(checked)]</td>
+              </tr>
+              <tr>
+                <td><code>disabled</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>État désactivé du radio</td>
+              </tr>
+              <tr>
+                <td><code>required</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Indique si le radio est requis</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Input Signals)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>label</code></td>
+                <td><code>string</code></td>
+                <td><code>''</code></td>
+                <td>Label du radio (alternative au contenu projeté)</td>
+              </tr>
+              <tr>
+                <td><code>name</code></td>
+                <td><code>string</code></td>
+                <td><code>''</code></td>
+                <td>Nom du groupe radio (OBLIGATOIRE pour le groupement)</td>
+              </tr>
+              <tr>
+                <td><code>value</code></td>
+                <td><code>any</code></td>
+                <td><code>undefined</code></td>
+                <td>Valeur associée au radio</td>
+              </tr>
+              <tr>
+                <td><code>error</code></td>
+                <td><code>string</code></td>
+                <td><code>''</code></td>
+                <td>Message d'erreur à afficher</td>
+              </tr>
+              <tr>
+                <td><code>success</code></td>
+                <td><code>string</code></td>
+                <td><code>''</code></td>
+                <td>Message de succès à afficher</td>
+              </tr>
+              <tr>
+                <td><code>ariaLabel</code></td>
+                <td><code>string | undefined</code></td>
+                <td><code>undefined</code></td>
+                <td>Label ARIA personnalisé pour l'accessibilité</td>
+              </tr>
+              <tr>
+                <td><code>size</code></td>
+                <td><code>RadioSize</code></td>
+                <td><code>'medium'</code></td>
+                <td>'small' | 'medium' | 'large'</td>
+              </tr>
+              <tr>
+                <td><code>labelPosition</code></td>
+                <td><code>'left' | 'right'</code></td>
+                <td><code>'right'</code></td>
+                <td>Position du label par rapport au radio</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Outputs (Événements)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Événement</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>checkedChange</code></td>
+                <td><code>OutputEmitterRef&lt;boolean&gt;</code></td>
+                <td>Émis lors du changement d'état coché</td>
+              </tr>
+              <tr>
+                <td><code>valueChange</code></td>
+                <td><code>OutputEmitterRef&lt;any&gt;</code></td>
+                <td>Émis avec la valeur du radio sélectionné</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-usage-example">
+          <h4>Exemple d'Utilisation Complète</h4>
+          <div class="code-block">
+            <pre><code>import &#123; PshRadioComponent &#125; from 'ps-helix';
+
+&#64;Component(&#123;
+  standalone: true,
+  imports: [PshRadioComponent],
+  template: `
+    &lt;!-- Groupe de radios pour choix de livraison --&gt;
+    &lt;div class="radio-group"&gt;
+      &lt;h3&gt;Mode de livraison&lt;/h3&gt;
+
+      &lt;psh-radio
+        name="delivery"
+        value="standard"
+        [(checked)]="deliveryMethod"
+        [required]="true"
+        size="medium"
+        (valueChange)="handleDeliveryChange($event)"
+      &gt;
+        Livraison standard (3-5 jours)
+      &lt;/psh-radio&gt;
+
+      &lt;psh-radio
+        name="delivery"
+        value="express"
+        size="medium"
+      &gt;
+        Livraison express (24h)
+      &lt;/psh-radio&gt;
+
+      &lt;psh-radio
+        name="delivery"
+        value="pickup"
+        size="medium"
+      &gt;
+        Retrait en magasin
+      &lt;/psh-radio&gt;
+    &lt;/div&gt;
+  `
+&#125;)
+export class MyComponent &#123;
+  deliveryMethod = 'standard';
+
+  handleDeliveryChange(value: any): void &#123;
+    console.log('Méthode de livraison:', value);
+  &#125;
+&#125;</code></pre>
+          </div>
+        </div>
+
+        <div class="api-best-practices">
+          <h4>Bonnes Pratiques d'Accessibilité</h4>
+          <ul class="best-practices-list">
+            <li><strong>Navigation clavier</strong> : Les radios supportent la navigation par <kbd>Tab</kbd>, <kbd>Espace</kbd>, <kbd>Entrée</kbd> et les <kbd>flèches directionnelles</kbd></li>
+            <li><strong>Groupement obligatoire</strong> : Tous les radios d'un groupe doivent partager le même attribut <code>name</code></li>
+            <li><strong>Focus visible</strong> : Un anneau de focus visible entoure le radio lors de la navigation au clavier</li>
+            <li><strong>ARIA automatique</strong> : Les attributs <code>aria-checked</code>, <code>aria-invalid</code> et <code>aria-required</code> sont gérés automatiquement</li>
+            <li><strong>Labels obligatoires</strong> : Toujours fournir un label via contenu projeté, input <code>label</code> ou <code>ariaLabel</code></li>
+            <li><strong>Messages descriptifs</strong> : Les messages d'erreur/succès sont liés au radio via des IDs uniques pour les lecteurs d'écran</li>
+            <li><strong>Navigation fléchée</strong> : Dans un groupe, les flèches haut/bas et gauche/droite permettent de naviguer entre les options</li>
+            <li><strong>Un seul choix</strong> : Contrairement aux checkboxes, un seul radio peut être sélectionné dans un groupe donné</li>
+          </ul>
+        </div>
+
+        <div class="api-differences">
+          <h4>Radio vs Checkbox : Quand Utiliser Quoi ?</h4>
+          <div class="comparison-grid">
+            <div class="comparison-card">
+              <h5>Radio Buttons</h5>
+              <ul>
+                <li>✓ Choix unique et exclusif</li>
+                <li>✓ Options mutuellement exclusives</li>
+                <li>✓ Sélection obligatoire dans le groupe</li>
+                <li>✓ Exemples: mode de paiement, genre, taille de vêtement</li>
+              </ul>
+            </div>
+            <div class="comparison-card">
+              <h5>Checkboxes</h5>
+              <ul>
+                <li>✓ Sélections multiples possibles</li>
+                <li>✓ Options indépendantes</li>
+                <li>✓ Peut être coché/décoché librement</li>
+                <li>✓ Exemples: préférences multiples, conditions d'utilisation</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

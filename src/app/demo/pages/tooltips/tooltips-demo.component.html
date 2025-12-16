@@ -1,0 +1,493 @@
+<ds-demo-page-layout
+  [title]="'TOOLTIP.TITLE' | translate"
+  [introText]="'TOOLTIP.DESCRIPTION' | translate"
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Basic Tooltips - Section Pleine Largeur -->
+    <section class="tooltip-basic-section">
+      <h3 class="section-title">{{ 'TOOLTIP.SECTIONS.BASIC' | translate }}</h3>
+      <div class="basic-container">
+        <div class="basic-intro">
+          <p>{{ 'TOOLTIP.BASIC.DESCRIPTION' | translate }}</p>
+        </div>
+        <div class="basic-grid">
+          <div class="basic-card">
+            <div class="basic-preview">
+              <psh-tooltip [content]="'TOOLTIP.BASIC.CONTEXTUAL_INFO' | translate">
+                <i
+                  class="ph ph-info"
+                  style="font-size: 1.5rem; color: var(--primary-color); cursor: help;"
+                ></i>
+              </psh-tooltip>
+            </div>
+            <div class="basic-info">
+              <h4>{{ 'TOOLTIP.BASIC.ICON_TOOLTIP' | translate }}</h4>
+              <p>{{ 'TOOLTIP.BASIC.ICON_DESCRIPTION' | translate }}</p>
+              <ds-code-snippet [code]="iconTooltipCode" />
+            </div>
+          </div>
+
+          <div class="basic-card">
+            <div class="basic-preview">
+              <psh-tooltip [content]="'TOOLTIP.BASIC.BUTTON_INFO' | translate">
+                <psh-button variant="primary">
+                  {{ 'TOOLTIP.BASIC.HOVER_ME' | translate }}
+                </psh-button>
+              </psh-tooltip>
+            </div>
+            <div class="basic-info">
+              <h4>{{ 'TOOLTIP.BASIC.BUTTON_TOOLTIP' | translate }}</h4>
+              <p>{{ 'TOOLTIP.BASIC.BUTTON_DESCRIPTION' | translate }}</p>
+              <ds-code-snippet [code]="buttonTooltipCode" />
+            </div>
+          </div>
+
+          <div class="basic-card">
+            <div class="basic-preview">
+              <psh-tooltip
+                [content]="'TOOLTIP.BASIC.HELP_TEXT' | translate"
+                (showed)="handleTooltipShowed()"
+                (hidden)="handleTooltipHidden()"
+              >
+                <psh-button appearance="outline" variant="secondary" icon="question" iconPosition="only" ariaLabel="Help">
+                </psh-button>
+              </psh-tooltip>
+            </div>
+            <div class="basic-info">
+              <h4>{{ 'TOOLTIP.BASIC.HELP_BUTTON' | translate }}</h4>
+              <p>{{ 'TOOLTIP.BASIC.HELP_DESCRIPTION' | translate }}</p>
+              <ds-code-snippet [code]="helpTooltipCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tooltip Positions - Section Pleine Largeur -->
+    <section class="tooltip-positions-section">
+      <h3 class="section-title">{{ 'TOOLTIP.SECTIONS.POSITIONS' | translate }}</h3>
+      <div class="positions-container">
+        <div class="positions-intro">
+          <p>{{ 'TOOLTIP.POSITIONS.DESCRIPTION' | translate }}</p>
+        </div>
+        <div class="positions-grid">
+          <div class="position-card">
+            <div class="position-preview">
+              <psh-tooltip [content]="'TOOLTIP.POSITIONS.TOP' | translate" position="top">
+                <psh-button appearance="outline" variant="primary">Top</psh-button>
+              </psh-tooltip>
+            </div>
+            <div class="position-info">
+              <h4>Top</h4>
+              <div class="position-specs">
+                <code class="position-code">position="top"</code>
+              </div>
+              <p class="position-usage">{{ 'TOOLTIP.POSITIONS.TOP_USAGE' | translate }}</p>
+              <ds-code-snippet [code]="topPositionCode" />
+            </div>
+          </div>
+
+          <div class="position-card">
+            <div class="position-preview">
+              <psh-tooltip [content]="'TOOLTIP.POSITIONS.RIGHT' | translate" position="right">
+                <psh-button appearance="outline" variant="primary">Right</psh-button>
+              </psh-tooltip>
+            </div>
+            <div class="position-info">
+              <h4>Right</h4>
+              <div class="position-specs">
+                <code class="position-code">position="right"</code>
+              </div>
+              <p class="position-usage">{{ 'TOOLTIP.POSITIONS.RIGHT_USAGE' | translate }}</p>
+              <ds-code-snippet [code]="rightPositionCode" />
+            </div>
+          </div>
+
+          <div class="position-card">
+            <div class="position-preview">
+              <psh-tooltip [content]="'TOOLTIP.POSITIONS.BOTTOM' | translate" position="bottom">
+                <psh-button appearance="outline" variant="primary">Bottom</psh-button>
+              </psh-tooltip>
+            </div>
+            <div class="position-info">
+              <h4>Bottom</h4>
+              <div class="position-specs">
+                <code class="position-code">position="bottom"</code>
+              </div>
+              <p class="position-usage">{{ 'TOOLTIP.POSITIONS.BOTTOM_USAGE' | translate }}</p>
+              <ds-code-snippet [code]="bottomPositionCode" />
+            </div>
+          </div>
+
+          <div class="position-card">
+            <div class="position-preview">
+              <psh-tooltip [content]="'TOOLTIP.POSITIONS.LEFT' | translate" position="left">
+                <psh-button appearance="outline" variant="primary">Left</psh-button>
+              </psh-tooltip>
+            </div>
+            <div class="position-info">
+              <h4>Left</h4>
+              <div class="position-specs">
+                <code class="position-code">position="left"</code>
+              </div>
+              <p class="position-usage">{{ 'TOOLTIP.POSITIONS.LEFT_USAGE' | translate }}</p>
+              <ds-code-snippet [code]="leftPositionCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tooltip Variants - Section Pleine Largeur -->
+    <section class="tooltip-variants-section">
+      <h3 class="section-title">{{ 'TOOLTIP.SECTIONS.VARIANTS' | translate }}</h3>
+      <div class="variants-container">
+        <div class="variants-intro">
+          <p>{{ 'TOOLTIP.VARIANTS.DESCRIPTION' | translate }}</p>
+        </div>
+        <div class="variants-grid">
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-tooltip [content]="'TOOLTIP.VARIANTS.DARK' | translate" variant="dark">
+                <psh-button appearance="outline" variant="primary">Dark Variant</psh-button>
+              </psh-tooltip>
+            </div>
+            <div class="variant-info">
+              <h4>Dark ({{ 'TOOLTIP.VARIANTS.DEFAULT' | translate }})</h4>
+              <code class="variant-code">variant="dark"</code>
+              <p>{{ 'TOOLTIP.VARIANTS.DARK_USAGE' | translate }}</p>
+              <ds-code-snippet [code]="darkVariantCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-tooltip [content]="'TOOLTIP.VARIANTS.LIGHT' | translate" variant="light">
+                <psh-button appearance="outline" variant="primary">Light Variant</psh-button>
+              </psh-tooltip>
+            </div>
+            <div class="variant-info">
+              <h4>Light</h4>
+              <code class="variant-code">variant="light"</code>
+              <p>{{ 'TOOLTIP.VARIANTS.LIGHT_USAGE' | translate }}</p>
+              <ds-code-snippet [code]="lightVariantCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Timing Configuration - Section Pleine Largeur -->
+    <section class="tooltip-timing-section">
+      <h3 class="section-title">{{ 'TOOLTIP.SECTIONS.TIMING' | translate }}</h3>
+      <div class="timing-container">
+        <div class="timing-intro">
+          <p>{{ 'TOOLTIP.TIMING.DESCRIPTION' | translate }}</p>
+        </div>
+        <div class="timing-grid">
+          <div class="timing-card">
+            <div class="timing-preview">
+              <psh-tooltip
+                [content]="'TOOLTIP.TIMING.INSTANT' | translate"
+                [showDelay]="demoDelays.quick.show"
+                [hideDelay]="demoDelays.quick.hide"
+              >
+                <psh-button appearance="filled" variant="primary">
+                  {{ 'TOOLTIP.TIMING.INSTANT_LABEL' | translate }}
+                </psh-button>
+              </psh-tooltip>
+            </div>
+            <div class="timing-info">
+              <h4>{{ 'TOOLTIP.TIMING.INSTANT_TITLE' | translate }}</h4>
+              <div class="timing-specs">
+                <span class="timing-value">{{ 'TOOLTIP.TIMING.SHOW_DELAY' | translate }}: 0ms</span>
+                <span class="timing-value">{{ 'TOOLTIP.TIMING.HIDE_DELAY' | translate }}: 0ms</span>
+              </div>
+              <p class="timing-usage">{{ 'TOOLTIP.TIMING.INSTANT_USAGE' | translate }}</p>
+              <ds-code-snippet [code]="instantTimingCode" />
+            </div>
+          </div>
+
+          <div class="timing-card">
+            <div class="timing-preview">
+              <psh-tooltip
+                [content]="'TOOLTIP.TIMING.NORMAL' | translate"
+                [showDelay]="demoDelays.normal.show"
+                [hideDelay]="demoDelays.normal.hide"
+              >
+                <psh-button appearance="filled" variant="primary">
+                  {{ 'TOOLTIP.TIMING.NORMAL_LABEL' | translate }}
+                </psh-button>
+              </psh-tooltip>
+            </div>
+            <div class="timing-info">
+              <h4>{{ 'TOOLTIP.TIMING.NORMAL_TITLE' | translate }}</h4>
+              <div class="timing-specs">
+                <span class="timing-value">{{ 'TOOLTIP.TIMING.SHOW_DELAY' | translate }}: 200ms</span>
+                <span class="timing-value">{{ 'TOOLTIP.TIMING.HIDE_DELAY' | translate }}: 100ms</span>
+              </div>
+              <p class="timing-usage">{{ 'TOOLTIP.TIMING.NORMAL_USAGE' | translate }}</p>
+              <ds-code-snippet [code]="normalTimingCode" />
+            </div>
+          </div>
+
+          <div class="timing-card">
+            <div class="timing-preview">
+              <psh-tooltip
+                [content]="'TOOLTIP.TIMING.DELAYED' | translate"
+                [showDelay]="demoDelays.slow.show"
+                [hideDelay]="demoDelays.slow.hide"
+              >
+                <psh-button appearance="filled" variant="primary">
+                  {{ 'TOOLTIP.TIMING.DELAYED_LABEL' | translate }}
+                </psh-button>
+              </psh-tooltip>
+            </div>
+            <div class="timing-info">
+              <h4>{{ 'TOOLTIP.TIMING.DELAYED_TITLE' | translate }}</h4>
+              <div class="timing-specs">
+                <span class="timing-value">{{ 'TOOLTIP.TIMING.SHOW_DELAY' | translate }}: 500ms</span>
+                <span class="timing-value">{{ 'TOOLTIP.TIMING.HIDE_DELAY' | translate }}: 200ms</span>
+              </div>
+              <p class="timing-usage">{{ 'TOOLTIP.TIMING.DELAYED_USAGE' | translate }}</p>
+              <ds-code-snippet [code]="delayedTimingCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Practical Applications - Section Pleine Largeur -->
+    <section class="tooltip-applications-section">
+      <h3 class="section-title">{{ 'TOOLTIP.SECTIONS.APPLICATIONS' | translate }}</h3>
+      <div class="applications-container">
+        <div class="applications-intro">
+          <p>{{ 'TOOLTIP.APPLICATIONS.DESCRIPTION' | translate }}</p>
+        </div>
+        <div class="applications-content">
+          <div class="application-demo">
+            <h4>{{ 'TOOLTIP.APPLICATIONS.ICON_ACTIONS' | translate }}</h4>
+            <div class="application-examples">
+              <psh-tooltip [content]="'TOOLTIP.APPLICATIONS.EDIT' | translate" position="top">
+                <psh-button appearance="text" variant="primary" icon="pencil" iconPosition="only" ariaLabel="Edit"></psh-button>
+              </psh-tooltip>
+              <psh-tooltip [content]="'TOOLTIP.APPLICATIONS.DELETE' | translate" position="top">
+                <psh-button appearance="text" variant="danger" icon="trash" iconPosition="only" ariaLabel="Delete"></psh-button>
+              </psh-tooltip>
+              <psh-tooltip [content]="'TOOLTIP.APPLICATIONS.SHARE' | translate" position="top">
+                <psh-button appearance="text" variant="primary" icon="share" iconPosition="only" ariaLabel="Share"></psh-button>
+              </psh-tooltip>
+              <psh-tooltip [content]="'TOOLTIP.APPLICATIONS.DOWNLOAD' | translate" position="top">
+                <psh-button appearance="text" variant="secondary" icon="download" iconPosition="only" ariaLabel="Download"></psh-button>
+              </psh-tooltip>
+            </div>
+          </div>
+
+          <div class="application-demo">
+            <h4>{{ 'TOOLTIP.APPLICATIONS.NOTIFICATION_ICONS' | translate }}</h4>
+            <div class="application-examples">
+              <psh-tooltip [content]="'TOOLTIP.APPLICATIONS.NOTIFICATIONS' | translate" position="bottom">
+                <i class="ph ph-bell" style="font-size: 1.5rem; color: var(--text-color); cursor: pointer;"></i>
+              </psh-tooltip>
+              <psh-tooltip [content]="'TOOLTIP.APPLICATIONS.MESSAGES' | translate" position="bottom">
+                <i class="ph ph-envelope" style="font-size: 1.5rem; color: var(--text-color); cursor: pointer;"></i>
+              </psh-tooltip>
+              <psh-tooltip [content]="'TOOLTIP.APPLICATIONS.SETTINGS' | translate" position="bottom">
+                <i class="ph ph-gear" style="font-size: 1.5rem; color: var(--text-color); cursor: pointer;"></i>
+              </psh-tooltip>
+              <psh-tooltip [content]="'TOOLTIP.APPLICATIONS.USER_PROFILE' | translate" position="bottom">
+                <i class="ph ph-user" style="font-size: 1.5rem; color: var(--text-color); cursor: pointer;"></i>
+              </psh-tooltip>
+            </div>
+          </div>
+
+          <div class="application-demo">
+            <h4>{{ 'TOOLTIP.APPLICATIONS.BUTTON_VARIANTS' | translate }}</h4>
+            <div class="application-examples">
+              <psh-tooltip [content]="'TOOLTIP.APPLICATIONS.PRIMARY_ACTION' | translate">
+                <psh-button appearance="filled" variant="primary" icon="check" iconPosition="left">
+                  {{ 'TOOLTIP.APPLICATIONS.SAVE' | translate }}
+                </psh-button>
+              </psh-tooltip>
+              <psh-tooltip [content]="'TOOLTIP.APPLICATIONS.SECONDARY_ACTION' | translate">
+                <psh-button appearance="outline" variant="secondary">
+                  {{ 'TOOLTIP.APPLICATIONS.CANCEL' | translate }}
+                </psh-button>
+              </psh-tooltip>
+              <psh-tooltip [content]="'TOOLTIP.APPLICATIONS.DISABLED_INFO' | translate">
+                <psh-button appearance="filled" variant="primary" [disabled]="true">
+                  {{ 'TOOLTIP.APPLICATIONS.SUBMIT' | translate }}
+                </psh-button>
+              </psh-tooltip>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Documentation API - Section Pleine Largeur -->
+    <section class="api-section">
+      <h3 class="section-title">{{ 'TOOLTIP.API.TITLE' | translate }}</h3>
+      <div class="api-container">
+        <div class="api-intro">
+          <p>{{ 'TOOLTIP.API.INTRO' | translate }}</p>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>{{ 'TOOLTIP.API.MODEL_INPUTS' | translate }}</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>{{ 'TOOLTIP.API.PROPERTY' | translate }}</th>
+                <th>{{ 'TOOLTIP.API.TYPE' | translate }}</th>
+                <th>{{ 'TOOLTIP.API.DEFAULT' | translate }}</th>
+                <th>{{ 'TOOLTIP.API.DESCRIPTION' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>variant</code></td>
+                <td><code>'light' | 'dark'</code></td>
+                <td><code>'dark'</code></td>
+                <td>{{ 'TOOLTIP.API.VARIANT_DESC' | translate }}</td>
+              </tr>
+              <tr>
+                <td><code>position</code></td>
+                <td><code>TooltipPosition</code></td>
+                <td><code>'top'</code></td>
+                <td>'top' | 'right' | 'bottom' | 'left'</td>
+              </tr>
+              <tr>
+                <td><code>showDelay</code></td>
+                <td><code>number</code></td>
+                <td><code>200</code></td>
+                <td>{{ 'TOOLTIP.API.SHOW_DELAY_DESC' | translate }}</td>
+              </tr>
+              <tr>
+                <td><code>hideDelay</code></td>
+                <td><code>number</code></td>
+                <td><code>100</code></td>
+                <td>{{ 'TOOLTIP.API.HIDE_DELAY_DESC' | translate }}</td>
+              </tr>
+              <tr>
+                <td><code>maxWidth</code></td>
+                <td><code>number</code></td>
+                <td><code>200</code></td>
+                <td>{{ 'TOOLTIP.API.MAX_WIDTH_DESC' | translate }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>{{ 'TOOLTIP.API.REGULAR_INPUTS' | translate }}</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>{{ 'TOOLTIP.API.PROPERTY' | translate }}</th>
+                <th>{{ 'TOOLTIP.API.TYPE' | translate }}</th>
+                <th>{{ 'TOOLTIP.API.DESCRIPTION' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>content</code></td>
+                <td><code>string</code></td>
+                <td>{{ 'TOOLTIP.API.CONTENT_DESC' | translate }}</td>
+              </tr>
+              <tr>
+                <td><code>disabled</code></td>
+                <td><code>boolean</code></td>
+                <td>{{ 'TOOLTIP.API.DISABLED_DESC' | translate }}</td>
+              </tr>
+              <tr>
+                <td><code>ariaLabel</code></td>
+                <td><code>string | undefined</code></td>
+                <td>{{ 'TOOLTIP.API.ARIA_LABEL_DESC' | translate }}</td>
+              </tr>
+              <tr>
+                <td><code>id</code></td>
+                <td><code>string</code></td>
+                <td>{{ 'TOOLTIP.API.ID_DESC' | translate }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>{{ 'TOOLTIP.API.OUTPUTS' | translate }}</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>{{ 'TOOLTIP.API.EVENT' | translate }}</th>
+                <th>{{ 'TOOLTIP.API.TYPE' | translate }}</th>
+                <th>{{ 'TOOLTIP.API.DESCRIPTION' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>showed</code></td>
+                <td><code>EventEmitter&lt;void&gt;</code></td>
+                <td>{{ 'TOOLTIP.API.SHOWED_DESC' | translate }}</td>
+              </tr>
+              <tr>
+                <td><code>hidden</code></td>
+                <td><code>EventEmitter&lt;void&gt;</code></td>
+                <td>{{ 'TOOLTIP.API.HIDDEN_DESC' | translate }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-usage-example">
+          <h4>{{ 'TOOLTIP.API.EXAMPLE_TITLE' | translate }}</h4>
+          <div class="code-block">
+            <pre><code>import &#123; PshTooltipComponent &#125; from 'ps-helix';
+
+&#64;Component(&#123;
+  standalone: true,
+  imports: [PshTooltipComponent],
+  template: `
+    &lt;psh-tooltip
+      content="Additional information"
+      variant="dark"
+      position="top"
+      [showDelay]="200"
+      [hideDelay]="100"
+      [maxWidth]="250"
+      ariaLabel="Help information"
+      (showed)="onTooltipShow()"
+      (hidden)="onTooltipHide()"
+    &gt;
+      &lt;psh-button&gt;Hover for info&lt;/psh-button&gt;
+    &lt;/psh-tooltip&gt;
+  `
+&#125;)
+export class MyComponent &#123;
+  onTooltipShow(): void &#123;
+    console.log('Tooltip shown');
+  &#125;
+
+  onTooltipHide(): void &#123;
+    console.log('Tooltip hidden');
+  &#125;
+&#125;</code></pre>
+          </div>
+        </div>
+
+        <div class="api-best-practices">
+          <h4>{{ 'TOOLTIP.API.BEST_PRACTICES_TITLE' | translate }}</h4>
+          <ul class="best-practices-list">
+            <li><strong>{{ 'TOOLTIP.API.BP_CONCISE' | translate }}</strong>: {{ 'TOOLTIP.API.BP_CONCISE_DESC' | translate }}</li>
+            <li><strong>{{ 'TOOLTIP.API.BP_KEYBOARD' | translate }}</strong>: {{ 'TOOLTIP.API.BP_KEYBOARD_DESC' | translate }}</li>
+            <li><strong>{{ 'TOOLTIP.API.BP_ARIA' | translate }}</strong>: {{ 'TOOLTIP.API.BP_ARIA_DESC' | translate }}</li>
+            <li><strong>{{ 'TOOLTIP.API.BP_POSITION' | translate }}</strong>: {{ 'TOOLTIP.API.BP_POSITION_DESC' | translate }}</li>
+            <li><strong>{{ 'TOOLTIP.API.BP_TIMING' | translate }}</strong>: {{ 'TOOLTIP.API.BP_TIMING_DESC' | translate }}</li>
+            <li><strong>{{ 'TOOLTIP.API.BP_WIDTH' | translate }}</strong>: {{ 'TOOLTIP.API.BP_WIDTH_DESC' | translate }}</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

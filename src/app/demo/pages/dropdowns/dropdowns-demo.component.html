@@ -1,0 +1,600 @@
+<ds-demo-page-layout
+  title="Menus Déroulants"
+  introText="Les menus déroulants permettent aux utilisateurs de sélectionner une option parmi une liste d'éléments ou d'effectuer des actions contextuelles. Ils sont essentiels pour créer des interfaces organisées et accessibles."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Variantes de Dropdown - Section Pleine Largeur -->
+    <section class="dropdown-variants-section">
+      <h3 class="section-title">Variantes de Dropdown</h3>
+      <div class="variants-container">
+        <div class="variants-intro">
+          <p>Les menus déroulants offrent quatre variantes distinctes pour s'adapter à différents contextes d'utilisation et niveaux de hiérarchie visuelle dans l'interface.</p>
+        </div>
+        <div class="variants-grid">
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-dropdown variant="primary">
+                <span dropdown-trigger>Primary</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+            </div>
+            <div class="variant-info">
+              <h4>Primary</h4>
+              <p>Style par défaut avec fond plein. Idéal pour les actions principales et les menus critiques nécessitant une forte visibilité dans l'interface.</p>
+              <ds-code-snippet [code]="primaryVariantCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-dropdown variant="secondary">
+                <span dropdown-trigger>Secondary</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+            </div>
+            <div class="variant-info">
+              <h4>Secondary</h4>
+              <p>Style alternatif avec fond plein. Parfait pour les actions secondaires et les menus complémentaires qui accompagnent l'action principale.</p>
+              <ds-code-snippet [code]="secondaryVariantCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-dropdown variant="outline">
+                <span dropdown-trigger>Outline</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+            </div>
+            <div class="variant-info">
+              <h4>Outline</h4>
+              <p>Style avec bordure sans fond. Utilisé pour les interfaces épurées et les menus tertiaires nécessitant moins de poids visuel tout en restant visibles.</p>
+              <ds-code-snippet [code]="outlineVariantCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-dropdown variant="text">
+                <span dropdown-trigger>Text</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+            </div>
+            <div class="variant-info">
+              <h4>Text</h4>
+              <p>Style minimaliste sans fond ni bordure. Parfait pour les menus discrets, la navigation contextuelle et les interfaces où la sobriété est privilégiée.</p>
+              <ds-code-snippet [code]="textVariantCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Positionnement du Menu - Section Pleine Largeur -->
+    <section class="dropdown-placements-section">
+      <h3 class="section-title">Positionnement du Menu</h3>
+      <div class="placements-container">
+        <div class="placements-intro">
+          <p>Le menu déroulant peut être positionné de différentes manières pour s'adapter à l'emplacement du déclencheur dans l'interface et éviter tout débordement.</p>
+        </div>
+        <div class="placements-grid">
+          <div class="placement-card">
+            <div class="placement-preview">
+              <psh-dropdown placement="bottom-start" variant="outline">
+                <span dropdown-trigger>Bottom Start</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+            </div>
+            <div class="placement-info">
+              <h4>Bottom Start (Défaut)</h4>
+              <div class="placement-specs">
+                <code class="placement-code">placement="bottom-start"</code>
+              </div>
+              <p class="placement-usage">Position par défaut. Le menu s'ouvre en dessous du déclencheur, aligné à gauche. Idéal pour les menus de navigation et les actions standard.</p>
+            </div>
+          </div>
+
+          <div class="placement-card">
+            <div class="placement-preview">
+              <psh-dropdown placement="bottom-end" variant="outline">
+                <span dropdown-trigger>Bottom End</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+            </div>
+            <div class="placement-info">
+              <h4>Bottom End</h4>
+              <div class="placement-specs">
+                <code class="placement-code">placement="bottom-end"</code>
+              </div>
+              <p class="placement-usage">Le menu s'ouvre en dessous, aligné à droite. Parfait pour les menus utilisateur et les actions placées dans le coin supérieur droit de l'interface.</p>
+            </div>
+          </div>
+
+          <div class="placement-card">
+            <div class="placement-preview">
+              <psh-dropdown placement="top-start" variant="outline">
+                <span dropdown-trigger>Top Start</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+            </div>
+            <div class="placement-info">
+              <h4>Top Start</h4>
+              <div class="placement-specs">
+                <code class="placement-code">placement="top-start"</code>
+              </div>
+              <p class="placement-usage">Le menu s'ouvre au-dessus, aligné à gauche. Utilisé lorsque le déclencheur est en bas de l'écran pour éviter tout débordement hors viewport.</p>
+            </div>
+          </div>
+
+          <div class="placement-card">
+            <div class="placement-preview">
+              <psh-dropdown placement="top-end" variant="outline">
+                <span dropdown-trigger>Top End</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+            </div>
+            <div class="placement-info">
+              <h4>Top End</h4>
+              <div class="placement-specs">
+                <code class="placement-code">placement="top-end"</code>
+              </div>
+              <p class="placement-usage">Le menu s'ouvre au-dessus, aligné à droite. Idéal pour les éléments en bas à droite nécessitant une ouverture vers le haut sans débordement.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dropdowns avec Icônes - Section Pleine Largeur -->
+    <section class="dropdown-icons-section">
+      <h3 class="section-title">Dropdowns avec Icônes</h3>
+      <div class="icons-container">
+        <div class="icons-intro">
+          <p>Les icônes renforcent la compréhension visuelle des actions et améliorent l'expérience utilisateur. Elles peuvent être utilisées dans le déclencheur et dans les éléments du menu.</p>
+        </div>
+        <div class="icons-grid">
+          <div class="icon-card">
+            <div class="icon-preview">
+              <psh-dropdown icon="dots-three" variant="outline">
+                <span dropdown-trigger>Actions</span>
+                <div dropdown-menu>
+                  @for (item of iconItems; track item.value) {
+                  <button
+                    class="dropdown-item"
+                    (click)="selectItem(item.value)"
+                    [class.disabled]="item.disabled"
+                  >
+                    <i class="ph ph-{{ item.icon }}" aria-hidden="true"></i>
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+            </div>
+            <div class="icon-info">
+              <h4>Icône dans le Déclencheur</h4>
+              <p class="icon-usage">Ajoutez une icône au bouton déclencheur pour indiquer visuellement la présence d'un menu. Les icônes courantes incluent <code>dots-three</code>, <code>caret-down</code>, ou <code>gear</code>.</p>
+              <ds-code-snippet [code]="iconTriggerCode" />
+            </div>
+          </div>
+
+          <div class="icon-card">
+            <div class="icon-preview">
+              <psh-dropdown variant="primary">
+                <span dropdown-trigger>Menu avec icônes</span>
+                <div dropdown-menu>
+                  @for (item of iconItems; track item.value) {
+                  <button
+                    class="dropdown-item"
+                    (click)="selectItem(item.value)"
+                    [class.disabled]="item.disabled"
+                  >
+                    <i class="ph ph-{{ item.icon }}" aria-hidden="true"></i>
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+            </div>
+            <div class="icon-info">
+              <h4>Icônes dans les Items</h4>
+              <p class="icon-usage">Enrichissez chaque élément du menu avec une icône descriptive pour améliorer la scannabilité et la compréhension des actions disponibles.</p>
+              <ds-code-snippet [code]="iconItemsCode" />
+            </div>
+          </div>
+
+          <div class="icon-card">
+            <div class="icon-preview">
+              <div class="icon-examples">
+                <psh-dropdown variant="primary">
+                  <span dropdown-trigger>Édition</span>
+                  <div dropdown-menu>
+                    <button class="dropdown-item" (click)="selectItem('edit')">
+                      <i class="ph ph-pencil-simple" aria-hidden="true"></i>
+                      Modifier
+                    </button>
+                    <button class="dropdown-item" (click)="selectItem('copy')">
+                      <i class="ph ph-copy" aria-hidden="true"></i>
+                      Dupliquer
+                    </button>
+                  </div>
+                </psh-dropdown>
+              </div>
+            </div>
+            <div class="icon-info">
+              <h4>Icônes Contextuelles</h4>
+              <p class="icon-usage">Sélectionnez des icônes qui renforcent visuellement l'action décrite. Les icônes doivent être immédiatement reconnaissables et cohérentes.</p>
+              <ul class="icon-recommendations">
+                <li><code>pencil-simple</code> pour modifier</li>
+                <li><code>trash</code> pour supprimer</li>
+                <li><code>copy</code> pour dupliquer</li>
+                <li><code>archive</code> pour archiver</li>
+                <li><code>download</code> pour télécharger</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- États des Dropdowns - Section Pleine Largeur -->
+    <section class="dropdown-states-section">
+      <h3 class="section-title">États des Dropdowns</h3>
+      <div class="states-container">
+        <div class="states-intro">
+          <p>Les menus déroulants supportent différents états pour communiquer clairement leur disponibilité et le statut des options proposées.</p>
+        </div>
+        <div class="states-content">
+          <div class="states-demo">
+            <div class="state-group">
+              <h4>État Normal</h4>
+              <div class="state-examples">
+                <psh-dropdown variant="primary">
+                  <span dropdown-trigger>Menu actif</span>
+                  <div dropdown-menu>
+                    @for (item of basicItems; track item.value) {
+                    <button class="dropdown-item" (click)="selectItem(item.value)">
+                      {{ item.content }}
+                    </button>
+                    }
+                  </div>
+                </psh-dropdown>
+              </div>
+              <p class="state-description">État par défaut du menu déroulant, prêt à recevoir les interactions utilisateur.</p>
+            </div>
+
+            <div class="state-group">
+              <h4>État Désactivé</h4>
+              <div class="state-examples">
+                <psh-dropdown variant="primary" [disabled]="true">
+                  <span dropdown-trigger>Menu désactivé</span>
+                  <div dropdown-menu>
+                    @for (item of basicItems; track item.value) {
+                    <button class="dropdown-item" (click)="selectItem(item.value)">
+                      {{ item.content }}
+                    </button>
+                    }
+                  </div>
+                </psh-dropdown>
+              </div>
+              <p class="state-description">Menu temporairement indisponible. Le déclencheur n'accepte aucune interaction et communique visuellement son indisponibilité.</p>
+            </div>
+
+            <div class="state-group">
+              <h4>Items Désactivés</h4>
+              <div class="state-examples">
+                <psh-dropdown variant="primary">
+                  <span dropdown-trigger>Options mixtes</span>
+                  <div dropdown-menu>
+                    @for (item of statusItems; track item.value) {
+                    <button
+                      class="dropdown-item"
+                      (click)="selectItem(item.value)"
+                      [class.disabled]="item.disabled"
+                    >
+                      {{ item.content }}
+                    </button>
+                    }
+                  </div>
+                </psh-dropdown>
+              </div>
+              <p class="state-description">Certaines options peuvent être désactivées individuellement pour indiquer leur indisponibilité contextuelle tout en restant visibles.</p>
+            </div>
+          </div>
+          <div class="states-doc">
+            <h4>Caractéristiques des États</h4>
+            <ul class="feature-list">
+              <li><strong>Hover</strong> : Changement visuel au survol pour indiquer l'interactivité du déclencheur</li>
+              <li><strong>Focus</strong> : Indicateur de focus visible pour la navigation au clavier avec <code>Tab</code></li>
+              <li><strong>Active</strong> : Feedback visuel lors du clic pour confirmer l'interaction</li>
+              <li><strong>Disabled</strong> : Curseur <code>not-allowed</code> et opacité réduite sur le déclencheur</li>
+              <li><strong>Item Disabled</strong> : Options individuelles désactivées avec <code>aria-disabled="true"</code></li>
+            </ul>
+            <ds-code-snippet [code]="statesCode" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Documentation API - Section Pleine Largeur -->
+    <section class="api-section">
+      <h3 class="section-title">Documentation API</h3>
+      <div class="api-container">
+        <div class="api-intro">
+          <p>Le composant Dropdown utilise des <strong>model inputs</strong> et des <strong>input signals</strong> pour une API simple et performante, conforme aux standards Angular 20.</p>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Model Inputs)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>variant</code></td>
+                <td><code>DropdownVariant</code></td>
+                <td><code>'primary'</code></td>
+                <td>'primary' | 'secondary' | 'outline' | 'text'</td>
+              </tr>
+              <tr>
+                <td><code>placement</code></td>
+                <td><code>DropdownPlacement</code></td>
+                <td><code>'bottom-start'</code></td>
+                <td>'bottom-start' | 'bottom-end' | 'top-start' | 'top-end'</td>
+              </tr>
+              <tr>
+                <td><code>disabled</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Désactive le menu déroulant et empêche toute interaction</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Input Signals)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>items</code></td>
+                <td><code>DropdownItem[]</code></td>
+                <td><code>[]</code></td>
+                <td>Liste des éléments du menu (optionnel avec content projection)</td>
+              </tr>
+              <tr>
+                <td><code>label</code></td>
+                <td><code>string</code></td>
+                <td><code>'Dropdown Menu'</code></td>
+                <td>Label par défaut du menu déroulant</td>
+              </tr>
+              <tr>
+                <td><code>icon</code></td>
+                <td><code>string | undefined</code></td>
+                <td><code>undefined</code></td>
+                <td>Nom de l'icône Phosphor à afficher dans le déclencheur</td>
+              </tr>
+              <tr>
+                <td><code>ariaLabel</code></td>
+                <td><code>string | undefined</code></td>
+                <td><code>undefined</code></td>
+                <td>Label ARIA personnalisé pour l'accessibilité</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Événements (Outputs)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Événement</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>selected</code></td>
+                <td><code>EventEmitter&lt;DropdownItem&gt;</code></td>
+                <td>Émis lors de la sélection d'un élément du menu</td>
+              </tr>
+              <tr>
+                <td><code>opened</code></td>
+                <td><code>EventEmitter&lt;void&gt;</code></td>
+                <td>Émis lorsque le menu s'ouvre</td>
+              </tr>
+              <tr>
+                <td><code>closed</code></td>
+                <td><code>EventEmitter&lt;void&gt;</code></td>
+                <td>Émis lorsque le menu se ferme</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Interface DropdownItem</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>content</code></td>
+                <td><code>string</code></td>
+                <td>Contenu textuel de l'élément</td>
+              </tr>
+              <tr>
+                <td><code>value</code></td>
+                <td><code>T</code></td>
+                <td>Valeur de l'élément (type générique)</td>
+              </tr>
+              <tr>
+                <td><code>icon</code></td>
+                <td><code>string | undefined</code></td>
+                <td>Nom de l'icône Phosphor à afficher</td>
+              </tr>
+              <tr>
+                <td><code>disabled</code></td>
+                <td><code>boolean | undefined</code></td>
+                <td>Désactive l'élément individuellement</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-usage-example">
+          <h4>Exemple d'Utilisation Complète</h4>
+          <div class="code-block">
+            <pre><code>import &#123; PshDropdownComponent &#125; from 'ps-helix';
+import &#123; DropdownItem &#125; from 'ps-helix';
+
+&#64;Component(&#123;
+  standalone: true,
+  imports: [PshDropdownComponent],
+  template: `
+    &lt;psh-dropdown
+      variant="primary"
+      placement="bottom-start"
+      icon="dots-three"
+      [disabled]="isLoading"
+      ariaLabel="Menu d'actions"
+      (selected)="handleSelect($event)"
+      (opened)="handleOpened()"
+      (closed)="handleClosed()"
+    &gt;
+      &lt;span dropdown-trigger&gt;Actions&lt;/span&gt;
+      &lt;div dropdown-menu&gt;
+        &lt;button
+          class="dropdown-item"
+          (click)="editItem()"
+        &gt;
+          &lt;i class="ph ph-pencil-simple"&gt;&lt;/i&gt;
+          Modifier
+        &lt;/button&gt;
+        &lt;button
+          class="dropdown-item"
+          (click)="deleteItem()"
+          [class.disabled]="!canDelete"
+        &gt;
+          &lt;i class="ph ph-trash"&gt;&lt;/i&gt;
+          Supprimer
+        &lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/psh-dropdown&gt;
+  `
+&#125;)
+export class MyComponent &#123;
+  isLoading = false;
+  canDelete = true;
+
+  handleSelect(item: DropdownItem): void &#123;
+    console.log('Item sélectionné:', item);
+  &#125;
+
+  handleOpened(): void &#123;
+    console.log('Menu ouvert');
+  &#125;
+
+  handleClosed(): void &#123;
+    console.log('Menu fermé');
+  &#125;
+
+  editItem(): void &#123;
+    console.log('Édition...');
+  &#125;
+
+  deleteItem(): void &#123;
+    if (this.canDelete) &#123;
+      console.log('Suppression...');
+    &#125;
+  &#125;
+&#125;</code></pre>
+          </div>
+        </div>
+
+        <div class="api-best-practices">
+          <h4>Bonnes Pratiques d'Accessibilité</h4>
+          <ul class="best-practices-list">
+            <li><strong>ARIA Automatique</strong> : Le composant gère automatiquement <code>aria-haspopup="menu"</code>, <code>aria-expanded</code> et <code>role="menu"</code></li>
+            <li><strong>Navigation Clavier</strong> : Support complet avec <code>Tab</code> (focus), <code>Enter</code>/<code>Space</code> (toggle), <code>Escape</code> (fermeture), <code>ArrowDown</code>/<code>ArrowUp</code> (navigation items)</li>
+            <li><strong>Focus Management</strong> : Le focus retourne automatiquement au déclencheur après fermeture du menu</li>
+            <li><strong>Labels Descriptifs</strong> : Utilisez <code>ariaLabel</code> pour fournir un contexte clair, surtout avec des icônes seules</li>
+            <li><strong>Contraste</strong> : Vérifiez un ratio minimum de 4.5:1 entre le texte et l'arrière-plan (WCAG AA)</li>
+            <li><strong>Click Outside</strong> : Le menu se ferme automatiquement lors d'un clic à l'extérieur pour une expérience intuitive</li>
+            <li><strong>Items Désactivés</strong> : Utilisez <code>aria-disabled="true"</code> sur les items désactivés pour communiquer leur état aux technologies d'assistance</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

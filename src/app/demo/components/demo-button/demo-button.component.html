@@ -1,0 +1,14 @@
+<button
+  [class.primary]="variant === 'primary'"
+  [class.secondary]="variant === 'secondary'"
+  [class.success]="variant === 'success'"
+  [class.warning]="variant === 'warning'"
+  [class.small]="size === 'small'"
+  [class.medium]="size === 'medium'"
+  [class.large]="size === 'large'"
+  (click)="onClick.emit($event)"
+>
+  <span class="button-content">
+    <ng-content></ng-content>
+  </span>
+</button>

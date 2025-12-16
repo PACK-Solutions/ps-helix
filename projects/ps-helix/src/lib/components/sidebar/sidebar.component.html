@@ -1,0 +1,22 @@
+<div
+  class="sidebar"
+  [class.open]="open()"
+  [class.fixed]="effectiveMode() === 'fixed'"
+  [class.overlay]="effectiveMode() === 'overlay'"
+  [class.left]="position() === 'left'"
+  [class.right]="position() === 'right'"
+  [style.width]="width()"
+  [style.--sidebar-width]="width()"
+>
+  <div class="sidebar-content">
+    <ng-content></ng-content>
+  </div>
+</div>
+
+@if (effectiveMode() === 'overlay' && open()) {
+  <div
+    class="sidebar-backdrop"
+    role="presentation"
+    (click)="closeSidebar()"
+  ></div>
+}

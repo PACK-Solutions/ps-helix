@@ -1,0 +1,704 @@
+<ds-demo-page-layout
+  title="Système de Cartes"
+  introText="Les cartes permettent d'organiser et d'afficher du contenu de manière structurée et élégante. Elles offrent une API flexible avec titre, description, variantes de couleur et états interactifs pour s'adapter à tous vos besoins."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Variantes de Base - Section Pleine Largeur -->
+    <section class="card-variants-section">
+      <h3 class="section-title">Variantes de Base</h3>
+      <div class="variants-container">
+        <div class="variants-intro">
+          <p>Les cartes offrent trois styles visuels pour s'adapter à différents contextes d'utilisation et niveaux de hiérarchie visuelle.</p>
+        </div>
+        <div class="variants-grid">
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-card
+                #cardElevated
+                title="Carte Elevated"
+                description="Avec ombre portée"
+                variant="elevated"
+              >
+                <p>Cette carte utilise une ombre pour créer une élévation visuelle et se détacher du fond.</p>
+                <div card-actions>
+                  <psh-button variant="primary" [fullWidth]="cardElevated.isMobile()">Action</psh-button>
+                </div>
+              </psh-card>
+            </div>
+            <div class="variant-info">
+              <h4>Elevated</h4>
+              <p>Variante avec ombre portée. Idéale pour mettre en avant des contenus importants ou créer une hiérarchie visuelle claire.</p>
+              <ds-code-snippet [code]="elevatedVariantCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-card
+                #cardOutlined
+                title="Carte Outlined"
+                description="Avec bordure"
+                variant="outlined"
+              >
+                <p>Cette carte utilise une bordure simple pour un design plus léger et discret.</p>
+                <div card-actions>
+                  <psh-button appearance="outline" variant="primary" [fullWidth]="cardOutlined.isMobile()">Action</psh-button>
+                </div>
+              </psh-card>
+            </div>
+            <div class="variant-info">
+              <h4>Outlined</h4>
+              <p>Variante avec bordure sans ombre. Parfaite pour les interfaces épurées et les contenus secondaires.</p>
+              <ds-code-snippet [code]="outlinedVariantCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-card
+                #cardDefault
+                title="Carte Default"
+                description="Style par défaut"
+                variant="default"
+              >
+                <p>Cette carte utilise le style par défaut, sans ombre ni bordure prononcée.</p>
+                <div card-actions>
+                  <psh-button appearance="text" variant="primary" [fullWidth]="cardDefault.isMobile()">Action</psh-button>
+                </div>
+              </psh-card>
+            </div>
+            <div class="variant-info">
+              <h4>Default</h4>
+              <p>Variante par défaut sans décoration. Utilisée pour les contenus intégrés ou les designs épurés.</p>
+              <ds-code-snippet [code]="defaultVariantCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Variantes de Couleur - Section Pleine Largeur -->
+    <section class="card-colors-section">
+      <h3 class="section-title">Variantes de Couleur</h3>
+      <div class="colors-container">
+        <div class="colors-intro">
+          <p>Les cartes supportent des variantes de couleur pour communiquer différents types de messages et niveaux d'importance adaptés à chaque situation.</p>
+        </div>
+        <div class="colors-grid">
+          <div class="color-card">
+            <div class="color-preview">
+              <psh-card
+                title="Information"
+                description="Message informatif"
+                variant="outlined"
+                colorVariant="info"
+              >
+                <p>Votre compte a été mis à jour avec succès. Les modifications prendront effet immédiatement.</p>
+              </psh-card>
+            </div>
+            <div class="color-info">
+              <h4>Info</h4>
+              <p>Messages informatifs généraux qui apportent un contexte ou une aide supplémentaire.</p>
+              <ds-code-snippet [code]="infoColorCode" />
+            </div>
+          </div>
+
+          <div class="color-card">
+            <div class="color-preview">
+              <psh-card
+                title="Succès"
+                description="Opération réussie"
+                variant="outlined"
+                colorVariant="success"
+              >
+                <p>Votre paiement a été traité avec succès. Un reçu vous a été envoyé par email.</p>
+              </psh-card>
+            </div>
+            <div class="color-info">
+              <h4>Success</h4>
+              <p>Confirmation d'actions réussies ou de processus terminés avec succès.</p>
+              <ds-code-snippet [code]="successColorCode" />
+            </div>
+          </div>
+
+          <div class="color-card">
+            <div class="color-preview">
+              <psh-card
+                #cardWarning
+                title="Attention"
+                description="Action requise"
+                variant="outlined"
+                colorVariant="warning"
+              >
+                <p>Votre abonnement expire dans 7 jours. Renouvelez-le pour continuer à profiter de tous les avantages.</p>
+                <div card-actions>
+                  <psh-button variant="primary" [fullWidth]="cardWarning.isMobile()">Renouveler</psh-button>
+                </div>
+              </psh-card>
+            </div>
+            <div class="color-info">
+              <h4>Warning</h4>
+              <p>Avertissements et précautions nécessitant l'attention de l'utilisateur.</p>
+              <ds-code-snippet [code]="warningColorCode" />
+            </div>
+          </div>
+
+          <div class="color-card">
+            <div class="color-preview">
+              <psh-card
+                #cardDanger
+                title="Erreur"
+                description="Une erreur est survenue"
+                variant="outlined"
+                colorVariant="danger"
+              >
+                <p>Impossible de se connecter au serveur. Vérifiez votre connexion internet et réessayez.</p>
+                <div card-actions>
+                  <psh-button variant="primary" [fullWidth]="cardDanger.isMobile()">Réessayer</psh-button>
+                </div>
+              </psh-card>
+            </div>
+            <div class="color-info">
+              <h4>Danger</h4>
+              <p>Erreurs et problèmes critiques nécessitant une action immédiate.</p>
+              <ds-code-snippet [code]="dangerColorCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Densités - Section Pleine Largeur -->
+    <section class="card-densities-section">
+      <h3 class="section-title">Niveaux de Densité</h3>
+      <div class="densities-container">
+        <div class="densities-intro">
+          <p>Trois niveaux de densité sont disponibles pour s'adapter à différents contextes d'utilisation et besoins d'espace.</p>
+        </div>
+        <div class="densities-grid">
+          <div class="density-card">
+            <div class="density-preview">
+              <psh-card
+                title="Densité Compacte"
+                description="Spacing réduit"
+                variant="outlined"
+                density="compact"
+              >
+                <p>Cette carte utilise un padding compact (16px) pour afficher plus d'informations dans moins d'espace.</p>
+              </psh-card>
+            </div>
+            <div class="density-info">
+              <h4>Compact</h4>
+              <div class="density-specs">
+                <span class="density-dimension">16px de padding</span>
+                <code class="density-code">density="compact"</code>
+              </div>
+              <p class="density-usage">Idéal pour les tableaux de bord denses, les listes compactes ou les interfaces nécessitant une optimisation de l'espace.</p>
+            </div>
+          </div>
+
+          <div class="density-card">
+            <div class="density-preview">
+              <psh-card
+                title="Densité Normale"
+                description="Spacing standard"
+                variant="outlined"
+                density="normal"
+              >
+                <p>Cette carte utilise le padding standard (24px) recommandé pour la plupart des cas d'usage.</p>
+              </psh-card>
+            </div>
+            <div class="density-info">
+              <h4>Normal (Défaut)</h4>
+              <div class="density-specs">
+                <span class="density-dimension">24px de padding</span>
+                <code class="density-code">density="normal"</code>
+              </div>
+              <p class="density-usage">Taille par défaut, équilibrée pour la plupart des cas d'usage et une bonne lisibilité sur tous les appareils.</p>
+            </div>
+          </div>
+
+          <div class="density-card">
+            <div class="density-preview">
+              <psh-card
+                title="Densité Spacieuse"
+                description="Spacing généreux"
+                variant="outlined"
+                density="spacious"
+              >
+                <p>Cette carte utilise un padding généreux (32px) pour un design aéré et premium.</p>
+              </psh-card>
+            </div>
+            <div class="density-info">
+              <h4>Spacious</h4>
+              <div class="density-specs">
+                <span class="density-dimension">32px de padding</span>
+                <code class="density-code">density="spacious"</code>
+              </div>
+              <p class="density-usage">Pour les designs premium, les pages de détail ou les contenus nécessitant une présentation aérée et élégante.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slots et Personnalisation - Section Pleine Largeur -->
+    <section class="card-slots-section">
+      <h3 class="section-title">Slots et Personnalisation</h3>
+      <div class="slots-container">
+        <div class="slots-intro">
+          <p>Les cartes offrent plusieurs slots pour personnaliser le header, le body, le footer et les actions selon vos besoins.</p>
+        </div>
+        <div class="slots-grid">
+          <div class="slot-card">
+            <div class="slot-preview">
+              <psh-card
+                #cardNotif
+                title="Notifications"
+                description="3 nouvelles notifications"
+                variant="elevated"
+              >
+                <div card-header-icon>
+                  <i class="ph ph-bell" style="font-size: 1.5rem; color: var(--primary-color);"></i>
+                </div>
+                <p>Vous avez reçu de nouvelles notifications importantes concernant votre compte.</p>
+                <div card-actions>
+                  <psh-button appearance="outline" variant="primary" [fullWidth]="cardNotif.isMobile()">Voir tout</psh-button>
+                </div>
+              </psh-card>
+            </div>
+            <div class="slot-info">
+              <h4>Header Icon</h4>
+              <code class="slot-code">card-header-icon</code>
+              <p class="slot-usage">Slot pour afficher une icône avant le titre dans le header de la carte.</p>
+              <ds-code-snippet [code]="headerIconSlotCode" />
+            </div>
+          </div>
+
+          <div class="slot-card">
+            <div class="slot-preview">
+              <psh-card
+                title="Projet en cours"
+                description="Design System v2.0"
+                variant="elevated"
+                [hoverable]="true"
+              >
+                <div card-header-extra>
+                  <psh-tag variant="success">Actif</psh-tag>
+                </div>
+                <p>Développement du nouveau design system avec composants Angular 20 et Signals.</p>
+                <div card-footer>
+                  <span>Échéance: 15 Déc 2025</span>
+                  <span>Équipe: 6 personnes</span>
+                </div>
+              </psh-card>
+            </div>
+            <div class="slot-info">
+              <h4>Header Extra & Footer</h4>
+              <code class="slot-code">card-header-extra</code>
+              <code class="slot-code">card-footer</code>
+              <p class="slot-usage">Slots pour ajouter des badges dans le header et des métadonnées dans le footer.</p>
+              <ds-code-snippet [code]="headerExtraFooterSlotCode" />
+            </div>
+          </div>
+
+          <div class="slot-card">
+            <div class="slot-preview">
+              <psh-card
+                #cardWelcome
+                title="Bienvenue"
+                description="Commencez votre parcours"
+                variant="elevated"
+              >
+                <p>Cette carte utilise les propriétés title et description pour un rendu cohérent et bien espacé.</p>
+                <div card-actions>
+                  <psh-button variant="primary" [fullWidth]="cardWelcome.isMobile()">Démarrer</psh-button>
+                  <psh-button appearance="outline" variant="secondary" [fullWidth]="cardWelcome.isMobile()">En savoir plus</psh-button>
+                </div>
+              </psh-card>
+            </div>
+            <div class="slot-info">
+              <h4>Card Actions</h4>
+              <code class="slot-code">card-actions</code>
+              <p class="slot-usage">Slot pour afficher les boutons d'action au bas de la carte avec un alignement automatique.</p>
+              <ds-code-snippet [code]="cardActionsSlotCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- États des Cartes - Section Pleine Largeur -->
+    <section class="card-states-section">
+      <h3 class="section-title">États des Cartes</h3>
+      <div class="states-container">
+        <div class="states-intro">
+          <p>Les cartes supportent différents états pour communiquer clairement leur disponibilité et leur statut d'exécution.</p>
+        </div>
+        <div class="states-content">
+          <div class="states-demo">
+            <div class="state-group">
+              <h4>État Interactif</h4>
+              <div class="state-examples">
+                <psh-card
+                  title="Carte Interactive"
+                  description="Cliquez pour interagir"
+                  variant="elevated"
+                  [interactive]="true"
+                  [hoverable]="true"
+                  (clicked)="handleCardClick($event)"
+                >
+                  <p>Cette carte est cliquable avec effet de survol et focus accessible au clavier.</p>
+                </psh-card>
+              </div>
+              <p class="state-description">Carte cliquable avec effet de survol et support complet de la navigation au clavier pour une accessibilité optimale.</p>
+            </div>
+
+            <div class="state-group">
+              <h4>État de Chargement</h4>
+              <div class="state-examples">
+                <psh-card
+                  title="Chargement"
+                  description="État de chargement"
+                  variant="outlined"
+                  [loading]="true"
+                >
+                  <p>Ce contenu ne sera pas visible pendant le chargement</p>
+                </psh-card>
+              </div>
+              <p class="state-description">Affiche un skeleton animé pendant le chargement des données asynchrones.</p>
+            </div>
+
+            <div class="state-group">
+              <h4>État Désactivé</h4>
+              <div class="state-examples">
+                <psh-card
+                  #cardDisabled
+                  title="Carte Désactivée"
+                  description="État désactivé"
+                  variant="outlined"
+                  [disabled]="true"
+                >
+                  <p>Cette carte est désactivée avec opacité réduite et interactions bloquées.</p>
+                  <div card-actions>
+                    <psh-button variant="primary" [fullWidth]="cardDisabled.isMobile()">Action impossible</psh-button>
+                  </div>
+                </psh-card>
+              </div>
+              <p class="state-description">Carte temporairement indisponible avec opacité réduite et interactions bloquées.</p>
+            </div>
+          </div>
+          <div class="states-doc">
+            <h4>Caractéristiques des États</h4>
+            <ul class="feature-list">
+              <li><strong>Interactive</strong> : Rend la carte cliquable avec l'événement <code>clicked</code></li>
+              <li><strong>Hoverable</strong> : Ajoute un effet de survol avec élévation et transition fluide</li>
+              <li><strong>Loading</strong> : Affiche un skeleton animé avec <code>aria-busy="true"</code></li>
+              <li><strong>Disabled</strong> : Réduit l'opacité à 0.6 et bloque toutes les interactions</li>
+              <li><strong>Focus</strong> : Indicateur de focus visible pour la navigation au clavier</li>
+            </ul>
+            <div class="code-example">
+              <pre><code>&lt;psh-card
+  title="Carte Interactive"
+  [interactive]="true"
+  [hoverable]="true"
+  [loading]="isLoading"
+  [disabled]="isDisabled"
+  (clicked)="handleClick($event)"
+&gt;
+  Contenu
+&lt;/psh-card&gt;</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cartes Spécialisées - Section Pleine Largeur -->
+    <section class="card-specialized-section">
+      <h3 class="section-title">Cartes Spécialisées</h3>
+      <div class="specialized-container">
+        <div class="specialized-intro">
+          <p>Le design system propose des composants de cartes spécialisés pour des cas d'usage spécifiques.</p>
+        </div>
+        <div class="specialized-content">
+          <psh-card #cardSpec1 class="specialized-card" variant="outlined">
+            <div class="specialized-card-header">
+              <i class="ph ph-chart-line" style="font-size: 2rem; color: var(--primary-color);"></i>
+              <div>
+                <h4>Cartes de Statistiques</h4>
+                <p class="specialized-description">Composant spécialisé pour afficher des métriques avec icône colorée, valeur et indicateur de tendance.</p>
+              </div>
+            </div>
+            <div card-actions>
+              <a href="/demo/stat-cards">
+                <psh-button variant="primary" [fullWidth]="cardSpec1.isMobile()">Voir la documentation</psh-button>
+              </a>
+            </div>
+          </psh-card>
+
+          <psh-card #cardSpec2 class="specialized-card" variant="outlined">
+            <div class="specialized-card-header">
+              <i class="ph ph-info" style="font-size: 2rem; color: var(--primary-color);"></i>
+              <div>
+                <h4>Cartes d'Information</h4>
+                <p class="specialized-description">Composant pour afficher des données structurées sous forme de paires label-valeur.</p>
+              </div>
+            </div>
+            <div card-actions>
+              <a href="/demo/info-cards">
+                <psh-button variant="primary" [fullWidth]="cardSpec2.isMobile()">Voir la documentation</psh-button>
+              </a>
+            </div>
+          </psh-card>
+
+          <psh-card #cardSpec3 class="specialized-card" variant="outlined">
+            <div class="specialized-card-header">
+              <i class="ph ph-layout" style="font-size: 2rem; color: var(--primary-color);"></i>
+              <div>
+                <h4>Cartes Horizontales</h4>
+                <p class="specialized-description">Composant pour afficher du contenu avec une image ou un média sur le côté.</p>
+              </div>
+            </div>
+            <div card-actions>
+              <a href="/demo/horizontal-cards">
+                <psh-button variant="primary" [fullWidth]="cardSpec3.isMobile()">Voir la documentation</psh-button>
+              </a>
+            </div>
+          </psh-card>
+        </div>
+      </div>
+    </section>
+
+    <!-- Documentation API - Section Pleine Largeur -->
+    <section class="api-section">
+      <h3 class="section-title">Documentation API</h3>
+      <div class="api-container">
+        <div class="api-intro">
+          <p>Le composant Card utilise des <strong>model inputs</strong> et des <strong>input signals</strong> pour une API simple et performante, conforme aux standards Angular 20.</p>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Model Inputs)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>variant</code></td>
+                <td><code>CardVariant</code></td>
+                <td><code>'elevated'</code></td>
+                <td>'elevated' | 'outlined' | 'default'</td>
+              </tr>
+              <tr>
+                <td><code>colorVariant</code></td>
+                <td><code>CardColorVariant</code></td>
+                <td><code>'default'</code></td>
+                <td>'default' | 'info' | 'success' | 'warning' | 'danger'</td>
+              </tr>
+              <tr>
+                <td><code>density</code></td>
+                <td><code>CardDensity</code></td>
+                <td><code>'normal'</code></td>
+                <td>'compact' | 'normal' | 'spacious'</td>
+              </tr>
+              <tr>
+                <td><code>interactive</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Rend la carte cliquable</td>
+              </tr>
+              <tr>
+                <td><code>hoverable</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Ajoute un effet de survol</td>
+              </tr>
+              <tr>
+                <td><code>loading</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Affiche un skeleton de chargement</td>
+              </tr>
+              <tr>
+                <td><code>disabled</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Désactive la carte</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Input Signals)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>title</code></td>
+                <td><code>string</code></td>
+                <td><code>''</code></td>
+                <td>Titre principal de la carte</td>
+              </tr>
+              <tr>
+                <td><code>description</code></td>
+                <td><code>string</code></td>
+                <td><code>''</code></td>
+                <td>Description ou sous-titre</td>
+              </tr>
+              <tr>
+                <td><code>ariaLabel</code></td>
+                <td><code>string | undefined</code></td>
+                <td><code>undefined</code></td>
+                <td>Label ARIA personnalisé pour l'accessibilité</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Événements (Outputs)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Événement</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>clicked</code></td>
+                <td><code>EventEmitter&lt;MouseEvent | KeyboardEvent&gt;</code></td>
+                <td>Émis lors du clic sur la carte (si interactive)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Slots Disponibles</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Slot</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>card-header-icon</code></td>
+                <td>Icône affichée avant le titre dans le header</td>
+              </tr>
+              <tr>
+                <td><code>card-header-content</code></td>
+                <td>Contenu personnalisé pour remplacer le header par défaut</td>
+              </tr>
+              <tr>
+                <td><code>card-header-extra</code></td>
+                <td>Badge ou actions secondaires dans le header (à droite)</td>
+              </tr>
+              <tr>
+                <td><code>(default)</code></td>
+                <td>Contenu principal de la carte (body)</td>
+              </tr>
+              <tr>
+                <td><code>card-footer</code></td>
+                <td>Métadonnées ou informations complémentaires en bas de carte</td>
+              </tr>
+              <tr>
+                <td><code>card-actions</code></td>
+                <td>Boutons d'action avec alignement automatique</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-usage-example">
+          <h4>Exemple d'Utilisation Complète</h4>
+          <div class="code-block">
+            <pre><code>import &#123; PshCardComponent, PshButtonComponent &#125; from 'ps-helix';
+
+&#64;Component(&#123;
+  standalone: true,
+  imports: [PshCardComponent, PshButtonComponent],
+  template: `
+    &lt;psh-card
+      #myCard
+      title="Mon Projet"
+      description="Description du projet"
+      variant="elevated"
+      colorVariant="default"
+      density="normal"
+      [interactive]="true"
+      [hoverable]="true"
+      [loading]="isLoading"
+      [disabled]="isDisabled"
+      ariaLabel="Carte de projet interactive"
+      (clicked)="handleCardClick($event)"
+    &gt;
+      &lt;div card-header-icon&gt;
+        &lt;i class="ph ph-folder"&gt;&lt;/i&gt;
+      &lt;/div&gt;
+      &lt;div card-header-extra&gt;
+        &lt;psh-tag variant="success"&gt;Actif&lt;/psh-tag&gt;
+      &lt;/div&gt;
+
+      &lt;p&gt;Contenu principal de la carte avec description détaillée.&lt;/p&gt;
+
+      &lt;div card-footer&gt;
+        &lt;span&gt;Échéance: 31 Déc 2025&lt;/span&gt;
+        &lt;span&gt;Équipe: 8 personnes&lt;/span&gt;
+      &lt;/div&gt;
+
+      &lt;div card-actions&gt;
+        &lt;psh-button variant="primary" [fullWidth]="myCard.isMobile()"&gt;Ouvrir&lt;/psh-button&gt;
+        &lt;psh-button appearance="outline" variant="secondary" [fullWidth]="myCard.isMobile()"&gt;Détails&lt;/psh-button&gt;
+      &lt;/div&gt;
+    &lt;/psh-card&gt;
+  `
+&#125;)
+export class MyComponent &#123;
+  isLoading = false;
+  isDisabled = false;
+
+  handleCardClick(event: MouseEvent | KeyboardEvent): void &#123;
+    console.log('Card clicked', event);
+  &#125;
+&#125;</code></pre>
+          </div>
+        </div>
+
+        <div class="api-best-practices">
+          <h4>Bonnes Pratiques</h4>
+          <ul class="best-practices-list">
+            <li><strong>Titre et description</strong> : Utilisez toujours <code>title</code> et <code>description</code> pour un rendu cohérent et accessible</li>
+            <li><strong>Densité par défaut</strong> : Privilégiez <code>density="normal"</code> pour la plupart des cas d'usage</li>
+            <li><strong>Variantes de couleur</strong> : Réservez les colorVariant (info, success, warning, danger) pour les messages d'état importants</li>
+            <li><strong>Interactivité</strong> : Ajoutez <code>[interactive]="true"</code> uniquement si la carte doit être cliquable dans son ensemble</li>
+            <li><strong>Effet de survol</strong> : Combinez <code>[hoverable]="true"</code> avec interactive pour un feedback visuel clair</li>
+            <li><strong>État de chargement</strong> : Utilisez <code>[loading]="true"</code> pendant les opérations asynchrones pour améliorer l'expérience utilisateur</li>
+            <li><strong>Accessibilité</strong> : Fournissez un <code>ariaLabel</code> descriptif pour les cartes interactives</li>
+            <li><strong>Actions</strong> : Placez les boutons principaux dans le slot <code>card-actions</code> pour un alignement automatique et cohérent</li>
+            <li><strong>Boutons mobile</strong> : Utilisez une référence template (<code>#myCard</code>) et passez <code>[fullWidth]="myCard.isMobile()"</code> aux boutons dans card-actions pour une meilleure ergonomie tactile sur mobile (< 640px)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

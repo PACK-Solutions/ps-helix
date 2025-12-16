@@ -1,0 +1,46 @@
+<div class="radio-container">
+  <label class="radio-label" [class.label-left]="labelPosition() === 'left'">
+    <input
+      type="radio"
+      class="radio-input"
+      [checked]="checked()"
+      [disabled]="disabled()"
+      [required]="required()"
+      [name]="name()"
+      [value]="value()"
+      [attr.aria-label]="computedAriaLabel()"
+      [attr.aria-required]="required() || null"
+      [attr.aria-invalid]="error() ? 'true' : null"
+      [attr.aria-checked]="checked()"
+      [attr.aria-describedby]="ariaDescribedBy()"
+      (change)="handleChange()"
+      (keydown)="handleKeydown($event)"
+    />
+    <span 
+      class="radio-control"
+      [class.error]="!!error()"
+      [class.success]="!!success()"
+    >
+      <span class="radio-dot"></span>
+    </span>
+    <span class="radio-text">
+      @if (label()) {
+        {{ label() }}
+      } @else {
+        <ng-content>Radio</ng-content>
+      }
+    </span>
+  </label>
+
+  @if (error()) {
+    <div [id]="errorMessageId()" class="radio-error" role="alert">
+      {{ error() }}
+    </div>
+  }
+
+  @if (success()) {
+    <div [id]="successMessageId()" class="radio-success" role="status">
+      {{ success() }}
+    </div>
+  }
+</div>

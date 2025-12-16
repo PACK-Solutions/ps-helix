@@ -1,0 +1,81 @@
+<div
+  [class]="computedClasses()"
+  [ngStyle]="computedStyles()"
+  (click)="handleClick($event)"
+  (keydown)="handleKeydown($event)"
+  role="region"
+  [attr.tabindex]="interactive() && !disabled() ? 0 : null"
+  [attr.aria-label]="computedAriaLabel()"
+  [attr.aria-disabled]="disabled() ? 'true' : null"
+  [attr.aria-busy]="loading() ? 'true' : null"
+>
+  @if (title()) {
+    <div class="info-card-header">
+      <h3 class="info-card-title">
+        @if (icon()) {
+          <i
+            class="ph {{ titleIcon() }}"
+            aria-hidden="true"
+            [attr.data-icon]="icon()"
+          ></i>
+        }
+        {{ title() }}
+      </h3>
+    </div>
+  }
+
+  <div class="info-card-body">
+    @if (loading()) {
+      <div class="info-card-loading">
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line short"></div>
+      </div>
+    } @else {
+      <div
+        class="info-card-content"
+        role="list"
+      >
+        @if (shouldShowEmptyState()) {
+          <div
+            class="info-card-empty-state"
+            role="status"
+            aria-live="polite"
+            [attr.data-testid]="'info-card-empty-state'"
+          >
+            {{ getEmptyStateMessage() }}
+          </div>
+        } @else {
+          @for (item of data(); track $index) {
+            <div
+              class="info-card-row"
+              role="listitem"
+              [attr.data-index]="$index"
+              [class]="item.customClass || ''"
+            >
+              <div
+                class="info-card-label"
+                [style.width]="item.labelWidth || options().labelWidth"
+                [attr.data-label]="item.label"
+              >
+                {{ item.label }}
+              </div>
+              <div
+                class="info-card-value"
+                [style.width]="item.valueWidth || options().valueWidth"
+                [attr.data-value]="item.value"
+                [title]="item.value?.toString() || ''"
+              >
+                {{ item.value ?? 'Non renseigné' }}
+              </div>
+            </div>
+          }
+        }
+      </div>
+    }
+  </div>
+
+  <div class="info-card-actions" [class]="getActionsClasses()">
+    <ng-content select="[card-actions]"></ng-content>
+  </div>
+</div>

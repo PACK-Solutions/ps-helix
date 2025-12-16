@@ -1,0 +1,120 @@
+<div 
+  class="input-container"
+  [class.full-width]="fullWidth()"
+  [class.small]="size() === 'small'"
+  [class.large]="size() === 'large'"
+  [class.error]="!!error()"
+  [class.success]="!!success()"
+  [class.disabled]="disabled()"
+  [class.readonly]="readonly()"
+  [class.loading]="loading()"
+  [class.focused]="focused()"
+  [class.has-start-icon]="!!iconStart()"
+  [class.has-end-icon]="!!iconEnd() || type() === 'password'"
+  [class.outlined]="variant() === 'outlined'"
+  [class.filled]="variant() === 'filled'"
+>
+  <!-- Label slot -->
+  @if (showLabel()) {
+    <label class="input-label" [for]="inputId" (click)="focusSelect()" [class.required]="required()">
+      <ng-content select="[input-label]"></ng-content>
+      @if (!hasLabelContent()) {
+        {{ label() }}
+      }
+    </label>
+  }
+
+  <div class="input-wrapper">
+    @if (iconStart()) {
+      <i class="ph ph-{{ iconStart() }}" aria-hidden="true"></i>
+    }
+
+    <input
+      [id]="inputId"
+      [type]="effectiveType()"
+      [attr.placeholder]="placeholder()"
+      [attr.aria-label]="computedAriaLabel()"
+      [attr.aria-invalid]="!!error()"
+      [attr.aria-required]="required()"
+      [attr.aria-describedby]="error() ? 'error-message' : success() ? 'success-message' : hint() ? 'hint-message' : null"
+      [disabled]="disabled()"
+      [readonly]="readonly()"
+      [required]="required()"
+      [value]="value()"
+      (input)="handleInput($event)"
+      (keydown)="handleKeydown($event)"
+      (focus)="handleFocus()"
+      (blur)="handleBlur()"
+      [attr.data-state]="state()"
+    />
+
+    @if (iconEnd()) {
+      <i class="ph ph-{{ iconEnd() }}" aria-hidden="true"></i>
+    }
+
+    @if (type() === 'password') {
+      <button
+        type="button"
+        class="password-toggle"
+        (click)="togglePasswordVisibility()"
+        [attr.aria-label]="passwordVisible() ? 'Masquer le mot de passe' : 'Afficher le mot de passe'"
+        [disabled]="disabled() || readonly()"
+      >
+        <i 
+          [class]="'ph ph-' + (passwordVisible() ? 'eye-slash' : 'eye')"
+          aria-hidden="true"
+        ></i>
+      </button>
+    }
+
+    @if (loading()) {
+      <div class="input-loader" aria-hidden="true">
+        <div class="loader"></div>
+      </div>
+    }
+
+    @if (showSuggestions()) {
+      <div class="suggestions-list" role="listbox">
+        @for (suggestion of filteredSuggestions(); track suggestion; let i = $index) {
+          <div 
+            class="suggestion-item"
+            [class.focused]="i === focusedSuggestionIndex()"
+            role="option"
+            [attr.aria-selected]="i === focusedSuggestionIndex()"
+            (click)="handleSuggestionClick(suggestion)"
+            (mouseenter)="focusedSuggestionIndex.set(i)"
+          >
+            {{ suggestion }}
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  <!-- Error message slot -->
+  @if (error()) {
+    <div id="error-message" class="input-error" role="alert">
+      <ng-content select="[input-error]">
+        {{ error() }}
+      </ng-content>
+    </div>
+  }
+
+  <!-- Success message slot -->
+  @if (success()) {
+    <div id="success-message" class="input-success" role="status">
+      <ng-content select="[input-success]">
+        {{ success() }}
+      </ng-content>
+    </div>
+  }
+
+  <!-- Hint message slot -->
+  @if (hint()) {
+    <div id="hint-message" class="input-hint">
+      <ng-content select="[input-hint]">
+        {{ hint() }}
+      </ng-content>
+    </div>
+  }
+</div>

@@ -1,0 +1,203 @@
+:host {
+  --spinner-size-sm: var(--size-6);
+  --spinner-size-md: var(--size-8);
+  --spinner-size-lg: var(--size-12);
+
+  --spinner-dot-size-sm: var(--size-1-5);
+  --spinner-dot-size-md: var(--size-2);
+  --spinner-dot-size-lg: var(--size-3);
+
+  --spinner-pulse-width-sm: var(--size-1-5);
+  --spinner-pulse-width-md: var(--size-2);
+  --spinner-pulse-width-lg: var(--size-3);
+  --spinner-pulse-height-sm: var(--size-6);
+  --spinner-pulse-height-md: var(--size-8);
+  --spinner-pulse-height-lg: var(--size-12);
+
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.spinner-circle {
+  width: var(--spinner-size-md);
+  height: var(--spinner-size-md);
+  border: var(--border-width-2) solid var(--surface-border);
+  border-radius: var(--radius-full);
+  animation: spin 1s var(--animation-easing-default) infinite;
+}
+
+.spinner-circle.primary {
+  border-top-color: var(--primary-color);
+}
+
+.spinner-circle.secondary {
+  border-top-color: var(--secondary-color);
+}
+
+.spinner-circle.success {
+  border-top-color: var(--success-color);
+}
+
+.spinner-circle.warning {
+  border-top-color: var(--warning-color);
+}
+
+.spinner-circle.danger {
+  border-top-color: var(--danger-color);
+}
+
+.spinner-dots {
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+.spinner-dots .dot {
+  width: var(--spinner-dot-size-md);
+  height: var(--spinner-dot-size-md);
+  border-radius: var(--radius-full);
+  animation: bounce var(--animation-duration-slow) var(--animation-easing-in-out) infinite;
+}
+
+.spinner-dots.primary .dot {
+  background: var(--primary-color);
+}
+
+.spinner-dots.secondary .dot {
+  background: var(--secondary-color);
+}
+
+.spinner-dots.success .dot {
+  background: var(--success-color);
+}
+
+.spinner-dots.warning .dot {
+  background: var(--warning-color);
+}
+
+.spinner-dots.danger .dot {
+  background: var(--danger-color);
+}
+
+.spinner-dots .dot:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.spinner-dots .dot:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.spinner-pulse {
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+.spinner-pulse .pulse {
+  width: var(--spinner-pulse-width-md);
+  height: var(--spinner-pulse-height-md);
+  animation: pulse 0.8s var(--animation-easing-in-out) infinite;
+}
+
+.spinner-pulse.primary .pulse {
+  background: var(--primary-color);
+}
+
+.spinner-pulse.secondary .pulse {
+  background: var(--secondary-color);
+}
+
+.spinner-pulse.success .pulse {
+  background: var(--success-color);
+}
+
+.spinner-pulse.warning .pulse {
+  background: var(--warning-color);
+}
+
+.spinner-pulse.danger .pulse {
+  background: var(--danger-color);
+}
+
+.spinner-pulse .pulse:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.spinner-pulse .pulse:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+:host.small .spinner-circle {
+  width: var(--spinner-size-sm);
+  height: var(--spinner-size-sm);
+  border-width: var(--border-width-1);
+}
+
+:host.small .spinner-dots .dot {
+  width: var(--spinner-dot-size-sm);
+  height: var(--spinner-dot-size-sm);
+}
+
+:host.small .spinner-pulse .pulse {
+  width: var(--spinner-pulse-width-sm);
+  height: var(--spinner-pulse-height-sm);
+}
+
+:host.large .spinner-circle {
+  width: var(--spinner-size-lg);
+  height: var(--spinner-size-lg);
+  border-width: var(--border-width-4);
+}
+
+:host.large .spinner-dots .dot {
+  width: var(--spinner-dot-size-lg);
+  height: var(--spinner-dot-size-lg);
+}
+
+:host.large .spinner-pulse .pulse {
+  width: var(--spinner-pulse-width-lg);
+  height: var(--spinner-pulse-height-lg);
+}
+
+.spinner-label {
+  color: var(--text-color-secondary);
+  font-size: var(--font-size-sm);
+}
+
+:host.small .spinner-label {
+  font-size: var(--font-size-xs);
+}
+
+:host.large .spinner-label {
+  font-size: var(--font-size-base);
+}
+
+:host.reduce-motion .spinner-circle,
+:host.reduce-motion .spinner-dots .dot,
+:host.reduce-motion .spinner-pulse .pulse {
+  animation-duration: 2s;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(calc(-1 * var(--animation-distance-sm)));
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.4);
+  }
+}

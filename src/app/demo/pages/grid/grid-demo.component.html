@@ -1,0 +1,175 @@
+<ds-demo-page-layout
+  title="Système de Grille et d'Espacement"
+  introText="Notre système spatial constitue le fondement de toute l'architecture visuelle. Combinant la base de 8px avec des incréments de 4px pour les ajustements fins, il offre la flexibilité nécessaire tout en maintenant une cohérence rigoureuse. Ce système hybride s'étend à tous les aspects : espacements, grilles, layouts et responsive design."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Principes Fondamentaux -->
+    <section class="principles-section">
+      <h3 class="section-title">Principes Fondamentaux</h3>
+      <div class="principles-container">
+        @for (principle of spacingPrinciples; track principle.title) {
+          <div class="principle-card">
+            <div class="principle-header">
+              <i class="ph ph-{{ principle.icon }}" aria-hidden="true"></i>
+              <h4>{{ principle.title }}</h4>
+            </div>
+            <p>{{ principle.description }}</p>
+            <ul class="principle-benefits">
+              @for (benefit of principle.benefits; track benefit) {
+                <li>{{ benefit }}</li>
+              }
+            </ul>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- Échelle d'Espacement Hybride par Catégories -->
+    @for (category of spacingCategories; track category.title) {
+      <section class="spacing-section" [attr.data-category]="category.title">
+        <h3 class="section-title">
+          <i class="ph ph-{{ category.icon }}" [style.color]="category.color"></i>
+          {{ category.title }}
+        </h3>
+        <div class="spacing-container">
+          <div class="spacing-intro" [style.border-left-color]="category.color">
+            <p>{{ category.description }}</p>
+          </div>
+          <div class="spacing-grid" [attr.data-size]="category.title === 'Petits Espacements' ? 'small' : (category.title === 'Espacements Moyens' ? 'medium' : 'large')">
+            @for (scale of category.spacings; track scale.variable) {
+              <div class="spacing-card" [attr.data-spacing]="scale.name" [attr.data-size]="category.title === 'Petits Espacements' ? 'small' : (category.title === 'Espacements Moyens' ? 'medium' : 'large')">
+                <div class="spacing-visual" [style.background]="category.color" [style.height.px]="scale.pixels" [style.width.px]="scale.pixels"></div>
+                <div class="spacing-value">{{ scale.pixels }}px</div>
+                <div class="spacing-info">
+                  <div class="spacing-name">{{ scale.name }}</div>
+                  <code class="spacing-variable">{{ scale.variable }}</code>
+                </div>
+                <div class="spacing-usage">{{ scale.usage }}</div>
+              </div>
+            }
+          </div>
+        </div>
+      </section>
+    }
+
+    <!-- Breakpoints Responsive -->
+    <section class="breakpoints-section">
+      <h3 class="section-title">Breakpoints Responsive</h3>
+      <div class="breakpoints-container">
+        <div class="breakpoints-intro">
+          <p>Notre système définit quatre breakpoints principaux qui dictent comment les espacements et layouts s'adaptent aux différentes tailles d'écran.</p>
+        </div>
+        <div class="breakpoints-grid">
+          @for (breakpoint of breakpoints; track breakpoint.name) {
+            <div class="breakpoint-card">
+              <div class="breakpoint-header">
+                <i class="ph ph-{{ breakpoint.icon }}" aria-hidden="true"></i>
+                <div class="breakpoint-info">
+                  <h4>{{ breakpoint.name }}</h4>
+                  <span class="breakpoint-range">{{ breakpoint.range }}</span>
+                </div>
+              </div>
+              <p class="breakpoint-description">{{ breakpoint.description }}</p>
+
+              <div class="breakpoint-visual-preview">
+                <div class="preview-label">Aperçu du layout</div>
+                <div class="preview-frame" [attr.data-breakpoint]="breakpoint.name.toLowerCase()">
+                  <div class="preview-header"></div>
+                  <div class="preview-content">
+                    <div class="preview-card"></div>
+                    <div class="preview-card"></div>
+                    <div class="preview-card"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="breakpoint-strategies">
+                <h5>Stratégies d'espacement:</h5>
+                <ul class="strategies-list">
+                  @for (strategy of breakpoint.strategies; track strategy) {
+                    <li>{{ strategy }}</li>
+                  }
+                </ul>
+              </div>
+
+              <div class="breakpoint-example">
+                <h5>Exemple CSS:</h5>
+                <div class="example-code">
+                  <code>{{ breakpoint.example.container }}</code>
+                  <code>{{ breakpoint.example.sections }}</code>
+                  <code>{{ breakpoint.example.cards }}</code>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Règles et Standards -->
+    <section class="rules-section">
+      <h3 class="section-title">Règles et Standards</h3>
+      <div class="rules-container">
+        <div class="rules-intro">
+          <p>Ces règles garantissent la cohérence, l'accessibilité et la performance de notre système spatial à travers tous les projets et contextes d'usage.</p>
+        </div>
+        <div class="rules-grid">
+          @for (rule of spacingRules; track rule.category) {
+            <div class="rule-card">
+              <div class="rule-header">
+                <i class="ph ph-{{ rule.icon }}" aria-hidden="true"></i>
+                <h4>{{ rule.category }}</h4>
+              </div>
+              <p class="rule-description">{{ rule.description }}</p>
+              <ul class="rule-list">
+                @for (ruleItem of rule.rules; track ruleItem) {
+                  <li>{{ ruleItem }}</li>
+                }
+              </ul>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Classes Utilitaires -->
+    <section class="utilities-section">
+      <h3 class="section-title">Classes Utilitaires</h3>
+      <div class="utilities-container">
+        <div class="utilities-intro">
+          <p>Un ensemble complet de classes utilitaires pour contrôler rapidement les espacements sans écrire de CSS custom.</p>
+        </div>
+        <div class="utilities-grid">
+          @for (utility of utilityClasses; track utility.category) {
+            <div class="utility-card">
+              <div class="utility-header">
+                <i class="ph ph-{{ utility.icon }}" aria-hidden="true"></i>
+                <h4>{{ utility.category }}</h4>
+              </div>
+              <p class="utility-description">{{ utility.description }}</p>
+
+              <div class="utility-classes">
+                <h5>Classes disponibles :</h5>
+                <div class="classes-list">
+                  @for (cls of utility.classes; track cls.name) {
+                    <div class="class-item">
+                      <code class="class-name">{{ cls.name }}</code>
+                      <span class="class-usage">{{ cls.usage }}</span>
+                    </div>
+                  }
+                </div>
+              </div>
+
+              <div class="utility-example">
+                <h5>Exemple :</h5>
+                <pre><code>{{ utility.example }}</code></pre>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+  </div>
+</ds-demo-page-layout>

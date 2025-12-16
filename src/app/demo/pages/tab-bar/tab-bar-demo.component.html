@@ -1,0 +1,362 @@
+<ds-demo-page-layout
+  title="Barre d'Onglets Mobile"
+  introText="La barre d'onglets mobile offre une navigation rapide et intuitive, parfaite pour les applications mobiles. Elle permet aux utilisateurs de basculer facilement entre différentes vues principales de l'application."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Utilisation Basique - Section Pleine Largeur -->
+    <section class="tabbar-basic-section">
+      <h3 class="section-title">Utilisation Basique</h3>
+      <div class="basic-container">
+        <div class="basic-intro">
+          <p>La barre d'onglets de base fournit une navigation intuitive avec des icônes et des labels clairs, parfaite pour les sections principales de votre application.</p>
+        </div>
+        <div class="basic-content">
+          <div class="basic-demo">
+            <div class="mobile-preview">
+              <psh-tab-bar [items]="defaultTabs"></psh-tab-bar>
+            </div>
+          </div>
+          <div class="basic-doc">
+            <h4>Caractéristiques Principales</h4>
+            <ul class="feature-list">
+              <li><strong>Navigation intuitive</strong> : Icônes et labels pour une reconnaissance rapide</li>
+              <li><strong>Feedback visuel</strong> : État actif clairement indiqué avec icônes remplies</li>
+              <li><strong>Animations fluides</strong> : Transitions douces entre les onglets</li>
+              <li><strong>Design responsive</strong> : S'adapte automatiquement à tous les écrans</li>
+              <li><strong>Accessibilité complète</strong> : Support ARIA et navigation au clavier</li>
+            </ul>
+            <ds-code-snippet [code]="basicTabBarCode" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Badges et Notifications - Section Pleine Largeur -->
+    <section class="tabbar-badges-section">
+      <h3 class="section-title">Badges et Notifications</h3>
+      <div class="badges-container">
+        <div class="badges-intro">
+          <p>Les badges permettent d'afficher des compteurs de notifications directement sur les onglets pour attirer l'attention de l'utilisateur sur du nouveau contenu.</p>
+        </div>
+        <div class="badges-content">
+          <div class="badges-demo">
+            <div class="mobile-preview">
+              <psh-tab-bar
+                [items]="defaultTabs"
+                [(activeIndex)]="activeTabIndex"
+                (tabChange)="handleTabChange($event)"
+              ></psh-tab-bar>
+            </div>
+            <div class="demo-info">
+              <p><strong>Onglet actif :</strong> {{ getCurrentTabLabel() }}</p>
+              <p><strong>Événement déclenché :</strong> {{ tabChangeCount }} fois</p>
+            </div>
+          </div>
+          <div class="badges-doc">
+            <h4>Utilisation des Badges</h4>
+            <ul class="feature-list">
+              <li><strong>Compteurs de notifications</strong> : Afficher le nombre de nouveaux éléments (messages, alertes)</li>
+              <li><strong>Indicateurs de mise à jour</strong> : Signaler du contenu récemment ajouté</li>
+              <li><strong>Attirer l'attention</strong> : Guider l'utilisateur vers les sections nécessitant une action</li>
+            </ul>
+            <ds-code-snippet [code]="badgesTabBarCode" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Positions - Section Pleine Largeur -->
+    <section class="tabbar-positions-section">
+      <h3 class="section-title">Positions Disponibles</h3>
+      <div class="positions-container">
+        <div class="positions-intro">
+          <p>La barre d'onglets peut être positionnée en haut ou en bas de l'écran selon les besoins de votre interface.</p>
+        </div>
+        <div class="positions-grid">
+          <div class="position-card">
+            <div class="position-preview">
+              <div class="mobile-preview top-position">
+                <psh-tab-bar [items]="simpleTabs" position="top"></psh-tab-bar>
+              </div>
+            </div>
+            <div class="position-info">
+              <h4>Top</h4>
+              <div class="position-specs">
+                <code class="position-code">position="top"</code>
+              </div>
+              <p class="position-usage">Position alternative pour des cas d'usage spécifiques ou des designs particuliers. Utile pour libérer l'espace en bas de l'écran.</p>
+            </div>
+          </div>
+
+          <div class="position-card">
+            <div class="position-preview">
+              <div class="mobile-preview">
+                <psh-tab-bar [items]="simpleTabs" position="bottom"></psh-tab-bar>
+              </div>
+            </div>
+            <div class="position-info">
+              <h4>Bottom (Défaut)</h4>
+              <div class="position-specs">
+                <code class="position-code">position="bottom"</code>
+              </div>
+              <p class="position-usage">Position standard pour les applications mobiles, facilement accessible avec le pouce. Recommandée pour la navigation principale.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Responsive Design - Section Pleine Largeur -->
+    <section class="tabbar-responsive-section">
+      <h3 class="section-title">Design Responsive et Adaptatif</h3>
+      <div class="responsive-container">
+        <div class="responsive-intro">
+          <p>La barre d'onglets s'adapte automatiquement à tous les écrans pour offrir une expérience optimale, que ce soit sur mobile, tablette ou desktop. Le design est pensé pour un maximum de 5 éléments de navigation pour garantir lisibilité et confort d'utilisation.</p>
+        </div>
+        <div class="responsive-grid">
+          <div class="responsive-card">
+            <div class="responsive-preview">
+              <div class="mobile-preview">
+                <psh-tab-bar [items]="defaultTabs"></psh-tab-bar>
+              </div>
+            </div>
+            <div class="responsive-info">
+              <h4>Adaptation Automatique</h4>
+              <p class="responsive-description">Les onglets se répartissent équitablement l'espace disponible. Chaque élément occupe une proportion égale de la largeur totale, garantissant une disposition harmonieuse quel que soit le nombre d'onglets (jusqu'à 5 maximum).</p>
+              <div class="responsive-highlight">
+                <strong>Sur grands écrans :</strong> Icônes 24px avec labels complets visibles
+              </div>
+            </div>
+          </div>
+
+          <div class="responsive-card">
+            <div class="responsive-preview">
+              <div class="mobile-preview">
+                <psh-tab-bar [items]="simpleTabs"></psh-tab-bar>
+              </div>
+            </div>
+            <div class="responsive-info">
+              <h4>Écrans Compacts</h4>
+              <p class="responsive-description">Sur les petits écrans (≤640px), les labels sont réduits pour optimiser l'espace. Sur les très petits écrans (≤480px), seules les icônes sont affichées pour maximiser la zone tactile.</p>
+              <div class="responsive-highlight">
+                <strong>Sur petits écrans :</strong> Icônes 20px, labels masqués pour plus de clarté
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- États - Section Pleine Largeur -->
+    <section class="tabbar-states-section">
+      <h3 class="section-title">États et Interactions</h3>
+      <div class="states-container">
+        <div class="states-intro">
+          <p>La barre d'onglets supporte différents états pour communiquer la disponibilité et contrôler l'interaction utilisateur.</p>
+        </div>
+        <div class="states-content">
+          <div class="states-demo">
+            <div class="state-group">
+              <h4>État Normal</h4>
+              <div class="mobile-preview">
+                <psh-tab-bar [items]="simpleTabs"></psh-tab-bar>
+              </div>
+              <p class="state-description">État par défaut avec toutes les interactions activées. Les onglets répondent au clic et au clavier.</p>
+            </div>
+
+            <div class="state-group">
+              <h4>État Désactivé (Composant)</h4>
+              <div class="mobile-preview">
+                <psh-tab-bar [items]="simpleTabs" [disabled]="true"></psh-tab-bar>
+              </div>
+              <p class="state-description">Désactive toute la barre d'onglets. Aucune interaction possible, opacité réduite pour indiquer l'indisponibilité.</p>
+            </div>
+
+            <div class="state-group">
+              <h4>Onglet Désactivé (Individuel)</h4>
+              <div class="mobile-preview">
+                <psh-tab-bar [items]="tabsWithDisabled"></psh-tab-bar>
+              </div>
+              <p class="state-description">Désactive des onglets individuels tout en gardant les autres actifs. Utile pour les fonctionnalités conditionnelles.</p>
+            </div>
+          </div>
+          <div class="states-doc">
+            <h4>Caractéristiques des États</h4>
+            <ul class="feature-list">
+              <li><strong>Hover</strong> : Légère modification visuelle au survol pour indiquer l'interactivité</li>
+              <li><strong>Active</strong> : Icône remplie et couleur accentuée pour l'onglet sélectionné</li>
+              <li><strong>Focus</strong> : Indicateur de focus visible pour la navigation au clavier (Tab)</li>
+              <li><strong>Disabled</strong> : Curseur <code>not-allowed</code>, opacité réduite, interactions bloquées</li>
+              <li><strong>Animations</strong> : Transitions fluides contrôlées par la propriété <code>animated</code></li>
+            </ul>
+            <ds-code-snippet [code]="disabledTabBarCode" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Documentation API - Section Pleine Largeur -->
+    <section class="api-section">
+      <h3 class="section-title">Documentation API</h3>
+      <div class="api-container">
+        <div class="api-intro">
+          <p>Le composant TabBar utilise des <strong>model inputs</strong> et des <strong>input signals</strong> pour une API simple et performante, conforme aux standards Angular 20.</p>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Model Inputs)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>disabled</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Désactive toute la barre d'onglets et empêche les interactions</td>
+              </tr>
+              <tr>
+                <td><code>position</code></td>
+                <td><code>'bottom' | 'top'</code></td>
+                <td><code>'bottom'</code></td>
+                <td>Position de la barre d'onglets dans l'interface</td>
+              </tr>
+              <tr>
+                <td><code>animated</code></td>
+                <td><code>boolean</code></td>
+                <td><code>true</code></td>
+                <td>Active ou désactive les animations de transition</td>
+              </tr>
+              <tr>
+                <td><code>activeIndex</code></td>
+                <td><code>number</code></td>
+                <td><code>0</code></td>
+                <td>Index de l'onglet actuellement actif (two-way binding)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Input Signals)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>items</code></td>
+                <td><code>TabBarItem[]</code></td>
+                <td>Liste des onglets à afficher (requis). Chaque item contient id, label, icon et optionnellement badge et disabled</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Événements (Outputs)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Événement</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>tabChange</code></td>
+                <td><code>EventEmitter&lt;TabChangeEvent&gt;</code></td>
+                <td>Émis lors du changement d'onglet. Contient l'index, l'item sélectionné et l'index précédent</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Interfaces TypeScript</h4>
+          <div class="code-block">
+            <pre><code>interface TabBarItem &#123;
+  id: string;              // Identifiant unique
+  label: string;           // Label de l'onglet
+  icon: string;            // Nom de l'icône Phosphor
+  disabled?: boolean;      // État désactivé
+  badge?: string | number; // Compteur ou texte du badge
+&#125;
+
+interface TabChangeEvent &#123;
+  index: number;           // Index du nouvel onglet actif
+  item: TabBarItem;        // Item sélectionné
+  previousIndex: number;   // Index précédent
+&#125;</code></pre>
+          </div>
+        </div>
+
+        <div class="api-usage-example">
+          <h4>Exemple d'Utilisation Complète</h4>
+          <div class="code-block">
+            <pre><code>import &#123; Component, signal &#125; from '@angular/core';
+import &#123; PshTabBarComponent &#125; from 'ps-helix';
+import &#123; TabBarItem, TabChangeEvent &#125; from 'ps-helix';
+
+&#64;Component(&#123;
+  selector: 'app-main',
+  imports: [PshTabBarComponent],
+  template: `
+    &lt;psh-tab-bar
+      [items]="tabs"
+      [(activeIndex)]="activeTabIndex"
+      position="bottom"
+      [animated]="true"
+      [disabled]="isLoading"
+      (tabChange)="handleTabChange($event)"
+    &gt;&lt;/psh-tab-bar&gt;
+  `
+&#125;)
+export class MainComponent &#123;
+  activeTabIndex = 0;
+  isLoading = false;
+
+  tabs: TabBarItem[] = [
+    &#123; id: 'home', label: 'Accueil', icon: 'house' &#125;,
+    &#123; id: 'search', label: 'Rechercher', icon: 'magnifying-glass' &#125;,
+    &#123; id: 'notifications', label: 'Notifications', icon: 'bell', badge: '5' &#125;,
+    &#123; id: 'profile', label: 'Profil', icon: 'user' &#125;
+  ];
+
+  handleTabChange(event: TabChangeEvent): void &#123;
+    console.log('Tab changed:', event);
+    // Navigation ou logique métier ici
+  &#125;
+&#125;</code></pre>
+          </div>
+        </div>
+
+        <div class="api-best-practices">
+          <h4>Bonnes Pratiques d'Accessibilité</h4>
+          <ul class="best-practices-list">
+            <li><strong>Role ARIA</strong> : La barre utilise automatiquement <code>role="tablist"</code> et chaque onglet utilise <code>role="tab"</code> avec <code>aria-selected</code></li>
+            <li><strong>Navigation clavier</strong> : Supporté nativement avec <kbd>Tab</kbd> pour naviguer entre onglets, <kbd>Enter</kbd> et <kbd>Space</kbd> pour activer</li>
+            <li><strong>Labels descriptifs</strong> : Utilisez des labels clairs et concis qui décrivent la destination de l'onglet</li>
+            <li><strong>Icônes sémantiques</strong> : Choisissez des icônes immédiatement reconnaissables qui renforcent le label textuel</li>
+            <li><strong>Contraste</strong> : L'état actif maintient un ratio de contraste minimum de 4.5:1 conformément à WCAG 2.1 AA</li>
+            <li><strong>Focus visible</strong> : Un indicateur de focus clairement visible est fourni pour la navigation au clavier</li>
+            <li><strong>Badges accessibles</strong> : Les badges sont annoncés par les lecteurs d'écran dans le contexte du label de l'onglet</li>
+            <li><strong>Limite d'onglets</strong> : Recommandé de ne pas dépasser 5 onglets pour maintenir une bonne utilisabilité sur mobile</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

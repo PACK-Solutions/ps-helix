@@ -1,0 +1,36 @@
+<main
+  class="home-container"
+  role="main"
+  [@pageExit]="isLeaving() ? 'hidden' : 'visible'">
+  <div class="design-element design-element-1" aria-hidden="true"></div>
+  <div class="design-element design-element-2" aria-hidden="true"></div>
+  <div class="title-container">
+    <div class="title-wrapper">
+      <img src="https://i.goopics.net/7p9v36.png" alt="Helix Logo" class="helix-logo" />
+      <div class="title-text">
+        <h1 class="title">
+          <span class="helix">Helix</span>
+        </h1>
+      </div>
+    </div>
+    <p class="subtitle">Un Design System moderne et accessible pour créer des interfaces cohérentes et élégantes</p>
+  </div>
+  <button
+    type="button"
+    class="home-cta"
+    (click)="handleNavigation()"
+    [disabled]="isLeaving()"
+    aria-label="Explorer la documentation du système de design">
+    <span>Découvrir le Design System</span>
+    <i class="ph ph-arrow-right" aria-hidden="true"></i>
+  </button>
+  <div
+    role="status"
+    aria-live="polite"
+    class="sr-only">
+    @if (isLeaving()) {
+      Navigation en cours vers la documentation...
+    }
+  </div>
+  <div class="signature" aria-label="Signature">Engineered by PACK Solutions</div>
+</main>

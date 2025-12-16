@@ -1,0 +1,279 @@
+:root {
+  /* Surface Colors */
+  --surface-0: #ffffff;
+  --surface-50: #f8fafc;
+  --surface-100: #f1f5f9;
+  --surface-200: #e2e8f0;
+  --surface-300: #cbd5e1;
+  --surface-400: #94a3b8;
+  --surface-500: #64748b;
+  --surface-600: #475569;
+  --surface-700: #334155;
+  --surface-800: #1e293b;
+  --surface-900: #0f172a;
+  --surface-900-rgb: 15, 23, 42;
+
+  /* Functional Colors */
+  --surface-ground: var(--surface-50);
+  --surface-section: var(--surface-0);
+  
+  /* Alert Colors */
+  --alert-info-bg: rgba(11, 1, 145, 0.1);
+  --alert-info-border-color: #0B0191;
+  --alert-info-text-color: #0B0191;
+  
+  --surface-card: var(--surface-0);
+  --surface-overlay: var(--surface-0);
+  --surface-border: var(--surface-200);
+  --surface-hover: var(--surface-100);
+
+  /* Text Colors */
+  --text-color: var(--surface-800);
+  --text-color-secondary: var(--surface-600);
+  --text-color-tertiary: var(--surface-500);
+  --text-color-disabled: var(--surface-400);
+
+  /* Text on colored backgrounds */
+  --text-on-primary: #FFFFFF;
+  --text-on-secondary: #FFFFFF;
+  --text-on-success: #FFFFFF;
+  --text-on-warning: #FFFFFF;
+  --text-on-danger: #FFFFFF;
+  --text-on-surface: var(--text-color);
+  --text-on-dark: #FFFFFF;
+  --text-on-light: #0a0d16;
+
+  /* Blue Palette */
+  --blue-50: #EEF2FF;
+  --blue-100: #E0E7FF;
+  --blue-200: #C7D2FE;
+  --blue-300: #A5B4FC;
+  --blue-400: #818CF8;
+  --blue-500: #6366F1;
+  --blue-600: #4F46E5;
+  --blue-700: #4338CA;
+  --blue-800: #3730A3;
+  --blue-900: #312E81;
+
+  /* Red Palette */
+  --red-50: #FEF2F2;
+  --red-100: #FEE2E2;
+  --red-200: #FECACA;
+  --red-300: #FCA5A5;
+  --red-400: #F87171;
+  --red-500: #EF4444;
+  --red-600: #DC2626;
+  --red-700: #B91C1C;
+  --red-800: #991B1B;
+  --red-900: #7F1D1D;
+
+  /* Green Palette */
+  --green-50: #F0FDF4;
+  --green-100: #DCFCE7;
+  --green-200: #BBF7D0;
+  --green-300: #86EFAC;
+  --green-400: #4ADE80;
+  --green-500: #22C55E;
+  --green-600: #16A34A;
+  --green-700: #15803D;
+  --green-800: #166534;
+  --green-900: #14532D;
+
+  /* Orange Palette */
+  --orange-50: #FFF7ED;
+  --orange-100: #FFEDD5;
+  --orange-200: #FED7AA;
+  --orange-300: #FDBA74;
+  --orange-400: #FB923C;
+  --orange-500: #F97316;
+  --orange-600: #EA580C;
+  --orange-700: #C2410C;
+  --orange-800: #9A3412;
+  --orange-900: #7C2D12;
+
+  /* Yellow Palette */
+  --yellow-50: #FEFCE8;
+  --yellow-100: #FEF9C3;
+  --yellow-200: #FEF08A;
+  --yellow-300: #FDE047;
+  --yellow-400: #FACC15;
+  --yellow-500: #EAB308;
+  --yellow-600: #CA8A04;
+  --yellow-700: #A16207;
+  --yellow-800: #854D0E;
+  --yellow-900: #713F12;
+
+  /* Violet Palette */
+  --violet-50: #F5F3FF;
+  --violet-100: #EDE9FE;
+  --violet-200: #DDD6FE;
+  --violet-300: #C4B5FD;
+  --violet-400: #A78BFA;
+  --violet-500: #8B5CF6;
+  --violet-600: #7C3AED;
+  --violet-700: #6D28D9;
+  --violet-800: #5B21B6;
+  --violet-900: #4C1D95;
+
+  /* Cyan Palette */
+  --cyan-50: #ECFEFF;
+  --cyan-100: #CFFAFE;
+  --cyan-200: #A5F3FC;
+  --cyan-300: #67E8F9;
+  --cyan-400: #22D3EE;
+  --cyan-500: #06B6D4;
+  --cyan-600: #0891B2;
+  --cyan-700: #0E7490;
+  --cyan-800: #155E75;
+  --cyan-900: #164E63;
+
+  /* Teal Palette */
+  --teal-50: #F0FDFA;
+  --teal-100: #CCFBF1;
+  --teal-200: #99F6E4;
+  --teal-300: #5EEAD4;
+  --teal-400: #2DD4BF;
+  --teal-500: #14B8A6;
+  --teal-600: #0D9488;
+  --teal-700: #0F766E;
+  --teal-800: #115E59;
+  --teal-900: #134E4A;
+
+  /* Emerald Palette */
+  --emerald-50: #ECFDF5;
+  --emerald-100: #D1FAE5;
+  --emerald-200: #A7F3D0;
+  --emerald-300: #6EE7B7;
+  --emerald-400: #34D399;
+  --emerald-500: #10B981;
+  --emerald-600: #059669;
+  --emerald-700: #047857;
+  --emerald-800: #065F46;
+  --emerald-900: #064E3B;
+
+  /* Indigo Palette */
+  --indigo-50: #EEF2FF;
+  --indigo-100: #E0E7FF;
+  --indigo-200: #C7D2FE;
+  --indigo-300: #A5B4FC;
+  --indigo-400: #818CF8;
+  --indigo-500: #6366F1;
+  --indigo-600: #4F46E5;
+  --indigo-700: #4338CA;
+  --indigo-800: #3730A3;
+  --indigo-900: #312E81;
+
+  /* Purple Palette */
+  --purple-50: #FAF5FF;
+  --purple-100: #F3E8FF;
+  --purple-200: #E9D5FF;
+  --purple-300: #D8B4FE;
+  --purple-400: #C084FC;
+  --purple-500: #A855F7;
+  --purple-600: #9333EA;
+  --purple-700: #7C3AED;
+  --purple-800: #6B21A8;
+  --purple-900: #581C87;
+
+  /* Fuchsia Palette */
+  --fuchsia-50: #FDF4FF;
+  --fuchsia-100: #FAE8FF;
+  --fuchsia-200: #F5D0FE;
+  --fuchsia-300: #F0ABFC;
+  --fuchsia-400: #E879F9;
+  --fuchsia-500: #D946EF;
+  --fuchsia-600: #C026D3;
+  --fuchsia-700: #A21CAF;
+  --fuchsia-800: #86198F;
+  --fuchsia-900: #701A75;
+
+  /* Rose Palette */
+  --rose-50: #FFF1F2;
+  --rose-100: #FFE4E6;
+  --rose-200: #FECDD3;
+  --rose-300: #FDA4AF;
+  --rose-400: #FB7185;
+  --rose-500: #F43F5E;
+  --rose-600: #E11D48;
+  --rose-700: #BE123C;
+  --rose-800: #9F1239;
+  --rose-900: #881337;
+
+  /* Amber Palette */
+  --amber-50: #FFFBEB;
+  --amber-100: #FEF3C7;
+  --amber-200: #FDE68A;
+  --amber-300: #FCD34D;
+  --amber-400: #FBBF24;
+  --amber-500: #F59E0B;
+  --amber-600: #D97706;
+  --amber-700: #B45309;
+  --amber-800: #92400E;
+  --amber-900: #78350F;
+
+  /* Pink Palette */
+  --pink-50: #FDF2F8;
+  --pink-100: #FCE7F3;
+  --pink-200: #FBCFE8;
+  --pink-300: #F9A8D4;
+  --pink-400: #F472B6;
+  --pink-500: #EC4899;
+  --pink-600: #DB2777;
+  --pink-700: #BE185D;
+  --pink-800: #9D174D;
+  --pink-900: #831843;
+
+  /* Primary Colors - Use insurer context with fallbacks */
+  --primary-color: var(--insurer-primary-color, #0B0191);
+  --primary-color-light: var(--insurer-primary-color-light, #0F02C4);
+  --primary-color-lighter: var(--insurer-primary-color-lighter, #4A3FD9);
+  --primary-color-dark: var(--insurer-primary-color-dark, #09017A);
+  --primary-color-darker: var(--insurer-primary-color-darker, #07015E);
+  --primary-color-text: var(--insurer-primary-color-text, #FFFFFF);
+  --primary-color-rgb: var(--insurer-primary-color-rgb, 11, 1, 145);
+
+  /* Primary Gradients - Automatically adapt to custom colors */
+  --primary-gradient: linear-gradient(to right, var(--primary-color-darker), var(--primary-color-light));
+  --primary-gradient-hover: linear-gradient(to right, var(--primary-color-dark), var(--primary-color-lighter));
+  --primary-gradient-reversed: linear-gradient(to left, var(--primary-color-darker), var(--primary-color-light));
+
+  /* Secondary Colors - Use insurer context with fallbacks (gray tones for light theme) */
+  --secondary-color: var(--insurer-secondary-color, #5E5E5E);
+  --secondary-color-light: var(--insurer-secondary-color-light, #7B7B7B);
+  --secondary-color-lighter: var(--insurer-secondary-color-lighter, #969696);
+  --secondary-color-dark: var(--insurer-secondary-color-dark, #404040);
+  --secondary-color-darker: var(--insurer-secondary-color-darker, #2B2B2B);
+  --secondary-color-text: var(--insurer-secondary-color-text, #FFFFFF);
+  --secondary-color-rgb: var(--insurer-secondary-color-rgb, 94, 94, 94);
+
+  /* Success Colors */
+  --success-color: #0F853A;
+  --success-color-rgb: 15, 133, 58;
+  --success-color-text: #FFFFFF;
+
+  /* Warning Colors */
+  --warning-color: #b25310;
+  --warning-color-rgb: 178, 83, 16;
+  --warning-color-text: #FFFFFF;
+
+  /* Danger Colors */
+  --danger-color: #D92626;
+  --danger-color-rgb: 217, 38, 38;
+  --danger-color-text: #FFFFFF;
+
+  /* Chart Colors */
+  --chart-text-color: var(--text-color);
+  --chart-grid-color: var(--surface-200);
+  --chart-primary-color: var(--primary-color);
+  --chart-secondary-color: var(--secondary-color);
+  --chart-success-color: var(--success-color);
+  --chart-warning-color: var(--warning-color);
+  --chart-danger-color: var(--danger-color);
+  --chart-tooltip-background: var(--surface-card);
+  --chart-tooltip-text: var(--text-color);
+  --chart-legend-text: var(--text-color);
+
+  /* Background */
+  --background-opacity: 0.5;
+  --body-gradient: radial-gradient(184.52% 111.8% at 100% 0%, #E0E4F7 0%, rgba(255, 255, 255, 0.00) 100%);
+}

@@ -1,0 +1,380 @@
+<ds-demo-page-layout
+  title="Système de Tags"
+  introText="Les tags permettent d'afficher des étiquettes, des badges ou des statuts de manière concise et visuelle. Ils sont parfaits pour la catégorisation, le filtrage et l'affichage d'états."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Variantes de Tags - Section Pleine Largeur -->
+    <section class="tag-variants-section">
+      <h3 class="section-title">Variantes de Tags</h3>
+      <div class="variants-container">
+        <div class="variants-intro">
+          <p>Les tags offrent cinq variantes visuelles pour communiquer différents niveaux d'importance et de sémantique adaptés à chaque contexte.</p>
+        </div>
+        <div class="variants-grid">
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-tag variant="primary">{{ 'TAG.VARIANTS.DEFAULT' | translate }}</psh-tag>
+            </div>
+            <div class="variant-info">
+              <h4>Primary</h4>
+              <p>Tag par défaut pour les informations générales et les catégories standards.</p>
+              <ds-code-snippet [code]="primaryTagCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-tag variant="secondary">{{ 'TAG.VARIANTS.SECONDARY' | translate }}</psh-tag>
+            </div>
+            <div class="variant-info">
+              <h4>Secondary</h4>
+              <p>Tag secondaire pour les informations complémentaires et les métadonnées.</p>
+              <ds-code-snippet [code]="secondaryTagCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-tag variant="success">{{ 'TAG.VARIANTS.SUCCESS' | translate }}</psh-tag>
+            </div>
+            <div class="variant-info">
+              <h4>Success</h4>
+              <p>Indique des états positifs, des confirmations et des statuts actifs.</p>
+              <ds-code-snippet [code]="successTagCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-tag variant="warning">{{ 'TAG.VARIANTS.WARNING' | translate }}</psh-tag>
+            </div>
+            <div class="variant-info">
+              <h4>Warning</h4>
+              <p>Pour les états nécessitant attention ou les actions en attente.</p>
+              <ds-code-snippet [code]="warningTagCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-tag variant="danger">{{ 'TAG.VARIANTS.DANGER' | translate }}</psh-tag>
+            </div>
+            <div class="variant-info">
+              <h4>Danger</h4>
+              <p>Pour les erreurs, les alertes critiques et les états négatifs.</p>
+              <ds-code-snippet [code]="dangerTagCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tags avec Icônes - Section Pleine Largeur -->
+    <section class="tag-icons-section">
+      <h3 class="section-title">Tags avec Icônes</h3>
+      <div class="icons-container">
+        <div class="icons-intro">
+          <p>Les icônes renforcent le message visuel et améliorent la compréhension instantanée du statut ou de la catégorie. Utilisez des icônes pertinentes pour chaque contexte.</p>
+        </div>
+        <div class="icons-grid">
+          <div class="icon-card">
+            <div class="icon-preview">
+              <psh-tag icon="check-circle" variant="success">{{ 'TAG.STATES.VERIFIED' | translate }}</psh-tag>
+            </div>
+            <div class="icon-info">
+              <h4>Icône Check Circle</h4>
+              <code class="icon-code">icon="check-circle"</code>
+              <p class="icon-usage">Idéal pour les statuts vérifiés, les confirmations et les états validés.</p>
+            </div>
+          </div>
+
+          <div class="icon-card">
+            <div class="icon-preview">
+              <psh-tag icon="clock" variant="warning">{{ 'TAG.STATES.PENDING' | translate }}</psh-tag>
+            </div>
+            <div class="icon-info">
+              <h4>Icône Clock</h4>
+              <code class="icon-code">icon="clock"</code>
+              <p class="icon-usage">Pour les statuts en attente, les délais et les processus temporels.</p>
+            </div>
+          </div>
+
+          <div class="icon-card">
+            <div class="icon-preview">
+              <psh-tag icon="x-circle" variant="danger">{{ 'TAG.STATES.REJECTED' | translate }}</psh-tag>
+            </div>
+            <div class="icon-info">
+              <h4>Icône X Circle</h4>
+              <code class="icon-code">icon="x-circle"</code>
+              <p class="icon-usage">Pour les rejets, les erreurs et les statuts négatifs.</p>
+            </div>
+          </div>
+
+          <div class="icon-card">
+            <div class="icon-preview">
+              <psh-tag icon="star" variant="success">{{ 'TAG.STATES.FEATURED' | translate }}</psh-tag>
+            </div>
+            <div class="icon-info">
+              <h4>Icône Star</h4>
+              <code class="icon-code">icon="star"</code>
+              <p class="icon-usage">Pour les éléments mis en avant, favoris ou recommandés.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tags Fermables - Section Pleine Largeur -->
+    <section class="tag-closable-section">
+      <h3 class="section-title">Tags Fermables</h3>
+      <div class="closable-container">
+        <div class="closable-intro">
+          <p>Les tags peuvent être rendus fermables pour permettre aux utilisateurs de les supprimer. Cette fonctionnalité est idéale pour les filtres, les sélections multiples et les listes dynamiques.</p>
+        </div>
+        <div class="closable-content">
+          <div class="closable-demo">
+            <div class="closable-tags">
+              @for (tag of closableTags(); track tag.id) {
+                <psh-tag
+                  [variant]="tag.variant"
+                  [icon]="tag.icon"
+                  [closable]="true"
+                  (closed)="handleTagClose(tag.id)"
+                >
+                  {{ tag.labelKey | translate }}
+                </psh-tag>
+              }
+              @if (closableTags().length === 0) {
+                <p class="no-tags-message">Tous les tags ont été fermés. Cliquez sur le bouton ci-dessous pour les réinitialiser.</p>
+              }
+            </div>
+            <div class="reset-button-container">
+              <psh-button
+                variant="secondary"
+                size="small"
+                icon="arrow-counter-clockwise"
+                (clicked)="resetClosableTags()"
+                [disabled]="closableTags().length === initialClosableTags.length"
+              >
+                Réinitialiser les tags
+              </psh-button>
+            </div>
+          </div>
+          <div class="closable-doc">
+            <h4>Caractéristiques</h4>
+            <ul class="feature-list">
+              <li><strong>Interaction</strong> : Bouton de fermeture accessible au clavier et à la souris</li>
+              <li><strong>État</strong> : Gestion de l'état via l'événement <code>closed</code></li>
+              <li><strong>Accessibilité</strong> : Label traduit automatiquement pour le bouton de fermeture</li>
+              <li><strong>Animation</strong> : L'application parente gère l'animation de suppression</li>
+            </ul>
+            <ds-code-snippet [code]="closableTagCode" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tailles de Tags - Section Pleine Largeur -->
+    <section class="tag-sizes-section">
+      <h3 class="section-title">Tailles Disponibles</h3>
+      <div class="sizes-container">
+        <div class="sizes-intro">
+          <p>Trois tailles sont disponibles pour s'adapter à différents contextes d'utilisation et niveaux de hiérarchie visuelle.</p>
+        </div>
+        <div class="sizes-grid">
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-tag size="small" variant="primary">{{ 'TAG.SIZES.SMALL' | translate }}</psh-tag>
+            </div>
+            <div class="size-info">
+              <h4>Small</h4>
+              <div class="size-specs">
+                <code class="size-code">size="small"</code>
+              </div>
+              <p class="size-usage">Taille compacte pour les interfaces denses, les listes détaillées ou les indicateurs discrets.</p>
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-tag size="medium" variant="primary">{{ 'TAG.SIZES.MEDIUM' | translate }}</psh-tag>
+            </div>
+            <div class="size-info">
+              <h4>Medium (Défaut)</h4>
+              <div class="size-specs">
+                <code class="size-code">size="medium"</code>
+              </div>
+              <p class="size-usage">Taille par défaut, équilibrée pour la plupart des cas d'usage et une bonne lisibilité.</p>
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-tag size="large" variant="primary">{{ 'TAG.SIZES.LARGE' | translate }}</psh-tag>
+            </div>
+            <div class="size-info">
+              <h4>Large</h4>
+              <div class="size-specs">
+                <code class="size-code">size="large"</code>
+              </div>
+              <p class="size-usage">Taille emphase pour les indicateurs importants nécessitant une grande visibilité.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Documentation API - Section Pleine Largeur -->
+    <section class="api-section">
+      <h3 class="section-title">Documentation API</h3>
+      <div class="api-container">
+        <div class="api-intro">
+          <p>Le composant Tag utilise des <strong>input signals</strong> pour une API simple et performante, conforme aux standards Angular 20.</p>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Input Signals)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>variant</code></td>
+                <td><code>TagVariant</code></td>
+                <td><code>'primary'</code></td>
+                <td>'primary' | 'secondary' | 'success' | 'warning' | 'danger'</td>
+              </tr>
+              <tr>
+                <td><code>size</code></td>
+                <td><code>TagSize</code></td>
+                <td><code>'medium'</code></td>
+                <td>'small' | 'medium' | 'large'</td>
+              </tr>
+              <tr>
+                <td><code>closable</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Rend le tag fermable avec un bouton de fermeture</td>
+              </tr>
+              <tr>
+                <td><code>disabled</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Désactive le tag et empêche les interactions</td>
+              </tr>
+              <tr>
+                <td><code>interactive</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Rend le tag interactif (cliquable) avec role="button"</td>
+              </tr>
+              <tr>
+                <td><code>icon</code></td>
+                <td><code>string | undefined</code></td>
+                <td><code>undefined</code></td>
+                <td>Nom de l'icône Phosphor à afficher avant le contenu</td>
+              </tr>
+              <tr>
+                <td><code>closeLabel</code></td>
+                <td><code>string</code></td>
+                <td><code>'Supprimer le tag'</code></td>
+                <td>Label accessible du bouton de fermeture</td>
+              </tr>
+              <tr>
+                <td><code>content</code></td>
+                <td><code>string</code></td>
+                <td><code>'Tag'</code></td>
+                <td>Contenu textuel du tag (fallback si pas de ng-content)</td>
+              </tr>
+              <tr>
+                <td><code>ariaLabel</code></td>
+                <td><code>string | undefined</code></td>
+                <td><code>undefined</code></td>
+                <td>Label ARIA personnalisé pour l'accessibilité</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Événements (Outputs)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Événement</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>clicked</code></td>
+                <td><code>EventEmitter&lt;MouseEvent&gt;</code></td>
+                <td>Émis lorsque le tag est cliqué (si non désactivé)</td>
+              </tr>
+              <tr>
+                <td><code>closed</code></td>
+                <td><code>EventEmitter&lt;void&gt;</code></td>
+                <td>Émis lorsque le bouton de fermeture est cliqué</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-usage-example">
+          <h4>Exemple d'Utilisation Complète</h4>
+          <div class="code-block">
+            <pre><code>import &#123; PshTagComponent &#125; from 'ps-helix';
+
+&#64;Component(&#123;
+  standalone: true,
+  imports: [PshTagComponent],
+  template: `
+    &lt;psh-tag
+      variant="success"
+      size="medium"
+      icon="check-circle"
+      [closable]="true"
+      [interactive]="true"
+      ariaLabel="Article vérifié"
+      closeLabel="Retirer la vérification"
+      (clicked)="handleTagClick($event)"
+      (closed)="handleTagClose()"
+    &gt;
+      Vérifié
+    &lt;/psh-tag&gt;
+  `
+&#125;)
+export class MyComponent &#123;
+  handleTagClick(event: MouseEvent): void &#123;
+    console.log('Tag clicked', event);
+  &#125;
+
+  handleTagClose(): void &#123;
+    console.log('Tag closed');
+  &#125;
+&#125;</code></pre>
+          </div>
+        </div>
+
+        <div class="api-best-practices">
+          <h4>Bonnes Pratiques d'Accessibilité</h4>
+          <ul class="best-practices-list">
+            <li><strong>Role ARIA</strong> : Le tag utilise automatiquement <code>role="status"</code> par défaut et <code>role="button"</code> si <code>interactive="true"</code></li>
+            <li><strong>Labels</strong> : Fournissez un <code>ariaLabel</code> descriptif pour les tags sans texte visible ou avec icônes uniquement</li>
+            <li><strong>Keyboard Navigation</strong> : Les tags interactifs sont accessibles au clavier avec <code>tabindex="0"</code></li>
+            <li><strong>État désactivé</strong> : Utilisez <code>disabled="true"</code> pour empêcher toute interaction et signaler visuellement l'état</li>
+            <li><strong>Fermeture</strong> : Le bouton de fermeture a un label accessible automatique, personnalisable via <code>closeLabel</code></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

@@ -1,0 +1,122 @@
+<ds-demo-page-layout 
+  title="Ton et Voix"
+  introText="Le ton et la voix sont des piliers essentiels de notre communication. Ils définissent la manière dont nous interagissons avec nos audiences, que ce soit des professionnels du secteur de l'assurance (B2B) ou des clients finaux (B2C). Notre objectif est de maintenir une communication cohérente, adaptée et inclusive, quel que soit le contexte."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Principes Fondamentaux - Section Pleine Largeur -->
+    <section class="principles-section">
+      <h3 class="section-title">Principes Fondamentaux</h3>
+      <div class="principles-container">
+        @for (principle of principles; track principle.title) {
+          <div class="principle-card">
+            <div class="principle-header">
+              <i class="ph ph-{{ principle.icon }}" aria-hidden="true"></i>
+              <h4>{{ principle.title }}</h4>
+            </div>
+            <p>{{ principle.description }}</p>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- Audiences - Section Pleine Largeur -->
+    <section class="audiences-section">
+      <h3 class="section-title">Adaptation par Audience</h3>
+      <div class="audiences-container">
+        @for (audience of audiences; track audience.type) {
+          <article class="audience-card">
+            <!-- Header avec type d'audience -->
+            <header class="audience-header">
+              <span class="audience-type">{{ audience.type }}</span>
+              <h4 class="audience-title">{{ audience.title }}</h4>
+            </header>
+
+            <!-- Description et objectif -->
+            <div class="audience-intro">
+              <p class="audience-description">{{ audience.description }}</p>
+              <div class="audience-objective">
+                <strong>Objectif :</strong> {{ audience.objective }}
+              </div>
+            </div>
+
+            <!-- Ton et Voix côte à côte -->
+            <div class="tone-voice-grid">
+              <div class="tone-section">
+                <h5>
+                  <i class="ph ph-chat-circle" aria-hidden="true"></i>
+                  Ton
+                </h5>
+                <ul>
+                  @for (item of audience.tone; track item) {
+                    <li>{{ item }}</li>
+                  }
+                </ul>
+              </div>
+              
+              <div class="voice-section">
+                <h5>
+                  <i class="ph ph-microphone" aria-hidden="true"></i>
+                  Voix
+                </h5>
+                <ul>
+                  @for (item of audience.voice; track item) {
+                    <li>{{ item }}</li>
+                  }
+                </ul>
+              </div>
+            </div>
+
+            <!-- Exemples concrets -->
+            <div class="examples-section">
+              <h5>
+                <i class="ph ph-quotes" aria-hidden="true"></i>
+                Exemples Concrets
+              </h5>
+              @for (example of audience.examples; track example.type) {
+                <div class="example-item">
+                  <div class="example-type">{{ example.type }}</div>
+                  <blockquote class="example-content">{{ example.content }}</blockquote>
+                </div>
+              }
+            </div>
+          </article>
+        }
+      </div>
+    </section>
+
+    <!-- Guidelines Section -->
+    <section class="guidelines-section">
+      <h3 class="section-title">Guidelines de Rédaction</h3>
+      <div class="guidelines-grid">
+        <div class="guideline-card">
+          <h4>
+            <i class="ph ph-check-circle" aria-hidden="true"></i>
+            À Faire
+          </h4>
+          <ul class="do-list">
+            <li>Utiliser un langage clair et direct</li>
+            <li>Adapter le ton selon l'audience (B2B/B2C)</li>
+            <li>Maintenir une cohérence dans tous les canaux</li>
+            <li>Privilégier l'empathie et la bienveillance</li>
+            <li>Tester la compréhensibilité des messages</li>
+          </ul>
+        </div>
+        
+        <div class="guideline-card">
+          <h4>
+            <i class="ph ph-x-circle" aria-hidden="true"></i>
+            À Éviter
+          </h4>
+          <ul class="dont-list">
+            <li>Jargon technique non expliqué</li>
+            <li>Tons contradictoires entre canaux</li>
+            <li>Messages ambigus ou confus</li>
+            <li>Langage trop formel pour le B2C</li>
+            <li>Assumptions sur les connaissances utilisateur</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

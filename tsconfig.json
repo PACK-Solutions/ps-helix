@@ -1,36 +1,44 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "skipLibCheck": true,
+   "noEmitOnError": true,
+    "useDefineForClassFields": false,
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
+    "target": "ES2022",
+    "module": "ES2022",
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitAny": true,
+    "esModuleInterop": true,
     "sourceMap": true,
     "declaration": false,
-    "downlevelIteration": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "ES2022",
-    "module": "ES2022",
-    "useDefineForClassFields": false,
-    "lib": [
-      "ES2022",
-      "dom"
-    ],
+    "baseUrl": "./",
     "paths": {
-      "@lib/*": ["src/lib/*"]
-    }
+      "@app/*": ["src/app/*"],
+      "@lib/*": ["projects/ps-helix/src/lib/*"],
+      "@demo/*": ["src/app/demo/*"],
+      "ps-helix": [
+        "projects/ps-helix/src/public-api.ts"
+      ]
+    },
+    "lib": ["ES2022", "dom"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true,
-    "enableResourceInlining": true
+   "strictStandalone": true,
+   "disableTypeScriptVersionCheck": true
   }
 }

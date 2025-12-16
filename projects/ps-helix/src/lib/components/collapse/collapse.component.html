@@ -1,0 +1,45 @@
+<div
+  class="collapse"
+  [class.expanded]="expanded()"
+  [class.disabled]="disabled()"
+  [class.outline]="variant() === 'outline'"
+  [class.small]="size() === 'small'"
+  [class.large]="size() === 'large'"
+  [class.no-animation]="disableAnimation()"
+  [attr.data-state]="state()"
+  [style.--collapse-max-height]="maxHeight()"
+>
+  <button
+    [id]="headerId()"
+    class="collapse-header"
+    (click)="toggle()"
+    (keydown)="onKeydown($event)"
+    [attr.aria-expanded]="expanded()"
+    [attr.aria-controls]="contentId()"
+    [disabled]="disabled()"
+    type="button"
+  >
+    <span class="header-content">
+      <ng-content select="[collapse-header]">
+        <span>Section pliable</span>
+      </ng-content>
+    </span>
+    <i
+      class="ph ph-{{ icon() }}"
+      [class.expanded]="expanded()"
+      aria-hidden="true"
+    ></i>
+  </button>
+
+  <div
+    [id]="contentId()"
+    class="collapse-content"
+    role="region"
+    [attr.aria-labelledby]="headerId()"
+    [attr.aria-hidden]="!expanded()"
+  >
+    <div class="content-wrapper">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

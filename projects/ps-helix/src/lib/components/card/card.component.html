@@ -1,0 +1,61 @@
+<div
+  [class]="computedClasses()"
+  [style]="computedStyles()"
+  (click)="handleClick($event)"
+  (keydown)="handleKeydown($event)"
+  role="article"
+  [attr.tabindex]="interactive() && !disabled() ? 0 : null"
+  [attr.aria-disabled]="disabled() ? 'true' : null"
+  [attr.aria-busy]="loading() ? 'true' : null"
+>
+  <!-- Header avec titre et description intégrés -->
+  @if (hasHeader()) {
+    <div class="card-header" [class.has-divider]="showHeaderDivider()">
+      <!-- Slot pour icône/avatar avant le titre -->
+      <ng-content select="[card-header-icon]"></ng-content>
+
+      <!-- Zone de titre et description -->
+      @if (title() || description()) {
+        <div class="card-header-content">
+          @if (title()) {
+            <h3 class="card-title">{{ title() }}</h3>
+          }
+          @if (description()) {
+            <p class="card-description">{{ description() }}</p>
+          }
+        </div>
+      }
+
+      <!-- Slot pour contenu personnalisé du header -->
+      <ng-content select="[card-header-content]"></ng-content>
+
+      <!-- Slot pour badge/tag ou actions secondaires -->
+      <ng-content select="[card-header-extra]"></ng-content>
+    </div>
+  }
+
+  <!-- Body avec contenu principal -->
+  <div class="card-body">
+    <!-- État de chargement -->
+    @if (loading()) {
+      <div class="card-loading">
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line short"></div>
+      </div>
+    } @else {
+      <!-- Contenu principal (slot par défaut) -->
+      <ng-content></ng-content>
+    }
+  </div>
+
+  <!-- Footer optionnel pour métadonnées -->
+  <div class="card-footer" [class.has-divider]="showFooterDivider()">
+    <ng-content select="[card-footer]"></ng-content>
+  </div>
+
+  <!-- Actions -->
+  <div class="card-actions" [class]="actionsAlignmentClass()" [class.has-divider]="showActionsDivider()">
+    <ng-content select="[card-actions]"></ng-content>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+<div class="checkbox-container">
+  <label class="checkbox-label" [class.label-left]="labelPosition() === 'left'">
+    <input
+      type="checkbox"
+      class="checkbox-input"
+      [checked]="checked()"
+      [disabled]="disabled()"
+      [required]="required()"
+      [attr.aria-label]="computedAriaLabel()"
+      [attr.aria-required]="required() || null"
+      [attr.aria-invalid]="error() ? 'true' : null"
+      [attr.aria-checked]="ariaChecked()"
+      [attr.aria-describedby]="ariaDescribedBy()"
+      (change)="toggle()"
+      (keydown)="handleKeydown($event)"
+    />
+    <span 
+      class="checkbox-control"
+      [class.error]="!!error()"
+      [class.success]="!!success()"
+      [class.indeterminate]="indeterminate()"
+    >
+      @if (checked() && !indeterminate()) {
+        <i class="ph ph-check" aria-hidden="true"></i>
+      }
+      @if (indeterminate()) {
+        <i class="ph ph-minus" aria-hidden="true"></i>
+      }
+    </span>
+    <span class="checkbox-text" #checkboxTextRef>
+      @if (label()) {
+        {{ label() }}
+      } @else {
+        <ng-content></ng-content>
+      }
+    </span>
+  </label>
+
+  @if (error()) {
+    <div [id]="errorMessageId()" class="checkbox-error" role="alert">
+      {{ error() }}
+    </div>
+  }
+
+  @if (success()) {
+    <div [id]="successMessageId()" class="checkbox-success" role="status">
+      {{ success() }}
+    </div>
+  }
+</div>

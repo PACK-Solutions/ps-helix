@@ -1,0 +1,778 @@
+<ds-demo-page-layout
+  title="Système de Toasts"
+  introText="Les toasts sont des notifications non-bloquantes qui apparaissent temporairement pour informer l'utilisateur d'événements ou d'actions. Ils offrent un feedback discret sans interrompre le flux de travail."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Variantes de Toasts - Section Pleine Largeur -->
+    <section class="toast-variants-section">
+      <h3 class="section-title">Variantes de Toasts</h3>
+      <div class="variants-container">
+        <div class="variants-intro">
+          <p>Les toasts offrent différentes variantes visuelles pour communiquer des niveaux d'importance et de contexte adaptés à chaque situation.</p>
+        </div>
+        <div class="variants-grid">
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-button
+                appearance="filled"
+                variant="primary"
+                (clicked)="showToast('info')"
+              >
+                Afficher Toast Info
+              </psh-button>
+            </div>
+            <div class="variant-info">
+              <h4>Info</h4>
+              <p>Messages informatifs généraux, mises à jour système et notifications non critiques qui apportent un contexte ou une aide.</p>
+              <ds-code-snippet [code]="infoToastCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-button
+                appearance="filled"
+                variant="success"
+                (clicked)="showToast('success')"
+              >
+                Afficher Toast Success
+              </psh-button>
+            </div>
+            <div class="variant-info">
+              <h4>Success</h4>
+              <p>Confirmations d'actions réussies, processus terminés avec succès et validations positives.</p>
+              <ds-code-snippet [code]="successToastCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-button
+                appearance="filled"
+                variant="warning"
+                (clicked)="showToast('warning')"
+              >
+                Afficher Toast Warning
+              </psh-button>
+            </div>
+            <div class="variant-info">
+              <h4>Warning</h4>
+              <p>Avertissements et précautions nécessitant l'attention de l'utilisateur sans être bloquants.</p>
+              <ds-code-snippet [code]="warningToastCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-button
+                appearance="filled"
+                variant="danger"
+                (clicked)="showToast('danger')"
+              >
+                Afficher Toast Danger
+              </psh-button>
+            </div>
+            <div class="variant-info">
+              <h4>Danger</h4>
+              <p>Erreurs critiques, échecs d'opération et problèmes nécessitant une action immédiate de l'utilisateur.</p>
+              <ds-code-snippet [code]="dangerToastCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Icônes Personnalisées - Section Pleine Largeur -->
+    <section class="toast-icons-section">
+      <h3 class="section-title">Icônes Personnalisées</h3>
+      <div class="icons-container">
+        <div class="icons-intro">
+          <p>Les icônes renforcent le message visuel et améliorent la compréhension instantanée du type de notification. Personnalisez les icônes pour des contextes spécifiques.</p>
+        </div>
+        <div class="icons-grid">
+          <div class="icon-card">
+            <div class="icon-preview">
+              <psh-button
+                appearance="filled"
+                variant="primary"
+                icon="bell"
+                (clicked)="showCustomToast('bell', 'info', 'Nouvelle notification système reçue')"
+              >
+                Icône Bell
+              </psh-button>
+            </div>
+            <div class="icon-info">
+              <h4>Icône Bell</h4>
+              <code class="icon-code">icon: "bell"</code>
+              <p class="icon-usage">Idéal pour les notifications système, les alertes et les nouveaux messages.</p>
+            </div>
+          </div>
+
+          <div class="icon-card">
+            <div class="icon-preview">
+              <psh-button
+                appearance="filled"
+                variant="success"
+                icon="check-circle"
+                (clicked)="showCustomToast('check-circle', 'success', 'Fichier téléchargé avec succès')"
+              >
+                Icône Check Circle
+              </psh-button>
+            </div>
+            <div class="icon-info">
+              <h4>Icône Check Circle</h4>
+              <code class="icon-code">icon: "check-circle"</code>
+              <p class="icon-usage">Pour confirmer la réussite d'une action, téléchargement ou sauvegarde.</p>
+            </div>
+          </div>
+
+          <div class="icon-card">
+            <div class="icon-preview">
+              <psh-button
+                appearance="filled"
+                variant="warning"
+                icon="clock"
+                (clicked)="showCustomToast('clock', 'warning', 'Session expire dans 5 minutes')"
+              >
+                Icône Clock
+              </psh-button>
+            </div>
+            <div class="icon-info">
+              <h4>Icône Clock</h4>
+              <code class="icon-code">icon: "clock"</code>
+              <p class="icon-usage">Pour les alertes temporelles, délais et expiration de session.</p>
+            </div>
+          </div>
+
+          <div class="icon-card">
+            <div class="icon-preview">
+              <psh-button
+                appearance="filled"
+                variant="danger"
+                icon="warning-octagon"
+                (clicked)="showCustomToast('warning-octagon', 'danger', 'Connexion perdue au serveur')"
+              >
+                Icône Warning Octagon
+              </psh-button>
+            </div>
+            <div class="icon-info">
+              <h4>Icône Warning Octagon</h4>
+              <code class="icon-code">"warning-octagon"</code>
+              <p class="icon-usage">Pour les erreurs critiques, problèmes de connexion et alertes urgentes.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Durée d'Affichage - Section Pleine Largeur -->
+    <section class="toast-duration-section">
+      <h3 class="section-title">Durée d'Affichage</h3>
+      <div class="duration-container">
+        <div class="duration-intro">
+          <p>Contrôlez la durée d'affichage des toasts pour s'adapter à différents contextes. Les toasts peuvent disparaître automatiquement ou rester visibles jusqu'à ce que l'utilisateur les ferme.</p>
+        </div>
+        <div class="duration-grid">
+          <div class="duration-card">
+            <div class="duration-preview">
+              <psh-button
+                appearance="filled"
+                variant="primary"
+                (clicked)="showDurationToast(2000)"
+              >
+                Toast Rapide (2s)
+              </psh-button>
+            </div>
+            <div class="duration-info">
+              <h4>Durée Courte (2000ms)</h4>
+              <div class="duration-specs">
+                <code class="duration-code">duration: 2000</code>
+              </div>
+              <p class="duration-usage">Idéal pour les confirmations simples et les messages brefs qui ne nécessitent pas une lecture prolongée.</p>
+            </div>
+          </div>
+
+          <div class="duration-card">
+            <div class="duration-preview">
+              <psh-button
+                appearance="filled"
+                variant="primary"
+                (clicked)="showDurationToast(5000)"
+              >
+                Toast Standard (5s)
+              </psh-button>
+            </div>
+            <div class="duration-info">
+              <h4>Durée Standard (5000ms - Défaut)</h4>
+              <div class="duration-specs">
+                <code class="duration-code">duration: 5000</code>
+              </div>
+              <p class="duration-usage">Durée par défaut, équilibrée pour la plupart des notifications et messages informatifs standards.</p>
+            </div>
+          </div>
+
+          <div class="duration-card">
+            <div class="duration-preview">
+              <psh-button
+                appearance="filled"
+                variant="primary"
+                (clicked)="showDurationToast(10000)"
+              >
+                Toast Long (10s)
+              </psh-button>
+            </div>
+            <div class="duration-info">
+              <h4>Durée Longue (10000ms)</h4>
+              <div class="duration-specs">
+                <code class="duration-code">duration: 10000</code>
+              </div>
+              <p class="duration-usage">Pour les messages complexes, instructions détaillées ou informations importantes nécessitant plus de temps de lecture.</p>
+            </div>
+          </div>
+
+          <div class="duration-card">
+            <div class="duration-preview">
+              <psh-button
+                appearance="filled"
+                variant="warning"
+                (clicked)="showPersistentToast()"
+              >
+                Toast Persistant
+              </psh-button>
+            </div>
+            <div class="duration-info">
+              <h4>Persistant (duration: 0)</h4>
+              <div class="duration-specs">
+                <code class="duration-code">duration: 0</code>
+              </div>
+              <p class="duration-usage">Le toast reste visible jusqu'à ce que l'utilisateur le ferme manuellement. Réservé aux messages critiques nécessitant une action.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Positions - Section Pleine Largeur -->
+    <section class="toast-positions-section">
+      <h3 class="section-title">Positions des Toasts</h3>
+      <div class="positions-container">
+        <div class="positions-intro">
+          <p>Les toasts peuvent être positionnés dans quatre coins de l'écran selon les besoins de votre interface et les conventions de votre application.</p>
+        </div>
+        <div class="positions-content">
+          <div class="positions-demo">
+            <div class="position-grid">
+              <div class="position-item">
+                <psh-button
+                  appearance="outline"
+                  variant="primary"
+                  icon="arrow-up-left"
+                  iconPosition="left"
+                  (clicked)="changePosition('top-left')"
+                >
+                  Top Left
+                </psh-button>
+              </div>
+              <div class="position-item">
+                <psh-button
+                  appearance="outline"
+                  variant="primary"
+                  icon="arrow-up-right"
+                  iconPosition="right"
+                  (clicked)="changePosition('top-right')"
+                >
+                  Top Right
+                </psh-button>
+              </div>
+              <div class="position-item">
+                <psh-button
+                  appearance="outline"
+                  variant="primary"
+                  icon="arrow-down-left"
+                  iconPosition="left"
+                  (clicked)="changePosition('bottom-left')"
+                >
+                  Bottom Left
+                </psh-button>
+              </div>
+              <div class="position-item">
+                <psh-button
+                  appearance="outline"
+                  variant="primary"
+                  icon="arrow-down-right"
+                  iconPosition="right"
+                  (clicked)="changePosition('bottom-right')"
+                >
+                  Bottom Right
+                </psh-button>
+              </div>
+            </div>
+          </div>
+          <div class="positions-doc">
+            <h4>Positions Disponibles</h4>
+            <ul class="position-list">
+              <li><strong>Top Right (Défaut)</strong> : Position standard pour la plupart des applications, n'interfère pas avec la navigation</li>
+              <li><strong>Top Left</strong> : Alternative pour les interfaces RTL ou les applications avec navigation à droite</li>
+              <li><strong>Bottom Right</strong> : Évite les conflits avec le header, idéal pour les interfaces avec navigation supérieure</li>
+              <li><strong>Bottom Left</strong> : Pour des cas d'usage spécifiques ou des interfaces personnalisées</li>
+            </ul>
+            <ds-code-snippet [code]="positionToastCode" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fonctionnalités Avancées - Section Pleine Largeur -->
+    <section class="toast-features-section">
+      <h3 class="section-title">Fonctionnalités Avancées</h3>
+      <div class="features-container">
+        <div class="features-intro">
+          <p>Les toasts supportent des fonctionnalités avancées pour améliorer l'expérience utilisateur et s'adapter à des besoins complexes.</p>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-preview">
+              <psh-button
+                appearance="filled"
+                variant="primary"
+                (clicked)="showMultipleToasts()"
+              >
+                Toasts Multiples
+              </psh-button>
+            </div>
+            <div class="feature-info">
+              <h4>Empilage de Toasts</h4>
+              <p>Les toasts s'empilent automatiquement lorsque plusieurs notifications sont affichées simultanément. La limite par défaut est de 5 toasts visibles.</p>
+              <ul class="feature-list">
+                <li>Empilage automatique des notifications</li>
+                <li>Gestion FIFO (First In, First Out)</li>
+                <li>Limite configurable de toasts visibles</li>
+                <li>Animation de pile fluide</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-preview">
+              <psh-button
+                appearance="filled"
+                variant="primary"
+                (clicked)="showHoverToast()"
+              >
+                Pause
+              </psh-button>
+            </div>
+            <div class="feature-info">
+              <h4>Pause</h4>
+              <p>Les toasts pausent automatiquement leur timer de fermeture lorsque l'utilisateur les survole, permettant une lecture sans interruption.</p>
+              <ul class="feature-list">
+                <li>Pause automatique au survol de la souris</li>
+                <li>Reprise du timer après le survol</li>
+                <li>Améliore l'accessibilité et l'UX</li>
+                <li>Configurable globalement</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-preview">
+              <psh-button
+                appearance="filled"
+                variant="success"
+                (clicked)="showToastWithIcon()"
+              >
+                Icônes Automatiques
+              </psh-button>
+            </div>
+            <div class="feature-info">
+              <h4>Icônes par Défaut</h4>
+              <p>Chaque type de toast possède une icône par défaut adaptée à son contexte, personnalisable selon vos besoins.</p>
+              <ul class="feature-list">
+                <li><code>info</code> : Icône d'information</li>
+                <li><code>success</code> : Icône de validation</li>
+                <li><code>warning</code> : Icône d'avertissement</li>
+                <li><code>danger</code> : Icône d'erreur</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contrôle de Fermeture - Section Pleine Largeur -->
+    <section class="toast-close-control-section">
+      <h3 class="section-title">Contrôle de Fermeture</h3>
+      <div class="close-control-container">
+        <div class="close-control-intro">
+          <p>Le système de toast offre une flexibilité complète pour contrôler comment les utilisateurs peuvent fermer les notifications. Chaque toast peut être configuré individuellement pour s'adapter au contexte et à l'importance du message.</p>
+        </div>
+        <div class="close-control-grid">
+          <div class="close-control-card">
+            <div class="close-control-preview">
+              <psh-button
+                appearance="filled"
+                variant="success"
+                (clicked)="showStandardToast()"
+              >
+                Toast Standard
+              </psh-button>
+            </div>
+            <div class="close-control-info">
+              <h4>Configuration Standard (Défaut)</h4>
+              <div class="close-control-specs">
+                <code class="close-control-code">duration: 5000, showCloseButton: true</code>
+              </div>
+              <p class="close-control-desc">Le toast se ferme automatiquement après 5 secondes, mais l'utilisateur peut le fermer manuellement à tout moment avec le bouton de fermeture.</p>
+              <ul class="close-control-features">
+                <li><strong>Fermeture automatique</strong> après expiration du délai</li>
+                <li><strong>Fermeture manuelle</strong> via bouton croix disponible</li>
+                <li><strong>Pause au survol</strong> pour lecture sans pression</li>
+                <li><strong>Cas d'usage</strong> : notifications générales, confirmations, messages informatifs</li>
+              </ul>
+              <ds-code-snippet [code]="standardToastCode" />
+            </div>
+          </div>
+
+          <div class="close-control-card">
+            <div class="close-control-preview">
+              <psh-button
+                appearance="filled"
+                variant="primary"
+                (clicked)="showAutoOnlyToast()"
+              >
+                Fermeture Auto Uniquement
+              </psh-button>
+            </div>
+            <div class="close-control-info">
+              <h4>Fermeture Automatique Uniquement</h4>
+              <div class="close-control-specs">
+                <code class="close-control-code">duration: 5000, showCloseButton: false</code>
+              </div>
+              <p class="close-control-desc">Le toast se ferme automatiquement après le délai spécifié. Aucun bouton de fermeture manuelle n'est affiché, garantissant que l'utilisateur voit le message pendant toute sa durée.</p>
+              <ul class="close-control-features">
+                <li><strong>Fermeture automatique</strong> après expiration du délai</li>
+                <li><strong>Pas de fermeture manuelle</strong> pour garantir la lecture</li>
+                <li><strong>Durée recommandée</strong> : 3 à 7 secondes maximum</li>
+                <li><strong>Cas d'usage</strong> : messages importants à lire obligatoirement, confirmations critiques, alertes de sécurité courtes</li>
+              </ul>
+              <ds-code-snippet [code]="autoOnlyToastCode" />
+            </div>
+          </div>
+
+          <div class="close-control-card">
+            <div class="close-control-preview">
+              <psh-button
+                appearance="filled"
+                variant="warning"
+                (clicked)="showManualOnlyToast()"
+              >
+                Fermeture Manuelle Obligatoire
+              </psh-button>
+            </div>
+            <div class="close-control-info">
+              <h4>Fermeture Manuelle Obligatoire</h4>
+              <div class="close-control-specs">
+                <code class="close-control-code">duration: 0, showCloseButton: true</code>
+              </div>
+              <p class="close-control-desc">Le toast persiste jusqu'à ce que l'utilisateur le ferme manuellement. Idéal pour les actions critiques nécessitant une confirmation explicite de lecture.</p>
+              <ul class="close-control-features">
+                <li><strong>Pas de fermeture automatique</strong>, le toast reste visible</li>
+                <li><strong>Fermeture manuelle obligatoire</strong> via bouton croix</li>
+                <li><strong>Attention requise</strong> de l'utilisateur</li>
+                <li><strong>Cas d'usage</strong> : erreurs critiques, actions nécessitant confirmation, messages d'avertissement importants</li>
+              </ul>
+              <ds-code-snippet [code]="manualOnlyToastCode" />
+            </div>
+          </div>
+        </div>
+
+        <div class="close-control-best-practices">
+          <h4>Recommandations d'Utilisation</h4>
+          <div class="best-practices-grid">
+            <div class="practice-card">
+              <div class="practice-icon">
+                <i class="ph ph-check-circle"></i>
+              </div>
+              <div class="practice-content">
+                <h5>À Faire</h5>
+                <ul>
+                  <li>Utilisez la <strong>fermeture automatique</strong> pour les messages généraux et notifications non critiques</li>
+                  <li>Réservez la <strong>fermeture manuelle obligatoire</strong> aux erreurs critiques et actions importantes</li>
+                  <li>Limitez la durée des toasts sans bouton de fermeture (max 7 secondes)</li>
+                  <li>Utilisez des messages clairs et concis pour tous les types de toast</li>
+                </ul>
+              </div>
+            </div>
+            <div class="practice-card">
+              <div class="practice-icon">
+                <i class="ph ph-x-circle"></i>
+              </div>
+              <div class="practice-content">
+                <h5>À Éviter</h5>
+                <ul>
+                  <li>Ne créez <strong>JAMAIS</strong> de toast persistant sans bouton de fermeture (<code>duration: 0, showCloseButton: false</code>)</li>
+                  <li>N'abusez pas des toasts persistants, ils peuvent surcharger l'interface</li>
+                  <li>Évitez les durées trop longues (>10s) pour les toasts auto-fermables</li>
+                  <li>Ne masquez pas le bouton de fermeture sur des messages longs ou complexes</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Documentation API - Section Pleine Largeur -->
+    <section class="api-section">
+      <h3 class="section-title">Documentation API</h3>
+      <div class="api-container">
+        <div class="api-intro">
+          <p>Le système de toasts utilise un <strong>service injectable</strong> pour afficher et gérer les notifications de manière centralisée et performante.</p>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Méthodes du Service</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Méthode</th>
+                <th>Paramètres</th>
+                <th>Retour</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>show()</code></td>
+                <td><code>Toast</code></td>
+                <td><code>string</code></td>
+                <td>Affiche un nouveau toast et retourne son ID unique</td>
+              </tr>
+              <tr>
+                <td><code>remove()</code></td>
+                <td><code>id: string</code></td>
+                <td><code>void</code></td>
+                <td>Supprime un toast spécifique par son ID</td>
+              </tr>
+              <tr>
+                <td><code>setPosition()</code></td>
+                <td><code>ToastPosition</code></td>
+                <td><code>void</code></td>
+                <td>Change la position d'affichage des toasts</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Interface Toast</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>message</code></td>
+                <td><code>string</code></td>
+                <td><code>required</code></td>
+                <td>Message à afficher dans le toast</td>
+              </tr>
+              <tr>
+                <td><code>type</code></td>
+                <td><code>ToastType</code></td>
+                <td><code>required</code></td>
+                <td>'info' | 'success' | 'warning' | 'danger'</td>
+              </tr>
+              <tr>
+                <td><code>duration</code></td>
+                <td><code>number</code></td>
+                <td><code>5000</code></td>
+                <td>Durée d'affichage en millisecondes (0 = persistant)</td>
+              </tr>
+              <tr>
+                <td><code>icon</code></td>
+                <td><code>string</code></td>
+                <td><code>undefined</code></td>
+                <td>Nom de l'icône Phosphor personnalisée</td>
+              </tr>
+              <tr>
+                <td><code>showCloseButton</code></td>
+                <td><code>boolean</code></td>
+                <td><code>undefined</code></td>
+                <td>Affiche ou masque le bouton de fermeture (surcharge la configuration globale)</td>
+              </tr>
+              <tr>
+                <td><code>id</code></td>
+                <td><code>string</code></td>
+                <td><code>auto-generated</code></td>
+                <td>Identifiant unique du toast (généré automatiquement)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Configuration Globale</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>position</code></td>
+                <td><code>ToastPosition</code></td>
+                <td><code>'top-right'</code></td>
+                <td>Position d'affichage des toasts</td>
+              </tr>
+              <tr>
+                <td><code>duration</code></td>
+                <td><code>number</code></td>
+                <td><code>5000</code></td>
+                <td>Durée d'affichage par défaut en ms</td>
+              </tr>
+              <tr>
+                <td><code>maxToasts</code></td>
+                <td><code>number</code></td>
+                <td><code>5</code></td>
+                <td>Nombre maximum de toasts affichés simultanément</td>
+              </tr>
+              <tr>
+                <td><code>pauseOnHover</code></td>
+                <td><code>boolean</code></td>
+                <td><code>true</code></td>
+                <td>Pause le timer au survol de la souris</td>
+              </tr>
+              <tr>
+                <td><code>showIcon</code></td>
+                <td><code>boolean</code></td>
+                <td><code>true</code></td>
+                <td>Affiche les icônes par défaut</td>
+              </tr>
+              <tr>
+                <td><code>showCloseButton</code></td>
+                <td><code>boolean</code></td>
+                <td><code>true</code></td>
+                <td>Affiche le bouton de fermeture</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-usage-example">
+          <h4>Installation et Configuration</h4>
+          <div class="code-block">
+            <pre><code>// 1. Importer le composant Toast dans app.component.ts
+import &#123; ToastComponent &#125; from 'ps-helix';
+
+&#64;Component(&#123;
+  standalone: true,
+  imports: [ToastComponent],
+  template: `
+    &lt;router-outlet /&gt;
+    &lt;psh-toast /&gt;
+  `
+&#125;)
+export class AppComponent &#123;&#125;
+
+// 2. Injecter le service dans votre composant
+import &#123; ToastService &#125; from 'ps-helix';
+
+export class MyComponent &#123;
+  private toastService = inject(ToastService);
+
+  showNotification(): void &#123;
+    this.toastService.show(&#123;
+      message: 'Opération réussie',
+      type: 'success',
+      duration: 3000,
+      icon: 'check-circle'
+    &#125;);
+  &#125;
+&#125;</code></pre>
+          </div>
+        </div>
+
+        <div class="api-usage-example">
+          <h4>Exemples d'Utilisation Avancée</h4>
+          <div class="code-block">
+            <pre><code>// Toast persistant nécessitant une action
+showCriticalError(): void &#123;
+  this.toastService.show(&#123;
+    message: 'Erreur critique détectée',
+    type: 'danger',
+    duration: 0,
+    showCloseButton: true,
+    icon: 'warning-octagon'
+  &#125;);
+&#125;
+
+// Toast auto-fermable sans bouton de fermeture
+showImportantMessage(): void &#123;
+  this.toastService.show(&#123;
+    message: 'Message important à lire',
+    type: 'warning',
+    duration: 5000,
+    showCloseButton: false
+  &#125;);
+&#125;
+
+// Toast avec gestion de l'ID
+uploadFile(): void &#123;
+  const toastId = this.toastService.show(&#123;
+    message: 'Téléchargement en cours...',
+    type: 'info',
+    duration: 0,
+    showCloseButton: true
+  &#125;);
+
+  this.uploadService.upload().subscribe(&#123;
+    next: () => &#123;
+      this.toastService.remove(toastId);
+      this.toastService.show(&#123;
+        message: 'Téléchargement terminé',
+        type: 'success',
+        duration: 3000
+      &#125;);
+    &#125;
+  &#125;);
+&#125;</code></pre>
+          </div>
+        </div>
+
+        <div class="api-best-practices">
+          <h4>Bonnes Pratiques d'Accessibilité</h4>
+          <ul class="best-practices-list">
+            <li><strong>Rôle ARIA</strong> : Les toasts utilisent <code>role="status"</code> et <code>aria-live="polite"</code> pour être annoncés par les lecteurs d'écran sans interrompre</li>
+            <li><strong>Messages clairs</strong> : Rédigez des messages concis et explicites décrivant l'action ou l'état (évitez les messages ambigus)</li>
+            <li><strong>Durée adaptée</strong> : Assurez une durée suffisante pour que tous les utilisateurs puissent lire le message (minimum 3 secondes pour les messages courts)</li>
+            <li><strong>Contraste</strong> : Vérifiez que le ratio de contraste entre le texte et le fond respecte WCAG AA (4.5:1 minimum)</li>
+            <li><strong>Fermeture accessible</strong> : Le bouton de fermeture est accessible au clavier via <code>Tab</code> et <code>Enter</code>, et la touche <code>Escape</code> ferme le toast actif</li>
+            <li><strong>Éviter la surcharge</strong> : Limitez le nombre de toasts simultanés pour éviter de surcharger l'interface et l'utilisateur</li>
+            <li><strong>Types appropriés</strong> : Utilisez le type correct (<code>danger</code> pour les erreurs critiques, <code>info</code> pour les notifications générales)</li>
+            <li><strong>Pause au survol</strong> : Activez <code>pauseOnHover</code> pour permettre aux utilisateurs de lire les messages sans pression temporelle</li>
+          </ul>
+        </div>
+
+        <div class="api-best-practices">
+          <h4>Quand Utiliser les Toasts</h4>
+          <ul class="best-practices-list">
+            <li><strong>Utilisez les toasts pour</strong> : Confirmations d'actions, notifications non-bloquantes, mises à jour de statut, feedback temporaire</li>
+            <li><strong>N'utilisez PAS les toasts pour</strong> : Erreurs critiques bloquantes (utilisez des modales), informations permanentes (utilisez des alertes), contenu nécessitant une action immédiate</li>
+            <li><strong>Alternatives</strong> : Pour des messages permanents ou critiques, préférez les alertes (<code>psh-alert</code>). Pour des confirmations nécessitant une action, utilisez des modales (<code>psh-modal</code>)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

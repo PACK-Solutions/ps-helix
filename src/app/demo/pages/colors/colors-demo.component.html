@@ -1,0 +1,219 @@
+<ds-demo-page-layout
+  title="Système de Couleurs Avancé"
+  introText="Notre système de couleurs va bien au-delà d'une simple palette esthétique. Il constitue un langage visuel sophistiqué qui guide la perception, communique les états, et garantit l'accessibilité universelle. Chaque choix chromatique est motivé par des principes d'ergonomie visuelle et d'inclusion."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Principes du Système de Couleurs - Section Pleine Largeur -->
+    <section class="principles-section">
+      <h3 class="section-title">Principes Fondamentaux</h3>
+      <div class="principles-container">
+        @for (principle of colorPrinciples; track principle.title) {
+          <div class="principle-card">
+            <div class="principle-header">
+              <i class="ph ph-{{ principle.icon }}" aria-hidden="true"></i>
+              <h4>{{ principle.title }}</h4>
+            </div>
+            <p>{{ principle.description }}</p>
+            <ul class="principle-benefits">
+              @for (benefit of principle.benefits; track benefit) {
+                <li>{{ benefit }}</li>
+              }
+            </ul>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- Palettes de Couleurs - Section Pleine Largeur -->
+    <section class="palettes-section">
+      <h3 class="section-title">Palettes de Couleurs</h3>
+      <div class="palettes-container">
+        <div class="palettes-intro">
+          <p>Notre système organise les couleurs par fonction et sémantique. Chaque palette a un rôle spécifique dans la construction d'interfaces cohérentes et accessibles.</p>
+        </div>
+        @for (palette of colorPalettes; track palette.category) {
+          <div class="palette-section">
+            <div class="palette-header">
+              <i class="ph ph-{{ palette.icon }}" aria-hidden="true"></i>
+              <div class="palette-info">
+                <h4>{{ palette.category }}</h4>
+                <p>{{ palette.description }}</p>
+              </div>
+            </div>
+            <div class="colors-grid">
+              @for (color of palette.colors; track color.variable) {
+                <div class="color-card" [attr.data-accent]="palette.accentColor">
+                  <div class="color-preview" [style.background]="'var(' + color.variable + ')'">
+                    @if (color.variable.includes('text')) {
+                      <div class="color-sample-text" [style.color]="'var(' + color.variable + ')'">Aa</div>
+                    }
+                  </div>
+                  <div class="color-details">
+                    <span class="color-name">{{ color.name }}</span>
+                    <code class="color-variable">{{ color.variable }}</code>
+                    <span class="color-usage">{{ color.usage }}</span>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- Application Contextuelle - Section Pleine Largeur -->
+    <section class="usage-section">
+      <h3 class="section-title">Application Contextuelle</h3>
+      <div class="usage-container">
+        <div class="usage-intro">
+          <p>Les couleurs s'adaptent aux contextes d'usage pour maximiser la clarté de communication et l'efficacité des interactions utilisateur.</p>
+        </div>
+        <div class="usage-grid">
+          @for (usage of usageContexts; track usage.context) {
+            <div class="usage-card">
+              <div class="usage-header">
+                <i class="ph ph-{{ usage.icon }}" aria-hidden="true"></i>
+                <h4>{{ usage.context }}</h4>
+              </div>
+              <p class="usage-description">{{ usage.description }}</p>
+
+              <div class="usage-guidelines">
+                <h5>Guidelines :</h5>
+                <ul class="guidelines-list">
+                  @for (guideline of usage.guidelines; track guideline) {
+                    <li>{{ guideline }}</li>
+                  }
+                </ul>
+              </div>
+
+              <div class="usage-example">
+                <h5>Exemple :</h5>
+                <div class="example-demo">{{ usage.example }}</div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Accessibilité et Standards - Section Pleine Largeur -->
+    <section class="accessibility-section">
+      <h3 class="section-title">Accessibilité et Standards</h3>
+      <div class="accessibility-container">
+        <div class="accessibility-intro">
+          <p>Notre système respecte rigoureusement les standards WCAG 2.1 AA et intègre les meilleures pratiques d'accessibilité pour garantir une expérience inclusive.</p>
+        </div>
+        <div class="accessibility-grid">
+          @for (rule of accessibilityRules; track rule.category) {
+            <div class="accessibility-card">
+              <div class="accessibility-header">
+                <i class="ph ph-{{ rule.icon }}" aria-hidden="true"></i>
+                <h4>{{ rule.category }}</h4>
+              </div>
+              <p class="accessibility-description">{{ rule.description }}</p>
+              <ul class="accessibility-list">
+                @for (ruleItem of rule.rules; track ruleItem) {
+                  <li>{{ ruleItem }}</li>
+                }
+              </ul>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Guide d'Implémentation - Section Pleine Largeur -->
+    <section class="implementation-section">
+      <h3 class="section-title">Guide d'Implémentation</h3>
+      <div class="implementation-container">
+        <div class="implementation-intro">
+          <p>Suivez ces étapes pour intégrer notre système de couleurs dans vos projets et garantir une cohérence visuelle optimale.</p>
+        </div>
+        <div class="implementation-grid">
+          @for (guide of implementationGuide; track guide.step) {
+            <div class="implementation-card">
+              <div class="implementation-header">
+                <i class="ph ph-{{ guide.icon }}" aria-hidden="true"></i>
+                <h4>{{ guide.step }}</h4>
+              </div>
+              <p class="implementation-description">{{ guide.description }}</p>
+
+              <div class="code-block">
+                <pre><code>{{ guide.code }}</code></pre>
+              </div>
+
+              <ul class="implementation-notes">
+                @for (note of guide.notes; track note) {
+                  <li>{{ note }}</li>
+                }
+              </ul>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Démonstration Interactive - Section Spéciale -->
+    <section class="demo-section">
+      <h3 class="section-title">Démonstration Interactive</h3>
+      <div class="demo-container">
+        <div class="demo-intro">
+          <p>Explorez notre système de couleurs en action avec cette démonstration qui illustre l'application pratique de nos principes.</p>
+        </div>
+
+        <div class="demo-showcase">
+          <div class="demo-example">
+            <div class="demo-buttons">
+              <button class="demo-btn primary">
+                <i class="ph ph-check-circle" aria-hidden="true"></i>
+                Action Principale
+              </button>
+              <button class="demo-btn secondary">
+                <i class="ph ph-info" aria-hidden="true"></i>
+                Action Secondaire
+              </button>
+            </div>
+
+            <div class="demo-alerts">
+              <div class="demo-alert success">
+                <i class="ph ph-check-circle" aria-hidden="true"></i>
+                <span>Opération réussie avec succès</span>
+              </div>
+              <div class="demo-alert warning">
+                <i class="ph ph-warning" aria-hidden="true"></i>
+                <span>Attention requise sur cette action</span>
+              </div>
+              <div class="demo-alert danger">
+                <i class="ph ph-x-circle" aria-hidden="true"></i>
+                <span>Une erreur critique s'est produite</span>
+              </div>
+            </div>
+
+            <div class="demo-cards">
+              <div class="demo-mini-card">
+                <h5>Carte Standard</h5>
+                <p>Surface Card avec bordures</p>
+              </div>
+              <div class="demo-mini-card hover">
+                <h5>État Hover</h5>
+                <p>Surface Hover au survol</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="demo-analysis">
+            <h4>Analyse de cette Démo :</h4>
+            <ul class="analysis-list">
+              <li><strong>Hiérarchie claire :</strong> Bouton primaire dominant visuellement</li>
+              <li><strong>Feedback sémantique :</strong> Couleurs adaptées aux messages</li>
+              <li><strong>Cohérence visuelle :</strong> Variables CSS utilisées partout</li>
+              <li><strong>Accessibilité :</strong> Contrastes WCAG conformes</li>
+              <li><strong>États interactifs :</strong> Hover visible et fluide</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

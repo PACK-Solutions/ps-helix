@@ -1,0 +1,584 @@
+<ds-demo-page-layout
+  title="Cartes de Statistiques"
+  introText="Les cartes de statistiques permettent d'afficher des métriques clés avec icône colorée, valeur, description et indicateur de tendance optionnel. Idéales pour les tableaux de bord, vues d'ensemble et rapports de performance."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Exemples de Base - Section Pleine Largeur -->
+    <section class="stat-cards-basic-section">
+      <h3 class="section-title">Exemples de Base</h3>
+      <div class="basic-container">
+        <div class="basic-intro">
+          <p>Les cartes de statistiques utilisent des inputs individuels pour une API flexible et typée. Chaque carte affiche une icône avec gradient, une valeur principale, une description et un tag optionnel.</p>
+        </div>
+        <div class="stats-grid">
+          <psh-stat-card
+            value="8,430€"
+            description="Revenu des 30 derniers jours"
+            icon="coins"
+            tagVariant="success"
+            tagLabel="+12.6%"
+            [interactive]="true"
+            (clicked)="handleStatClick($event)"
+          ></psh-stat-card>
+
+          <psh-stat-card
+            value="211"
+            description="Ventes des 30 derniers jours"
+            icon="shopping-cart"
+            tagVariant="danger"
+            tagLabel="-8.1%"
+            [interactive]="true"
+            (clicked)="handleStatClick($event)"
+          ></psh-stat-card>
+
+          <psh-stat-card
+            value="140"
+            description="Nouveaux clients"
+            icon="users"
+            tagVariant="success"
+            tagLabel="+28.4%"
+            [interactive]="true"
+            (clicked)="handleStatClick($event)"
+          ></psh-stat-card>
+        </div>
+        <ds-code-snippet [code]="basicExampleCode" />
+      </div>
+    </section>
+
+    <!-- Variantes de Tag - Section Pleine Largeur -->
+    <section class="stat-cards-variants-section">
+      <h3 class="section-title">Variantes de Tag</h3>
+      <div class="variants-container">
+        <div class="variants-intro">
+          <p>Les tags d'évolution utilisent des variantes de couleur pour communiquer le type de tendance. Le gradient de l'icône s'adapte automatiquement à la variante du tag pour une cohérence visuelle.</p>
+        </div>
+        <div class="stats-grid">
+          <psh-stat-card
+            [value]="2847"
+            description="Utilisateurs actifs"
+            icon="users-three"
+            tagVariant="success"
+            tagLabel="+18.2%"
+          ></psh-stat-card>
+
+          <psh-stat-card
+            [value]="156"
+            description="Tickets ouverts"
+            icon="ticket"
+            tagVariant="danger"
+            tagLabel="-5.4%"
+          ></psh-stat-card>
+
+          <psh-stat-card
+            [value]="42"
+            description="Tâches en attente"
+            icon="clock"
+            tagVariant="warning"
+            tagLabel="+3.1%"
+          ></psh-stat-card>
+
+          <psh-stat-card
+            [value]="98.5"
+            description="Satisfaction client (%)"
+            icon="smiley"
+            tagVariant="primary"
+            tagLabel="+2.3%"
+          ></psh-stat-card>
+        </div>
+        <div class="variants-info">
+          <h4>Gradients par Défaut</h4>
+          <ul class="feature-list">
+            <li><strong>Success</strong> : Gradient vert (emerald 400 → emerald 600)</li>
+            <li><strong>Danger</strong> : Gradient rouge (red 400 → red 600)</li>
+            <li><strong>Warning</strong> : Gradient jaune (amber 400 → amber 600)</li>
+            <li><strong>Primary</strong> : Gradient bleu (blue 400 → blue 600)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sans Tag - Section Pleine Largeur -->
+    <section class="stat-cards-notag-section">
+      <h3 class="section-title">Sans Indicateur de Tendance</h3>
+      <div class="notag-container">
+        <div class="notag-intro">
+          <p>Les cartes de statistiques peuvent s'afficher sans tag d'évolution pour présenter des valeurs absolues ou des métriques neutres.</p>
+        </div>
+        <div class="stats-grid">
+          <psh-stat-card
+            value="1,234"
+            description="Total des produits"
+            icon="package"
+            iconBackground="linear-gradient(135deg, #A78BFA, #7C3AED)"
+          ></psh-stat-card>
+
+          <psh-stat-card
+            value="5"
+            description="Projets actifs"
+            icon="folders"
+            iconBackground="linear-gradient(135deg, #FB923C, #EA580C)"
+          ></psh-stat-card>
+
+          <psh-stat-card
+            value="24h"
+            description="Temps de réponse moyen"
+            icon="timer"
+            iconBackground="linear-gradient(135deg, #38BDF8, #0284C7)"
+          ></psh-stat-card>
+        </div>
+        <ds-code-snippet [code]="noTagCode" />
+      </div>
+    </section>
+
+    <!-- Variantes de Carte - Section Pleine Largeur -->
+    <section class="stat-cards-card-variants-section">
+      <h3 class="section-title">Variantes de Carte</h3>
+      <div class="card-variants-container">
+        <div class="card-variants-intro">
+          <p>Les stat-cards héritent des variantes de la carte de base (elevated, outlined, default) pour s'adapter à différents contextes visuels.</p>
+        </div>
+        <div class="card-variants-content">
+          <div class="variant-group">
+            <h4>Elevated (Défaut)</h4>
+            <div class="stats-grid">
+              <psh-stat-card
+                value="3,456"
+                description="Téléchargements"
+                icon="download-simple"
+                tagVariant="success"
+                tagLabel="+45.2%"
+                variant="elevated"
+              ></psh-stat-card>
+            </div>
+            <p class="variant-description">Avec ombre portée, idéale pour mettre en valeur les métriques importantes.</p>
+          </div>
+
+          <div class="variant-group">
+            <h4>Outlined</h4>
+            <div class="stats-grid">
+              <psh-stat-card
+                value="892"
+                description="Commentaires"
+                icon="chat-circle"
+                tagVariant="primary"
+                tagLabel="+12.8%"
+                variant="outlined"
+              ></psh-stat-card>
+            </div>
+            <p class="variant-description">Avec bordure, pour un design plus léger et épuré.</p>
+          </div>
+
+          <div class="variant-group">
+            <h4>Default</h4>
+            <div class="stats-grid">
+              <psh-stat-card
+                value="67"
+                description="En traitement"
+                icon="hourglass"
+                tagVariant="warning"
+                tagLabel="+5.1%"
+                variant="default"
+              ></psh-stat-card>
+            </div>
+            <p class="variant-description">Style minimal sans décoration, pour les interfaces très épurées.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gradients Personnalisés - Section Pleine Largeur -->
+    <section class="stat-cards-custom-section">
+      <h3 class="section-title">Gradients Personnalisés</h3>
+      <div class="custom-container">
+        <div class="custom-intro">
+          <p>Vous pouvez personnaliser le gradient de l'icône avec l'input <code>iconBackground</code> pour créer des identités visuelles uniques.</p>
+        </div>
+        <div class="stats-grid">
+          <psh-stat-card
+            value="12.5k"
+            description="Abonnés"
+            icon="user-plus"
+            tagVariant="success"
+            tagLabel="+24.6%"
+            iconBackground="linear-gradient(135deg, #EC4899, #BE185D)"
+          ></psh-stat-card>
+
+          <psh-stat-card
+            value="4.8"
+            description="Note moyenne"
+            icon="star"
+            tagVariant="success"
+            tagLabel="+0.3"
+            iconBackground="linear-gradient(135deg, #FBBF24, #F59E0B)"
+          ></psh-stat-card>
+
+          <psh-stat-card
+            value="89%"
+            description="Taux de conversion"
+            icon="chart-line-up"
+            tagVariant="success"
+            tagLabel="+7.2%"
+            iconBackground="linear-gradient(135deg, #10B981, #047857)"
+          ></psh-stat-card>
+        </div>
+        <ds-code-snippet [code]="customGradientCode" />
+      </div>
+    </section>
+
+    <!-- États - Section Pleine Largeur -->
+    <section class="stat-cards-states-section">
+      <h3 class="section-title">États</h3>
+      <div class="states-container">
+        <div class="states-intro">
+          <p>Les stat-cards supportent l'interactivité avec effet de survol et la navigation au clavier pour une accessibilité optimale.</p>
+        </div>
+        <div class="states-content">
+          <div class="state-group">
+            <h4>Interactive avec survol</h4>
+            <div class="stats-grid">
+              <psh-stat-card
+                value="1,847"
+                description="Pages vues"
+                icon="eye"
+                tagVariant="primary"
+                tagLabel="+15.3%"
+                [interactive]="true"
+                (clicked)="handleStatClick($event)"
+              ></psh-stat-card>
+            </div>
+            <p class="state-description">Carte cliquable avec effet de survol automatique et support du clavier (Enter/Space).</p>
+            <ds-code-snippet [code]="interactiveCode" />
+          </div>
+
+          <div class="state-group">
+            <h4>Non interactive</h4>
+            <div class="stats-grid">
+              <psh-stat-card
+                value="456"
+                description="En attente"
+                icon="clock-countdown"
+                tagVariant="warning"
+                tagLabel="+2.1%"
+              ></psh-stat-card>
+            </div>
+            <p class="state-description">Carte non cliquable, idéale pour les statistiques en lecture seule.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Disposition (Layout) - Section Pleine Largeur -->
+    <section class="stat-cards-layout-section">
+      <h3 class="section-title">Disposition (Layout)</h3>
+      <div class="layout-container">
+        <div class="layout-intro">
+          <p>Les stat-cards supportent deux dispositions : <strong>horizontal</strong> (icône à gauche, par défaut) et <strong>vertical</strong> (icône en haut). La disposition peut être contrôlée indépendamment de la taille d'écran.</p>
+        </div>
+        <div class="layout-content">
+          <div class="layout-group">
+            <h4>Horizontal (Défaut)</h4>
+            <div class="stats-grid">
+              <psh-stat-card
+                value="2,847"
+                description="Utilisateurs actifs"
+                icon="users-three"
+                tagVariant="success"
+                tagLabel="+18.2%"
+                layout="horizontal"
+              ></psh-stat-card>
+              <psh-stat-card
+                value="156"
+                description="Tickets ouverts"
+                icon="ticket"
+                tagVariant="danger"
+                tagLabel="-5.4%"
+                layout="horizontal"
+              ></psh-stat-card>
+            </div>
+            <p class="layout-description">Disposition horizontale avec icône à gauche. Optimale pour économiser l'espace vertical et présenter plusieurs cartes en grille.</p>
+            <ds-code-snippet [code]="horizontalLayoutCode" />
+          </div>
+
+          <div class="layout-group">
+            <h4>Vertical</h4>
+            <div class="stats-grid">
+              <psh-stat-card
+                value="8,430€"
+                description="Revenu des 30 derniers jours"
+                icon="coins"
+                tagVariant="success"
+                tagLabel="+12.6%"
+                layout="vertical"
+              ></psh-stat-card>
+              <psh-stat-card
+                value="98.5"
+                description="Satisfaction client (%)"
+                icon="smiley"
+                tagVariant="primary"
+                tagLabel="+2.3%"
+                layout="vertical"
+              ></psh-stat-card>
+            </div>
+            <p class="layout-description">Disposition verticale avec icône en haut. Idéale pour mettre l'accent sur les valeurs et créer un design plus centré.</p>
+            <ds-code-snippet [code]="verticalLayoutCode" />
+          </div>
+
+          <div class="layout-group">
+            <h4>Row Direction (Flex-row dans le body)</h4>
+            <div class="stats-grid">
+              <psh-stat-card
+                value="4,321"
+                description="Commandes en cours"
+                icon="shopping-bag"
+                tagVariant="primary"
+                tagLabel="+9.8%"
+                [rowDirection]="true"
+              ></psh-stat-card>
+              <psh-stat-card
+                value="673"
+                description="Messages non lus"
+                icon="envelope"
+                tagVariant="warning"
+                tagLabel="+15.2%"
+                [rowDirection]="true"
+              ></psh-stat-card>
+            </div>
+            <p class="layout-description">Direction row pour le card-body, permettant à l'icône et au contenu d'être côte à côte en flex-row. Le card-body s'adapte automatiquement en mode responsive.</p>
+            <ds-code-snippet [code]="rowDirectionCode" />
+          </div>
+        </div>
+        <div class="layout-note">
+          <h4>Note sur le responsive</h4>
+          <p>Sur mobile (&lt;480px), les cartes en mode <code>horizontal</code> et <code>rowDirection</code> passent automatiquement en mode vertical. Les cartes en mode <code>vertical</code> gardent leur disposition verticale sur tous les écrans.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Documentation API - Section Pleine Largeur -->
+    <section class="api-section">
+      <h3 class="section-title">Documentation API</h3>
+      <div class="api-container">
+        <div class="api-intro">
+          <p>Le composant StatCard utilise des <strong>input signals</strong> pour une API simple, flexible et performante, conforme aux standards Angular 20.</p>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés Principales (Input Signals)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>value</code></td>
+                <td><code>string | number</code></td>
+                <td><code>undefined</code></td>
+                <td>Valeur principale de la statistique</td>
+              </tr>
+              <tr>
+                <td><code>description</code></td>
+                <td><code>string</code></td>
+                <td><code>undefined</code></td>
+                <td>Description ou label de la statistique</td>
+              </tr>
+              <tr>
+                <td><code>icon</code></td>
+                <td><code>string</code></td>
+                <td><code>undefined</code></td>
+                <td>Nom de l'icône Phosphor (sans préfixe 'ph-')</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés Optionnelles (Input Signals)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>tagVariant</code></td>
+                <td><code>StatTagVariant</code></td>
+                <td><code>undefined</code></td>
+                <td>'success' | 'danger' | 'warning' | 'primary'</td>
+              </tr>
+              <tr>
+                <td><code>tagLabel</code></td>
+                <td><code>string</code></td>
+                <td><code>undefined</code></td>
+                <td>Label du tag d'évolution (ex: '+12.6%')</td>
+              </tr>
+              <tr>
+                <td><code>iconBackground</code></td>
+                <td><code>string</code></td>
+                <td><code>auto</code></td>
+                <td>Gradient CSS personnalisé pour l'icône</td>
+              </tr>
+              <tr>
+                <td><code>variant</code></td>
+                <td><code>StatCardVariant</code></td>
+                <td><code>'elevated'</code></td>
+                <td>'elevated' | 'outlined' | 'default'</td>
+              </tr>
+              <tr>
+                <td><code>interactive</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Rend la carte cliquable avec survol automatique</td>
+              </tr>
+              <tr>
+                <td><code>ariaLabel</code></td>
+                <td><code>string</code></td>
+                <td><code>auto</code></td>
+                <td>Label ARIA personnalisé pour l'accessibilité</td>
+              </tr>
+              <tr>
+                <td><code>layout</code></td>
+                <td><code>StatCardLayout</code></td>
+                <td><code>'horizontal'</code></td>
+                <td>'horizontal' (icône à gauche) | 'vertical' (icône en haut)</td>
+              </tr>
+              <tr>
+                <td><code>rowDirection</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Active la direction row pour le card-body (icône et contenu en flex-row)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Événements (Outputs)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Événement</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>clicked</code></td>
+                <td><code>EventEmitter&lt;MouseEvent | KeyboardEvent&gt;</code></td>
+                <td>Émis lors du clic sur la carte (si interactive)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-compatibility">
+          <h4>Compatibilité avec l'ancienne API</h4>
+          <div class="compatibility-note">
+            <p><strong>Note de migration :</strong> L'input <code>[data]</code> est déprécié mais toujours supporté pour la rétrocompatibilité.</p>
+            <div class="migration-example">
+              <div class="old-way">
+                <h5>Ancienne API (dépréciée)</h5>
+                <pre><code>// Component
+statsData: StatCardData = &#123;
+  value: '8,430€',
+  description: 'Revenu',
+  icon: 'coins',
+  tagVariant: 'success',
+  tagLabel: '+12.6%'
+&#125;;
+
+// Template
+&lt;psh-stat-card [data]="statsData"&gt;&lt;/psh-stat-card&gt;</code></pre>
+              </div>
+              <div class="new-way">
+                <h5>Nouvelle API (recommandée)</h5>
+                <pre><code>// Template uniquement
+&lt;psh-stat-card
+  value="8,430€"
+  description="Revenu"
+  icon="coins"
+  tagVariant="success"
+  tagLabel="+12.6%"
+&gt;&lt;/psh-stat-card&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="api-usage-example">
+          <h4>Exemple d'Utilisation Complète</h4>
+          <div class="code-block">
+            <pre><code>import &#123; PshStatCardComponent &#125; from 'ps-helix';
+
+&#64;Component(&#123;
+  standalone: true,
+  imports: [PshStatCardComponent],
+  template: &#96;
+    &lt;div class="stats-grid"&gt;
+      &lt;!-- Avec tag d'évolution et gradient auto --&gt;
+      &lt;psh-stat-card
+        value="8,430€"
+        description="Revenu des 30 derniers jours"
+        icon="coins"
+        tagVariant="success"
+        tagLabel="+12.6%"
+        [interactive]="true"
+        (clicked)="handleRevenueClick($event)"
+      &gt;&lt;/psh-stat-card&gt;
+
+      &lt;!-- Sans tag, gradient personnalisé --&gt;
+      &lt;psh-stat-card
+        [value]="1234"
+        description="Total des produits"
+        icon="package"
+        iconBackground="linear-gradient(135deg, #A78BFA, #7C3AED)"
+        variant="outlined"
+      &gt;&lt;/psh-stat-card&gt;
+
+      &lt;!-- Variante outlined, non interactive --&gt;
+      &lt;psh-stat-card
+        value="24h"
+        description="Temps de réponse moyen"
+        icon="timer"
+        tagVariant="primary"
+        tagLabel="Stable"
+        variant="outlined"
+        ariaLabel="Temps de réponse moyen: 24 heures, statut stable"
+      &gt;&lt;/psh-stat-card&gt;
+    &lt;/div&gt;
+  &#96;
+&#125;)
+export class DashboardComponent &#123;
+  handleRevenueClick(event: MouseEvent | KeyboardEvent): void &#123;
+    console.log('Revenue card clicked', event);
+  &#125;
+&#125;</code></pre>
+          </div>
+        </div>
+
+        <div class="api-best-practices">
+          <h4>Bonnes Pratiques</h4>
+          <ul class="best-practices-list">
+            <li><strong>Inputs individuels</strong> : Privilégiez les inputs individuels plutôt que l'input <code>[data]</code> déprécié</li>
+            <li><strong>Gradients auto</strong> : Laissez le composant générer les gradients automatiquement à partir de <code>tagVariant</code></li>
+            <li><strong>Gradients personnalisés</strong> : Utilisez <code>iconBackground</code> uniquement pour des identités visuelles spécifiques</li>
+            <li><strong>Tags optionnels</strong> : Les tags d'évolution sont optionnels, omettez <code>tagVariant</code> et <code>tagLabel</code> pour les métriques neutres</li>
+            <li><strong>Interactivité</strong> : Ajoutez <code>[interactive]="true"</code> uniquement si la carte doit être cliquable</li>
+            <li><strong>Accessibilité</strong> : Le label ARIA est généré automatiquement, mais vous pouvez le personnaliser avec <code>ariaLabel</code></li>
+            <li><strong>Grilles responsives</strong> : Utilisez des grilles CSS pour organiser vos stat-cards (ex: <code>display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))</code>)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

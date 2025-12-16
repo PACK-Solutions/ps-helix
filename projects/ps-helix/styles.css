@@ -1,0 +1,33 @@
+/* ============================================
+   PS-HELIX DESIGN SYSTEM - LIBRARY STYLESHEET
+   ============================================ */
+
+/* 1. BASE - CSS Reset and Global Styles */
+@import './src/lib/styles/base/reset.css';
+@import './src/lib/styles/base/global.css';
+
+/* 2. DESIGN TOKENS - Primitive Values */
+@import './src/lib/styles/tokens/spacing.tokens.css';
+@import './src/lib/styles/tokens/sizing.tokens.css';
+@import './src/lib/styles/tokens/typography.tokens.css';
+@import './src/lib/styles/tokens/effects.tokens.css';
+@import './src/lib/styles/tokens/animations.tokens.css';
+@import './src/lib/styles/tokens/layout.tokens.css';
+
+/* 3. THEMES - Color Tokens and Theme Variables */
+@import './src/lib/styles/themes/light.css';
+@import './src/lib/styles/themes/dark.css';
+
+/* 4. UTILITY CLASSES - Functional Helpers */
+@import './src/lib/styles/utilities/spacing.utils.css';
+@import './src/lib/styles/utilities/typography.utils.css';
+@import './src/lib/styles/utilities/colors.utils.css';
+@import './src/lib/styles/utilities/layout.utils.css';
+@import './src/lib/styles/utilities/animations.utils.css';
+@import './src/lib/styles/utilities/focus.utils.css';
+@import './src/lib/styles/utilities/responsive.utils.css';
+
+/* Demo navigation scrollbar compensation */
+.demo-navigation {
+  padding-right: var(--scrollbar-width);
+}
