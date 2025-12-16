@@ -11,7 +11,7 @@ import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component
 })
 export class IntroductionDemoComponent {
   npmUrl = 'https://www.npmjs.com/package/ps-helix';
-  npmVersion = '2.0.5';
+  npmVersion = '2.0.6';
   keyFeatures = [
     {
       icon: 'lightning',
