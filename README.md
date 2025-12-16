@@ -1,7 +1,7 @@
 # Helix Design System
 
 Bibliothèque de composants Angular moderne et complète avec 28 composants standalone, système de thèmes, internationalisation et accessibilité optimale.
-titi
+
 [![Version](https://img.shields.io/badge/version-2.0.5-blue.svg)](https://www.npmjs.com/package/ps-helix)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Angular](https://img.shields.io/badge/Angular-20.0.0-red.svg)](https://angular.dev/)
