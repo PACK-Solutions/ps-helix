@@ -1,5 +1,5 @@
 {
-  "name": "@your-org/design-system",
+  "name": "Ps-helix-design-system",
   "private": true,
   "version": "2.0.5",
   "description": "Helix Design System",
@@ -7,7 +7,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/your-org/design-system.git"
+    "url": "git+https://github.com/PACK-Solutions/ps-helix"
   },
   "publishConfig": {
     "access": "restricted"
