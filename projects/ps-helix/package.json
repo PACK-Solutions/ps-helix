@@ -1,9 +1,10 @@
 {
   "name": "ps-helix",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "description": "Helix Design System - A comprehensive Angular component library",
   "author": "Fabrice PEREZ - Product designer at PACK Solutions",
   "license": "MIT",
+  "homepage": "https://ps-helix.com/",
   "keywords": [
     "angular",
     "design-system",
@@ -13,7 +14,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/your-org/design-system.git"
+    "url": "git+https://github.com/PACK-Solutions/ps-helix.git"
   },
   "publishConfig": {
     "access": "public"
