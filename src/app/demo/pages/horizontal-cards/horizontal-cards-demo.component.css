@@ -2,16 +2,21 @@
 .products-section,
 .users-section,
 .articles-section,
-.variants-section,
-.api-section {
+.variants-section {
   margin-bottom: var(--spacing-2xl);
+}
+
+.api-section {
+  margin-bottom: var(--spacing-3xl);
 }
 
 .section-title {
   font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-bold);
-  color: var(--text-primary);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-color);
   margin-bottom: var(--spacing-xl);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 2px solid var(--surface-border);
 }
 
 .use-cases-container,
@@ -29,10 +34,16 @@
 .products-intro,
 .users-intro,
 .articles-intro,
-.variants-intro,
-.api-intro {
+.variants-intro {
   color: var(--text-secondary);
   font-size: var(--font-size-md);
+  line-height: 1.6;
+}
+
+.api-intro {
+  margin-bottom: var(--spacing-xl);
+  color: var(--text-color-secondary);
+  font-size: var(--font-size-lg);
   line-height: 1.6;
 }
 
@@ -232,71 +243,72 @@
 }
 
 .api-table-wrapper {
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: var(--spacing-2xl);
+  overflow-x: auto;
 }
 
 .api-table-wrapper h4 {
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-xl);
   font-weight: var(--font-weight-semibold);
-  color: var(--text-primary);
-  margin-bottom: var(--spacing-md);
+  color: var(--text-color);
+  margin-bottom: var(--spacing-lg);
 }
 
 .api-table {
   width: 100%;
   border-collapse: collapse;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
+  background: var(--surface-card);
+  border-radius: var(--border-radius);
   overflow: hidden;
 }
 
 .api-table thead {
-  background: var(--bg-tertiary);
+  background: var(--surface-ground);
 }
 
 .api-table th {
-  padding: var(--spacing-md);
   text-align: left;
+  padding: var(--spacing-md);
   font-weight: var(--font-weight-semibold);
-  color: var(--text-primary);
-  border-bottom: 1px solid var(--border-color);
+  color: var(--text-color);
+  border-bottom: 2px solid var(--surface-border);
 }
 
 .api-table td {
   padding: var(--spacing-md);
-  color: var(--text-secondary);
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--surface-border);
+  color: var(--text-color-secondary);
 }
 
-.api-table tbody tr:last-child td {
+.api-table tr:last-child td {
   border-bottom: none;
 }
 
 .api-table code {
-  font-family: var(--font-family-mono, 'Courier New', monospace);
-  font-size: var(--font-size-sm);
+  background: var(--surface-ground);
   padding: 2px 6px;
-  background: var(--bg-tertiary);
-  border-radius: var(--radius-xs);
+  border-radius: var(--border-radius-sm);
+  font-family: 'Courier New', monospace;
+  font-size: var(--font-size-sm);
   color: var(--primary-color);
 }
 
 .api-usage-example {
-  margin-top: var(--spacing-xl);
+  margin-bottom: var(--spacing-2xl);
 }
 
 .api-usage-example h4 {
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-xl);
   font-weight: var(--font-weight-semibold);
-  color: var(--text-primary);
-  margin-bottom: var(--spacing-md);
+  color: var(--text-color);
+  margin-bottom: var(--spacing-lg);
 }
 
 .code-block {
+  background: var(--surface-ground);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--border-radius);
   padding: var(--spacing-lg);
-  background: var(--bg-tertiary);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-color);
   overflow-x: auto;
 }
 
@@ -305,44 +317,58 @@
 }
 
 .code-block code {
-  font-family: var(--font-family-mono, 'Courier New', monospace);
+  font-family: 'Courier New', monospace;
   font-size: var(--font-size-sm);
-  color: var(--text-secondary);
+  color: var(--text-color);
   line-height: 1.6;
 }
 
 .api-best-practices {
-  margin-top: var(--spacing-xl);
-  padding: var(--spacing-md);
-  background: var(--bg-secondary);
-  border-radius: var(--radius-md);
+  background: var(--surface-card);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xl);
+  margin-bottom: var(--spacing-lg);
 }
 
 .api-best-practices h4 {
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-xl);
   font-weight: var(--font-weight-semibold);
-  color: var(--text-primary);
-  margin-bottom: var(--spacing-md);
+  color: var(--text-color);
+  margin-bottom: var(--spacing-lg);
 }
 
 .best-practices-list {
+  list-style: none;
+  padding: 0;
   margin: 0;
-  padding-left: var(--spacing-lg);
-  color: var(--text-secondary);
-  font-size: var(--font-size-sm);
-  line-height: 1.8;
 }
 
 .best-practices-list li {
+  padding: var(--spacing-sm) var(--spacing-md);
   margin-bottom: var(--spacing-sm);
+  background: var(--surface-ground);
+  border-left: 3px solid var(--primary-color);
+  border-radius: var(--border-radius-sm);
+  color: var(--text-color-secondary);
+  line-height: 1.6;
+}
+
+.best-practices-list li:last-child {
+  margin-bottom: 0;
+}
+
+.best-practices-list li strong {
+  color: var(--text-color);
+  font-weight: var(--font-weight-semibold);
 }
 
 .best-practices-list code {
-  font-family: var(--font-family-mono, 'Courier New', monospace);
-  font-size: var(--font-size-sm);
+  background: var(--surface-card);
   padding: 2px 6px;
-  background: var(--bg-tertiary);
-  border-radius: var(--radius-xs);
+  border-radius: var(--border-radius-sm);
+  font-family: 'Courier New', monospace;
+  font-size: var(--font-size-sm);
   color: var(--primary-color);
 }
 
@@ -355,6 +381,10 @@
     grid-template-columns: 1fr;
   }
 
+  .section-title {
+    font-size: var(--font-size-xl);
+  }
+
   .api-table {
     font-size: var(--font-size-sm);
   }
@@ -362,5 +392,9 @@
   .api-table th,
   .api-table td {
     padding: var(--spacing-sm);
+  }
+
+  .api-best-practices {
+    padding: var(--spacing-md);
   }
 }
