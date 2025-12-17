@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
-
+import { CodeSnippetComponent } from '../../shared/code-snippet.component';
 
 @Component({
   selector: 'ds-introduction-demo',
-  imports: [TranslateModule, DemoPageLayoutComponent],
+  imports: [TranslateModule, DemoPageLayoutComponent, CodeSnippetComponent],
   templateUrl: './introduction-demo.component.html',
   styleUrls: ['./introduction-demo.component.css'],
 })
