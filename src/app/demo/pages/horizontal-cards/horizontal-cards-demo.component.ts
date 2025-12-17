@@ -90,7 +90,8 @@ export class HorizontalCardsDemoComponent {
       date: '15 Déc 2025',
       readTime: '8 min',
       category: 'Design',
-      image: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
+      image: 'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop',
+      imageAlt: 'Palette de couleurs et outils de design'
     },
     {
       id: 2,
@@ -99,7 +100,8 @@ export class HorizontalCardsDemoComponent {
       date: '10 Déc 2025',
       readTime: '12 min',
       category: 'Développement',
-      image: 'linear-gradient(135deg, #30cfd0 0%, #330867 100%)'
+      image: 'https://images.pexels.com/photos/574071/pexels-photo-574071.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop',
+      imageAlt: 'Code source sur ecran de developpeur'
     }
   ];
 

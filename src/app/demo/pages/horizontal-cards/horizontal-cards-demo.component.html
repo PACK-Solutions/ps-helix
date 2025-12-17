@@ -160,7 +160,7 @@
               (clicked)="handleCardClick($event, 'Article ' + article.id)"
             >
               <div horizontal-side>
-                <div class="article-image" [style.background]="article.image"></div>
+                <img [src]="article.image" [alt]="article.imageAlt" class="article-image">
               </div>
               <div horizontal-header>
                 <div class="article-header">
