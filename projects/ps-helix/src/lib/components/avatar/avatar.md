@@ -46,7 +46,7 @@ import { PshAvatarComponent } from 'ps-helix';
 
 ## API
 
-### Model Inputs (@model)
+### Model Inputs
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
 | size | AvatarSize | 'medium' | Taille de l'avatar |
@@ -54,13 +54,13 @@ import { PshAvatarComponent } from 'ps-helix';
 | src | string | undefined | URL de l'image |
 | alt | string | 'User avatar' | Texte alternatif |
 
-### Regular Inputs (@input)
-| Nom | Type | Description |
-|-----|------|-------------|
-| initials | string | Initiales à afficher |
-| icon | string | Icône Phosphor |
-| status | AvatarStatus | Statut de l'utilisateur |
-| ariaLabel | string | Label ARIA personnalisé |
+### Inputs
+| Nom | Type | Défaut | Description |
+|-----|------|---------|-------------|
+| initials | string | '' | Initiales à afficher |
+| icon | string | 'user' | Icône Phosphor |
+| status | AvatarStatus | undefined | Statut de l'utilisateur |
+| ariaLabel | string | undefined | Label ARIA personnalisé |
 
 ### Types
 

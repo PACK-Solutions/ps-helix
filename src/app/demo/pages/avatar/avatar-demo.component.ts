@@ -33,7 +33,6 @@ export class AvatarDemoComponent {
   fullExampleCode = `import { PshAvatarComponent } from 'ps-helix';
 
 @Component({
-  standalone: true,
   imports: [PshAvatarComponent],
   template: \`
     <psh-avatar
