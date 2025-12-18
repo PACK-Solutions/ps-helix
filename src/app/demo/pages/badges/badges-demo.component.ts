@@ -101,7 +101,6 @@ export class BadgesDemoComponent {
   fullExampleCode = `import { PshBadgeComponent } from 'ps-helix';
 
 @Component({
-  standalone: true,
   imports: [PshBadgeComponent],
   template: \`
     <div style="position: relative">

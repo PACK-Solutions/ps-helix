@@ -356,11 +356,11 @@
       <h3 class="section-title">Documentation API</h3>
       <div class="api-container">
         <div class="api-intro">
-          <p>Le composant Badge utilise des <strong>model inputs</strong> et des <strong>input signals</strong> pour une API simple et performante, conforme aux standards Angular 20.</p>
+          <p>Le composant Badge utilise des <strong>input signals</strong> pour une API simple et performante, conforme aux standards Angular.</p>
         </div>
 
         <div class="api-table-wrapper">
-          <h4>Propriétés (Model Inputs)</h4>
+          <h4>Inputs</h4>
           <table class="api-table">
             <thead>
               <tr>
@@ -375,7 +375,7 @@
                 <td><code>variant</code></td>
                 <td><code>BadgeVariant</code></td>
                 <td><code>'primary'</code></td>
-                <td>'primary' | 'success' | 'warning' | 'danger' | 'disabled'</td>
+                <td>'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info' | 'disabled'</td>
               </tr>
               <tr>
                 <td><code>size</code></td>
@@ -393,7 +393,7 @@
                 <td><code>content</code></td>
                 <td><code>string</code></td>
                 <td><code>''</code></td>
-                <td>Contenu textuel du badge</td>
+                <td>Texte de fallback pour les badges counter sans valeur</td>
               </tr>
               <tr>
                 <td><code>value</code></td>
@@ -423,37 +423,50 @@
                 <td><code>visible</code></td>
                 <td><code>boolean</code></td>
                 <td><code>true</code></td>
-                <td>Contrôle la visibilité du badge</td>
+                <td>Controle la visibilite du badge</td>
+              </tr>
+              <tr>
+                <td><code>overlap</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Active le mode superposition sur l'element parent</td>
+              </tr>
+              <tr>
+                <td><code>ariaLabel</code></td>
+                <td><code>string</code></td>
+                <td><code>undefined</code></td>
+                <td>Label ARIA personnalise pour l'accessibilite</td>
+              </tr>
+              <tr>
+                <td><code>formatter</code></td>
+                <td><code>(value: T) => string</code></td>
+                <td><code>undefined</code></td>
+                <td>Fonction de formatage personnalisee pour la valeur</td>
               </tr>
             </tbody>
           </table>
         </div>
 
         <div class="api-table-wrapper">
-          <h4>Propriétés (Input Signals)</h4>
+          <h4>Outputs</h4>
           <table class="api-table">
             <thead>
               <tr>
-                <th>Propriété</th>
+                <th>Propriete</th>
                 <th>Type</th>
                 <th>Description</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><code>overlap</code></td>
-                <td><code>boolean</code></td>
-                <td>Active le mode superposition sur l'élément parent</td>
+                <td><code>badgeClick</code></td>
+                <td><code>void</code></td>
+                <td>Emis lors d'un clic sur le badge</td>
               </tr>
               <tr>
-                <td><code>ariaLabel</code></td>
-                <td><code>string | undefined</code></td>
-                <td>Label ARIA personnalisé pour l'accessibilité</td>
-              </tr>
-              <tr>
-                <td><code>formatter</code></td>
-                <td><code>(value: T) => string</code></td>
-                <td>Fonction de formatage personnalisée pour la valeur</td>
+                <td><code>valueChange</code></td>
+                <td><code>T</code></td>
+                <td>Emis lors d'un changement de valeur</td>
               </tr>
             </tbody>
           </table>
@@ -469,7 +482,7 @@
           <ul class="best-practices-list">
             <li><strong>Labels ARIA</strong> : Fournissez toujours un <code>ariaLabel</code> descriptif pour les badges numériques et les points indicateurs</li>
             <li><strong>Contexte</strong> : Assurez-vous que le badge est toujours accompagné d'un élément visuel ou textuel qui donne le contexte</li>
-            <li><strong>Role sémantique</strong> : Le badge utilise automatiquement <code>role="status"</code> pour les compteurs et <code>role="img"</code> pour les points</li>
+            <li><strong>Role semantique</strong> : Le badge utilise automatiquement <code>role="status"</code> pour les compteurs et <code>role="img"</code> pour les points et textes</li>
             <li><strong>Contraste</strong> : Vérifiez que les couleurs des badges respectent les ratios de contraste WCAG AA (4.5:1 minimum)</li>
           </ul>
         </div>
