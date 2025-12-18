@@ -14,7 +14,6 @@ npm install ps-helix
 import { PshBadgeComponent } from 'ps-helix';
 
 @Component({
-  standalone: true,
   imports: [PshBadgeComponent],
 })
 export class MyComponent {}
@@ -69,14 +68,14 @@ export class MyComponent {}
 
 ## API
 
-### Inputs (@input)
+### Inputs
 
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
 | variant | BadgeVariant | 'primary' | Style du badge ('primary' \| 'secondary' \| 'success' \| 'warning' \| 'danger' \| 'info' \| 'disabled') |
 | size | BadgeSize | 'medium' | Taille du badge ('small' \| 'medium' \| 'large') |
 | displayType | BadgeDisplayType | 'text' | Type d'affichage ('dot' \| 'counter' \| 'text') |
-| content | string | '' | Contenu textuel du badge |
+| content | string | '' | Texte de fallback pour les badges counter sans valeur |
 | visible | boolean | true | Contrôle la visibilité du badge |
 | value | T | undefined | Valeur à afficher (type générique) |
 | max | number | 99 | Valeur maximale avant affichage du suffixe + |
@@ -86,7 +85,7 @@ export class MyComponent {}
 | ariaLabel | string | undefined | Label ARIA personnalisé |
 | formatter | (value: T) => string | undefined | Fonction de formatage personnalisée |
 
-### Outputs (@output)
+### Outputs
 
 | Nom | Type | Description |
 |-----|------|-------------|
@@ -248,7 +247,7 @@ export class MyComponent {
 
 Le composant gère automatiquement les attributs ARIA :
 - `role="status"`: Pour les badges numériques (counter)
-- `role="img"`: Pour les badges de type point (dot)
+- `role="img"`: Pour les badges de type point (dot) et texte (text)
 - `aria-label`: Description détaillée calculée automatiquement
 
 ### Bonnes Pratiques
