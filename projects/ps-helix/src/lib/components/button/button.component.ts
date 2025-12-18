@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  contentChild,
   input,
   output,
 } from '@angular/core';
@@ -19,8 +18,6 @@ import { ButtonAppearance, ButtonVariant, ButtonSize, ButtonIconPosition } from 
   },
 })
 export class PshButtonComponent {
-  contentElement = contentChild<any>('content');
-
   appearance = input<ButtonAppearance>('filled');
   variant = input<ButtonVariant>('primary');
   size = input<ButtonSize>('medium');

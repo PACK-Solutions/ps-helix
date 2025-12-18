@@ -30,7 +30,11 @@ describe('PshButtonComponent', () => {
     fixture.nativeElement.querySelector('.loader[aria-hidden="true"]') as HTMLElement;
 
   const getIcon = () =>
-    fixture.nativeElement.querySelector('i[aria-hidden="true"]') as HTMLElement;
+    fixture.nativeElement.querySelector('i.ph[aria-hidden="true"]') as HTMLElement;
+
+  const ALL_VARIANTS = ['primary', 'secondary', 'success', 'warning', 'danger'] as const;
+  const ALL_SIZES = ['small', 'medium', 'large'] as const;
+  const ALL_APPEARANCES = ['filled', 'outline', 'rounded', 'text'] as const;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -230,6 +234,49 @@ describe('PshButtonComponent', () => {
 
         expect(getButton().getAttribute('aria-label')).toBe('Custom label');
       });
+
+      it('should prioritize explicit ariaLabel over disabled state', () => {
+        fixture.componentRef.setInput('ariaLabel', 'Custom disabled label');
+        fixture.componentRef.setInput('disabled', true);
+        fixture.detectChanges();
+
+        expect(getButton().getAttribute('aria-label')).toBe('Custom disabled label');
+      });
+
+      it('should prioritize explicit ariaLabel over iconOnly', () => {
+        fixture.componentRef.setInput('ariaLabel', 'Custom icon label');
+        fixture.componentRef.setInput('iconPosition', 'only');
+        fixture.componentRef.setInput('iconOnlyText', 'Icon only text');
+        fixture.detectChanges();
+
+        expect(getButton().getAttribute('aria-label')).toBe('Custom icon label');
+      });
+
+      it('should prioritize loadingText over disabledText when both loading and disabled', () => {
+        fixture.componentRef.setInput('loading', true);
+        fixture.componentRef.setInput('disabled', true);
+        fixture.detectChanges();
+
+        expect(getButton().getAttribute('aria-label')).toBe('Loading...');
+      });
+
+      it('should prioritize disabledText over iconOnlyText when disabled and iconOnly', () => {
+        fixture.componentRef.setInput('disabled', true);
+        fixture.componentRef.setInput('iconPosition', 'only');
+        fixture.componentRef.setInput('iconOnlyText', 'Icon action');
+        fixture.detectChanges();
+
+        expect(getButton().getAttribute('aria-label')).toBe('This action is currently unavailable');
+      });
+
+      it('should prioritize loadingText over iconOnlyText when loading and iconOnly', () => {
+        fixture.componentRef.setInput('loading', true);
+        fixture.componentRef.setInput('iconPosition', 'only');
+        fixture.componentRef.setInput('iconOnlyText', 'Icon action');
+        fixture.detectChanges();
+
+        expect(getButton().getAttribute('aria-label')).toBe('Loading...');
+      });
     });
 
     describe('aria-busy attribute', () => {
@@ -313,6 +360,40 @@ describe('PshButtonComponent', () => {
 
       expect(getIcon()).toBeFalsy();
     });
+
+    it('should have correct icon class format with ph prefix', () => {
+      fixture.componentRef.setInput('icon', 'heart');
+      fixture.detectChanges();
+
+      const icon = getIcon();
+      expect(icon).toBeTruthy();
+      expect(icon.classList.contains('ph')).toBe(true);
+      expect(icon.classList.contains('ph-heart')).toBe(true);
+    });
+
+    it('should render icon before content when iconPosition is left', () => {
+      fixture.componentRef.setInput('icon', 'heart');
+      fixture.componentRef.setInput('iconPosition', 'left');
+      fixture.detectChanges();
+
+      const buttonContent = fixture.nativeElement.querySelector('.button-content');
+      const children = Array.from(buttonContent.children) as HTMLElement[];
+      const iconIndex = children.findIndex(el => el.tagName === 'I' && el.classList.contains('ph'));
+      const contentIndex = children.findIndex(el => el.tagName === 'NG-CONTENT' || el.nodeName === '#text' || !el.classList.contains('ph'));
+
+      expect(iconIndex).toBeLessThan(contentIndex === -1 ? children.length : contentIndex);
+    });
+
+    it('should render icon after content when iconPosition is right', () => {
+      fixture.componentRef.setInput('icon', 'heart');
+      fixture.componentRef.setInput('iconPosition', 'right');
+      fixture.detectChanges();
+
+      const buttonContent = fixture.nativeElement.querySelector('.button-content');
+      const icon = buttonContent.querySelector('i.ph');
+      expect(icon).toBeTruthy();
+      expect(icon.previousElementSibling).toBeFalsy();
+    });
   });
 
   describe('Variant classes', () => {
@@ -343,6 +424,22 @@ describe('PshButtonComponent', () => {
       expect(getButton().classList.contains('danger')).toBe(true);
       expect(getButton().classList.contains('primary')).toBe(false);
     });
+
+    it.each<[ButtonVariant]>([
+      ['primary'],
+      ['secondary'],
+      ['success'],
+      ['warning'],
+      ['danger']
+    ])('should only have "%s" variant class and no other variant classes', (variant) => {
+      fixture.componentRef.setInput('variant', variant);
+      fixture.detectChanges();
+
+      const otherVariants = ALL_VARIANTS.filter(v => v !== variant);
+      otherVariants.forEach(otherVariant => {
+        expect(getButton().classList.contains(otherVariant)).toBe(false);
+      });
+    });
   });
 
   describe('Size classes', () => {
@@ -359,6 +456,19 @@ describe('PshButtonComponent', () => {
     it('should have medium size by default', () => {
       expect(getButton().classList.contains('medium')).toBe(true);
     });
+
+    it.each<[ButtonSize]>([['small'], ['medium'], ['large']])(
+      'should only have "%s" size class and no other size classes',
+      (size) => {
+        fixture.componentRef.setInput('size', size);
+        fixture.detectChanges();
+
+        const otherSizes = ALL_SIZES.filter(s => s !== size);
+        otherSizes.forEach(otherSize => {
+          expect(getButton().classList.contains(otherSize)).toBe(false);
+        });
+      }
+    );
   });
 
   describe('Appearance classes', () => {
@@ -375,6 +485,19 @@ describe('PshButtonComponent', () => {
     it('should have filled appearance by default', () => {
       expect(getButton().classList.contains('filled')).toBe(true);
     });
+
+    it.each<[ButtonAppearance]>([['filled'], ['outline'], ['rounded'], ['text']])(
+      'should only have "%s" appearance class and no other appearance classes',
+      (appearance) => {
+        fixture.componentRef.setInput('appearance', appearance);
+        fixture.detectChanges();
+
+        const otherAppearances = ALL_APPEARANCES.filter(a => a !== appearance);
+        otherAppearances.forEach(otherAppearance => {
+          expect(getButton().classList.contains(otherAppearance)).toBe(false);
+        });
+      }
+    );
   });
 
   describe('State classes', () => {
@@ -397,6 +520,79 @@ describe('PshButtonComponent', () => {
       fixture.detectChanges();
 
       expect(getButton().classList.contains('icon-only')).toBe(true);
+    });
+  });
+
+  describe('Combined states', () => {
+    it('should handle disabled + loading + iconOnly simultaneously', () => {
+      fixture.componentRef.setInput('disabled', true);
+      fixture.componentRef.setInput('loading', true);
+      fixture.componentRef.setInput('iconPosition', 'only');
+      fixture.componentRef.setInput('icon', 'heart');
+      fixture.detectChanges();
+
+      const button = getButton();
+      expect(button.disabled).toBe(true);
+      expect(button.getAttribute('data-state')).toBe('disabled');
+      expect(button.classList.contains('icon-only')).toBe(true);
+      expect(button.classList.contains('loading')).toBe(true);
+      expect(button.classList.contains('disabled')).toBe(true);
+    });
+
+    it('should maintain disabled state when loading changes after disabled is set', () => {
+      fixture.componentRef.setInput('disabled', true);
+      fixture.detectChanges();
+      expect(getButton().getAttribute('data-state')).toBe('disabled');
+
+      fixture.componentRef.setInput('loading', true);
+      fixture.detectChanges();
+      expect(getButton().getAttribute('data-state')).toBe('disabled');
+
+      fixture.componentRef.setInput('loading', false);
+      fixture.detectChanges();
+      expect(getButton().getAttribute('data-state')).toBe('disabled');
+    });
+
+    it('should return to default state when all special states are cleared', () => {
+      fixture.componentRef.setInput('disabled', true);
+      fixture.componentRef.setInput('loading', true);
+      fixture.detectChanges();
+      expect(getButton().getAttribute('data-state')).toBe('disabled');
+
+      fixture.componentRef.setInput('disabled', false);
+      fixture.componentRef.setInput('loading', false);
+      fixture.detectChanges();
+      expect(getButton().getAttribute('data-state')).toBe('default');
+    });
+  });
+
+  describe('Loader behavior', () => {
+    it('should show spinner loader for icon-only buttons when loading', () => {
+      fixture.componentRef.setInput('loading', true);
+      fixture.componentRef.setInput('iconPosition', 'only');
+      fixture.componentRef.setInput('icon', 'heart');
+      fixture.detectChanges();
+
+      expect(getLoader()).toBeTruthy();
+    });
+
+    it('should hide text but show spinner for icon-only loading buttons', () => {
+      fixture.componentRef.setInput('loading', true);
+      fixture.componentRef.setInput('iconPosition', 'only');
+      fixture.detectChanges();
+
+      expect(getLoader()).toBeTruthy();
+      const buttonText = getButton().textContent?.trim();
+      expect(buttonText).toBe('');
+    });
+
+    it('should show both spinner and text for regular loading buttons', () => {
+      fixture.componentRef.setInput('loading', true);
+      fixture.componentRef.setInput('loadingText', 'Saving...');
+      fixture.detectChanges();
+
+      expect(getLoader()).toBeTruthy();
+      expect(getButton().textContent).toContain('Saving...');
     });
   });
 });
