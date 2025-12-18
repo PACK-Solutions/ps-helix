@@ -42,7 +42,7 @@ import { PshAlertComponent } from 'ps-helix';
 
 ## API
 
-### Model Inputs (@model)
+### Inputs
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
 | type | AlertType | 'info' | Type d'alerte |
@@ -50,16 +50,12 @@ import { PshAlertComponent } from 'ps-helix';
 | closable | boolean | false | Affiche un bouton de fermeture |
 | size | AlertSize | 'medium' | Taille de l'alerte |
 | showIcon | boolean | true | Affiche ou masque l'icône |
-| role | AlertRole | 'alert' | Rôle ARIA |
-
-### Regular Inputs (@input)
-| Nom | Type | Description |
-|-----|------|-------------|
-| icon | string | Nom de l'icône Phosphor |
-| ariaLabel | string | Label ARIA personnalisé |
-| dismissLabel | string | Label du bouton de fermeture |
-| ariaLive | 'polite' \| 'assertive' | Niveau de politesse ARIA |
-| content | string | Contenu de l'alerte |
+| icon | string | - | Nom de l'icône Phosphor (auto selon type si non défini) |
+| role | AlertRole | auto | Rôle ARIA (auto: 'alert' pour warning/danger, 'status' pour info/success) |
+| ariaLabel | string | - | Label ARIA personnalisé |
+| dismissLabel | string | 'Dismiss alert' | Label du bouton de fermeture |
+| ariaLive | 'polite' \| 'assertive' | auto | Niveau de politesse ARIA (auto: 'assertive' pour warning/danger, 'polite' pour info/success) |
+| content | string | '' | Contenu de l'alerte (alternative à ng-content) |
 
 ### Outputs
 | Nom | Type | Description |
@@ -85,8 +81,18 @@ const DEFAULT_CONFIG = {
   iconPosition: 'left',
   closable: false,
   size: 'medium',
-  showIcon: true,
-  role: 'alert'
+  showIcon: true
+};
+
+const DEFAULT_LABELS = {
+  dismiss: 'Dismiss alert'
+};
+
+const DEFAULT_ICONS = {
+  info: 'info',
+  success: 'check-circle',
+  warning: 'warning',
+  danger: 'warning-octagon'
 };
 ```
 
@@ -141,17 +147,29 @@ const DEFAULT_CONFIG = {
 
 ## Accessibilité
 
+### Comportement Automatique
+
+Le composant calcule automatiquement les attributs ARIA en fonction du type d'alerte :
+
+| Type | role | aria-live |
+|------|------|-----------|
+| info | status | polite |
+| success | status | polite |
+| warning | alert | assertive |
+| danger | alert | assertive |
+
+Ces valeurs peuvent être surchargées via les inputs `role` et `ariaLive`.
+
 ### Rôles ARIA
-- `role="alert"`: Pour les messages importants nécessitant l'attention immédiate
-- `role="status"`: Pour les messages informatifs non critiques
+- `role="alert"`: Pour les messages importants nécessitant l'attention immédiate (warning, danger)
+- `role="status"`: Pour les messages informatifs non critiques (info, success)
 
 ### Attributs ARIA
 - `aria-label`: Label personnalisé pour les lecteurs d'écran
 - `aria-live`: Contrôle la priorité des annonces ('polite' ou 'assertive')
-- `aria-describedby`: Relie l'alerte à des descriptions supplémentaires
 
 ### Bonnes Pratiques
-- Utiliser le rôle approprié selon l'importance du message
+- Laisser le calcul automatique des rôles ARIA sauf besoin specifique
 - Fournir des labels clairs et descriptifs
 - Gérer correctement la fermeture avec le clavier
 
