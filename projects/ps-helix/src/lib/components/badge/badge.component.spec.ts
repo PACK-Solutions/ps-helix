@@ -28,7 +28,7 @@ describe('PshBadgeComponent', () => {
   });
 
   describe('Content rendering', () => {
-    it('should render content input for counter display type', () => {
+    it('should show content as fallback when counter has no value', () => {
       fixture.componentRef.setInput('displayType', 'counter');
       fixture.componentRef.setInput('content', 'New');
       fixture.detectChanges();
@@ -105,6 +105,41 @@ describe('PshBadgeComponent', () => {
       fixture.detectChanges();
 
       expect(getBadgeElement().textContent?.trim()).toBe('custom');
+    });
+
+    it('should display exact value when value equals max', () => {
+      fixture.componentRef.setInput('value', 99);
+      fixture.componentRef.setInput('max', 99);
+      fixture.detectChanges();
+
+      expect(getBadgeElement().textContent?.trim()).toBe('99');
+    });
+
+    it('should hide negative values like zero (counters cannot be negative)', () => {
+      fixture.componentRef.setInput('value', -5);
+      fixture.componentRef.setInput('content', 'Fallback');
+      fixture.detectChanges();
+
+      expect(getBadgeElement().textContent?.trim()).toBe('Fallback');
+    });
+
+    it('should use formatter return value even if empty string', () => {
+      const formatter = () => '';
+      fixture.componentRef.setInput('value', 5);
+      fixture.componentRef.setInput('formatter', formatter);
+      fixture.detectChanges();
+
+      expect(getBadgeElement().textContent?.trim()).toBe('');
+    });
+
+    it('should ignore max when custom formatter is provided', () => {
+      const formatter = (val: number) => `Count: ${val}`;
+      fixture.componentRef.setInput('value', 150);
+      fixture.componentRef.setInput('max', 99);
+      fixture.componentRef.setInput('formatter', formatter);
+      fixture.detectChanges();
+
+      expect(getBadgeElement().textContent?.trim()).toBe('Count: 150');
     });
   });
 
@@ -290,5 +325,39 @@ describe('PshBadgeComponent with ng-content', () => {
     hostFixture.detectChanges();
 
     expect(getBadgeElement().textContent?.trim()).toBe('Updated Badge');
+  });
+});
+
+@Component({
+  selector: 'test-host-with-content-input',
+  imports: [PshBadgeComponent],
+  template: `<psh-badge [displayType]="'text'" [content]="contentInput">Projected</psh-badge>`
+})
+class TestHostWithContentInputComponent {
+  contentInput = 'Content Input Value';
+}
+
+describe('PshBadgeComponent text displayType behavior', () => {
+  let hostFixture: ComponentFixture<TestHostWithContentInputComponent>;
+
+  const getBadgeElement = () =>
+    hostFixture.nativeElement.querySelector('[role="img"]') as HTMLElement;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [TestHostWithContentInputComponent]
+    }).compileComponents();
+
+    hostFixture = TestBed.createComponent(TestHostWithContentInputComponent);
+    hostFixture.detectChanges();
+  });
+
+  it('should display ng-content, not content input, for text displayType', () => {
+    expect(getBadgeElement().textContent?.trim()).toBe('Projected');
+    expect(getBadgeElement().textContent).not.toContain('Content Input Value');
+  });
+
+  it('should use content input for aria-label even when ng-content is displayed', () => {
+    expect(getBadgeElement().getAttribute('aria-label')).toBe('Content Input Value');
   });
 });
