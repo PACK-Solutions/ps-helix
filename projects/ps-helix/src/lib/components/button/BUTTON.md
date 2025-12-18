@@ -50,7 +50,7 @@ import { PshButtonComponent } from 'ps-helix';
 
 ## API
 
-### Model Inputs (@model)
+### Inputs
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
 | appearance | ButtonAppearance | 'filled' | Apparence du bouton |
@@ -60,15 +60,12 @@ import { PshButtonComponent } from 'ps-helix';
 | loading | boolean | false | État de chargement |
 | fullWidth | boolean | false | Largeur complète |
 | iconPosition | ButtonIconPosition | 'left' | Position de l'icône |
-
-### Regular Inputs (@input)
-| Nom | Type | Défaut | Description |
-|-----|------|---------|-------------|
 | icon | string | undefined | Nom de l'icône Phosphor |
 | ariaLabel | string | undefined | Label ARIA personnalisé |
 | loadingText | string | 'Loading...' | Texte de chargement |
-| disabledText | string | 'Unavailable' | Texte désactivé |
+| disabledText | string | 'This action is currently unavailable' | Texte pour lecteurs d'écran quand désactivé |
 | iconOnlyText | string | undefined | Label pour icône seule |
+| type | 'button' \| 'submit' \| 'reset' | 'button' | Type HTML du bouton |
 
 ### Outputs
 | Nom | Type | Description |
@@ -82,6 +79,7 @@ type ButtonAppearance = 'filled' | 'outline' | 'rounded' | 'text';
 type ButtonVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
 type ButtonSize = 'small' | 'medium' | 'large';
 type ButtonIconPosition = 'left' | 'right' | 'only';
+type ButtonType = 'button' | 'submit' | 'reset';
 ```
 
 ## Apparences
@@ -487,6 +485,16 @@ Utilisez n'importe quelle icône de [Phosphor Icons](https://phosphoricons.com/)
     Enregistrer
   </psh-button>
 </div>
+
+<!-- Avec type submit pour formulaires natifs -->
+<form (ngSubmit)="onSubmit()">
+  <psh-button type="reset" appearance="outline" variant="secondary">
+    Réinitialiser
+  </psh-button>
+  <psh-button type="submit" variant="primary" [disabled]="!form.valid">
+    Soumettre
+  </psh-button>
+</form>
 ```
 
 ### Boutons d'action de table
@@ -554,7 +562,6 @@ import { PshButtonComponent } from 'ps-helix';
 
 @Component({
   selector: 'app-example',
-  standalone: true,
   imports: [PshButtonComponent],
   template: `
     <psh-button
