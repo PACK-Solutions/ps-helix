@@ -63,20 +63,17 @@ export class AlertsDemoComponent {
   fullExampleCode = `import { PshAlertComponent } from 'ps-helix';
 
 @Component({
-  standalone: true,
   imports: [PshAlertComponent],
   template: \`
     <psh-alert
       type="success"
       icon="check-circle"
       size="large"
-      role="status"
-      ariaLive="polite"
-      ariaLabel="Profil mis à jour avec succès"
+      ariaLabel="Profil mis a jour avec succes"
       [closable]="true"
       (closed)="handleAlertClose()"
     >
-      Votre profil a été mis à jour avec succès
+      Votre profil a ete mis a jour avec succes
     </psh-alert>
   \`
 })
