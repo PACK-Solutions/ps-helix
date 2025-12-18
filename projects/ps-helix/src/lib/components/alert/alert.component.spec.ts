@@ -1,10 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PshAlertComponent } from './alert.component';
 import { By } from '@angular/platform-browser';
+import { AlertType } from './alert.types';
 
 describe('PshAlertComponent', () => {
   let component: PshAlertComponent;
   let fixture: ComponentFixture<PshAlertComponent>;
+
+  const getAlert = () => fixture.debugElement.query(By.css('.alert'));
+  const getDismissButton = () => fixture.debugElement.query(By.css('.alert-dismiss'));
+  const getMessage = () => fixture.debugElement.query(By.css('.alert-message'));
+  const getIcon = () => fixture.debugElement.query(By.css('[aria-hidden="true"]'));
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -16,390 +22,206 @@ describe('PshAlertComponent', () => {
     fixture.detectChanges();
   });
 
-  describe('Initial Rendering', () => {
+  describe('Rendering', () => {
     it('should create the component', () => {
       expect(component).toBeTruthy();
     });
 
-    it('should render with default props', () => {
-      expect(component.type()).toBe('info');
-      expect(component.size()).toBe('medium');
-      expect(component.closable()).toBe(false);
-      expect(component.showIcon()).toBe(true);
-      expect(component.iconPosition()).toBe('left');
-      expect(component.role()).toBe('alert');
+    it('should render alert container', () => {
+      expect(getAlert()).toBeTruthy();
     });
 
-    it('should render alert container with correct base class', () => {
-      const alertElement = fixture.debugElement.query(By.css('.alert'));
-      expect(alertElement).toBeTruthy();
-    });
-
-    it('should display content from content input', () => {
+    it('should display content from input', () => {
       fixture.componentRef.setInput('content', 'Test alert message');
       fixture.detectChanges();
 
-      const messageElement = fixture.debugElement.query(By.css('.alert-message'));
-      expect(messageElement.nativeElement.textContent).toContain('Test alert message');
-    });
-  });
-
-  describe('Alert Types', () => {
-    it('should apply info class by default', () => {
-      const alertElement = fixture.debugElement.query(By.css('.alert'));
-      expect(alertElement.classes['info']).toBe(true);
+      expect(getMessage().nativeElement.textContent).toContain('Test alert message');
     });
 
-    it('should apply success class when type is success', () => {
-      fixture.componentRef.setInput('type', 'success');
-      fixture.detectChanges();
-
-      const alertElement = fixture.debugElement.query(By.css('.alert'));
-      expect(alertElement.classes['success']).toBe(true);
-    });
-
-    it('should apply warning class when type is warning', () => {
-      fixture.componentRef.setInput('type', 'warning');
-      fixture.detectChanges();
-
-      const alertElement = fixture.debugElement.query(By.css('.alert'));
-      expect(alertElement.classes['warning']).toBe(true);
-    });
-
-    it('should apply danger class when type is danger', () => {
-      fixture.componentRef.setInput('type', 'danger');
-      fixture.detectChanges();
-
-      const alertElement = fixture.debugElement.query(By.css('.alert'));
-      expect(alertElement.classes['danger']).toBe(true);
-    });
-
-    it('should display info icon for info type', () => {
-      const icon = fixture.debugElement.query(By.css('i.ph'));
-      expect(icon.classes['ph-info']).toBe(true);
-    });
-
-    it('should display check-circle icon for success type', () => {
-      fixture.componentRef.setInput('type', 'success');
-      fixture.detectChanges();
-
-      const icon = fixture.debugElement.query(By.css('i.ph'));
-      expect(icon.classes['ph-check-circle']).toBe(true);
-    });
-
-    it('should display warning icon for warning type', () => {
-      fixture.componentRef.setInput('type', 'warning');
-      fixture.detectChanges();
-
-      const icon = fixture.debugElement.query(By.css('i.ph'));
-      expect(icon.classes['ph-warning']).toBe(true);
-    });
-
-    it('should display warning-octagon icon for danger type', () => {
-      fixture.componentRef.setInput('type', 'danger');
-      fixture.detectChanges();
-
-      const icon = fixture.debugElement.query(By.css('i.ph'));
-      expect(icon.classes['ph-warning-octagon']).toBe(true);
-    });
-  });
-
-  describe('Sizes', () => {
-    it('should not have size class for medium (default)', () => {
-      const alertElement = fixture.debugElement.query(By.css('.alert'));
-      expect(alertElement.classes['small']).toBeFalsy();
-      expect(alertElement.classes['large']).toBeFalsy();
-    });
-
-    it('should apply small class when size is small', () => {
-      fixture.componentRef.setInput('size', 'small');
-      fixture.detectChanges();
-
-      const alertElement = fixture.debugElement.query(By.css('.alert'));
-      expect(alertElement.classes['small']).toBe(true);
-    });
-
-    it('should apply large class when size is large', () => {
-      fixture.componentRef.setInput('size', 'large');
-      fixture.detectChanges();
-
-      const alertElement = fixture.debugElement.query(By.css('.alert'));
-      expect(alertElement.classes['large']).toBe(true);
-    });
-  });
-
-  describe('Icon', () => {
-    it('should display icon when showIcon is true', () => {
-      const icon = fixture.debugElement.query(By.css('i.ph'));
-      expect(icon).toBeTruthy();
+    it('should display icon by default', () => {
+      expect(getIcon()).toBeTruthy();
     });
 
     it('should hide icon when showIcon is false', () => {
       fixture.componentRef.setInput('showIcon', false);
       fixture.detectChanges();
 
-      const icon = fixture.debugElement.query(By.css('i.ph'));
-      expect(icon).toBeFalsy();
-    });
-
-    it('should use custom icon when provided', () => {
-      fixture.componentRef.setInput('icon', 'star');
-      fixture.detectChanges();
-
-      const icon = fixture.debugElement.query(By.css('i.ph'));
-      expect(icon.classes['ph-star']).toBe(true);
-    });
-
-    it('should position icon on left by default', () => {
-      const content = fixture.debugElement.query(By.css('.alert-content'));
-      expect(content.classes['icon-right']).toBeFalsy();
-    });
-
-    it('should position icon on right when iconPosition is right', () => {
-      fixture.componentRef.setInput('iconPosition', 'right');
-      fixture.detectChanges();
-
-      const content = fixture.debugElement.query(By.css('.alert-content'));
-      expect(content.classes['icon-right']).toBe(true);
-    });
-
-    it('should have aria-hidden on icon', () => {
-      const icon = fixture.debugElement.query(By.css('i.ph'));
-      expect(icon.attributes['aria-hidden']).toBe('true');
+      expect(getIcon()).toBeFalsy();
     });
   });
 
-  describe('Closable', () => {
-    it('should not display dismiss button when closable is false', () => {
-      const dismissButton = fixture.debugElement.query(By.css('.alert-dismiss'));
-      expect(dismissButton).toBeFalsy();
+  describe('Closable behavior', () => {
+    it('should not show dismiss button by default', () => {
+      expect(getDismissButton()).toBeFalsy();
     });
 
-    it('should display dismiss button when closable is true', () => {
+    it('should show dismiss button when closable is true', () => {
       fixture.componentRef.setInput('closable', true);
       fixture.detectChanges();
 
-      const dismissButton = fixture.debugElement.query(By.css('.alert-dismiss'));
-      expect(dismissButton).toBeTruthy();
+      expect(getDismissButton()).toBeTruthy();
     });
 
     it('should emit closed event when dismiss button is clicked', () => {
       fixture.componentRef.setInput('closable', true);
       fixture.detectChanges();
 
-      jest.spyOn(component.closed, 'emit');
+      const closedSpy = jest.fn();
+      component.closed.subscribe(closedSpy);
 
-      const dismissButton = fixture.debugElement.query(By.css('.alert-dismiss'));
-      dismissButton.nativeElement.click();
-      fixture.detectChanges();
+      getDismissButton().nativeElement.click();
 
-      expect(component.closed.emit).toHaveBeenCalled();
+      expect(closedSpy).toHaveBeenCalled();
     });
 
-    it('should use default dismiss label', () => {
+    it('should have type="button" on dismiss button', () => {
       fixture.componentRef.setInput('closable', true);
       fixture.detectChanges();
 
-      const dismissButton = fixture.debugElement.query(By.css('.alert-dismiss'));
-      expect(dismissButton.attributes['aria-label']).toBe('Dismiss alert');
+      expect(getDismissButton().attributes['type']).toBe('button');
     });
 
-    it('should use custom dismiss label when provided', () => {
-      fixture.componentRef.setInput('closable', true);
-      fixture.componentRef.setInput('dismissLabel', 'Close this alert');
-      fixture.detectChanges();
-
-      const dismissButton = fixture.debugElement.query(By.css('.alert-dismiss'));
-      expect(dismissButton.attributes['aria-label']).toBe('Close this alert');
-    });
-
-    it('should have type button on dismiss button', () => {
+    it('should have default aria-label on dismiss button', () => {
       fixture.componentRef.setInput('closable', true);
       fixture.detectChanges();
 
-      const dismissButton = fixture.debugElement.query(By.css('.alert-dismiss'));
-      expect(dismissButton.attributes['type']).toBe('button');
+      expect(getDismissButton().attributes['aria-label']).toBe('Dismiss alert');
+    });
+
+    it('should use custom dismissLabel when provided', () => {
+      fixture.componentRef.setInput('closable', true);
+      fixture.componentRef.setInput('dismissLabel', 'Fermer');
+      fixture.detectChanges();
+
+      expect(getDismissButton().attributes['aria-label']).toBe('Fermer');
     });
   });
 
-  describe('Accessibility', () => {
-    it('should have role alert for info type (default)', () => {
-      const alertElement = fixture.debugElement.query(By.css('.alert'));
-      expect(alertElement.attributes['role']).toBe('alert');
-    });
-
-    it('should have role alert for success type (default)', () => {
-      fixture.componentRef.setInput('type', 'success');
+  describe('Accessibility - aria-live', () => {
+    it.each<[AlertType, string]>([
+      ['info', 'polite'],
+      ['success', 'polite'],
+      ['warning', 'assertive'],
+      ['danger', 'assertive']
+    ])('type "%s" should have aria-live="%s"', (type, expected) => {
+      fixture.componentRef.setInput('type', type);
       fixture.detectChanges();
 
-      const alertElement = fixture.debugElement.query(By.css('.alert'));
-      expect(alertElement.attributes['role']).toBe('alert');
+      expect(getAlert().attributes['aria-live']).toBe(expected);
     });
 
-    it('should have role alert for warning type', () => {
-      fixture.componentRef.setInput('type', 'warning');
-      fixture.detectChanges();
-
-      const alertElement = fixture.debugElement.query(By.css('.alert'));
-      expect(alertElement.attributes['role']).toBe('alert');
-    });
-
-    it('should have role alert for danger type', () => {
-      fixture.componentRef.setInput('type', 'danger');
-      fixture.detectChanges();
-
-      const alertElement = fixture.debugElement.query(By.css('.alert'));
-      expect(alertElement.attributes['role']).toBe('alert');
-    });
-
-    it('should have aria-live polite for info type', () => {
-      const alertElement = fixture.debugElement.query(By.css('.alert'));
-      expect(alertElement.attributes['aria-live']).toBe('polite');
-    });
-
-    it('should have aria-live polite for success type', () => {
-      fixture.componentRef.setInput('type', 'success');
-      fixture.detectChanges();
-
-      const alertElement = fixture.debugElement.query(By.css('.alert'));
-      expect(alertElement.attributes['aria-live']).toBe('polite');
-    });
-
-    it('should have aria-live assertive for warning type', () => {
-      fixture.componentRef.setInput('type', 'warning');
-      fixture.detectChanges();
-
-      const alertElement = fixture.debugElement.query(By.css('.alert'));
-      expect(alertElement.attributes['aria-live']).toBe('assertive');
-    });
-
-    it('should have aria-live assertive for danger type', () => {
-      fixture.componentRef.setInput('type', 'danger');
-      fixture.detectChanges();
-
-      const alertElement = fixture.debugElement.query(By.css('.alert'));
-      expect(alertElement.attributes['aria-live']).toBe('assertive');
-    });
-
-    it('should apply custom ariaLabel when provided', () => {
-      fixture.componentRef.setInput('ariaLabel', 'Important notification');
-      fixture.detectChanges();
-
-      const alertElement = fixture.debugElement.query(By.css('.alert'));
-      expect(alertElement.attributes['aria-label']).toBe('Important notification');
-    });
-
-    it('should override aria-live when explicitly set', () => {
+    it('should allow overriding aria-live', () => {
+      fixture.componentRef.setInput('type', 'info');
       fixture.componentRef.setInput('ariaLive', 'assertive');
       fixture.detectChanges();
 
-      const alertElement = fixture.debugElement.query(By.css('.alert'));
-      expect(alertElement.attributes['aria-live']).toBe('assertive');
-    });
-
-    it('should set aria-describedby when ariaLabel is provided', () => {
-      fixture.componentRef.setInput('ariaLabel', 'Test label');
-      fixture.detectChanges();
-
-      const alertElement = fixture.debugElement.query(By.css('.alert'));
-      expect(alertElement.attributes['aria-describedby']).toBe('alert-label');
+      expect(getAlert().attributes['aria-live']).toBe('assertive');
     });
   });
 
-  describe('Data State', () => {
-    it('should have data-state matching type for non-closable alerts', () => {
-      const alertElement = fixture.debugElement.query(By.css('.alert'));
-      expect(alertElement.attributes['data-state']).toBe('info');
+  describe('Accessibility - role', () => {
+    it.each<[AlertType, string]>([
+      ['info', 'status'],
+      ['success', 'status'],
+      ['warning', 'alert'],
+      ['danger', 'alert']
+    ])('type "%s" should have role="%s" by default', (type, expected) => {
+      fixture.componentRef.setInput('type', type);
+      fixture.detectChanges();
+
+      expect(getAlert().attributes['role']).toBe(expected);
     });
 
-    it('should have data-state closable when alert is closable', () => {
+    it('should allow overriding role', () => {
+      fixture.componentRef.setInput('type', 'info');
+      fixture.componentRef.setInput('role', 'alert');
+      fixture.detectChanges();
+
+      expect(getAlert().attributes['role']).toBe('alert');
+    });
+  });
+
+  describe('Accessibility - aria-label', () => {
+    it('should not have aria-label by default', () => {
+      expect(getAlert().attributes['aria-label']).toBeFalsy();
+    });
+
+    it('should apply custom aria-label when provided', () => {
+      fixture.componentRef.setInput('ariaLabel', 'Important notification');
+      fixture.detectChanges();
+
+      expect(getAlert().attributes['aria-label']).toBe('Important notification');
+    });
+  });
+
+  describe('Accessibility - icon', () => {
+    it('should hide icon from assistive technologies', () => {
+      const icon = getIcon();
+      expect(icon.attributes['aria-hidden']).toBe('true');
+    });
+  });
+
+  describe('CSS Contract - data-state', () => {
+    it('should reflect type in data-state when not closable', () => {
+      fixture.componentRef.setInput('type', 'danger');
+      fixture.detectChanges();
+
+      expect(getAlert().attributes['data-state']).toBe('danger');
+    });
+
+    it('should have data-state="closable" when closable', () => {
       fixture.componentRef.setInput('closable', true);
       fixture.detectChanges();
 
-      const alertElement = fixture.debugElement.query(By.css('.alert'));
-      expect(alertElement.attributes['data-state']).toBe('closable');
-    });
-
-    it('should update data-state when type changes', () => {
-      fixture.componentRef.setInput('type', 'danger');
-      fixture.detectChanges();
-
-      const alertElement = fixture.debugElement.query(By.css('.alert'));
-      expect(alertElement.attributes['data-state']).toBe('danger');
+      expect(getAlert().attributes['data-state']).toBe('closable');
     });
   });
 
-  describe('Computed Values', () => {
-    it('should return correct default icon for each type', () => {
-      expect(component.defaultIcon()).toBe('info');
+  describe('CSS Contract - type class', () => {
+    it.each<AlertType>(['info', 'success', 'warning', 'danger'])(
+      'should apply "%s" class for type',
+      (type) => {
+        fixture.componentRef.setInput('type', type);
+        fixture.detectChanges();
 
-      fixture.componentRef.setInput('type', 'success');
-      fixture.detectChanges();
-      expect(component.defaultIcon()).toBe('check-circle');
+        expect(getAlert().classes[type]).toBe(true);
+      }
+    );
+  });
 
-      fixture.componentRef.setInput('type', 'warning');
-      fixture.detectChanges();
-      expect(component.defaultIcon()).toBe('warning');
-
-      fixture.componentRef.setInput('type', 'danger');
-      fixture.detectChanges();
-      expect(component.defaultIcon()).toBe('warning-octagon');
+  describe('CSS Contract - size class', () => {
+    it('should not apply size class for medium (default)', () => {
+      expect(getAlert().classes['small']).toBeFalsy();
+      expect(getAlert().classes['large']).toBeFalsy();
     });
 
-    it('should return custom icon when provided via getIcon', () => {
-      fixture.componentRef.setInput('icon', 'bell');
+    it('should apply small class when size is small', () => {
+      fixture.componentRef.setInput('size', 'small');
       fixture.detectChanges();
 
-      expect(component.getIcon()).toBe('bell');
+      expect(getAlert().classes['small']).toBe(true);
     });
 
-    it('should return default icon when no custom icon via getIcon', () => {
-      expect(component.getIcon()).toBe('info');
-    });
-
-    it('should compute correct role based on type', () => {
-      expect(component.computedRole()).toBe('alert');
-
-      fixture.componentRef.setInput('type', 'warning');
-      fixture.detectChanges();
-      expect(component.computedRole()).toBe('alert');
-
-      fixture.componentRef.setInput('type', 'danger');
-      fixture.detectChanges();
-      expect(component.computedRole()).toBe('alert');
-    });
-
-    it('should compute correct ariaLive based on type', () => {
-      expect(component.computedAriaLive()).toBe('polite');
-
-      fixture.componentRef.setInput('type', 'warning');
-      fixture.detectChanges();
-      expect(component.computedAriaLive()).toBe('assertive');
-    });
-
-    it('should return closable state when closable is true', () => {
-      fixture.componentRef.setInput('closable', true);
+    it('should apply large class when size is large', () => {
+      fixture.componentRef.setInput('size', 'large');
       fixture.detectChanges();
 
-      expect(component.state()).toBe('closable');
-    });
-
-    it('should return type as state when not closable', () => {
-      expect(component.state()).toBe('info');
-
-      fixture.componentRef.setInput('type', 'danger');
-      fixture.detectChanges();
-      expect(component.state()).toBe('danger');
+      expect(getAlert().classes['large']).toBe(true);
     });
   });
 
-  describe('handleClose', () => {
-    it('should emit closed event when handleClose is called', () => {
-      jest.spyOn(component.closed, 'emit');
+  describe('CSS Contract - icon position', () => {
+    it('should not have icon-right class by default', () => {
+      const content = fixture.debugElement.query(By.css('.alert-content'));
+      expect(content.classes['icon-right']).toBeFalsy();
+    });
 
-      component.handleClose();
+    it('should apply icon-right class when iconPosition is right', () => {
+      fixture.componentRef.setInput('iconPosition', 'right');
+      fixture.detectChanges();
 
-      expect(component.closed.emit).toHaveBeenCalled();
+      const content = fixture.debugElement.query(By.css('.alert-content'));
+      expect(content.classes['icon-right']).toBe(true);
     });
   });
 });

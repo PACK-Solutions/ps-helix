@@ -21,14 +21,12 @@ const DEFAULT_ICONS: Record<string, string> = {
   danger: 'warning-octagon'
 };
 
-// Default alert configuration
 const DEFAULT_CONFIG = {
   type: 'info' as AlertType,
   iconPosition: 'left' as IconPosition,
   closable: false,
   size: 'medium' as AlertSize,
-  showIcon: true,
-  role: 'alert' as AlertRole
+  showIcon: true
 };
 
 @Component({
@@ -46,7 +44,7 @@ export class PshAlertComponent {
   closable = input(DEFAULT_CONFIG.closable);
   size = input<AlertSize>(DEFAULT_CONFIG.size);
   showIcon = input(DEFAULT_CONFIG.showIcon);
-  role = input<AlertRole>(DEFAULT_CONFIG.role);
+  role = input<AlertRole>();
   icon = input<string>();
   ariaLabel = input<string>();
   dismissLabel = input(DEFAULT_LABELS.dismiss);
@@ -59,12 +57,6 @@ export class PshAlertComponent {
   // Computed values
   defaultIcon = computed(() => DEFAULT_ICONS[this.type()] || 'info');
   getIcon = computed(() => this.icon() || this.defaultIcon());
-
-  ariaDescribedBy = computed(() => {
-    const parts: string[] = [];
-    if (this.ariaLabel()) parts.push('alert-label');
-    return parts.length ? parts.join(' ') : undefined;
-  });
 
   computedAriaLive = computed(() => 
     this.ariaLive() || (['warning', 'danger'].includes(this.type()) ? 'assertive' : 'polite')
