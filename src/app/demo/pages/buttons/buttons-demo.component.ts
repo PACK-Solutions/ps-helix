@@ -60,7 +60,7 @@ export class ButtonsDemoComponent {
   iconOnlyCode = `<psh-button
   icon="plus"
   iconPosition="only"
-  ariaLabel="Ajouter"
+  iconOnlyText="Ajouter"
 />`;
 
   statesCode = `<psh-button

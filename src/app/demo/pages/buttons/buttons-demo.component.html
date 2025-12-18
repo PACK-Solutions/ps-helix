@@ -226,12 +226,12 @@
 
           <div class="icon-card">
             <div class="icon-preview">
-              <psh-button appearance="filled" variant="primary" icon="plus" iconPosition="only" ariaLabel="Ajouter un élément"></psh-button>
+              <psh-button appearance="filled" variant="primary" icon="plus" iconPosition="only" iconOnlyText="Ajouter un élément"></psh-button>
             </div>
             <div class="icon-info">
               <h4>Icône Seule</h4>
               <code class="icon-code">iconPosition="only"</code>
-              <p class="icon-usage">Bouton circulaire avec icône uniquement. Nécessite toujours un ariaLabel descriptif pour l'accessibilité.</p>
+              <p class="icon-usage">Bouton circulaire avec icône uniquement. Nécessite toujours un iconOnlyText descriptif pour l'accessibilité.</p>
               <ds-code-snippet [code]="iconOnlyCode" />
             </div>
           </div>
@@ -324,11 +324,11 @@
       <h3 class="section-title">Documentation API</h3>
       <div class="api-container">
         <div class="api-intro">
-          <p>Le composant Button utilise des <strong>model inputs</strong> et des <strong>input signals</strong> pour une API simple et performante, conforme aux standards Angular 20.</p>
+          <p>Le composant Button utilise des <strong>input signals</strong> pour une API simple et performante, conforme aux standards Angular 20.</p>
         </div>
 
         <div class="api-table-wrapper">
-          <h4>Propriétés (Model Inputs)</h4>
+          <h4>Inputs</h4>
           <table class="api-table">
             <thead>
               <tr>
@@ -358,6 +358,12 @@
                 <td>'small' | 'medium' | 'large'</td>
               </tr>
               <tr>
+                <td><code>type</code></td>
+                <td><code>'button' | 'submit' | 'reset'</code></td>
+                <td><code>'button'</code></td>
+                <td>Type HTML du bouton pour l'intégration avec les formulaires</td>
+              </tr>
+              <tr>
                 <td><code>disabled</code></td>
                 <td><code>boolean</code></td>
                 <td><code>false</code></td>
@@ -376,32 +382,16 @@
                 <td>Étend le bouton sur toute la largeur du conteneur</td>
               </tr>
               <tr>
-                <td><code>iconPosition</code></td>
-                <td><code>ButtonIconPosition</code></td>
-                <td><code>'left'</code></td>
-                <td>'left' | 'right' | 'only' - Position de l'icône</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="api-table-wrapper">
-          <h4>Propriétés (Input Signals)</h4>
-          <table class="api-table">
-            <thead>
-              <tr>
-                <th>Propriété</th>
-                <th>Type</th>
-                <th>Défaut</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
                 <td><code>icon</code></td>
                 <td><code>string | undefined</code></td>
                 <td><code>undefined</code></td>
                 <td>Nom de l'icône Phosphor à afficher</td>
+              </tr>
+              <tr>
+                <td><code>iconPosition</code></td>
+                <td><code>ButtonIconPosition</code></td>
+                <td><code>'left'</code></td>
+                <td>'left' | 'right' | 'only' - Position de l'icône</td>
               </tr>
               <tr>
                 <td><code>ariaLabel</code></td>
@@ -418,14 +408,14 @@
               <tr>
                 <td><code>disabledText</code></td>
                 <td><code>string</code></td>
-                <td><code>'Unavailable'</code></td>
+                <td><code>'This action is currently unavailable'</code></td>
                 <td>Texte descriptif pour l'état désactivé</td>
               </tr>
               <tr>
                 <td><code>iconOnlyText</code></td>
                 <td><code>string | undefined</code></td>
                 <td><code>undefined</code></td>
-                <td>Label pour les boutons avec icône seule</td>
+                <td>Label pour les boutons avec icône seule (obligatoire pour l'accessibilité)</td>
               </tr>
             </tbody>
           </table>
@@ -457,19 +447,18 @@
             <pre><code>import &#123; PshButtonComponent &#125; from 'ps-helix';
 
 &#64;Component(&#123;
-  standalone: true,
   imports: [PshButtonComponent],
   template: `
     &lt;psh-button
       appearance="filled"
       variant="primary"
       size="medium"
+      type="submit"
       icon="arrow-right"
       iconPosition="right"
       [disabled]="isFormInvalid"
       [loading]="isSubmitting"
       [fullWidth]="false"
-      ariaLabel="Continuer vers l'étape suivante"
       loadingText="Envoi en cours..."
       (clicked)="handleSubmit($event)"
     &gt;
@@ -483,7 +472,6 @@ export class MyComponent &#123;
 
   handleSubmit(event: MouseEvent): void &#123;
     this.isSubmitting = true;
-    // Logique de soumission
   &#125;
 &#125;</code></pre>
           </div>
@@ -493,7 +481,7 @@ export class MyComponent &#123;
           <h4>Bonnes Pratiques d'Accessibilité</h4>
           <ul class="best-practices-list">
             <li><strong>Labels descriptifs</strong> : Utilisez un texte clair décrivant l'action (évitez "Cliquez ici" ou "En savoir plus" sans contexte)</li>
-            <li><strong>Attribut ariaLabel</strong> : Obligatoire pour les boutons avec <code>iconPosition="only"</code> pour communiquer l'action aux lecteurs d'écran</li>
+            <li><strong>Attribut iconOnlyText</strong> : Obligatoire pour les boutons avec <code>iconPosition="only"</code> pour communiquer l'action aux lecteurs d'écran</li>
             <li><strong>États visuels</strong> : Maintenez un indicateur de focus visible avec un ratio de contraste minimum de 3:1 selon WCAG 2.1</li>
             <li><strong>Support clavier</strong> : Les boutons sont automatiquement accessibles via <code>Tab</code> (navigation), <code>Enter</code> et <code>Space</code> (activation)</li>
             <li><strong>Feedback d'état</strong> : Utilisez <code>aria-busy="true"</code> pendant le chargement et <code>aria-disabled="true"</code> pour l'état désactivé</li>
