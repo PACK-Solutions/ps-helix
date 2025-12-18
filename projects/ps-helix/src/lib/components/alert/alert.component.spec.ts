@@ -24,8 +24,8 @@ describe('PshAlertComponent', () => {
     it('should render with default props', () => {
       expect(component.type()).toBe('info');
       expect(component.size()).toBe('medium');
-      expect(component.closable()).toBeFalse();
-      expect(component.showIcon()).toBeTrue();
+      expect(component.closable()).toBe(false);
+      expect(component.showIcon()).toBe(true);
       expect(component.iconPosition()).toBe('left');
       expect(component.role()).toBe('alert');
     });
@@ -47,7 +47,7 @@ describe('PshAlertComponent', () => {
   describe('Alert Types', () => {
     it('should apply info class by default', () => {
       const alertElement = fixture.debugElement.query(By.css('.alert'));
-      expect(alertElement.classes['info']).toBeTrue();
+      expect(alertElement.classes['info']).toBe(true);
     });
 
     it('should apply success class when type is success', () => {
@@ -55,7 +55,7 @@ describe('PshAlertComponent', () => {
       fixture.detectChanges();
 
       const alertElement = fixture.debugElement.query(By.css('.alert'));
-      expect(alertElement.classes['success']).toBeTrue();
+      expect(alertElement.classes['success']).toBe(true);
     });
 
     it('should apply warning class when type is warning', () => {
@@ -63,7 +63,7 @@ describe('PshAlertComponent', () => {
       fixture.detectChanges();
 
       const alertElement = fixture.debugElement.query(By.css('.alert'));
-      expect(alertElement.classes['warning']).toBeTrue();
+      expect(alertElement.classes['warning']).toBe(true);
     });
 
     it('should apply danger class when type is danger', () => {
@@ -71,12 +71,12 @@ describe('PshAlertComponent', () => {
       fixture.detectChanges();
 
       const alertElement = fixture.debugElement.query(By.css('.alert'));
-      expect(alertElement.classes['danger']).toBeTrue();
+      expect(alertElement.classes['danger']).toBe(true);
     });
 
     it('should display info icon for info type', () => {
       const icon = fixture.debugElement.query(By.css('i.ph'));
-      expect(icon.classes['ph-info']).toBeTrue();
+      expect(icon.classes['ph-info']).toBe(true);
     });
 
     it('should display check-circle icon for success type', () => {
@@ -84,7 +84,7 @@ describe('PshAlertComponent', () => {
       fixture.detectChanges();
 
       const icon = fixture.debugElement.query(By.css('i.ph'));
-      expect(icon.classes['ph-check-circle']).toBeTrue();
+      expect(icon.classes['ph-check-circle']).toBe(true);
     });
 
     it('should display warning icon for warning type', () => {
@@ -92,7 +92,7 @@ describe('PshAlertComponent', () => {
       fixture.detectChanges();
 
       const icon = fixture.debugElement.query(By.css('i.ph'));
-      expect(icon.classes['ph-warning']).toBeTrue();
+      expect(icon.classes['ph-warning']).toBe(true);
     });
 
     it('should display warning-octagon icon for danger type', () => {
@@ -100,7 +100,7 @@ describe('PshAlertComponent', () => {
       fixture.detectChanges();
 
       const icon = fixture.debugElement.query(By.css('i.ph'));
-      expect(icon.classes['ph-warning-octagon']).toBeTrue();
+      expect(icon.classes['ph-warning-octagon']).toBe(true);
     });
   });
 
@@ -116,7 +116,7 @@ describe('PshAlertComponent', () => {
       fixture.detectChanges();
 
       const alertElement = fixture.debugElement.query(By.css('.alert'));
-      expect(alertElement.classes['small']).toBeTrue();
+      expect(alertElement.classes['small']).toBe(true);
     });
 
     it('should apply large class when size is large', () => {
@@ -124,7 +124,7 @@ describe('PshAlertComponent', () => {
       fixture.detectChanges();
 
       const alertElement = fixture.debugElement.query(By.css('.alert'));
-      expect(alertElement.classes['large']).toBeTrue();
+      expect(alertElement.classes['large']).toBe(true);
     });
   });
 
@@ -147,7 +147,7 @@ describe('PshAlertComponent', () => {
       fixture.detectChanges();
 
       const icon = fixture.debugElement.query(By.css('i.ph'));
-      expect(icon.classes['ph-star']).toBeTrue();
+      expect(icon.classes['ph-star']).toBe(true);
     });
 
     it('should position icon on left by default', () => {
@@ -160,7 +160,7 @@ describe('PshAlertComponent', () => {
       fixture.detectChanges();
 
       const content = fixture.debugElement.query(By.css('.alert-content'));
-      expect(content.classes['icon-right']).toBeTrue();
+      expect(content.classes['icon-right']).toBe(true);
     });
 
     it('should have aria-hidden on icon', () => {
@@ -187,7 +187,7 @@ describe('PshAlertComponent', () => {
       fixture.componentRef.setInput('closable', true);
       fixture.detectChanges();
 
-      spyOn(component.closed, 'emit');
+      jest.spyOn(component.closed, 'emit');
 
       const dismissButton = fixture.debugElement.query(By.css('.alert-dismiss'));
       dismissButton.nativeElement.click();
@@ -223,17 +223,17 @@ describe('PshAlertComponent', () => {
   });
 
   describe('Accessibility', () => {
-    it('should have role status for info type', () => {
+    it('should have role alert for info type (default)', () => {
       const alertElement = fixture.debugElement.query(By.css('.alert'));
-      expect(alertElement.attributes['role']).toBe('status');
+      expect(alertElement.attributes['role']).toBe('alert');
     });
 
-    it('should have role status for success type', () => {
+    it('should have role alert for success type (default)', () => {
       fixture.componentRef.setInput('type', 'success');
       fixture.detectChanges();
 
       const alertElement = fixture.debugElement.query(By.css('.alert'));
-      expect(alertElement.attributes['role']).toBe('status');
+      expect(alertElement.attributes['role']).toBe('alert');
     });
 
     it('should have role alert for warning type', () => {
@@ -358,7 +358,7 @@ describe('PshAlertComponent', () => {
     });
 
     it('should compute correct role based on type', () => {
-      expect(component.computedRole()).toBe('status');
+      expect(component.computedRole()).toBe('alert');
 
       fixture.componentRef.setInput('type', 'warning');
       fixture.detectChanges();
@@ -395,7 +395,7 @@ describe('PshAlertComponent', () => {
 
   describe('handleClose', () => {
     it('should emit closed event when handleClose is called', () => {
-      spyOn(component.closed, 'emit');
+      jest.spyOn(component.closed, 'emit');
 
       component.handleClose();
 
