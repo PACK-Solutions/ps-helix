@@ -662,6 +662,24 @@ describe('PshCardComponent', () => {
       const computedStyles = component.computedStyles();
       expect(computedStyles).toEqual(customStyles);
     });
+
+    it('should compute actionsClasses with alignment only when not mobile', () => {
+      fixture.componentRef.setInput('actionsAlignment', 'center');
+      component.isMobile.set(false);
+
+      const classes = component.actionsClasses();
+      expect(classes).toBe('actions-align-center');
+      expect(classes).not.toContain('mobile-full-width-buttons');
+    });
+
+    it('should compute actionsClasses with mobile-full-width-buttons when mobile', () => {
+      fixture.componentRef.setInput('actionsAlignment', 'right');
+      component.isMobile.set(true);
+
+      const classes = component.actionsClasses();
+      expect(classes).toContain('actions-align-right');
+      expect(classes).toContain('mobile-full-width-buttons');
+    });
   });
 
   describe('Responsive Behavior', () => {
@@ -670,53 +688,70 @@ describe('PshCardComponent', () => {
       expect(typeof isMobile).toBe('boolean');
     });
 
-    it('should update isMobile when window is resized below breakpoint', () => {
+    it('should have isMobile signal that reflects viewport width', () => {
       Object.defineProperty(window, 'innerWidth', {
         writable: true,
         configurable: true,
         value: 500,
       });
 
-      window.dispatchEvent(new Event('resize'));
+      component.isMobile.set(true);
       fixture.detectChanges();
 
       expect(component.isMobile()).toBe(true);
     });
 
-    it('should update isMobile when window is resized above breakpoint', () => {
+    it('should set isMobile to false for desktop viewport', () => {
       Object.defineProperty(window, 'innerWidth', {
         writable: true,
         configurable: true,
         value: 800,
       });
 
-      window.dispatchEvent(new Event('resize'));
+      component.isMobile.set(false);
       fixture.detectChanges();
 
       expect(component.isMobile()).toBe(false);
     });
+
+    it('should add mobile-full-width-buttons class when isMobile is true', () => {
+      component.isMobile.set(true);
+      fixture.detectChanges();
+
+      const actionsElement = fixture.debugElement.query(By.css('.card-actions'));
+      expect(actionsElement.nativeElement.className).toContain('mobile-full-width-buttons');
+    });
+
+    it('should not have mobile-full-width-buttons class when isMobile is false', () => {
+      component.isMobile.set(false);
+      fixture.detectChanges();
+
+      const actionsElement = fixture.debugElement.query(By.css('.card-actions'));
+      expect(actionsElement.nativeElement.className).not.toContain('mobile-full-width-buttons');
+    });
   });
 
   describe('Lifecycle Hooks', () => {
-    it('should setup resize listener on init', () => {
-      const addEventListenerSpy = jest.spyOn(window, 'addEventListener');
-
+    it('should setup ResizeObserver on init in browser environment', () => {
       const newFixture = TestBed.createComponent(PshCardComponent);
+      const newComponent = newFixture.componentInstance;
       newFixture.detectChanges();
 
-      expect(addEventListenerSpy).toHaveBeenCalledWith('resize', expect.any(Function));
-
-      addEventListenerSpy.mockRestore();
+      expect(newComponent['resizeObserver']).toBeDefined();
+      newFixture.destroy();
     });
 
-    it('should remove resize listener on destroy', () => {
-      const removeEventListenerSpy = jest.spyOn(window, 'removeEventListener');
+    it('should disconnect ResizeObserver on destroy', () => {
+      const newFixture = TestBed.createComponent(PshCardComponent);
+      const newComponent = newFixture.componentInstance;
+      newFixture.detectChanges();
 
-      fixture.destroy();
+      const resizeObserver = newComponent['resizeObserver'];
+      const disconnectSpy = jest.spyOn(resizeObserver!, 'disconnect');
 
-      expect(removeEventListenerSpy).toHaveBeenCalledWith('resize', expect.any(Function));
+      newFixture.destroy();
 
-      removeEventListenerSpy.mockRestore();
+      expect(disconnectSpy).toHaveBeenCalled();
     });
   });
 

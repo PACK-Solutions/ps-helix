@@ -12,3 +12,11 @@ Object.defineProperty(window, 'getComputedStyle', {
     getPropertyValue: () => ''
   })
 });
+
+class ResizeObserverMock {
+  observe = jest.fn();
+  unobserve = jest.fn();
+  disconnect = jest.fn();
+}
+
+(window as typeof globalThis).ResizeObserver = ResizeObserverMock as unknown as typeof ResizeObserver;

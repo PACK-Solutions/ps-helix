@@ -96,6 +96,22 @@ Propriétés en lecture seule
 |-----|------|-------------|
 | `clicked` | `EventEmitter<MouseEvent \| KeyboardEvent>` | Émis lors du clic souris ou de l'activation clavier (Enter/Space) sur la carte (si `interactive=true` et non désactivée) |
 
+### Signals Publics
+
+| Nom | Type | Description |
+|-----|------|-------------|
+| `isMobile` | `Signal<boolean>` | Indique si le viewport est en mode mobile (< 640px). Utilise un `ResizeObserver` pour la detection. |
+
+### Proprietes Calculees (Computed)
+
+| Nom | Type | Description |
+|-----|------|-------------|
+| `computedClasses` | `Signal<string>` | Classes CSS calculees selon les proprietes (variant, color, density, etats) |
+| `computedStyles` | `Signal<Record<string, string>>` | Styles inline fusionnes avec `customStyle` |
+| `hasHeader` | `Signal<boolean>` | Indique si le header doit etre affiche (title ou description present) |
+| `actionsAlignmentClass` | `Signal<string>` | Classe d'alignement pour la zone d'actions |
+| `actionsClasses` | `Signal<string>` | Classes CSS pour la zone d'actions incluant `mobile-full-width-buttons` sur mobile |
+
 ### Types TypeScript
 
 ```typescript
@@ -109,7 +125,7 @@ type CardActionsAlignment = 'left' | 'center' | 'right' | 'space-between';
 
 L'ajout de boutons est très simple grâce au slot `card-actions`.
 
-**Note sur le responsive :** Les boutons placés dans `card-actions` deviennent automatiquement pleine largeur sur mobile (< 640px) grâce au CSS intégré. Vous n'avez pas besoin de gérer manuellement la propriété `fullWidth`.
+**Note sur le responsive :** Les boutons places dans `card-actions` deviennent automatiquement pleine largeur sur mobile (< 640px). Le composant utilise un `ResizeObserver` pour detecter le viewport mobile et applique automatiquement la classe `mobile-full-width-buttons` au conteneur d'actions. Vous n'avez pas besoin de gerer manuellement la propriete `fullWidth`.
 
 ### Option 1 : Zone d'Actions (Recommandé)
 
@@ -678,6 +694,6 @@ Pour toute question ou suggestion d'amélioration, consultez la documentation co
 
 ---
 
-**Version :** 2.0
-**Dernière mise à jour :** Octobre 2025
-**Compatibilité :** Angular 19+
+**Version :** 2.1
+**Derniere mise a jour :** Decembre 2025
+**Compatibilite :** Angular 20+
