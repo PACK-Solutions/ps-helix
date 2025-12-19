@@ -2,13 +2,17 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  inject,
   input,
   model,
+  OnDestroy,
   output,
+  PLATFORM_ID,
+  signal,
   ViewEncapsulation
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { CardVariant, CardColorVariant, CardDensity, CardActionsAlignment } from './card.types';
-import { CardActionsMobileDirective } from './card-actions-mobile.directive';
 
 /**
  * Composant carte métier - conteneur structuré pour contenu professionnel
@@ -38,13 +42,16 @@ import { CardActionsMobileDirective } from './card-actions-mobile.directive';
  */
 @Component({
   selector: 'psh-card',
-  imports: [CardActionsMobileDirective],
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class PshCardComponent {
+export class PshCardComponent implements OnDestroy {
+  private platformId = inject(PLATFORM_ID);
+  private resizeObserver?: ResizeObserver;
+
+  isMobile = signal<boolean>(false);
   // Model inputs - propriétés modifiables
   /** Variante visuelle de la carte (default, elevated, outlined) */
   variant = model<CardVariant>('default');
@@ -127,6 +134,39 @@ export class PshCardComponent {
   actionsAlignmentClass = computed(() => {
     return `actions-align-${this.actionsAlignment()}`;
   });
+
+  actionsClasses = computed(() => {
+    const classes = [this.actionsAlignmentClass()];
+    if (this.isMobile()) {
+      classes.push('mobile-full-width-buttons');
+    }
+    return classes.join(' ');
+  });
+
+  constructor() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.checkMobileViewport();
+
+      if (typeof window !== 'undefined') {
+        this.resizeObserver = new ResizeObserver(() => {
+          this.checkMobileViewport();
+        });
+        this.resizeObserver.observe(document.documentElement);
+      }
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+    }
+  }
+
+  private checkMobileViewport(): void {
+    if (typeof window !== 'undefined') {
+      this.isMobile.set(window.innerWidth <= 640);
+    }
+  }
 
   /**
    * Gère le clic sur la carte

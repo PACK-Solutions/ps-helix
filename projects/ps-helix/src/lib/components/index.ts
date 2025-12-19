@@ -4,7 +4,6 @@ export * from './avatar/avatar.component';
 export * from './badge/badge.component';
 export * from './button/button.component';
 export * from './card/card.component';
-export * from './card/card-actions-mobile.directive';
 export * from './stat-card/stat-card.component';
 export * from './horizontal-card/horizontal-card.component';
 export * from './checkbox/checkbox.component';
