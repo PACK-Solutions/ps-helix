@@ -354,9 +354,15 @@
     gap: var(--spacing-md);
   }
 
-  .card-actions psh-button {
-    display: flex;
-    width: 100%;
+  .card-actions ::ng-deep psh-button {
+    display: flex !important;
+    width: 100% !important;
+  }
+
+  .card-actions ::ng-deep psh-button button {
+    width: 100% !important;
+    min-width: 100% !important;
+    flex: 1;
   }
 }
 
@@ -424,8 +430,14 @@
     min-width: 0;
   }
 
-  .card-actions psh-button {
-    display: flex;
-    width: 100%;
+  .card-actions ::ng-deep psh-button {
+    display: flex !important;
+    width: 100% !important;
+  }
+
+  .card-actions ::ng-deep psh-button button {
+    width: 100% !important;
+    min-width: 100% !important;
+    flex: 1;
   }
 }
