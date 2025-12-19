@@ -353,6 +353,11 @@
     flex-direction: column;
     gap: var(--spacing-md);
   }
+
+  .card-actions > * {
+    flex-direction: column;
+    width: 100%;
+  }
 }
 
 @media (max-width: 480px) {
