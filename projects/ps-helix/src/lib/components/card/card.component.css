@@ -353,6 +353,10 @@
     flex-direction: column;
     gap: var(--spacing-md);
   }
+
+  .card-actions psh-button {
+    width: 100%;
+  }
 }
 
 @media (max-width: 480px) {
@@ -417,5 +421,9 @@
     width: 100%;
     flex-direction: column;
     min-width: 0;
+  }
+
+  .card-actions psh-button {
+    width: 100%;
   }
 }
