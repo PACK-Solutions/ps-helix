@@ -27,7 +27,7 @@ import { CardVariant, CardColorVariant, CardDensity, CardActionsAlignment } from
  * - Dividers automatiques entre les sections
  *
  * Les boutons placés dans le slot card-actions deviennent automatiquement
- * pleine largeur sur mobile (< 640px) pour améliorer l'ergonomie tactile.
+ * pleine largeur sur mobile (< 640px) grâce au CSS intégré.
  *
  * @example
  * <psh-card
@@ -37,7 +37,7 @@ import { CardVariant, CardColorVariant, CardDensity, CardActionsAlignment } from
  * >
  *   <p>Contenu principal</p>
  *   <div card-actions>
- *     <psh-button [fullWidth]="card.isMobile()">Action</psh-button>
+ *     <psh-button variant="primary">Action</psh-button>
  *   </div>
  * </psh-card>
  */

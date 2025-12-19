@@ -94,7 +94,7 @@ Propriétés en lecture seule
 
 | Nom | Type | Description |
 |-----|------|-------------|
-| `clicked` | `EventEmitter<MouseEvent>` | Émis lors du clic sur la carte (si `interactive=true` et non désactivée) |
+| `clicked` | `EventEmitter<MouseEvent \| KeyboardEvent>` | Émis lors du clic souris ou de l'activation clavier (Enter/Space) sur la carte (si `interactive=true` et non désactivée) |
 
 ### Types TypeScript
 
@@ -108,6 +108,8 @@ type CardActionsAlignment = 'left' | 'center' | 'right' | 'space-between';
 ## Ajout de Boutons
 
 L'ajout de boutons est très simple grâce au slot `card-actions`.
+
+**Note sur le responsive :** Les boutons placés dans `card-actions` deviennent automatiquement pleine largeur sur mobile (< 640px) grâce au CSS intégré. Vous n'avez pas besoin de gérer manuellement la propriété `fullWidth`.
 
 ### Option 1 : Zone d'Actions (Recommandé)
 
@@ -385,10 +387,17 @@ Carte cliquable avec effet de survol et support du clavier.
 
 **Comportement :**
 - Cursor pointer au survol
-- Animation translateY(-4px) avec hoverable
+- Animation translateY(-2px) avec hoverable
 - Focusable avec tabindex="0"
 - Support clavier (Enter et Space)
-- Émet l'événement `clicked`
+- Émet l'événement `clicked` avec `MouseEvent` (clic souris) ou `KeyboardEvent` (activation clavier)
+
+**Exemple de gestion d'événement :**
+```typescript
+handleCardClick(event: MouseEvent | KeyboardEvent): void {
+  console.log('Carte activée via :', event instanceof MouseEvent ? 'souris' : 'clavier');
+}
+```
 
 ### Loading
 
