@@ -240,6 +240,55 @@
       </div>
     </section>
 
+    <section class="states-section">
+      <h3 class="section-title">États du Composant</h3>
+      <div class="states-container">
+        <div class="states-intro">
+          <p>Le composant horizontal-card supporte plusieurs états pour gérer les interactions et le feedback visuel.</p>
+        </div>
+        <div class="states-demo">
+          <div class="state-example">
+            <h4>État Loading</h4>
+            <p class="state-description">Affiche un skeleton animé pendant le chargement des données.</p>
+            <psh-horizontal-card [loading]="true" [sideWidth]="'var(--size-32)'">
+              <div horizontal-side>
+                <div class="demo-side"></div>
+              </div>
+              <div horizontal-header>
+                <h5>Contenu masqué</h5>
+              </div>
+              <p>Ce contenu ne sera pas visible pendant le chargement.</p>
+            </psh-horizontal-card>
+          </div>
+          <div class="state-example">
+            <h4>État Disabled</h4>
+            <p class="state-description">Désactive les interactions avec opacité réduite.</p>
+            <psh-horizontal-card
+              [variant]="'elevated'"
+              [interactive]="true"
+              [disabled]="true"
+              [sideWidth]="'var(--size-32)'"
+            >
+              <div horizontal-side>
+                <div class="demo-side" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+              </div>
+              <div horizontal-header>
+                <h5>Carte désactivée</h5>
+              </div>
+              <p>Cette carte est désactivée et ne peut pas être cliquée.</p>
+              <div horizontal-actions>
+                <psh-button [variant]="'primary'" [disabled]="true">Action</psh-button>
+              </div>
+            </psh-horizontal-card>
+          </div>
+        </div>
+        <div class="code-example">
+          <h4>Code d'exemple</h4>
+          <ds-code-snippet [code]="statesCode" />
+        </div>
+      </div>
+    </section>
+
     <section class="api-section">
       <h3 class="section-title">Documentation API</h3>
       <div class="api-container">
@@ -262,7 +311,7 @@
               <tr>
                 <td><code>variant</code></td>
                 <td><code>HorizontalCardVariant</code></td>
-                <td><code>'default'</code></td>
+                <td><code>'elevated'</code></td>
                 <td>'default' | 'elevated' | 'outlined'</td>
               </tr>
               <tr>
@@ -276,6 +325,18 @@
                 <td><code>boolean</code></td>
                 <td><code>false</code></td>
                 <td>Ajoute un effet de survol</td>
+              </tr>
+              <tr>
+                <td><code>loading</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Affiche un skeleton animé pendant le chargement</td>
+              </tr>
+              <tr>
+                <td><code>disabled</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Désactive la carte (opacité réduite, interactions bloquées)</td>
               </tr>
               <tr>
                 <td><code>sideWidth</code></td>
@@ -306,6 +367,18 @@
                 <td><code>string</code></td>
                 <td><code>'var(--size-48)'</code></td>
                 <td>Hauteur du contenu latéral sur mobile</td>
+              </tr>
+              <tr>
+                <td><code>cssClass</code></td>
+                <td><code>string</code></td>
+                <td><code>''</code></td>
+                <td>Classes CSS additionnelles</td>
+              </tr>
+              <tr>
+                <td><code>customStyle</code></td>
+                <td><code>Record&lt;string, string&gt;</code></td>
+                <td><code>&#123;&#125;</code></td>
+                <td>Styles inline personnalisés</td>
               </tr>
             </tbody>
           </table>

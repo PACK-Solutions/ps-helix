@@ -160,6 +160,31 @@ export class HorizontalCardsDemoComponent {
   </div>
 </psh-horizontal-card>`;
 
+  statesCode = `<!-- État Loading -->
+<psh-horizontal-card [loading]="true">
+  <div horizontal-side>
+    <img src="image.jpg" alt="Image">
+  </div>
+  <div horizontal-header>
+    <h4>Titre</h4>
+  </div>
+  <p>Contenu masqué pendant le chargement</p>
+</psh-horizontal-card>
+
+<!-- État Disabled -->
+<psh-horizontal-card
+  [interactive]="true"
+  [disabled]="true"
+>
+  <div horizontal-side>
+    <img src="image.jpg" alt="Image">
+  </div>
+  <div horizontal-header>
+    <h4>Carte désactivée</h4>
+  </div>
+  <p>Cette carte ne peut pas être cliquée</p>
+</psh-horizontal-card>`;
+
   handleCardClick(event: MouseEvent | KeyboardEvent, item: string): void {
     console.log(`${item} clicked:`, event);
   }

@@ -2,7 +2,8 @@
 .products-section,
 .users-section,
 .articles-section,
-.variants-section {
+.variants-section,
+.states-section {
   margin-bottom: var(--spacing-2xl);
 }
 
@@ -24,6 +25,7 @@
 .users-container,
 .articles-container,
 .variants-container,
+.states-container,
 .api-container {
   display: flex;
   flex-direction: column;
@@ -34,7 +36,8 @@
 .products-intro,
 .users-intro,
 .articles-intro,
-.variants-intro {
+.variants-intro,
+.states-intro {
   color: var(--text-secondary);
   font-size: var(--font-size-md);
   line-height: 1.6;
@@ -188,10 +191,38 @@
   color: var(--text-tertiary);
 }
 
-.variants-demo {
+.variants-demo,
+.states-demo {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
   gap: var(--spacing-xl);
+}
+
+.state-example h4 {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.state-example .state-description {
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.state-example h5 {
+  margin: 0;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+
+.state-example p:not(.state-description) {
+  margin: var(--spacing-sm) 0 0 0;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
 }
 
 .variant-example h4 {
@@ -377,7 +408,8 @@
     grid-template-columns: 1fr;
   }
 
-  .variants-demo {
+  .variants-demo,
+  .states-demo {
     grid-template-columns: 1fr;
   }
 
