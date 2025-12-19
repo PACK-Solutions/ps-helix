@@ -15,14 +15,13 @@
           <div class="variant-card">
             <div class="variant-preview">
               <psh-card
-                #cardElevated
                 title="Carte Elevated"
                 description="Avec ombre portée"
                 variant="elevated"
               >
                 <p>Cette carte utilise une ombre pour créer une élévation visuelle et se détacher du fond.</p>
                 <div card-actions>
-                  <psh-button variant="primary" [fullWidth]="cardElevated.isMobile()">Action</psh-button>
+                  <psh-button variant="primary">Action</psh-button>
                 </div>
               </psh-card>
             </div>
@@ -36,14 +35,13 @@
           <div class="variant-card">
             <div class="variant-preview">
               <psh-card
-                #cardOutlined
                 title="Carte Outlined"
                 description="Avec bordure"
                 variant="outlined"
               >
                 <p>Cette carte utilise une bordure simple pour un design plus léger et discret.</p>
                 <div card-actions>
-                  <psh-button appearance="outline" variant="primary" [fullWidth]="cardOutlined.isMobile()">Action</psh-button>
+                  <psh-button appearance="outline" variant="primary">Action</psh-button>
                 </div>
               </psh-card>
             </div>
@@ -57,14 +55,13 @@
           <div class="variant-card">
             <div class="variant-preview">
               <psh-card
-                #cardDefault
                 title="Carte Default"
                 description="Style par défaut"
                 variant="default"
               >
                 <p>Cette carte utilise le style par défaut, sans ombre ni bordure prononcée.</p>
                 <div card-actions>
-                  <psh-button appearance="text" variant="primary" [fullWidth]="cardDefault.isMobile()">Action</psh-button>
+                  <psh-button appearance="text" variant="primary">Action</psh-button>
                 </div>
               </psh-card>
             </div>
@@ -125,7 +122,6 @@
           <div class="color-card">
             <div class="color-preview">
               <psh-card
-                #cardWarning
                 title="Attention"
                 description="Action requise"
                 variant="outlined"
@@ -133,7 +129,7 @@
               >
                 <p>Votre abonnement expire dans 7 jours. Renouvelez-le pour continuer à profiter de tous les avantages.</p>
                 <div card-actions>
-                  <psh-button variant="primary" [fullWidth]="cardWarning.isMobile()">Renouveler</psh-button>
+                  <psh-button variant="primary">Renouveler</psh-button>
                 </div>
               </psh-card>
             </div>
@@ -147,7 +143,6 @@
           <div class="color-card">
             <div class="color-preview">
               <psh-card
-                #cardDanger
                 title="Erreur"
                 description="Une erreur est survenue"
                 variant="outlined"
@@ -155,7 +150,7 @@
               >
                 <p>Impossible de se connecter au serveur. Vérifiez votre connexion internet et réessayez.</p>
                 <div card-actions>
-                  <psh-button variant="primary" [fullWidth]="cardDanger.isMobile()">Réessayer</psh-button>
+                  <psh-button variant="primary">Réessayer</psh-button>
                 </div>
               </psh-card>
             </div>
@@ -254,7 +249,6 @@
           <div class="slot-card">
             <div class="slot-preview">
               <psh-card
-                #cardNotif
                 title="Notifications"
                 description="3 nouvelles notifications"
                 variant="elevated"
@@ -264,7 +258,7 @@
                 </div>
                 <p>Vous avez reçu de nouvelles notifications importantes concernant votre compte.</p>
                 <div card-actions>
-                  <psh-button appearance="outline" variant="primary" [fullWidth]="cardNotif.isMobile()">Voir tout</psh-button>
+                  <psh-button appearance="outline" variant="primary">Voir tout</psh-button>
                 </div>
               </psh-card>
             </div>
@@ -306,15 +300,14 @@
           <div class="slot-card">
             <div class="slot-preview">
               <psh-card
-                #cardWelcome
                 title="Bienvenue"
                 description="Commencez votre parcours"
                 variant="elevated"
               >
                 <p>Cette carte utilise les propriétés title et description pour un rendu cohérent et bien espacé.</p>
                 <div card-actions>
-                  <psh-button variant="primary" [fullWidth]="cardWelcome.isMobile()">Démarrer</psh-button>
-                  <psh-button appearance="outline" variant="secondary" [fullWidth]="cardWelcome.isMobile()">En savoir plus</psh-button>
+                  <psh-button variant="primary">Démarrer</psh-button>
+                  <psh-button appearance="outline" variant="secondary">En savoir plus</psh-button>
                 </div>
               </psh-card>
             </div>
@@ -374,7 +367,6 @@
               <h4>État Désactivé</h4>
               <div class="state-examples">
                 <psh-card
-                  #cardDisabled
                   title="Carte Désactivée"
                   description="État désactivé"
                   variant="outlined"
@@ -382,7 +374,7 @@
                 >
                   <p>Cette carte est désactivée avec opacité réduite et interactions bloquées.</p>
                   <div card-actions>
-                    <psh-button variant="primary" [fullWidth]="cardDisabled.isMobile()">Action impossible</psh-button>
+                    <psh-button variant="primary">Action impossible</psh-button>
                   </div>
                 </psh-card>
               </div>
@@ -423,7 +415,7 @@
           <p>Le design system propose des composants de cartes spécialisés pour des cas d'usage spécifiques.</p>
         </div>
         <div class="specialized-content">
-          <psh-card #cardSpec1 class="specialized-card" variant="outlined">
+          <psh-card class="specialized-card" variant="outlined">
             <div class="specialized-card-header">
               <i class="ph ph-chart-line" style="font-size: 2rem; color: var(--primary-color);"></i>
               <div>
@@ -433,12 +425,12 @@
             </div>
             <div card-actions>
               <a href="/demo/stat-cards">
-                <psh-button variant="primary" [fullWidth]="cardSpec1.isMobile()">Voir la documentation</psh-button>
+                <psh-button variant="primary">Voir la documentation</psh-button>
               </a>
             </div>
           </psh-card>
 
-          <psh-card #cardSpec2 class="specialized-card" variant="outlined">
+          <psh-card class="specialized-card" variant="outlined">
             <div class="specialized-card-header">
               <i class="ph ph-info" style="font-size: 2rem; color: var(--primary-color);"></i>
               <div>
@@ -448,12 +440,12 @@
             </div>
             <div card-actions>
               <a href="/demo/info-cards">
-                <psh-button variant="primary" [fullWidth]="cardSpec2.isMobile()">Voir la documentation</psh-button>
+                <psh-button variant="primary">Voir la documentation</psh-button>
               </a>
             </div>
           </psh-card>
 
-          <psh-card #cardSpec3 class="specialized-card" variant="outlined">
+          <psh-card class="specialized-card" variant="outlined">
             <div class="specialized-card-header">
               <i class="ph ph-layout" style="font-size: 2rem; color: var(--primary-color);"></i>
               <div>
@@ -463,7 +455,7 @@
             </div>
             <div card-actions>
               <a href="/demo/horizontal-cards">
-                <psh-button variant="primary" [fullWidth]="cardSpec3.isMobile()">Voir la documentation</psh-button>
+                <psh-button variant="primary">Voir la documentation</psh-button>
               </a>
             </div>
           </psh-card>
@@ -494,8 +486,8 @@
               <tr>
                 <td><code>variant</code></td>
                 <td><code>CardVariant</code></td>
-                <td><code>'elevated'</code></td>
-                <td>'elevated' | 'outlined' | 'default'</td>
+                <td><code>'default'</code></td>
+                <td>'default' | 'elevated' | 'outlined'</td>
               </tr>
               <tr>
                 <td><code>colorVariant</code></td>
@@ -639,7 +631,6 @@
   imports: [PshCardComponent, PshButtonComponent],
   template: `
     &lt;psh-card
-      #myCard
       title="Mon Projet"
       description="Description du projet"
       variant="elevated"
@@ -667,8 +658,8 @@
       &lt;/div&gt;
 
       &lt;div card-actions&gt;
-        &lt;psh-button variant="primary" [fullWidth]="myCard.isMobile()"&gt;Ouvrir&lt;/psh-button&gt;
-        &lt;psh-button appearance="outline" variant="secondary" [fullWidth]="myCard.isMobile()"&gt;Détails&lt;/psh-button&gt;
+        &lt;psh-button variant="primary"&gt;Ouvrir&lt;/psh-button&gt;
+        &lt;psh-button appearance="outline" variant="secondary"&gt;Détails&lt;/psh-button&gt;
       &lt;/div&gt;
     &lt;/psh-card&gt;
   `
@@ -694,8 +685,7 @@ export class MyComponent &#123;
             <li><strong>Effet de survol</strong> : Combinez <code>[hoverable]="true"</code> avec interactive pour un feedback visuel clair</li>
             <li><strong>État de chargement</strong> : Utilisez <code>[loading]="true"</code> pendant les opérations asynchrones pour améliorer l'expérience utilisateur</li>
             <li><strong>Accessibilité</strong> : Fournissez un <code>ariaLabel</code> descriptif pour les cartes interactives</li>
-            <li><strong>Actions</strong> : Placez les boutons principaux dans le slot <code>card-actions</code> pour un alignement automatique et cohérent</li>
-            <li><strong>Boutons mobile</strong> : Utilisez une référence template (<code>#myCard</code>) et passez <code>[fullWidth]="myCard.isMobile()"</code> aux boutons dans card-actions pour une meilleure ergonomie tactile sur mobile (< 640px)</li>
+            <li><strong>Actions</strong> : Placez les boutons principaux dans le slot <code>card-actions</code> pour un alignement automatique et cohérent. Les boutons deviennent automatiquement pleine largeur sur mobile (&lt; 640px) grâce au CSS intégré</li>
           </ul>
         </div>
       </div>
