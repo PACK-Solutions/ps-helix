@@ -355,6 +355,7 @@
   }
 
   .card-actions psh-button {
+    display: flex;
     width: 100%;
   }
 }
@@ -424,6 +425,7 @@
   }
 
   .card-actions psh-button {
+    display: flex;
     width: 100%;
   }
 }
