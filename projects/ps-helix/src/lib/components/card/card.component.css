@@ -353,17 +353,6 @@
     flex-direction: column;
     gap: var(--spacing-md);
   }
-
-  .card-actions ::ng-deep psh-button {
-    display: flex !important;
-    width: 100% !important;
-  }
-
-  .card-actions ::ng-deep psh-button button {
-    width: 100% !important;
-    min-width: 100% !important;
-    flex: 1;
-  }
 }
 
 @media (max-width: 480px) {
@@ -422,22 +411,5 @@
   .card-actions {
     flex-direction: column;
     gap: var(--spacing-sm);
-  }
-
-  .card-actions > * {
-    width: 100%;
-    flex-direction: column;
-    min-width: 0;
-  }
-
-  .card-actions ::ng-deep psh-button {
-    display: flex !important;
-    width: 100% !important;
-  }
-
-  .card-actions ::ng-deep psh-button button {
-    width: 100% !important;
-    min-width: 100% !important;
-    flex: 1;
   }
 }

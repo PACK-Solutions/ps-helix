@@ -8,6 +8,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { CardVariant, CardColorVariant, CardDensity, CardActionsAlignment } from './card.types';
+import { CardActionsMobileDirective } from './card-actions-mobile.directive';
 
 /**
  * Composant carte métier - conteneur structuré pour contenu professionnel
@@ -21,7 +22,7 @@ import { CardVariant, CardColorVariant, CardDensity, CardActionsAlignment } from
  * - Dividers automatiques entre les sections
  *
  * Les boutons placés dans le slot card-actions deviennent automatiquement
- * pleine largeur sur mobile (< 640px) grâce au CSS intégré.
+ * pleine largeur sur mobile (< 640px) grâce à une directive automatique.
  *
  * @example
  * <psh-card
@@ -37,7 +38,7 @@ import { CardVariant, CardColorVariant, CardDensity, CardActionsAlignment } from
  */
 @Component({
   selector: 'psh-card',
-  imports: [],
+  imports: [CardActionsMobileDirective],
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

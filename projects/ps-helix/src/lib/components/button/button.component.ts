@@ -3,6 +3,7 @@ import {
   Component,
   computed,
   input,
+  model,
   output,
 } from '@angular/core';
 import { ButtonAppearance, ButtonVariant, ButtonSize, ButtonIconPosition } from './button.types';
@@ -23,7 +24,7 @@ export class PshButtonComponent {
   size = input<ButtonSize>('medium');
   disabled = input(false);
   loading = input(false);
-  fullWidth = input(false);
+  fullWidth = model(false);
   iconPosition = input<ButtonIconPosition>('left');
   icon = input<string>();
   ariaLabel = input<string>();
