@@ -2,17 +2,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  inject,
   input,
   model,
-  OnDestroy,
-  OnInit,
   output,
-  PLATFORM_ID,
-  signal,
   ViewEncapsulation
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
 import { CardVariant, CardColorVariant, CardDensity, CardActionsAlignment } from './card.types';
 
 /**
@@ -43,17 +37,13 @@ import { CardVariant, CardColorVariant, CardDensity, CardActionsAlignment } from
  */
 @Component({
   selector: 'psh-card',
+  imports: [],
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class PshCardComponent implements OnInit, OnDestroy {
-  private readonly platformId = inject(PLATFORM_ID);
-  private resizeListener?: () => void;
-  private readonly isMobileSignal = signal(false);
-  private readonly mobileBreakpoint = 640;
-
+export class PshCardComponent {
   // Model inputs - propriétés modifiables
   /** Variante visuelle de la carte (default, elevated, outlined) */
   variant = model<CardVariant>('default');
@@ -136,46 +126,6 @@ export class PshCardComponent implements OnInit, OnDestroy {
   actionsAlignmentClass = computed(() => {
     return `actions-align-${this.actionsAlignment()}`;
   });
-
-  /** Indique si l'écran est en mode mobile (< 640px) */
-  isMobile = computed(() => this.isMobileSignal());
-
-  ngOnInit(): void {
-    this.setupResizeListener();
-  }
-
-  ngOnDestroy(): void {
-    this.removeResizeListener();
-  }
-
-  /**
-   * Vérifie si la taille de l'écran est mobile
-   */
-  private checkScreenSize(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      this.isMobileSignal.set(window.innerWidth < this.mobileBreakpoint);
-    }
-  }
-
-  /**
-   * Configure l'écouteur de redimensionnement pour détecter les changements de viewport
-   */
-  private setupResizeListener(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      this.checkScreenSize();
-      this.resizeListener = () => this.checkScreenSize();
-      window.addEventListener('resize', this.resizeListener);
-    }
-  }
-
-  /**
-   * Supprime l'écouteur de redimensionnement
-   */
-  private removeResizeListener(): void {
-    if (isPlatformBrowser(this.platformId) && this.resizeListener) {
-      window.removeEventListener('resize', this.resizeListener);
-    }
-  }
 
   /**
    * Gère le clic sur la carte
