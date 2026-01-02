@@ -19,6 +19,7 @@
             tagVariant="success"
             tagLabel="+12.6%"
             [interactive]="true"
+            [hoverable]="true"
             (clicked)="handleStatClick($event)"
           ></psh-stat-card>
 
@@ -29,6 +30,7 @@
             tagVariant="danger"
             tagLabel="-8.1%"
             [interactive]="true"
+            [hoverable]="true"
             (clicked)="handleStatClick($event)"
           ></psh-stat-card>
 
@@ -39,6 +41,7 @@
             tagVariant="success"
             tagLabel="+28.4%"
             [interactive]="true"
+            [hoverable]="true"
             (clicked)="handleStatClick($event)"
           ></psh-stat-card>
         </div>
@@ -231,7 +234,7 @@
       <h3 class="section-title">États</h3>
       <div class="states-container">
         <div class="states-intro">
-          <p>Les stat-cards supportent l'interactivité avec effet de survol et la navigation au clavier pour une accessibilité optimale.</p>
+          <p>Les stat-cards supportent plusieurs états : interactivité, survol, chargement et désactivation pour s'adapter à différents contextes.</p>
         </div>
         <div class="states-content">
           <div class="state-group">
@@ -244,11 +247,45 @@
                 tagVariant="primary"
                 tagLabel="+15.3%"
                 [interactive]="true"
+                [hoverable]="true"
                 (clicked)="handleStatClick($event)"
               ></psh-stat-card>
             </div>
-            <p class="state-description">Carte cliquable avec effet de survol automatique et support du clavier (Enter/Space).</p>
+            <p class="state-description">Carte cliquable avec effet de survol. Combinez <code>[interactive]="true"</code> et <code>[hoverable]="true"</code> pour un feedback visuel complet. Support du clavier (Enter/Space).</p>
             <ds-code-snippet [code]="interactiveCode" />
+          </div>
+
+          <div class="state-group">
+            <h4>En chargement</h4>
+            <div class="stats-grid">
+              <psh-stat-card
+                value="--"
+                description="Chargement des données..."
+                icon="spinner"
+                tagVariant="primary"
+                tagLabel="..."
+                [loading]="isLoading"
+              ></psh-stat-card>
+            </div>
+            <p class="state-description">État de chargement avec skeleton animé. Les interactions sont bloquées pendant le chargement.</p>
+            <button class="demo-button" (click)="handleSimulateLoading()">Simuler le chargement (2s)</button>
+            <ds-code-snippet [code]="loadingCode" />
+          </div>
+
+          <div class="state-group">
+            <h4>Désactivée</h4>
+            <div class="stats-grid">
+              <psh-stat-card
+                value="N/A"
+                description="Données indisponibles"
+                icon="warning"
+                tagVariant="warning"
+                tagLabel="--"
+                [disabled]="true"
+              ></psh-stat-card>
+            </div>
+            <p class="state-description">Carte désactivée avec opacité réduite. Les clics et la navigation clavier sont bloqués.</p>
+            <ds-code-snippet [code]="disabledCode" />
           </div>
 
           <div class="state-group">
@@ -437,7 +474,25 @@
                 <td><code>interactive</code></td>
                 <td><code>boolean</code></td>
                 <td><code>false</code></td>
-                <td>Rend la carte cliquable avec survol automatique</td>
+                <td>Rend la carte cliquable avec gestion du focus et support clavier</td>
+              </tr>
+              <tr>
+                <td><code>hoverable</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Active l'effet de survol (animation translateY)</td>
+              </tr>
+              <tr>
+                <td><code>loading</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Active l'état de chargement avec skeleton animé</td>
+              </tr>
+              <tr>
+                <td><code>disabled</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Désactive la carte (opacité réduite, interactions bloquées)</td>
               </tr>
               <tr>
                 <td><code>ariaLabel</code></td>
@@ -457,6 +512,18 @@
                 <td><code>false</code></td>
                 <td>Active la direction row pour le card-body (icône et contenu en flex-row)</td>
               </tr>
+              <tr>
+                <td><code>cssClass</code></td>
+                <td><code>string</code></td>
+                <td><code>''</code></td>
+                <td>Classes CSS additionnelles à appliquer</td>
+              </tr>
+              <tr>
+                <td><code>customStyle</code></td>
+                <td><code>Record&lt;string, string&gt;</code></td>
+                <td><code>&#123;&#125;</code></td>
+                <td>Styles inline personnalisés</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -474,8 +541,8 @@
             <tbody>
               <tr>
                 <td><code>clicked</code></td>
-                <td><code>EventEmitter&lt;MouseEvent | KeyboardEvent&gt;</code></td>
-                <td>Émis lors du clic sur la carte (si interactive)</td>
+                <td><code>OutputEmitterRef&lt;MouseEvent | KeyboardEvent&gt;</code></td>
+                <td>Émis lors du clic ou activation clavier sur la carte (si interactive et non désactivée)</td>
               </tr>
             </tbody>
           </table>
@@ -521,7 +588,6 @@ statsData: StatCardData = &#123;
             <pre><code>import &#123; PshStatCardComponent &#125; from 'ps-helix';
 
 &#64;Component(&#123;
-  standalone: true,
   imports: [PshStatCardComponent],
   template: &#96;
     &lt;div class="stats-grid"&gt;
@@ -533,6 +599,7 @@ statsData: StatCardData = &#123;
         tagVariant="success"
         tagLabel="+12.6%"
         [interactive]="true"
+        [hoverable]="true"
         (clicked)="handleRevenueClick($event)"
       &gt;&lt;/psh-stat-card&gt;
 
@@ -573,7 +640,7 @@ export class DashboardComponent &#123;
             <li><strong>Gradients auto</strong> : Laissez le composant générer les gradients automatiquement à partir de <code>tagVariant</code></li>
             <li><strong>Gradients personnalisés</strong> : Utilisez <code>iconBackground</code> uniquement pour des identités visuelles spécifiques</li>
             <li><strong>Tags optionnels</strong> : Les tags d'évolution sont optionnels, omettez <code>tagVariant</code> et <code>tagLabel</code> pour les métriques neutres</li>
-            <li><strong>Interactivité</strong> : Ajoutez <code>[interactive]="true"</code> uniquement si la carte doit être cliquable</li>
+            <li><strong>Interactivité</strong> : Combinez <code>[interactive]="true"</code> et <code>[hoverable]="true"</code> pour les cartes cliquables avec feedback visuel</li>
             <li><strong>Accessibilité</strong> : Le label ARIA est généré automatiquement, mais vous pouvez le personnaliser avec <code>ariaLabel</code></li>
             <li><strong>Grilles responsives</strong> : Utilisez des grilles CSS pour organiser vos stat-cards (ex: <code>display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))</code>)</li>
           </ul>

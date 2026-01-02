@@ -32,6 +32,7 @@ export class StatCardsDemoComponent {
   tagVariant="success"
   tagLabel="+12.6%"
   [interactive]="true"
+  [hoverable]="true"
   (clicked)="handleClick($event)"
 ></psh-stat-card>`;
 
@@ -53,8 +54,23 @@ export class StatCardsDemoComponent {
 
   interactiveCode = `<psh-stat-card
   [interactive]="true"
+  [hoverable]="true"
   (clicked)="handleClick($event)"
   ...autres props
+></psh-stat-card>`;
+
+  loadingCode = `<psh-stat-card
+  [loading]="isLoading"
+  value="--"
+  description="Chargement..."
+  icon="spinner"
+></psh-stat-card>`;
+
+  disabledCode = `<psh-stat-card
+  [disabled]="true"
+  value="N/A"
+  description="Données indisponibles"
+  icon="warning"
 ></psh-stat-card>`;
 
   horizontalLayoutCode = `<psh-stat-card
