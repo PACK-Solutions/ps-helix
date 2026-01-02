@@ -70,31 +70,33 @@ export class InfoCardsDemoComponent {
   elevatedVariantCode = `<psh-info-card
   title="Profil Utilisateur"
   [data]="userData"
-  cardVariant="elevated"
+  variant="elevated"
   icon="user-circle"
 ></psh-info-card>`;
 
   outlinedVariantCode = `<psh-info-card
   title="Détails de Commande"
   [data]="orderData"
-  cardVariant="outlined"
+  variant="outlined"
   icon="shopping-cart"
 ></psh-info-card>`;
 
   defaultVariantCode = `<psh-info-card
   title="Informations Système"
   [data]="systemData"
-  cardVariant="default"
+  variant="default"
   icon="gear"
 ></psh-info-card>`;
 
   statesCode = `<psh-info-card
   title="État Dynamique"
   [data]="data"
+  variant="outlined"
   [loading]="isLoading"
   [interactive]="true"
   [hoverable]="true"
   [disabled]="isDisabled"
+  (clicked)="handleClick($event)"
 ></psh-info-card>`;
 
   handleSimulateLoading(): void {
@@ -102,5 +104,9 @@ export class InfoCardsDemoComponent {
     setTimeout(() => {
       this.isLoading = false;
     }, 2000);
+  }
+
+  handleCardClick(event: MouseEvent | KeyboardEvent): void {
+    alert('Carte cliquée !');
   }
 }

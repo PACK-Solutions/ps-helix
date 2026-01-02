@@ -26,10 +26,6 @@ export interface InfoCardOptions {
   labelWidth?: string;
   /** Default width for all value columns */
   valueWidth?: string;
-  /** Whether to show dividers between rows */
-  showDividers?: boolean;
-  /** Density of spacing (compact, normal, spacious) */
-  density?: 'compact' | 'normal' | 'spacious';
 }
 
 /**

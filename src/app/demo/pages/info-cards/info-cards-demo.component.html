@@ -17,7 +17,7 @@
               <psh-info-card
                 title="Profil Utilisateur"
                 [data]="userProfileData"
-                cardVariant="elevated"
+                variant="elevated"
                 icon="user-circle"
               ></psh-info-card>
             </div>
@@ -33,7 +33,7 @@
               <psh-info-card
                 title="Détails de Commande"
                 [data]="orderDetailsData"
-                cardVariant="outlined"
+                variant="outlined"
                 icon="shopping-cart"
               ></psh-info-card>
             </div>
@@ -49,7 +49,7 @@
               <psh-info-card
                 title="Informations Système"
                 [data]="systemInfoData"
-                cardVariant="default"
+                variant="default"
                 icon="gear"
               ></psh-info-card>
             </div>
@@ -76,7 +76,7 @@
             <psh-info-card
               title="Informations Personnelles"
               [data]="userProfileData"
-              cardVariant="elevated"
+              variant="elevated"
               icon="identification-card"
               [hoverable]="true"
             >
@@ -94,7 +94,7 @@
             <psh-info-card
               title="Ma Commande"
               [data]="orderDetailsData"
-              cardVariant="outlined"
+              variant="outlined"
               icon="package"
               [hoverable]="true"
             >
@@ -113,7 +113,7 @@
             <psh-info-card
               title="État du Système"
               [data]="systemInfoData"
-              cardVariant="elevated"
+              variant="elevated"
               icon="monitor"
             ></psh-info-card>
             <p class="usage-description">
@@ -139,7 +139,7 @@
                 <psh-info-card
                   title="Données en Chargement"
                   [data]="userProfileData"
-                  cardVariant="outlined"
+                  variant="outlined"
                   icon="circle-notch"
                   [loading]="isLoading"
                 ></psh-info-card>
@@ -163,7 +163,7 @@
                 <psh-info-card
                   title="Aucune Donnée"
                   [data]="emptyData"
-                  cardVariant="outlined"
+                  variant="outlined"
                   icon="x-circle"
                   [options]="{ showEmptyState: true, emptyStateMessage: 'Aucune information disponible pour le moment' }"
                 ></psh-info-card>
@@ -179,25 +179,43 @@
                 <psh-info-card
                   title="Cliquez-moi"
                   [data]="compactData"
-                  cardVariant="elevated"
+                  variant="elevated"
                   icon="hand-pointing"
                   [interactive]="true"
                   [hoverable]="true"
+                  (clicked)="handleCardClick($event)"
                 ></psh-info-card>
               </div>
               <p class="state-description">
                 Carte cliquable avec effet de survol pour des interactions complètes.
               </p>
             </div>
+
+            <div class="state-group">
+              <h4>Carte Désactivée</h4>
+              <div class="state-examples">
+                <psh-info-card
+                  title="Carte Inactive"
+                  [data]="compactData"
+                  variant="outlined"
+                  icon="prohibit"
+                  [disabled]="true"
+                ></psh-info-card>
+              </div>
+              <p class="state-description">
+                Carte désactivée avec opacité réduite et interactions bloquées.
+              </p>
+            </div>
           </div>
           <div class="states-doc">
             <h4>Caractéristiques des États</h4>
             <ul class="feature-list">
-              <li><strong>Loading</strong> : Opacité réduite avec <code>[loading]="true"</code></li>
+              <li><strong>Loading</strong> : Affiche un skeleton avec <code>[loading]="true"</code></li>
               <li><strong>Empty</strong> : Message personnalisable via <code>options.emptyStateMessage</code></li>
               <li><strong>Interactive</strong> : Rend la carte cliquable avec <code>[interactive]="true"</code></li>
               <li><strong>Hoverable</strong> : Effet de survol avec <code>[hoverable]="true"</code></li>
-              <li><strong>Disabled</strong> : Désactive toutes les interactions</li>
+              <li><strong>Disabled</strong> : Désactive toutes les interactions avec <code>[disabled]="true"</code></li>
+              <li><strong>Clicked</strong> : Événement émis au clic avec <code>(clicked)="handler($event)"</code></li>
             </ul>
             <ds-code-snippet [code]="statesCode" />
           </div>
@@ -218,7 +236,7 @@
             <psh-info-card
               title="Largeurs Custom"
               [data]="customWidthData"
-              cardVariant="outlined"
+              variant="outlined"
               icon="arrows-horizontal"
             ></psh-info-card>
             <div class="code-example">
@@ -238,7 +256,7 @@
             <psh-info-card
               title="Données Compactes"
               [data]="compactData"
-              cardVariant="outlined"
+              variant="outlined"
               icon="list-bullets"
             ></psh-info-card>
             <p class="customization-description">
@@ -251,7 +269,7 @@
             <psh-info-card
               title="Actions Multiples"
               [data]="compactData"
-              cardVariant="elevated"
+              variant="elevated"
               icon="check-circle"
             >
               <div card-actions>
@@ -279,7 +297,7 @@
           <psh-info-card
             title="Profil"
             [data]="compactData"
-            cardVariant="elevated"
+            variant="elevated"
             icon="user"
             [hoverable]="true"
           ></psh-info-card>
@@ -287,7 +305,7 @@
           <psh-info-card
             title="Statistiques"
             [data]="compactData"
-            cardVariant="elevated"
+            variant="elevated"
             icon="chart-bar"
             [hoverable]="true"
           ></psh-info-card>
@@ -295,7 +313,7 @@
           <psh-info-card
             title="Notifications"
             [data]="compactData"
-            cardVariant="elevated"
+            variant="elevated"
             icon="bell"
             [hoverable]="true"
           ></psh-info-card>
@@ -303,7 +321,7 @@
           <psh-info-card
             title="Paramètres"
             [data]="compactData"
-            cardVariant="elevated"
+            variant="elevated"
             icon="gear"
             [hoverable]="true"
           ></psh-info-card>
@@ -350,7 +368,7 @@
                 <td>Nom de l'icône Phosphor (sans préfixe 'ph-')</td>
               </tr>
               <tr>
-                <td><code>cardVariant</code></td>
+                <td><code>variant</code></td>
                 <td><code>InfoCardVariant</code></td>
                 <td><code>'outlined'</code></td>
                 <td>'elevated' | 'outlined' | 'default'</td>
@@ -390,6 +408,44 @@
                 <td><code>string</code></td>
                 <td><code>undefined</code></td>
                 <td>Label ARIA personnalisé pour l'accessibilité</td>
+              </tr>
+              <tr>
+                <td><code>cssClass</code></td>
+                <td><code>string</code></td>
+                <td><code>''</code></td>
+                <td>Classes CSS additionnelles</td>
+              </tr>
+              <tr>
+                <td><code>customStyle</code></td>
+                <td><code>Record&lt;string, string&gt;</code></td>
+                <td><code>&#123;&#125;</code></td>
+                <td>Styles inline personnalisés</td>
+              </tr>
+              <tr>
+                <td><code>autoFullWidthOnMobile</code></td>
+                <td><code>boolean</code></td>
+                <td><code>true</code></td>
+                <td>Boutons pleine largeur sur mobile</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Événements (Outputs)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Événement</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>clicked</code></td>
+                <td><code>MouseEvent | KeyboardEvent</code></td>
+                <td>Émis lors du clic ou activation clavier (si <code>interactive=true</code>)</td>
               </tr>
             </tbody>
           </table>
@@ -512,10 +568,12 @@ import &#123; InfoCardData &#125; from 'ps-helix';
       title="Profil Utilisateur"
       [data]="userData"
       icon="user-circle"
-      cardVariant="elevated"
+      variant="elevated"
       [hoverable]="true"
+      [interactive]="true"
       [loading]="isLoading"
       ariaLabel="Informations du profil utilisateur"
+      (clicked)="handleCardClick($event)"
     &gt;
       &lt;div card-actions&gt;
         &lt;psh-button variant="primary"&gt;Modifier&lt;/psh-button&gt;
@@ -535,6 +593,10 @@ export class MyComponent &#123;
     &#123; label: 'Téléphone', value: '+33 6 12 34 56 78' &#125;,
     &#123; label: 'Ville', value: 'Paris' &#125;
   ];
+
+  handleCardClick(event: MouseEvent | KeyboardEvent): void &#123;
+    console.log('Carte cliquée', event);
+  &#125;
 &#125;</pre>
           </div>
         </div>

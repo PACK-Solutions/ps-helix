@@ -132,8 +132,6 @@ interface InfoCardOptions {
   emptyStateMessage?: string;
   labelWidth?: string;
   valueWidth?: string;
-  showDividers?: boolean;
-  density?: 'compact' | 'normal' | 'spacious';
 }
 
 type InfoCardVariant = 'default' | 'elevated' | 'outlined';
