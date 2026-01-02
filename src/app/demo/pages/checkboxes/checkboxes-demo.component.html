@@ -48,8 +48,8 @@
             <div class="variant-preview">
               <psh-checkbox
                 [(checked)]="noLabelChecked"
-              >
-              </psh-checkbox>
+                ariaLabel="Sélectionner l'élément"
+              />
             </div>
             <div class="variant-info">
               <h4>Sans Label Visible</h4>
@@ -309,7 +309,6 @@
             <pre><code>import &#123; PshCheckboxComponent &#125; from 'ps-helix';
 
 &#64;Component(&#123;
-  standalone: true,
   imports: [PshCheckboxComponent],
   template: `
     &lt;psh-checkbox

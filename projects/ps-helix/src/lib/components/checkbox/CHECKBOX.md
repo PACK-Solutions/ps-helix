@@ -40,27 +40,30 @@ import { PshCheckboxComponent } from 'ps-helix';
 
 ## API
 
-### Model Inputs (@model)
+### Model Inputs (bidirectionnels avec `[()]`)
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
 | checked | boolean | false | État coché |
 | disabled | boolean | false | État désactivé |
 | required | boolean | false | État requis |
 | indeterminate | boolean | false | État indéterminé |
-| size | CheckboxSize | 'medium' | Taille de la checkbox |
-| labelPosition | 'left' \| 'right' | 'right' | Position du label |
 
-### Regular Inputs (@input)
+### Regular Inputs
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
 | label | string | '' | Label de la checkbox |
 | error | string | '' | Message d'erreur |
 | success | string | '' | Message de succès |
+| ariaLabel | string \| undefined | undefined | Label ARIA pour l'accessibilité |
+| size | CheckboxSize | 'medium' | Taille de la checkbox |
+| labelPosition | 'left' \| 'right' | 'right' | Position du label |
 
 ### Outputs
-| Nom | Type | Description |
-|-----|------|-------------|
-| checkedChange | EventEmitter<boolean> | Émis lors du changement d'état |
+Les model inputs génèrent automatiquement des events de changement :
+- `checkedChange` : Émis lors du changement d'état coché
+- `disabledChange` : Émis lors du changement d'état désactivé
+- `requiredChange` : Émis lors du changement d'état requis
+- `indeterminateChange` : Émis lors du changement d'état indéterminé
 
 ### Types
 
