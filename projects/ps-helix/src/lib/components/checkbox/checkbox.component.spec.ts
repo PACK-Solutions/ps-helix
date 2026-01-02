@@ -261,12 +261,12 @@ describe('PshCheckboxComponent', () => {
         expect(getCheckboxInput().getAttribute('aria-label')).toBe('Custom accessibility label');
       });
 
-      it('should use label as aria-label when no custom ariaLabel', () => {
+      it('should not have aria-label when ariaLabel is not provided', () => {
         fixture.componentRef.setInput('label', 'Terms and conditions');
         fixture.componentRef.setInput('ariaLabel', undefined);
         fixture.detectChanges();
 
-        expect(getCheckboxInput().getAttribute('aria-label')).toBe('Terms and conditions');
+        expect(getCheckboxInput().getAttribute('aria-label')).toBeFalsy();
       });
     });
   });

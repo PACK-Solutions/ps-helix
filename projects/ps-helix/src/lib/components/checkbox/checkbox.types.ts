@@ -21,6 +21,8 @@ export interface CheckboxConfig {
   size: CheckboxSize;
   /** Position du label */
   labelPosition: 'left' | 'right';
+  /** Label ARIA pour l'accessibilité */
+  ariaLabel?: string;
   /** Message d'erreur */
   error?: string;
   /** Message de succès */

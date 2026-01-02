@@ -87,17 +87,16 @@ type CheckboxSize = 'small' | 'medium' | 'large';
 ## Accessibilité
 
 ### Attributs ARIA
-- `role="checkbox"`: Rôle sémantique
-- `aria-checked`: État de la checkbox
-- `aria-disabled`: État désactivé
-- `aria-required`: État requis
-- `aria-invalid`: État d'erreur
+- `aria-checked`: État de la checkbox (true, false, mixed)
+- `aria-required`: État requis (si applicable)
+- `aria-invalid`: État d'erreur (si applicable)
+- `aria-describedby`: Liaison aux messages d'erreur/succès
 
 ### Bonnes Pratiques
-- Labels descriptifs
-- Support du clavier
-- États visuels distincts
-- Messages d'erreur vocaux
+- Labels descriptifs via contenu projeté, input `label` ou `ariaLabel`
+- Support du clavier (Tab, Espace, Entrée)
+- États visuels distincts avec focus visible
+- Messages d'erreur liés pour les lecteurs d'écran
 
 ## Exemple Complet
 
