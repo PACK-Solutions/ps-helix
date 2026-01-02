@@ -21,7 +21,7 @@ import { InfoCardData, InfoCardOptions, InfoCardVariant } from './info-card.type
  *   title="User Information"
  *   [data]="userData"
  *   icon="user"
- *   cardVariant="elevated"
+ *   variant="elevated"
  * ></psh-info-card>
  * ```
  */
