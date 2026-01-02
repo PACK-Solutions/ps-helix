@@ -1,6 +1,21 @@
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PshInfoCardComponent } from './info-card.component';
 import { InfoCardData, InfoCardVariant } from './info-card.types';
+
+@Component({
+  template: `
+    <psh-info-card [title]="title" [data]="data" [autoFullWidthOnMobile]="autoFullWidthOnMobile">
+      <button card-actions>Action Button</button>
+    </psh-info-card>
+  `,
+  imports: [PshInfoCardComponent]
+})
+class TestHostComponent {
+  title = 'Test Card';
+  data: InfoCardData[] = [];
+  autoFullWidthOnMobile = true;
+}
 
 describe('PshInfoCardComponent', () => {
   let fixture: ComponentFixture<PshInfoCardComponent>;
@@ -147,6 +162,10 @@ describe('PshInfoCardComponent', () => {
   });
 
   describe('Variants', () => {
+    it('should have outlined as default variant', () => {
+      expect(getRegion().className).toContain('variant-outlined');
+    });
+
     it.each<[InfoCardVariant]>([['default'], ['elevated'], ['outlined']])(
       'should apply variant-%s class for variant "%s"',
       (variant) => {
@@ -419,6 +438,93 @@ describe('PshInfoCardComponent', () => {
     });
   });
 
+  describe('Per-item customization', () => {
+    it('should apply customClass to individual row', () => {
+      const testData: InfoCardData[] = [
+        { label: 'Name', value: 'John', customClass: 'highlight-row' },
+        { label: 'Email', value: 'john@example.com' }
+      ];
+      fixture.componentRef.setInput('data', testData);
+      fixture.detectChanges();
+
+      const rows = getListItems();
+      const firstRow = rows[0] as HTMLElement;
+      const secondRow = rows[1] as HTMLElement;
+      expect(firstRow.className).toContain('highlight-row');
+      expect(secondRow.className).not.toContain('highlight-row');
+    });
+
+    it('should apply per-item labelWidth', () => {
+      const testData: InfoCardData[] = [
+        { label: 'Name', value: 'John', labelWidth: '200px' }
+      ];
+      fixture.componentRef.setInput('data', testData);
+      fixture.detectChanges();
+
+      const label = fixture.nativeElement.querySelector('.info-card-label') as HTMLElement;
+      expect(label.style.width).toBe('200px');
+    });
+
+    it('should apply per-item valueWidth', () => {
+      const testData: InfoCardData[] = [
+        { label: 'Name', value: 'John', valueWidth: '300px' }
+      ];
+      fixture.componentRef.setInput('data', testData);
+      fixture.detectChanges();
+
+      const value = fixture.nativeElement.querySelector('.info-card-value') as HTMLElement;
+      expect(value.style.width).toBe('300px');
+    });
+
+    it('should use per-item labelWidth over options.labelWidth', () => {
+      const testData: InfoCardData[] = [
+        { label: 'Name', value: 'John', labelWidth: '150px' }
+      ];
+      fixture.componentRef.setInput('data', testData);
+      fixture.componentRef.setInput('options', { labelWidth: '100px' });
+      fixture.detectChanges();
+
+      const label = fixture.nativeElement.querySelector('.info-card-label') as HTMLElement;
+      expect(label.style.width).toBe('150px');
+    });
+
+    it('should use per-item valueWidth over options.valueWidth', () => {
+      const testData: InfoCardData[] = [
+        { label: 'Name', value: 'John', valueWidth: '250px' }
+      ];
+      fixture.componentRef.setInput('data', testData);
+      fixture.componentRef.setInput('options', { valueWidth: '200px' });
+      fixture.detectChanges();
+
+      const value = fixture.nativeElement.querySelector('.info-card-value') as HTMLElement;
+      expect(value.style.width).toBe('250px');
+    });
+
+    it('should fall back to options.labelWidth when per-item labelWidth is not set', () => {
+      const testData: InfoCardData[] = [
+        { label: 'Name', value: 'John' }
+      ];
+      fixture.componentRef.setInput('data', testData);
+      fixture.componentRef.setInput('options', { labelWidth: '120px' });
+      fixture.detectChanges();
+
+      const label = fixture.nativeElement.querySelector('.info-card-label') as HTMLElement;
+      expect(label.style.width).toBe('120px');
+    });
+
+    it('should fall back to options.valueWidth when per-item valueWidth is not set', () => {
+      const testData: InfoCardData[] = [
+        { label: 'Name', value: 'John' }
+      ];
+      fixture.componentRef.setInput('data', testData);
+      fixture.componentRef.setInput('options', { valueWidth: '180px' });
+      fixture.detectChanges();
+
+      const value = fixture.nativeElement.querySelector('.info-card-value') as HTMLElement;
+      expect(value.style.width).toBe('180px');
+    });
+  });
+
   describe('Edge cases', () => {
     it('should handle empty data array gracefully', () => {
       fixture.componentRef.setInput('data', []);
@@ -465,5 +571,64 @@ describe('PshInfoCardComponent', () => {
 
       expect(getRegion().style.backgroundColor).toBe('red');
     });
+  });
+});
+
+describe('PshInfoCardComponent - Content Projection', () => {
+  let fixture: ComponentFixture<TestHostComponent>;
+  let hostComponent: TestHostComponent;
+
+  const getActionsContainer = () =>
+    fixture.nativeElement.querySelector('.info-card-actions') as HTMLElement;
+
+  const getProjectedButton = () =>
+    fixture.nativeElement.querySelector('[card-actions]') as HTMLElement;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [TestHostComponent]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(TestHostComponent);
+    hostComponent = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should render card-actions container', () => {
+    expect(getActionsContainer()).toBeTruthy();
+  });
+
+  it('should project content into card-actions slot', () => {
+    const button = getProjectedButton();
+    expect(button).toBeTruthy();
+    expect(button.textContent).toContain('Action Button');
+  });
+
+  it('should apply mobile-full-width-buttons class when mobile and autoFullWidthOnMobile is true', () => {
+    const infoCardDebugEl = fixture.debugElement.children[0];
+    const infoCard = infoCardDebugEl?.componentInstance as PshInfoCardComponent;
+    infoCard.isMobile.set(true);
+    fixture.detectChanges();
+
+    expect(getActionsContainer().className).toContain('mobile-full-width-buttons');
+  });
+
+  it('should not apply mobile-full-width-buttons class when autoFullWidthOnMobile is false', () => {
+    hostComponent.autoFullWidthOnMobile = false;
+    const infoCardDebugEl = fixture.debugElement.children[0];
+    const infoCard = infoCardDebugEl?.componentInstance as PshInfoCardComponent;
+    infoCard.isMobile.set(true);
+    fixture.detectChanges();
+
+    expect(getActionsContainer().className).not.toContain('mobile-full-width-buttons');
+  });
+
+  it('should not apply mobile-full-width-buttons class when not mobile', () => {
+    const infoCardDebugEl = fixture.debugElement.children[0];
+    const infoCard = infoCardDebugEl?.componentInstance as PshInfoCardComponent;
+    infoCard.isMobile.set(false);
+    fixture.detectChanges();
+
+    expect(getActionsContainer().className).not.toContain('mobile-full-width-buttons');
   });
 });

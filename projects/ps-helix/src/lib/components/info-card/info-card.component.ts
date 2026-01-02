@@ -113,12 +113,6 @@ export class PshInfoCardComponent {
     return customLabel || (titleText ? `Information card: ${titleText}` : 'Information card');
   });
 
-  /** Validates if data array has valid entries */
-  hasValidData = computed(() => {
-    const dataArray = this.data();
-    return dataArray && dataArray.length > 0 && dataArray.some(item => item.label && item.value !== undefined);
-  });
-
   /** Computed CSS classes */
   computedClasses = computed(() => {
     const classes = ['info-card'];
