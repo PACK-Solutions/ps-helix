@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PshTagComponent } from '../tag/tag.component';
-import { StatCardData, StatTagVariant, StatCardLayout, StatCardVariant } from './stat-card.types';
+import { StatTagVariant, StatCardLayout, StatCardVariant } from './stat-card.types';
 
 const ICON_GRADIENT_DEFAULTS: Record<StatTagVariant, string> = {
   success: 'linear-gradient(135deg, #34D399, #059669)',
@@ -76,61 +76,26 @@ export class PshStatCardComponent {
   /** Active la direction row pour le card-body (icône et contenu côte à côte en flex-row) */
   rowDirection = input(false);
 
-  // Inputs de compatibilité (deprecated)
-  /**
-   * @deprecated Utiliser les inputs individuels (value, description, icon, etc.)
-   */
-  data = input<StatCardData>();
-
   // Outputs
   /** Émis lors du clic sur la carte */
   clicked = output<MouseEvent | KeyboardEvent>();
 
   // Computed values
-  /** Valeur calculée (priorité: input direct > data.value) */
-  private computedValue = computed(() => {
-    const directValue = this.value();
-    const dataValue = this.data()?.value;
-    return directValue ?? dataValue ?? '';
-  });
+  private computedValue = computed(() => this.value() ?? '');
 
-  /** Description calculée (priorité: input direct > data.description) */
-  private computedDescription = computed(() => {
-    const directDesc = this.description();
-    const dataDesc = this.data()?.description;
-    return directDesc ?? dataDesc ?? '';
-  });
+  private computedDescription = computed(() => this.description() ?? '');
 
-  /** Icône calculée (priorité: input direct > data.icon) */
-  private computedIcon = computed(() => {
-    const directIcon = this.icon();
-    const dataIcon = this.data()?.icon;
-    return directIcon ?? dataIcon ?? '';
-  });
+  private computedIcon = computed(() => this.icon() ?? '');
 
-  /** Variante de tag calculée */
-  private computedTagVariant = computed(() => {
-    const directVariant = this.tagVariant();
-    const dataVariant = this.data()?.tagVariant;
-    return directVariant ?? dataVariant;
-  });
+  private computedTagVariant = computed(() => this.tagVariant());
 
-  /** Label de tag calculé */
-  private computedTagLabel = computed(() => {
-    const directLabel = this.tagLabel();
-    const dataLabel = this.data()?.tagLabel;
-    return directLabel ?? dataLabel;
-  });
+  private computedTagLabel = computed(() => this.tagLabel());
 
-  /** Background d'icône calculé avec valeur par défaut intelligente */
   private computedIconBackground = computed(() => {
-    const directBg = this.iconBackground();
-    const dataBg = this.data()?.iconBackground;
-    const customBg = directBg ?? dataBg;
-
+    const customBg = this.iconBackground();
     if (customBg) return customBg;
 
-    const variant = this.computedTagVariant();
+    const variant = this.tagVariant();
     return variant ? ICON_GRADIENT_DEFAULTS[variant] : null;
   });
 
@@ -148,10 +113,7 @@ export class PshStatCardComponent {
   /** Vérifie si une icône doit être affichée */
   hasIcon = computed(() => !!this.computedIcon());
 
-  /** RowDirection calculé (priorité: input direct > data.rowDirection) */
-  useRowDirection = computed(() =>
-    this.rowDirection() || this.data()?.rowDirection || false
-  );
+  useRowDirection = computed(() => this.rowDirection());
 
   /** Label ARIA calculé */
   computedAriaLabel = computed(() => {

@@ -15,7 +15,6 @@ Composant carte statistique - affichage compact de metriques cles avec icone, va
 - [Accessibilite](#accessibilite)
 - [Personnalisation CSS](#personnalisation-css)
 - [Bonnes Pratiques](#bonnes-pratiques)
-- [Migration](#migration)
 
 ## Installation
 
@@ -118,12 +117,6 @@ export class MyComponent {}
 |-----|------|--------|-------------|
 | `ariaLabel` | `string` | Auto | Label ARIA personnalise. Par defaut genere automatiquement depuis `description` et `value` |
 
-### Input Deprecie
-
-| Nom | Type | Description |
-|-----|------|-------------|
-| `data` | `StatCardData` | **Deprecie** - Utiliser les inputs individuels. Objet contenant toutes les proprietes |
-
 ### Outputs
 
 | Nom | Type | Description |
@@ -133,16 +126,6 @@ export class MyComponent {}
 ### Types TypeScript
 
 ```typescript
-interface StatCardData {
-  value: string | number;
-  description: string;
-  icon: string;
-  tagVariant?: 'success' | 'danger' | 'warning' | 'primary';
-  tagLabel?: string;
-  iconBackground?: string;
-  rowDirection?: boolean;
-}
-
 type StatTagVariant = 'success' | 'danger' | 'warning' | 'primary';
 
 type StatCardLayout = 'horizontal' | 'vertical';
@@ -687,44 +670,6 @@ statCard.value.set('2,000');
 - Listes detaillees
 - Formulaires
 - Navigation principale
-
-## Migration
-
-### Depuis l'Input `data` (Deprecie)
-
-**Avant :**
-```html
-<psh-stat-card [data]="statData">
-</psh-stat-card>
-```
-
-```typescript
-statData: StatCardData = {
-  value: '1,234',
-  description: 'Utilisateurs',
-  icon: 'users',
-  tagVariant: 'success',
-  tagLabel: '+12%'
-};
-```
-
-**Apres :**
-```html
-<psh-stat-card
-  value="1,234"
-  description="Utilisateurs"
-  icon="users"
-  tagVariant="success"
-  tagLabel="+12%"
->
-</psh-stat-card>
-```
-
-Les inputs individuels offrent :
-- Meilleure lisibilite du template
-- Completion automatique dans l'IDE
-- Validation des types plus precise
-- Compatibilite avec les signals Angular
 
 ---
 

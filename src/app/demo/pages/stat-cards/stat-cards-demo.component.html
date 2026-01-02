@@ -548,40 +548,6 @@
           </table>
         </div>
 
-        <div class="api-compatibility">
-          <h4>Compatibilité avec l'ancienne API</h4>
-          <div class="compatibility-note">
-            <p><strong>Note de migration :</strong> L'input <code>[data]</code> est déprécié mais toujours supporté pour la rétrocompatibilité.</p>
-            <div class="migration-example">
-              <div class="old-way">
-                <h5>Ancienne API (dépréciée)</h5>
-                <pre><code>// Component
-statsData: StatCardData = &#123;
-  value: '8,430€',
-  description: 'Revenu',
-  icon: 'coins',
-  tagVariant: 'success',
-  tagLabel: '+12.6%'
-&#125;;
-
-// Template
-&lt;psh-stat-card [data]="statsData"&gt;&lt;/psh-stat-card&gt;</code></pre>
-              </div>
-              <div class="new-way">
-                <h5>Nouvelle API (recommandée)</h5>
-                <pre><code>// Template uniquement
-&lt;psh-stat-card
-  value="8,430€"
-  description="Revenu"
-  icon="coins"
-  tagVariant="success"
-  tagLabel="+12.6%"
-&gt;&lt;/psh-stat-card&gt;</code></pre>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div class="api-usage-example">
           <h4>Exemple d'Utilisation Complète</h4>
           <div class="code-block">
@@ -636,7 +602,7 @@ export class DashboardComponent &#123;
         <div class="api-best-practices">
           <h4>Bonnes Pratiques</h4>
           <ul class="best-practices-list">
-            <li><strong>Inputs individuels</strong> : Privilégiez les inputs individuels plutôt que l'input <code>[data]</code> déprécié</li>
+            <li><strong>Inputs individuels</strong> : Utilisez les inputs individuels pour une API simple et typee</li>
             <li><strong>Gradients auto</strong> : Laissez le composant générer les gradients automatiquement à partir de <code>tagVariant</code></li>
             <li><strong>Gradients personnalisés</strong> : Utilisez <code>iconBackground</code> uniquement pour des identités visuelles spécifiques</li>
             <li><strong>Tags optionnels</strong> : Les tags d'évolution sont optionnels, omettez <code>tagVariant</code> et <code>tagLabel</code> pour les métriques neutres</li>
