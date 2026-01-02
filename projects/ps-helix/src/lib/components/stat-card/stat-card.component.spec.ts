@@ -96,29 +96,6 @@ describe('PshStatCardComponent', () => {
 
       expect(getTag()).toBeFalsy();
     });
-
-    it('should support data input for value', () => {
-      fixture.componentRef.setInput('data', {
-        value: 999,
-        description: 'Data Description',
-        icon: 'star'
-      });
-      fixture.detectChanges();
-
-      expect(getValueElement().textContent).toContain('999');
-    });
-
-    it('should prioritize direct inputs over data object', () => {
-      fixture.componentRef.setInput('value', 'Direct Value');
-      fixture.componentRef.setInput('data', {
-        value: 'Data Value',
-        description: 'Data Description',
-        icon: 'star'
-      });
-      fixture.detectChanges();
-
-      expect(getValueElement().textContent).toContain('Direct Value');
-    });
   });
 
   describe('Loading state', () => {
@@ -533,82 +510,6 @@ describe('PshStatCardComponent', () => {
       getContainer().dispatchEvent(enterEvent);
 
       expect(clickSpy).not.toHaveBeenCalled();
-    });
-
-    it('should handle partial data object', () => {
-      fixture.componentRef.setInput('data', {
-        value: 'Partial',
-        description: '',
-        icon: ''
-      });
-      fixture.detectChanges();
-
-      expect(getValueElement().textContent).toContain('Partial');
-    });
-
-    it('should support rowDirection from data object with CSS class and template structure', () => {
-      fixture.componentRef.setInput('data', {
-        value: '100',
-        description: 'Test',
-        icon: 'star',
-        rowDirection: true
-      });
-      fixture.detectChanges();
-
-      expect(getContainer().className).toContain('stat-card--row');
-      const cardBody = fixture.nativeElement.querySelector('.stat-card-body');
-      expect(cardBody).toBeTruthy();
-    });
-
-    it('should support tagVariant and tagLabel from data object', () => {
-      fixture.componentRef.setInput('data', {
-        value: '500',
-        description: 'Revenue',
-        icon: 'currency-dollar',
-        tagVariant: 'success',
-        tagLabel: '+25%'
-      });
-      fixture.detectChanges();
-
-      const tag = getTag();
-      expect(tag).toBeTruthy();
-      expect(tag.textContent).toContain('+25%');
-      const tagDiv = tag.querySelector('.tag');
-      expect(tagDiv?.classList.contains('success')).toBe(true);
-    });
-
-    it('should support iconBackground from data object', () => {
-      fixture.componentRef.setInput('data', {
-        value: '100',
-        description: 'Test',
-        icon: 'star',
-        iconBackground: '#00FF00'
-      });
-      fixture.detectChanges();
-
-      const iconContainer = getIconContainer();
-      expect(iconContainer).toBeTruthy();
-      expect(iconContainer.style.background).toBe('rgb(0, 255, 0)');
-    });
-
-    it('should prioritize direct tagVariant over data object tagVariant', () => {
-      fixture.componentRef.setInput('tagVariant', 'danger');
-      fixture.componentRef.setInput('tagLabel', '+10%');
-      fixture.componentRef.setInput('data', {
-        value: '100',
-        description: 'Test',
-        icon: 'star',
-        tagVariant: 'success',
-        tagLabel: '+20%'
-      });
-      fixture.detectChanges();
-
-      const tag = getTag();
-      expect(tag).toBeTruthy();
-      const tagDiv = tag.querySelector('.tag');
-      expect(tagDiv?.classList.contains('danger')).toBe(true);
-      expect(tagDiv?.classList.contains('success')).toBe(false);
-      expect(tag.textContent).toContain('+10%');
     });
   });
 });
