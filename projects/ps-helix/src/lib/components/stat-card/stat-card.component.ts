@@ -145,6 +145,14 @@ export class PshStatCardComponent {
     !!(this.computedTagVariant() && this.computedTagLabel())
   );
 
+  /** Vérifie si une icône doit être affichée */
+  hasIcon = computed(() => !!this.computedIcon());
+
+  /** RowDirection calculé (priorité: input direct > data.rowDirection) */
+  useRowDirection = computed(() =>
+    this.rowDirection() || this.data()?.rowDirection || false
+  );
+
   /** Label ARIA calculé */
   computedAriaLabel = computed(() => {
     const customLabel = this.ariaLabel();
@@ -163,7 +171,6 @@ export class PshStatCardComponent {
   computedClasses = computed(() => {
     const classes = ['stat-card'];
     const layout = this.layout();
-    const useRowDirection = this.rowDirection() || this.data()?.rowDirection;
 
     classes.push(`variant-${this.variant()}`);
 
@@ -173,7 +180,7 @@ export class PshStatCardComponent {
       classes.push('stat-card--horizontal');
     }
 
-    if (useRowDirection) {
+    if (this.useRowDirection()) {
       classes.push('stat-card--row');
     }
 

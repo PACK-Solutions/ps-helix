@@ -18,11 +18,13 @@
       </div>
     </div>
   } @else {
-    @if (rowDirection()) {
+    @if (useRowDirection()) {
       <div class="stat-card-body">
-        <div class="stat-icon" [style]="iconStyle()">
-          <i class="ph ph-{{ displayIcon }}" aria-hidden="true"></i>
-        </div>
+        @if (hasIcon()) {
+          <div class="stat-icon" [style]="iconStyle()">
+            <i class="ph ph-{{ displayIcon }}" aria-hidden="true"></i>
+          </div>
+        }
 
         <div class="stat-content">
           <h3 class="stat-value">{{ displayValue }}</h3>
@@ -36,9 +38,11 @@
         </div>
       </div>
     } @else {
-      <div class="stat-icon" [style]="iconStyle()">
-        <i class="ph ph-{{ displayIcon }}" aria-hidden="true"></i>
-      </div>
+      @if (hasIcon()) {
+        <div class="stat-icon" [style]="iconStyle()">
+          <i class="ph ph-{{ displayIcon }}" aria-hidden="true"></i>
+        </div>
+      }
 
       <div class="stat-content">
         <h3 class="stat-value">{{ displayValue }}</h3>

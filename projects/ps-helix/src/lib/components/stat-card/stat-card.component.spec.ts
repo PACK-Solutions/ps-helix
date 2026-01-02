@@ -54,11 +54,23 @@ describe('PshStatCardComponent', () => {
       expect(getDescriptionElement().textContent).toContain('Total Revenue');
     });
 
-    it('should render icon container', () => {
+    it('should render icon container with correct icon class', () => {
       fixture.componentRef.setInput('icon', 'chart-line');
       fixture.detectChanges();
 
-      expect(getIconContainer()).toBeTruthy();
+      const iconContainer = getIconContainer();
+      expect(iconContainer).toBeTruthy();
+      const iconElement = iconContainer.querySelector('i');
+      expect(iconElement).toBeTruthy();
+      expect(iconElement!.className).toBe('ph ph-chart-line');
+    });
+
+    it('should not render icon container when no icon provided', () => {
+      fixture.componentRef.setInput('value', '100');
+      fixture.componentRef.setInput('description', 'Test');
+      fixture.detectChanges();
+
+      expect(getIconContainer()).toBeNull();
     });
 
     it('should render tag when tagVariant and tagLabel are provided', () => {
@@ -435,15 +447,26 @@ describe('PshStatCardComponent', () => {
 
         expect(getContainer().getAttribute('tabindex')).toBeNull();
       });
+
+      it('should still have tabindex when loading and interactive', () => {
+        fixture.componentRef.setInput('interactive', true);
+        fixture.componentRef.setInput('loading', true);
+        fixture.detectChanges();
+
+        expect(getContainer().getAttribute('tabindex')).toBe('0');
+      });
     });
 
     describe('icon accessibility', () => {
-      it('should have aria-hidden="true" on icon', () => {
+      it('should have aria-hidden="true" on icon element', () => {
         fixture.componentRef.setInput('icon', 'chart-line');
         fixture.detectChanges();
 
-        const icon = fixture.nativeElement.querySelector('[aria-hidden="true"]');
-        expect(icon).toBeTruthy();
+        const iconContainer = getIconContainer();
+        expect(iconContainer).toBeTruthy();
+        const iconElement = iconContainer.querySelector('i.ph');
+        expect(iconElement).toBeTruthy();
+        expect(iconElement!.getAttribute('aria-hidden')).toBe('true');
       });
     });
   });
@@ -523,7 +546,7 @@ describe('PshStatCardComponent', () => {
       expect(getValueElement().textContent).toContain('Partial');
     });
 
-    it('should support rowDirection from data object', () => {
+    it('should support rowDirection from data object with CSS class and template structure', () => {
       fixture.componentRef.setInput('data', {
         value: '100',
         description: 'Test',
@@ -533,6 +556,59 @@ describe('PshStatCardComponent', () => {
       fixture.detectChanges();
 
       expect(getContainer().className).toContain('stat-card--row');
+      const cardBody = fixture.nativeElement.querySelector('.stat-card-body');
+      expect(cardBody).toBeTruthy();
+    });
+
+    it('should support tagVariant and tagLabel from data object', () => {
+      fixture.componentRef.setInput('data', {
+        value: '500',
+        description: 'Revenue',
+        icon: 'currency-dollar',
+        tagVariant: 'success',
+        tagLabel: '+25%'
+      });
+      fixture.detectChanges();
+
+      const tag = getTag();
+      expect(tag).toBeTruthy();
+      expect(tag.textContent).toContain('+25%');
+      const tagDiv = tag.querySelector('.tag');
+      expect(tagDiv?.classList.contains('success')).toBe(true);
+    });
+
+    it('should support iconBackground from data object', () => {
+      fixture.componentRef.setInput('data', {
+        value: '100',
+        description: 'Test',
+        icon: 'star',
+        iconBackground: '#00FF00'
+      });
+      fixture.detectChanges();
+
+      const iconContainer = getIconContainer();
+      expect(iconContainer).toBeTruthy();
+      expect(iconContainer.style.background).toBe('rgb(0, 255, 0)');
+    });
+
+    it('should prioritize direct tagVariant over data object tagVariant', () => {
+      fixture.componentRef.setInput('tagVariant', 'danger');
+      fixture.componentRef.setInput('tagLabel', '+10%');
+      fixture.componentRef.setInput('data', {
+        value: '100',
+        description: 'Test',
+        icon: 'star',
+        tagVariant: 'success',
+        tagLabel: '+20%'
+      });
+      fixture.detectChanges();
+
+      const tag = getTag();
+      expect(tag).toBeTruthy();
+      const tagDiv = tag.querySelector('.tag');
+      expect(tagDiv?.classList.contains('danger')).toBe(true);
+      expect(tagDiv?.classList.contains('success')).toBe(false);
+      expect(tag.textContent).toContain('+10%');
     });
   });
 });
