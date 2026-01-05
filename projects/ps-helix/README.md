@@ -87,14 +87,26 @@ The following dependencies are bundled with ps-helix:
 
 ## Installation
 
-Install the package via npm:
+Install the package via your preferred package manager:
 
+**Avec pnpm (recommandé) :**
+```bash
+pnpm add ps-helix
+```
+
+**Avec npm :**
 ```bash
 npm install ps-helix
 ```
 
 All peer dependencies should be automatically installed. If not, install them manually:
 
+**Avec pnpm :**
+```bash
+pnpm add @angular/common@^20.0.0 @angular/core@^20.0.0 @angular/forms@^20.0.0 @ngx-translate/core@^15.0.0 rxjs@^7.8.0
+```
+
+**Avec npm :**
 ```bash
 npm install @angular/common@^20.0.0 @angular/core@^20.0.0 @angular/forms@^20.0.0 @ngx-translate/core@^15.0.0 rxjs@^7.8.0
 ```
@@ -1037,7 +1049,9 @@ See [THEME.md](./THEME.md) for complete theming documentation.
 1. Verify Angular version is 20.0.0 or higher
 2. Check `tsconfig.json` has `"strict": true`
 3. Ensure all peer dependencies are installed
-4. Clear node_modules and reinstall: `rm -rf node_modules && npm install`
+4. Clear node_modules and reinstall:
+   - Avec pnpm: `rm -rf node_modules && pnpm install`
+   - Avec npm: `rm -rf node_modules && npm install`
 
 ### Performance Issues
 
@@ -1084,23 +1098,24 @@ Helix Design System supports:
 
 ## Development Scripts
 
-The following npm scripts are available for library development:
+The following scripts are available for library development:
 
+**Avec pnpm (recommandé) :**
 ```bash
-# Build the library
-npm run build:lib
+pnpm run build:lib    # Build the library
+pnpm run watch:lib    # Watch for changes and rebuild
+pnpm run publish:lib  # Publish to npm registry
+pnpm run build        # Build demo application
+pnpm run dev          # Run demo application in dev mode
+```
 
-# Watch for changes and rebuild
-npm run watch:lib
-
-# Publish to npm registry
-npm run publish:lib
-
-# Build demo application
-npm run build
-
-# Run demo application in dev mode
-npm run dev
+**Avec npm :**
+```bash
+npm run build:lib     # Build the library
+npm run watch:lib     # Watch for changes and rebuild
+npm run publish:lib   # Publish to npm registry
+npm run build         # Build demo application
+npm run dev           # Run demo application in dev mode
 ```
 
 ## Contributing
