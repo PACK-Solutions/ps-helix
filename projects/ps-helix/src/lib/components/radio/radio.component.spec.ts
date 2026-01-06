@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
-import { PshRadioComponent } from './radio.component';
+import { PshRadioComponent, RADIO_CONFIG, RADIO_STYLES } from './radio.component';
 import { RadioSize } from './radio.types';
 
 @Component({
@@ -468,6 +468,171 @@ describe('PshRadioComponent', () => {
       fixture.detectChanges();
 
       expect(getHostElement().classList.contains('radio-success')).toBe(false);
+    });
+  });
+
+  describe('Arrow key navigation', () => {
+    it('should call focusNextRadio on ArrowDown key', () => {
+      const input = getRadioInput();
+      const focusNextSpy = jest.spyOn(fixture.componentInstance as any, 'focusNextRadio');
+
+      input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
+      fixture.detectChanges();
+
+      expect(focusNextSpy).toHaveBeenCalled();
+    });
+
+    it('should call focusNextRadio on ArrowRight key', () => {
+      const input = getRadioInput();
+      const focusNextSpy = jest.spyOn(fixture.componentInstance as any, 'focusNextRadio');
+
+      input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+      fixture.detectChanges();
+
+      expect(focusNextSpy).toHaveBeenCalled();
+    });
+
+    it('should call focusPreviousRadio on ArrowUp key', () => {
+      const input = getRadioInput();
+      const focusPrevSpy = jest.spyOn(fixture.componentInstance as any, 'focusPreviousRadio');
+
+      input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }));
+      fixture.detectChanges();
+
+      expect(focusPrevSpy).toHaveBeenCalled();
+    });
+
+    it('should call focusPreviousRadio on ArrowLeft key', () => {
+      const input = getRadioInput();
+      const focusPrevSpy = jest.spyOn(fixture.componentInstance as any, 'focusPreviousRadio');
+
+      input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
+      fixture.detectChanges();
+
+      expect(focusPrevSpy).toHaveBeenCalled();
+    });
+
+    it('should not navigate when disabled', () => {
+      fixture.componentRef.setInput('disabled', true);
+      fixture.detectChanges();
+
+      const input = getRadioInput();
+      const focusNextSpy = jest.spyOn(fixture.componentInstance as any, 'focusNextRadio');
+
+      input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
+      fixture.detectChanges();
+
+      expect(focusNextSpy).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('updateProjectedContent method', () => {
+    it('should set hasProjectedContent to true when called with true', () => {
+      fixture.componentInstance.updateProjectedContent(true);
+      fixture.detectChanges();
+
+      expect((fixture.componentInstance as any).hasProjectedContent()).toBe(true);
+    });
+
+    it('should set hasProjectedContent to false when called with false', () => {
+      fixture.componentInstance.updateProjectedContent(true);
+      fixture.detectChanges();
+
+      fixture.componentInstance.updateProjectedContent(false);
+      fixture.detectChanges();
+
+      expect((fixture.componentInstance as any).hasProjectedContent()).toBe(false);
+    });
+  });
+
+  describe('computedAriaLabel with projected content', () => {
+    it('should return undefined when hasProjectedContent is true and no label/ariaLabel', () => {
+      fixture.componentRef.setInput('label', '');
+      fixture.componentRef.setInput('ariaLabel', undefined);
+      fixture.componentInstance.updateProjectedContent(true);
+      fixture.detectChanges();
+
+      expect((fixture.componentInstance as any).computedAriaLabel()).toBeUndefined();
+    });
+
+    it('should return "Radio" fallback when no label, ariaLabel, or projected content', () => {
+      fixture.componentRef.setInput('label', '');
+      fixture.componentRef.setInput('ariaLabel', undefined);
+      fixture.componentInstance.updateProjectedContent(false);
+      fixture.detectChanges();
+
+      expect((fixture.componentInstance as any).computedAriaLabel()).toBe('Radio');
+    });
+  });
+});
+
+describe('PshRadioComponent with custom configuration', () => {
+  let fixture: ComponentFixture<PshRadioComponent>;
+
+  describe('RADIO_CONFIG injection', () => {
+    beforeEach(async () => {
+      await TestBed.configureTestingModule({
+        imports: [PshRadioComponent],
+        providers: [
+          {
+            provide: RADIO_CONFIG,
+            useValue: {
+              checked: true,
+              disabled: false,
+              required: true,
+              size: 'large',
+              labelPosition: 'left'
+            }
+          }
+        ]
+      }).compileComponents();
+
+      fixture = TestBed.createComponent(PshRadioComponent);
+      fixture.componentRef.setInput('label', 'Config test');
+      fixture.detectChanges();
+    });
+
+    it('should use checked from config', () => {
+      expect(fixture.componentInstance.checked()).toBe(true);
+    });
+
+    it('should use required from config', () => {
+      expect(fixture.componentInstance.required()).toBe(true);
+    });
+
+    it('should use size from config', () => {
+      expect(fixture.componentInstance.size()).toBe('large');
+    });
+
+    it('should use labelPosition from config', () => {
+      expect(fixture.componentInstance.labelPosition()).toBe('left');
+    });
+  });
+
+  describe('RADIO_STYLES injection', () => {
+    beforeEach(async () => {
+      await TestBed.configureTestingModule({
+        imports: [PshRadioComponent],
+        providers: [
+          {
+            provide: RADIO_STYLES,
+            useValue: [
+              { '--radio-color': 'blue' },
+              { '--radio-size': '20px' }
+            ]
+          }
+        ]
+      }).compileComponents();
+
+      fixture = TestBed.createComponent(PshRadioComponent);
+      fixture.componentRef.setInput('label', 'Style test');
+      fixture.detectChanges();
+    });
+
+    it('should merge custom styles into customStyles computed', () => {
+      const styles = (fixture.componentInstance as any).customStyles();
+      expect(styles['--radio-color']).toBe('blue');
+      expect(styles['--radio-size']).toBe('20px');
     });
   });
 });
