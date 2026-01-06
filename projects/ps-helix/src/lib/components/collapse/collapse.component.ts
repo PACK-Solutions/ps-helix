@@ -1,6 +1,5 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject, input, model, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, model, output } from '@angular/core';
 import { CollapseVariant, CollapseSize } from './collapse.types';
-import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'psh-collapse',
@@ -9,7 +8,6 @@ import { DOCUMENT } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PshCollapseComponent {
-  private readonly document = inject(DOCUMENT);
   private static idCounter = 0;
 
   expanded = model(false);

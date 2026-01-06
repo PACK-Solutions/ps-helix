@@ -654,4 +654,52 @@ describe('PshCollapseComponent', () => {
       expect(toggledSpy).toHaveBeenNthCalledWith(3, true);
     });
   });
+
+  describe('maxHeight input', () => {
+    it('should have default maxHeight of 1000px', () => {
+      const style = getCollapseContainer().style.getPropertyValue('--collapse-max-height');
+      expect(style).toBe('1000px');
+    });
+
+    it('should apply custom maxHeight as CSS variable', () => {
+      fixture.componentRef.setInput('maxHeight', '500px');
+      fixture.detectChanges();
+
+      const style = getCollapseContainer().style.getPropertyValue('--collapse-max-height');
+      expect(style).toBe('500px');
+    });
+
+    it('should apply different maxHeight values', () => {
+      fixture.componentRef.setInput('maxHeight', '200px');
+      fixture.detectChanges();
+      expect(getCollapseContainer().style.getPropertyValue('--collapse-max-height')).toBe('200px');
+
+      fixture.componentRef.setInput('maxHeight', '100vh');
+      fixture.detectChanges();
+      expect(getCollapseContainer().style.getPropertyValue('--collapse-max-height')).toBe('100vh');
+    });
+  });
+
+  describe('disableAnimation input', () => {
+    it('should not have no-animation class by default', () => {
+      expect(getCollapseContainer().classList.contains('no-animation')).toBe(false);
+    });
+
+    it('should apply no-animation class when disableAnimation is true', () => {
+      fixture.componentRef.setInput('disableAnimation', true);
+      fixture.detectChanges();
+
+      expect(getCollapseContainer().classList.contains('no-animation')).toBe(true);
+    });
+
+    it('should remove no-animation class when disableAnimation is set back to false', () => {
+      fixture.componentRef.setInput('disableAnimation', true);
+      fixture.detectChanges();
+      expect(getCollapseContainer().classList.contains('no-animation')).toBe(true);
+
+      fixture.componentRef.setInput('disableAnimation', false);
+      fixture.detectChanges();
+      expect(getCollapseContainer().classList.contains('no-animation')).toBe(false);
+    });
+  });
 });
