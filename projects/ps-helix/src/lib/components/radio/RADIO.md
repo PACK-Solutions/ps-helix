@@ -65,8 +65,6 @@ export class ExampleComponent {
 | checked | boolean | false | État coché |
 | disabled | boolean | false | État désactivé |
 | required | boolean | false | État requis |
-| size | RadioSize | 'medium' | Taille du radio |
-| labelPosition | 'left' \| 'right' | 'right' | Position du label |
 
 #### Regular Inputs (@input)
 | Nom | Type | Défaut | Description |
@@ -76,11 +74,15 @@ export class ExampleComponent {
 | success | string | '' | Message de succès |
 | name | string | '' | Nom du groupe |
 | value | any | undefined | Valeur associée |
+| ariaLabel | string \| undefined | undefined | Label ARIA personnalisé |
+| size | RadioSize | 'medium' | Taille du radio |
+| labelPosition | 'left' \| 'right' | 'right' | Position du label |
 
 #### Outputs
 | Nom | Type | Description |
 |-----|------|-------------|
-| valueChange | EventEmitter<any> | Émis lors de la sélection |
+| valueChange | output\<any\> | Émis lors de la sélection |
+| checkedChange | output\<boolean\> | Émis lors du changement d'état coché |
 
 ### Configuration Globale
 
