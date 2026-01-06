@@ -453,12 +453,12 @@
             <tbody>
               <tr>
                 <td><code>stepChange</code></td>
-                <td><code>EventEmitter&lt;number&gt;</code></td>
+                <td><code>OutputEmitterRef&lt;number&gt;</code></td>
                 <td>Émis lors du changement d'étape active</td>
               </tr>
               <tr>
                 <td><code>completed</code></td>
-                <td><code>EventEmitter&lt;void&gt;</code></td>
+                <td><code>OutputEmitterRef&lt;void&gt;</code></td>
                 <td>Émis lorsque la dernière étape est complétée</td>
               </tr>
             </tbody>
@@ -511,7 +511,6 @@
             <pre><code>import &#123; PshStepperComponent, PshStepComponent &#125; from 'ps-helix';
 
 &#64;Component(&#123;
-  standalone: true,
   imports: [PshStepperComponent, PshStepComponent],
   template: `
     &lt;psh-stepper

@@ -85,8 +85,8 @@ import { PshStepperComponent, PshStepComponent } from 'ps-helix';
 
 | Name | Type | Description |
 |------|------|-------------|
-| stepChange | EventEmitter<number> | Emitted when step changes |
-| completed | EventEmitter<void> | Emitted when process completes |
+| stepChange | OutputEmitterRef<number> | Emitted when step changes |
+| completed | OutputEmitterRef<void> | Emitted when process completes |
 
 #### Public Methods
 
@@ -109,8 +109,9 @@ isStepValid(index: number): boolean;
 | title | string | required | Step title |
 | subtitle | string | undefined | Optional subtitle |
 | icon | string | undefined | Phosphor icon name |
-| disabled | boolean | false | Disabled state |
 | completed | boolean | false | Completed state |
+| disabled | boolean | false | Disabled state |
+| loading | boolean | false | Shows a loading spinner in the header (only for variant="progress") |
 | error | string | undefined | Error message |
 | warning | string | undefined | Warning message |
 | success | string | undefined | Success message |
@@ -209,7 +210,6 @@ import { PshStepperComponent, PshStepComponent } from 'ps-helix';
 
 @Component({
   selector: 'app-example',
-  standalone: true,
   imports: [PshStepperComponent, PshStepComponent, ReactiveFormsModule],
   template: `
     <psh-stepper
@@ -342,11 +342,34 @@ export class ExampleComponent {
 
 ### Accessibility
 
-- Provide descriptive ARIA labels
-- Ensure keyboard navigation works correctly (Left/Right arrows, Enter, Space)
-- Use proper ARIA states (aria-selected, aria-disabled, aria-current)
-- Include error messages that are announced to screen readers
-- Maintain focus management between steps
+The Stepper component follows WCAG 2.1 AA guidelines with comprehensive accessibility support:
+
+**Keyboard Navigation:**
+- Left/Right arrows: Navigate between step headers
+- Home/End: Jump to first/last step
+- Enter/Space: Activate focused step
+- Tab: Move focus between interactive elements
+
+**ARIA Roles:**
+- `role="tablist"` on the stepper container
+- `role="tab"` on each step header
+- `role="tabpanel"` on each step content panel
+
+**ARIA States (automatically managed):**
+- `aria-selected`: Indicates active step
+- `aria-current="step"`: Marks current step
+- `aria-disabled`: Indicates disabled steps
+- `aria-describedby`: Links error messages to steps
+
+**Dynamic Announcements:**
+- Error messages use `aria-live="polite"` for screen reader announcements
+- Focus outline visible with minimum 3:1 contrast ratio
+
+**Best Practices:**
+- Provide descriptive ARIA labels via `ariaLabels` input
+- Include clear titles and subtitles for each step
+- Validate each step individually for reduced cognitive load
+- Maintain proper focus management between steps
 
 ### Performance
 
