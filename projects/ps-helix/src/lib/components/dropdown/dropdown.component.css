@@ -21,6 +21,8 @@
   background: transparent;
   position: relative;
   overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .trigger-content {
