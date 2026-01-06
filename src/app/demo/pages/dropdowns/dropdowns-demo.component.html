@@ -95,6 +95,83 @@
       </div>
     </section>
 
+    <!-- Tailles du Dropdown - Section Pleine Largeur -->
+    <section class="dropdown-sizes-section">
+      <h3 class="section-title">Tailles du Dropdown</h3>
+      <div class="sizes-container">
+        <div class="sizes-intro">
+          <p>Les menus deroulants sont disponibles en trois tailles pour s'adapter aux differents contextes d'utilisation et maintenir une hierarchie visuelle coherente.</p>
+        </div>
+        <div class="sizes-grid">
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-dropdown size="small" variant="primary">
+                <span dropdown-trigger>Small</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+            </div>
+            <div class="size-info">
+              <h4>Small</h4>
+              <div class="size-specs">
+                <code class="size-code">size="small"</code>
+              </div>
+              <p class="size-usage">Taille compacte pour les espaces restreints, les barres d'outils denses ou les interfaces necessitant un grand nombre d'actions groupees.</p>
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-dropdown size="medium" variant="primary">
+                <span dropdown-trigger>Medium</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+            </div>
+            <div class="size-info">
+              <h4>Medium (Defaut)</h4>
+              <div class="size-specs">
+                <code class="size-code">size="medium"</code>
+              </div>
+              <p class="size-usage">Taille standard equilibree pour la plupart des cas d'utilisation. Offre un bon compromis entre visibilite et economie d'espace.</p>
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-dropdown size="large" variant="primary">
+                <span dropdown-trigger>Large</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+            </div>
+            <div class="size-info">
+              <h4>Large</h4>
+              <div class="size-specs">
+                <code class="size-code">size="large"</code>
+              </div>
+              <p class="size-usage">Taille plus imposante pour les actions principales, les interfaces tactiles ou les situations necessitant une meilleure accessibilite.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Positionnement du Menu - Section Pleine Largeur -->
     <section class="dropdown-placements-section">
       <h3 class="section-title">Positionnement du Menu</h3>
@@ -374,7 +451,7 @@
         </div>
 
         <div class="api-table-wrapper">
-          <h4>Propriétés (Model Inputs)</h4>
+          <h4>Propriétés (Input Signals)</h4>
           <table class="api-table">
             <thead>
               <tr>
@@ -392,33 +469,17 @@
                 <td>'primary' | 'secondary' | 'outline' | 'text'</td>
               </tr>
               <tr>
+                <td><code>size</code></td>
+                <td><code>DropdownSize</code></td>
+                <td><code>'medium'</code></td>
+                <td>'small' | 'medium' | 'large'</td>
+              </tr>
+              <tr>
                 <td><code>placement</code></td>
                 <td><code>DropdownPlacement</code></td>
                 <td><code>'bottom-start'</code></td>
                 <td>'bottom-start' | 'bottom-end' | 'top-start' | 'top-end'</td>
               </tr>
-              <tr>
-                <td><code>disabled</code></td>
-                <td><code>boolean</code></td>
-                <td><code>false</code></td>
-                <td>Désactive le menu déroulant et empêche toute interaction</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="api-table-wrapper">
-          <h4>Propriétés (Input Signals)</h4>
-          <table class="api-table">
-            <thead>
-              <tr>
-                <th>Propriété</th>
-                <th>Type</th>
-                <th>Défaut</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
               <tr>
                 <td><code>items</code></td>
                 <td><code>DropdownItem[]</code></td>
@@ -442,6 +503,28 @@
                 <td><code>string | undefined</code></td>
                 <td><code>undefined</code></td>
                 <td>Label ARIA personnalisé pour l'accessibilité</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Model Inputs - Two-way Binding)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>disabled</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Désactive le menu déroulant (supporte [(disabled)])</td>
               </tr>
             </tbody>
           </table>

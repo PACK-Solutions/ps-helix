@@ -49,6 +49,7 @@ import { PshDropdownComponent } from 'ps-helix';
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
 | variant | string | 'primary' | Style du dropdown (primary, secondary, outline, text) |
+| size | DropdownSize | 'medium' | Taille du dropdown (small, medium, large) |
 | placement | DropdownPlacement | 'bottom-start' | Position du menu |
 | items | DropdownItem[] | [] | Liste des éléments |
 | label | string | 'Dropdown Menu' | Label du bouton |
