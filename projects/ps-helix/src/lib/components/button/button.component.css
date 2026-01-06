@@ -29,6 +29,8 @@ button {
   min-width: var(--btn-min-width-md);
   position: relative;
   overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   font-size: var(--font-size-base);
   border-radius: var(--border-radius);
 }
