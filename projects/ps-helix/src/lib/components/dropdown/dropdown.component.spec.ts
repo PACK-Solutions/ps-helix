@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { PshDropdownComponent } from './dropdown.component';
-import { DropdownItem, DropdownPlacement } from './dropdown.types';
+import { DropdownItem, DropdownPlacement, DropdownSize } from './dropdown.types';
 
 describe('PshDropdownComponent', () => {
   let fixture: ComponentFixture<PshDropdownComponent<string>>;
@@ -640,6 +640,7 @@ describe('PshDropdownComponent', () => {
     });
   });
 
+
   describe('Accessibility', () => {
     it('should have aria-expanded="false" when closed', () => {
       expect(getTrigger().getAttribute('aria-expanded')).toBe('false');
@@ -738,6 +739,23 @@ describe('PshDropdownComponent', () => {
     it('should have bottom-start placement by default', () => {
       openDropdown();
       expect(getMenu().classList.contains('bottom-start')).toBe(true);
+    });
+  });
+
+  describe('Size', () => {
+    it.each<[DropdownSize]>([
+      ['small'],
+      ['medium'],
+      ['large']
+    ])('should apply %s size class to container', (size) => {
+      fixture.componentRef.setInput('size', size);
+      fixture.detectChanges();
+
+      expect(getContainer().classList.contains(size)).toBe(true);
+    });
+
+    it('should have medium size by default', () => {
+      expect(getContainer().classList.contains('medium')).toBe(true);
     });
   });
 

@@ -1,5 +1,6 @@
-<div 
+<div
   class="dropdown-container"
+  [class]="size()"
   [class.open]="isOpen()"
   [class.disabled]="disabled()"
   [attr.data-state]="state()"

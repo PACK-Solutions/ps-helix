@@ -11,7 +11,7 @@ import {
   OnDestroy
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DropdownItem, DropdownPlacement } from './dropdown.types';
+import { DropdownItem, DropdownPlacement, DropdownSize } from './dropdown.types';
 
 @Component({
   selector: 'psh-dropdown',
@@ -26,6 +26,7 @@ export class PshDropdownComponent<T = string> implements OnDestroy {
 
   // Regular inputs
   variant = input<'primary' | 'secondary' | 'outline' | 'text'>('primary');
+  size = input<DropdownSize>('medium');
   placement = input<DropdownPlacement>('bottom-start');
   items = input<DropdownItem<T>[]>([]);
   label = input('Dropdown Menu');
