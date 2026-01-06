@@ -1,9 +1,10 @@
 # Collapse Component
 
-Le composant Collapse permet de créer des sections de contenu pliables/dépliables.
+Le composant Collapse permet de creer des sections de contenu pliables/depliables.
 
-## Installation
+## Utilisation
 
+1. Importer le composant dans votre module ou composant standalone :
 ```typescript
 import { PshCollapseComponent } from 'ps-helix';
 
@@ -12,8 +13,6 @@ import { PshCollapseComponent } from 'ps-helix';
   imports: [PshCollapseComponent]
 })
 ```
-
-## Utilisation
 
 ### Basique
 

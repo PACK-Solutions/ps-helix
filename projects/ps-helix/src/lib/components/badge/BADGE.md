@@ -1,15 +1,8 @@
 # Badge Component Documentation
 
-## Installation et Utilisation
+## Utilisation
 
-### Installation
-
-```bash
-npm install ps-helix
-```
-
-### Import du Composant
-
+1. Importer le composant dans votre module ou composant standalone :
 ```typescript
 import { PshBadgeComponent } from 'ps-helix';
 

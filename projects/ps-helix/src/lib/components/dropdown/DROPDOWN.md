@@ -1,9 +1,10 @@
 # Dropdown Component
 
-Le composant Dropdown permet de créer des menus déroulants personnalisables et accessibles.
+Le composant Dropdown permet de creer des menus deroulants personnalisables et accessibles.
 
-## Installation
+## Utilisation
 
+1. Importer le composant dans votre module ou composant standalone :
 ```typescript
 import { PshDropdownComponent } from 'ps-helix';
 
@@ -13,9 +14,7 @@ import { PshDropdownComponent } from 'ps-helix';
 })
 ```
 
-## Utilisation
-
-### Approche Recommandée (avec contenu personnalisé)
+### Approche Recommandee (avec contenu personnalise)
 ```typescript
 <psh-dropdown [variant]="'primary'">
   <span dropdown-trigger>{{ 'DROPDOWN.TITLE' | translate }}</span>

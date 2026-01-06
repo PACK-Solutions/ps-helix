@@ -6,10 +6,9 @@ The Stepper component is a horizontal navigation component for multi-step proces
 
 **Note:** This component is designed exclusively for horizontal layouts. For vertical timeline displays, use the Timeline component (coming soon).
 
-## Installation and Usage
+## Usage
 
-### Installation
-
+1. Import the component in your module or standalone component:
 ```typescript
 import { PshStepperComponent, PshStepComponent } from 'ps-helix';
 

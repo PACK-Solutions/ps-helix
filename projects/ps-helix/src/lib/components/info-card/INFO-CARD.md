@@ -4,7 +4,7 @@ Composant carte d'information - affiche des donnees structurees sous forme de pa
 
 ## Table des Matieres
 
-- [Installation](#installation)
+- [Utilisation](#utilisation)
 - [Utilisation de Base](#utilisation-de-base)
 - [API Complete](#api-complete)
 - [Slots de Contenu](#slots-de-contenu)
@@ -15,8 +15,9 @@ Composant carte d'information - affiche des donnees structurees sous forme de pa
 - [Accessibilite](#accessibilite)
 - [Bonnes Pratiques](#bonnes-pratiques)
 
-## Installation
+## Utilisation
 
+1. Importer le composant dans votre module ou composant standalone :
 ```typescript
 import { PshInfoCardComponent } from 'ps-helix';
 

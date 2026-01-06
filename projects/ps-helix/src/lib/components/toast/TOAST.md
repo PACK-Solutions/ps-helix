@@ -1,21 +1,14 @@
 # Toast Component Documentation
 
-## Installation et Configuration
+## Utilisation
 
-### 1. Installation du Package
-```bash
-npm install ps-helix
-```
-
-### 2. Configuration Requise
-
-#### Étape 1: Importer le Service et le Composant
+### 1. Importer le Service et le Composant
 ```typescript
 import { ToastService, ToastComponent } from 'ps-helix';
 ```
 
-#### Étape 2: Ajouter le Conteneur de Toasts
-IMPORTANT: Cette étape est OBLIGATOIRE pour que les toasts s'affichent !
+### 2. Ajouter le Conteneur de Toasts
+IMPORTANT: Cette etape est OBLIGATOIRE pour que les toasts s'affichent !
 
 ```typescript
 // app.component.html

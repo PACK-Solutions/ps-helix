@@ -1,9 +1,8 @@
 # Tag Component Documentation
 
-## Installation et Utilisation
+## Utilisation
 
-### Installation
-
+1. Importer le composant dans votre module ou composant standalone :
 ```typescript
 import { PshTagComponent } from 'ps-helix';
 
@@ -15,7 +14,7 @@ import { PshTagComponent } from 'ps-helix';
 export class ExampleComponent {}
 ```
 
-> **Note**: Le composant Tag nécessite la bibliothèque Phosphor Icons pour les icônes. Assurez-vous que `@phosphor-icons/web` est installé et configuré.
+> **Note**: Le composant Tag necessite la bibliotheque Phosphor Icons pour les icones. Assurez-vous que `@phosphor-icons/web` est installe et configure.
 
 ### Utilisation de Base
 

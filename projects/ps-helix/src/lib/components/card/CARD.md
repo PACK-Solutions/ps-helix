@@ -1,29 +1,29 @@
 # Card Component Documentation
 
-Composant carte métier - conteneur structuré pour contenu professionnel avec support complet des titres, descriptions, et zones d'actions.
+Composant carte metier - conteneur structure pour contenu professionnel avec support complet des titres, descriptions, et zones d'actions.
 
-## Table des Matières
+## Table des Matieres
 
-- [Installation](#installation)
+- [Utilisation](#utilisation)
 - [Utilisation de Base](#utilisation-de-base)
-- [API Complète](#api-complète)
+- [API Complete](#api-complète)
 - [Ajout de Boutons](#ajout-de-boutons)
 - [Slots de Contenu](#slots-de-contenu)
 - [Variantes Visuelles](#variantes-visuelles)
 - [Variantes de Couleur](#variantes-de-couleur)
-- [Densités](#densités)
-- [États](#états)
+- [Densites](#densités)
+- [Etats](#états)
 - [Exemples Pratiques](#exemples-pratiques)
-- [Accessibilité](#accessibilité)
+- [Accessibilite](#accessibilité)
 - [Bonnes Pratiques](#bonnes-pratiques)
 
-## Installation
+## Utilisation
 
+1. Importer le composant dans votre module ou composant standalone :
 ```typescript
 import { PshCardComponent } from 'ps-helix';
 
 @Component({
-  standalone: true,
   imports: [PshCardComponent],
 })
 export class MyComponent {}

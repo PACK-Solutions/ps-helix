@@ -4,7 +4,7 @@ Composant carte horizontale - layout avec contenu lateral et principal, parfait 
 
 ## Table des Matieres
 
-- [Installation](#installation)
+- [Utilisation](#utilisation)
 - [Utilisation de Base](#utilisation-de-base)
 - [API Complete](#api-complete)
 - [Slots de Contenu](#slots-de-contenu)
@@ -15,8 +15,9 @@ Composant carte horizontale - layout avec contenu lateral et principal, parfait 
 - [Accessibilite](#accessibilite)
 - [Bonnes Pratiques](#bonnes-pratiques)
 
-## Installation
+## Utilisation
 
+1. Importer le composant dans votre module ou composant standalone :
 ```typescript
 import { PshHorizontalCardComponent } from 'ps-helix';
 

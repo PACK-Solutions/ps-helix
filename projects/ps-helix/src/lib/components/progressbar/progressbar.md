@@ -1,9 +1,10 @@
 # Progressbar Component
 
-Le composant Progressbar permet d'afficher la progression d'une tâche ou d'un processus.
+Le composant Progressbar permet d'afficher la progression d'une tache ou d'un processus.
 
-## Installation
+## Utilisation
 
+1. Importer le composant dans votre module ou composant standalone :
 ```typescript
 import { PshProgressbarComponent } from 'ps-helix';
 
@@ -12,8 +13,6 @@ import { PshProgressbarComponent } from 'ps-helix';
   imports: [PshProgressbarComponent]
 })
 ```
-
-## Utilisation
 
 ### Basique
 ```html

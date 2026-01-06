@@ -1,9 +1,8 @@
 # Input Component Documentation
 
-## Installation et Utilisation
+## Utilisation
 
-### Installation
-
+1. Importer le composant dans votre module ou composant standalone :
 ```typescript
 import { PshInputComponent } from 'ps-helix';
 

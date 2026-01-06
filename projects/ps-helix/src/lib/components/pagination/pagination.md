@@ -1,27 +1,25 @@
 # Pagination Component Documentation
 
-## Table des Matières
+## Table des Matieres
 
-- [Installation et Utilisation](#installation-et-utilisation)
+- [Utilisation](#utilisation)
 - [API](#api)
 - [Variantes](#variantes)
 - [Tailles](#tailles)
 - [Configuration](#configuration)
 - [Navigation au Clavier](#navigation-au-clavier)
-- [Accessibilité](#accessibilité)
+- [Accessibilite](#accessibilité)
 - [Exemples Pratiques](#exemples-pratiques)
 - [Configuration Globale](#configuration-globale)
 - [Bonnes Pratiques](#bonnes-pratiques)
 
-## Installation et Utilisation
+## Utilisation
 
-### Installation
-
+1. Importer le composant dans votre module ou composant standalone :
 ```typescript
 import { PshPaginationComponent } from 'ps-helix';
 
 @Component({
-  standalone: true,
   imports: [PshPaginationComponent],
 })
 export class MyComponent {}

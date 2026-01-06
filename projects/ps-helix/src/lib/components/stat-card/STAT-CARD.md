@@ -4,7 +4,7 @@ Composant carte statistique - affichage compact de metriques cles avec icone, va
 
 ## Table des Matieres
 
-- [Installation](#installation)
+- [Utilisation](#utilisation)
 - [Utilisation de Base](#utilisation-de-base)
 - [API Complete](#api-complete)
 - [Variantes Visuelles](#variantes-visuelles)
@@ -16,8 +16,9 @@ Composant carte statistique - affichage compact de metriques cles avec icone, va
 - [Personnalisation CSS](#personnalisation-css)
 - [Bonnes Pratiques](#bonnes-pratiques)
 
-## Installation
+## Utilisation
 
+1. Importer le composant dans votre module ou composant standalone :
 ```typescript
 import { PshStatCardComponent } from 'ps-helix';
 

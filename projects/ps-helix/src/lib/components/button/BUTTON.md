@@ -1,7 +1,7 @@
 # Button Component Documentation
 
 ## Table des Matières
-- [Installation et Utilisation](#installation-et-utilisation)
+- [Utilisation](#utilisation)
 - [API](#api)
 - [Apparences](#apparences)
 - [Tailles](#tailles)
@@ -12,10 +12,9 @@
 - [Accessibilité](#accessibilité)
 - [Bonnes Pratiques](#bonnes-pratiques)
 
-## Installation et Utilisation
+## Utilisation
 
-### Installation
-
+1. Importer le composant dans votre module ou composant standalone :
 ```typescript
 import { PshButtonComponent } from 'ps-helix';
 

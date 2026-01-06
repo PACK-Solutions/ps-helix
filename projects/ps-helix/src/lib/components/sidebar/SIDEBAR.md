@@ -1,9 +1,8 @@
 # Sidebar Component Documentation
 
-## Installation et Utilisation
+## Utilisation
 
-### Installation
-
+1. Importer le composant dans votre module ou composant standalone :
 ```typescript
 import { PshSidebarComponent } from 'ps-helix';
 

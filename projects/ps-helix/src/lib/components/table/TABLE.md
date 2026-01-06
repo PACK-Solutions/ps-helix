@@ -1,9 +1,8 @@
 # Table Component Documentation
 
-## Installation et Utilisation
+## Utilisation
 
-### Installation
-
+1. Importer le composant dans votre module ou composant standalone :
 ```typescript
 import { PshTableComponent, TableColumn, TableRow } from 'ps-helix';
 

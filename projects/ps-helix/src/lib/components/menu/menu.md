@@ -1,15 +1,8 @@
 # Menu Component Documentation
 
-## Installation et Utilisation
+## Utilisation
 
-### Installation
-
-1. Installer le package via npm :
-```bash
-npm install ps-helix
-```
-
-2. Importer le composant dans votre module ou composant standalone :
+1. Importer le composant dans votre module ou composant standalone :
 ```typescript
 import { PshMenuComponent } from 'ps-helix';
 
