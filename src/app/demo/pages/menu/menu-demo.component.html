@@ -366,12 +366,17 @@
               <tr>
                 <td><code>itemClick</code></td>
                 <td><code>EventEmitter&lt;MenuItem&lt;T&gt;&gt;</code></td>
-                <td>Émis lors du clic sur un item du menu (sauf si désactivé)</td>
+                <td>Émis lors du clic sur un item du menu (sauf si désactivé ou avec children)</td>
+              </tr>
+              <tr>
+                <td><code>submenuToggle</code></td>
+                <td><code>EventEmitter&lt;&#123;item: MenuItem&lt;T&gt;, expanded: boolean&#125;&gt;</code></td>
+                <td>Émis lors de l'ouverture ou fermeture d'un sous-menu</td>
               </tr>
               <tr>
                 <td><code>collapsedChange</code></td>
                 <td><code>EventEmitter&lt;boolean&gt;</code></td>
-                <td>Émis lors du changement d'état collapsed (pour two-way binding)</td>
+                <td>Émis lors du changement d'état collapsed (généré par model pour two-way binding)</td>
               </tr>
             </tbody>
           </table>
