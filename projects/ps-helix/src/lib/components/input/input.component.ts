@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { InputType, InputVariant, InputSize, AutocompleteConfig } from './input.types';
+import { InputType, InputVariant, InputSize, AutocompleteConfig, INPUT_LABELS } from './input.types';
 
 @Component({
   selector: 'psh-input',
@@ -96,6 +96,10 @@ export class PshInputComponent implements ControlValueAccessor {
     return this.ariaLabel() || this.label() || this.placeholder();
   });
 
+  passwordToggleLabel = computed(() => {
+    return this.passwordVisible() ? INPUT_LABELS.hidePassword : INPUT_LABELS.showPassword;
+  });
+
   state = computed(() => this.getState());
 
   private getState(): string {
@@ -155,7 +159,6 @@ export class PshInputComponent implements ControlValueAccessor {
   handleFocus(): void {
     this.focusedSignal.set(true);
     this.inputFocus.emit();
-    this.onTouched();
 
     if (this.suggestions() && this.value().length >= this.autocompleteConfig().minLength) {
       this.updateSuggestions(this.value());
@@ -232,10 +235,6 @@ export class PshInputComponent implements ControlValueAccessor {
 
   protected hasLabelContent(): boolean {
     return !!this.elementRef.nativeElement.querySelector('[input-label]');
-  }
-
-  protected hasSlotContent(slot: string): boolean {
-    return !!this.elementRef.nativeElement.querySelector(`[${slot}]`);
   }
 
   focusSelect(): void {

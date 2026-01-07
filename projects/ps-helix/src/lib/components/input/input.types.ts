@@ -29,3 +29,8 @@ export interface SuggestionResult {
   suggestions: string[];
   error?: string;
 }
+
+export const INPUT_LABELS = {
+  showPassword: 'Afficher le mot de passe',
+  hidePassword: 'Masquer le mot de passe'
+} as const;

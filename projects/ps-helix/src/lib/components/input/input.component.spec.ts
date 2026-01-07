@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed, fakeAsync, tick, flush } from '@angular/core/testing';
 import { Component } from '@angular/core';
-import { FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
+import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { PshInputComponent } from './input.component';
-import { InputType, InputVariant, InputSize } from './input.types';
+import { InputType, InputVariant, InputSize, INPUT_LABELS } from './input.types';
 
 @Component({
   template: `<psh-input><span input-label>Custom Label</span></psh-input>`,
@@ -48,9 +48,7 @@ describe('PshInputComponent', () => {
   const getLoader = () =>
     fixture.nativeElement.querySelector('.input-loader') as HTMLElement;
 
-  const ALL_TYPES: InputType[] = ['text', 'password', 'email', 'tel', 'url', 'search', 'date', 'number'];
   const ALL_VARIANTS: InputVariant[] = ['outlined', 'filled'];
-  const ALL_SIZES: InputSize[] = ['small', 'medium', 'large'];
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -212,6 +210,15 @@ describe('PshInputComponent', () => {
 
       expect(getInput().value).toBe('new value');
     });
+
+    it('should focus input when focusSelect is called', () => {
+      const input = getInput();
+      const focusSpy = jest.spyOn(input, 'focus');
+
+      fixture.componentInstance.focusSelect();
+
+      expect(focusSpy).toHaveBeenCalled();
+    });
   });
 
   describe('Password input behavior', () => {
@@ -246,12 +253,12 @@ describe('PshInputComponent', () => {
     });
 
     it('should have correct aria-label on password toggle based on visibility', () => {
-      expect(getPasswordToggle().getAttribute('aria-label')).toBe('Afficher le mot de passe');
+      expect(getPasswordToggle().getAttribute('aria-label')).toBe(INPUT_LABELS.showPassword);
 
       getPasswordToggle().click();
       fixture.detectChanges();
 
-      expect(getPasswordToggle().getAttribute('aria-label')).toBe('Masquer le mot de passe');
+      expect(getPasswordToggle().getAttribute('aria-label')).toBe(INPUT_LABELS.hidePassword);
     });
 
     it('should disable password toggle when input is disabled', () => {
@@ -708,7 +715,7 @@ describe('PshInputComponent', () => {
       expect(getSuggestionsList()).toBeFalsy();
     }));
 
-    it('should close suggestions on blur after delay', (done) => {
+    it('should close suggestions on blur after delay', async () => {
       fixture.componentRef.setInput('suggestions', suggestions);
       fixture.componentRef.setInput('autocompleteConfig', { minLength: 1, debounceTime: 0 });
       fixture.detectChanges();
@@ -717,19 +724,16 @@ describe('PshInputComponent', () => {
       input.value = 'a';
       input.dispatchEvent(new Event('input'));
       input.dispatchEvent(new FocusEvent('focus'));
+      await new Promise(resolve => setTimeout(resolve, 10));
+      fixture.detectChanges();
 
-      setTimeout(() => {
-        fixture.detectChanges();
-        expect(getSuggestionsList()).toBeTruthy();
+      expect(getSuggestionsList()).toBeTruthy();
 
-        input.dispatchEvent(new FocusEvent('blur'));
+      input.dispatchEvent(new FocusEvent('blur'));
+      await new Promise(resolve => setTimeout(resolve, 250));
+      fixture.detectChanges();
 
-        setTimeout(() => {
-          fixture.detectChanges();
-          expect(getSuggestionsList()).toBeFalsy();
-          done();
-        }, 250);
-      }, 10);
+      expect(getSuggestionsList()).toBeFalsy();
     });
 
     it('should wrap around when navigating past last suggestion', fakeAsync(() => {
@@ -754,7 +758,7 @@ describe('PshInputComponent', () => {
   });
 
   describe('Async suggestions', () => {
-    it('should support async suggestion function', fakeAsync(() => {
+    it('should support async suggestion function and render results', async () => {
       const asyncSuggestions = jest.fn().mockResolvedValue(['Result 1', 'Result 2']);
       fixture.componentRef.setInput('suggestions', asyncSuggestions);
       fixture.componentRef.setInput('autocompleteConfig', { minLength: 1, debounceTime: 0 });
@@ -764,14 +768,46 @@ describe('PshInputComponent', () => {
       input.value = 'test';
       input.dispatchEvent(new Event('input'));
       input.dispatchEvent(new FocusEvent('focus'));
-      tick(0);
-      fixture.detectChanges();
-
-      tick(100);
+      await new Promise(resolve => setTimeout(resolve, 50));
       fixture.detectChanges();
 
       expect(asyncSuggestions).toHaveBeenCalledWith('test');
-    }));
+
+      const options = getSuggestionOptions();
+      expect(options.length).toBe(2);
+      expect(options[0]?.textContent).toContain('Result 1');
+      expect(options[1]?.textContent).toContain('Result 2');
+    });
+
+    it('should handle async suggestion errors gracefully', async () => {
+      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation();
+      let rejectFn: (error: Error) => void;
+      const asyncSuggestions = jest.fn().mockImplementation(() => {
+        return new Promise((_, reject) => {
+          rejectFn = reject;
+        });
+      });
+      fixture.componentRef.setInput('suggestions', asyncSuggestions);
+      fixture.componentRef.setInput('autocompleteConfig', { minLength: 1, debounceTime: 0 });
+      fixture.detectChanges();
+
+      const input = getInput();
+      input.value = 'test';
+      input.dispatchEvent(new Event('input'));
+      input.dispatchEvent(new FocusEvent('focus'));
+      await new Promise(resolve => setTimeout(resolve, 10));
+      fixture.detectChanges();
+
+      expect(asyncSuggestions).toHaveBeenCalledWith('test');
+      rejectFn!(new Error('Network error'));
+      await new Promise(resolve => setTimeout(resolve, 50));
+      fixture.detectChanges();
+
+      expect(getSuggestionsList()).toBeFalsy();
+      expect(consoleErrorSpy).toHaveBeenCalled();
+
+      consoleErrorSpy.mockRestore();
+    });
   });
 
   describe('State classes', () => {

@@ -57,7 +57,7 @@
         type="button"
         class="password-toggle"
         (click)="togglePasswordVisibility()"
-        [attr.aria-label]="passwordVisible() ? 'Masquer le mot de passe' : 'Afficher le mot de passe'"
+        [attr.aria-label]="passwordToggleLabel()"
         [disabled]="disabled() || readonly()"
       >
         <i 
