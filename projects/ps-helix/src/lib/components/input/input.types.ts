@@ -5,7 +5,6 @@ export type InputSize = 'small' | 'medium' | 'large';
 export interface AutocompleteConfig {
   minLength: number;
   debounceTime: number;
-  placeholder?: string;
 }
 
 export interface InputConfig {

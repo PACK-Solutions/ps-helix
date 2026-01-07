@@ -65,21 +65,28 @@ import { PshInputComponent } from 'ps-helix';
 ## API
 
 ### Model Inputs (@model)
+
+Propriétés à liaison bidirectionnelle pour les états dynamiques.
+
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
 | value | string | '' | Valeur de l'input |
 | disabled | boolean | false | État désactivé |
 | readonly | boolean | false | État lecture seule |
 | loading | boolean | false | État chargement |
-| fullWidth | boolean | false | Largeur complète |
-| size | InputSize | 'medium' | Taille de l'input |
-| showLabel | boolean | true | Afficher le label |
 
 ### Regular Inputs (@input)
+
+Propriétés de configuration (unidirectionnelles).
+
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
+| variant | InputVariant | 'outlined' | Style visuel de l'input |
+| size | InputSize | 'medium' | Taille de l'input |
+| fullWidth | boolean | false | Largeur complète |
 | type | InputType | 'text' | Type de l'input |
 | label | string | '' | Texte du label |
+| showLabel | boolean | true | Afficher le label |
 | placeholder | string | '' | Placeholder |
 | ariaLabel | string | null | Label ARIA personnalisé |
 | iconStart | string | undefined | Icône de début |
@@ -88,8 +95,8 @@ import { PshInputComponent } from 'ps-helix';
 | error | string | undefined | Message d'erreur |
 | success | string | undefined | Message de succès |
 | required | boolean | false | Champ requis |
-| suggestions | string[] | [] | Liste des suggestions |
-| autocompleteConfig | AutocompleteConfig | {...} | Config autocomplétion |
+| suggestions | string[] \| ((query: string) => Promise<string[]>) | [] | Liste ou fonction de suggestions |
+| autocompleteConfig | AutocompleteConfig | { minLength: 1, debounceTime: 300 } | Config autocomplétion |
 
 ### Outputs
 | Nom | Type | Description |
@@ -103,24 +110,48 @@ import { PshInputComponent } from 'ps-helix';
 
 ```typescript
 type InputType = 'text' | 'password' | 'email' | 'tel' | 'url' | 'search' | 'date' | 'number';
+type InputVariant = 'outlined' | 'filled';
 type InputSize = 'small' | 'medium' | 'large';
 
 interface AutocompleteConfig {
-  debounceTime: number;  // Délai avant recherche
-  minLength: number;     // Minimum de caractères
+  minLength: number;     // Minimum de caractères avant recherche
+  debounceTime: number;  // Délai en ms avant lancement de la recherche
 }
 ```
 
 ## Slots de Contenu
 
-Le composant supporte plusieurs slots pour personnaliser son contenu :
+Le composant supporte plusieurs slots pour personnaliser son contenu avec du HTML riche :
 
-```typescript
+```html
 <psh-input>
   <span input-label>Label personnalisé</span>
   <span input-hint>Texte d'aide</span>
   <span input-error>Message d'erreur</span>
   <span input-success>Message de succès</span>
+</psh-input>
+```
+
+### Priorité Slots vs Inputs
+
+Pour les messages (hint, error, success), vous pouvez utiliser soit la propriété input, soit le slot :
+
+| Méthode | Cas d'utilisation |
+|---------|-------------------|
+| Input property (`error="Message"`) | Messages simples en texte brut |
+| Slot (`<span input-error>...</span>`) | Contenu riche avec HTML, icônes, liens |
+
+**Important** : Si les deux sont fournis, le slot est affiché visuellement. Il est recommandé d'utiliser une seule méthode pour éviter toute confusion.
+
+```html
+<!-- Utilisation avec input (texte simple) -->
+<psh-input error="Ce champ est requis"></psh-input>
+
+<!-- Utilisation avec slot (contenu riche) -->
+<psh-input>
+  <span input-error>
+    <i class="ph ph-warning"></i> Ce champ est requis
+  </span>
 </psh-input>
 ```
 

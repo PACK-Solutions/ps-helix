@@ -38,14 +38,16 @@ export class PshInputComponent implements ControlValueAccessor {
   private static nextId = 0;
   readonly inputId = `psh-input-${PshInputComponent.nextId++}`;
 
-  // Model inputs
+  // Model inputs (two-way bindable state)
   value = model('');
   disabled = model(false);
   readonly = model(false);
   loading = model(false);
-  fullWidth = model(false);
-  variant = model<InputVariant>('outlined');
-  size = model<InputSize>('medium');
+
+  // Configuration inputs (one-directional)
+  variant = input<InputVariant>('outlined');
+  size = input<InputSize>('medium');
+  fullWidth = input(false);
 
   // Regular inputs
   required = input(false);
