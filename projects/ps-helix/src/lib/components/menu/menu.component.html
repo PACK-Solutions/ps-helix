@@ -104,12 +104,12 @@
           }
 
           @if (item.children?.length) {
-            <ul 
-              class="submenu" 
-              role="menu" 
+            <ul
+              class="submenu"
+              role="menu"
               [attr.aria-label]="item.content + ' submenu'"
             >
-              @for (child of item.children; track child.id; let childIndex = $index) {
+              @for (child of item.children; track child.id) {
                 <li class="menu-item" role="none">
                   @if (child.path) {
                     <a
@@ -120,6 +120,8 @@
                       [attr.aria-disabled]="child.disabled"
                       [attr.aria-label]="getAriaLabel(child)"
                       (click)="toggleItem(child, $event)"
+                      (keydown.enter)="toggleItem(child, $event)"
+                      (keydown.space)="toggleItem(child, $event)"
                       role="menuitem"
                       [attr.tabindex]="child.disabled ? -1 : 0"
                     >
@@ -140,6 +142,8 @@
                       [attr.aria-disabled]="child.disabled"
                       [attr.aria-label]="getAriaLabel(child)"
                       (click)="toggleItem(child, $event)"
+                      (keydown.enter)="toggleItem(child, $event)"
+                      (keydown.space)="toggleItem(child, $event)"
                       role="menuitem"
                       [attr.tabindex]="child.disabled ? -1 : 0"
                       [disabled]="child.disabled"

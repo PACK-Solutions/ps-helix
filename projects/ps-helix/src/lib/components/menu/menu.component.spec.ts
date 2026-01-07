@@ -655,6 +655,20 @@ describe('PshMenuComponent', () => {
 
       expect(fixture.componentInstance.isExpanded(mockItemsWithChildren[1]!)).toBe(false);
     });
+
+    it('should NOT emit submenuToggle when clicking item with children while menu is collapsed', () => {
+      fixture.componentRef.setInput('collapsible', true);
+      fixture.componentRef.setInput('collapsed', true);
+      fixture.detectChanges();
+
+      const toggleSpy = jest.fn();
+      fixture.componentInstance.submenuToggle.subscribe(toggleSpy);
+
+      getMenuItemById('settings')!.click();
+      fixture.detectChanges();
+
+      expect(toggleSpy).not.toHaveBeenCalled();
+    });
   });
 
   describe('Disabled state', () => {
@@ -848,6 +862,93 @@ describe('PshMenuComponent', () => {
       expect(fixture.componentInstance.collapsed()).toBe(false);
     });
 
+    describe('Disabled item navigation', () => {
+      it('should skip disabled items when navigating forward with ArrowDown', () => {
+        jest.useFakeTimers();
+        const itemsWithDisabledMiddle: MenuItem<string>[] = [
+          { id: 'first', content: 'First' },
+          { id: 'disabled', content: 'Disabled', disabled: true },
+          { id: 'last', content: 'Last' }
+        ];
+        fixture.componentRef.setInput('items', itemsWithDisabledMiddle);
+        fixture.detectChanges();
+
+        const lastItem = getMenuItemById('last')!;
+        const focusSpy = jest.spyOn(lastItem, 'focus');
+
+        const firstItem = getMenuItemById('first')!;
+        dispatchKeyboardEvent(firstItem, 'ArrowDown');
+        jest.runAllTimers();
+
+        expect(focusSpy).toHaveBeenCalled();
+        jest.useRealTimers();
+      });
+
+      it('should skip disabled items when navigating backward with ArrowUp', () => {
+        jest.useFakeTimers();
+        const itemsWithDisabledMiddle: MenuItem<string>[] = [
+          { id: 'first', content: 'First' },
+          { id: 'disabled', content: 'Disabled', disabled: true },
+          { id: 'last', content: 'Last' }
+        ];
+        fixture.componentRef.setInput('items', itemsWithDisabledMiddle);
+        fixture.detectChanges();
+
+        const firstItem = getMenuItemById('first')!;
+        const focusSpy = jest.spyOn(firstItem, 'focus');
+
+        const lastItem = getMenuItemById('last')!;
+        dispatchKeyboardEvent(lastItem, 'ArrowUp');
+        jest.runAllTimers();
+
+        expect(focusSpy).toHaveBeenCalled();
+        jest.useRealTimers();
+      });
+
+      it('should skip dividers when navigating forward', () => {
+        jest.useFakeTimers();
+        const itemsWithDivider: MenuItem<string>[] = [
+          { id: 'first', content: 'First' },
+          { id: 'divider', content: '', divider: true },
+          { id: 'last', content: 'Last' }
+        ];
+        fixture.componentRef.setInput('items', itemsWithDivider);
+        fixture.detectChanges();
+
+        const lastItem = getMenuItemById('last')!;
+        const focusSpy = jest.spyOn(lastItem, 'focus');
+
+        const firstItem = getMenuItemById('first')!;
+        dispatchKeyboardEvent(firstItem, 'ArrowDown');
+        jest.runAllTimers();
+
+        expect(focusSpy).toHaveBeenCalled();
+        jest.useRealTimers();
+      });
+
+      it('should skip multiple consecutive disabled items', () => {
+        jest.useFakeTimers();
+        const itemsWithMultipleDisabled: MenuItem<string>[] = [
+          { id: 'first', content: 'First' },
+          { id: 'disabled1', content: 'Disabled 1', disabled: true },
+          { id: 'disabled2', content: 'Disabled 2', disabled: true },
+          { id: 'last', content: 'Last' }
+        ];
+        fixture.componentRef.setInput('items', itemsWithMultipleDisabled);
+        fixture.detectChanges();
+
+        const lastItem = getMenuItemById('last')!;
+        const focusSpy = jest.spyOn(lastItem, 'focus');
+
+        const firstItem = getMenuItemById('first')!;
+        dispatchKeyboardEvent(firstItem, 'ArrowDown');
+        jest.runAllTimers();
+
+        expect(focusSpy).toHaveBeenCalled();
+        jest.useRealTimers();
+      });
+    });
+
     describe('Submenu keyboard navigation', () => {
       beforeEach(() => {
         fixture.componentRef.setInput('items', mockItemsWithChildren);
@@ -930,6 +1031,32 @@ describe('PshMenuComponent', () => {
           item: mockItemsWithChildren[1],
           expanded: true
         });
+      });
+
+      it('should emit itemClick when pressing Enter on child item', () => {
+        getMenuItemById('settings')!.click();
+        fixture.detectChanges();
+
+        const clickSpy = jest.fn();
+        fixture.componentInstance.itemClick.subscribe(clickSpy);
+
+        const accountItem = getMenuItemById('account')!;
+        dispatchKeyboardEvent(accountItem, 'Enter');
+
+        expect(clickSpy).toHaveBeenCalledWith(mockItemsWithChildren[1]!.children![0]);
+      });
+
+      it('should emit itemClick when pressing Space on child item', () => {
+        getMenuItemById('settings')!.click();
+        fixture.detectChanges();
+
+        const clickSpy = jest.fn();
+        fixture.componentInstance.itemClick.subscribe(clickSpy);
+
+        const accountItem = getMenuItemById('account')!;
+        dispatchKeyboardEvent(accountItem, ' ');
+
+        expect(clickSpy).toHaveBeenCalledWith(mockItemsWithChildren[1]!.children![0]);
       });
     });
   });

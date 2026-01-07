@@ -16,19 +16,21 @@ import { PshMenuComponent } from 'ps-helix';
 ### Utilisation de Base
 
 ```typescript
+import { MenuItem } from 'ps-helix';
+
 @Component({
   template: `
     <!-- Menu basique -->
     <psh-menu
       [items]="menuItems"
       (itemClick)="handleItemClick($event)"
-    ></psh-menu>
+    />
 
     <!-- Menu horizontal -->
     <psh-menu
       [items]="menuItems"
-      [mode]="'horizontal'"
-    ></psh-menu>
+      mode="horizontal"
+    />
 
     <!-- Menu pliable -->
     <psh-menu
@@ -36,7 +38,7 @@ import { PshMenuComponent } from 'ps-helix';
       [collapsible]="true"
       [(collapsed)]="isCollapsed"
       (submenuToggle)="handleSubmenuToggle($event)"
-    ></psh-menu>
+    />
   `
 })
 export class ExampleComponent {
@@ -197,7 +199,7 @@ Le composant gère automatiquement le focus, le skip des items désactivés et l
 
 ```typescript
 import { Component } from '@angular/core';
-import { PshMenuComponent } from 'ps-helix';
+import { PshMenuComponent, MenuItem } from 'ps-helix';
 
 interface CustomValue {
   id: number;
@@ -206,8 +208,9 @@ interface CustomValue {
 
 @Component({
   selector: 'app-menu-demo',
+  imports: [PshMenuComponent],
   template: `
-    <psh-menu<CustomValue>
+    <psh-menu
       [items]="menuItems"
       mode="vertical"
       variant="default"
@@ -215,7 +218,7 @@ interface CustomValue {
       [(collapsed)]="isCollapsed"
       (itemClick)="handleItemClick($event)"
       (submenuToggle)="handleSubmenuToggle($event)"
-    ></psh-menu>
+    />
   `
 })
 export class MenuDemoComponent {

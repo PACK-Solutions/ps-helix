@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, model, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, model, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuItem, MenuMode, MenuVariant } from './menu.types';
 
@@ -11,7 +11,6 @@ import { MenuItem, MenuMode, MenuVariant } from './menu.types';
 })
 export class PshMenuComponent<T = string> {
 
-  // Regular inputs
   mode = input<MenuMode>('vertical');
   variant = input<MenuVariant>('default');
   collapsible = input(false);
@@ -24,20 +23,12 @@ export class PshMenuComponent<T = string> {
 
   items = input<MenuItem<T>[]>([]);
 
-  // Model inputs
   collapsed = model(false);
 
-  // Outputs
   itemClick = output<MenuItem<T>>();
   submenuToggle = output<{ item: MenuItem<T>; expanded: boolean }>();
 
-  // State
   expandedItems = signal(new Set<string>());
-
-  // Computed values
-  hasItems = computed(() => this.items().length > 0);
-  isHorizontal = computed(() => this.mode() === 'horizontal');
-  isCollapsed = computed(() => this.collapsed() && !this.isHorizontal());
 
   state = computed(() => this.getState());
 
@@ -57,12 +48,13 @@ export class PshMenuComponent<T = string> {
 
       if (wasExpanded) {
         newExpanded.delete(item.id);
+        this.expandedItems.set(newExpanded);
+        this.submenuToggle.emit({ item, expanded: false });
       } else if (!this.collapsed()) {
         newExpanded.add(item.id);
+        this.expandedItems.set(newExpanded);
+        this.submenuToggle.emit({ item, expanded: true });
       }
-
-      this.expandedItems.set(newExpanded);
-      this.submenuToggle.emit({ item, expanded: !wasExpanded });
     } else {
       this.itemClick.emit(item);
     }
@@ -148,35 +140,41 @@ export class PshMenuComponent<T = string> {
   private focusNextItem(currentIndex: number): void {
     const items = this.items();
     const nextIndex = currentIndex < items.length - 1 ? currentIndex + 1 : 0;
-    this.focusItemAtIndex(nextIndex);
+    this.focusItemAtIndex(nextIndex, 1);
   }
 
   private focusPreviousItem(currentIndex: number): void {
     const items = this.items();
     const previousIndex = currentIndex > 0 ? currentIndex - 1 : items.length - 1;
-    this.focusItemAtIndex(previousIndex);
+    this.focusItemAtIndex(previousIndex, -1);
   }
 
   private focusFirstItem(): void {
-    this.focusItemAtIndex(0);
+    this.focusItemAtIndex(0, 1);
   }
 
   private focusLastItem(): void {
-    this.focusItemAtIndex(this.items().length - 1);
+    this.focusItemAtIndex(this.items().length - 1, -1);
   }
 
-  private focusItemAtIndex(index: number): void {
+  private focusItemAtIndex(index: number, direction: 1 | -1): void {
     const items = this.items();
-    if (index >= 0 && index < items.length) {
-      const item = items[index];
-      if (item && !item.divider && !item.disabled) {
-        setTimeout(() => {
-          const link = document.querySelector(`[data-menu-item-id="${item.id}"]`) as HTMLElement;
-          link?.focus();
-        });
-      } else {
-        const direction = index > 0 ? -1 : 1;
-        this.focusItemAtIndex(index + direction);
+    if (index < 0) {
+      index = items.length - 1;
+    } else if (index >= items.length) {
+      index = 0;
+    }
+
+    const item = items[index];
+    if (item && !item.divider && !item.disabled) {
+      setTimeout(() => {
+        const link = document.querySelector(`[data-menu-item-id="${item.id}"]`) as HTMLElement;
+        link?.focus();
+      });
+    } else {
+      const nextIndex = index + direction;
+      if (nextIndex !== index) {
+        this.focusItemAtIndex(nextIndex, direction);
       }
     }
   }
