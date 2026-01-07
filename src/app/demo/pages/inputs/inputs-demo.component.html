@@ -155,7 +155,7 @@
             <div class="state-group">
               <h4>État Erreur</h4>
               <div class="state-examples">
-                <psh-input>
+                <psh-input error="required">
                   <span input-label>Champ en erreur</span>
                   <span input-error>
                     <i class="ph ph-warning"></i>
@@ -171,6 +171,7 @@
               <div class="state-examples">
                 <psh-input
                   value="contact@exemple.fr"
+                  success="valid"
                 >
                   <span input-label>{{ 'INPUT.LABEL.SUCCESS' | translate }}</span>
                   <span input-success>{{ 'INPUT.SUCCESS.VALID' | translate }}</span>
