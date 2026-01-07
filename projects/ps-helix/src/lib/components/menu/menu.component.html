@@ -33,74 +33,115 @@
           role="none"
         >
           @if (item.path) {
-            <a
-              class="menu-link"
-              [attr.href]="item.path"
-              [attr.data-menu-item-id]="item.id"
-              [class.active]="item.active"
-              [attr.aria-disabled]="item.disabled"
-              [attr.aria-expanded]="item.children?.length ? isExpanded(item) : null"
-              [attr.aria-label]="getAriaLabel(item)"
-              (click)="toggleItem(item, $event)"
-              (keydown)="handleKeyDown($event, item, i)"
-              role="menuitem"
-              [attr.tabindex]="item.disabled ? -1 : 0"
-            >
-            @if (item.icon) {
-              <i class="ph ph-{{ item.icon }}" aria-hidden="true"></i>
+            @if (showTooltip()) {
+              <psh-tooltip [content]="item.content" position="right" [showDelay]="100" [hideDelay]="0">
+                <a
+                  class="menu-link"
+                  [attr.href]="item.path"
+                  [attr.data-menu-item-id]="item.id"
+                  [class.active]="item.active"
+                  [attr.aria-disabled]="item.disabled"
+                  [attr.aria-expanded]="item.children?.length ? isExpanded(item) : null"
+                  [attr.aria-label]="getAriaLabel(item)"
+                  (click)="toggleItem(item, $event)"
+                  (keydown)="handleKeyDown($event, item, i)"
+                  role="menuitem"
+                  [attr.tabindex]="item.disabled ? -1 : 0"
+                >
+                  @if (item.icon) {
+                    <i class="ph ph-{{ item.icon }}" aria-hidden="true"></i>
+                  }
+                  @if (item.badge) {
+                    <span class="menu-badge" role="status">{{ item.badge }}</span>
+                  }
+                </a>
+              </psh-tooltip>
+            } @else {
+              <a
+                class="menu-link"
+                [attr.href]="item.path"
+                [attr.data-menu-item-id]="item.id"
+                [class.active]="item.active"
+                [attr.aria-disabled]="item.disabled"
+                [attr.aria-expanded]="item.children?.length ? isExpanded(item) : null"
+                [attr.aria-label]="getAriaLabel(item)"
+                (click)="toggleItem(item, $event)"
+                (keydown)="handleKeyDown($event, item, i)"
+                role="menuitem"
+                [attr.tabindex]="item.disabled ? -1 : 0"
+              >
+                @if (item.icon) {
+                  <i class="ph ph-{{ item.icon }}" aria-hidden="true"></i>
+                }
+                <span class="menu-label">{{ item.content }}</span>
+                @if (item.badge) {
+                  <span class="menu-badge" role="status">{{ item.badge }}</span>
+                }
+                @if (item.children?.length) {
+                  <i
+                    class="ph ph-caret-down menu-arrow"
+                    [class.expanded]="isExpanded(item)"
+                    aria-hidden="true"
+                  ></i>
+                }
+              </a>
             }
-            
-            @if (!collapsed() || mode() === 'horizontal') {
-              <span class="menu-label">{{ item.content }}</span>
-            }
-
-            @if (item.badge) {
-              <span class="menu-badge" role="status">{{ item.badge }}</span>
-            }
-
-            @if (item.children?.length) {
-              <i
-                class="ph ph-caret-down menu-arrow"
-                [class.expanded]="isExpanded(item)"
-                aria-hidden="true"
-              ></i>
-            }
-            </a>
           } @else {
-            <button
-              type="button"
-              class="menu-link"
-              [attr.data-menu-item-id]="item.id"
-              [class.active]="item.active"
-              [attr.aria-disabled]="item.disabled"
-              [attr.aria-expanded]="item.children?.length ? isExpanded(item) : null"
-              [attr.aria-label]="getAriaLabel(item)"
-              (click)="toggleItem(item, $event)"
-              (keydown)="handleKeyDown($event, item, i)"
-              role="menuitem"
-              [attr.tabindex]="item.disabled ? -1 : 0"
-              [disabled]="item.disabled"
-            >
-            @if (item.icon) {
-              <i class="ph ph-{{ item.icon }}" aria-hidden="true"></i>
+            @if (showTooltip()) {
+              <psh-tooltip [content]="item.content" position="right" [showDelay]="100" [hideDelay]="0">
+                <button
+                  type="button"
+                  class="menu-link"
+                  [attr.data-menu-item-id]="item.id"
+                  [class.active]="item.active"
+                  [attr.aria-disabled]="item.disabled"
+                  [attr.aria-expanded]="item.children?.length ? isExpanded(item) : null"
+                  [attr.aria-label]="getAriaLabel(item)"
+                  (click)="toggleItem(item, $event)"
+                  (keydown)="handleKeyDown($event, item, i)"
+                  role="menuitem"
+                  [attr.tabindex]="item.disabled ? -1 : 0"
+                  [disabled]="item.disabled"
+                >
+                  @if (item.icon) {
+                    <i class="ph ph-{{ item.icon }}" aria-hidden="true"></i>
+                  }
+                  @if (item.badge) {
+                    <span class="menu-badge" role="status">{{ item.badge }}</span>
+                  }
+                </button>
+              </psh-tooltip>
+            } @else {
+              <button
+                type="button"
+                class="menu-link"
+                [attr.data-menu-item-id]="item.id"
+                [class.active]="item.active"
+                [attr.aria-disabled]="item.disabled"
+                [attr.aria-expanded]="item.children?.length ? isExpanded(item) : null"
+                [attr.aria-label]="getAriaLabel(item)"
+                (click)="toggleItem(item, $event)"
+                (keydown)="handleKeyDown($event, item, i)"
+                role="menuitem"
+                [attr.tabindex]="item.disabled ? -1 : 0"
+                [disabled]="item.disabled"
+              >
+                @if (item.icon) {
+                  <i class="ph ph-{{ item.icon }}" aria-hidden="true"></i>
+                }
+                <span class="menu-label">{{ item.content }}</span>
+                @if (item.badge) {
+                  <span class="menu-badge" role="status">{{ item.badge }}</span>
+                }
+                @if (item.children?.length) {
+                  <i
+                    class="ph ph-caret-down menu-arrow"
+                    [class.expanded]="isExpanded(item)"
+                    aria-hidden="true"
+                  ></i>
+                }
+              </button>
             }
-
-            @if (!collapsed() || mode() === 'horizontal') {
-              <span class="menu-label">{{ item.content }}</span>
-            }
-
-            @if (item.badge) {
-              <span class="menu-badge" role="status">{{ item.badge }}</span>
-            }
-
-            @if (item.children?.length) {
-              <i
-                class="ph ph-caret-down menu-arrow"
-                [class.expanded]="isExpanded(item)"
-                aria-hidden="true"
-              ></i>
-            }
-            </button>
           }
 
           @if (item.children?.length) {

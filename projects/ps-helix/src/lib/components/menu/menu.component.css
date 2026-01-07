@@ -227,6 +227,11 @@
   width: 0;
 }
 
+.menu.collapsed psh-tooltip {
+  display: block;
+  width: 100%;
+}
+
 /* Menu Icon */
 .menu-link i {
   font-size: 1.2rem;

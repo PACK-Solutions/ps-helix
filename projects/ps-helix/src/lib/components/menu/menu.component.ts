@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, computed, input, model, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuItem, MenuMode, MenuVariant } from './menu.types';
+import { PshTooltipComponent } from '../tooltip/tooltip.component';
 
 @Component({
   selector: 'psh-menu',
-  imports: [CommonModule],
+  imports: [CommonModule, PshTooltipComponent],
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -31,6 +32,8 @@ export class PshMenuComponent<T = string> {
   expandedItems = signal(new Set<string>());
 
   state = computed(() => this.getState());
+
+  showTooltip = computed(() => this.collapsed() && this.mode() === 'vertical');
 
   private getState(): string {
     if (this.collapsed()) return 'collapsed';
