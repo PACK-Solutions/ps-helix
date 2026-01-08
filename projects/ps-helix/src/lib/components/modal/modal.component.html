@@ -11,7 +11,7 @@
   [attr.data-state]="state()"
 >
   <div
-    class="modal-container"
+    [class]="'modal-container ' + styleClass()"
     [class.small]="size() === 'small'"
     [class.medium]="size() === 'medium'"
     [class.large]="size() === 'large'"
@@ -21,11 +21,7 @@
     <div class="modal-content-wrapper">
       <div class="modal-header">
         <h2 class="modal-title" [attr.id]="modalDialogId() + '-title'">
-          <ng-content select="[modal-title]">
-            @if (title()) {
-            {{ title() }}
-            } @else { Modal Title }
-          </ng-content>
+          <ng-content select="[modal-title]">{{ title() }}</ng-content>
         </h2>
         @if (showClose()) {
         <button

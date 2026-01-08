@@ -215,6 +215,17 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
   cancelLabel = input(this.config.cancelLabel ?? 'Cancel');
 
   /**
+   * Custom CSS class(es) to apply to the modal container
+   * Allows for custom styling without using deep selectors
+   *
+   * @example
+   * ```html
+   * <psh-modal styleClass="my-custom-modal" />
+   * ```
+   */
+  styleClass = input('');
+
+  /**
    * Emitted when the modal is closed
    */
   closed = output<void>();
