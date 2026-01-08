@@ -110,6 +110,27 @@
               <ds-code-snippet [code]="noFooterCode" />
             </div>
           </div>
+
+          <div class="type-card">
+            <div class="type-preview">
+              <psh-button appearance="filled" variant="primary" (clicked)="customTitleModalOpen = true">
+                Titre Personnalise
+              </psh-button>
+              <psh-modal [(open)]="customTitleModalOpen">
+                <span modal-title style="display: flex; align-items: center; gap: var(--spacing-sm);">
+                  <i class="ph ph-warning" style="color: var(--warning-500);"></i>
+                  Attention requise
+                </span>
+                <p>Cette modale utilise le slot <code>[modal-title]</code> pour afficher un titre personnalise avec une icone.</p>
+                <p>Le slot permet d'ajouter du HTML ou des composants dans le titre.</p>
+              </psh-modal>
+            </div>
+            <div class="type-info">
+              <h4>Titre Personnalise</h4>
+              <p>Utilisez le slot <code>[modal-title]</code> pour personnaliser le titre avec des icones ou du HTML. Le titre par defaut est remplace par le contenu projete.</p>
+              <ds-code-snippet [code]="customTitleCode" />
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -420,7 +441,6 @@
             <pre><code>import &#123; PshModalComponent, PshButtonComponent &#125; from 'ps-helix';
 
 &#64;Component(&#123;
-  standalone: true,
   imports: [PshModalComponent, PshButtonComponent],
   template: `
     &lt;psh-button (clicked)="isModalOpen = true"&gt;

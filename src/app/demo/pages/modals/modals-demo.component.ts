@@ -19,6 +19,7 @@ export class ModalsDemoComponent {
   noFooterModalOpen = false;
   noBackdropModalOpen = false;
   confirmationModalOpen = false;
+  customTitleModalOpen = false;
 
   handleConfirm(): void {
     this.basicModalOpen = false;
@@ -59,6 +60,14 @@ export class ModalsDemoComponent {
   [showFooter]="false"
 >
   Information simple
+</psh-modal>`;
+
+  customTitleCode = `<psh-modal [(open)]="isOpen">
+  <span modal-title>
+    <i class="ph ph-warning"></i>
+    Titre avec icone
+  </span>
+  <p>Contenu de la modale</p>
 </psh-modal>`;
 
   closeOptionsCode = `<psh-modal
