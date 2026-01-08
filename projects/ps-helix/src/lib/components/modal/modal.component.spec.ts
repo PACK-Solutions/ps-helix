@@ -774,3 +774,45 @@ describe('PshModalComponent responsive behavior', () => {
     expect(footer).toBeTruthy();
   });
 });
+
+@Component({
+  template: `
+    <psh-modal [open]="isOpen" [title]="defaultTitle">
+      <h2 modal-title>Custom Projected Title</h2>
+      <p>Content</p>
+    </psh-modal>
+  `,
+  imports: [PshModalComponent]
+})
+class TestHostWithCustomTitleComponent {
+  isOpen = true;
+  defaultTitle = 'Default Title';
+}
+
+describe('PshModalComponent with custom title', () => {
+  let fixture: ComponentFixture<TestHostWithCustomTitleComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [TestHostWithCustomTitleComponent]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(TestHostWithCustomTitleComponent);
+    fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    cleanupDialog();
+  });
+
+  it('should render custom title content when projected', () => {
+    const title = getTitle();
+    expect(title).toBeTruthy();
+    expect(title?.textContent).toContain('Custom Projected Title');
+  });
+
+  it('should not render default title when custom title is provided', () => {
+    const title = getTitle();
+    expect(title?.textContent).not.toContain('Default Title');
+  });
+});
