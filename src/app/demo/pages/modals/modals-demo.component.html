@@ -328,6 +328,32 @@
                 <td><code>'Cancel'</code></td>
                 <td>Label du bouton d'annulation dans le footer</td>
               </tr>
+              <tr>
+                <td><code>styleClass</code></td>
+                <td><code>string</code></td>
+                <td><code>''</code></td>
+                <td>Classes CSS personnalisées à appliquer au conteneur de la modale</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Signaux Calculés (Computed Signals)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Signal</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>isMobileScreen</code></td>
+                <td><code>Signal&lt;boolean&gt;</code></td>
+                <td>Indique si l'écran est de taille mobile (breakpoint: 768px). Utile pour adapter les footers personnalisés.</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -345,13 +371,44 @@
             <tbody>
               <tr>
                 <td><code>closed</code></td>
-                <td><code>EventEmitter&lt;void&gt;</code></td>
+                <td><code>OutputEmitterRef&lt;void&gt;</code></td>
                 <td>Émis lorsque la modale est fermée</td>
               </tr>
               <tr>
                 <td><code>confirmed</code></td>
-                <td><code>EventEmitter&lt;void&gt;</code></td>
+                <td><code>OutputEmitterRef&lt;void&gt;</code></td>
                 <td>Émis lors du clic sur le bouton de confirmation</td>
+              </tr>
+              <tr>
+                <td><code>openChange</code></td>
+                <td><code>OutputEmitterRef&lt;boolean&gt;</code></td>
+                <td>Émis automatiquement par le model() lors du changement de l'état open</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Slots de Contenu (Content Projection)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Sélecteur</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>[modal-title]</code></td>
+                <td>Permet de personnaliser le titre avec du HTML ou des composants (ex: titre avec icône)</td>
+              </tr>
+              <tr>
+                <td><code>[modal-footer]</code></td>
+                <td>Remplace le footer par défaut. Nécessite <code>#modalFooter</code> pour la détection automatique.</td>
+              </tr>
+              <tr>
+                <td>(contenu par défaut)</td>
+                <td>Le contenu principal de la modale, projeté dans la zone de contenu scrollable</td>
               </tr>
             </tbody>
           </table>
@@ -390,7 +447,7 @@
     &lt;!-- Modale avec footer personnalisé responsive --&gt;
     &lt;psh-modal #customModal [(open)]="isCustomModalOpen" title="Actions Multiples"&gt;
       &lt;p&gt;Choisissez une action à effectuer.&lt;/p&gt;
-      &lt;div modal-footer&gt;
+      &lt;div modal-footer #modalFooter&gt;
         &lt;psh-button
           appearance="text"
           [fullWidth]="customModal.isMobileScreen()"
@@ -460,22 +517,139 @@ export class MyComponent &#123;
         </div>
 
         <div class="api-service-info">
-          <h4>Service de Gestion des Modales</h4>
-          <p>Le composant fournit un <code>ModalService</code> pour gérer globalement les instances de modales et leur configuration.</p>
+          <h4>Configuration Globale (MODAL_CONFIG)</h4>
+          <p>Utilisez le token <code>MODAL_CONFIG</code> pour définir les valeurs par défaut de toutes les modales de l'application.</p>
           <div class="code-block">
-            <pre><code>// Configuration globale des modales
-import &#123; MODAL_CONFIG &#125; from 'ps-helix';
+            <pre><code>import &#123; MODAL_CONFIG &#125; from 'ps-helix';
 
 providers: [
   &#123;
     provide: MODAL_CONFIG,
     useValue: &#123;
-      size: 'large',
-      closeOnBackdrop: false,
-      preventScroll: true
+      size: 'medium',
+      showClose: true,
+      closeOnBackdrop: true,
+      closeOnEscape: true,
+      preventScroll: true,
+      showFooter: true,
+      dismissLabel: 'Fermer',
+      confirmLabel: 'Confirmer',
+      cancelLabel: 'Annuler'
     &#125;
   &#125;
 ]</code></pre>
+          </div>
+        </div>
+
+        <div class="api-service-info">
+          <h4>Service ModalService</h4>
+          <p>Le <code>ModalService</code> permet de gérer les instances de modales et de suivre leur état global.</p>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Membre</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>activeModalsCount</code></td>
+                <td><code>Signal&lt;number&gt;</code></td>
+                <td>Signal calculé indiquant le nombre de modales actuellement ouvertes</td>
+              </tr>
+              <tr>
+                <td><code>getConfig()</code></td>
+                <td><code>Partial&lt;ModalConfig&gt;</code></td>
+                <td>Retourne la configuration globale des modales</td>
+              </tr>
+              <tr>
+                <td><code>isRegistered(id)</code></td>
+                <td><code>boolean</code></td>
+                <td>Vérifie si une modale avec l'ID donné est actuellement ouverte</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="code-block">
+            <pre><code>import &#123; ModalService &#125; from 'ps-helix';
+
+&#64;Component(&#123; ... &#125;)
+export class MyComponent &#123;
+  private modalService = inject(ModalService);
+
+  get hasOpenModals(): boolean &#123;
+    return this.modalService.activeModalsCount() > 0;
+  &#125;
+&#125;</code></pre>
+          </div>
+        </div>
+
+        <div class="api-service-info">
+          <h4>Variables CSS Personnalisables</h4>
+          <p>Les modales utilisent des variables CSS que vous pouvez surcharger pour personnaliser leur apparence.</p>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Variable</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>--modal-max-width-sm</code></td>
+                <td><code>25rem</code></td>
+                <td>Largeur maximale des modales small (400px)</td>
+              </tr>
+              <tr>
+                <td><code>--modal-max-width-md</code></td>
+                <td><code>37.5rem</code></td>
+                <td>Largeur maximale des modales medium (600px)</td>
+              </tr>
+              <tr>
+                <td><code>--modal-max-width-lg</code></td>
+                <td><code>50rem</code></td>
+                <td>Largeur maximale des modales large (800px)</td>
+              </tr>
+              <tr>
+                <td><code>--modal-backdrop-opacity</code></td>
+                <td><code>0.6</code></td>
+                <td>Opacité de l'arrière-plan sombre</td>
+              </tr>
+              <tr>
+                <td><code>--modal-backdrop-blur</code></td>
+                <td><code>4px</code></td>
+                <td>Flou appliqué à l'arrière-plan</td>
+              </tr>
+              <tr>
+                <td><code>--modal-animation-distance</code></td>
+                <td><code>20px</code></td>
+                <td>Distance de translation de l'animation d'entrée</td>
+              </tr>
+              <tr>
+                <td><code>--modal-animation-scale</code></td>
+                <td><code>0.95</code></td>
+                <td>Échelle de l'animation d'entrée</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="code-block">
+            <pre><code>:root &#123;
+  --modal-backdrop-opacity: 0.8;
+  --modal-backdrop-blur: 8px;
+  --modal-max-width-lg: 60rem;
+&#125;</code></pre>
+          </div>
+        </div>
+
+        <div class="api-service-info">
+          <h4>Gestion du Scroll Lock</h4>
+          <p>Lorsqu'une modale est ouverte avec <code>preventScroll="true"</code>, le composant ajoute la classe <code>modal-open</code> au body et calcule la largeur de la scrollbar pour éviter les décalages de mise en page.</p>
+          <div class="code-block">
+            <pre><code>body.modal-open &#123;
+  overflow: hidden;
+  padding-right: var(--scrollbar-width);
+&#125;</code></pre>
           </div>
         </div>
       </div>

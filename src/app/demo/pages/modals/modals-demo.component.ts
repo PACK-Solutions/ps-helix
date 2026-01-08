@@ -47,7 +47,7 @@ export class ModalsDemoComponent {
 
   customFooterCode = `<psh-modal #modal [(open)]="isOpen">
   Contenu
-  <div modal-footer>
+  <div modal-footer #modalFooter>
     <psh-button [fullWidth]="modal.isMobileScreen()">Annuler</psh-button>
     <psh-button [fullWidth]="modal.isMobileScreen()">Confirmer</psh-button>
   </div>
