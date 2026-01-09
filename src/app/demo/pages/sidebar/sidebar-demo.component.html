@@ -255,8 +255,8 @@
                 <div class="feature-highlight">
                   <h5>Interactive Features:</h5>
                   <ul>
-                    <li><i class="ph ph-mouse-simple"></i> Click outside the sidebar to close</li>
-                    <li><i class="ph ph-keyboard"></i> Press <kbd>Escape</kbd> to dismiss</li>
+                    <li><i class="ph ph-mouse-simple"></i> Click outside the sidebar to close (configurable via <code>closeOnBackdrop</code>)</li>
+                    <li><i class="ph ph-keyboard"></i> Press <kbd>Escape</kbd> to dismiss (configurable via <code>closeOnEscape</code>)</li>
                     <li><i class="ph ph-lock"></i> Focus trap prevents background interaction</li>
                     <li><i class="ph ph-eye"></i> Backdrop overlay dims the content</li>
                   </ul>
@@ -345,6 +345,32 @@
               </div>
             </div>
           </div>
+
+          <div class="config-card">
+            <div class="config-icon">
+              <i class="ph ph-mouse-simple"></i>
+            </div>
+            <div class="config-info">
+              <h4>Close on Backdrop</h4>
+              <p>Control whether clicking the backdrop closes the overlay sidebar. Disable this for sidebars requiring explicit user action, such as important forms or confirmation dialogs.</p>
+              <div class="config-example">
+                <code>[closeOnBackdrop]="true"</code>
+              </div>
+            </div>
+          </div>
+
+          <div class="config-card">
+            <div class="config-icon">
+              <i class="ph ph-keyboard"></i>
+            </div>
+            <div class="config-info">
+              <h4>Close on Escape</h4>
+              <p>Control whether pressing the Escape key closes the overlay sidebar. Disable this when the sidebar contains content that should not be accidentally dismissed.</p>
+              <div class="config-example">
+                <code>[closeOnEscape]="true"</code>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -375,6 +401,22 @@
                 <td><code>false</code></td>
                 <td>Controls the open/closed state of the sidebar (two-way bindable with [(open)])</td>
               </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Input Signals</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Property</th>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
               <tr>
                 <td><code>mode</code></td>
                 <td><code>SidebarMode</code></td>
@@ -399,22 +441,6 @@
                 <td><code>'768px'</code></td>
                 <td>Viewport width at which sidebar switches to overlay mode on mobile</td>
               </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="api-table-wrapper">
-          <h4>Input Signals</h4>
-          <table class="api-table">
-            <thead>
-              <tr>
-                <th>Property</th>
-                <th>Type</th>
-                <th>Default</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
               <tr>
                 <td><code>autoFocus</code></td>
                 <td><code>boolean</code></td>
@@ -426,6 +452,18 @@
                 <td><code>string</code></td>
                 <td><code>'Sidebar navigation'</code></td>
                 <td>Accessible label for screen readers describing sidebar purpose</td>
+              </tr>
+              <tr>
+                <td><code>closeOnBackdrop</code></td>
+                <td><code>boolean</code></td>
+                <td><code>true</code></td>
+                <td>Close sidebar when clicking the backdrop (overlay mode only)</td>
+              </tr>
+              <tr>
+                <td><code>closeOnEscape</code></td>
+                <td><code>boolean</code></td>
+                <td><code>true</code></td>
+                <td>Close sidebar when pressing Escape key (overlay mode only)</td>
               </tr>
             </tbody>
           </table>
@@ -472,7 +510,6 @@
             <pre><code>import &#123; PshSidebarComponent, PshMenuComponent &#125; from 'ps-helix';
 
 &#64;Component(&#123;
-  standalone: true,
   imports: [PshSidebarComponent, PshMenuComponent],
   template: `
     &lt;psh-sidebar
@@ -482,6 +519,8 @@
       width="280px"
       breakpoint="768px"
       [autoFocus]="true"
+      [closeOnBackdrop]="true"
+      [closeOnEscape]="true"
       ariaLabel="Main navigation menu"
       (toggle)="handleSidebarToggle($event)"
       (opened)="onSidebarOpened()"
@@ -543,7 +582,9 @@ bootstrapApplication(AppComponent, &#123;
         width: '280px',
         breakpoint: '1024px',
         autoFocus: true,
-        ariaLabel: 'Application navigation'
+        ariaLabel: 'Application navigation',
+        closeOnBackdrop: true,
+        closeOnEscape: true
       &#125;
     &#125;
   ]

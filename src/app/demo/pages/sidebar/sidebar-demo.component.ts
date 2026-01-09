@@ -86,6 +86,8 @@ export class SidebarDemoComponent {
   position="right"
   width="300px"
   [(open)]="isOpen"
+  [closeOnBackdrop]="true"
+  [closeOnEscape]="true"
 >
   <!-- Filter content -->
 </psh-sidebar>`;
