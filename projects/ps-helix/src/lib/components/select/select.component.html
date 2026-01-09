@@ -9,152 +9,154 @@
     </label>
   }
 
-  <div
-    class="select-trigger"
-    [id]="selectId"
-    role="combobox"
-    aria-haspopup="listbox"
-    [attr.aria-controls]="selectId + '-listbox'"
-    [attr.aria-expanded]="isOpen()"
-    [attr.aria-disabled]="disabled()"
-    [attr.aria-busy]="loading() ? 'true' : null"
-    [attr.aria-required]="required() ? 'true' : 'false'"
-    [attr.aria-invalid]="!!error()"
-    [attr.aria-label]="computedAriaLabel()"
-    [attr.aria-describedby]="error() ? 'error-message' : success() ? 'success-message' : hint() ? 'hint-message' : null"
-    [attr.aria-activedescendant]="activeDescendant()"
-    [attr.tabindex]="disabled() || loading() ? -1 : 0"
-    (click)="toggle()"
-    (keydown)="handleKeyDown($event)"
-  >
-    <div class="select-value">
-      <span [class.placeholder]="!hasValue()">{{ selectedLabel() }}</span>
-    </div>
-
-    <div class="select-actions">
-      @if (clearable() && hasValue() && !loading()) {
-        <button
-          type="button"
-          class="select-clear"
-          (click)="clear($event)"
-          [attr.aria-label]="'Effacer la sélection'"
-          [tabindex]="disabled() ? -1 : 0"
-        >
-          <i class="ph ph-x" aria-hidden="true"></i>
-        </button>
-      }
-      @if (loading()) {
-        <div class="select-loader-trigger" aria-hidden="true"></div>
-      } @else {
-        <i
-          class="ph ph-caret-down select-arrow"
-          [class.open]="isOpen()"
-          aria-hidden="true"
-        ></i>
-      }
-    </div>
-  </div>
-
-  @if (isOpen()) {
+  <div class="select-trigger-wrapper">
     <div
-      class="select-dropdown"
-      role="listbox"
-      [id]="selectId + '-listbox'"
-      [attr.aria-multiselectable]="multiple()"
+      class="select-trigger"
+      [id]="selectId"
+      role="combobox"
+      aria-haspopup="listbox"
+      [attr.aria-controls]="selectId + '-listbox'"
+      [attr.aria-expanded]="isOpen()"
+      [attr.aria-disabled]="disabled()"
+      [attr.aria-busy]="loading() ? 'true' : null"
+      [attr.aria-required]="required() ? 'true' : 'false'"
+      [attr.aria-invalid]="!!error()"
+      [attr.aria-label]="computedAriaLabel()"
+      [attr.aria-describedby]="error() ? 'error-message' : success() ? 'success-message' : hint() ? 'hint-message' : null"
+      [attr.aria-activedescendant]="activeDescendant()"
+      [attr.tabindex]="disabled() || loading() ? -1 : 0"
+      (click)="toggle()"
+      (keydown)="handleKeyDown($event)"
     >
-      @if (searchable()) {
-        <div class="select-search">
-          <input
-            type="text"
-            [placeholder]="searchConfig().placeholder"
-            [value]="searchTerm()"
-            (input)="onSearch($event)"
-            (click)="$event.stopPropagation()"
-            [attr.aria-label]="searchConfig().placeholder"
-          />
-        </div>
-      }
+      <div class="select-value">
+        <span [class.placeholder]="!hasValue()">{{ selectedLabel() }}</span>
+      </div>
 
-      <div class="select-options" (scroll)="onScroll($event)">
+      <div class="select-actions">
+        @if (clearable() && hasValue() && !loading()) {
+          <button
+            type="button"
+            class="select-clear"
+            (click)="clear($event)"
+            [attr.aria-label]="'Effacer la sélection'"
+            [tabindex]="disabled() ? -1 : 0"
+          >
+            <i class="ph ph-x" aria-hidden="true"></i>
+          </button>
+        }
         @if (loading()) {
-          <div class="select-loading">
-            <div class="select-loader"></div>
-          </div>
-        } @else if (filteredOptions().length === 0) {
-          <div class="select-no-results">
-            Aucun résultat
-          </div>
+          <div class="select-loader-trigger" aria-hidden="true"></div>
         } @else {
-          @for (option of filteredOptions(); track getOptionKey(option)) {
-            @if (isOptionGroup(option)) {
-              <div class="select-group">
-                <div class="select-group-label">{{ option.label }}</div>
-                @for (groupOption of option.options; track getOptionKey(groupOption)) {
-                  <div
-                    class="select-option"
-                    role="option"
-                    [class.selected]="isSelected(groupOption)"
-                    [class.focused]="isFocused(groupOption)"
-                    [class.disabled]="option.disabled || groupOption.disabled"
-                    [attr.aria-selected]="isSelected(groupOption)"
-                    [attr.aria-disabled]="(option.disabled || groupOption.disabled) || null"
-                    [attr.id]="selectId + '-option-' + groupOption.value"
-                    [attr.tabindex]="option.disabled || groupOption.disabled ? -1 : 0"
-                    (click)="!option.disabled && select(groupOption)"
-                    (keydown)="handleOptionKeyDown($event, groupOption)"
-                  >
-                    @if (multiple()) {
-                      <div class="select-checkbox">
-                        <i class="ph ph-check" aria-hidden="true"></i>
-                      </div>
-                    }
-                    @if (groupOption.icon) {
-                      <i class="ph ph-{{ groupOption.icon }}" aria-hidden="true"></i>
-                    }
-                    <div class="option-content">
-                      <div class="option-label">{{ groupOption.label }}</div>
-                      @if (groupOption.description) {
-                        <div class="option-description">{{ groupOption.description }}</div>
-                      }
-                    </div>
-                  </div>
-                }
-              </div>
-            } @else {
-              <div
-                class="select-option"
-                role="option"
-                [class.selected]="isSelected(option)"
-                [class.focused]="isFocused(option)"
-                [class.disabled]="option.disabled"
-                [attr.aria-selected]="isSelected(option)"
-                [attr.aria-disabled]="option.disabled || null"
-                [attr.id]="selectId + '-option-' + option.value"
-                [attr.tabindex]="option.disabled ? -1 : 0"
-                (click)="select(option)"
-                (keydown)="handleOptionKeyDown($event, option)"
-              >
-                @if (multiple()) {
-                  <div class="select-checkbox">
-                    <i class="ph ph-check" aria-hidden="true"></i>
-                  </div>
-                }
-                @if (option.icon) {
-                  <i class="ph ph-{{ option.icon }}" aria-hidden="true"></i>
-                }
-                <div class="option-content">
-                  <div class="option-label">{{ option.label }}</div>
-                  @if (option.description) {
-                    <div class="option-description">{{ option.description }}</div>
-                  }
-                </div>
-              </div>
-            }
-          }
+          <i
+            class="ph ph-caret-down select-arrow"
+            [class.open]="isOpen()"
+            aria-hidden="true"
+          ></i>
         }
       </div>
     </div>
-  }
+
+    @if (isOpen()) {
+      <div
+        class="select-dropdown"
+        role="listbox"
+        [id]="selectId + '-listbox'"
+        [attr.aria-multiselectable]="multiple()"
+      >
+        @if (searchable()) {
+          <div class="select-search">
+            <input
+              type="text"
+              [placeholder]="searchConfig().placeholder"
+              [value]="searchTerm()"
+              (input)="onSearch($event)"
+              (click)="$event.stopPropagation()"
+              [attr.aria-label]="searchConfig().placeholder"
+            />
+          </div>
+        }
+
+        <div class="select-options" (scroll)="onScroll($event)">
+          @if (loading()) {
+            <div class="select-loading">
+              <div class="select-loader"></div>
+            </div>
+          } @else if (filteredOptions().length === 0) {
+            <div class="select-no-results">
+              Aucun résultat
+            </div>
+          } @else {
+            @for (option of filteredOptions(); track getOptionKey(option)) {
+              @if (isOptionGroup(option)) {
+                <div class="select-group">
+                  <div class="select-group-label">{{ option.label }}</div>
+                  @for (groupOption of option.options; track getOptionKey(groupOption)) {
+                    <div
+                      class="select-option"
+                      role="option"
+                      [class.selected]="isSelected(groupOption)"
+                      [class.focused]="isFocused(groupOption)"
+                      [class.disabled]="option.disabled || groupOption.disabled"
+                      [attr.aria-selected]="isSelected(groupOption)"
+                      [attr.aria-disabled]="(option.disabled || groupOption.disabled) || null"
+                      [attr.id]="selectId + '-option-' + groupOption.value"
+                      [attr.tabindex]="option.disabled || groupOption.disabled ? -1 : 0"
+                      (click)="!option.disabled && select(groupOption)"
+                      (keydown)="handleOptionKeyDown($event, groupOption)"
+                    >
+                      @if (multiple()) {
+                        <div class="select-checkbox">
+                          <i class="ph ph-check" aria-hidden="true"></i>
+                        </div>
+                      }
+                      @if (groupOption.icon) {
+                        <i class="ph ph-{{ groupOption.icon }}" aria-hidden="true"></i>
+                      }
+                      <div class="option-content">
+                        <div class="option-label">{{ groupOption.label }}</div>
+                        @if (groupOption.description) {
+                          <div class="option-description">{{ groupOption.description }}</div>
+                        }
+                      </div>
+                    </div>
+                  }
+                </div>
+              } @else {
+                <div
+                  class="select-option"
+                  role="option"
+                  [class.selected]="isSelected(option)"
+                  [class.focused]="isFocused(option)"
+                  [class.disabled]="option.disabled"
+                  [attr.aria-selected]="isSelected(option)"
+                  [attr.aria-disabled]="option.disabled || null"
+                  [attr.id]="selectId + '-option-' + option.value"
+                  [attr.tabindex]="option.disabled ? -1 : 0"
+                  (click)="select(option)"
+                  (keydown)="handleOptionKeyDown($event, option)"
+                >
+                  @if (multiple()) {
+                    <div class="select-checkbox">
+                      <i class="ph ph-check" aria-hidden="true"></i>
+                    </div>
+                  }
+                  @if (option.icon) {
+                    <i class="ph ph-{{ option.icon }}" aria-hidden="true"></i>
+                  }
+                  <div class="option-content">
+                    <div class="option-label">{{ option.label }}</div>
+                    @if (option.description) {
+                      <div class="option-description">{{ option.description }}</div>
+                    }
+                  </div>
+                </div>
+              }
+            }
+          }
+        </div>
+      </div>
+    }
+  </div>
 
   <!-- Error message slot -->
   @if (error()) {

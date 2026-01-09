@@ -9,6 +9,10 @@
 }
 
 .select-container {
+  width: 100%;
+}
+
+.select-trigger-wrapper {
   position: relative;
   width: 100%;
 }
