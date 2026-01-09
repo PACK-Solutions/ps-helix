@@ -768,11 +768,29 @@ const size: ModalSize = 'small' | 'medium' | 'large' | 'fullscreen';
 ### Select Types
 
 ```typescript
-import { SelectFilterMode, SelectPlacement, SelectSize } from 'ps-helix';
+import { SelectOption, SelectOptionGroup, SelectSize, SearchConfig } from 'ps-helix';
 
-const filterMode: SelectFilterMode = 'none' | 'startsWith' | 'contains';
-const placement: SelectPlacement = 'bottom' | 'top';
-const size: SelectSize = 'small' | 'medium' | 'large';
+interface SelectOption<T> {
+  label: string;
+  value: T;
+  icon?: string;
+  disabled?: boolean;
+  description?: string;
+}
+
+interface SelectOptionGroup<T> {
+  label: string;
+  options: SelectOption<T>[];
+  disabled?: boolean;
+}
+
+interface SearchConfig {
+  debounceTime: number;
+  placeholder: string;
+  minLength: number;
+}
+
+type SelectSize = 'small' | 'medium' | 'large';
 ```
 
 ### Stepper Types
