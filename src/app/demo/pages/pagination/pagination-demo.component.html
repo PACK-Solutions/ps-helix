@@ -4,6 +4,494 @@
   [showTechnicalSection]="false"
 >
   <div demo-content>
+    <!-- Cas d'Usage Pratique - Tableau Paginé -->
+    <section class="pagination-use-case-section">
+      <h3 class="section-title">Cas d'Usage : Tableau de Données Paginées</h3>
+      <div class="use-case-container">
+        <div class="use-case-intro">
+          <p>Exemple complet d'un tableau de données avec pagination intégrée. Utilise les signals et computed() pour une gestion réactive des données.</p>
+        </div>
+
+        <div class="table-stats">
+          <span class="stat-item">
+            <i class="ph ph-list-numbers" aria-hidden="true"></i>
+            Affichage {{ displayedRange().start }}-{{ displayedRange().end }} sur {{ displayedRange().total }} utilisateurs
+          </span>
+          <span class="stat-item">
+            <i class="ph ph-file" aria-hidden="true"></i>
+            Page {{ tableCurrentPage() }} / {{ tableTotalPages() }}
+          </span>
+        </div>
+
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Rôle</th>
+                <th>Département</th>
+                <th>Statut</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (user of paginatedUsers(); track user.id) {
+                <tr>
+                  <td>{{ user.id }}</td>
+                  <td>{{ user.name }}</td>
+                  <td>{{ user.email }}</td>
+                  <td>{{ user.role }}</td>
+                  <td>{{ user.department }}</td>
+                  <td>
+                    <span class="status-badge" [class]="getStatusClass(user.status)">
+                      {{ user.status }}
+                    </span>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-pagination">
+          <psh-pagination
+            [currentPage]="tableCurrentPage()"
+            [totalPages]="tableTotalPages()"
+            [itemsPerPage]="tableItemsPerPage()"
+            [showItemsPerPage]="true"
+            [itemsPerPageOptions]="[5, 10, 25, 50]"
+            [firstLabel]="labels.first"
+            [previousLabel]="labels.previous"
+            [nextLabel]="labels.next"
+            [lastLabel]="labels.last"
+            [pageLabel]="labels.page"
+            [itemsLabel]="labels.items"
+            [itemsPerPageLabel]="labels.itemsPerPage"
+            (pageChange)="handleTablePageChange($event)"
+            (itemsPerPageChange)="handleTableItemsPerPageChange($event)"
+          ></psh-pagination>
+        </div>
+
+        <ds-code-snippet [code]="paginatedTableCode" />
+      </div>
+    </section>
+
+    <!-- Navigation Programmatique avec viewChild -->
+    <section class="pagination-programmatic-section">
+      <h3 class="section-title">Navigation Programmatique avec viewChild()</h3>
+      <div class="programmatic-container">
+        <div class="programmatic-intro">
+          <p>Utilisez viewChild() pour accéder aux méthodes publiques du composant et contrôler la pagination depuis votre code TypeScript.</p>
+        </div>
+
+        <div class="programmatic-demo">
+          <div class="programmatic-controls">
+            <div class="control-group">
+              <h4>Contrôles de Navigation</h4>
+              <div class="control-buttons">
+                <button type="button" class="control-btn" (click)="goToFirst()">
+                  <i class="ph ph-caret-double-left" aria-hidden="true"></i>
+                  Première
+                </button>
+                <button type="button" class="control-btn" (click)="goToPrevious()">
+                  <i class="ph ph-caret-left" aria-hidden="true"></i>
+                  Précédente
+                </button>
+                <button type="button" class="control-btn" (click)="goToNext()">
+                  Suivante
+                  <i class="ph ph-caret-right" aria-hidden="true"></i>
+                </button>
+                <button type="button" class="control-btn" (click)="goToLast()">
+                  Dernière
+                  <i class="ph ph-caret-double-right" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <h4>Aller à une Page Spécifique</h4>
+              <div class="goto-controls">
+                <input
+                  type="number"
+                  class="goto-input"
+                  [value]="goToPageInput()"
+                  (input)="updateGoToPageInput($event)"
+                  min="1"
+                  [max]="programmaticTotalPages()"
+                  aria-label="Numéro de page"
+                />
+                <button type="button" class="control-btn primary" (click)="goToSpecificPage()">
+                  <i class="ph ph-arrow-right" aria-hidden="true"></i>
+                  Aller
+                </button>
+              </div>
+            </div>
+
+            <div class="current-state">
+              <span class="state-label">État actuel :</span>
+              <span class="state-value">Page {{ programmaticCurrentPage() }} sur {{ programmaticTotalPages() }}</span>
+            </div>
+          </div>
+
+          <div class="programmatic-pagination">
+            <psh-pagination #programmaticPagination
+              [(currentPage)]="programmaticCurrentPage"
+              [(totalPages)]="programmaticTotalPages"
+              [firstLabel]="labels.first"
+              [previousLabel]="labels.previous"
+              [nextLabel]="labels.next"
+              [lastLabel]="labels.last"
+              [pageLabel]="labels.page"
+            ></psh-pagination>
+          </div>
+        </div>
+
+        <ds-code-snippet [code]="viewChildCode" />
+      </div>
+    </section>
+
+    <!-- Gestion des Erreurs -->
+    <section class="pagination-errors-section">
+      <h3 class="section-title">Gestion des Erreurs de Navigation</h3>
+      <div class="errors-container">
+        <div class="errors-intro">
+          <p>L'événement navigationError est émis lorsqu'une tentative de navigation invalide est effectuée. Utilisez-le pour informer l'utilisateur ou logger les erreurs.</p>
+        </div>
+
+        <div class="errors-demo">
+          <div class="error-test-zone">
+            <h4>Tester les Erreurs</h4>
+            <p>Essayez de naviguer vers une page invalide (0, -1, ou supérieure à 5) :</p>
+            <div class="error-test-controls">
+              <input
+                type="number"
+                class="error-input"
+                [value]="errorTestPageInput()"
+                (input)="updateErrorTestInput($event)"
+                placeholder="Entrez un numéro de page"
+                aria-label="Page de test"
+              />
+              <button type="button" class="control-btn warning" (click)="triggerNavigationError()">
+                <i class="ph ph-warning" aria-hidden="true"></i>
+                Tester
+              </button>
+            </div>
+            <p class="hint">Valeurs valides : 1-5. Testez avec 0, -1, 6, 10...</p>
+          </div>
+
+          <div class="error-pagination-zone">
+            <psh-pagination #errorDemoPagination
+              [(currentPage)]="errorDemoCurrentPage"
+              [(totalPages)]="errorDemoTotalPages"
+              [firstLabel]="labels.first"
+              [previousLabel]="labels.previous"
+              [nextLabel]="labels.next"
+              [lastLabel]="labels.last"
+              [pageLabel]="labels.page"
+              (navigationError)="handleNavigationError($event)"
+            ></psh-pagination>
+          </div>
+
+          @if (navigationErrors().length > 0) {
+            <div class="error-list">
+              <div class="error-list-header">
+                <h4>
+                  <i class="ph ph-warning-circle" aria-hidden="true"></i>
+                  Erreurs de Navigation ({{ navigationErrors().length }})
+                </h4>
+                <button type="button" class="clear-btn" (click)="clearErrors()">
+                  <i class="ph ph-trash" aria-hidden="true"></i>
+                  Effacer
+                </button>
+              </div>
+              <div class="error-items">
+                @for (error of navigationErrors(); track error.timestamp) {
+                  <div class="error-item">
+                    <span class="error-action">{{ error.action }}</span>
+                    <span class="error-reason">{{ error.reason }}</span>
+                    <span class="error-time">{{ error.timestamp | date:'HH:mm:ss' }}</span>
+                  </div>
+                }
+              </div>
+            </div>
+          }
+        </div>
+
+        <ds-code-snippet [code]="errorHandlingCode" />
+      </div>
+    </section>
+
+    <!-- Internationalisation Dynamique -->
+    <section class="pagination-i18n-section">
+      <h3 class="section-title">Internationalisation Dynamique des Labels</h3>
+      <div class="i18n-container">
+        <div class="i18n-intro">
+          <p>Changez la langue des labels de pagination en temps réel grâce aux signals et computed(). Les labels sont mis à jour instantanément.</p>
+        </div>
+
+        <div class="i18n-demo">
+          <div class="language-selector">
+            <h4>Sélectionnez une Langue</h4>
+            <div class="language-buttons">
+              @for (lang of languages; track lang.code) {
+                <button
+                  type="button"
+                  class="language-btn"
+                  [class.active]="currentLanguage() === lang.code"
+                  (click)="setLanguage(lang.code)"
+                >
+                  <span class="flag">{{ lang.flag }}</span>
+                  <span class="lang-name">{{ lang.name }}</span>
+                </button>
+              }
+            </div>
+          </div>
+
+          <div class="i18n-pagination">
+            <psh-pagination
+              [(currentPage)]="i18nCurrentPage"
+              [(totalPages)]="i18nTotalPages"
+              [firstLabel]="currentLabels().first"
+              [previousLabel]="currentLabels().previous"
+              [nextLabel]="currentLabels().next"
+              [lastLabel]="currentLabels().last"
+              [pageLabel]="currentLabels().page"
+              [itemsLabel]="currentLabels().items"
+              [itemsPerPageLabel]="currentLabels().itemsPerPage"
+              [showItemsPerPage]="true"
+              [itemsPerPageOptions]="[5, 10, 25]"
+            ></psh-pagination>
+          </div>
+
+          <div class="current-labels">
+            <h4>Labels Actuels ({{ currentLanguage() | uppercase }})</h4>
+            <div class="labels-grid">
+              <div class="label-item">
+                <span class="label-key">first:</span>
+                <span class="label-value">{{ currentLabels().first }}</span>
+              </div>
+              <div class="label-item">
+                <span class="label-key">previous:</span>
+                <span class="label-value">{{ currentLabels().previous }}</span>
+              </div>
+              <div class="label-item">
+                <span class="label-key">next:</span>
+                <span class="label-value">{{ currentLabels().next }}</span>
+              </div>
+              <div class="label-item">
+                <span class="label-key">last:</span>
+                <span class="label-value">{{ currentLabels().last }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <ds-code-snippet [code]="i18nCode" />
+      </div>
+    </section>
+
+    <!-- Statistiques avec Computed -->
+    <section class="pagination-computed-section">
+      <h3 class="section-title">Statistiques Dérivées avec computed()</h3>
+      <div class="computed-container">
+        <div class="computed-intro">
+          <p>Utilisez computed() pour créer des valeurs dérivées qui se mettent à jour automatiquement lorsque la pagination change.</p>
+        </div>
+
+        <div class="computed-demo">
+          <div class="stats-dashboard">
+            <div class="stat-card">
+              <i class="ph ph-chart-line-up" aria-hidden="true"></i>
+              <div class="stat-content">
+                <span class="stat-label">Progression</span>
+                <span class="stat-value">{{ progressPercentage() }}%</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" [style.width.%]="progressPercentage()"></div>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <i class="ph ph-list" aria-hidden="true"></i>
+              <div class="stat-content">
+                <span class="stat-label">Éléments Affichés</span>
+                <span class="stat-value">{{ itemsDisplayed().start }} - {{ itemsDisplayed().end }}</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <i class="ph ph-hourglass" aria-hidden="true"></i>
+              <div class="stat-content">
+                <span class="stat-label">Éléments Restants</span>
+                <span class="stat-value">{{ remainingItems() }}</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <i class="ph ph-files" aria-hidden="true"></i>
+              <div class="stat-content">
+                <span class="stat-label">Pages Restantes</span>
+                <span class="stat-value">{{ remainingPages() }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="computed-pagination">
+            <psh-pagination
+              [(currentPage)]="computedCurrentPage"
+              [(totalPages)]="computedTotalPages"
+              [firstLabel]="labels.first"
+              [previousLabel]="labels.previous"
+              [nextLabel]="labels.next"
+              [lastLabel]="labels.last"
+              [pageLabel]="labels.page"
+            ></psh-pagination>
+          </div>
+        </div>
+
+        <ds-code-snippet [code]="computedStatsCode" />
+      </div>
+    </section>
+
+    <!-- Simulation Backend avec Loading -->
+    <section class="pagination-backend-section">
+      <h3 class="section-title">Intégration Backend avec État de Chargement</h3>
+      <div class="backend-container">
+        <div class="backend-intro">
+          <p>Simulation d'un appel API avec état de chargement. Le spinner s'affiche pendant la récupération des données.</p>
+        </div>
+
+        <div class="backend-demo">
+          <div class="backend-controls">
+            <button type="button" class="control-btn primary" (click)="loadSimulatedData()" [disabled]="isLoading()">
+              @if (isLoading()) {
+                <psh-spinloader size="small" />
+                Chargement...
+              } @else {
+                <i class="ph ph-cloud-arrow-down" aria-hidden="true"></i>
+                Charger les Données
+              }
+            </button>
+          </div>
+
+          <div class="backend-table-wrapper">
+            @if (isLoading()) {
+              <div class="loading-overlay">
+                <psh-spinloader size="large" />
+                <span>Chargement des données...</span>
+              </div>
+            } @else if (simulatedUsers().length > 0) {
+              <table class="data-table compact">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Rôle</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (user of simulatedUsers(); track user.id) {
+                    <tr>
+                      <td>{{ user.id }}</td>
+                      <td>{{ user.name }}</td>
+                      <td>{{ user.email }}</td>
+                      <td>{{ user.role }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            } @else {
+              <div class="empty-state">
+                <i class="ph ph-database" aria-hidden="true"></i>
+                <p>Cliquez sur "Charger les Données" pour simuler un appel API</p>
+              </div>
+            }
+          </div>
+
+          <div class="backend-pagination">
+            <psh-pagination
+              [(currentPage)]="simulatedCurrentPage"
+              [(totalPages)]="simulatedTotalPages"
+              [firstLabel]="labels.first"
+              [previousLabel]="labels.previous"
+              [nextLabel]="labels.next"
+              [lastLabel]="labels.last"
+              [pageLabel]="labels.page"
+              (pageChange)="handleSimulatedPageChange($event)"
+            ></psh-pagination>
+          </div>
+        </div>
+
+        <ds-code-snippet [code]="backendSimulationCode" />
+      </div>
+    </section>
+
+    <!-- Configuration Globale -->
+    <section class="pagination-config-section">
+      <h3 class="section-title">Configuration Globale avec Providers</h3>
+      <div class="config-container">
+        <div class="config-intro">
+          <p>Utilisez PAGINATION_CONFIG pour définir une configuration par défaut pour toutes les paginations de votre application.</p>
+        </div>
+
+        <div class="config-comparison">
+          <div class="config-card">
+            <h4>Configuration par Défaut</h4>
+            <p>Sans configuration personnalisée</p>
+            <div class="config-preview">
+              <psh-pagination
+                [(currentPage)]="defaultCurrentPage"
+                [(totalPages)]="defaultTotalPages"
+                [firstLabel]="labels.first"
+                [previousLabel]="labels.previous"
+                [nextLabel]="labels.next"
+                [lastLabel]="labels.last"
+                [pageLabel]="labels.page"
+              ></psh-pagination>
+            </div>
+            <ul class="config-list">
+              <li>size: 'medium'</li>
+              <li>variant: 'default'</li>
+              <li>maxVisiblePages: 5</li>
+              <li>showFirstLast: true</li>
+            </ul>
+          </div>
+
+          <div class="config-card highlight">
+            <h4>Configuration Personnalisée</h4>
+            <p>Avec PAGINATION_CONFIG</p>
+            <div class="config-preview">
+              <psh-pagination
+                [(currentPage)]="outlineCurrentPage"
+                [(totalPages)]="outlineTotalPages"
+                variant="outline"
+                [maxVisiblePages]="7"
+                [showItemsPerPage]="true"
+                [itemsPerPageOptions]="[10, 25, 50, 100]"
+                [firstLabel]="labels.first"
+                [previousLabel]="labels.previous"
+                [nextLabel]="labels.next"
+                [lastLabel]="labels.last"
+                [pageLabel]="labels.page"
+                [itemsLabel]="labels.items"
+                [itemsPerPageLabel]="labels.itemsPerPage"
+              ></psh-pagination>
+            </div>
+            <ul class="config-list">
+              <li>variant: 'outline'</li>
+              <li>maxVisiblePages: 7</li>
+              <li>showItemsPerPage: true</li>
+              <li>itemsPerPageOptions: [10, 25, 50, 100]</li>
+            </ul>
+          </div>
+        </div>
+
+        <ds-code-snippet [code]="globalConfigCode" />
+      </div>
+    </section>
+
     <!-- Variantes de Pagination - Section Pleine Largeur -->
     <section class="pagination-variants-section">
       <h3 class="section-title">Variantes de Pagination</h3>
@@ -204,8 +692,8 @@
                   <p><strong>Navigation au Clavier Active</strong></p>
                   <p>Essayez les touches suivantes :</p>
                   <ul class="keyboard-shortcuts">
-                    <li><kbd>←</kbd> Page précédente</li>
-                    <li><kbd>→</kbd> Page suivante</li>
+                    <li><kbd>&#8592;</kbd> Page précédente</li>
+                    <li><kbd>&#8594;</kbd> Page suivante</li>
                     <li><kbd>Home</kbd> Première page</li>
                     <li><kbd>End</kbd> Dernière page</li>
                     <li><kbd>Tab</kbd> Navigation entre boutons</li>
@@ -418,6 +906,70 @@
         </div>
 
         <div class="api-table-wrapper">
+          <h4>Labels (Internationalisation)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>firstLabel</code></td>
+                <td><code>string</code></td>
+                <td><code>'First'</code></td>
+                <td>Label du bouton "Première page"</td>
+              </tr>
+              <tr>
+                <td><code>previousLabel</code></td>
+                <td><code>string</code></td>
+                <td><code>'Previous'</code></td>
+                <td>Label du bouton "Page précédente"</td>
+              </tr>
+              <tr>
+                <td><code>nextLabel</code></td>
+                <td><code>string</code></td>
+                <td><code>'Next'</code></td>
+                <td>Label du bouton "Page suivante"</td>
+              </tr>
+              <tr>
+                <td><code>lastLabel</code></td>
+                <td><code>string</code></td>
+                <td><code>'Last'</code></td>
+                <td>Label du bouton "Dernière page"</td>
+              </tr>
+              <tr>
+                <td><code>pageLabel</code></td>
+                <td><code>string</code></td>
+                <td><code>'Page'</code></td>
+                <td>Label pour "Page X sur Y"</td>
+              </tr>
+              <tr>
+                <td><code>itemsLabel</code></td>
+                <td><code>string</code></td>
+                <td><code>'items'</code></td>
+                <td>Label pour "X éléments"</td>
+              </tr>
+              <tr>
+                <td><code>itemsPerPageLabel</code></td>
+                <td><code>string</code></td>
+                <td><code>'Items per page'</code></td>
+                <td>Label du sélecteur d'éléments</td>
+              </tr>
+              <tr>
+                <td><code>ariaLabel</code></td>
+                <td><code>string</code></td>
+                <td><code>'Pagination navigation'</code></td>
+                <td>Label ARIA pour l'accessibilité</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
           <h4>Outputs (Événements)</h4>
           <table class="api-table">
             <thead>
@@ -440,7 +992,7 @@
               </tr>
               <tr>
                 <td><code>navigationError</code></td>
-                <td><code>EventEmitter&lt;{{ '{' }}action, reason{{ '}' }}&gt;</code></td>
+                <td><code>EventEmitter&lt;{{ '{' }} action: string, reason: string {{ '}' }}&gt;</code></td>
                 <td>Émis lors d'une tentative de navigation invalide</td>
               </tr>
             </tbody>
@@ -476,6 +1028,26 @@
               <tr>
                 <td><code>goToPreviousPage()</code></td>
                 <td>Navigue vers la page précédente (si disponible)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Configuration Globale (InjectionToken)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Token</th>
+                <th>Interface</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>PAGINATION_CONFIG</code></td>
+                <td><code>Partial&lt;PaginationConfig&gt;</code></td>
+                <td>Permet de définir une configuration par défaut pour toutes les paginations</td>
               </tr>
             </tbody>
           </table>
