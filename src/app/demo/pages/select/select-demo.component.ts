@@ -112,9 +112,8 @@ export class SelectDemoComponent {
   [(value)]="selected"
   placeholder="Choisir"
   [clearable]="true"
->
-  <span select-hint>Texte d'aide</span>
-</psh-select>`;
+  hint="Texte d'aide"
+/>`;
 
   searchableSelectCode = `<psh-select
   [options]="options"

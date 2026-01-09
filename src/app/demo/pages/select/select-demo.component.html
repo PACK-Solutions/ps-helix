@@ -20,9 +20,8 @@
                 placeholder="Choisir une option"
                 [clearable]="true"
                 label="Sélection basique"
-              >
-                <span select-hint>Sélectionnez une option dans la liste</span>
-              </psh-select>
+                hint="Sélectionnez une option dans la liste"
+              />
             </div>
             <div class="doc-card-info">
               <h4>Select Basique</h4>
@@ -41,9 +40,8 @@
                 placeholder="Rechercher un pays"
                 (searched)="handleSearch($event)"
                 label="Select avec recherche"
-              >
-                <span select-hint>Utilisez la recherche pour filtrer les pays</span>
-              </psh-select>
+                hint="Utilisez la recherche pour filtrer les pays"
+              />
             </div>
             <div class="doc-card-info">
               <h4>Select avec Recherche</h4>
@@ -63,9 +61,8 @@
                 placeholder="Sélectionner des langages"
                 multiplePlaceholder="Sélectionner des langages"
                 label="Sélection multiple"
-              >
-                <span select-hint>Vous pouvez sélectionner plusieurs options</span>
-              </psh-select>
+                hint="Vous pouvez sélectionner plusieurs options"
+              />
             </div>
             <div class="doc-card-info">
               <h4>Sélection Multiple</h4>
@@ -165,9 +162,8 @@
                   [(value)]="selectedFruit"
                   placeholder="Sélectionner un fruit"
                   label="Select Normal"
-                >
-                  <span select-hint>État par défaut, prêt à recevoir les interactions</span>
-                </psh-select>
+                  hint="État par défaut, prêt à recevoir les interactions"
+                />
               </div>
             </div>
 
@@ -180,9 +176,8 @@
                   [disabled]="true"
                   placeholder="Select désactivé"
                   label="Select Désactivé"
-                >
-                  <span select-hint>Temporairement non modifiable</span>
-                </psh-select>
+                  hint="Temporairement non modifiable"
+                />
               </div>
             </div>
 
@@ -194,9 +189,8 @@
                   [loading]="isLoading"
                   placeholder="Chargement..."
                   label="Select en Chargement"
-                >
-                  <span select-hint>Opération en cours d'exécution</span>
-                </psh-select>
+                  hint="Opération en cours d'exécution"
+                />
                 <psh-button
                   variant="secondary"
                   size="small"
@@ -266,9 +260,8 @@
                 [(value)]="selectedCountry"
                 placeholder="Sélectionner un pays"
                 label="Options avec Descriptions"
-              >
-                <span select-hint>Chaque option affiche une description détaillée</span>
-              </psh-select>
+                hint="Chaque option affiche une description détaillée"
+              />
             </div>
             <div class="doc-card-info">
               <h4>Options avec Descriptions</h4>
@@ -283,9 +276,8 @@
                 [options]="basicOptions"
                 placeholder="Sélectionner une option"
                 label="Options avec Icônes"
-              >
-                <span select-hint>Icônes Phosphor pour renforcer la compréhension visuelle</span>
-              </psh-select>
+                hint="Icônes Phosphor pour renforcer la compréhension visuelle"
+              />
             </div>
             <div class="doc-card-info">
               <h4>Options avec Icônes</h4>
@@ -300,9 +292,8 @@
                 [options]="groupedOptions"
                 placeholder="Sélectionner un aliment"
                 label="Options Groupées"
-              >
-                <span select-hint>Les options sont organisées en catégories</span>
-              </psh-select>
+                hint="Les options sont organisées en catégories"
+              />
             </div>
             <div class="doc-card-info">
               <h4>Options Groupées</h4>
@@ -370,9 +361,8 @@
               [options]="fruitOptions"
               placeholder="Utilisez le clavier pour naviguer"
               label="Démonstration Navigation"
-            >
-              <span select-hint>Utilisez Tab, Flèches, Enter et Escape pour voir le focus visuel</span>
-            </psh-select>
+              hint="Utilisez Tab, Flèches, Enter et Escape pour voir le focus visuel"
+            />
           </div>
         </div>
       </div>
@@ -392,9 +382,8 @@
                 [options]="basicOptions"
                 placeholder="Largeur par défaut"
                 label="Select Standard"
-              >
-                <span select-hint>Largeur minimale de 12rem, contenu stable</span>
-              </psh-select>
+                hint="Largeur minimale de 12rem, contenu stable"
+              />
             </div>
             <div class="doc-card-info">
               <h4>Largeur par Défaut</h4>
@@ -410,9 +399,8 @@
                 [fullWidth]="true"
                 placeholder="Pleine largeur"
                 label="Select Pleine Largeur"
-              >
-                <span select-hint>S'étend sur tout l'espace disponible</span>
-              </psh-select>
+                hint="S'étend sur tout l'espace disponible"
+              />
             </div>
             <div class="doc-card-info">
               <h4>Pleine Largeur</h4>
@@ -509,12 +497,6 @@
                 <td>Étend le select sur toute la largeur</td>
               </tr>
               <tr>
-                <td><code>virtualScroll</code></td>
-                <td><code>boolean</code></td>
-                <td><code>false</code></td>
-                <td>Active le scroll virtuel pour grandes listes</td>
-              </tr>
-              <tr>
                 <td><code>required</code></td>
                 <td><code>boolean</code></td>
                 <td><code>false</code></td>
@@ -535,8 +517,14 @@
               <tr>
                 <td><code>placeholder</code></td>
                 <td><code>string</code></td>
-                <td><code>'Sélectionner'</code></td>
+                <td><code>'Sélectionner une option'</code></td>
                 <td>Texte affiché quand aucune sélection</td>
+              </tr>
+              <tr>
+                <td><code>multiplePlaceholder</code></td>
+                <td><code>string</code></td>
+                <td><code>'Sélectionner des options'</code></td>
+                <td>Texte affiché en mode multiple sans sélection</td>
               </tr>
               <tr>
                 <td><code>error</code></td>
@@ -549,6 +537,42 @@
                 <td><code>string</code></td>
                 <td><code>''</code></td>
                 <td>Message de succès à afficher</td>
+              </tr>
+              <tr>
+                <td><code>hint</code></td>
+                <td><code>string</code></td>
+                <td><code>''</code></td>
+                <td>Texte d'aide affiché sous le select</td>
+              </tr>
+              <tr>
+                <td><code>ariaLabel</code></td>
+                <td><code>string | null</code></td>
+                <td><code>null</code></td>
+                <td>Label ARIA personnalisé pour l'accessibilité</td>
+              </tr>
+              <tr>
+                <td><code>maxSelections</code></td>
+                <td><code>number | undefined</code></td>
+                <td><code>undefined</code></td>
+                <td>Nombre maximum de sélections (mode multiple)</td>
+              </tr>
+              <tr>
+                <td><code>minSelections</code></td>
+                <td><code>number | undefined</code></td>
+                <td><code>undefined</code></td>
+                <td>Nombre minimum de sélections (mode multiple)</td>
+              </tr>
+              <tr>
+                <td><code>compareWith</code></td>
+                <td><code>(a: T, b: T) => boolean</code></td>
+                <td><code>(a, b) => a === b</code></td>
+                <td>Fonction de comparaison personnalisée</td>
+              </tr>
+              <tr>
+                <td><code>searchConfig</code></td>
+                <td><code>SearchConfig</code></td>
+                <td><code>&#123; debounceTime: 300, ... &#125;</code></td>
+                <td>Configuration de la recherche (debounce, placeholder, minLength)</td>
               </tr>
             </tbody>
           </table>
@@ -614,12 +638,11 @@
       error="Veuillez sélectionner un pays"
       placeholder="Sélectionner un pays"
       label="Pays de résidence"
+      hint="Choisissez votre pays"
       (valueChange)="handleChange($event)"
       (opened)="handleOpen()"
       (searched)="handleSearch($event)"
-    &gt;
-      &lt;span select-hint&gt;Choisissez votre pays&lt;/span&gt;
-    &lt;/psh-select&gt;
+    /&gt;
   `
 &#125;)
 export class MyComponent &#123;
