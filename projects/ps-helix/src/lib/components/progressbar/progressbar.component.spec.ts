@@ -70,6 +70,27 @@ describe('PshProgressbarComponent', () => {
 
       expect(getLabel()).toBeFalsy();
     });
+
+    it('should show visible label in indeterminate mode', () => {
+      fixture.componentRef.setInput('mode', 'indeterminate');
+      fixture.componentRef.setInput('showLabel', true);
+      fixture.detectChanges();
+
+      const label = getLabel();
+      expect(label).toBeTruthy();
+      expect(label.textContent).toContain('Loading...');
+    });
+
+    it('should show custom label in indeterminate mode', () => {
+      fixture.componentRef.setInput('mode', 'indeterminate');
+      fixture.componentRef.setInput('label', 'Please wait...');
+      fixture.componentRef.setInput('showLabel', true);
+      fixture.detectChanges();
+
+      const label = getLabel();
+      expect(label).toBeTruthy();
+      expect(label.textContent).toContain('Please wait...');
+    });
   });
 
   describe('Percentage calculation', () => {
@@ -192,12 +213,13 @@ describe('PshProgressbarComponent', () => {
       expect(progressbar.classList.contains('indeterminate')).toBe(true);
     });
 
-    it('should set track width to 100% for indeterminate mode', () => {
+    it('should use percentage width for indeterminate mode (CSS handles animation)', () => {
       fixture.componentRef.setInput('mode', 'indeterminate');
+      fixture.componentRef.setInput('value', 50);
       fixture.detectChanges();
 
       const track = getProgressTrack();
-      expect(track.style.width).toBe('100%');
+      expect(track.style.width).toBe('50%');
     });
   });
 
@@ -337,6 +359,58 @@ describe('PshProgressbarComponent', () => {
 
       const calls25 = thresholdSpy.mock.calls.filter((call: number[]) => call[0] === 25);
       expect(calls25.length).toBe(1);
+    });
+
+    it('should not emit duplicate completed events when value stays at max', () => {
+      const completedSpy = jest.fn();
+      fixture.componentInstance.completed.subscribe(completedSpy);
+
+      fixture.componentRef.setInput('value', 100);
+      fixture.componentRef.setInput('max', 100);
+      fixture.detectChanges();
+
+      fixture.componentRef.setInput('value', 100);
+      fixture.detectChanges();
+
+      fixture.componentRef.setInput('value', 100);
+      fixture.detectChanges();
+
+      expect(completedSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should re-emit completed event after value drops and reaches max again', () => {
+      const completedSpy = jest.fn();
+      fixture.componentInstance.completed.subscribe(completedSpy);
+
+      fixture.componentRef.setInput('value', 100);
+      fixture.componentRef.setInput('max', 100);
+      fixture.detectChanges();
+      expect(completedSpy).toHaveBeenCalledTimes(1);
+
+      fixture.componentRef.setInput('value', 50);
+      fixture.detectChanges();
+
+      fixture.componentRef.setInput('value', 100);
+      fixture.detectChanges();
+      expect(completedSpy).toHaveBeenCalledTimes(2);
+    });
+
+    it('should re-emit threshold events after value drops below 25%', () => {
+      const thresholdSpy = jest.fn();
+      fixture.componentInstance.thresholdReached.subscribe(thresholdSpy);
+
+      fixture.componentRef.setInput('value', 30);
+      fixture.detectChanges();
+      expect(thresholdSpy).toHaveBeenCalledWith(25);
+
+      fixture.componentRef.setInput('value', 10);
+      fixture.detectChanges();
+
+      thresholdSpy.mockClear();
+
+      fixture.componentRef.setInput('value', 30);
+      fixture.detectChanges();
+      expect(thresholdSpy).toHaveBeenCalledWith(25);
     });
   });
 
