@@ -1,17 +1,20 @@
 # Pagination Component Documentation
 
-## Table des Matieres
+## Table des Matières
 
 - [Utilisation](#utilisation)
 - [API](#api)
+- [Validation et Gestion des Erreurs](#validation-et-gestion-des-erreurs)
 - [Variantes](#variantes)
 - [Tailles](#tailles)
 - [Configuration](#configuration)
 - [Navigation au Clavier](#navigation-au-clavier)
-- [Accessibilite](#accessibilité)
+- [Accessibilité](#accessibilité)
 - [Exemples Pratiques](#exemples-pratiques)
 - [Configuration Globale](#configuration-globale)
 - [Bonnes Pratiques](#bonnes-pratiques)
+- [Architecture Technique](#architecture-technique)
+- [Design Tokens](#design-tokens)
 
 ## Utilisation
 
@@ -60,34 +63,34 @@ export class MyComponent {}
 
 Propriétés avec two-way binding
 
-| Nom | Type | Défaut | Description |
-|-----|------|---------|-------------|
-| `currentPage` | `number` | `1` | Page actuellement affichée (two-way binding avec `[(currentPage)]`) |
-| `totalPages` | `number` | `1` | Nombre total de pages disponibles (two-way binding avec `[(totalPages)]`) |
-| `itemsPerPage` | `number` | `10` | Nombre d'éléments affichés par page (two-way binding avec `[(itemsPerPage)]`) |
+| Nom | Type | Défaut | Validation | Description |
+|-----|------|---------|------------|-------------|
+| `currentPage` | `number` | `1` | >= 1, <= totalPages | Page actuellement affichée (two-way binding avec `[(currentPage)]`) |
+| `totalPages` | `number` | `1` | >= 1 | Nombre total de pages disponibles (two-way binding avec `[(totalPages)]`) |
+| `itemsPerPage` | `number` | `10` | >= 1 | Nombre d'éléments affichés par page (two-way binding avec `[(itemsPerPage)]`) |
 
 ### Regular Inputs (@input)
 
 Propriétés en lecture seule
 
-| Nom | Type | Défaut | Description |
-|-----|------|---------|-------------|
-| `size` | `PaginationSize` | `'medium'` | Taille du composant : `'small'` \| `'medium'` \| `'large'` |
-| `variant` | `PaginationVariant` | `'default'` | Style visuel : `'default'` \| `'outline'` |
-| `showFirstLast` | `boolean` | `true` | Affiche les boutons "Premier" et "Dernier" |
-| `showPrevNext` | `boolean` | `true` | Affiche les boutons "Précédent" et "Suivant" |
-| `maxVisiblePages` | `number` | `5` | Nombre maximum de numéros de page affichés simultanément |
-| `showItemsPerPage` | `boolean` | `false` | Affiche le sélecteur d'éléments par page |
-| `itemsPerPageOptions` | `number[]` | `[5, 10, 25, 50]` | Options disponibles dans le sélecteur d'éléments par page |
-| `firstLabel` | `string` | `'First'` | Label du bouton "Premier" (personnalisable pour i18n) |
-| `previousLabel` | `string` | `'Previous'` | Label du bouton "Précédent" (personnalisable pour i18n) |
-| `nextLabel` | `string` | `'Next'` | Label du bouton "Suivant" (personnalisable pour i18n) |
-| `lastLabel` | `string` | `'Last'` | Label du bouton "Dernier" (personnalisable pour i18n) |
-| `pageLabel` | `string` | `'Page'` | Label pour identifier les pages (personnalisable pour i18n) |
-| `itemsLabel` | `string` | `'items'` | Label pour les éléments (personnalisable pour i18n) |
-| `itemsPerPageLabel` | `string` | `'Items per page'` | Label du sélecteur (personnalisable pour i18n) |
-| `id` | `string` | auto-généré | ID unique pour l'élément de navigation (généré automatiquement si non fourni) |
-| `ariaLabel` | `string` | `'Pagination navigation'` | Label ARIA pour l'accessibilité |
+| Nom | Type | Défaut | Validation | Description |
+|-----|------|---------|------------|-------------|
+| `size` | `PaginationSize` | `'medium'` | 'small' \| 'medium' \| 'large' | Taille du composant |
+| `variant` | `PaginationVariant` | `'default'` | 'default' \| 'outline' | Style visuel |
+| `showFirstLast` | `boolean` | `true` | - | Affiche les boutons "Premier" et "Dernier" |
+| `showPrevNext` | `boolean` | `true` | - | Affiche les boutons "Précédent" et "Suivant" |
+| `maxVisiblePages` | `number` | `5` | >= 1 | Nombre maximum de numéros de page affichés simultanément |
+| `showItemsPerPage` | `boolean` | `false` | - | Affiche le sélecteur d'éléments par page |
+| `itemsPerPageOptions` | `number[]` | `[5, 10, 25, 50]` | - | Options disponibles dans le sélecteur d'éléments par page |
+| `firstLabel` | `string` | `'First'` | - | Label du bouton "Premier" (personnalisable pour i18n) |
+| `previousLabel` | `string` | `'Previous'` | - | Label du bouton "Précédent" (personnalisable pour i18n) |
+| `nextLabel` | `string` | `'Next'` | - | Label du bouton "Suivant" (personnalisable pour i18n) |
+| `lastLabel` | `string` | `'Last'` | - | Label du bouton "Dernier" (personnalisable pour i18n) |
+| `pageLabel` | `string` | `'Page'` | - | Label pour identifier les pages (personnalisable pour i18n) |
+| `itemsLabel` | `string` | `'items'` | - | Label pour les éléments (personnalisable pour i18n) |
+| `itemsPerPageLabel` | `string` | `'Items per page'` | - | Label du sélecteur (personnalisable pour i18n) |
+| `id` | `string` | auto-généré | - | ID unique pour l'élément de navigation (généré automatiquement si non fourni) |
+| `ariaLabel` | `string` | `'Pagination navigation'` | - | Label ARIA pour l'accessibilité |
 
 ### Outputs
 
@@ -121,6 +124,154 @@ interface PaginationConfig {
   maxVisiblePages?: number;
   showItemsPerPage?: boolean;
   itemsPerPageOptions?: number[];
+}
+```
+
+## Validation et Gestion des Erreurs
+
+Le composant Pagination intègre un système robuste de validation automatique pour garantir un comportement cohérent même avec des valeurs invalides.
+
+### Validation Automatique
+
+#### totalPages
+Le composant valide et normalise automatiquement le nombre total de pages :
+
+```typescript
+// Valeurs invalides normalisées automatiquement à 1
+<psh-pagination [totalPages]="0"></psh-pagination>      // → totalPages = 1
+<psh-pagination [totalPages]="-5"></psh-pagination>     // → totalPages = 1
+<psh-pagination [totalPages]="NaN"></psh-pagination>    // → totalPages = 1
+
+// Message console : "[psh-pagination] Invalid totalPages "0", setting to 1"
+```
+
+#### currentPage
+La page courante est validée par rapport aux limites :
+
+```typescript
+// Valeurs invalides normalisées automatiquement
+<psh-pagination
+  [currentPage]="0"
+  [totalPages]="10">
+</psh-pagination>  // → currentPage = 1
+
+<psh-pagination
+  [currentPage]="15"
+  [totalPages]="10">
+</psh-pagination>  // → currentPage = 10 (max)
+
+// Messages console :
+// "[psh-pagination] Invalid currentPage "0", setting to 1"
+// "[psh-pagination] currentPage "15" exceeds totalPages "10", setting to 10"
+```
+
+#### maxVisiblePages
+Le nombre de pages visibles est validé :
+
+```typescript
+// Valeur invalide → avertissement console
+<psh-pagination [maxVisiblePages]="0"></psh-pagination>
+// Console : "[psh-pagination] Invalid maxVisiblePages "0", must be >= 1"
+
+<psh-pagination [maxVisiblePages]="-3"></psh-pagination>
+// Console : "[psh-pagination] Invalid maxVisiblePages "-3", must be >= 1"
+```
+
+#### size et variant
+Les valeurs invalides sont normalisées aux valeurs par défaut :
+
+```typescript
+// Valeurs invalides normalisées automatiquement
+<psh-pagination size="huge"></psh-pagination>  // → size = "medium"
+// Console : "[psh-pagination] Invalid size "huge", falling back to "medium""
+
+<psh-pagination variant="fancy"></psh-pagination>  // → variant = "default"
+// Console : "[psh-pagination] Invalid variant "fancy", falling back to "default""
+```
+
+### Output navigationError
+
+Lorsqu'une tentative de navigation vers une page invalide est effectuée programmatiquement, l'événement `navigationError` est émis :
+
+```typescript
+@Component({
+  template: `
+    <psh-pagination
+      [(currentPage)]="currentPage"
+      [totalPages]="10"
+      (navigationError)="handleError($event)"
+    ></psh-pagination>
+  `
+})
+export class MyComponent {
+  currentPage = 1;
+
+  jumpToPage(page: number) {
+    this.pagination.goToPage(page);
+  }
+
+  handleError(error: { action: string; reason: string }) {
+    console.error(`Erreur: ${error.action} - ${error.reason}`);
+    // Exemple d'erreur :
+    // { action: "goToPage", reason: "Page 15 is out of bounds (1-10)" }
+  }
+}
+```
+
+### Messages de Validation
+
+Tous les messages de validation sont en **anglais** (standard industrie) :
+
+| Scénario | Message Console |
+|----------|----------------|
+| totalPages invalide | `[psh-pagination] Invalid totalPages "{value}", setting to 1` |
+| currentPage < 1 | `[psh-pagination] Invalid currentPage "{value}", setting to 1` |
+| currentPage > totalPages | `[psh-pagination] currentPage "{current}" exceeds totalPages "{total}", setting to {total}` |
+| maxVisiblePages invalide | `[psh-pagination] Invalid maxVisiblePages "{value}", must be >= 1` |
+| size invalide | `[psh-pagination] Invalid size "{value}", falling back to "medium"` |
+| variant invalide | `[psh-pagination] Invalid variant "{value}", falling back to "default"` |
+
+### Comportement Défensif
+
+Le composant est conçu pour **ne jamais crasher** :
+
+- ✅ Les valeurs invalides sont normalisées automatiquement
+- ✅ Les avertissements console aident au débogage
+- ✅ L'interface reste fonctionnelle en toutes circonstances
+- ✅ Les états impossibles sont prévenus
+- ✅ La navigation reste cohérente
+
+### Exemple de Gestion d'Erreur Complète
+
+```typescript
+import { Component, signal, viewChild } from '@angular/core';
+import { PshPaginationComponent } from 'ps-helix';
+
+@Component({
+  selector: 'app-robust-pagination',
+  template: `
+    <psh-pagination
+      #pagination
+      [(currentPage)]="currentPage"
+      [totalPages]="totalPages()"
+      (navigationError)="logError($event)"
+    ></psh-pagination>
+
+    <button (click)="testInvalidPage()">Tester page invalide</button>
+  `
+})
+export class RobustPaginationComponent {
+  pagination = viewChild.required<PshPaginationComponent>('pagination');
+  currentPage = 1;
+  totalPages = signal(10);
+
+  testInvalidPage() {
+    this.pagination().goToPage(999);
+  }
+
+  logError(error: { action: string; reason: string }) {
+    console.error('Navigation error:', error);
+  }
 }
 ```
 
@@ -412,14 +563,11 @@ export class UsersTableComponent {
 
   onPageChange(page: number) {
     console.log('Page changée:', page);
-    // Charger les données de la nouvelle page si nécessaire
   }
 
   onItemsPerPageChange(items: number) {
     console.log('Items par page changés:', items);
-    // Réinitialiser à la première page
     this.currentPage = 1;
-    // Recalculer les données
   }
 }
 ```
@@ -486,7 +634,6 @@ export class ErrorHandlingComponent {
 
   handleNavigationError(error: { action: string; reason: string }) {
     console.error('Erreur de navigation:', error);
-    // Afficher un message à l'utilisateur
     alert(`Navigation impossible: ${error.reason}`);
   }
 }
@@ -590,26 +737,6 @@ import { PAGINATION_CONFIG } from 'ps-helix';
 export class AdminComponent {}
 ```
 
-### Personnalisation des Styles
-
-```typescript
-import { PAGINATION_STYLES } from 'ps-helix';
-
-bootstrapApplication(AppComponent, {
-  providers: [
-    {
-      provide: PAGINATION_STYLES,
-      useValue: [
-        {
-          '--pagination-primary-color': '#007bff',
-          '--pagination-border-radius': '8px'
-        }
-      ]
-    }
-  ]
-});
-```
-
 ## Bonnes Pratiques
 
 ### 1. Two-way Binding
@@ -695,7 +822,6 @@ onItemsPerPageChange(items: number) {
 // ❌ À éviter - rester sur une page qui n'existe plus
 onItemsPerPageChange(items: number) {
   this.itemsPerPage = items;
-  // currentPage peut être invalide maintenant
 }
 ```
 
@@ -730,52 +856,176 @@ Adaptez la configuration selon la taille d'écran :
 
 ### 8. Validation des Données
 
-Validez toujours les données avant de les utiliser :
+Le composant valide automatiquement les données, mais vérifiez vos propres données en amont :
 
 ```typescript
-// ✅ Bon - validation des données
+// ✅ Bon - validation des données métier
 loadData(page: number) {
   if (page < 1 || page > this.totalPages()) {
     console.error('Page invalide');
     return;
   }
-  // Charger les données
 }
+
+// Note : Le composant normalisera automatiquement les valeurs invalides,
+// mais il est préférable de valider vos données en amont pour un meilleur contrôle
 ```
 
 ## Architecture Technique
 
 ### Computed Signals
 
-Le composant utilise plusieurs computed signals pour optimiser les performances :
+Le composant utilise plusieurs computed signals pour optimiser les performances et garantir la réactivité :
 
+- **`navigationId`**: Génère l'ID unique pour l'élément nav (auto-généré si non fourni)
 - **`pages`**: Calcule les numéros de page visibles avec algorithme de centrage intelligent
+- **`state`**: Calcule l'état actuel de la pagination ('first', 'last', 'default')
 - **`canGoNext`**: Détermine si la navigation vers la page suivante est possible
 - **`canGoPrevious`**: Détermine si la navigation vers la page précédente est possible
 - **`isFirstPage`**: Vérifie si on est sur la première page
 - **`isLastPage`**: Vérifie si on est sur la dernière page
-- **`state`**: Calcule l'état actuel de la pagination ('first', 'last', 'default')
 - **`currentPageAnnouncement`**: Génère l'annonce vocale pour les lecteurs d'écran
-- **`customStyles`**: Fusionne les styles personnalisés injectés
 
-### Avantages
+### Effects de Validation
+
+Le composant utilise des Angular effects pour valider et normaliser automatiquement les valeurs :
+
+```typescript
+// Validation de totalPages
+effect(() => {
+  const total = this.totalPages();
+  if (total < 1 || !Number.isFinite(total)) {
+    console.warn(`[psh-pagination] Invalid totalPages "${total}", setting to 1`);
+    this.totalPages.set(1);
+  }
+});
+
+// Validation de currentPage
+effect(() => {
+  const current = this.currentPage();
+  const total = this.totalPages();
+  if (current < 1 || !Number.isFinite(current)) {
+    console.warn(`[psh-pagination] Invalid currentPage "${current}", setting to 1`);
+    this.currentPage.set(1);
+  } else if (current > total && total >= 1) {
+    console.warn(`[psh-pagination] currentPage "${current}" exceeds totalPages "${total}", setting to ${total}`);
+    this.currentPage.set(total);
+  }
+});
+
+// Validation de maxVisiblePages
+effect(() => {
+  const maxVisible = this.maxVisiblePages();
+  if (maxVisible < 1 || !Number.isFinite(maxVisible)) {
+    console.warn(`[psh-pagination] Invalid maxVisiblePages "${maxVisible}", must be >= 1`);
+  }
+});
+```
+
+### Système d'ID Unique
+
+Chaque instance génère automatiquement un ID unique si non fourni :
+
+```typescript
+private static idCounter = 0;
+private readonly uniqueId = `pagination-${++PshPaginationComponent.idCounter}`;
+
+protected readonly navigationId = computed(() => {
+  const customId = this.id();
+  return customId || this.uniqueId;
+});
+```
+
+Cela garantit que plusieurs instances peuvent coexister sans conflit d'ID.
+
+### Avantages de cette Architecture
 
 1. **Performance**: OnPush + Signals = recalculs minimaux et optimisés
 2. **Réactivité**: Mises à jour automatiques via model signals
-3. **Maintenabilité**: Code organisé et logique décomposée
-4. **Accessibilité**: Support ARIA complet et automatique
-5. **Flexibilité**: Configuration globale + personnalisation par instance
-6. **Type Safety**: Types TypeScript stricts pour éviter les erreurs
+3. **Robustesse**: Validation automatique des valeurs invalides
+4. **Maintenabilité**: Code organisé et logique décomposée
+5. **Accessibilité**: Support ARIA complet et automatique
+6. **Flexibilité**: Configuration globale + personnalisation par instance
+7. **Type Safety**: Types TypeScript stricts pour éviter les erreurs
+8. **Defensive Programming**: Le composant ne crashe jamais, même avec des données invalides
 
 ## Design Tokens
 
-Le composant utilise les design tokens suivants pour une cohérence maximale avec le design system :
+Le composant utilise les design tokens CSS du Design System pour garantir une cohérence visuelle maximale. La personnalisation se fait via les CSS custom properties au niveau global de votre application.
 
-- **Espacements**: `--spacing-xs`, `--spacing-sm`, `--spacing-md`
-- **Tailles**: `--size-8`, `--size-9`, `--size-11`
-- **Couleurs**: `--primary-color`, `--surface-card`, `--text-color`, `--text-color-secondary`
-- **Typographie**: `--font-size-sm`, `--font-size-base`, `--font-size-lg`
-- **Animations**: `--animation-duration-fast`, `--animation-easing-default`
-- **Focus**: `--focus-outline-width`, `--focus-ring-color`
-- **Effets**: `--opacity-disabled`, `--border-radius`
-- **États**: `--hover-color`, `--active-color`
+### Tokens Utilisés
+
+Le composant s'appuie sur les tokens suivants :
+
+#### Espacements
+- `--spacing-xs`, `--spacing-sm`, `--spacing-md`
+- `--spacing-2xs` (responsive)
+
+#### Tailles
+- `--size-7`, `--size-8`, `--size-9`, `--size-11`
+
+#### Couleurs
+- `--primary-color`, `--primary-color-text`, `--primary-gradient`
+- `--surface-card`, `--surface-ground`, `--surface-border`, `--surface-hover`
+- `--text-color`, `--text-color-secondary`
+
+#### Typographie
+- `--font-size-xs`, `--font-size-sm`, `--font-size-base`, `--font-size-lg`
+
+#### Icônes
+- `--icon-size-xs`, `--icon-size-sm`, `--icon-size-md`
+
+#### Animations
+- `--animation-duration-fast`
+- `--animation-easing-default`
+
+#### Focus et Accessibilité
+- `--focus-outline-width`, `--focus-outline-style`, `--focus-outline-color`, `--focus-outline-offset`
+- `--focus-ring-width`, `--focus-ring-color`
+
+#### Effets
+- `--opacity-disabled`
+- `--border-radius`
+- `--border-width-1`
+
+### Personnalisation via CSS
+
+Pour personnaliser l'apparence globale du composant, surchargez les design tokens dans votre CSS global :
+
+```css
+:root {
+  /* Personnaliser les couleurs primaires */
+  --primary-color: #007bff;
+  --primary-color-text: #ffffff;
+
+  /* Personnaliser les espacements */
+  --spacing-xs: 6px;
+  --spacing-sm: 12px;
+
+  /* Personnaliser les bordures */
+  --border-radius: 8px;
+
+  /* Personnaliser les animations */
+  --animation-duration-fast: 200ms;
+}
+```
+
+### Personnalisation par Thème
+
+Si votre Design System supporte plusieurs thèmes, les tokens s'adapteront automatiquement :
+
+```css
+[data-theme="dark"] {
+  --surface-card: #1e1e1e;
+  --text-color: #ffffff;
+  --surface-border: #404040;
+}
+
+[data-theme="light"] {
+  --surface-card: #ffffff;
+  --text-color: #212121;
+  --surface-border: #e0e0e0;
+}
+```
+
+Le composant Pagination respectera automatiquement ces changements sans configuration supplémentaire.
