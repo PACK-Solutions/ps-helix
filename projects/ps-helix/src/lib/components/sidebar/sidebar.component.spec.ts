@@ -7,12 +7,14 @@ import { SidebarMode, SidebarPosition } from './sidebar.types';
   template: `
     <psh-sidebar
       [(open)]="isOpen"
-      [(mode)]="mode"
-      [(position)]="position"
-      [(width)]="width"
-      [(breakpoint)]="breakpoint"
+      [mode]="mode"
+      [position]="position"
+      [width]="width"
+      [breakpoint]="breakpoint"
       [autoFocus]="autoFocus"
       [ariaLabel]="ariaLabel"
+      [closeOnBackdrop]="closeOnBackdrop"
+      [closeOnEscape]="closeOnEscape"
       (toggle)="onToggle($event)"
       (opened)="onOpened()"
       (closed)="onClosed()"
@@ -33,6 +35,8 @@ class TestHostComponent {
   breakpoint = '768px';
   autoFocus = true;
   ariaLabel = 'Sidebar navigation';
+  closeOnBackdrop = true;
+  closeOnEscape = true;
   onToggle = jest.fn();
   onOpened = jest.fn();
   onClosed = jest.fn();
@@ -100,8 +104,15 @@ describe('PshSidebarComponent', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let hostComponent: TestHostComponent;
   let mockMatchMedia: ReturnType<typeof createMockMatchMedia>;
+  let rafCallbacks: FrameRequestCallback[] = [];
 
   beforeEach(async () => {
+    rafCallbacks = [];
+    jest.spyOn(window, 'requestAnimationFrame').mockImplementation((callback: FrameRequestCallback) => {
+      rafCallbacks.push(callback);
+      return rafCallbacks.length;
+    });
+
     mockMatchMedia = createMockMatchMedia(false);
     window.matchMedia = jest.fn().mockReturnValue(mockMatchMedia);
 
@@ -114,8 +125,15 @@ describe('PshSidebarComponent', () => {
     fixture.detectChanges();
   });
 
+  const flushRaf = () => {
+    const callbacks = [...rafCallbacks];
+    rafCallbacks = [];
+    callbacks.forEach(cb => cb(performance.now()));
+  };
+
   afterEach(() => {
     jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
 
   describe('Content rendering', () => {
@@ -385,8 +403,9 @@ describe('PshSidebarComponent', () => {
     it('should emit opened output when sidebar opens', fakeAsync(() => {
       const sidebarComponent = getSidebarComponentInstance(fixture);
       sidebarComponent.toggleSidebar();
-      tick(100);
+      tick();
       fixture.detectChanges();
+      flushRaf();
 
       expect(hostComponent.onOpened).toHaveBeenCalledTimes(1);
     }));
@@ -394,11 +413,13 @@ describe('PshSidebarComponent', () => {
     it('should emit closed output when sidebar closes', fakeAsync(() => {
       hostComponent.isOpen = true;
       fixture.detectChanges();
+      flushRaf();
 
       const sidebarComponent = getSidebarComponentInstance(fixture);
-      sidebarComponent.toggleSidebar();
-      tick(100);
+      sidebarComponent.closeSidebar();
+      tick();
       fixture.detectChanges();
+      flushRaf();
 
       expect(hostComponent.onClosed).toHaveBeenCalledTimes(1);
     }));
@@ -434,11 +455,13 @@ describe('PshSidebarComponent', () => {
     it('should close sidebar when closeSidebar is called and currently open', fakeAsync(() => {
       hostComponent.isOpen = true;
       fixture.detectChanges();
+      flushRaf();
 
       const sidebarComponent = getSidebarComponentInstance(fixture);
       sidebarComponent.closeSidebar();
-      tick(100);
+      tick();
       fixture.detectChanges();
+      flushRaf();
 
       expect(hostComponent.isOpen).toBe(false);
       expect(hostComponent.onClosed).toHaveBeenCalled();
@@ -526,6 +549,51 @@ describe('PshSidebarComponent', () => {
 
       expect(hostComponent.isOpen).toBe(true);
     }));
+
+    it('should not close sidebar when closeOnBackdrop is false', fakeAsync(() => {
+      hostComponent.mode = 'overlay';
+      hostComponent.isOpen = true;
+      hostComponent.closeOnBackdrop = false;
+      fixture.detectChanges();
+      tick();
+
+      const backdrop = getBackdrop(fixture);
+      backdrop.click();
+      tick();
+      fixture.detectChanges();
+
+      expect(hostComponent.isOpen).toBe(true);
+    }));
+  });
+
+  describe('closeOnEscape behavior', () => {
+    it('should not close sidebar when closeOnEscape is false', fakeAsync(() => {
+      hostComponent.mode = 'overlay';
+      hostComponent.isOpen = true;
+      hostComponent.closeOnEscape = false;
+      fixture.detectChanges();
+      tick();
+
+      dispatchKeyboardEvent('Escape');
+      tick();
+      fixture.detectChanges();
+
+      expect(hostComponent.isOpen).toBe(true);
+    }));
+
+    it('should close sidebar when closeOnEscape is true (default)', fakeAsync(() => {
+      hostComponent.mode = 'overlay';
+      hostComponent.isOpen = true;
+      hostComponent.closeOnEscape = true;
+      fixture.detectChanges();
+      tick();
+
+      dispatchKeyboardEvent('Escape');
+      tick();
+      fixture.detectChanges();
+
+      expect(hostComponent.isOpen).toBe(false);
+    }));
   });
 
   describe('Focus management', () => {
@@ -535,8 +603,9 @@ describe('PshSidebarComponent', () => {
 
       const sidebarComponent = getSidebarComponentInstance(fixture);
       sidebarComponent.toggleSidebar();
-      tick(100);
+      tick();
       fixture.detectChanges();
+      flushRaf();
 
       const firstButton = fixture.nativeElement.querySelector('#first-button') as HTMLElement;
       expect(document.activeElement).toBe(firstButton);
@@ -546,12 +615,11 @@ describe('PshSidebarComponent', () => {
       hostComponent.autoFocus = false;
       fixture.detectChanges();
 
-      const previousActiveElement = document.activeElement;
-
       const sidebarComponent = getSidebarComponentInstance(fixture);
       sidebarComponent.toggleSidebar();
-      tick(100);
+      tick();
       fixture.detectChanges();
+      flushRaf();
 
       const firstButton = fixture.nativeElement.querySelector('#first-button') as HTMLElement;
       expect(document.activeElement).not.toBe(firstButton);

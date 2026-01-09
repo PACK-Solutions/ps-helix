@@ -98,9 +98,7 @@
   }
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .sidebar {
-    width: min(var(--sidebar-width), 100vw) !important;
-  }
+/* Responsive - mobile constraint handled by JS, this is a fallback */
+.sidebar.overlay {
+  max-width: 100vw;
 }
