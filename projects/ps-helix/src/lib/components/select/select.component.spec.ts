@@ -59,6 +59,28 @@ describe('PshSelectComponent', () => {
     }
   ];
 
+  const mockOptionsWithIcons: SelectOption<string>[] = [
+    { label: 'Home', value: 'home', icon: 'house' },
+    { label: 'Settings', value: 'settings', icon: 'gear' }
+  ];
+
+  const mockDisabledGroup: (SelectOption<string> | SelectOptionGroup<string>)[] = [
+    {
+      label: 'Disabled Group',
+      disabled: true,
+      options: [
+        { label: 'Option A', value: 'a' },
+        { label: 'Option B', value: 'b' }
+      ]
+    },
+    {
+      label: 'Enabled Group',
+      options: [
+        { label: 'Option C', value: 'c' }
+      ]
+    }
+  ];
+
   const getCombobox = () =>
     fixture.nativeElement.querySelector('[role="combobox"]') as HTMLElement;
 
@@ -484,17 +506,28 @@ describe('PshSelectComponent', () => {
       expect(getListbox()).toBeTruthy();
     });
 
-    it('should navigate forward with ArrowDown', () => {
+    it('should focus first option with ArrowDown', () => {
       openSelect();
 
       pressKey('ArrowDown');
 
       const combobox = getCombobox();
       const activeDescendant = combobox.getAttribute('aria-activedescendant');
-      expect(activeDescendant).toBeTruthy();
+      expect(activeDescendant).toContain('apple');
     });
 
-    it('should navigate backward with ArrowUp', () => {
+    it('should focus second option after two ArrowDown presses', () => {
+      openSelect();
+
+      pressKey('ArrowDown');
+      pressKey('ArrowDown');
+
+      const combobox = getCombobox();
+      const activeDescendant = combobox.getAttribute('aria-activedescendant');
+      expect(activeDescendant).toContain('banana');
+    });
+
+    it('should navigate backward with ArrowUp to previous option', () => {
       openSelect();
 
       pressKey('ArrowDown');
@@ -503,7 +536,53 @@ describe('PshSelectComponent', () => {
 
       const combobox = getCombobox();
       const activeDescendant = combobox.getAttribute('aria-activedescendant');
-      expect(activeDescendant).toBeTruthy();
+      expect(activeDescendant).toContain('apple');
+    });
+
+    it('should wrap to first option when pressing ArrowDown on last option', () => {
+      openSelect();
+
+      pressKey('ArrowDown');
+      pressKey('ArrowDown');
+      pressKey('ArrowDown');
+      pressKey('ArrowDown');
+
+      const combobox = getCombobox();
+      const activeDescendant = combobox.getAttribute('aria-activedescendant');
+      expect(activeDescendant).toContain('apple');
+    });
+
+    it('should wrap to last option when pressing ArrowUp on first option', () => {
+      openSelect();
+
+      pressKey('ArrowDown');
+      pressKey('ArrowUp');
+
+      const combobox = getCombobox();
+      const activeDescendant = combobox.getAttribute('aria-activedescendant');
+      expect(activeDescendant).toContain('cherry');
+    });
+
+    it('should focus first option on Home key', () => {
+      openSelect();
+
+      pressKey('ArrowDown');
+      pressKey('ArrowDown');
+      pressKey('Home');
+
+      const combobox = getCombobox();
+      const activeDescendant = combobox.getAttribute('aria-activedescendant');
+      expect(activeDescendant).toContain('apple');
+    });
+
+    it('should focus last option on End key', () => {
+      openSelect();
+
+      pressKey('End');
+
+      const combobox = getCombobox();
+      const activeDescendant = combobox.getAttribute('aria-activedescendant');
+      expect(activeDescendant).toContain('cherry');
     });
 
     it('should select focused option on Enter', () => {
@@ -514,7 +593,7 @@ describe('PshSelectComponent', () => {
       pressKey('ArrowDown');
       pressKey('Enter');
 
-      expect(valueChangeSpy).toHaveBeenCalled();
+      expect(valueChangeSpy).toHaveBeenCalledWith('apple');
     });
 
     it('should select focused option on Space', () => {
@@ -525,7 +604,7 @@ describe('PshSelectComponent', () => {
       pressKey('ArrowDown');
       pressKey(' ');
 
-      expect(valueChangeSpy).toHaveBeenCalled();
+      expect(valueChangeSpy).toHaveBeenCalledWith('apple');
     });
   });
 
@@ -835,6 +914,24 @@ describe('PshSelectComponent', () => {
 
       expect(getOption(1).getAttribute('tabindex')).toBe('-1');
     });
+
+    it('should have aria-haspopup="listbox" on combobox', () => {
+      expect(getCombobox().getAttribute('aria-haspopup')).toBe('listbox');
+    });
+
+    it('should have aria-controls pointing to listbox id', () => {
+      const combobox = getCombobox();
+      const expectedListboxId = combobox.getAttribute('id') + '-listbox';
+      expect(combobox.getAttribute('aria-controls')).toBe(expectedListboxId);
+    });
+
+    it('should have listbox with matching id for aria-controls', () => {
+      openSelect();
+
+      const combobox = getCombobox();
+      const listbox = getListbox();
+      expect(listbox.getAttribute('id')).toBe(combobox.getAttribute('aria-controls'));
+    });
   });
 
   describe('Label behavior', () => {
@@ -915,12 +1012,146 @@ describe('PshSelectComponent', () => {
       getOption(0).click();
       fixture.detectChanges();
 
-      expect(valueChangeSpy).toHaveBeenLastCalledWith(['apple']);
+      expect(valueChangeSpy).toHaveBeenCalledTimes(1);
+      expect(valueChangeSpy).toHaveBeenCalledWith(['apple']);
 
       getOption(0).click();
       fixture.detectChanges();
 
-      expect(valueChangeSpy).toHaveBeenLastCalledWith(['apple']);
+      expect(valueChangeSpy).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('Icon rendering', () => {
+    it('should render icons when provided in options', () => {
+      fixture.componentRef.setInput('options', mockOptionsWithIcons);
+      fixture.detectChanges();
+      openSelect();
+
+      const icons = fixture.nativeElement.querySelectorAll('.select-option i.ph');
+      expect(icons.length).toBe(2);
+      expect(icons[0].classList.contains('ph-house')).toBe(true);
+      expect(icons[1].classList.contains('ph-gear')).toBe(true);
+    });
+
+    it('should NOT render icons when not provided', () => {
+      openSelect();
+
+      const options = getOptions();
+      options.forEach(opt => {
+        const icon = opt.querySelector('i.ph:not(.ph-check)');
+        expect(icon).toBeFalsy();
+      });
+    });
+  });
+
+  describe('Disabled groups', () => {
+    it('should mark all options in disabled group as disabled', () => {
+      fixture.componentRef.setInput('options', mockDisabledGroup);
+      fixture.detectChanges();
+      openSelect();
+
+      const options = getOptions();
+      expect(options[0]!.getAttribute('aria-disabled')).toBe('true');
+      expect(options[1]!.getAttribute('aria-disabled')).toBe('true');
+      expect(options[2]!.getAttribute('aria-disabled')).toBeNull();
+    });
+
+    it('should NOT select options from disabled group', () => {
+      fixture.componentRef.setInput('options', mockDisabledGroup);
+      fixture.detectChanges();
+
+      const valueChangeSpy = jest.fn();
+      fixture.componentInstance.valueChange.subscribe(valueChangeSpy);
+
+      openSelect();
+      getOption(0).click();
+      fixture.detectChanges();
+
+      expect(valueChangeSpy).not.toHaveBeenCalled();
+    });
+
+    it('should allow selecting options from enabled group', () => {
+      fixture.componentRef.setInput('options', mockDisabledGroup);
+      fixture.detectChanges();
+
+      const valueChangeSpy = jest.fn();
+      fixture.componentInstance.valueChange.subscribe(valueChangeSpy);
+
+      openSelect();
+      getOption(2).click();
+      fixture.detectChanges();
+
+      expect(valueChangeSpy).toHaveBeenCalledWith('c');
+    });
+  });
+
+  describe('Selection from groups', () => {
+    it('should select option from within a group', () => {
+      fixture.componentRef.setInput('options', mockOptionGroups);
+      fixture.detectChanges();
+
+      const valueChangeSpy = jest.fn();
+      fixture.componentInstance.valueChange.subscribe(valueChangeSpy);
+
+      openSelect();
+      getOption(2).click();
+      fixture.detectChanges();
+
+      expect(valueChangeSpy).toHaveBeenCalledWith('carrot');
+    });
+
+    it('should display selected option label from group', () => {
+      fixture.componentRef.setInput('options', mockOptionGroups);
+      fixture.detectChanges();
+
+      openSelect();
+      getOption(0).click();
+      fixture.detectChanges();
+
+      expect(getCombobox().textContent).toContain('Apple');
+    });
+  });
+
+  describe('Multiple placeholder', () => {
+    it('should display multiplePlaceholder when in multiple mode with no selection', () => {
+      fixture.componentRef.setInput('multiple', true);
+      fixture.componentRef.setInput('multiplePlaceholder', 'Select items');
+      fixture.detectChanges();
+
+      expect(getCombobox().textContent).toContain('Select items');
+    });
+
+    it('should display selected labels instead of placeholder when items selected', () => {
+      fixture.componentRef.setInput('multiple', true);
+      fixture.componentRef.setInput('multiplePlaceholder', 'Select items');
+      fixture.detectChanges();
+
+      openSelect();
+      getOption(0).click();
+      fixture.detectChanges();
+
+      expect(getCombobox().textContent).toContain('Apple');
+      expect(getCombobox().textContent).not.toContain('Select items');
+    });
+  });
+
+  describe('Search term reset', () => {
+    it('should clear search term when dropdown closes', () => {
+      fixture.componentRef.setInput('searchable', true);
+      fixture.detectChanges();
+
+      openSelect();
+      const searchInput = getSearchInput();
+      searchInput.value = 'app';
+      searchInput.dispatchEvent(new Event('input'));
+      fixture.detectChanges();
+
+      pressKey('Escape');
+      openSelect();
+
+      expect(getSearchInput().value).toBe('');
+      expect(getOptions().length).toBe(3);
     });
   });
 });

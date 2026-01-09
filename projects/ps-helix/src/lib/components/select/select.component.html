@@ -13,6 +13,8 @@
     class="select-trigger"
     [id]="selectId"
     role="combobox"
+    aria-haspopup="listbox"
+    [attr.aria-controls]="selectId + '-listbox'"
     [attr.aria-expanded]="isOpen()"
     [attr.aria-disabled]="disabled()"
     [attr.aria-busy]="loading() ? 'true' : null"
@@ -54,9 +56,10 @@
   </div>
 
   @if (isOpen()) {
-    <div 
+    <div
       class="select-dropdown"
       role="listbox"
+      [id]="selectId + '-listbox'"
       [attr.aria-multiselectable]="multiple()"
     >
       @if (searchable()) {
@@ -94,10 +97,10 @@
                     [class.focused]="isFocused(groupOption)"
                     [class.disabled]="option.disabled || groupOption.disabled"
                     [attr.aria-selected]="isSelected(groupOption)"
-                    [attr.aria-disabled]="option.disabled || groupOption.disabled"
+                    [attr.aria-disabled]="(option.disabled || groupOption.disabled) || null"
                     [attr.id]="selectId + '-option-' + groupOption.value"
                     [attr.tabindex]="option.disabled || groupOption.disabled ? -1 : 0"
-                    (click)="select(groupOption)"
+                    (click)="!option.disabled && select(groupOption)"
                     (keydown)="handleOptionKeyDown($event, groupOption)"
                   >
                     @if (multiple()) {
@@ -125,7 +128,7 @@
                 [class.focused]="isFocused(option)"
                 [class.disabled]="option.disabled"
                 [attr.aria-selected]="isSelected(option)"
-                [attr.aria-disabled]="option.disabled"
+                [attr.aria-disabled]="option.disabled || null"
                 [attr.id]="selectId + '-option-' + option.value"
                 [attr.tabindex]="option.disabled ? -1 : 0"
                 (click)="select(option)"

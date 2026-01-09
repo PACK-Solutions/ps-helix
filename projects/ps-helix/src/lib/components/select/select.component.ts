@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { SelectOption, SelectOptionGroup, SelectSize, SearchConfig, VirtualScrollConfig } from './select.types';
+import { SelectOption, SelectOptionGroup, SelectSize, SearchConfig } from './select.types';
 
 @Component({
   selector: 'psh-select',
@@ -57,8 +57,7 @@ export class PshSelectComponent<T = any> implements ControlValueAccessor, AfterC
   clearable = input(false);
   loading = input(false);
   fullWidth = input(false);
-  virtualScroll = input(false);
-  required = input(false); // Moved back to input as it doesn't need two-way binding
+  required = input(false);
 
   // Regular inputs
   options = input<(SelectOption<T> | SelectOptionGroup<T>)[]>([]);
@@ -77,10 +76,6 @@ export class PshSelectComponent<T = any> implements ControlValueAccessor, AfterC
     placeholder: 'Rechercher...',
     minLength: 1
   });
-  virtualScrollConfig = input<VirtualScrollConfig>({
-    itemSize: 40,
-    buffer: 4
-  });
 
   // State
   private isOpenSignal = signal(false);
@@ -96,7 +91,6 @@ export class PshSelectComponent<T = any> implements ControlValueAccessor, AfterC
   opened = output<void>();
   closed = output<void>();
   scrollEnd = output<void>();
-  loadOptions = output<string>();
   searched = output<string>();
 
   // Computed values
@@ -105,21 +99,9 @@ export class PshSelectComponent<T = any> implements ControlValueAccessor, AfterC
   hasLabelContent = computed(() => this.hasLabelContentSignal());
   activeDescendant = computed(() => this.activeDescendantId());
 
-  // Computed aria-label pour l'accessibilité
   computedAriaLabel = computed(() => {
     return this.ariaLabel() || this.label() || this.placeholder();
   });
-
-  state = computed(() => this.getState());
-
-  private getState(): string {
-    if (this.disabled()) return 'disabled';
-    if (this.loading()) return 'loading';
-    if (this.error()) return 'error';
-    if (this.success()) return 'success';
-    if (this.isOpen()) return 'open';
-    return 'closed';
-  }
 
   selectedLabel = computed(() => {
     if (!this.initializedSignal() || !this.hasValue()) {
@@ -220,6 +202,20 @@ export class PshSelectComponent<T = any> implements ControlValueAccessor, AfterC
           this.close();
         }
         break;
+
+      case 'Home':
+        if (this.isOpen()) {
+          event.preventDefault();
+          this.focusFirstOption();
+        }
+        break;
+
+      case 'End':
+        if (this.isOpen()) {
+          event.preventDefault();
+          this.focusLastOption();
+        }
+        break;
     }
   }
 
@@ -249,7 +245,7 @@ export class PshSelectComponent<T = any> implements ControlValueAccessor, AfterC
     if (nextOption) {
       this.updateActiveDescendant(nextOption);
     }
-    this.scrollOptionIntoView(nextIndex);
+    this.scrollOptionIntoView();
   }
 
   private focusPreviousOption(): void {
@@ -263,10 +259,35 @@ export class PshSelectComponent<T = any> implements ControlValueAccessor, AfterC
     if (prevOption) {
       this.updateActiveDescendant(prevOption);
     }
-    this.scrollOptionIntoView(previousIndex);
+    this.scrollOptionIntoView();
   }
 
-  private scrollOptionIntoView(index: number): void {
+  private focusFirstOption(): void {
+    const options = this.flattenOptions(this.filteredOptions());
+    if (options.length === 0) return;
+
+    this.focusedOptionIndex.set(0);
+    const firstOption = options[0];
+    if (firstOption) {
+      this.updateActiveDescendant(firstOption);
+    }
+    this.scrollOptionIntoView();
+  }
+
+  private focusLastOption(): void {
+    const options = this.flattenOptions(this.filteredOptions());
+    if (options.length === 0) return;
+
+    const lastIndex = options.length - 1;
+    this.focusedOptionIndex.set(lastIndex);
+    const lastOption = options[lastIndex];
+    if (lastOption) {
+      this.updateActiveDescendant(lastOption);
+    }
+    this.scrollOptionIntoView();
+  }
+
+  private scrollOptionIntoView(): void {
     requestAnimationFrame(() => {
       const activeId = this.activeDescendantId();
       if (activeId) {
@@ -350,29 +371,36 @@ export class PshSelectComponent<T = any> implements ControlValueAccessor, AfterC
         const currentValue = this.value();
         const values = Array.isArray(currentValue) ? [...currentValue] : [];
         const index = values.findIndex(v => this.compareWith()(v, option.value));
+        let changed = false;
 
         if (index === -1) {
           const maxSelections = this.maxSelections();
           if (!maxSelections || values.length < maxSelections) {
             values.push(option.value);
+            changed = true;
           }
         } else {
           const minSelections = this.minSelections();
           if (!minSelections || values.length > minSelections) {
             values.splice(index, 1);
+            changed = true;
           }
         }
 
-        this.value.set(values);
-        this.onChange(values);
+        if (changed) {
+          this.value.set(values);
+          this.onChange(values);
+          this.valueChange.emit(values);
+          this.updateSelectedLabel();
+        }
       } else {
         this.value.set(option.value);
         this.onChange(option.value);
+        this.valueChange.emit(option.value);
+        this.updateSelectedLabel();
         this.close();
       }
 
-      this.valueChange.emit(this.value());
-      this.updateSelectedLabel();
       this.onTouched();
     }
   }
@@ -385,10 +413,8 @@ export class PshSelectComponent<T = any> implements ControlValueAccessor, AfterC
     return currentValue !== null && this.compareWith()(currentValue as T, option.value);
   }
 
-  // UI methods
   toggle(): void {
     if (!this.disabled() && !this.loading()) {
-      event?.stopPropagation();
       const newValue = !this.isOpenSignal();
       this.isOpenSignal.set(newValue);
       if (newValue) {
