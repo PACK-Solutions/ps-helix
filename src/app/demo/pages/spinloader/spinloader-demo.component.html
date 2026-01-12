@@ -281,6 +281,94 @@
       </div>
     </section>
 
+    <!-- Labels Dynamiques - Section Pleine Largeur -->
+    <section class="spinloader-labels-section">
+      <h3 class="section-title">Labels Dynamiques</h3>
+      <div class="labels-container">
+        <div class="labels-intro">
+          <p>Les indicateurs peuvent afficher des labels textuels sous l'animation pour fournir un contexte additionnel et améliorer l'expérience utilisateur. Ces labels peuvent être mis à jour dynamiquement pour refléter la progression en temps réel.</p>
+        </div>
+
+        <div class="labels-grid">
+          <div class="label-card">
+            <div class="label-preview">
+              <psh-spinloader
+                variant="circle"
+                color="primary"
+                size="medium"
+                label="Chargement des données..."
+                ariaLabel="Chargement des données en cours"
+              ></psh-spinloader>
+            </div>
+            <div class="label-info">
+              <h4>Label Statique</h4>
+              <p>Un message simple et fixe pour indiquer l'action en cours.</p>
+              <ds-code-snippet [code]="labelStaticCode" />
+            </div>
+          </div>
+
+          <div class="label-card">
+            <div class="label-preview">
+              <psh-spinloader
+                variant="circle"
+                color="primary"
+                size="medium"
+                [label]="dynamicMessage()"
+                [ariaLabel]="dynamicMessage()"
+              ></psh-spinloader>
+              <button
+                class="demo-button"
+                (click)="simulateDynamicLoading()"
+                [disabled]="isSimulating()"
+              >
+                {{ isSimulating() ? 'Simulation en cours...' : 'Démarrer la simulation' }}
+              </button>
+            </div>
+            <div class="label-info">
+              <h4>Label Dynamique</h4>
+              <p>Message qui se met à jour en temps réel pour refléter les différentes étapes du processus.</p>
+              <ds-code-snippet [code]="labelDynamicCode" />
+            </div>
+          </div>
+
+          <div class="label-card">
+            <div class="label-preview">
+              <psh-spinloader
+                variant="dots"
+                color="primary"
+                size="medium"
+                [label]="'Étape ' + currentStep() + ' sur ' + totalSteps()"
+                ariaLabel="Chargement multi-étapes en cours"
+              ></psh-spinloader>
+              <button
+                class="demo-button"
+                (click)="simulateStepLoading()"
+                [disabled]="isSimulating()"
+              >
+                {{ isSimulating() ? 'Simulation en cours...' : 'Démarrer la progression' }}
+              </button>
+            </div>
+            <div class="label-info">
+              <h4>Progression par Étapes</h4>
+              <p>Affichage de la progression avec compteur d'étapes pour les processus séquentiels.</p>
+              <ds-code-snippet [code]="labelStepCode" />
+            </div>
+          </div>
+        </div>
+
+        <div class="labels-best-practices">
+          <h4>Bonnes Pratiques pour les Labels</h4>
+          <ul class="best-practices-list">
+            <li><strong>Clarté</strong> : Utilisez des messages courts et explicites (< 50 caractères)</li>
+            <li><strong>Synchronisation ARIA</strong> : Mettez à jour <code>ariaLabel</code> en même temps que <code>label</code> pour l'accessibilité</li>
+            <li><strong>Feedback Temps Réel</strong> : Pour les processus longs, actualisez le label pour informer l'utilisateur de la progression</li>
+            <li><strong>Langue Cohérente</strong> : Gardez un ton et un style cohérents avec le reste de votre interface</li>
+            <li><strong>Éviter la Surcharge</strong> : N'utilisez pas de label pour les chargements très courts (< 500ms)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
     <!-- Documentation API - Section Pleine Largeur -->
     <section class="api-section">
       <h3 class="section-title">Documentation API</h3>
