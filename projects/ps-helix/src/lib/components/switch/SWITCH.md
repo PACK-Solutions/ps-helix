@@ -16,7 +16,7 @@ import { PshSwitchComponent } from 'ps-helix';
 ### Utilisation de Base
 
 ```typescript
-// Switch basique avec contenu par défaut
+// Switch basique avec contenu par defaut
 <psh-switch></psh-switch>
 
 // Switch avec label et binding
@@ -37,35 +37,114 @@ import { PshSwitchComponent } from 'ps-helix';
 </psh-switch>
 ```
 
+### Utilisation avec les Formulaires Angular
+
+Le composant implemente `ControlValueAccessor` et s'integre avec les formulaires Angular :
+
+```typescript
+// Avec Reactive Forms
+<psh-switch formControlName="notifications">
+  Activer les notifications
+</psh-switch>
+
+// Avec ngModel
+<psh-switch [(ngModel)]="isEnabled">
+  Mode actif
+</psh-switch>
+
+// Exemple complet avec FormGroup
+@Component({
+  template: `
+    <form [formGroup]="form">
+      <psh-switch formControlName="newsletter">
+        S'abonner a la newsletter
+      </psh-switch>
+    </form>
+  `
+})
+export class MyComponent {
+  form = new FormGroup({
+    newsletter: new FormControl(false)
+  });
+}
+```
+
 ## API
 
 ### Model Inputs (@model)
-| Nom | Type | Défaut | Description |
+
+Ces inputs supportent le two-way binding avec la syntaxe `[(prop)]` et emettent automatiquement un evenement `propChange`.
+
+| Nom | Type | Defaut | Description |
 |-----|------|---------|-------------|
-| checked | boolean | false | État coché |
-| disabled | boolean | false | État désactivé |
-| required | boolean | false | État requis |
+| checked | boolean | false | Etat coche |
+| disabled | boolean | false | Etat desactive |
+| required | boolean | false | Etat requis |
 | size | SwitchSize | 'medium' | Taille du switch |
 | labelPosition | 'left' \| 'right' | 'right' | Position du label |
 
 ### Regular Inputs (@input)
-| Nom | Type | Défaut | Description |
+
+| Nom | Type | Defaut | Description |
 |-----|------|---------|-------------|
 | label | string | '' | Label du switch |
 | error | string | '' | Message d'erreur |
-| success | string | '' | Message de succès |
-| ariaLabel | string | undefined | Label ARIA personnalisé pour l'accessibilité |
+| success | string | '' | Message de succes |
+| ariaLabel | string | undefined | Label ARIA personnalise pour l'accessibilite |
 | name | string | undefined | Attribut name de l'input natif |
-| id | string | auto-généré | ID unique du switch (auto-généré si non fourni) |
+| id | string | auto-genere | ID unique du switch (auto-genere si non fourni) |
 
 ### Outputs
+
+Les model inputs generent automatiquement des outputs correspondants :
+
 | Nom | Type | Description |
 |-----|------|-------------|
-| checkedChange | EventEmitter<boolean> | Émis lors du changement d'état |
+| checkedChange | ModelSignal<boolean> | Emis lors du changement d'etat |
+| disabledChange | ModelSignal<boolean> | Emis lors du changement d'etat desactive |
+| requiredChange | ModelSignal<boolean> | Emis lors du changement d'etat requis |
+| sizeChange | ModelSignal<SwitchSize> | Emis lors du changement de taille |
+| labelPositionChange | ModelSignal<'left' \| 'right'> | Emis lors du changement de position |
+
+### Methodes Publiques
+
+| Methode | Description |
+|---------|-------------|
+| `toggle()` | Bascule l'etat du switch (si non desactive) |
+| `focus()` | Donne le focus au switch |
+| `blur()` | Retire le focus du switch |
+
+```typescript
+// Exemple d'utilisation programmatique
+@ViewChild(PshSwitchComponent) switch!: PshSwitchComponent;
+
+activerSwitch() {
+  this.switch.toggle();
+}
+
+mettreEnFocus() {
+  this.switch.focus();
+}
+```
+
+### Classes CSS Host
+
+Le composant applique ces classes sur l'element host pour faciliter le styling :
+
+| Classe | Condition |
+|--------|-----------|
+| `switch-wrapper` | Toujours presente |
+| `switch-disabled` | Quand `disabled()` est true |
+| `switch-error` | Quand `error()` est non vide |
+| `switch-success` | Quand `success()` est non vide |
 
 ## Configuration Globale
 
+Vous pouvez configurer les valeurs par defaut en injectant `SWITCH_CONFIG` :
+
 ```typescript
+import { SWITCH_CONFIG } from 'ps-helix';
+
 @Component({
   providers: [
     {
@@ -82,58 +161,63 @@ import { PshSwitchComponent } from 'ps-helix';
 })
 ```
 
-## États et Modificateurs
+## Etats et Modificateurs
 
 ### Tailles
 - `small`: Pour les interfaces denses
-- `medium`: Taille par défaut
-- `large`: Pour plus de visibilité
+- `medium`: Taille par defaut
+- `large`: Pour plus de visibilite
 
-### États
-- `checked`: État coché
-- `disabled`: État désactivé
-- `required`: État requis
-- `error`: État d'erreur
-- `success`: État de succès
+### Etats
+- `checked`: Etat coche
+- `disabled`: Etat desactive
+- `required`: Etat requis
+- `error`: Etat d'erreur (affiche un message)
+- `success`: Etat de succes (affiche un message)
 
 ### Position du Label
-- `left`: Label à gauche
-- `right`: Label à droite (défaut)
+- `left`: Label a gauche
+- `right`: Label a droite (defaut)
 
-## Accessibilité
+## Accessibilite
 
-### Attributs ARIA
-- `role="switch"`: Rôle sémantique
-- `aria-checked`: État du switch
-- `aria-disabled`: État désactivé
-- `aria-required`: État requis
-- `aria-invalid`: État d'erreur
+### Attributs ARIA utilises
+- `aria-label`: Label accessible (utilise `ariaLabel`, `label`, ou "Switch" par defaut)
+- `aria-checked`: Etat coche du switch
+- `aria-required`: Indique si le champ est requis
+- `aria-invalid`: Indique un etat d'erreur
+- `aria-describedby`: Lie aux messages d'erreur/succes
+
+### Elements semantiques
+- Utilise un `<input type="checkbox">` natif avec l'attribut `disabled`
+- Messages d'erreur avec `role="alert"` et `aria-live="polite"`
+- Messages de succes avec `role="status"` et `aria-live="polite"`
 
 ### Bonnes Pratiques
-- Labels descriptifs
-- Support du clavier
-- États visuels distincts
-- Messages d'erreur vocaux
+- Fournir un label descriptif via `label`, `ariaLabel`, ou contenu projete
+- Les messages d'erreur/succes sont automatiquement annonces aux lecteurs d'ecran
+- Support complet du clavier (Tab, Space, Enter)
+- Focus visible sur l'element interactif
 
 ## Bonnes Pratiques
 
-1. **Hiérarchie Visuelle**
-   - Taille appropriée selon le contexte
-   - États visuels clairs
-   - Feedback immédiat
+1. **Hierarchie Visuelle**
+   - Taille appropriee selon le contexte
+   - Etats visuels clairs
+   - Feedback immediat
 
-2. **Accessibilité**
+2. **Accessibilite**
    - Labels descriptifs
    - Support du clavier
-   - États ARIA appropriés
+   - Etats ARIA appropries
 
 3. **Performance**
    - Utilisation des signals
-   - Détection de changements OnPush
-   - Gestion efficace des états
+   - Detection de changements OnPush
+   - Gestion efficace des etats
 
 4. **UX**
-   - Feedback immédiat
+   - Feedback immediat
    - Animations fluides
-   - États visuels clairs
+   - Etats visuels clairs
    - Gestion des erreurs
