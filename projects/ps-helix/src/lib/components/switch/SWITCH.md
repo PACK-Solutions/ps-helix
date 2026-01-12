@@ -54,6 +54,9 @@ import { PshSwitchComponent } from 'ps-helix';
 | label | string | '' | Label du switch |
 | error | string | '' | Message d'erreur |
 | success | string | '' | Message de succès |
+| ariaLabel | string | undefined | Label ARIA personnalisé pour l'accessibilité |
+| name | string | undefined | Attribut name de l'input natif |
+| id | string | auto-généré | ID unique du switch (auto-généré si non fourni) |
 
 ### Outputs
 | Nom | Type | Description |
