@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { PshSwitchComponent } from './switch.component';
+import { PshSwitchComponent, SWITCH_CONFIG } from './switch.component';
 import { SwitchSize } from './switch.types';
 
 @Component({
@@ -131,14 +131,13 @@ describe('PshSwitchComponent', () => {
       expect(input.checked).toBe(false);
     });
 
-    it('should emit checkedChange event on toggle', () => {
-      const spy = jest.fn();
-      fixture.componentInstance.checkedChange.subscribe(spy);
+    it('should update checked signal on toggle', () => {
+      expect(fixture.componentInstance.checked()).toBe(false);
 
       getSwitchInput().click();
       fixture.detectChanges();
 
-      expect(spy).toHaveBeenCalledWith(true);
+      expect(fixture.componentInstance.checked()).toBe(true);
     });
   });
 
@@ -447,5 +446,125 @@ describe('PshSwitchComponent', () => {
 
       expect(getSwitchInput().required).toBe(true);
     });
+  });
+
+  describe('toggle() method', () => {
+    it('should toggle checked state when called programmatically', () => {
+      expect(fixture.componentInstance.checked()).toBe(false);
+
+      fixture.componentInstance.toggle();
+      fixture.detectChanges();
+
+      expect(fixture.componentInstance.checked()).toBe(true);
+    });
+
+    it('should not toggle when disabled', () => {
+      fixture.componentRef.setInput('disabled', true);
+      fixture.detectChanges();
+
+      expect(fixture.componentInstance.checked()).toBe(false);
+
+      fixture.componentInstance.toggle();
+      fixture.detectChanges();
+
+      expect(fixture.componentInstance.checked()).toBe(false);
+    });
+
+    it('should update checked signal when toggled programmatically', () => {
+      expect(fixture.componentInstance.checked()).toBe(false);
+
+      fixture.componentInstance.toggle();
+      fixture.detectChanges();
+
+      expect(fixture.componentInstance.checked()).toBe(true);
+    });
+  });
+
+  describe('Model signals', () => {
+    it('should update size signal when set programmatically', () => {
+      expect(fixture.componentInstance.size()).toBe('medium');
+
+      fixture.componentInstance.size.set('large');
+      fixture.detectChanges();
+
+      expect(fixture.componentInstance.size()).toBe('large');
+    });
+
+    it('should update disabled signal when set programmatically', () => {
+      expect(fixture.componentInstance.disabled()).toBe(false);
+
+      fixture.componentInstance.disabled.set(true);
+      fixture.detectChanges();
+
+      expect(fixture.componentInstance.disabled()).toBe(true);
+    });
+
+    it('should update required signal when set programmatically', () => {
+      expect(fixture.componentInstance.required()).toBe(false);
+
+      fixture.componentInstance.required.set(true);
+      fixture.detectChanges();
+
+      expect(fixture.componentInstance.required()).toBe(true);
+    });
+
+    it('should update labelPosition signal when set programmatically', () => {
+      expect(fixture.componentInstance.labelPosition()).toBe('right');
+
+      fixture.componentInstance.labelPosition.set('left');
+      fixture.detectChanges();
+
+      expect(fixture.componentInstance.labelPosition()).toBe('left');
+    });
+
+    it('should update checked signal via update method', () => {
+      expect(fixture.componentInstance.checked()).toBe(false);
+
+      fixture.componentInstance.checked.update(v => !v);
+      fixture.detectChanges();
+
+      expect(fixture.componentInstance.checked()).toBe(true);
+    });
+  });
+});
+
+describe('PshSwitchComponent with custom SWITCH_CONFIG', () => {
+  let fixture: ComponentFixture<PshSwitchComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [PshSwitchComponent],
+      providers: [
+        {
+          provide: SWITCH_CONFIG,
+          useValue: {
+            checked: true,
+            disabled: false,
+            required: true,
+            size: 'large',
+            labelPosition: 'left'
+          }
+        }
+      ]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(PshSwitchComponent);
+    fixture.detectChanges();
+  });
+
+  it('should use checked value from config', () => {
+    expect(fixture.componentInstance.checked()).toBe(true);
+  });
+
+  it('should use size value from config', () => {
+    expect(fixture.componentInstance.size()).toBe('large');
+  });
+
+  it('should use required value from config', () => {
+    expect(fixture.componentInstance.required()).toBe(true);
+  });
+
+  it('should use labelPosition value from config', () => {
+    expect(fixture.componentInstance.labelPosition()).toBe('left');
   });
 });
