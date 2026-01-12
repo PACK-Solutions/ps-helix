@@ -32,8 +32,6 @@ export const STEPPER_CONFIG = new InjectionToken<Partial<StepperConfig>>('STEPPE
 
 @Component({
   selector: 'psh-stepper',
-  standalone: true,
-  imports: [],
   templateUrl: './stepper.component.html',
   styleUrls: ['./stepper.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -42,7 +40,7 @@ export const STEPPER_CONFIG = new InjectionToken<Partial<StepperConfig>>('STEPPE
     '[class.numbered]': 'variant() === "numbered"',
     '[class.progress]': 'variant() === "progress"',
     '[attr.role]': '"region"',
-    '[attr.aria-label]': '"Stepper navigation"'
+    '[attr.aria-label]': '"Navigation par étapes"'
   }
 })
 export class PshStepperComponent {
@@ -207,8 +205,9 @@ export class PshStepperComponent {
     return null;
   }
 
-  trackByIndex(index: number): number {
-    return index;
+  reset(): void {
+    this.activeStep.set(0);
+    this.stepChange.emit(0);
   }
 
   handleStepClick(index: number): void {
