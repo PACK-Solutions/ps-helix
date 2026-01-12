@@ -646,7 +646,7 @@ describe('PshStepperComponent', () => {
     });
 
     it('should have aria-label on host', () => {
-      expect(getStepperHost().getAttribute('aria-label')).toBe('Stepper navigation');
+      expect(getStepperHost().getAttribute('aria-label')).toBe('Navigation par étapes');
     });
 
     it('should have role="tablist" on header container', () => {
@@ -806,6 +806,332 @@ describe('PshStepperComponent', () => {
       expect(getStepper().isStepValid(0)).toBe(false);
     });
   });
+
+  describe('reset() method', () => {
+    it('should reset activeStep to 0', async () => {
+      hostComponent.step1Completed = true;
+      hostComponent.step2Completed = true;
+      hostComponent.activeStep = 2;
+      fixture.detectChanges();
+
+      expect(getStepper().activeStep()).toBe(2);
+
+      getStepper().reset();
+      fixture.detectChanges();
+
+      expect(getStepper().activeStep()).toBe(0);
+    });
+
+    it('should emit stepChange with 0 when reset', () => {
+      hostComponent.step1Completed = true;
+      hostComponent.activeStep = 1;
+      fixture.detectChanges();
+
+      const initialCount = hostComponent.stepChangeEvents.length;
+
+      getStepper().reset();
+      fixture.detectChanges();
+
+      expect(hostComponent.stepChangeEvents.length).toBe(initialCount + 1);
+      expect(hostComponent.stepChangeEvents[hostComponent.stepChangeEvents.length - 1]).toBe(0);
+    });
+
+    it('should work correctly from any step', async () => {
+      hostComponent.step1Completed = true;
+      hostComponent.step2Completed = true;
+      hostComponent.activeStep = 2;
+      fixture.detectChanges();
+
+      getStepper().reset();
+      fixture.detectChanges();
+
+      expect(getStepper().activeStep()).toBe(0);
+      expect(getStepper().isFirstStep()).toBe(true);
+    });
+  });
+
+  describe('getStepAriaLabel()', () => {
+    it('should return correct label for completed step', () => {
+      hostComponent.step1Completed = true;
+      fixture.detectChanges();
+
+      const step = getStepper().steps()[0]!;
+      const label = getStepper().getStepAriaLabel(step, 0);
+
+      expect(label).toContain('Étape 1');
+      expect(label).toContain('Step 1');
+      expect(label).toContain('Étape complétée');
+    });
+
+    it('should return correct label for active step', () => {
+      fixture.detectChanges();
+
+      const step = getStepper().steps()[0]!;
+      const label = getStepper().getStepAriaLabel(step, 0);
+
+      expect(label).toContain('Étape 1');
+      expect(label).toContain('Step 1');
+      expect(label).toContain('Étape active');
+    });
+
+    it('should return correct label for disabled step', () => {
+      hostComponent.step2Disabled = true;
+      fixture.detectChanges();
+
+      const step = getStepper().steps()[1]!;
+      const label = getStepper().getStepAriaLabel(step, 1);
+
+      expect(label).toContain('Étape 2');
+      expect(label).toContain('Étape désactivée');
+    });
+
+    it('should return correct label for incomplete step', () => {
+      fixture.detectChanges();
+
+      const step = getStepper().steps()[1]!;
+      const label = getStepper().getStepAriaLabel(step, 1);
+
+      expect(label).toContain('Étape 2');
+      expect(label).toContain('Étape incomplète');
+    });
+  });
+
+  describe('getStepDescribedBy()', () => {
+    it('should return error id when step has error', () => {
+      hostComponent.step1Error = 'Error message';
+      fixture.detectChanges();
+
+      const step = getStepper().steps()[0]!;
+      expect(getStepper().getStepDescribedBy(step, 0)).toBe('error-0');
+    });
+
+    it('should return warning id when step has warning', () => {
+      hostComponent.step1Warning = 'Warning message';
+      fixture.detectChanges();
+
+      const step = getStepper().steps()[0]!;
+      expect(getStepper().getStepDescribedBy(step, 0)).toBe('warning-0');
+    });
+
+    it('should return success id when step has success', () => {
+      hostComponent.step1Success = 'Success message';
+      fixture.detectChanges();
+
+      const step = getStepper().steps()[0]!;
+      expect(getStepper().getStepDescribedBy(step, 0)).toBe('success-0');
+    });
+
+    it('should return null when step has no message', () => {
+      fixture.detectChanges();
+
+      const step = getStepper().steps()[0]!;
+      expect(getStepper().getStepDescribedBy(step, 0)).toBeNull();
+    });
+
+    it('should prioritize error over warning and success', () => {
+      hostComponent.step1Error = 'Error';
+      hostComponent.step1Warning = 'Warning';
+      hostComponent.step1Success = 'Success';
+      fixture.detectChanges();
+
+      const step = getStepper().steps()[0]!;
+      expect(getStepper().getStepDescribedBy(step, 0)).toBe('error-0');
+    });
+  });
+
+  describe('canActivateStep() with invalid indices', () => {
+    it('should return false for negative index', () => {
+      expect(getStepper().canActivateStep(-1)).toBe(false);
+    });
+
+    it('should return false for index beyond steps length', () => {
+      expect(getStepper().canActivateStep(10)).toBe(false);
+    });
+
+    it('should return false for index equal to steps length', () => {
+      expect(getStepper().canActivateStep(3)).toBe(false);
+    });
+  });
+
+  describe('isStepValid() edge cases', () => {
+    it('should return false for negative index', () => {
+      expect(getStepper().isStepValid(-1)).toBe(false);
+    });
+
+    it('should return false for index beyond steps length', () => {
+      expect(getStepper().isStepValid(10)).toBe(false);
+    });
+  });
+
+  describe('beforeStepChange with Promise rejection', () => {
+    it('should emit navigationError when Promise rejects', async () => {
+      hostComponent.step1Completed = true;
+      hostComponent.beforeStepChange = () => Promise.reject(new Error('Async validation failed'));
+      fixture.detectChanges();
+
+      await getStepper().goToStep(1);
+      fixture.detectChanges();
+
+      expect(hostComponent.navigationErrors.length).toBe(1);
+      expect(hostComponent.navigationErrors[0]).toContain('Async validation failed');
+      expect(getStepper().activeStep()).toBe(0);
+    });
+
+    it('should receive correct from and to arguments', async () => {
+      let receivedFrom = -1;
+      let receivedTo = -1;
+
+      hostComponent.step1Completed = true;
+      hostComponent.step2Completed = true;
+      hostComponent.activeStep = 1;
+      hostComponent.beforeStepChange = (from, to) => {
+        receivedFrom = from;
+        receivedTo = to;
+        return true;
+      };
+      fixture.detectChanges();
+
+      await getStepper().goToStep(2);
+      fixture.detectChanges();
+
+      expect(receivedFrom).toBe(1);
+      expect(receivedTo).toBe(2);
+    });
+  });
+
+  describe('goToStep() with negative index', () => {
+    it('should emit navigationError for negative index', async () => {
+      await getStepper().goToStep(-1);
+      fixture.detectChanges();
+
+      expect(hostComponent.navigationErrors.length).toBe(1);
+      expect(hostComponent.navigationErrors[0]).toContain('Invalid step index');
+    });
+  });
+
+  describe('Blocked keyboard navigation', () => {
+    const createKeyboardEvent = (key: string) => {
+      const event = new KeyboardEvent('keydown', { key, bubbles: true });
+      jest.spyOn(event, 'preventDefault');
+      return event;
+    };
+
+    it('should not navigate on ArrowRight when canGoNext is false', () => {
+      fixture.detectChanges();
+
+      const event = createKeyboardEvent('ArrowRight');
+      getStepIndicator(0).dispatchEvent(event);
+      fixture.detectChanges();
+
+      expect(getStepper().activeStep()).toBe(0);
+      expect(event.preventDefault).toHaveBeenCalled();
+    });
+
+    it('should not navigate on ArrowLeft when on first step', () => {
+      fixture.detectChanges();
+
+      const event = createKeyboardEvent('ArrowLeft');
+      getStepIndicator(0).dispatchEvent(event);
+      fixture.detectChanges();
+
+      expect(getStepper().activeStep()).toBe(0);
+      expect(event.preventDefault).toHaveBeenCalled();
+    });
+
+    it('should not navigate on Home when step 0 cannot be activated', () => {
+      hostComponent.linear = false;
+      hostComponent.step1Disabled = true;
+      hostComponent.activeStep = 1;
+      fixture.detectChanges();
+
+      hostComponent.linear = true;
+      fixture.detectChanges();
+
+      const event = createKeyboardEvent('Home');
+      getStepIndicator(1).dispatchEvent(event);
+      fixture.detectChanges();
+
+      expect(event.preventDefault).toHaveBeenCalled();
+    });
+
+    it('should not navigate on End when last step cannot be activated', () => {
+      fixture.detectChanges();
+
+      const event = createKeyboardEvent('End');
+      getStepIndicator(0).dispatchEvent(event);
+      fixture.detectChanges();
+
+      expect(getStepper().activeStep()).toBe(0);
+      expect(event.preventDefault).toHaveBeenCalled();
+    });
+  });
+
+  describe('Template rendering', () => {
+    it('should display spinner icon in progress variant with loading step', () => {
+      hostComponent.variant = 'progress';
+      hostComponent.step1Loading = true;
+      fixture.detectChanges();
+
+      const indicator = getStepIndicator(0);
+      const spinner = indicator.querySelector('.spinner');
+      expect(spinner).toBeTruthy();
+      expect(spinner!.classList.contains('ph-circle-notch')).toBe(true);
+    });
+
+    it('should have aria-describedby pointing to warning message', () => {
+      hostComponent.step1Warning = 'Warning message';
+      fixture.detectChanges();
+
+      expect(getStepIndicator(0).getAttribute('aria-describedby')).toBe('warning-0');
+      expect(getStepWarningMessage(0)?.getAttribute('id')).toBe('warning-0');
+    });
+
+    it('should have aria-describedby pointing to success message', () => {
+      hostComponent.step1Success = 'Success message';
+      fixture.detectChanges();
+
+      expect(getStepIndicator(0).getAttribute('aria-describedby')).toBe('success-0');
+      expect(getStepSuccessMessage(0)?.getAttribute('id')).toBe('success-0');
+    });
+  });
+
+  describe('Integration test: complete user journey', () => {
+    it('should complete a full multi-step form workflow', async () => {
+      expect(getStepper().activeStep()).toBe(0);
+      expect(getStepper().isFirstStep()).toBe(true);
+      expect(hostComponent.completedCount).toBe(0);
+
+      hostComponent.step1Completed = true;
+      fixture.detectChanges();
+
+      await getStepper().next();
+      fixture.detectChanges();
+
+      expect(getStepper().activeStep()).toBe(1);
+      expect(hostComponent.stepChangeEvents).toContain(1);
+
+      hostComponent.step2Completed = true;
+      hostComponent.step3Completed = true;
+      fixture.detectChanges();
+
+      await getStepper().next();
+      fixture.detectChanges();
+
+      expect(getStepper().activeStep()).toBe(2);
+      expect(getStepper().isLastStep()).toBe(true);
+      expect(hostComponent.stepChangeEvents).toContain(2);
+      expect(hostComponent.completedCount).toBe(1);
+
+      expect(getStepper().completedSteps()).toBe(3);
+      expect(getStepper().progress()).toBeCloseTo(100, 0);
+
+      getStepper().reset();
+      fixture.detectChanges();
+
+      expect(getStepper().activeStep()).toBe(0);
+      expect(getStepper().isFirstStep()).toBe(true);
+    });
+  });
 });
 
 @Component({
@@ -951,5 +1277,43 @@ describe('PshStepperComponent with single step', () => {
 
   it('should calculate 100% progress for single step', () => {
     expect(getStepper().progress()).toBe(100);
+  });
+});
+
+@Component({
+  selector: 'psh-empty-test-host',
+  standalone: true,
+  imports: [PshStepperComponent],
+  template: `
+    <psh-stepper></psh-stepper>
+  `
+})
+class EmptyStepperHostComponent {}
+
+describe('PshStepperComponent with no steps', () => {
+  let fixture: ComponentFixture<EmptyStepperHostComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [EmptyStepperHostComponent]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(EmptyStepperHostComponent);
+    fixture.detectChanges();
+  });
+
+  const getStepper = () =>
+    fixture.debugElement.children[0]!.componentInstance as PshStepperComponent;
+
+  it('should handle empty stepper without errors', () => {
+    expect(getStepper().steps().length).toBe(0);
+  });
+
+  it('should return 0 progress for empty stepper', () => {
+    expect(getStepper().progress()).toBe(0);
+  });
+
+  it('should return 0 completedSteps for empty stepper', () => {
+    expect(getStepper().completedSteps()).toBe(0);
   });
 });
