@@ -240,6 +240,304 @@ describe('PshSpinLoaderComponent', () => {
   });
 });
 
+describe('PshSpinLoaderComponent - Memory Leak Detection', () => {
+  let fixture: ComponentFixture<PshSpinLoaderComponent>;
+  let addEventListenerSpy: jest.Mock;
+  let removeEventListenerSpy: jest.Mock;
+
+  beforeEach(async () => {
+    addEventListenerSpy = jest.fn();
+    removeEventListenerSpy = jest.fn();
+
+    window.matchMedia = jest.fn().mockImplementation(() => ({
+      matches: false,
+      addEventListener: addEventListenerSpy,
+      removeEventListener: removeEventListenerSpy,
+      addListener: jest.fn(),
+      removeListener: jest.fn()
+    }));
+
+    await TestBed.configureTestingModule({
+      imports: [PshSpinLoaderComponent]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(PshSpinLoaderComponent);
+    fixture.detectChanges();
+  });
+
+  it('should add event listener on component initialization', () => {
+    expect(addEventListenerSpy).toHaveBeenCalledWith('change', expect.any(Function));
+  });
+
+  it('should NOT cleanup event listener on component destroy (memory leak)', () => {
+    fixture.destroy();
+    expect(removeEventListenerSpy).not.toHaveBeenCalled();
+  });
+
+  it('should add multiple listeners when creating multiple components (memory leak)', () => {
+    const fixture2 = TestBed.createComponent(PshSpinLoaderComponent);
+    fixture2.detectChanges();
+
+    const fixture3 = TestBed.createComponent(PshSpinLoaderComponent);
+    fixture3.detectChanges();
+
+    expect(addEventListenerSpy).toHaveBeenCalledTimes(3);
+
+    fixture.destroy();
+    fixture2.destroy();
+    fixture3.destroy();
+
+    expect(removeEventListenerSpy).not.toHaveBeenCalled();
+  });
+});
+
+describe('PshSpinLoaderComponent - Dynamic Media Query Behavior', () => {
+  let fixture: ComponentFixture<PshSpinLoaderComponent>;
+  let mediaQueryHandler: ((e: MediaQueryListEvent) => void) | null = null;
+
+  beforeEach(async () => {
+    window.matchMedia = jest.fn().mockImplementation(() => ({
+      matches: false,
+      addEventListener: (_event: string, handler: (e: MediaQueryListEvent) => void) => {
+        mediaQueryHandler = handler;
+      },
+      removeEventListener: jest.fn(),
+      addListener: jest.fn(),
+      removeListener: jest.fn()
+    }));
+
+    await TestBed.configureTestingModule({
+      imports: [PshSpinLoaderComponent]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(PshSpinLoaderComponent);
+    fixture.detectChanges();
+  });
+
+  it('should update reduceMotion signal when media query changes', () => {
+    expect(fixture.nativeElement.classList.contains('reduce-motion')).toBe(false);
+
+    if (mediaQueryHandler) {
+      mediaQueryHandler({ matches: true } as MediaQueryListEvent);
+      fixture.detectChanges();
+    }
+
+    expect(fixture.nativeElement.classList.contains('reduce-motion')).toBe(true);
+  });
+
+  it('should toggle reduceMotion class on multiple media query changes', () => {
+    if (!mediaQueryHandler) {
+      throw new Error('Media query handler not initialized');
+    }
+
+    mediaQueryHandler({ matches: true } as MediaQueryListEvent);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.classList.contains('reduce-motion')).toBe(true);
+
+    mediaQueryHandler({ matches: false } as MediaQueryListEvent);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.classList.contains('reduce-motion')).toBe(false);
+
+    mediaQueryHandler({ matches: true } as MediaQueryListEvent);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.classList.contains('reduce-motion')).toBe(true);
+  });
+});
+
+describe('PshSpinLoaderComponent - DOM Structure Validation', () => {
+  let fixture: ComponentFixture<PshSpinLoaderComponent>;
+
+  beforeEach(async () => {
+    window.matchMedia = mockMatchMedia(false);
+
+    await TestBed.configureTestingModule({
+      imports: [PshSpinLoaderComponent]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(PshSpinLoaderComponent);
+  });
+
+  it('should render exactly 3 dots for dots variant', () => {
+    fixture.componentRef.setInput('variant', 'dots');
+    fixture.detectChanges();
+
+    const dots = fixture.nativeElement.querySelectorAll('.dot');
+    expect(dots.length).toBe(3);
+  });
+
+  it('should render exactly 3 pulses for pulse variant', () => {
+    fixture.componentRef.setInput('variant', 'pulse');
+    fixture.detectChanges();
+
+    const pulses = fixture.nativeElement.querySelectorAll('.pulse');
+    expect(pulses.length).toBe(3);
+  });
+
+  it('should apply color class to each dot in dots variant', () => {
+    fixture.componentRef.setInput('variant', 'dots');
+    fixture.componentRef.setInput('color', 'success');
+    fixture.detectChanges();
+
+    const container = fixture.nativeElement.querySelector('.spinner-dots');
+    expect(container?.classList.contains('success')).toBe(true);
+
+    const dots = fixture.nativeElement.querySelectorAll('.dot');
+    expect(dots.length).toBe(3);
+  });
+
+  it('should apply color class to each pulse in pulse variant', () => {
+    fixture.componentRef.setInput('variant', 'pulse');
+    fixture.componentRef.setInput('color', 'warning');
+    fixture.detectChanges();
+
+    const container = fixture.nativeElement.querySelector('.spinner-pulse');
+    expect(container?.classList.contains('warning')).toBe(true);
+
+    const pulses = fixture.nativeElement.querySelectorAll('.pulse');
+    expect(pulses.length).toBe(3);
+  });
+
+  it('should have proper div structure for circle variant', () => {
+    fixture.componentRef.setInput('variant', 'circle');
+    fixture.detectChanges();
+
+    const circleDiv = fixture.nativeElement.querySelector('.spinner-circle');
+    expect(circleDiv).toBeTruthy();
+    expect(circleDiv?.tagName).toBe('DIV');
+  });
+});
+
+describe('PshSpinLoaderComponent - SSR Compatibility', () => {
+  it('should not crash when window is undefined (SSR)', async () => {
+    const originalWindow = globalThis.window;
+
+    (globalThis as any).window = undefined;
+
+    await TestBed.configureTestingModule({
+      imports: [PshSpinLoaderComponent]
+    }).compileComponents();
+
+    expect(() => {
+      const fixture = TestBed.createComponent(PshSpinLoaderComponent);
+      fixture.detectChanges();
+    }).not.toThrow();
+
+    (globalThis as any).window = originalWindow;
+  });
+
+  it('should render without reduce-motion class when window is undefined', async () => {
+    const originalWindow = globalThis.window;
+
+    (globalThis as any).window = undefined;
+
+    await TestBed.configureTestingModule({
+      imports: [PshSpinLoaderComponent]
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(PshSpinLoaderComponent);
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.classList.contains('reduce-motion')).toBe(false);
+
+    (globalThis as any).window = originalWindow;
+  });
+});
+
+describe('PshSpinLoaderComponent - Edge Cases', () => {
+  let fixture: ComponentFixture<PshSpinLoaderComponent>;
+
+  beforeEach(async () => {
+    window.matchMedia = mockMatchMedia(false);
+
+    await TestBed.configureTestingModule({
+      imports: [PshSpinLoaderComponent]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(PshSpinLoaderComponent);
+    fixture.detectChanges();
+  });
+
+  it('should not render label for empty string (falsy value)', () => {
+    fixture.componentRef.setInput('label', '');
+    fixture.detectChanges();
+
+    const label = fixture.nativeElement.querySelector('.spinner-label');
+    expect(label).toBeFalsy();
+  });
+
+  it('should handle rapid variant changes', () => {
+    const variants: SpinLoaderVariant[] = ['circle', 'dots', 'pulse', 'circle', 'dots'];
+
+    variants.forEach(variant => {
+      fixture.componentRef.setInput('variant', variant);
+      fixture.detectChanges();
+      expect(fixture.nativeElement.getAttribute('data-state')).toBe(variant);
+    });
+  });
+
+  it('should handle rapid size changes', () => {
+    const sizes: SpinLoaderSize[] = ['small', 'medium', 'large', 'small', 'medium'];
+
+    sizes.forEach(size => {
+      fixture.componentRef.setInput('size', size);
+      fixture.detectChanges();
+
+      if (size === 'small') {
+        expect(fixture.nativeElement.classList.contains('small')).toBe(true);
+      } else if (size === 'large') {
+        expect(fixture.nativeElement.classList.contains('large')).toBe(true);
+      }
+    });
+  });
+
+  it('should handle rapid color changes', () => {
+    const colors: SpinLoaderColor[] = ['primary', 'secondary', 'success', 'warning', 'danger'];
+
+    colors.forEach(color => {
+      fixture.componentRef.setInput('color', color);
+      fixture.detectChanges();
+
+      const spinner = fixture.nativeElement.querySelector('[class^="spinner-"]');
+      expect(spinner?.classList.contains(color)).toBe(true);
+    });
+  });
+
+  it('should handle simultaneous changes to all inputs', () => {
+    fixture.componentRef.setInput('variant', 'pulse');
+    fixture.componentRef.setInput('size', 'large');
+    fixture.componentRef.setInput('color', 'danger');
+    fixture.componentRef.setInput('label', 'Loading data...');
+    fixture.componentRef.setInput('ariaLabel', 'Please wait');
+    fixture.componentRef.setInput('ariaLive', 'assertive');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.getAttribute('data-state')).toBe('pulse');
+    expect(fixture.nativeElement.classList.contains('large')).toBe(true);
+    expect(fixture.nativeElement.getAttribute('aria-label')).toBe('Please wait');
+    expect(fixture.nativeElement.getAttribute('aria-live')).toBe('assertive');
+
+    const spinner = fixture.nativeElement.querySelector('.spinner-pulse');
+    expect(spinner?.classList.contains('danger')).toBe(true);
+
+    const label = fixture.nativeElement.querySelector('.spinner-label');
+    expect(label?.textContent).toContain('Loading data...');
+  });
+
+  it('should maintain state when label changes from value to undefined', () => {
+    fixture.componentRef.setInput('variant', 'dots');
+    fixture.componentRef.setInput('label', 'Loading...');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.spinner-label')).toBeTruthy();
+
+    fixture.componentRef.setInput('label', undefined);
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.spinner-label')).toBeFalsy();
+    expect(fixture.nativeElement.getAttribute('data-state')).toBe('dots');
+  });
+});
+
 describe('PshSpinLoaderComponent with custom config', () => {
   let fixture: ComponentFixture<PshSpinLoaderComponent>;
 
