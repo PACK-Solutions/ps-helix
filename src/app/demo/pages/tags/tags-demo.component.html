@@ -316,12 +316,12 @@
             <tbody>
               <tr>
                 <td><code>clicked</code></td>
-                <td><code>EventEmitter&lt;MouseEvent&gt;</code></td>
+                <td><code>OutputEmitterRef&lt;MouseEvent&gt;</code></td>
                 <td>Émis lorsque le tag est cliqué (si non désactivé)</td>
               </tr>
               <tr>
                 <td><code>closed</code></td>
-                <td><code>EventEmitter&lt;void&gt;</code></td>
+                <td><code>OutputEmitterRef&lt;void&gt;</code></td>
                 <td>Émis lorsque le bouton de fermeture est cliqué</td>
               </tr>
             </tbody>
@@ -334,7 +334,6 @@
             <pre><code>import &#123; PshTagComponent &#125; from 'ps-helix';
 
 &#64;Component(&#123;
-  standalone: true,
   imports: [PshTagComponent],
   template: `
     &lt;psh-tag
