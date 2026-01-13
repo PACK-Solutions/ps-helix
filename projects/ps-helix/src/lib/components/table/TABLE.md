@@ -4,7 +4,16 @@
 
 1. Importer le composant dans votre module ou composant standalone :
 ```typescript
-import { PshTableComponent, TableColumn, TableRow } from 'ps-helix';
+import {
+  PshTableComponent,
+  TableColumn,
+  TableRow,
+  TableSort,
+  TableRowClickEvent,
+  TableCellContext,
+  TableConfig,
+  TABLE_CONFIG
+} from 'ps-helix';
 
 @Component({
   // ...
@@ -82,22 +91,18 @@ const data: TableRow[] = [
 
 ## API
 
-### Model Inputs (@model)
+### Inputs
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
-| variant | string | 'default' | Style de la table |
-| size | string | 'medium' | Taille de la table |
+| variant | 'default' \| 'outline' | 'default' | Style de la table |
+| size | 'small' \| 'medium' \| 'large' | 'medium' | Taille de la table |
 | striped | boolean | false | Lignes alternées |
 | hoverable | boolean | false | Effet au survol |
 | bordered | boolean | false | Bordures |
 | loading | boolean | false | État de chargement |
 | globalSearch | boolean | false | Recherche globale |
-
-### Regular Inputs (@input)
-| Nom | Type | Défaut | Description |
-|-----|------|---------|-------------|
-| columns | TableColumn[] | [...] | Configuration des colonnes |
-| data | TableRow[] | [...] | Données à afficher |
+| columns | TableColumn[] | [] | Configuration des colonnes |
+| data | TableRow[] | [] | Données à afficher |
 | emptyMessage | string | 'No data available' | Message quand aucune donnée |
 | noResultsMessage | string | 'No results found' | Message quand recherche sans résultat |
 | globalSearchPlaceholder | string | 'Search in all columns...' | Placeholder de recherche |
