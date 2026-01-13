@@ -356,6 +356,88 @@ describe('PshTabsComponent', () => {
 
       expect(getTabButton(2).getAttribute('aria-selected')).toBe('true');
     });
+
+    it('should not react to unrelated keys', () => {
+      const initialIndex = hostComponent.activeIndex;
+      const event = createKeyboardEvent('Tab');
+      getTabButton(0).dispatchEvent(event);
+      fixture.detectChanges();
+
+      expect(hostComponent.activeIndex).toBe(initialIndex);
+      expect(event.preventDefault).not.toHaveBeenCalled();
+    });
+
+    it('should not react to Enter or Space keys on navigation', () => {
+      const initialIndex = hostComponent.activeIndex;
+
+      const enterEvent = createKeyboardEvent('Enter');
+      getTabButton(0).dispatchEvent(enterEvent);
+      fixture.detectChanges();
+      expect(hostComponent.activeIndex).toBe(initialIndex);
+
+      const spaceEvent = createKeyboardEvent(' ');
+      getTabButton(0).dispatchEvent(spaceEvent);
+      fixture.detectChanges();
+      expect(hostComponent.activeIndex).toBe(initialIndex);
+    });
+
+    it('should not react to ArrowUp/ArrowDown for horizontal tabs', () => {
+      const initialIndex = hostComponent.activeIndex;
+
+      const arrowUpEvent = createKeyboardEvent('ArrowUp');
+      getTabButton(0).dispatchEvent(arrowUpEvent);
+      fixture.detectChanges();
+      expect(hostComponent.activeIndex).toBe(initialIndex);
+      expect(arrowUpEvent.preventDefault).not.toHaveBeenCalled();
+
+      const arrowDownEvent = createKeyboardEvent('ArrowDown');
+      getTabButton(0).dispatchEvent(arrowDownEvent);
+      fixture.detectChanges();
+      expect(hostComponent.activeIndex).toBe(initialIndex);
+      expect(arrowDownEvent.preventDefault).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Focus management', () => {
+    it('should have correct tabindex roving behavior', () => {
+      expect(getTabButton(0).getAttribute('tabindex')).toBe('0');
+      expect(getTabButton(1).getAttribute('tabindex')).toBe('-1');
+      expect(getTabButton(2).getAttribute('tabindex')).toBe('-1');
+
+      getTabButton(1).click();
+      fixture.detectChanges();
+
+      expect(getTabButton(0).getAttribute('tabindex')).toBe('-1');
+      expect(getTabButton(1).getAttribute('tabindex')).toBe('0');
+      expect(getTabButton(2).getAttribute('tabindex')).toBe('-1');
+    });
+
+    it('should update tabindex after keyboard navigation', () => {
+      const event = createKeyboardEvent('ArrowRight');
+      getTabButton(0).dispatchEvent(event);
+      fixture.detectChanges();
+
+      expect(getTabButton(0).getAttribute('tabindex')).toBe('-1');
+      expect(getTabButton(1).getAttribute('tabindex')).toBe('0');
+    });
+
+    it('should maintain only one tab with tabindex=0 at any time', () => {
+      const verifyOnlyOneTabFocusable = () => {
+        const buttons = getTabButtons();
+        const focusableButtons = buttons.filter(b => b.getAttribute('tabindex') === '0');
+        expect(focusableButtons.length).toBe(1);
+      };
+
+      verifyOnlyOneTabFocusable();
+
+      getTabButton(1).click();
+      fixture.detectChanges();
+      verifyOnlyOneTabFocusable();
+
+      getTabButton(2).click();
+      fixture.detectChanges();
+      verifyOnlyOneTabFocusable();
+    });
   });
 
   describe('Accessibility', () => {
@@ -489,7 +571,7 @@ describe('PshTabsComponent', () => {
       fixture.detectChanges();
 
       expect(getTabButton(2).getAttribute('aria-selected')).toBe('true');
-      expect(getTabPanel(2).hasAttribute('hidden')).toBe(false);
+      expect(getTabPanel(2).classList.contains('active')).toBe(true);
     });
 
     it('should update parent activeIndex when tab is selected', () => {
@@ -526,16 +608,156 @@ describe('PshTabsComponent', () => {
     });
   });
 
+  describe('Boundary value tests', () => {
+    it('should select last valid tab when activeIndex exceeds tab count', () => {
+      hostComponent.activeIndex = 100;
+      fixture.detectChanges();
+
+      expect(getTabButton(2).getAttribute('aria-selected')).toBe('true');
+    });
+
+    it('should handle activeIndex of 0 correctly', () => {
+      hostComponent.activeIndex = 1;
+      fixture.detectChanges();
+      hostComponent.activeIndex = 0;
+      fixture.detectChanges();
+
+      expect(getTabButton(0).getAttribute('aria-selected')).toBe('true');
+    });
+
+    it('should navigate to first tab on Home even if disabled', () => {
+      hostComponent.tab1Disabled = true;
+      hostComponent.activeIndex = 2;
+      fixture.detectChanges();
+
+      const event = createKeyboardEvent('Home');
+      getTabButton(2).dispatchEvent(event);
+      fixture.detectChanges();
+
+      expect(getTabButton(0).getAttribute('aria-selected')).toBe('false');
+      expect(getTabButton(2).getAttribute('aria-selected')).toBe('true');
+    });
+
+    it('should navigate to last tab on End even if disabled', () => {
+      hostComponent.tab3Disabled = true;
+      fixture.detectChanges();
+
+      const event = createKeyboardEvent('End');
+      getTabButton(0).dispatchEvent(event);
+      fixture.detectChanges();
+
+      expect(getTabButton(2).getAttribute('aria-selected')).toBe('false');
+      expect(getTabButton(0).getAttribute('aria-selected')).toBe('true');
+    });
+  });
+
+  describe('CSS class isolation', () => {
+    it('should remove previous variant class when variant changes', () => {
+      hostComponent.variant = 'pills';
+      fixture.detectChanges();
+      expect(getTabsHost().classList.contains('tabs-pills')).toBe(true);
+
+      hostComponent.variant = 'underline';
+      fixture.detectChanges();
+
+      expect(getTabsHost().classList.contains('tabs-underline')).toBe(true);
+      expect(getTabsHost().classList.contains('tabs-pills')).toBe(false);
+    });
+
+    it('should remove previous size class when size changes', () => {
+      hostComponent.size = 'large';
+      fixture.detectChanges();
+      expect(getTabsHost().classList.contains('tabs-large')).toBe(true);
+
+      hostComponent.size = 'small';
+      fixture.detectChanges();
+
+      expect(getTabsHost().classList.contains('tabs-small')).toBe(true);
+      expect(getTabsHost().classList.contains('tabs-large')).toBe(false);
+    });
+
+    it('should have exactly one variant class at any time', () => {
+      const variants: TabsVariant[] = ['default', 'underline', 'pills'];
+
+      for (const variant of variants) {
+        hostComponent.variant = variant;
+        fixture.detectChanges();
+
+        const host = getTabsHost();
+        const variantClasses = variants.filter(v => host.classList.contains(`tabs-${v}`));
+        expect(variantClasses.length).toBe(1);
+        expect(variantClasses[0]).toBe(variant);
+      }
+    });
+  });
+
+  describe('Event emission rigor', () => {
+    it('should emit exactly one activeIndexChange per tab selection', () => {
+      hostComponent.activeIndexChanges = [];
+
+      getTabButton(1).click();
+      fixture.detectChanges();
+
+      expect(hostComponent.activeIndexChanges.length).toBe(1);
+      expect(hostComponent.activeIndexChanges[0]).toBe(1);
+    });
+
+    it('should emit exactly one tabChange per tab selection', () => {
+      hostComponent.tabChangeEvents = [];
+
+      getTabButton(2).click();
+      fixture.detectChanges();
+
+      expect(hostComponent.tabChangeEvents.length).toBe(1);
+    });
+
+    it('should emit both events in correct order (activeIndexChange then tabChange)', () => {
+      const emissionOrder: string[] = [];
+      const originalIndexChange = hostComponent.onActiveIndexChange.bind(hostComponent);
+      const originalTabChange = hostComponent.onTabChange.bind(hostComponent);
+
+      hostComponent.onActiveIndexChange = (index: number) => {
+        emissionOrder.push('activeIndexChange');
+        originalIndexChange(index);
+      };
+      hostComponent.onTabChange = (event: TabChangeEvent) => {
+        emissionOrder.push('tabChange');
+        originalTabChange(event);
+      };
+
+      fixture.detectChanges();
+      getTabButton(1).click();
+      fixture.detectChanges();
+
+      expect(emissionOrder).toEqual(['activeIndexChange', 'tabChange']);
+    });
+
+    it('should not emit events during keyboard navigation to same tab', () => {
+      hostComponent.tab2Disabled = true;
+      hostComponent.tab3Disabled = true;
+      hostComponent.activeIndexChanges = [];
+      hostComponent.tabChangeEvents = [];
+      fixture.detectChanges();
+
+      const event = createKeyboardEvent('ArrowRight');
+      getTabButton(0).dispatchEvent(event);
+      fixture.detectChanges();
+
+      expect(hostComponent.activeIndexChanges.length).toBe(0);
+      expect(hostComponent.tabChangeEvents.length).toBe(0);
+    });
+  });
+
   describe('Integration test: complete user journey', () => {
     it('should complete a full tab navigation workflow', () => {
       expect(getTabButton(0).getAttribute('aria-selected')).toBe('true');
-      expect(getTabPanel(0).hasAttribute('hidden')).toBe(false);
+      expect(getTabPanel(0).classList.contains('active')).toBe(true);
 
       getTabButton(1).click();
       fixture.detectChanges();
 
       expect(getTabButton(1).getAttribute('aria-selected')).toBe('true');
-      expect(getTabPanel(1).hasAttribute('hidden')).toBe(false);
+      expect(getTabPanel(1).classList.contains('active')).toBe(true);
       expect(hostComponent.activeIndexChanges).toContain(1);
 
       const event = createKeyboardEvent('ArrowRight');
@@ -543,14 +765,14 @@ describe('PshTabsComponent', () => {
       fixture.detectChanges();
 
       expect(getTabButton(2).getAttribute('aria-selected')).toBe('true');
-      expect(getTabPanel(2).hasAttribute('hidden')).toBe(false);
+      expect(getTabPanel(2).classList.contains('active')).toBe(true);
 
       const homeEvent = createKeyboardEvent('Home');
       getTabButton(2).dispatchEvent(homeEvent);
       fixture.detectChanges();
 
       expect(getTabButton(0).getAttribute('aria-selected')).toBe('true');
-      expect(getTabPanel(0).hasAttribute('hidden')).toBe(false);
+      expect(getTabPanel(0).classList.contains('active')).toBe(true);
     });
   });
 });
@@ -644,13 +866,11 @@ describe('PshTabsComponent with data-driven tabs', () => {
       expect(getTabPanels().length).toBe(0);
     });
 
-    it('should adjust activeIndex when it exceeds tab count', () => {
+    it('should select last valid tab when activeIndex exceeds tab count', () => {
       hostComponent.activeIndex = 10;
       fixture.detectChanges();
 
-      const buttons = getTabButtons();
-      const activeButton = buttons.find(b => b.getAttribute('aria-selected') === 'true');
-      expect(activeButton).toBeTruthy();
+      expect(getTabButton(2).getAttribute('aria-selected')).toBe('true');
     });
 
     it('should handle single tab', () => {
@@ -670,6 +890,62 @@ describe('PshTabsComponent with data-driven tabs', () => {
 
       expect(getTabButtons().length).toBe(2);
       expect(getTabButton(0).textContent).toContain('New Tab 1');
+    });
+
+    it('should preserve selection when removing tabs after active index', () => {
+      hostComponent.activeIndex = 0;
+      fixture.detectChanges();
+
+      hostComponent.tabs = [
+        { header: 'First', content: 'First content' }
+      ];
+      fixture.detectChanges();
+
+      expect(hostComponent.activeIndex).toBe(0);
+      expect(getTabButton(0).getAttribute('aria-selected')).toBe('true');
+    });
+
+    it('should select last available tab when active tab is removed', () => {
+      hostComponent.activeIndex = 2;
+      fixture.detectChanges();
+
+      hostComponent.tabs = [
+        { header: 'First', content: 'First content' },
+        { header: 'Second', content: 'Second content' }
+      ];
+      fixture.detectChanges();
+
+      expect(getTabButton(1).getAttribute('aria-selected')).toBe('true');
+    });
+
+    it('should handle all tabs disabled scenario', () => {
+      hostComponent.tabs = [
+        { header: 'First', content: 'First', disabled: true },
+        { header: 'Second', content: 'Second', disabled: true }
+      ];
+      fixture.detectChanges();
+
+      const buttons = getTabButtons();
+      buttons.forEach(button => {
+        expect(button.hasAttribute('disabled')).toBe(true);
+      });
+    });
+  });
+
+  describe('Panel visibility with hidden attribute', () => {
+    it('should have hidden attribute on inactive panels', () => {
+      expect(getTabPanel(0).hasAttribute('hidden')).toBe(false);
+      expect(getTabPanel(1).hasAttribute('hidden')).toBe(true);
+      expect(getTabPanel(2).hasAttribute('hidden')).toBe(true);
+    });
+
+    it('should update hidden attribute when tab changes', () => {
+      getTabButton(1).click();
+      fixture.detectChanges();
+
+      expect(getTabPanel(0).hasAttribute('hidden')).toBe(true);
+      expect(getTabPanel(1).hasAttribute('hidden')).toBe(false);
+      expect(getTabPanel(2).hasAttribute('hidden')).toBe(true);
     });
   });
 });
