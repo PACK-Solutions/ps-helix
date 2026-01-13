@@ -78,6 +78,8 @@ export interface TableConfig {
   loading: boolean;
   /** Message quand vide */
   emptyMessage: string;
+  /** Message quand recherche sans resultat */
+  noResultsMessage: string;
   /** Recherche globale */
   globalSearch: boolean;
   /** Placeholder de recherche */

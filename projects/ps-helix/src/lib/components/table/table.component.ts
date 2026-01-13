@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, model, output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output, signal, InjectionToken } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
 import { TableColumn, TableRow, TableSort, TableConfig, TableRowClickEvent } from './table.types';
-import { InjectionToken } from '@angular/core';
 
 export const TABLE_CONFIG = new InjectionToken<Partial<TableConfig>>('TABLE_CONFIG', {
   factory: () => ({
@@ -18,55 +17,47 @@ export const TABLE_CONFIG = new InjectionToken<Partial<TableConfig>>('TABLE_CONF
   })
 });
 
-export const TABLE_STYLES = new InjectionToken<Record<string, string>[]>('TABLE_STYLES', {
-  factory: () => [{}]
-});
-
 @Component({
   selector: 'psh-table',
-  imports: [CommonModule],
+  imports: [NgTemplateOutlet],
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    'class': 'psh-table'
+  }
 })
 export class PshTableComponent {
   private config = inject(TABLE_CONFIG);
-  private styles = inject(TABLE_STYLES, { optional: true }) ?? [{}];
 
-  // Model inputs with defaults from config
-  variant = model<'default' | 'outline'>(this.config.variant ?? 'default');
-  size = model<'small' | 'medium' | 'large'>(this.config.size ?? 'medium');
-  striped = model(this.config.striped ?? false);
-  hoverable = model(this.config.hoverable ?? false);
-  bordered = model(this.config.bordered ?? false);
-  loading = model(this.config.loading ?? false);
-  globalSearch = model(this.config.globalSearch ?? false);
-
-  // Regular inputs
+  variant = input<'default' | 'outline'>(this.config.variant ?? 'default');
+  size = input<'small' | 'medium' | 'large'>(this.config.size ?? 'medium');
+  striped = input(this.config.striped ?? false);
+  hoverable = input(this.config.hoverable ?? false);
+  bordered = input(this.config.bordered ?? false);
+  loading = input(this.config.loading ?? false);
+  globalSearch = input(this.config.globalSearch ?? false);
   columns = input<TableColumn[]>([]);
   data = input<TableRow[]>([]);
-  emptyMessage = input<string>('No data available');
-  noResultsMessage = input<string>('No results found');
+  emptyMessage = input<string>(this.config.emptyMessage ?? 'No data available');
+  noResultsMessage = input<string>(this.config.noResultsMessage ?? 'No results found');
   globalSearchPlaceholder = input(this.config.globalSearchPlaceholder ?? 'Search in all columns...');
 
-  // Outputs
   sortChange = output<TableSort>();
   globalSearchChange = output<string>();
   rowClick = output<TableRowClickEvent>();
 
-  // State
-  currentSortSignal = model<TableSort | undefined>();
-  searchTermSignal = model('');
-
-  // Computed values
-  computedEmptyMessage = computed(() => {
-    return this.searchTerm() 
-      ? `${this.noResultsMessage()} "${this.searchTerm()}"` 
-      : this.emptyMessage();
-  });
+  private currentSortSignal = signal<TableSort | undefined>(undefined);
+  private searchTermSignal = signal('');
 
   currentSort = computed(() => this.currentSortSignal());
   searchTerm = computed(() => this.searchTermSignal());
+
+  computedEmptyMessage = computed(() => {
+    return this.searchTerm()
+      ? `${this.noResultsMessage()} "${this.searchTerm()}"`
+      : this.emptyMessage();
+  });
 
   state = computed(() => {
     if (this.loading()) return 'loading';
@@ -76,23 +67,17 @@ export class PshTableComponent {
 
   filteredData = computed(() => {
     let result = [...this.data()];
-    
-    // Apply global search
+
     if (this.searchTerm()) {
       result = this.filterData(result, this.searchTerm());
     }
 
-    // Apply sorting
     const sort = this.currentSort();
     if (sort) {
       result = this.sortData(result, sort);
     }
 
     return result;
-  });
-
-  customStyles = computed(() => {
-    return Object.assign({}, ...this.styles);
   });
 
   /**
