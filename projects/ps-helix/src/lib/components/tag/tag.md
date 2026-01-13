@@ -92,11 +92,6 @@ interface TagConfig {
   disabled: boolean;
   interactive?: boolean;
   closeLabel?: string;
-  ariaLabels?: {
-    close?: string;
-    disabled?: string;
-    status?: string;
-  };
 }
 ```
 
@@ -189,34 +184,8 @@ import { TAG_CONFIG } from 'ps-helix';
         closable: false,
         disabled: false,
         interactive: false,
-        closeLabel: 'Retirer',
-        ariaLabels: {
-          close: 'Retirer le tag',
-          disabled: 'Tag désactivé',
-          status: 'État'
-        }
+        closeLabel: 'Retirer'
       }
-    }
-  ]
-})
-export class AppComponent {}
-```
-
-### Styles Personnalisés
-
-Pour des styles CSS personnalisés au niveau global:
-
-```typescript
-import { TAG_STYLES } from 'ps-helix';
-
-@Component({
-  providers: [
-    {
-      provide: TAG_STYLES,
-      useValue: [
-        { '--tag-padding-x': '12px' },
-        { '--tag-font-size': '14px' }
-      ]
     }
   ]
 })
