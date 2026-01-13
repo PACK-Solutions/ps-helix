@@ -86,7 +86,9 @@ export class PshTabsComponent {
       const currentIndex = this.activeIndex();
       const tabs = this.tabsToDisplay();
       if (tabs.length > 0 && currentIndex >= tabs.length) {
-        this.activeIndex.set(Math.max(0, tabs.length - 1));
+        const clampedIndex = Math.max(0, tabs.length - 1);
+        this.activeIndex.set(clampedIndex);
+        this.activeIndexChange.emit(clampedIndex);
       }
     });
   }
@@ -103,11 +105,11 @@ export class PshTabsComponent {
         break;
       case 'Home':
         event.preventDefault();
-        this.selectTab(0);
+        this.selectFirst();
         break;
       case 'End':
         event.preventDefault();
-        this.selectTab(this.tabsToDisplay().length - 1);
+        this.selectLast();
         break;
     }
   }
@@ -149,6 +151,32 @@ export class PshTabsComponent {
 
     if (prevIndex !== this.activeIndex()) {
       this.selectTab(prevIndex);
+    }
+  }
+
+  selectFirst(): void {
+    const tabs = this.tabsToDisplay();
+    let firstIndex = 0;
+
+    while (tabs[firstIndex]?.disabled && firstIndex < tabs.length - 1) {
+      firstIndex++;
+    }
+
+    if (!tabs[firstIndex]?.disabled && firstIndex !== this.activeIndex()) {
+      this.selectTab(firstIndex);
+    }
+  }
+
+  selectLast(): void {
+    const tabs = this.tabsToDisplay();
+    let lastIndex = tabs.length - 1;
+
+    while (tabs[lastIndex]?.disabled && lastIndex > 0) {
+      lastIndex--;
+    }
+
+    if (!tabs[lastIndex]?.disabled && lastIndex !== this.activeIndex()) {
+      this.selectTab(lastIndex);
     }
   }
 

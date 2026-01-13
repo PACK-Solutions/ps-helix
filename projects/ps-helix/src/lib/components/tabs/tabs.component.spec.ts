@@ -609,11 +609,14 @@ describe('PshTabsComponent', () => {
   });
 
   describe('Boundary value tests', () => {
-    it('should select last valid tab when activeIndex exceeds tab count', () => {
+    it('should clamp and propagate activeIndex when exceeds tab count', () => {
+      hostComponent.activeIndexChanges = [];
       hostComponent.activeIndex = 100;
       fixture.detectChanges();
 
+      expect(hostComponent.activeIndex).toBe(2);
       expect(getTabButton(2).getAttribute('aria-selected')).toBe('true');
+      expect(hostComponent.activeIndexChanges).toContain(2);
     });
 
     it('should handle activeIndex of 0 correctly', () => {
@@ -625,7 +628,7 @@ describe('PshTabsComponent', () => {
       expect(getTabButton(0).getAttribute('aria-selected')).toBe('true');
     });
 
-    it('should navigate to first tab on Home even if disabled', () => {
+    it('should navigate to first enabled tab on Home when first tab is disabled', () => {
       hostComponent.tab1Disabled = true;
       hostComponent.activeIndex = 2;
       fixture.detectChanges();
@@ -634,11 +637,10 @@ describe('PshTabsComponent', () => {
       getTabButton(2).dispatchEvent(event);
       fixture.detectChanges();
 
-      expect(getTabButton(0).getAttribute('aria-selected')).toBe('false');
-      expect(getTabButton(2).getAttribute('aria-selected')).toBe('true');
+      expect(getTabButton(1).getAttribute('aria-selected')).toBe('true');
     });
 
-    it('should navigate to last tab on End even if disabled', () => {
+    it('should navigate to last enabled tab on End when last tab is disabled', () => {
       hostComponent.tab3Disabled = true;
       fixture.detectChanges();
 
@@ -646,8 +648,33 @@ describe('PshTabsComponent', () => {
       getTabButton(0).dispatchEvent(event);
       fixture.detectChanges();
 
-      expect(getTabButton(2).getAttribute('aria-selected')).toBe('false');
+      expect(getTabButton(1).getAttribute('aria-selected')).toBe('true');
+    });
+
+    it('should not change selection on Home when only first tab is enabled', () => {
+      hostComponent.tab2Disabled = true;
+      hostComponent.tab3Disabled = true;
+      hostComponent.activeIndex = 0;
+      fixture.detectChanges();
+
+      const event = createKeyboardEvent('Home');
+      getTabButton(0).dispatchEvent(event);
+      fixture.detectChanges();
+
       expect(getTabButton(0).getAttribute('aria-selected')).toBe('true');
+    });
+
+    it('should not change selection on End when only last tab is enabled', () => {
+      hostComponent.tab1Disabled = true;
+      hostComponent.tab2Disabled = true;
+      hostComponent.activeIndex = 2;
+      fixture.detectChanges();
+
+      const event = createKeyboardEvent('End');
+      getTabButton(2).dispatchEvent(event);
+      fixture.detectChanges();
+
+      expect(getTabButton(2).getAttribute('aria-selected')).toBe('true');
     });
   });
 
@@ -866,11 +893,14 @@ describe('PshTabsComponent with data-driven tabs', () => {
       expect(getTabPanels().length).toBe(0);
     });
 
-    it('should select last valid tab when activeIndex exceeds tab count', () => {
+    it('should clamp and propagate activeIndex when exceeds tab count', () => {
+      hostComponent.activeIndexChanges = [];
       hostComponent.activeIndex = 10;
       fixture.detectChanges();
 
+      expect(hostComponent.activeIndex).toBe(2);
       expect(getTabButton(2).getAttribute('aria-selected')).toBe('true');
+      expect(hostComponent.activeIndexChanges).toContain(2);
     });
 
     it('should handle single tab', () => {
@@ -905,17 +935,20 @@ describe('PshTabsComponent with data-driven tabs', () => {
       expect(getTabButton(0).getAttribute('aria-selected')).toBe('true');
     });
 
-    it('should select last available tab when active tab is removed', () => {
+    it('should clamp and propagate activeIndex when active tab is removed', () => {
       hostComponent.activeIndex = 2;
       fixture.detectChanges();
 
+      hostComponent.activeIndexChanges = [];
       hostComponent.tabs = [
         { header: 'First', content: 'First content' },
         { header: 'Second', content: 'Second content' }
       ];
       fixture.detectChanges();
 
+      expect(hostComponent.activeIndex).toBe(1);
       expect(getTabButton(1).getAttribute('aria-selected')).toBe('true');
+      expect(hostComponent.activeIndexChanges).toContain(1);
     });
 
     it('should handle all tabs disabled scenario', () => {
