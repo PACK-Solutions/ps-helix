@@ -156,10 +156,10 @@ export class AppComponent implements OnInit {
       title: 'Toast Notifications',
       description: 'Service de notifications toast avec plusieurs niveaux',
       code: `import { inject } from '@angular/core';
-import { ToastService } from 'ps-helix';
+import { PshToastService } from 'ps-helix';
 
 export class MyComponent {
-  private toastService = inject(ToastService);
+  private toastService = inject(PshToastService);
 
   showSuccess() {
     this.toastService.success('Opération réussie !');
@@ -223,11 +223,11 @@ export class MyComponent {
 }`
     },
     {
-      name: 'ToastService',
+      name: 'PshToastService',
       icon: 'bell',
       description: 'Service de notifications toast pour afficher des messages temporaires avec différents niveaux de sévérité.',
       features: [
-        'Méthodes success(), error(), warning(), info()',
+        'Méthodes success(), error(), warning(), info(), danger()',
         'Durée d\'affichage configurable',
         'Position configurable',
         'Icônes automatiques selon le type',
@@ -236,10 +236,10 @@ export class MyComponent {
       ],
       codeLabel: 'Utilisation du service',
       codeExample: `import { inject } from '@angular/core';
-import { ToastService } from 'ps-helix';
+import { PshToastService } from 'ps-helix';
 
 export class MyComponent {
-  private toastService = inject(ToastService);
+  private toastService = inject(PshToastService);
 
   showNotifications() {
     this.toastService.success('Enregistré avec succès');

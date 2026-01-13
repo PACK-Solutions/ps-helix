@@ -673,11 +673,10 @@
           <h4>Installation et Configuration</h4>
           <div class="code-block">
             <pre><code>// 1. Importer le composant Toast dans app.component.ts
-import &#123; ToastComponent &#125; from 'ps-helix';
+import &#123; PshToastComponent &#125; from 'ps-helix';
 
 &#64;Component(&#123;
-  standalone: true,
-  imports: [ToastComponent],
+  imports: [PshToastComponent],
   template: `
     &lt;router-outlet /&gt;
     &lt;psh-toast /&gt;
@@ -686,10 +685,10 @@ import &#123; ToastComponent &#125; from 'ps-helix';
 export class AppComponent &#123;&#125;
 
 // 2. Injecter le service dans votre composant
-import &#123; ToastService &#125; from 'ps-helix';
+import &#123; PshToastService &#125; from 'ps-helix';
 
 export class MyComponent &#123;
-  private toastService = inject(ToastService);
+  private toastService = inject(PshToastService);
 
   showNotification(): void &#123;
     this.toastService.show(&#123;

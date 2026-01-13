@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { PshButtonComponent } from '@lib/components';
-import { ToastService } from '@lib/components/toast/toast.service';
+import { PshToastService } from '@lib/components/toast/toast.service';
 import type { ToastPosition, ToastType } from '@lib/components/toast/toast.types';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
 import { CodeSnippetComponent } from '../../shared/code-snippet.component';
@@ -13,7 +13,7 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
   styleUrls: ['./toasts-demo.component.css'],
 })
 export class ToastsDemoComponent {
-  private toastService = inject(ToastService);
+  private toastService = inject(PshToastService);
 
   infoToastCode = `this.toastService.show({
   message: 'Nouvelle information',

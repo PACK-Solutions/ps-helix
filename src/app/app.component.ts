@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ToastComponent } from '@lib/components/toast/toast.component';
+import { PshToastComponent } from '@lib/components/toast/toast.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterModule, ToastComponent],
+  imports: [RouterModule, PshToastComponent],
   templateUrl: './app.component.html'
 })
 export class AppComponent {}

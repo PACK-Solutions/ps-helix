@@ -52,6 +52,7 @@ export * from './lib/components/tag/tag.component';
 export * from './lib/components/tag/tag.types';
 export * from './lib/components/toast/toast.component';
 export * from './lib/components/toast/toast.service';
+export * from './lib/components/toast/toast.tokens';
 export * from './lib/components/toast/toast.types';
 export * from './lib/components/tooltip/tooltip.component';
 export * from './lib/components/tooltip/tooltip.types';
