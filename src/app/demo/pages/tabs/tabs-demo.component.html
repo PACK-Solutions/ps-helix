@@ -430,6 +430,11 @@
                 <td><code>() =&gt; Tab | undefined</code></td>
                 <td>Retourne l'objet Tab actuellement actif</td>
               </tr>
+              <tr>
+                <td><code>getTabComponent</code></td>
+                <td><code>(index: number) =&gt; PshTabComponent | undefined</code></td>
+                <td>Retourne l'instance du composant psh-tab a l'index specifie</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -440,7 +445,6 @@
             <pre><code>import &#123; PshTabsComponent, PshTabComponent, TabChangeEvent &#125; from 'ps-helix';
 
 &#64;Component(&#123;
-  standalone: true,
   imports: [PshTabsComponent, PshTabComponent],
   template: `
     &lt;psh-tabs

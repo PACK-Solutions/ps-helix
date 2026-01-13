@@ -46,6 +46,7 @@ export * from './lib/components/tab-bar/tab-bar.types';
 export * from './lib/components/table/table.component';
 export * from './lib/components/table/table.types';
 export * from './lib/components/tabs/tabs.component';
+export * from './lib/components/tabs/tab.component';
 export * from './lib/components/tabs/tabs.types';
 export * from './lib/components/tag/tag.component';
 export * from './lib/components/tag/tag.types';

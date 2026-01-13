@@ -98,6 +98,7 @@ tabs: Tab[] = [
 | selectFirst | () => void | Select first enabled tab |
 | selectLast | () => void | Select last enabled tab |
 | getActiveTab | () => Tab \| undefined | Get currently active tab data |
+| getTabComponent | (index: number) => PshTabComponent \| undefined | Get tab component instance by index |
 
 ## Variants
 
