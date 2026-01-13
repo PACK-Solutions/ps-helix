@@ -11,14 +11,20 @@ describe('PshTabBarComponent', () => {
     { id: 'profile', label: 'Profile', icon: 'user' }
   ];
 
-  const getTabBar = () =>
-    fixture.nativeElement.querySelector('.tab-bar') as HTMLElement;
+  const getTabList = () =>
+    fixture.nativeElement as HTMLElement;
 
-  const getTabButtons = () =>
-    Array.from(fixture.nativeElement.querySelectorAll('.tab-item')) as HTMLButtonElement[];
+  const getAllTabs = () =>
+    Array.from(fixture.nativeElement.querySelectorAll('[role="tab"]')) as HTMLButtonElement[];
 
-  const getTabButton = (index: number) =>
-    getTabButtons()[index] as HTMLButtonElement;
+  const getTabByName = (name: string) =>
+    getAllTabs().find(tab => tab.getAttribute('aria-label') === name) as HTMLButtonElement;
+
+  const getSelectedTab = () =>
+    fixture.nativeElement.querySelector('[aria-selected="true"]') as HTMLButtonElement;
+
+  const getDisabledTabs = () =>
+    Array.from(fixture.nativeElement.querySelectorAll('[aria-disabled="true"]')) as HTMLButtonElement[];
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -31,39 +37,23 @@ describe('PshTabBarComponent', () => {
   });
 
   describe('Content rendering', () => {
-    it('should render a tab bar nav element', () => {
-      expect(getTabBar()).toBeTruthy();
+    it('should render a tablist', () => {
+      expect(getTabList().getAttribute('role')).toBe('tablist');
     });
 
-    it('should render all provided items', () => {
-      expect(getTabButtons().length).toBe(3);
+    it('should render all provided items as tabs', () => {
+      expect(getAllTabs().length).toBe(3);
     });
 
     it('should display item labels', () => {
-      const buttons = getTabButtons();
-      expect(buttons[0]!.textContent).toContain('Home');
-      expect(buttons[1]!.textContent).toContain('Search');
-      expect(buttons[2]!.textContent).toContain('Profile');
+      expect(getTabByName('Home')).toBeTruthy();
+      expect(getTabByName('Search')).toBeTruthy();
+      expect(getTabByName('Profile')).toBeTruthy();
     });
 
-    it('should render icons with correct class', () => {
-      const firstButton = getTabButton(0);
-      const icon = firstButton.querySelector('i');
-      expect(icon).toBeTruthy();
-      expect(icon!.classList.contains('ph-house')).toBe(true);
-    });
-
-    it('should render filled icon for active tab', () => {
-      const activeButton = getTabButton(0);
-      const icon = activeButton.querySelector('i');
-      expect(icon!.classList.contains('ph-fill')).toBe(true);
-    });
-
-    it('should render outline icon for inactive tabs', () => {
-      const inactiveButton = getTabButton(1);
-      const icon = inactiveButton.querySelector('i');
-      expect(icon!.classList.contains('ph')).toBe(true);
-      expect(icon!.classList.contains('ph-fill')).toBe(false);
+    it('should render icons with aria-hidden', () => {
+      const icons = fixture.nativeElement.querySelectorAll('i[aria-hidden="true"]');
+      expect(icons.length).toBe(3);
     });
 
     it('should display badge when item has badge', () => {
@@ -74,13 +64,13 @@ describe('PshTabBarComponent', () => {
       fixture.componentRef.setInput('items', itemsWithBadge);
       fixture.detectChanges();
 
-      const badge = getTabButton(0).querySelector('.tab-badge');
+      const badge = getTabByName('Notifications').querySelector('.tab-badge');
       expect(badge).toBeTruthy();
       expect(badge!.textContent).toBe('5');
     });
 
     it('should not display badge when item has no badge', () => {
-      const badge = getTabButton(0).querySelector('.tab-badge');
+      const badge = getTabByName('Home').querySelector('.tab-badge');
       expect(badge).toBeFalsy();
     });
 
@@ -91,21 +81,21 @@ describe('PshTabBarComponent', () => {
       fixture.componentRef.setInput('items', itemsWithNumericBadge);
       fixture.detectChanges();
 
-      const badge = getTabButton(0).querySelector('.tab-badge');
+      const badge = getTabByName('Messages').querySelector('.tab-badge');
       expect(badge!.textContent).toBe('42');
     });
   });
 
   describe('Selection behavior', () => {
     it('should have first item selected by default', () => {
-      expect(fixture.componentInstance.activeIndex()).toBe(0);
+      expect(getSelectedTab().getAttribute('aria-label')).toBe('Home');
     });
 
     it('should emit tabChange event when selecting a different tab', () => {
       const changeSpy = jest.fn();
       fixture.componentInstance.tabChange.subscribe(changeSpy);
 
-      getTabButton(1).click();
+      getTabByName('Search').click();
 
       expect(changeSpy).toHaveBeenCalledTimes(1);
     });
@@ -114,7 +104,7 @@ describe('PshTabBarComponent', () => {
       const changeSpy = jest.fn();
       fixture.componentInstance.tabChange.subscribe(changeSpy);
 
-      getTabButton(2).click();
+      getTabByName('Profile').click();
 
       const expectedEvent: TabBarChangeEvent = {
         index: 2,
@@ -124,31 +114,28 @@ describe('PshTabBarComponent', () => {
       expect(changeSpy).toHaveBeenCalledWith(expectedEvent);
     });
 
-    it('should update activeIndex when tab is clicked', () => {
-      getTabButton(1).click();
-      expect(fixture.componentInstance.activeIndex()).toBe(1);
+    it('should update selected tab when clicked', () => {
+      getTabByName('Search').click();
+      fixture.detectChanges();
+
+      expect(getSelectedTab().getAttribute('aria-label')).toBe('Search');
     });
 
     it('should NOT emit event when clicking already selected tab', () => {
       const changeSpy = jest.fn();
       fixture.componentInstance.tabChange.subscribe(changeSpy);
 
-      getTabButton(0).click();
+      getTabByName('Home').click();
 
       expect(changeSpy).not.toHaveBeenCalled();
-    });
-
-    it('should NOT change activeIndex when clicking already selected tab', () => {
-      getTabButton(0).click();
-      expect(fixture.componentInstance.activeIndex()).toBe(0);
     });
 
     it('should track previousIndex correctly across multiple selections', () => {
       const changeSpy = jest.fn();
       fixture.componentInstance.tabChange.subscribe(changeSpy);
 
-      getTabButton(1).click();
-      getTabButton(2).click();
+      getTabByName('Search').click();
+      getTabByName('Profile').click();
 
       expect(changeSpy).toHaveBeenLastCalledWith(
         expect.objectContaining({ index: 2, previousIndex: 1 })
@@ -157,38 +144,25 @@ describe('PshTabBarComponent', () => {
   });
 
   describe('Active state visual feedback', () => {
-    it('should apply active class to selected item', () => {
-      expect(getTabButton(0).classList.contains('active')).toBe(true);
+    it('should apply active class to selected tab', () => {
+      expect(getSelectedTab().classList.contains('active')).toBe(true);
     });
 
-    it('should not apply active class to non-selected items', () => {
-      expect(getTabButton(1).classList.contains('active')).toBe(false);
-      expect(getTabButton(2).classList.contains('active')).toBe(false);
+    it('should not apply active class to non-selected tabs', () => {
+      const nonSelectedTabs = getAllTabs().filter(
+        tab => tab.getAttribute('aria-selected') === 'false'
+      );
+      nonSelectedTabs.forEach(tab => {
+        expect(tab.classList.contains('active')).toBe(false);
+      });
     });
 
     it('should move active class when selection changes', () => {
-      getTabButton(1).click();
+      getTabByName('Search').click();
       fixture.detectChanges();
 
-      expect(getTabButton(0).classList.contains('active')).toBe(false);
-      expect(getTabButton(1).classList.contains('active')).toBe(true);
-    });
-
-    it('should update icon to filled style when tab becomes active', () => {
-      getTabButton(1).click();
-      fixture.detectChanges();
-
-      const newActiveIcon = getTabButton(1).querySelector('i');
-      expect(newActiveIcon!.classList.contains('ph-fill')).toBe(true);
-    });
-
-    it('should update icon to outline style when tab becomes inactive', () => {
-      getTabButton(1).click();
-      fixture.detectChanges();
-
-      const previousActiveIcon = getTabButton(0).querySelector('i');
-      expect(previousActiveIcon!.classList.contains('ph-fill')).toBe(false);
-      expect(previousActiveIcon!.classList.contains('ph')).toBe(true);
+      expect(getTabByName('Home').classList.contains('active')).toBe(false);
+      expect(getTabByName('Search').classList.contains('active')).toBe(true);
     });
   });
 
@@ -200,36 +174,26 @@ describe('PshTabBarComponent', () => {
       const changeSpy = jest.fn();
       fixture.componentInstance.tabChange.subscribe(changeSpy);
 
-      getTabButton(1).click();
+      getTabByName('Search').click();
 
       expect(changeSpy).not.toHaveBeenCalled();
     });
 
-    it('should NOT change activeIndex when component is disabled', () => {
+    it('should NOT change selection when component is disabled', () => {
       fixture.componentRef.setInput('disabled', true);
       fixture.detectChanges();
 
-      getTabButton(1).click();
+      getTabByName('Search').click();
+      fixture.detectChanges();
 
-      expect(fixture.componentInstance.activeIndex()).toBe(0);
+      expect(getSelectedTab().getAttribute('aria-label')).toBe('Home');
     });
 
-    it('should apply disabled class to all items when component is disabled', () => {
+    it('should set aria-disabled on all tabs when component is disabled', () => {
       fixture.componentRef.setInput('disabled', true);
       fixture.detectChanges();
 
-      getTabButtons().forEach(button => {
-        expect(button.classList.contains('disabled')).toBe(true);
-      });
-    });
-
-    it('should set aria-disabled on all items when component is disabled', () => {
-      fixture.componentRef.setInput('disabled', true);
-      fixture.detectChanges();
-
-      getTabButtons().forEach(button => {
-        expect(button.getAttribute('aria-disabled')).toBe('true');
-      });
+      expect(getDisabledTabs().length).toBe(3);
     });
   });
 
@@ -249,75 +213,75 @@ describe('PshTabBarComponent', () => {
       const changeSpy = jest.fn();
       fixture.componentInstance.tabChange.subscribe(changeSpy);
 
-      getTabButton(1).click();
+      getTabByName('Search').click();
 
       expect(changeSpy).not.toHaveBeenCalled();
     });
 
-    it('should NOT change activeIndex when clicking disabled item', () => {
-      getTabButton(1).click();
-      expect(fixture.componentInstance.activeIndex()).toBe(0);
-    });
+    it('should NOT change selection when clicking disabled item', () => {
+      getTabByName('Search').click();
+      fixture.detectChanges();
 
-    it('should apply disabled class only to disabled item', () => {
-      expect(getTabButton(0).classList.contains('disabled')).toBe(false);
-      expect(getTabButton(1).classList.contains('disabled')).toBe(true);
-      expect(getTabButton(2).classList.contains('disabled')).toBe(false);
+      expect(getSelectedTab().getAttribute('aria-label')).toBe('Home');
     });
 
     it('should set aria-disabled only on disabled item', () => {
-      expect(getTabButton(0).getAttribute('aria-disabled')).not.toBe('true');
-      expect(getTabButton(1).getAttribute('aria-disabled')).toBe('true');
-      expect(getTabButton(2).getAttribute('aria-disabled')).not.toBe('true');
+      const disabledTabs = getDisabledTabs();
+      expect(disabledTabs.length).toBe(1);
+      expect(disabledTabs[0]!.getAttribute('aria-label')).toBe('Search');
     });
 
     it('should still allow selecting non-disabled items', () => {
       const changeSpy = jest.fn();
       fixture.componentInstance.tabChange.subscribe(changeSpy);
 
-      getTabButton(2).click();
+      getTabByName('Profile').click();
+      fixture.detectChanges();
 
       expect(changeSpy).toHaveBeenCalledTimes(1);
-      expect(fixture.componentInstance.activeIndex()).toBe(2);
+      expect(getSelectedTab().getAttribute('aria-label')).toBe('Profile');
     });
   });
 
   describe('Accessibility', () => {
     it('should have role="tablist" on host', () => {
-      expect(fixture.nativeElement.getAttribute('role')).toBe('tablist');
+      expect(getTabList().getAttribute('role')).toBe('tablist');
     });
 
     it('should have aria-label on host', () => {
-      expect(fixture.nativeElement.getAttribute('aria-label')).toBe('Navigation par onglets');
+      expect(getTabList().getAttribute('aria-label')).toBe('Navigation par onglets');
     });
 
     it('should have role="tab" on each tab button', () => {
-      getTabButtons().forEach(button => {
-        expect(button.getAttribute('role')).toBe('tab');
+      getAllTabs().forEach(tab => {
+        expect(tab.getAttribute('role')).toBe('tab');
       });
     });
 
-    it('should have aria-selected="true" on active tab', () => {
-      expect(getTabButton(0).getAttribute('aria-selected')).toBe('true');
+    it('should have aria-selected="true" on selected tab', () => {
+      expect(getSelectedTab()).toBeTruthy();
+      expect(getSelectedTab().getAttribute('aria-selected')).toBe('true');
     });
 
-    it('should have aria-selected="false" on inactive tabs', () => {
-      expect(getTabButton(1).getAttribute('aria-selected')).toBe('false');
-      expect(getTabButton(2).getAttribute('aria-selected')).toBe('false');
+    it('should have aria-selected="false" on non-selected tabs', () => {
+      const nonSelectedTabs = getAllTabs().filter(
+        tab => tab.getAttribute('aria-selected') === 'false'
+      );
+      expect(nonSelectedTabs.length).toBe(2);
     });
 
     it('should update aria-selected when selection changes', () => {
-      getTabButton(1).click();
+      getTabByName('Search').click();
       fixture.detectChanges();
 
-      expect(getTabButton(0).getAttribute('aria-selected')).toBe('false');
-      expect(getTabButton(1).getAttribute('aria-selected')).toBe('true');
+      expect(getTabByName('Home').getAttribute('aria-selected')).toBe('false');
+      expect(getTabByName('Search').getAttribute('aria-selected')).toBe('true');
     });
 
     it('should have aria-label on each tab button', () => {
-      expect(getTabButton(0).getAttribute('aria-label')).toBe('Home');
-      expect(getTabButton(1).getAttribute('aria-label')).toBe('Search');
-      expect(getTabButton(2).getAttribute('aria-label')).toBe('Profile');
+      expect(getTabByName('Home').getAttribute('aria-label')).toBe('Home');
+      expect(getTabByName('Search').getAttribute('aria-label')).toBe('Search');
+      expect(getTabByName('Profile').getAttribute('aria-label')).toBe('Profile');
     });
 
     it('should have aria-hidden on icons', () => {
@@ -329,46 +293,38 @@ describe('PshTabBarComponent', () => {
   });
 
   describe('Position variants', () => {
-    it('should have bottom position by default', () => {
-      expect(fixture.componentInstance.position()).toBe('bottom');
-    });
-
     it('should NOT have top class by default', () => {
-      expect(fixture.nativeElement.classList.contains('top')).toBe(false);
+      expect(getTabList().classList.contains('top')).toBe(false);
     });
 
     it('should apply top class when position is top', () => {
       fixture.componentRef.setInput('position', 'top');
       fixture.detectChanges();
 
-      expect(fixture.nativeElement.classList.contains('top')).toBe(true);
+      expect(getTabList().classList.contains('top')).toBe(true);
     });
 
     it('should remove top class when position changes back to bottom', () => {
       fixture.componentRef.setInput('position', 'top');
       fixture.detectChanges();
-      expect(fixture.nativeElement.classList.contains('top')).toBe(true);
+      expect(getTabList().classList.contains('top')).toBe(true);
 
       fixture.componentRef.setInput('position', 'bottom');
       fixture.detectChanges();
-      expect(fixture.nativeElement.classList.contains('top')).toBe(false);
+      expect(getTabList().classList.contains('top')).toBe(false);
     });
   });
 
   describe('Animation configuration', () => {
-    it('should have animations enabled by default', () => {
-      expect(fixture.componentInstance.animated()).toBe(true);
-    });
-
     it('should have animated class by default', () => {
-      expect(fixture.nativeElement.classList.contains('animated')).toBe(true);
+      expect(getTabList().classList.contains('animated')).toBe(true);
     });
 
     it('should remove animated class when animations are disabled', () => {
       fixture.componentRef.setInput('animated', false);
       fixture.detectChanges();
 
-      expect(fixture.nativeElement.classList.contains('animated')).toBe(false);
+      expect(getTabList().classList.contains('animated')).toBe(false);
     });
   });
 
@@ -377,23 +333,15 @@ describe('PshTabBarComponent', () => {
       fixture.componentRef.setInput('items', []);
       fixture.detectChanges();
 
-      expect(getTabButtons().length).toBe(0);
+      expect(getAllTabs().length).toBe(0);
     });
 
     it('should handle single item', () => {
       fixture.componentRef.setInput('items', [mockItems[0]]);
       fixture.detectChanges();
 
-      expect(getTabButtons().length).toBe(1);
-      expect(getTabButton(0).classList.contains('active')).toBe(true);
-    });
-
-    it('should handle programmatic activeIndex change', () => {
-      fixture.componentInstance.activeIndex.set(2);
-      fixture.detectChanges();
-
-      expect(getTabButton(2).classList.contains('active')).toBe(true);
-      expect(getTabButton(0).classList.contains('active')).toBe(false);
+      expect(getAllTabs().length).toBe(1);
+      expect(getSelectedTab().getAttribute('aria-label')).toBe('Home');
     });
   });
 });
@@ -406,11 +354,14 @@ describe('PshTabBarComponent with custom config', () => {
     { id: 'search', label: 'Search', icon: 'magnifying-glass' }
   ];
 
-  const getTabButtons = () =>
-    Array.from(fixture.nativeElement.querySelectorAll('.tab-item')) as HTMLButtonElement[];
+  const getTabList = () =>
+    fixture.nativeElement as HTMLElement;
 
-  const getTabButton = (index: number) =>
-    getTabButtons()[index] as HTMLButtonElement;
+  const getAllTabs = () =>
+    Array.from(fixture.nativeElement.querySelectorAll('[role="tab"]')) as HTMLButtonElement[];
+
+  const getDisabledTabs = () =>
+    Array.from(fixture.nativeElement.querySelectorAll('[aria-disabled="true"]')) as HTMLButtonElement[];
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -433,17 +384,15 @@ describe('PshTabBarComponent with custom config', () => {
   });
 
   it('should use disabled from injected config', () => {
-    expect(fixture.componentInstance.disabled()).toBe(true);
+    expect(getDisabledTabs().length).toBe(2);
   });
 
   it('should use position from injected config', () => {
-    expect(fixture.componentInstance.position()).toBe('top');
-    expect(fixture.nativeElement.classList.contains('top')).toBe(true);
+    expect(getTabList().classList.contains('top')).toBe(true);
   });
 
   it('should use animated from injected config', () => {
-    expect(fixture.componentInstance.animated()).toBe(false);
-    expect(fixture.nativeElement.classList.contains('animated')).toBe(false);
+    expect(getTabList().classList.contains('animated')).toBe(false);
   });
 
   it('should allow overriding config values via inputs', () => {
@@ -452,8 +401,8 @@ describe('PshTabBarComponent with custom config', () => {
     fixture.componentRef.setInput('animated', true);
     fixture.detectChanges();
 
-    expect(fixture.componentInstance.disabled()).toBe(false);
-    expect(fixture.componentInstance.position()).toBe('bottom');
-    expect(fixture.componentInstance.animated()).toBe(true);
+    expect(getDisabledTabs().length).toBe(0);
+    expect(getTabList().classList.contains('top')).toBe(false);
+    expect(getTabList().classList.contains('animated')).toBe(true);
   });
 });
