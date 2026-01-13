@@ -69,7 +69,7 @@ export class ExampleComponent {}
 | icon | `string` | `undefined` | Nom de l'icône Phosphor (ex: `'check'`, `'star'`) |
 | closeLabel | `string` | `'Supprimer le tag'` | Label ARIA du bouton de fermeture |
 | content | `string` | `'Tag'` | Contenu par défaut si ng-content est vide |
-| ariaLabel | `string` | `undefined` | Label ARIA personnalisé pour le tag |
+| ariaLabel | `string` | `undefined` | Label ARIA personnalisé (optionnel, détecté automatiquement depuis ng-content) |
 
 ### Outputs
 
@@ -199,7 +199,7 @@ export class AppComponent {}
 - **Tags statiques** (`interactive: false`):
   - `role="status"` pour les lecteurs d'écran
   - `tabindex="-1"` (non focusable)
-  - Label ARIA généré automatiquement depuis le contenu
+  - Label ARIA détecté automatiquement depuis le contenu projeté (ng-content)
 
 - **Tags interactifs** (`interactive: true`):
   - `role="button"` pour indiquer l'interactivité
@@ -212,6 +212,13 @@ export class AppComponent {}
   - Focusable et utilisable au clavier
   - Icône masquée des lecteurs d'écran (`aria-hidden="true"`)
 
+- **Détection automatique du label ARIA**:
+  Le composant détecte automatiquement le texte pour l'attribut `aria-label` selon cette priorité :
+  1. `ariaLabel` explicite (si fourni)
+  2. `content` (si différent de 'Tag')
+  3. Contenu projeté via ng-content (détection automatique)
+  4. Fallback: 'Tag'
+
 ### Navigation Clavier
 
 | Touche | Action |
@@ -223,12 +230,14 @@ export class AppComponent {}
 ### Labels ARIA
 
 ```html
-<!-- Label automatique depuis le contenu -->
-<psh-tag>Label Auto</psh-tag>
+<!-- Label automatique depuis le contenu projeté (ng-content) -->
+<!-- Le composant détecte automatiquement "Mon Tag" comme aria-label -->
+<psh-tag>Mon Tag</psh-tag>
 
-<!-- Label personnalisé -->
-<psh-tag [ariaLabel]="'Statut: Nouveau message'">
-  <i class="icon"></i>
+<!-- Label personnalisé (prioritaire sur la détection automatique) -->
+<!-- Utile pour les tags avec icônes seules ou labels complexes -->
+<psh-tag [ariaLabel]="'Statut: Nouveau message'" icon="envelope">
+  <i class="ph ph-envelope"></i>
 </psh-tag>
 
 <!-- Bouton de fermeture avec label descriptif -->
@@ -239,6 +248,8 @@ export class AppComponent {}
   Actif
 </psh-tag>
 ```
+
+> **Note**: Le `ariaLabel` explicite n'est nécessaire que pour les tags avec icônes seules ou lorsque vous souhaitez un label différent du texte visible.
 
 ## Variables CSS Personnalisables
 

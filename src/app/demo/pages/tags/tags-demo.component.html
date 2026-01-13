@@ -297,7 +297,7 @@
                 <td><code>ariaLabel</code></td>
                 <td><code>string | undefined</code></td>
                 <td><code>undefined</code></td>
-                <td>Label ARIA personnalisé pour l'accessibilité</td>
+                <td>Label ARIA personnalisé (optionnel, détecté automatiquement depuis ng-content)</td>
               </tr>
             </tbody>
           </table>
@@ -368,7 +368,7 @@ export class MyComponent &#123;
           <h4>Bonnes Pratiques d'Accessibilité</h4>
           <ul class="best-practices-list">
             <li><strong>Role ARIA</strong> : Le tag utilise automatiquement <code>role="status"</code> par défaut et <code>role="button"</code> si <code>interactive="true"</code></li>
-            <li><strong>Labels</strong> : Fournissez un <code>ariaLabel</code> descriptif pour les tags sans texte visible ou avec icônes uniquement</li>
+            <li><strong>Labels automatiques</strong> : Le composant détecte automatiquement le texte projeté (ng-content) pour l'aria-label. Fournissez un <code>ariaLabel</code> explicite uniquement pour les tags avec icônes seules</li>
             <li><strong>Keyboard Navigation</strong> : Les tags interactifs sont accessibles au clavier avec <code>tabindex="0"</code></li>
             <li><strong>État désactivé</strong> : Utilisez <code>disabled="true"</code> pour empêcher toute interaction et signaler visuellement l'état</li>
             <li><strong>Fermeture</strong> : Le bouton de fermeture a un label accessible automatique, personnalisable via <code>closeLabel</code></li>
