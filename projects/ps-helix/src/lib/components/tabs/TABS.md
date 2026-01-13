@@ -88,6 +88,17 @@ tabs: Tab[] = [
 | index | Signal<number> | Tab index (set by parent) |
 | isActive | Signal<boolean> | Active state (set by parent) |
 
+### Public Methods
+
+| Method | Signature | Description |
+|--------|-----------|-------------|
+| selectTab | (index: number) => void | Select tab by index (skips disabled) |
+| selectNext | () => void | Select next enabled tab (loops) |
+| selectPrevious | () => void | Select previous enabled tab (loops) |
+| selectFirst | () => void | Select first enabled tab |
+| selectLast | () => void | Select last enabled tab |
+| getActiveTab | () => Tab \| undefined | Get currently active tab data |
+
 ## Variants
 
 ### Default
@@ -143,10 +154,12 @@ import { TABS_CONFIG } from 'ps-helix';
 
 | Key | Action |
 |-----|--------|
-| Arrow Left | Select previous tab |
-| Arrow Right | Select next tab |
-| Home | Select first tab |
-| End | Select last tab |
+| Arrow Left | Select previous enabled tab (loops) |
+| Arrow Right | Select next enabled tab (loops) |
+| Home | Select first enabled tab |
+| End | Select last enabled tab |
+
+> **Note**: All navigation keys automatically skip disabled tabs.
 
 ## Accessibility
 

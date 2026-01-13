@@ -403,17 +403,27 @@
               <tr>
                 <td><code>selectTab</code></td>
                 <td><code>(index: number) =&gt; void</code></td>
-                <td>Sélectionne un onglet par son index. Ignore les onglets désactivés</td>
+                <td>Selectionne un onglet par son index. Ignore les onglets desactives</td>
               </tr>
               <tr>
                 <td><code>selectNext</code></td>
                 <td><code>() =&gt; void</code></td>
-                <td>Sélectionne l'onglet suivant (ignore les désactivés, boucle en fin de liste)</td>
+                <td>Selectionne l'onglet suivant (ignore les desactives, boucle en fin de liste)</td>
               </tr>
               <tr>
                 <td><code>selectPrevious</code></td>
                 <td><code>() =&gt; void</code></td>
-                <td>Sélectionne l'onglet précédent (ignore les désactivés, boucle en début de liste)</td>
+                <td>Selectionne l'onglet precedent (ignore les desactives, boucle en debut de liste)</td>
+              </tr>
+              <tr>
+                <td><code>selectFirst</code></td>
+                <td><code>() =&gt; void</code></td>
+                <td>Selectionne le premier onglet actif (ignore les desactives)</td>
+              </tr>
+              <tr>
+                <td><code>selectLast</code></td>
+                <td><code>() =&gt; void</code></td>
+                <td>Selectionne le dernier onglet actif (ignore les desactives)</td>
               </tr>
               <tr>
                 <td><code>getActiveTab</code></td>
@@ -470,7 +480,7 @@ export class MyComponent &#123;
         <div class="api-best-practices">
           <h4>Bonnes Pratiques d'Accessibilité</h4>
           <ul class="best-practices-list">
-            <li><strong>Navigation clavier</strong> : Les onglets supportent <kbd>Tab</kbd> (focus), <kbd>←</kbd>/<kbd>→</kbd> (navigation), <kbd>Home</kbd>/<kbd>End</kbd> (début/fin), <kbd>Enter</kbd>/<kbd>Space</kbd> (activation)</li>
+            <li><strong>Navigation clavier</strong> : Les onglets supportent <kbd>Tab</kbd> (focus), <kbd>←</kbd>/<kbd>→</kbd> (navigation avec boucle), <kbd>Home</kbd>/<kbd>End</kbd> (premier/dernier). Toutes les touches sautent automatiquement les onglets desactives</li>
             <li><strong>Rôles ARIA</strong> : Les attributs <code>role="tablist"</code>, <code>role="tab"</code> et <code>role="tabpanel"</code> sont automatiquement appliqués</li>
             <li><strong>États ARIA</strong> : <code>aria-selected</code> indique l'onglet actif, <code>aria-disabled</code> pour les onglets désactivés</li>
             <li><strong>Labels descriptifs</strong> : Utilisez <code>ariaLabel</code> pour décrire le groupe d'onglets aux utilisateurs de lecteurs d'écran</li>
