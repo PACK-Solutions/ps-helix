@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { PshTabBarComponent } from '@lib/components/tab-bar/tab-bar.component';
 import { TabBarItem, TabBarChangeEvent } from '@lib/components/tab-bar/tab-bar.types';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
@@ -7,7 +6,7 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
 
 @Component({
   selector: 'ds-tab-bar-demo',
-  imports: [CommonModule, PshTabBarComponent, DemoPageLayoutComponent, CodeSnippetComponent],
+  imports: [PshTabBarComponent, DemoPageLayoutComponent, CodeSnippetComponent],
   templateUrl: './tab-bar-demo.component.html',
   styleUrls: ['./tab-bar-demo.component.css']
 })
