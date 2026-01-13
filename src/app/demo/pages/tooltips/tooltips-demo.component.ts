@@ -36,7 +36,7 @@ export class TooltipsDemoComponent {
 
   helpTooltipCode = `<psh-tooltip
   content="Help text"
-  (showed)="onShow()"
+  (shown)="onShow()"
   (hidden)="onHide()"
 >
   <psh-button icon="question" />
@@ -108,7 +108,23 @@ export class TooltipsDemoComponent {
   <psh-button>Delayed</psh-button>
 </psh-tooltip>`;
 
-  handleTooltipShowed(): void {
+  autoFlipCode = `<psh-tooltip
+  content="Auto-flip enabled"
+  position="top"
+  [autoFlip]="true"
+>
+  <psh-button>Auto-flip</psh-button>
+</psh-tooltip>`;
+
+  noAutoFlipCode = `<psh-tooltip
+  content="Fixed position"
+  position="top"
+  [autoFlip]="false"
+>
+  <psh-button>No auto-flip</psh-button>
+</psh-tooltip>`;
+
+  handleTooltipShown(): void {
     console.log('Tooltip shown');
   }
 

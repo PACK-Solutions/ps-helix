@@ -47,7 +47,7 @@
             <div class="basic-preview">
               <psh-tooltip
                 [content]="'TOOLTIP.BASIC.HELP_TEXT' | translate"
-                (showed)="handleTooltipShowed()"
+                (shown)="handleTooltipShown()"
                 (hidden)="handleTooltipHidden()"
               >
                 <psh-button appearance="outline" variant="secondary" icon="question" iconPosition="only" ariaLabel="Help">
@@ -133,6 +133,53 @@
               </div>
               <p class="position-usage">{{ 'TOOLTIP.POSITIONS.LEFT_USAGE' | translate }}</p>
               <ds-code-snippet [code]="leftPositionCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Auto-Flip Section -->
+    <section class="tooltip-autoflip-section">
+      <h3 class="section-title">{{ 'TOOLTIP.SECTIONS.AUTOFLIP' | translate }}</h3>
+      <div class="autoflip-container">
+        <div class="autoflip-intro">
+          <p>{{ 'TOOLTIP.AUTOFLIP.DESCRIPTION' | translate }}</p>
+        </div>
+        <div class="autoflip-grid">
+          <div class="autoflip-card">
+            <div class="autoflip-preview">
+              <psh-tooltip
+                [content]="'TOOLTIP.AUTOFLIP.ENABLED_TEXT' | translate"
+                position="top"
+                [autoFlip]="true"
+              >
+                <psh-button appearance="filled" variant="primary">{{ 'TOOLTIP.AUTOFLIP.ENABLED' | translate }}</psh-button>
+              </psh-tooltip>
+            </div>
+            <div class="autoflip-info">
+              <h4>{{ 'TOOLTIP.AUTOFLIP.ENABLED_TITLE' | translate }}</h4>
+              <code class="autoflip-code">[autoFlip]="true"</code>
+              <p>{{ 'TOOLTIP.AUTOFLIP.ENABLED_DESC' | translate }}</p>
+              <ds-code-snippet [code]="autoFlipCode" />
+            </div>
+          </div>
+
+          <div class="autoflip-card">
+            <div class="autoflip-preview">
+              <psh-tooltip
+                [content]="'TOOLTIP.AUTOFLIP.DISABLED_TEXT' | translate"
+                position="top"
+                [autoFlip]="false"
+              >
+                <psh-button appearance="outline" variant="secondary">{{ 'TOOLTIP.AUTOFLIP.DISABLED' | translate }}</psh-button>
+              </psh-tooltip>
+            </div>
+            <div class="autoflip-info">
+              <h4>{{ 'TOOLTIP.AUTOFLIP.DISABLED_TITLE' | translate }}</h4>
+              <code class="autoflip-code">[autoFlip]="false"</code>
+              <p>{{ 'TOOLTIP.AUTOFLIP.DISABLED_DESC' | translate }}</p>
+              <ds-code-snippet [code]="noAutoFlipCode" />
             </div>
           </div>
         </div>
@@ -335,7 +382,7 @@
         </div>
 
         <div class="api-table-wrapper">
-          <h4>{{ 'TOOLTIP.API.MODEL_INPUTS' | translate }}</h4>
+          <h4>{{ 'TOOLTIP.API.INPUTS' | translate }}</h4>
           <table class="api-table">
             <thead>
               <tr>
@@ -346,6 +393,12 @@
               </tr>
             </thead>
             <tbody>
+              <tr>
+                <td><code>content</code></td>
+                <td><code>string</code></td>
+                <td><strong>required</strong></td>
+                <td>{{ 'TOOLTIP.API.CONTENT_DESC' | translate }}</td>
+              </tr>
               <tr>
                 <td><code>variant</code></td>
                 <td><code>'light' | 'dark'</code></td>
@@ -376,39 +429,22 @@
                 <td><code>200</code></td>
                 <td>{{ 'TOOLTIP.API.MAX_WIDTH_DESC' | translate }}</td>
               </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="api-table-wrapper">
-          <h4>{{ 'TOOLTIP.API.REGULAR_INPUTS' | translate }}</h4>
-          <table class="api-table">
-            <thead>
               <tr>
-                <th>{{ 'TOOLTIP.API.PROPERTY' | translate }}</th>
-                <th>{{ 'TOOLTIP.API.TYPE' | translate }}</th>
-                <th>{{ 'TOOLTIP.API.DESCRIPTION' | translate }}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><code>content</code></td>
-                <td><code>string</code></td>
-                <td>{{ 'TOOLTIP.API.CONTENT_DESC' | translate }}</td>
+                <td><code>autoFlip</code></td>
+                <td><code>boolean</code></td>
+                <td><code>true</code></td>
+                <td>{{ 'TOOLTIP.API.AUTOFLIP_DESC' | translate }}</td>
               </tr>
               <tr>
                 <td><code>disabled</code></td>
                 <td><code>boolean</code></td>
+                <td><code>false</code></td>
                 <td>{{ 'TOOLTIP.API.DISABLED_DESC' | translate }}</td>
-              </tr>
-              <tr>
-                <td><code>ariaLabel</code></td>
-                <td><code>string | undefined</code></td>
-                <td>{{ 'TOOLTIP.API.ARIA_LABEL_DESC' | translate }}</td>
               </tr>
               <tr>
                 <td><code>id</code></td>
                 <td><code>string</code></td>
+                <td>auto</td>
                 <td>{{ 'TOOLTIP.API.ID_DESC' | translate }}</td>
               </tr>
             </tbody>
@@ -427,9 +463,9 @@
             </thead>
             <tbody>
               <tr>
-                <td><code>showed</code></td>
+                <td><code>shown</code></td>
                 <td><code>EventEmitter&lt;void&gt;</code></td>
-                <td>{{ 'TOOLTIP.API.SHOWED_DESC' | translate }}</td>
+                <td>{{ 'TOOLTIP.API.SHOWN_DESC' | translate }}</td>
               </tr>
               <tr>
                 <td><code>hidden</code></td>
@@ -446,7 +482,6 @@
             <pre><code>import &#123; PshTooltipComponent &#125; from 'ps-helix';
 
 &#64;Component(&#123;
-  standalone: true,
   imports: [PshTooltipComponent],
   template: `
     &lt;psh-tooltip
@@ -456,8 +491,8 @@
       [showDelay]="200"
       [hideDelay]="100"
       [maxWidth]="250"
-      ariaLabel="Help information"
-      (showed)="onTooltipShow()"
+      [autoFlip]="true"
+      (shown)="onTooltipShow()"
       (hidden)="onTooltipHide()"
     &gt;
       &lt;psh-button&gt;Hover for info&lt;/psh-button&gt;
