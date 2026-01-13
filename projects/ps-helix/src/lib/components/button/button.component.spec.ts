@@ -20,6 +20,16 @@ class TestHostComponent {
 })
 class TestHostIconOnlyComponent {}
 
+@Component({
+  selector: 'test-host-explicit-label',
+  imports: [PshButtonComponent],
+  template: `<psh-button [ariaLabel]="explicitLabel">{{ buttonText }}</psh-button>`
+})
+class TestHostExplicitLabelComponent {
+  buttonText = 'Click me';
+  explicitLabel = 'Custom label';
+}
+
 describe('PshButtonComponent', () => {
   let fixture: ComponentFixture<PshButtonComponent>;
 
@@ -171,7 +181,7 @@ describe('PshButtonComponent', () => {
 
   describe('Accessibility', () => {
     describe('aria-label attribute', () => {
-      it('should not have aria-label by default', () => {
+      it('should not have aria-label when no content is projected', () => {
         expect(getButton().getAttribute('aria-label')).toBeFalsy();
       });
 
@@ -630,6 +640,34 @@ describe('PshButtonComponent with ng-content', () => {
     expect(getButton().textContent).not.toContain('Click me');
     expect(getButton().textContent).toContain('Loading...');
   });
+
+  describe('automatic aria-label detection', () => {
+    it('should automatically set aria-label from projected content', () => {
+      hostFixture.detectChanges();
+      expect(getButton().getAttribute('aria-label')).toBe('Click me');
+    });
+
+    it('should update aria-label when projected content changes', () => {
+      hostFixture.componentInstance.buttonText = 'Submit';
+      hostFixture.detectChanges();
+
+      expect(getButton().getAttribute('aria-label')).toBe('Submit');
+    });
+
+    it('should trim whitespace from projected content for aria-label', () => {
+      hostFixture.componentInstance.buttonText = '   Trimmed   ';
+      hostFixture.detectChanges();
+
+      expect(getButton().getAttribute('aria-label')).toBe('Trimmed');
+    });
+
+    it('should use loading text aria-label when loading instead of projected content', () => {
+      hostFixture.componentInstance.loading = true;
+      hostFixture.detectChanges();
+
+      expect(getButton().getAttribute('aria-label')).toBe('Loading...');
+    });
+  });
 });
 
 describe('PshButtonComponent icon-only with ng-content', () => {
@@ -684,5 +722,39 @@ describe('PshButtonComponent full width', () => {
     fixture.detectChanges();
 
     expect(getHost().classList.contains('full-width')).toBe(true);
+  });
+});
+
+describe('PshButtonComponent explicit ariaLabel override', () => {
+  let hostFixture: ComponentFixture<TestHostExplicitLabelComponent>;
+
+  const getButton = () =>
+    hostFixture.nativeElement.querySelector('button') as HTMLButtonElement;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [TestHostExplicitLabelComponent]
+    }).compileComponents();
+
+    hostFixture = TestBed.createComponent(TestHostExplicitLabelComponent);
+    hostFixture.detectChanges();
+  });
+
+  it('should use explicit ariaLabel instead of projected content', () => {
+    expect(getButton().getAttribute('aria-label')).toBe('Custom label');
+  });
+
+  it('should update aria-label when explicit ariaLabel changes', () => {
+    hostFixture.componentInstance.explicitLabel = 'Updated label';
+    hostFixture.detectChanges();
+
+    expect(getButton().getAttribute('aria-label')).toBe('Updated label');
+  });
+
+  it('should keep explicit ariaLabel even when projected content changes', () => {
+    hostFixture.componentInstance.buttonText = 'New text';
+    hostFixture.detectChanges();
+
+    expect(getButton().getAttribute('aria-label')).toBe('Custom label');
   });
 });

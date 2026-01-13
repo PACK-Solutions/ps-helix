@@ -1,10 +1,14 @@
 import {
+  AfterContentChecked,
   ChangeDetectionStrategy,
   Component,
   computed,
+  ElementRef,
+  inject,
   input,
   model,
   output,
+  signal,
 } from '@angular/core';
 import { ButtonAppearance, ButtonVariant, ButtonSize, ButtonIconPosition } from './button.types';
 
@@ -18,7 +22,10 @@ import { ButtonAppearance, ButtonVariant, ButtonSize, ButtonIconPosition } from 
     '[class.full-width]': 'fullWidth()',
   },
 })
-export class PshButtonComponent {
+export class PshButtonComponent implements AfterContentChecked {
+  private elementRef = inject(ElementRef);
+  private projectedText = signal<string | undefined>(undefined);
+
   appearance = input<ButtonAppearance>('filled');
   variant = input<ButtonVariant>('primary');
   size = input<ButtonSize>('medium');
@@ -36,7 +43,22 @@ export class PshButtonComponent {
   // Outputs
   clicked = output<MouseEvent>();
 
-  // Computed values
+  ngAfterContentChecked(): void {
+    const button = this.elementRef.nativeElement.querySelector('button');
+    if (button) {
+      const ngContentElement = button.querySelector('.button-content');
+      if (ngContentElement) {
+        const textContent = ngContentElement.textContent?.trim() || '';
+        const currentProjectedText = this.projectedText();
+        if (textContent && textContent !== currentProjectedText) {
+          this.projectedText.set(textContent);
+        } else if (!textContent && currentProjectedText) {
+          this.projectedText.set(undefined);
+        }
+      }
+    }
+  }
+
   computedAriaLabel = computed(() => {
     if (this.ariaLabel()) return this.ariaLabel();
     if (this.loading()) return this.loadingText();
@@ -44,6 +66,8 @@ export class PshButtonComponent {
     if (this.iconPosition() === 'only') {
       return this.iconOnlyText() || 'Button';
     }
+    const projected = this.projectedText();
+    if (projected) return projected;
     return undefined;
   });
 
