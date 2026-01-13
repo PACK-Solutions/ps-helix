@@ -39,7 +39,13 @@ export class TooltipsDemoComponent {
   (shown)="onShow()"
   (hidden)="onHide()"
 >
-  <psh-button icon="question" />
+  <psh-button
+    appearance="outline"
+    variant="secondary"
+    icon="question"
+    iconPosition="only"
+    ariaLabel="Help"
+  />
 </psh-tooltip>`;
 
   topPositionCode = `<psh-tooltip
