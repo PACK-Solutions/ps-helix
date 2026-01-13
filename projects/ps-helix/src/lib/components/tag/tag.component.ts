@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, output, InjectionToken } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output, InjectionToken, ElementRef, AfterContentChecked, signal } from '@angular/core';
 import { TagVariant, TagSize, TagConfig } from './tag.types';
 
 export const TAG_CONFIG = new InjectionToken<Partial<TagConfig>>('TAG_CONFIG', {
@@ -18,8 +18,10 @@ export const TAG_CONFIG = new InjectionToken<Partial<TagConfig>>('TAG_CONFIG', {
   styleUrls: ['./tag.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PshTagComponent {
+export class PshTagComponent implements AfterContentChecked {
   private readonly config = inject(TAG_CONFIG);
+  private readonly elementRef = inject(ElementRef);
+  private readonly projectedText = signal('');
 
   readonly variant = input<TagVariant>(this.config.variant ?? 'primary');
   readonly size = input<TagSize>(this.config.size ?? 'medium');
@@ -39,10 +41,23 @@ export class PshTagComponent {
     if (customLabel) return customLabel;
 
     const contentText = this.content();
-    if (contentText) return contentText;
+    if (contentText && contentText !== 'Tag') return contentText;
+
+    const projected = this.projectedText();
+    if (projected) return projected;
 
     return 'Tag';
   });
+
+  ngAfterContentChecked(): void {
+    const contentElement = this.elementRef.nativeElement.querySelector('.tag-content');
+    if (contentElement) {
+      const text = (contentElement.textContent || '').trim();
+      if (text !== this.projectedText()) {
+        this.projectedText.set(text);
+      }
+    }
+  }
 
   readonly computedRole = computed(() =>
     this.interactive() ? 'button' : 'status'

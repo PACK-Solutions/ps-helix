@@ -729,30 +729,54 @@ describe('PshTagComponent with ng-content', () => {
   });
 
   describe('Accessibility with projected content', () => {
-    it('should use provided ariaLabel for screen readers', () => {
-      hostFixture.componentInstance.ariaLabel = 'Projected Tag';
-      hostFixture.detectChanges();
-
-      expect(getTagElement().getAttribute('aria-label')).toBe('Projected Tag');
-    });
-
-    it('should require explicit ariaLabel when using ng-content for WCAG compliance', () => {
+    it('should automatically detect projected content for aria-label', () => {
       const ariaLabel = getTagElement().getAttribute('aria-label');
       const visibleText = getTagElement().textContent?.trim();
 
-      expect(ariaLabel).toBe('Tag');
+      expect(ariaLabel).toBe('Projected Tag');
+      expect(ariaLabel).toBe(visibleText);
+    });
+
+    it('should use provided ariaLabel when explicitly set', () => {
+      hostFixture.componentInstance.ariaLabel = 'Custom Label';
+      hostFixture.detectChanges();
+
+      expect(getTagElement().getAttribute('aria-label')).toBe('Custom Label');
+    });
+
+    it('should prioritize explicit ariaLabel over projected content', () => {
+      hostFixture.componentInstance.ariaLabel = 'Explicit Label';
+      hostFixture.detectChanges();
+
+      const ariaLabel = getTagElement().getAttribute('aria-label');
+      const visibleText = getTagElement().textContent?.trim();
+
+      expect(ariaLabel).toBe('Explicit Label');
       expect(visibleText).toBe('Projected Tag');
       expect(ariaLabel).not.toBe(visibleText);
     });
 
-    it('should have coherent aria-label when ariaLabel is provided', () => {
-      hostFixture.componentInstance.ariaLabel = 'Projected Tag';
+    it('should update aria-label when projected content changes', () => {
+      expect(getTagElement().getAttribute('aria-label')).toBe('Projected Tag');
+
+      hostFixture.componentInstance.projectedContent = 'Updated Content';
       hostFixture.detectChanges();
 
-      const ariaLabel = getTagElement().getAttribute('aria-label');
-      const visibleText = getTagElement().textContent?.trim();
+      expect(getTagElement().getAttribute('aria-label')).toBe('Updated Content');
+    });
 
-      expect(ariaLabel).toBe(visibleText);
+    it('should trim whitespace from projected content for aria-label', async () => {
+      hostFixture.componentInstance.projectedContent = '  Spaced Content  ';
+      hostFixture.detectChanges();
+
+      expect(getTagElement().getAttribute('aria-label')).toBe('Spaced Content');
+    });
+
+    it('should fall back to "Tag" when projected content is empty', () => {
+      hostFixture.componentInstance.projectedContent = '';
+      hostFixture.detectChanges();
+
+      expect(getTagElement().getAttribute('aria-label')).toBe('Tag');
     });
   });
 });
