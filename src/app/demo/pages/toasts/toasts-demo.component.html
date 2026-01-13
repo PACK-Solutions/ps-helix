@@ -561,6 +561,36 @@
                 <td><code>void</code></td>
                 <td>Change la position d'affichage des toasts</td>
               </tr>
+              <tr>
+                <td><code>info()</code></td>
+                <td><code>message: string, options?: Partial&lt;Toast&gt;</code></td>
+                <td><code>string</code></td>
+                <td>Raccourci pour afficher un toast de type info</td>
+              </tr>
+              <tr>
+                <td><code>success()</code></td>
+                <td><code>message: string, options?: Partial&lt;Toast&gt;</code></td>
+                <td><code>string</code></td>
+                <td>Raccourci pour afficher un toast de type success</td>
+              </tr>
+              <tr>
+                <td><code>warning()</code></td>
+                <td><code>message: string, options?: Partial&lt;Toast&gt;</code></td>
+                <td><code>string</code></td>
+                <td>Raccourci pour afficher un toast de type warning</td>
+              </tr>
+              <tr>
+                <td><code>error()</code></td>
+                <td><code>message: string, options?: Partial&lt;Toast&gt;</code></td>
+                <td><code>string</code></td>
+                <td>Raccourci pour afficher un toast de type danger</td>
+              </tr>
+              <tr>
+                <td><code>danger()</code></td>
+                <td><code>message: string, options?: Partial&lt;Toast&gt;</code></td>
+                <td><code>string</code></td>
+                <td>Alias de error() pour afficher un toast de type danger</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -752,7 +782,7 @@ uploadFile(): void &#123;
         <div class="api-best-practices">
           <h4>Bonnes Pratiques d'Accessibilité</h4>
           <ul class="best-practices-list">
-            <li><strong>Rôle ARIA</strong> : Les toasts utilisent <code>role="status"</code> et <code>aria-live="polite"</code> pour être annoncés par les lecteurs d'écran sans interrompre</li>
+            <li><strong>Rôle ARIA</strong> : Les toasts utilisent <code>role="alert"</code> et <code>aria-live="polite"</code> pour être annoncés par les lecteurs d'écran sans interrompre</li>
             <li><strong>Messages clairs</strong> : Rédigez des messages concis et explicites décrivant l'action ou l'état (évitez les messages ambigus)</li>
             <li><strong>Durée adaptée</strong> : Assurez une durée suffisante pour que tous les utilisateurs puissent lire le message (minimum 3 secondes pour les messages courts)</li>
             <li><strong>Contraste</strong> : Vérifiez que le ratio de contraste entre le texte et le fond respecte WCAG AA (4.5:1 minimum)</li>
