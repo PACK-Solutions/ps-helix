@@ -1,64 +1,135 @@
 # Tabs Component Documentation
 
-## Utilisation
+## Import
 
-1. Importer le composant dans votre module ou composant standalone :
 ```typescript
-import { PshTabsComponent } from 'ps-helix';
+import { PshTabsComponent, PshTabComponent } from 'ps-helix';
 
 @Component({
-  // ...
-  imports: [PshTabsComponent]
+  imports: [PshTabsComponent, PshTabComponent]
 })
 ```
 
-### Utilisation de Base
+## Usage
+
+### Content Projection (Recommended)
+
+```html
+<psh-tabs [(activeIndex)]="activeIndex">
+  <psh-tab header="Accueil" icon="house">
+    <p>Contenu de l'onglet Accueil</p>
+  </psh-tab>
+  <psh-tab header="Profil" icon="user">
+    <p>Contenu de l'onglet Profil</p>
+  </psh-tab>
+  <psh-tab header="Parametres" icon="gear" [disabled]="true">
+    <p>Contenu desactive</p>
+  </psh-tab>
+</psh-tabs>
+```
+
+### Data-Driven
 
 ```typescript
-// Tabs basique avec contenu par défaut
-<psh-tabs></psh-tabs>
+tabs: Tab[] = [
+  { header: 'Accueil', icon: 'house', content: 'Contenu de l\'onglet Accueil' },
+  { header: 'Profil', icon: 'user', content: 'Contenu de l\'onglet Profil' },
+  { header: 'Parametres', icon: 'gear', content: 'Contenu des parametres', disabled: true }
+];
+```
 
-// Tabs avec contenu personnalisé
-<psh-tabs [(activeIndex)]="activeIndex">
-  <div tabContent data-header="Accueil" data-icon="house">
-    Contenu de l'onglet Accueil
-  </div>
-  <div tabContent data-header="Profil" data-icon="user">
-    Contenu de l'onglet Profil
-  </div>
-</psh-tabs>
+```html
+<psh-tabs [tabs]="tabs" [(activeIndex)]="activeIndex"></psh-tabs>
 ```
 
 ## API
 
-### Model Inputs (@model)
-| Nom | Type | Défaut | Description |
-|-----|------|---------|-------------|
-| variant | TabsVariant | 'default' | Style des onglets |
-| size | TabsSize | 'medium' | Taille des onglets |
-| activeIndex | number | 0 | Index de l'onglet actif |
-| animated | boolean | true | Animation activée |
+### PshTabsComponent
 
-### Outputs
-| Nom | Type | Description |
-|-----|------|-------------|
-| activeIndexChange | EventEmitter<number> | Émis lors du changement d'onglet |
+#### Inputs
 
-### Attributs des Onglets
-| Attribut | Type | Description |
-|----------|------|-------------|
-| data-header | string | Titre de l'onglet |
-| data-icon | string | Icône Phosphor |
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| variant | TabsVariant | 'default' | Visual style: 'default', 'underline', 'pills' |
+| size | TabsSize | 'medium' | Size: 'small', 'medium', 'large' |
+| tabs | Tab[] | [] | Data-driven tabs (alternative to content projection) |
+| animated | boolean | true | Enable fade-in animation |
+| ariaLabel | string | - | Custom ARIA label for the tab region |
+| ariaOrientation | 'horizontal' \| 'vertical' | 'horizontal' | Orientation for ARIA |
 
-## Configuration Globale
+#### Model
+
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| activeIndex | number | 0 | Currently active tab index (two-way binding) |
+
+#### Outputs
+
+| Name | Type | Description |
+|------|------|-------------|
+| activeIndexChange | number | Emitted when active tab changes |
+| tabChange | TabChangeEvent | Emitted with previous/current index and tab data |
+
+### PshTabComponent
+
+#### Inputs
+
+| Name | Type | Required | Description |
+|------|------|----------|-------------|
+| header | string | Yes | Tab header text |
+| icon | string | No | Phosphor icon name |
+| disabled | boolean | No | Disable the tab |
+| ariaLabel | string | No | Custom ARIA label |
+
+#### Readonly Signals
+
+| Name | Type | Description |
+|------|------|-------------|
+| index | Signal<number> | Tab index (set by parent) |
+| isActive | Signal<boolean> | Active state (set by parent) |
+
+## Variants
+
+### Default
+Standard tabs with background fill on active state.
+
+```html
+<psh-tabs variant="default">...</psh-tabs>
+```
+
+### Underline
+Minimal style with underline indicator.
+
+```html
+<psh-tabs variant="underline">...</psh-tabs>
+```
+
+### Pills
+Rounded pill-shaped tabs with background.
+
+```html
+<psh-tabs variant="pills">...</psh-tabs>
+```
+
+## Sizes
+
+```html
+<psh-tabs size="small">...</psh-tabs>
+<psh-tabs size="medium">...</psh-tabs>
+<psh-tabs size="large">...</psh-tabs>
+```
+
+## Global Configuration
 
 ```typescript
+import { TABS_CONFIG } from 'ps-helix';
+
 @Component({
   providers: [
     {
       provide: TABS_CONFIG,
       useValue: {
-        variant: 'default',
+        variant: 'pills',
         size: 'medium',
         activeIndex: 0,
         animated: true
@@ -68,58 +139,47 @@ import { PshTabsComponent } from 'ps-helix';
 })
 ```
 
-## Variants Overview
+## Keyboard Navigation
 
-### Default Tabs
-**Description**: Style par défaut avec fond.
+| Key | Action |
+|-----|--------|
+| Arrow Left | Select previous tab |
+| Arrow Right | Select next tab |
+| Home | Select first tab |
+| End | Select last tab |
 
-**Cas d'utilisation**:
-- Navigation principale
-- Sections de contenu
-- Interfaces standards
+## Accessibility
 
-### Underline Tabs
-**Description**: Style minimaliste avec soulignement.
+- `role="tablist"` on the header container
+- `role="tab"` on each tab button
+- `role="tabpanel"` on each content panel
+- `aria-selected` indicates active state
+- `aria-controls` links tab to panel
+- `aria-disabled` for disabled tabs
+- Full keyboard navigation support
 
-**Cas d'utilisation**:
-- Interfaces épurées
-- Navigation secondaire
-- Sous-sections
+## Types
 
-### Pills Tabs
-**Description**: Style avec fond coloré.
+```typescript
+type TabsVariant = 'default' | 'underline' | 'pills';
+type TabsSize = 'small' | 'medium' | 'large';
 
-**Cas d'utilisation**:
-- Mise en avant
-- Navigation distincte
-- Interfaces modernes
+interface Tab {
+  header: string;
+  icon?: string;
+  content: string;
+  disabled?: boolean;
+  ariaLabel?: string;
+}
 
-## États et Modificateurs
+interface TabChangeEvent {
+  previousIndex: number;
+  currentIndex: number;
+  tab: Tab;
+}
+```
 
-### Tailles
-- `small`: Pour les interfaces denses
-- `medium`: Taille par défaut
-- `large`: Pour plus de visibilité
-
-### États
-- `active`: Onglet actif
-- `animated`: Transitions animées
-
-## Accessibilité
-
-### Attributs ARIA
-- `role="tablist"`: Pour le conteneur
-- `role="tab"`: Pour chaque onglet
-- `role="tabpanel"`: Pour le contenu
-- `aria-selected`: État de sélection
-- `aria-controls`: Lien avec le contenu
-
-### Bonnes Pratiques
-- Navigation au clavier
-- Focus visible
-- États distincts
-
-## Exemple Complet
+## Complete Example
 
 ```typescript
 @Component({
@@ -129,22 +189,26 @@ import { PshTabsComponent } from 'ps-helix';
       variant="pills"
       size="medium"
       [animated]="true"
-      (activeIndexChange)="handleTabChange($event)"
+      (tabChange)="onTabChange($event)"
     >
-      <div tabContent data-header="Accueil" data-icon="house">
-        Contenu de l'onglet Accueil
-      </div>
-      <div tabContent data-header="Profil" data-icon="user">
-        Contenu de l'onglet Profil
-      </div>
+      <psh-tab header="Dashboard" icon="chart-line">
+        <app-dashboard />
+      </psh-tab>
+      <psh-tab header="Users" icon="users">
+        <app-user-list />
+      </psh-tab>
+      <psh-tab header="Settings" icon="gear">
+        <app-settings />
+      </psh-tab>
     </psh-tabs>
-  `
+  `,
+  imports: [PshTabsComponent, PshTabComponent]
 })
 export class TabsExampleComponent {
   activeIndex = 0;
 
-  handleTabChange(index: number) {
-    console.log('Active tab:', index);
+  onTabChange(event: TabChangeEvent) {
+    console.log('Tab changed from', event.previousIndex, 'to', event.currentIndex);
   }
 }
 ```

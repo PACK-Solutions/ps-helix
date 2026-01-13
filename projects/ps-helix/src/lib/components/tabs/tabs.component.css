@@ -122,19 +122,23 @@
   border-bottom-color: var(--primary-color);
 }
 
-.tab-panel {
+.tab-panel,
+psh-tab {
   display: none;
 }
 
-.tab-panel:focus {
+.tab-panel:focus,
+psh-tab:focus {
   outline: none;
 }
 
-.tab-panel.active {
+.tab-panel.active,
+psh-tab.active {
   display: block;
 }
 
-.tabs-animated .tab-panel.active {
+.tabs-animated .tab-panel.active,
+.tabs-animated psh-tab.active {
   animation: fadeIn var(--animation-duration-normal) var(--animation-easing-out);
 }
 

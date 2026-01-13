@@ -15,10 +15,10 @@ export class TabsDemoComponent {
   lastChange = signal<string>('');
 
   programmaticTabs: Tab[] = [
-    { header: 'Dashboard', icon: 'squares-four', content: '<p>Vue d\'ensemble de vos données</p>' },
-    { header: 'Analytics', icon: 'chart-line', content: '<p>Statistiques détaillées</p>' },
-    { header: 'Settings', icon: 'gear', content: '<p>Configuration de l\'application</p>' },
-    { header: 'Disabled', icon: 'prohibit', content: '<p>Cet onglet est désactivé</p>', disabled: true }
+    { header: 'Dashboard', icon: 'squares-four', content: 'Vue d\'ensemble de vos donnees' },
+    { header: 'Analytics', icon: 'chart-line', content: 'Statistiques detaillees' },
+    { header: 'Settings', icon: 'gear', content: 'Configuration de l\'application' },
+    { header: 'Disabled', icon: 'prohibit', content: 'Cet onglet est desactive', disabled: true }
   ];
 
   twoWayBindingCode = `<psh-tabs [(activeIndex)]="activeIndex">
@@ -40,12 +40,12 @@ export class TabsDemoComponent {
   {
     header: 'Dashboard',
     icon: 'squares-four',
-    content: '<p>Contenu</p>'
+    content: 'Contenu du dashboard'
   },
   {
     header: 'Disabled',
     icon: 'prohibit',
-    content: '...',
+    content: 'Contenu desactive',
     disabled: true
   }
 ];
