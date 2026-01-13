@@ -333,11 +333,11 @@
       <h3 class="section-title">Documentation API</h3>
       <div class="api-container">
         <div class="api-intro">
-          <p>Le composant Table utilise des <strong>model inputs</strong> et des <strong>input signals</strong> pour une API simple et performante, conforme aux standards Angular 20.</p>
+          <p>Le composant Table utilise des <strong>input signals</strong> pour une API simple et performante, conforme aux standards Angular 20. Une configuration globale via <code>TABLE_CONFIG</code> permet de définir des valeurs par défaut.</p>
         </div>
 
         <div class="api-table-wrapper">
-          <h4>Propriétés (Model Inputs)</h4>
+          <h4>Propriétés de Style</h4>
           <table class="api-table">
             <thead>
               <tr>
@@ -395,7 +395,7 @@
         </div>
 
         <div class="api-table-wrapper">
-          <h4>Propriétés (Input Signals)</h4>
+          <h4>Propriétés de Données</h4>
           <table class="api-table">
             <thead>
               <tr>
@@ -500,6 +500,16 @@
                 <td><code>TableRowClickEvent</code></td>
                 <td>id, row: TableRow</td>
                 <td>Événement émis lors du clic sur une ligne</td>
+              </tr>
+              <tr>
+                <td><code>TableCellContext</code></td>
+                <td>$implicit: TableRow, column: TableColumn</td>
+                <td>Contexte pour les templates personnalisés de cellule</td>
+              </tr>
+              <tr>
+                <td><code>TableConfig</code></td>
+                <td>variant, size, striped, hoverable, bordered, loading, emptyMessage, noResultsMessage, globalSearch, globalSearchPlaceholder</td>
+                <td>Configuration globale injectable via TABLE_CONFIG</td>
               </tr>
             </tbody>
           </table>

@@ -27,7 +27,7 @@
         @for (column of columns(); track column.key) {
           <th 
             [style.width]="column.width"
-            [attr.aria-sort]="column.sortable ? (currentSort()?.key === column.key ? currentSort()?.direction : 'none') : null"
+            [attr.aria-sort]="column.sortable ? (currentSort()?.key === column.key ? (currentSort()?.direction === 'asc' ? 'ascending' : 'descending') : 'none') : null"
             [class.sortable]="column.sortable" 
             (click)="handleSort(column)"
           >
