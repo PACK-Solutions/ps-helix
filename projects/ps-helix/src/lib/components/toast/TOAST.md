@@ -4,29 +4,38 @@
 
 ### 1. Importer le Service et le Composant
 ```typescript
-import { ToastService, ToastComponent } from 'ps-helix';
+import { PshToastService, PshToastComponent } from 'ps-helix';
 ```
 
 ### 2. Ajouter le Conteneur de Toasts
 IMPORTANT: Cette etape est OBLIGATOIRE pour que les toasts s'affichent !
 
 ```typescript
-// app.component.html
-<psh-toast></psh-toast>
+// app.component.ts
+@Component({
+  imports: [PshToastComponent],
+  template: `
+    <router-outlet />
+    <psh-toast />
+  `
+})
+export class AppComponent {}
 ```
 
 ### 3. Utilisation dans les Composants
 
 ```typescript
+import { Component, inject } from '@angular/core';
+import { PshToastService } from 'ps-helix';
+
 @Component({
   template: `
     <button (click)="showToast()">Afficher Toast</button>
   `
 })
 export class ExampleComponent {
-  constructor(private toastService: ToastService) {}
+  private toastService = inject(PshToastService);
 
-  // Toast basique sans traduction
   showBasicToast() {
     this.toastService.show({
       message: 'Message direct sans traduction',
@@ -35,12 +44,14 @@ export class ExampleComponent {
     });
   }
 
-  // Toast avec traduction
-  showTranslatedToast() {
-    this.toastService.show({
-      message: 'TOAST.SUCCESS',  // Clé de traduction
-      type: 'success',
-      duration: 3000
+  showSuccessToast() {
+    this.toastService.success('Operation reussie');
+  }
+
+  showWithOptions() {
+    this.toastService.info('Nouveau message', {
+      duration: 3000,
+      icon: 'bell'
     });
   }
 }
@@ -49,66 +60,94 @@ export class ExampleComponent {
 ## API
 
 ### Service Methods
-| Nom | Paramètres | Description |
-|-----|------------|-------------|
-| show | Toast | Affiche un nouveau toast |
-| remove | id: string | Supprime un toast spécifique |
-| setPosition | ToastPosition | Change la position des toasts |
+
+| Methode | Parametres | Retour | Description |
+|---------|------------|--------|-------------|
+| `show` | `Toast` | `string` | Affiche un nouveau toast et retourne son ID |
+| `info` | `message: string, options?: ToastOptions` | `string` | Affiche un toast de type info |
+| `success` | `message: string, options?: ToastOptions` | `string` | Affiche un toast de type success |
+| `warning` | `message: string, options?: ToastOptions` | `string` | Affiche un toast de type warning |
+| `error` | `message: string, options?: ToastOptions` | `string` | Affiche un toast de type danger |
+| `danger` | `message: string, options?: ToastOptions` | `string` | Affiche un toast de type danger |
+| `remove` | `id: string` | `void` | Supprime un toast specifique par son ID |
+| `setPosition` | `ToastPosition` | `void` | Change la position d'affichage des toasts |
 
 ### Interface Toast
+
 ```typescript
 interface Toast {
-  message: string;     // Message à afficher (direct ou clé de traduction)
-  type: ToastType;     // Type de toast
-  duration?: number;   // Durée en ms (0 = persistant)
-  icon?: string;      // Icône Phosphor
+  id?: string;                    // Identifiant unique (auto-genere)
+  message: string;                // Message a afficher
+  type: ToastType;                // Type de toast
+  duration?: number;              // Duree en ms (0 = persistant, defaut: 5000)
+  icon?: string;                  // Icone Phosphor personnalisee
+  showCloseButton?: boolean;      // Affiche/masque le bouton de fermeture
+  closeButtonAriaLabel?: string;  // Label ARIA pour le bouton de fermeture
+}
+```
+
+### Interface ToastConfig (Configuration Globale)
+
+```typescript
+interface ToastConfig {
+  position: ToastPosition;        // Position d'affichage (defaut: 'top-right')
+  duration: number;               // Duree par defaut en ms (defaut: 5000)
+  maxToasts: number;              // Nombre max de toasts simultanes (defaut: 5)
+  pauseOnHover: boolean;          // Pause au survol (defaut: true)
+  showIcon: boolean;              // Afficher les icones (defaut: true)
+  showCloseButton: boolean;       // Afficher bouton fermeture (defaut: true)
+  closeButtonAriaLabel?: string;  // Label ARIA pour le bouton de fermeture
 }
 ```
 
 ### Types
+
 ```typescript
 type ToastType = 'info' | 'success' | 'warning' | 'danger';
 type ToastPosition = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
 ```
 
-## Variants Overview
+## Variantes
 
 ### Info Toast
-**Description**: Toast d'information pour des messages généraux.
+**Description**: Toast d'information pour des messages generaux.
 
 **Cas d'utilisation**:
 - Notifications informatives
-- Mises à jour du système
+- Mises a jour du systeme
 - Messages de statut
 
 ### Success Toast
-**Description**: Toast de succès pour confirmer une action réussie.
+**Description**: Toast de succes pour confirmer une action reussie.
 
 **Cas d'utilisation**:
 - Confirmation de soumission
-- Actions complétées
-- Opérations réussies
+- Actions completees
+- Operations reussies
 
 ### Warning Toast
 **Description**: Toast d'avertissement pour attirer l'attention.
 
 **Cas d'utilisation**:
 - Avertissements
-- Actions nécessitant attention
+- Actions necessitant attention
 - Notifications importantes
 
 ### Danger Toast
-**Description**: Toast d'erreur pour signaler des problèmes.
+**Description**: Toast d'erreur pour signaler des problemes.
 
 **Cas d'utilisation**:
 - Messages d'erreur
-- Échecs d'opération
-- Problèmes critiques
+- Echecs d'operation
+- Problemes critiques
 
 ## Configuration et Options
 
 ### Configuration Globale
+
 ```typescript
+import { TOAST_CONFIG } from 'ps-helix';
+
 @Component({
   providers: [
     {
@@ -119,136 +158,193 @@ type ToastPosition = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
         maxToasts: 5,
         pauseOnHover: true,
         showIcon: true,
-        showCloseButton: true
+        showCloseButton: true,
+        closeButtonAriaLabel: 'Fermer la notification'
       }
     }
   ]
 })
 ```
 
-### Durée
-- Par défaut : 5000ms
+### Duree
+
+- Par defaut : 5000ms
 - Personnalisable via l'option `duration`
 - `duration: 0` pour un toast persistant
 
 ### Position
+
 ```typescript
-// Changer la position des toasts
 toastService.setPosition('top-right');
 ```
 
 Positions disponibles :
-- `top-right` (défaut)
+- `top-right` (defaut)
 - `top-left`
 - `bottom-right`
 - `bottom-left`
 
-### Icônes
-- Icônes par défaut selon le type
-- Possibilité d'utiliser une icône personnalisée
-- Utilise les icônes Phosphor
+### Controle de Fermeture
+
+| Configuration | Comportement |
+|---------------|--------------|
+| `duration: 5000, showCloseButton: true` | Fermeture auto + manuelle (standard) |
+| `duration: 5000, showCloseButton: false` | Fermeture auto uniquement |
+| `duration: 0, showCloseButton: true` | Fermeture manuelle obligatoire |
+
+**Important**: Ne jamais creer de toast avec `duration: 0` et `showCloseButton: false` car l'utilisateur ne pourrait pas le fermer.
+
+### Icones
+
+- Icones par defaut selon le type
+- Possibilite d'utiliser une icone personnalisee via la propriete `icon`
+- Utilise les icones Phosphor
+
+## Accessibilite
+
+### Attributs ARIA
+
+Les toasts utilisent les attributs ARIA suivants pour l'accessibilite :
+- `role="status"` : Indique une zone de statut
+- `aria-live="polite"` : Annonce le contenu sans interrompre
+- `aria-atomic="true"` : Lit l'ensemble du contenu
+
+### Navigation Clavier
+
+- **Tab** : Navigue vers le bouton de fermeture
+- **Enter/Space** : Active le bouton de fermeture
+- **Escape** : Ferme le toast actif
+
+### Bonnes Pratiques d'Accessibilite
+
+- Utiliser des messages clairs et concis
+- Assurer une duree suffisante pour la lecture (min 3 secondes)
+- Maintenir un contraste suffisant (WCAG AA 4.5:1)
+- Activer `pauseOnHover` pour permettre la lecture sans pression
+- Fournir un `closeButtonAriaLabel` descriptif
 
 ## Bonnes Pratiques
 
-1. **Utilisation Appropriée**
-   - Limiter le nombre de toasts simultanés
+1. **Utilisation Appropriee**
+   - Limiter le nombre de toasts simultanes
    - Messages courts et concis
-   - Durée adaptée au contenu
-   - Utiliser le type approprié selon le contexte
+   - Duree adaptee au contenu
+   - Utiliser le type approprie selon le contexte
 
-2. **Accessibilité**
-   - Rôles ARIA appropriés
-   - Support des lecteurs d'écran
-   - Contraste suffisant
-   - Durée d'affichage suffisante
+2. **Quand Utiliser les Toasts**
+   - Confirmations d'actions
+   - Notifications non-bloquantes
+   - Mises a jour de statut
+   - Feedback temporaire
 
-3. **Responsive Design**
-   - S'adapte à toutes les tailles d'écran
-   - Position optimisée sur mobile
+3. **Quand NE PAS Utiliser les Toasts**
+   - Erreurs critiques bloquantes (utiliser des modales)
+   - Informations permanentes (utiliser des alertes)
+   - Contenu necessitant une action immediate
+
+4. **Responsive Design**
+   - S'adapte a toutes les tailles d'ecran
+   - Position optimisee sur mobile
    - Gestion des longs contenus
-   - Lisibilité garantie
+   - Lisibilite garantie
 
-4. **Performance**
+5. **Performance**
    - Nettoyage automatique des toasts
-   - Utilisation des signals pour la réactivité
-   - Animations optimisées
-   - Gestion efficace de la mémoire
+   - Utilisation des signals pour la reactivite
+   - Animations optimisees
+   - Gestion efficace de la memoire
 
-5. **Internationalisation**
-   - Support des messages directs et traduits
-   - Traductions cohérentes
-   - Support RTL/LTR
-   - Messages adaptés au contexte culturel
+## Exemples
 
-## Exemple Complet
+### Toast Simple
 
 ```typescript
-import { Component } from '@angular/core';
-import { ToastService } from 'ps-helix';
-import { TranslateService } from '@ngx-translate/core';
+import { Component, inject } from '@angular/core';
+import { PshToastService } from 'ps-helix';
 
 @Component({
-  selector: 'app-toast-demo',
-  template: `
-    <!-- Toast basique sans traduction -->
-    <button (click)="showBasicToast()">Toast Basique</button>
-
-    <!-- Toast avec traduction -->
-    <button (click)="showTranslatedToast()">Toast Traduit</button>
-
-    <!-- Toast personnalisé -->
-    <button (click)="showCustomToast()">Toast Personnalisé</button>
-
-    <!-- Toast persistant -->
-    <button (click)="showPersistentToast()">Toast Persistant</button>
-
-    <!-- Changer la position -->
-    <button (click)="changePosition('top-left')">Changer Position</button>
-  `
+  selector: 'app-example'
 })
-export class ToastDemoComponent {
-  constructor(
-    private toastService: ToastService,
-    private translateService: TranslateService
-  ) {}
+export class ExampleComponent {
+  private toastService = inject(PshToastService);
 
-  showBasicToast() {
-    this.toastService.show({
-      message: 'Ceci est un message direct',
-      type: 'info'
-    });
+  showInfo() {
+    this.toastService.info('Nouvelle information disponible');
   }
 
-  showTranslatedToast() {
-    const message = this.translateService.instant('TOAST.SUCCESS');
-    this.toastService.show({
-      message,
-      type: 'success',
-      duration: 3000
-    });
+  showSuccess() {
+    this.toastService.success('Operation effectuee avec succes');
   }
 
-  showCustomToast() {
-    const message = this.translateService.instant('TOAST.CUSTOM');
-    this.toastService.show({
-      message,
-      type: 'info',
-      icon: 'bell',
-      duration: 5000
-    });
+  showWarning() {
+    this.toastService.warning('Veuillez verifier avant de continuer');
   }
 
-  showPersistentToast() {
-    const message = this.translateService.instant('TOAST.PERSISTENT');
-    this.toastService.show({
-      message,
-      type: 'warning',
-      duration: 0
-    });
+  showError() {
+    this.toastService.error('Une erreur est survenue');
   }
+}
+```
 
-  changePosition(position: ToastPosition) {
-    this.toastService.setPosition(position);
-  }
+### Toast avec Options
+
+```typescript
+showCustomToast() {
+  this.toastService.show({
+    message: 'Fichier telecharge avec succes',
+    type: 'success',
+    duration: 3000,
+    icon: 'check-circle',
+    showCloseButton: true
+  });
+}
+```
+
+### Toast Persistant
+
+```typescript
+showPersistentToast() {
+  const toastId = this.toastService.show({
+    message: 'Action requise: veuillez confirmer',
+    type: 'warning',
+    duration: 0,
+    showCloseButton: true
+  });
+
+  // Fermer manuellement plus tard
+  this.toastService.remove(toastId);
+}
+```
+
+### Gestion de Processus Asynchrone
+
+```typescript
+uploadFile() {
+  const toastId = this.toastService.show({
+    message: 'Telechargement en cours...',
+    type: 'info',
+    duration: 0,
+    showCloseButton: false
+  });
+
+  this.uploadService.upload().subscribe({
+    next: () => {
+      this.toastService.remove(toastId);
+      this.toastService.success('Telechargement termine');
+    },
+    error: () => {
+      this.toastService.remove(toastId);
+      this.toastService.error('Echec du telechargement');
+    }
+  });
+}
+```
+
+### Changer la Position
+
+```typescript
+changePosition() {
+  this.toastService.setPosition('bottom-right');
+  this.toastService.info('Position changee');
 }
 ```
