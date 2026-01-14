@@ -47,7 +47,7 @@ export class InfoCardsDemoComponent {
   ];
 
   systemInfoData: InfoCardData[] = [
-    { label: 'Version', value: 'v2.1.0' },
+    { label: 'Version', value: 'v2.1.1' },
     { label: 'Environnement', value: 'Production' },
     { label: 'Dernière mise à jour', value: '28 Octobre 2025' },
     { label: 'Uptime', value: '99.98%' },
