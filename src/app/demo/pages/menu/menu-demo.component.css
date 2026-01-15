@@ -29,6 +29,16 @@
   flex-wrap: wrap;
 }
 
+.expanded-ids-display {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--surface-ground);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  font-family: monospace;
+}
+
 .modes-grid,
 .variants-grid,
 .elements-grid {
