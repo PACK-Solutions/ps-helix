@@ -2,10 +2,10 @@
 
 Bibliothèque de composants Angular moderne et complète avec 28 composants standalone, système de thèmes, internationalisation et accessibilité optimale.
 
-[![Version](https://img.shields.io/badge/version-2.1.1-blue.svg)](https://www.npmjs.com/package/ps-helix)
+[![Version](https://img.shields.io/badge/version-3.0.0-blue.svg)](https://www.npmjs.com/package/ps-helix)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Angular](https://img.shields.io/badge/Angular-20.0.0-red.svg)](https://angular.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.8.0-blue.svg)](https://www.typescriptlang.org/)
+[![Angular](https://img.shields.io/badge/Angular-21.0.3-red.svg)](https://angular.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9.0-blue.svg)](https://www.typescriptlang.org/)
 
 ## Table des matières
 
@@ -26,7 +26,7 @@ Bibliothèque de composants Angular moderne et complète avec 28 composants stan
 
 ## Vue d'ensemble
 
-Helix est un design system professionnel construit avec Angular 20+, offrant une collection complète de composants réutilisables pour créer des applications web modernes et accessibles.
+Helix est un design system professionnel construit avec Angular 21+, offrant une collection complète de composants réutilisables pour créer des applications web modernes et accessibles.
 
 ### Auteur
 PACK Solutions
@@ -121,16 +121,16 @@ L'application de démonstration présente tous les composants avec :
 ### Versions requises
 - **Node.js** : 18.x ou supérieur
 - **pnpm** : 10.x ou supérieur (recommandé) ou **npm** : 9.x ou supérieur
-- **Angular** : 20.0.0 ou supérieur
-- **Angular CLI** : 20.0.0 ou supérieur
-- **TypeScript** : 5.8.0 ou supérieur
+- **Angular** : 21.0.3 ou supérieur
+- **Angular CLI** : 21.0.3 ou supérieur
+- **TypeScript** : 5.9.0 ou supérieur
 
 ### Dépendances peer
 ```json
 {
-  "@angular/common": "^20.0.0",
-  "@angular/core": "^20.0.0",
-  "@angular/forms": "^20.0.0",
+  "@angular/common": "^21.0.3",
+  "@angular/core": "^21.0.3",
+  "@angular/forms": "^21.0.3",
   "@ngx-translate/core": "^15.0.0",
   "rxjs": "^7.8.0"
 }
@@ -320,6 +320,32 @@ export class ExampleComponent {
   }
 }
 ```
+
+### Zoneless Change Detection
+
+Angular 21 introduit la détection de changement zoneless par défaut, ce qui représente une amélioration majeure des performances. Cette application utilise `provideZonelessChangeDetection()` au lieu de zone.js pour la détection des changements.
+
+**Avantages :**
+- **Performance améliorée** : Pas de surcharge liée à zone.js qui intercepte toutes les opérations asynchrones
+- **Bundle plus léger** : Réduction de la taille du bundle en éliminant zone.js de la production
+- **Modèle mental simplifié** : La détection de changement est déclenchée explicitement via les signals et les événements Angular
+- **Meilleure prévisibilité** : Contrôle plus fin sur le moment où la détection de changement se produit
+
+**Configuration :**
+```typescript
+// main.ts
+import { bootstrapApplication } from '@angular/platform-browser';
+import { provideZonelessChangeDetection } from '@angular/core';
+import { AppComponent } from './app/app.component';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideZonelessChangeDetection()
+  ]
+});
+```
+
+**Note :** zone.js reste dans les devDependencies uniquement pour les tests unitaires avec Jest, mais n'est pas utilisé en production.
 
 ## Composants disponibles
 
@@ -758,7 +784,7 @@ SOFTWARE.
 
 ---
 
-**Version** : 2.1.1
-**Construit avec** : Angular 20.0.0, TypeScript 5.8.0, Phosphor Icons 2.0.3
+**Version** : 3.0.0
+**Construit avec** : Angular 21.0.3, TypeScript 5.9.0, Phosphor Icons 2.0.3
 **Auteur** : Fabrice PEREZ | Product Designer chez PACK Solutions
-**Dernière mise à jour** : Décembre 2025
+**Dernière mise à jour** : Janvier 2026

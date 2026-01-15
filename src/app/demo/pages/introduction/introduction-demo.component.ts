@@ -11,12 +11,12 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
 })
 export class IntroductionDemoComponent {
   npmUrl = 'https://www.npmjs.com/package/ps-helix';
-  npmVersion = '2.1.1';
+  npmVersion = '3.0.0';
   keyFeatures = [
     {
       icon: 'lightning',
       title: 'Performance Optimale',
-      description: 'Composants légers et réactifs basés sur les signals Angular 20, optimisés pour maximiser l\'efficacité et la productivité.'
+      description: 'Composants légers et réactifs basés sur les signals Angular 21, optimisés pour maximiser l\'efficacité et la productivité.'
     },
     {
       icon: 'heart',
@@ -46,7 +46,7 @@ pnpm add ps-helix
 
 # Avec npm
 npm install ps-helix`,
-      note: 'Assurez-vous d\'utiliser Angular 20 ou superieur. pnpm offre des performances optimales.'
+      note: 'Assurez-vous d\'utiliser Angular 21 ou superieur. pnpm offre des performances optimales.'
     },
     {
       number: 2,
