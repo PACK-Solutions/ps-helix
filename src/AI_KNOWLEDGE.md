@@ -7,6 +7,7 @@ Reference documentation for the Helix Design System Angular component library. T
 ## Overview
 
 - **Library**: `ps-helix`
+- **Version**: 3.0.3
 - **Framework**: Angular 21+
 - **Prefix**: `psh-` (all components)
 - **Import**: `import { ComponentName } from 'ps-helix';`
@@ -906,9 +907,26 @@ interface Toast {
 |-------|------|---------|-------------|
 | `title` | `string` | `''` | Card title |
 | `data` | `InfoCardData[]` | `[]` | Data rows |
-| `variant` | `'default' \| 'elevated' \| 'outlined'` | `'default'` | Card variant |
-| `showEmptyState` | `boolean` | `true` | Show empty state |
-| `emptyStateMessage` | `string` | `'No data'` | Empty message |
+| `options` | `InfoCardOptions` | see below | Configuration options |
+| `variant` | `'default' \| 'elevated' \| 'outlined'` | `'outlined'` | Card variant |
+| `icon` | `string` | `'circle-dashed'` | Phosphor icon name |
+| `ariaLabel` | `string` | - | Custom ARIA label |
+| `cssClass` | `string` | `''` | Additional CSS classes |
+| `customStyle` | `Record<string, string>` | `{}` | Custom inline styles |
+| `interactive` | `boolean` | `false` | Makes card clickable |
+| `hoverable` | `boolean` | `false` | Enables hover effect |
+| `loading` | `boolean` | `false` | Loading state |
+| `disabled` | `boolean` | `false` | Disabled state |
+| `autoFullWidthOnMobile` | `boolean` | `true` | Full-width buttons on mobile |
+
+| Output | Type | Description |
+|--------|------|-------------|
+| `clicked` | `MouseEvent \| KeyboardEvent` | Click event (if interactive) |
+
+**Content Projection Slots**:
+- `[card-actions]`: Action buttons in footer
+
+**Layout Behavior**: The component uses `host: { style: 'display: block; height: 100%;' }` which enables equal-height cards in grid layouts. Uses `ViewEncapsulation.None` for style flexibility.
 
 **InfoCardData interface**:
 ```typescript
@@ -918,6 +936,16 @@ interface InfoCardData {
   labelWidth?: string;
   valueWidth?: string;
   customClass?: string;
+}
+```
+
+**InfoCardOptions interface**:
+```typescript
+interface InfoCardOptions {
+  showEmptyState?: boolean;
+  emptyStateMessage?: string;
+  labelWidth?: string;
+  valueWidth?: string;
 }
 ```
 

@@ -13,6 +13,7 @@ Composant carte d'information - affiche des donnees structurees sous forme de pa
 - [Comportement Responsive](#comportement-responsive)
 - [Exemples Pratiques](#exemples-pratiques)
 - [Accessibilite](#accessibilite)
+- [Comportement de Layout](#comportement-de-layout)
 - [Bonnes Pratiques](#bonnes-pratiques)
 
 ## Utilisation
@@ -449,6 +450,53 @@ Pour les cartes interactives (`interactive=true`) :
 4. Tester la navigation au clavier
 5. Fournir un feedback visuel clair pour l'etat de focus
 
+## Comportement de Layout
+
+### Host Element
+
+Le composant utilise `ViewEncapsulation.None` et definit des styles sur son element hote :
+
+```typescript
+host: {
+  style: 'display: block; height: 100%;'
+}
+```
+
+**Implications :**
+- **display: block** : Le composant occupe toute la largeur disponible par defaut
+- **height: 100%** : Le composant remplit la hauteur de son conteneur parent
+
+### Hauteur Egale dans les Grilles
+
+Grace a `height: 100%`, les cartes s'alignent automatiquement en hauteur dans une grille CSS :
+
+```html
+<div class="cards-grid">
+  <psh-info-card title="Carte 1" [data]="data1"></psh-info-card>
+  <psh-info-card title="Carte 2" [data]="data2"></psh-info-card>
+  <psh-info-card title="Carte 3" [data]="data3"></psh-info-card>
+</div>
+```
+
+```css
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+  gap: var(--size-4);
+}
+```
+
+**Resultat :** Toutes les cartes auront la meme hauteur, determinee par la carte la plus haute de chaque ligne.
+
+### ViewEncapsulation.None
+
+Le composant utilise `ViewEncapsulation.None`, ce qui permet :
+- Les styles du composant s'appliquent globalement
+- Les styles externes peuvent facilement personnaliser l'apparence
+- Les selecteurs CSS du composant ne sont pas encapsules
+
+**Note importante :** Utilisez les classes CSS fournies (`.info-card`, `.variant-elevated`, etc.) ou les inputs (`cssClass`, `customStyle`) pour personnaliser le composant plutot que de cibler directement les elements internes.
+
 ## Bonnes Pratiques
 
 ### 1. Utilisation des Design Tokens
@@ -516,6 +564,6 @@ Le composant utilise `ChangeDetectionStrategy.OnPush` et Signals :
 
 ---
 
-**Version :** 1.0
+**Version :** 1.1
 **Derniere mise a jour :** Janvier 2026
-**Compatibilite :** Angular 20+
+**Compatibilite :** Angular 21+

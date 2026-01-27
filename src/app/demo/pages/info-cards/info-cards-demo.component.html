@@ -291,7 +291,7 @@
       <h3 class="section-title">Layout en Grille</h3>
       <div class="grid-container">
         <div class="grid-intro">
-          <p>Organisez plusieurs cartes d'information dans une grille responsive pour créer des tableaux de bord complets.</p>
+          <p>Organisez plusieurs cartes d'information dans une grille responsive pour créer des tableaux de bord complets. Grace au comportement <code>height: 100%</code> du composant, toutes les cartes s'alignent automatiquement en hauteur au sein de chaque ligne.</p>
         </div>
         <div class="info-cards-grid">
           <psh-info-card
@@ -334,7 +334,7 @@
       <h3 class="section-title">Documentation API</h3>
       <div class="api-container">
         <div class="api-intro">
-          <p>Le composant Info Card utilise des <strong>input signals</strong> pour une API simple et performante, conforme aux standards Angular 20.</p>
+          <p>Le composant Info Card utilise des <strong>input signals</strong> pour une API simple et performante, conforme aux standards Angular 21. Le composant utilise <code>ViewEncapsulation.None</code> et <code>height: 100%</code> pour une integration optimale dans les grilles.</p>
         </div>
 
         <div class="api-table-wrapper">
