@@ -88,4 +88,6 @@ export interface TableConfig {
   tableLayout: 'auto' | 'fixed';
   /** Truncate text with ellipsis */
   truncateText: boolean;
+  /** Full width mode */
+  fullWidth: boolean;
 }

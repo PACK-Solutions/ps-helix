@@ -15,7 +15,8 @@ export const TABLE_CONFIG = new InjectionToken<Partial<TableConfig>>('TABLE_CONF
     globalSearch: false,
     globalSearchPlaceholder: 'Search in all columns...',
     tableLayout: 'auto',
-    truncateText: false
+    truncateText: false,
+    fullWidth: false
   })
 });
 
@@ -26,7 +27,8 @@ export const TABLE_CONFIG = new InjectionToken<Partial<TableConfig>>('TABLE_CONF
   styleUrls: ['./table.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    'class': 'psh-table'
+    'class': 'psh-table',
+    '[class.full-width]': 'fullWidth()'
   }
 })
 export class PshTableComponent {
@@ -39,6 +41,7 @@ export class PshTableComponent {
   bordered = input(this.config.bordered ?? false);
   loading = input(this.config.loading ?? false);
   globalSearch = input(this.config.globalSearch ?? false);
+  fullWidth = input(this.config.fullWidth ?? false);
   columns = input<TableColumn[]>([]);
   data = input<TableRow[]>([]);
   emptyMessage = input<string>(this.config.emptyMessage ?? 'No data available');
