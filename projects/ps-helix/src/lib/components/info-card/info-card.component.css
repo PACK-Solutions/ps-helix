@@ -4,6 +4,7 @@
   overflow: hidden;
   transition: all 0.2s ease;
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -174,7 +175,7 @@
   justify-content: flex-end;
 }
 
-.info-card-actions:empty {
+.info-card-actions:not(:has(*)) {
   display: none;
 }
 

@@ -32,6 +32,9 @@ import { InfoCardData, InfoCardOptions, InfoCardVariant } from './info-card.type
   styleUrl: './info-card.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
+  host: {
+    style: 'display: block; height: 100%;'
+  }
 })
 export class PshInfoCardComponent {
 
