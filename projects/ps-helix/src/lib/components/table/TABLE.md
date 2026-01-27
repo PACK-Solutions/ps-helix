@@ -106,6 +106,8 @@ const data: TableRow[] = [
 | emptyMessage | string | 'No data available' | Message quand aucune donnée |
 | noResultsMessage | string | 'No results found' | Message quand recherche sans résultat |
 | globalSearchPlaceholder | string | 'Search in all columns...' | Placeholder de recherche |
+| tableLayout | 'auto' \| 'fixed' | 'auto' | Algorithme de layout de la table |
+| truncateText | boolean | false | Tronque le texte avec ellipsis |
 
 ### Outputs
 | Nom | Type | Description |
@@ -360,6 +362,75 @@ const columns: TableColumn[] = [
 
 **Note** : Quand `sortFn` est défini, elle a la priorité sur le tri par défaut (même si `path` est aussi défini).
 
+## Layout et Troncature de Texte
+
+### Algorithme de Layout (`tableLayout`)
+
+La propriété `tableLayout` contrôle l'algorithme utilisé pour calculer les largeurs de colonnes :
+
+#### `tableLayout="auto"` (par défaut)
+Le navigateur calcule automatiquement les largeurs en fonction du contenu. Les largeurs définies en pourcentage peuvent ne pas être respectées exactement.
+
+```html
+<psh-table
+  [columns]="columns"
+  [data]="data"
+></psh-table>
+```
+
+#### `tableLayout="fixed"`
+Les largeurs de colonnes sont strictement respectées. Recommandé lorsque vous utilisez des largeurs en pourcentage.
+
+```typescript
+const columns: TableColumn[] = [
+  { key: 'id', label: 'ID', width: '10%' },
+  { key: 'name', label: 'Nom', width: '20%' },
+  { key: 'description', label: 'Description', width: '40%' },
+  { key: 'status', label: 'Statut', width: '15%' },
+  { key: 'date', label: 'Date', width: '15%' }
+];
+```
+
+```html
+<psh-table
+  tableLayout="fixed"
+  [columns]="columns"
+  [data]="data"
+></psh-table>
+```
+
+### Troncature de Texte (`truncateText`)
+
+La propriété `truncateText` permet de tronquer automatiquement le texte qui dépasse la largeur de la cellule, en affichant des points de suspension (ellipsis).
+
+```html
+<psh-table
+  [truncateText]="true"
+  [columns]="columns"
+  [data]="data"
+></psh-table>
+```
+
+Le texte tronqué affiche automatiquement une info-bulle native (`title`) au survol, permettant de visualiser le contenu complet.
+
+### Combinaison Recommandée
+
+Pour un contrôle optimal des largeurs de colonnes avec des textes potentiellement longs, combinez les deux propriétés :
+
+```html
+<psh-table
+  tableLayout="fixed"
+  [truncateText]="true"
+  [columns]="columns"
+  [data]="data"
+></psh-table>
+```
+
+Cette combinaison garantit :
+- Les largeurs de colonnes sont respectées (grâce à `tableLayout="fixed"`)
+- Les textes longs sont tronqués proprement avec ellipsis (grâce à `truncateText`)
+- L'utilisateur peut toujours accéder au contenu complet via l'info-bulle au survol
+
 ## Configuration Globale
 
 ```typescript
@@ -377,7 +448,9 @@ const columns: TableColumn[] = [
         globalSearch: false,
         emptyMessage: 'No data available',
         noResultsMessage: 'No results found',
-        globalSearchPlaceholder: 'Search in all columns...'
+        globalSearchPlaceholder: 'Search in all columns...',
+        tableLayout: 'auto',
+        truncateText: false
       }
     }
   ]

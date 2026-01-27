@@ -328,6 +328,102 @@
       </div>
     </section>
 
+    <!-- Layout et Troncature de Texte - Section Pleine Largeur -->
+    <section class="table-layout-section">
+      <h3 class="section-title">Layout et Troncature de Texte</h3>
+      <div class="layout-container">
+        <div class="layout-intro">
+          <p>Contrôlez le comportement des largeurs de colonnes et la gestion des textes longs grâce aux propriétés <code>tableLayout</code> et <code>truncateText</code>.</p>
+        </div>
+        <div class="layout-grid">
+          <div class="layout-card">
+            <div class="layout-preview">
+              <psh-table
+                [columns]="layoutColumns"
+                [data]="layoutData"
+              ></psh-table>
+            </div>
+            <div class="layout-info">
+              <h4>Layout Auto (Défaut)</h4>
+              <p>Le navigateur calcule automatiquement les largeurs en fonction du contenu. Les colonnes s'adaptent au contenu, ce qui peut étendre la table au-delà de son conteneur avec des textes longs.</p>
+              <div class="code-example">
+                <pre><code>&lt;psh-table
+  [columns]="columns"
+  [data]="data"
+&gt;&lt;/psh-table&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="layout-card">
+            <div class="layout-preview">
+              <psh-table
+                tableLayout="fixed"
+                [columns]="layoutColumns"
+                [data]="layoutData"
+              ></psh-table>
+            </div>
+            <div class="layout-info">
+              <h4>Layout Fixed</h4>
+              <p>Les largeurs définies en pourcentage sont strictement respectées. La table conserve sa largeur totale, mais le contenu peut déborder des cellules si le texte est trop long.</p>
+              <div class="code-example">
+                <pre><code>&lt;psh-table
+  tableLayout="fixed"
+  [columns]="columns"
+  [data]="data"
+&gt;&lt;/psh-table&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="layout-card">
+            <div class="layout-preview">
+              <psh-table
+                [truncateText]="true"
+                [columns]="layoutColumns"
+                [data]="layoutData"
+              ></psh-table>
+            </div>
+            <div class="layout-info">
+              <h4>Troncature de Texte</h4>
+              <p>Le texte qui dépasse la largeur de la cellule est tronqué avec des points de suspension. Survolez les cellules pour voir le contenu complet dans une info-bulle.</p>
+              <div class="code-example">
+                <pre><code>&lt;psh-table
+  [truncateText]="true"
+  [columns]="columns"
+  [data]="data"
+&gt;&lt;/psh-table&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="layout-card layout-card--recommended">
+            <div class="layout-preview">
+              <psh-table
+                tableLayout="fixed"
+                [truncateText]="true"
+                [striped]="true"
+                [columns]="layoutColumns"
+                [data]="layoutData"
+              ></psh-table>
+            </div>
+            <div class="layout-info">
+              <h4>Combinaison Recommandée</h4>
+              <p>Pour un contrôle optimal, combinez <code>tableLayout="fixed"</code> et <code>truncateText="true"</code>. Les largeurs sont respectées et les textes longs sont tronqués proprement avec info-bulle au survol.</p>
+              <div class="code-example">
+                <pre><code>&lt;psh-table
+  tableLayout="fixed"
+  [truncateText]="true"
+  [columns]="columns"
+  [data]="data"
+&gt;&lt;/psh-table&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Documentation API - Section Pleine Largeur -->
     <section class="api-section">
       <h3 class="section-title">Documentation API</h3>
@@ -389,6 +485,18 @@
                 <td><code>boolean</code></td>
                 <td><code>false</code></td>
                 <td>Active la barre de recherche globale</td>
+              </tr>
+              <tr>
+                <td><code>tableLayout</code></td>
+                <td><code>'auto' | 'fixed'</code></td>
+                <td><code>'auto'</code></td>
+                <td>Algorithme de layout. 'fixed' respecte les largeurs en pourcentage</td>
+              </tr>
+              <tr>
+                <td><code>truncateText</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Tronque le texte avec ellipsis et info-bulle au survol</td>
               </tr>
             </tbody>
           </table>
@@ -508,7 +616,7 @@
               </tr>
               <tr>
                 <td><code>TableConfig</code></td>
-                <td>variant, size, striped, hoverable, bordered, loading, emptyMessage, noResultsMessage, globalSearch, globalSearchPlaceholder</td>
+                <td>variant, size, striped, hoverable, bordered, loading, emptyMessage, noResultsMessage, globalSearch, globalSearchPlaceholder, tableLayout, truncateText</td>
                 <td>Configuration globale injectable via TABLE_CONFIG</td>
               </tr>
             </tbody>
@@ -531,6 +639,8 @@ import &#123; TableColumn, TableRow, TableSort &#125; from 'ps-helix';
       [striped]="true"
       [hoverable]="true"
       [globalSearch]="true"
+      [truncateText]="true"
+      tableLayout="fixed"
       size="medium"
       variant="default"
       emptyMessage="Aucun utilisateur trouvé"
@@ -581,6 +691,7 @@ export class UsersComponent &#123;
             <li><strong>Indicateurs Visuels</strong> : Les icônes de tri sont marquées <code>aria-hidden="true"</code> car l'information est fournie via <code>aria-sort</code></li>
             <li><strong>Contraste</strong> : Vérifiez que le texte respecte un ratio de contraste minimum de 4.5:1 (WCAG AA) sur tous les arrière-plans</li>
             <li><strong>État de Chargement</strong> : L'indicateur de chargement communique visuellement l'état, considérez l'ajout d'un message textuel pour les lecteurs d'écran</li>
+            <li><strong>Texte Tronqué</strong> : Lorsque <code>truncateText</code> est activé, le contenu complet est accessible via l'attribut <code>title</code> (info-bulle native au survol)</li>
           </ul>
         </div>
       </div>

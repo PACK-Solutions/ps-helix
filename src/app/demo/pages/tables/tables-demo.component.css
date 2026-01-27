@@ -5,7 +5,8 @@
 .table-variants-section,
 .table-sizes-section,
 .table-features-section,
-.table-states-section {
+.table-states-section,
+.table-layout-section {
   margin-bottom: var(--spacing-3xl);
 }
 
@@ -13,14 +14,16 @@
 .variants-container,
 .sizes-container,
 .features-container,
-.states-container {
+.states-container,
+.layout-container {
   width: 100%;
 }
 
 .variants-intro,
 .sizes-intro,
 .features-intro,
-.states-intro {
+.states-intro,
+.layout-intro {
   margin-bottom: var(--spacing-xl);
   color: var(--text-color-secondary);
   font-size: var(--font-size-lg);
@@ -46,10 +49,17 @@
   gap: var(--spacing-xl);
 }
 
+.layout-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-xl);
+}
+
 /* Cards */
 .variant-card,
 .size-card,
-.state-card {
+.state-card,
+.layout-card {
   background: var(--surface-card);
   border: 1px solid var(--surface-border);
   border-radius: var(--border-radius-lg);
@@ -61,16 +71,27 @@
 
 .variant-card:hover,
 .size-card:hover,
-.state-card:hover {
+.state-card:hover,
+.layout-card:hover {
   border-color: var(--primary-color);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transform: translateY(-2px);
 }
 
+.layout-card--recommended {
+  border-color: var(--success-color);
+  background: linear-gradient(135deg, var(--surface-card) 0%, rgba(var(--success-color-rgb, 34, 197, 94), 0.05) 100%);
+}
+
+.layout-card--recommended:hover {
+  border-color: var(--success-color);
+}
+
 /* Preview Areas */
 .variant-preview,
 .size-preview,
-.state-preview {
+.state-preview,
+.layout-preview {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -86,10 +107,20 @@
   min-height: 200px;
 }
 
+.layout-preview {
+  min-height: 180px;
+  align-items: flex-start;
+}
+
+.layout-preview psh-table {
+  width: 100%;
+}
+
 /* Info Sections */
 .variant-info h4,
 .size-info h4,
-.state-info h4 {
+.state-info h4,
+.layout-info h4 {
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
   color: var(--text-color);
@@ -98,7 +129,8 @@
 
 .variant-info p,
 .size-info p,
-.state-info p {
+.state-info p,
+.layout-info p {
   color: var(--text-color-secondary);
   margin-bottom: var(--spacing-md);
   line-height: 1.6;
@@ -215,6 +247,12 @@
   }
 }
 
+@media (max-width: 1024px) {
+  .layout-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 768px) {
   .variants-grid,
   .sizes-grid,
@@ -225,6 +263,7 @@
   .variant-card,
   .size-card,
   .state-card,
+  .layout-card,
   .feature-demo,
   .feature-doc {
     padding: var(--spacing-md);
@@ -232,7 +271,8 @@
 
   .variant-preview,
   .size-preview,
-  .state-preview {
+  .state-preview,
+  .layout-preview {
     padding: var(--spacing-md);
     min-height: 120px;
   }
@@ -249,7 +289,8 @@
 @media (max-width: 480px) {
   .variant-preview,
   .size-preview,
-  .state-preview {
+  .state-preview,
+  .layout-preview {
     min-height: 100px;
   }
 }
