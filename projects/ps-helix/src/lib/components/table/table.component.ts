@@ -13,7 +13,9 @@ export const TABLE_CONFIG = new InjectionToken<Partial<TableConfig>>('TABLE_CONF
     emptyMessage: 'No data available',
     noResultsMessage: 'No results found',
     globalSearch: false,
-    globalSearchPlaceholder: 'Search in all columns...'
+    globalSearchPlaceholder: 'Search in all columns...',
+    tableLayout: 'auto',
+    truncateText: false
   })
 });
 
@@ -42,6 +44,8 @@ export class PshTableComponent {
   emptyMessage = input<string>(this.config.emptyMessage ?? 'No data available');
   noResultsMessage = input<string>(this.config.noResultsMessage ?? 'No results found');
   globalSearchPlaceholder = input(this.config.globalSearchPlaceholder ?? 'Search in all columns...');
+  tableLayout = input<'auto' | 'fixed'>(this.config.tableLayout ?? 'auto');
+  truncateText = input(this.config.truncateText ?? false);
 
   sortChange = output<TableSort>();
   globalSearchChange = output<string>();

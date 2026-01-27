@@ -1,4 +1,4 @@
-<div 
+<div
   class="table-wrapper"
   [class.striped]="striped()"
   [class.hoverable]="hoverable()"
@@ -6,6 +6,8 @@
   [class.small]="size() === 'small'"
   [class.large]="size() === 'large'"
   [class.outline]="variant() === 'outline'"
+  [class.table-fixed]="tableLayout() === 'fixed'"
+  [class.truncate]="truncateText()"
   [attr.data-state]="state()"
 >
   @if (globalSearch()) {

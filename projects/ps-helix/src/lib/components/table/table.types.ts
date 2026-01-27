@@ -84,4 +84,8 @@ export interface TableConfig {
   globalSearch: boolean;
   /** Placeholder de recherche */
   globalSearchPlaceholder: string;
+  /** Table layout (auto or fixed for percentage widths) */
+  tableLayout: 'auto' | 'fixed';
+  /** Truncate text with ellipsis */
+  truncateText: boolean;
 }

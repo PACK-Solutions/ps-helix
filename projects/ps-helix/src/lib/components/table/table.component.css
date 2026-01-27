@@ -169,6 +169,24 @@ th.sortable:hover .sort-icon-neutral {
   box-shadow: 0 0 0 var(--focus-outline-width) var(--focus-ring-color);
 }
 
+/* Table Layout Fixed */
+.table-wrapper.table-fixed table {
+  table-layout: fixed;
+}
+
+/* Truncate Text */
+.table-wrapper.truncate td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 0;
+}
+
+.table-wrapper.truncate th {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* Responsive Design */
 @media (max-width: 48em) {
   .table-wrapper {

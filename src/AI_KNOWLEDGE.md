@@ -566,6 +566,8 @@ interface MenuItem<T = string> {
 | `globalSearchPlaceholder` | `string` | `'Search...'` | Search placeholder |
 | `emptyMessage` | `string` | `'No data available'` | Empty state message |
 | `noResultsMessage` | `string` | `'No results found'` | No results message |
+| `tableLayout` | `'auto' \| 'fixed'` | `'auto'` | Table layout (fixed respects column widths) |
+| `truncateText` | `boolean` | `false` | Truncate text with ellipsis |
 
 | Output | Type | Description |
 |--------|------|-------------|
@@ -585,6 +587,8 @@ interface TableColumn {
   sortFn?: (a: any, b: any) => number;
 }
 ```
+
+**Usage note**: For tables with percentage-based column widths, use `tableLayout="fixed"` combined with `truncateText="true"` to ensure columns respect their defined widths and long text is properly truncated with ellipsis.
 
 ---
 
