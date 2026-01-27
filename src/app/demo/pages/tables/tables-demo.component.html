@@ -424,6 +424,89 @@
       </div>
     </section>
 
+    <!-- Mode Pleine Largeur - Section Pleine Largeur -->
+    <section class="table-fullwidth-section">
+      <h3 class="section-title">Mode Pleine Largeur</h3>
+      <div class="fullwidth-container">
+        <div class="fullwidth-intro">
+          <p>La propriete <code>fullWidth</code> permet a la table de prendre toute la largeur disponible de son conteneur parent. Utile pour les dashboards et les interfaces responsives.</p>
+        </div>
+        <div class="fullwidth-grid">
+          <div class="fullwidth-card">
+            <div class="fullwidth-preview">
+              <div class="fullwidth-demo-container">
+                <psh-table
+                  [columns]="compactColumns"
+                  [data]="compactData"
+                ></psh-table>
+              </div>
+            </div>
+            <div class="fullwidth-info">
+              <h4>Sans fullWidth (Defaut)</h4>
+              <p>La table s'adapte a son contenu. La largeur est determinee par le contenu des cellules et les largeurs de colonnes definies.</p>
+              <div class="code-example">
+                <pre><code>&lt;psh-table
+  [columns]="columns"
+  [data]="data"
+&gt;&lt;/psh-table&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="fullwidth-card">
+            <div class="fullwidth-preview">
+              <div class="fullwidth-demo-container">
+                <psh-table
+                  [fullWidth]="true"
+                  [columns]="compactColumns"
+                  [data]="compactData"
+                ></psh-table>
+              </div>
+            </div>
+            <div class="fullwidth-info">
+              <h4>Avec fullWidth</h4>
+              <p>La table occupe 100% de la largeur de son conteneur. Ideal pour les interfaces ou la table doit s'etendre sur toute la zone disponible.</p>
+              <div class="code-example">
+                <pre><code>&lt;psh-table
+  [fullWidth]="true"
+  [columns]="columns"
+  [data]="data"
+&gt;&lt;/psh-table&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="fullwidth-card fullwidth-card--recommended">
+            <div class="fullwidth-preview">
+              <div class="fullwidth-demo-container">
+                <psh-table
+                  [fullWidth]="true"
+                  tableLayout="fixed"
+                  [truncateText]="true"
+                  [striped]="true"
+                  [columns]="layoutColumns"
+                  [data]="layoutData"
+                ></psh-table>
+              </div>
+            </div>
+            <div class="fullwidth-info">
+              <h4>Combinaison Optimale</h4>
+              <p>Combinez <code>fullWidth</code> avec <code>tableLayout="fixed"</code> et <code>truncateText</code> pour une table responsive qui respecte les largeurs de colonnes et gere les textes longs.</p>
+              <div class="code-example">
+                <pre><code>&lt;psh-table
+  [fullWidth]="true"
+  tableLayout="fixed"
+  [truncateText]="true"
+  [columns]="columns"
+  [data]="data"
+&gt;&lt;/psh-table&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Documentation API - Section Pleine Largeur -->
     <section class="api-section">
       <h3 class="section-title">Documentation API</h3>
@@ -497,6 +580,12 @@
                 <td><code>boolean</code></td>
                 <td><code>false</code></td>
                 <td>Tronque le texte avec ellipsis et info-bulle au survol</td>
+              </tr>
+              <tr>
+                <td><code>fullWidth</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Permet a la table de prendre toute la largeur disponible</td>
               </tr>
             </tbody>
           </table>
@@ -616,7 +705,7 @@
               </tr>
               <tr>
                 <td><code>TableConfig</code></td>
-                <td>variant, size, striped, hoverable, bordered, loading, emptyMessage, noResultsMessage, globalSearch, globalSearchPlaceholder, tableLayout, truncateText</td>
+                <td>variant, size, striped, hoverable, bordered, loading, emptyMessage, noResultsMessage, globalSearch, globalSearchPlaceholder, tableLayout, truncateText, fullWidth</td>
                 <td>Configuration globale injectable via TABLE_CONFIG</td>
               </tr>
             </tbody>

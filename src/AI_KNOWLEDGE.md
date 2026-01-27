@@ -568,6 +568,7 @@ interface MenuItem<T = string> {
 | `noResultsMessage` | `string` | `'No results found'` | No results message |
 | `tableLayout` | `'auto' \| 'fixed'` | `'auto'` | Table layout (fixed respects column widths) |
 | `truncateText` | `boolean` | `false` | Truncate text with ellipsis |
+| `fullWidth` | `boolean` | `false` | Full width mode |
 
 | Output | Type | Description |
 |--------|------|-------------|
@@ -588,7 +589,7 @@ interface TableColumn {
 }
 ```
 
-**Usage note**: For tables with percentage-based column widths, use `tableLayout="fixed"` combined with `truncateText="true"` to ensure columns respect their defined widths and long text is properly truncated with ellipsis.
+**Usage note**: For tables with percentage-based column widths, use `tableLayout="fixed"` combined with `truncateText="true"` to ensure columns respect their defined widths and long text is properly truncated with ellipsis. Use `fullWidth="true"` when the table should expand to fill its container width.
 
 ---
 

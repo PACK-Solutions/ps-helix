@@ -108,6 +108,7 @@ const data: TableRow[] = [
 | globalSearchPlaceholder | string | 'Search in all columns...' | Placeholder de recherche |
 | tableLayout | 'auto' \| 'fixed' | 'auto' | Algorithme de layout de la table |
 | truncateText | boolean | false | Tronque le texte avec ellipsis |
+| fullWidth | boolean | false | Mode pleine largeur |
 
 ### Outputs
 | Nom | Type | Description |
@@ -431,6 +432,52 @@ Cette combinaison garantit :
 - Les textes longs sont tronqués proprement avec ellipsis (grâce à `truncateText`)
 - L'utilisateur peut toujours accéder au contenu complet via l'info-bulle au survol
 
+## Mode Pleine Largeur (`fullWidth`)
+
+La propriété `fullWidth` permet à la table de prendre toute la largeur disponible de son conteneur parent.
+
+### Comportement par défaut
+
+Sans `fullWidth`, la table utilise `display: block` et sa largeur s'adapte au contenu.
+
+```html
+<psh-table
+  [columns]="columns"
+  [data]="data"
+></psh-table>
+```
+
+### Avec `fullWidth` activé
+
+Lorsque `fullWidth="true"`, la table s'étend pour occuper 100% de la largeur disponible.
+
+```html
+<psh-table
+  [fullWidth]="true"
+  [columns]="columns"
+  [data]="data"
+></psh-table>
+```
+
+### Combinaison avec les autres propriétés
+
+`fullWidth` se combine parfaitement avec les autres propriétés de layout :
+
+```html
+<psh-table
+  [fullWidth]="true"
+  tableLayout="fixed"
+  [truncateText]="true"
+  [columns]="columns"
+  [data]="data"
+></psh-table>
+```
+
+Cette combinaison est idéale pour :
+- Tables dans des conteneurs flexibles ou grilles
+- Interfaces responsives
+- Dashboards avec plusieurs panneaux
+
 ## Configuration Globale
 
 ```typescript
@@ -450,7 +497,8 @@ Cette combinaison garantit :
         noResultsMessage: 'No results found',
         globalSearchPlaceholder: 'Search in all columns...',
         tableLayout: 'auto',
-        truncateText: false
+        truncateText: false,
+        fullWidth: false
       }
     }
   ]
