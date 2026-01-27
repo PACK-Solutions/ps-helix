@@ -1173,7 +1173,7 @@ Copyright (c) 2025 PACK Solutions
 
 ---
 
-**Version**: 3.0.0
+**Version**: 3.0.1
 **Built with**: Angular 21.0.3, TypeScript 5.9.0, Phosphor Icons 2.0.3
 **Author**: Fabrice PEREZ | Product Designer at PACK Solutions
 **Last Updated**: January 2026
