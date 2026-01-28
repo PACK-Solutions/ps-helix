@@ -9,18 +9,23 @@
   [attr.aria-disabled]="disabled() ? 'true' : null"
   [attr.aria-busy]="loading() ? 'true' : null"
 >
-  @if (title()) {
+  @if (title() || hasHeaderActions()) {
     <div class="info-card-header">
-      <h3 class="info-card-title">
-        @if (icon()) {
-          <i
-            class="ph {{ titleIcon() }}"
-            aria-hidden="true"
-            [attr.data-icon]="icon()"
-          ></i>
-        }
-        {{ title() }}
-      </h3>
+      @if (title()) {
+        <h3 class="info-card-title">
+          @if (icon()) {
+            <i
+              class="ph {{ titleIcon() }}"
+              aria-hidden="true"
+              [attr.data-icon]="icon()"
+            ></i>
+          }
+          {{ title() }}
+        </h3>
+      }
+      <div class="info-card-header-actions">
+        <ng-content select="[card-header-actions]"></ng-content>
+      </div>
     </div>
   }
 

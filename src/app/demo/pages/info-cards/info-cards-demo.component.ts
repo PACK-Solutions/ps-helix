@@ -4,6 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import {
   PshInfoCardComponent,
   PshButtonComponent,
+  PshBadgeComponent,
 } from '@lib/components';
 import { InfoCardData } from '@lib/components/info-card/info-card.types';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
@@ -16,6 +17,7 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
     TranslateModule,
     PshInfoCardComponent,
     PshButtonComponent,
+    PshBadgeComponent,
     DemoPageLayoutComponent,
     CodeSnippetComponent,
   ],
@@ -98,6 +100,44 @@ export class InfoCardsDemoComponent {
   [disabled]="isDisabled"
   (clicked)="handleClick($event)"
 ></psh-info-card>`;
+
+  headerActionsCode = `<psh-info-card
+  title="Profil Utilisateur"
+  [data]="userData"
+  variant="elevated"
+  icon="user-circle"
+>
+  <div card-header-actions>
+    <psh-button appearance="text" size="small">
+      <i class="ph ph-pencil"></i>
+    </psh-button>
+  </div>
+</psh-info-card>`;
+
+  headerActionsWithBadgeCode = `<psh-info-card
+  title="Détails du Projet"
+  [data]="projectData"
+  variant="outlined"
+  icon="folder"
+>
+  <div card-header-actions>
+    <psh-badge variant="success">Actif</psh-badge>
+  </div>
+</psh-info-card>`;
+
+  bothSlotsCode = `<psh-info-card
+  title="Commande"
+  [data]="orderData"
+  variant="elevated"
+  icon="package"
+>
+  <div card-header-actions>
+    <psh-badge variant="warning">En cours</psh-badge>
+  </div>
+  <div card-actions>
+    <psh-button variant="primary">Suivre</psh-button>
+  </div>
+</psh-info-card>`;
 
   handleSimulateLoading(): void {
     this.isLoading = true;

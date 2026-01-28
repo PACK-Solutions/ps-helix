@@ -145,9 +145,29 @@ Le composant utilise `ng-content` avec des selecteurs pour organiser le contenu.
 
 | Slot | Selecteur | Description | Position |
 |------|-----------|-------------|----------|
+| **Header Actions** | `[card-header-actions]` | Actions dans l'en-tete | En-tete de carte (a droite du titre) |
 | **Actions** | `[card-actions]` | Boutons d'action | Pied de carte |
 
-### Exemple avec Zone d'Actions
+### Exemple avec Zone d'Actions Header
+
+```html
+<psh-info-card
+  title="Profil Utilisateur"
+  [data]="userData"
+  icon="user-circle"
+>
+  <div card-header-actions>
+    <psh-button appearance="ghost" size="sm">
+      <i class="ph ph-pencil"></i>
+    </psh-button>
+    <psh-button appearance="ghost" size="sm" variant="danger">
+      <i class="ph ph-trash"></i>
+    </psh-button>
+  </div>
+</psh-info-card>
+```
+
+### Exemple avec Zone d'Actions Footer
 
 ```html
 <psh-info-card
@@ -162,7 +182,25 @@ Le composant utilise `ng-content` avec des selecteurs pour organiser le contenu.
 </psh-info-card>
 ```
 
-**Note sur le responsive :** Les boutons places dans `card-actions` deviennent automatiquement pleine largeur sur mobile (<= 640px) grace a la propriete `autoFullWidthOnMobile`.
+### Exemple avec Actions Header et Footer
+
+```html
+<psh-info-card
+  title="Details du Projet"
+  [data]="projectData"
+  icon="folder"
+>
+  <div card-header-actions>
+    <psh-badge variant="success">Actif</psh-badge>
+  </div>
+  <div card-actions>
+    <psh-button appearance="outline">Annuler</psh-button>
+    <psh-button variant="primary">Sauvegarder</psh-button>
+  </div>
+</psh-info-card>
+```
+
+**Note sur le responsive :** Les boutons places dans `card-actions` deviennent automatiquement pleine largeur sur mobile (<= 640px) grace a la propriete `autoFullWidthOnMobile`. Le slot `card-header-actions` reste aligne a droite du titre sur tous les breakpoints, mais peut passer sous le titre sur mobile (<= 480px) si l'espace est insuffisant.
 
 ## Variantes Visuelles
 
