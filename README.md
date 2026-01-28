@@ -2,7 +2,7 @@
 
 Bibliothèque de composants Angular moderne et complète avec 28 composants standalone, système de thèmes, internationalisation et accessibilité optimale.
 
-[![Version](https://img.shields.io/badge/version-3.0.3-blue.svg)](https://www.npmjs.com/package/ps-helix)
+[![Version](https://img.shields.io/badge/version-3.0.4-blue.svg)](https://www.npmjs.com/package/ps-helix)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Angular](https://img.shields.io/badge/Angular-21.0.3-red.svg)](https://angular.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.0-blue.svg)](https://www.typescriptlang.org/)
@@ -784,7 +784,7 @@ SOFTWARE.
 
 ---
 
-**Version** : 3.0.3
+**Version** : 3.0.4
 **Construit avec** : Angular 21.0.3, TypeScript 5.9.0, Phosphor Icons 2.0.3
 **Auteur** : Fabrice PEREZ | Product Designer chez PACK Solutions
 **Dernière mise à jour** : Janvier 2026

@@ -7,7 +7,7 @@ Reference documentation for the Helix Design System Angular component library. T
 ## Overview
 
 - **Library**: `ps-helix`
-- **Version**: 3.0.3
+- **Version**: 3.0.4
 - **Framework**: Angular 21+
 - **Prefix**: `psh-` (all components)
 - **Import**: `import { ComponentName } from 'ps-helix';`
@@ -924,6 +924,7 @@ interface Toast {
 | `clicked` | `MouseEvent \| KeyboardEvent` | Click event (if interactive) |
 
 **Content Projection Slots**:
+- `[card-header-actions]`: Action buttons in header (right side of title)
 - `[card-actions]`: Action buttons in footer
 
 **Layout Behavior**: The component uses `host: { style: 'display: block; height: 100%;' }` which enables equal-height cards in grid layouts. Uses `ViewEncapsulation.None` for style flexibility.

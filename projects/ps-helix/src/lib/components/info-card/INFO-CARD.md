@@ -157,10 +157,10 @@ Le composant utilise `ng-content` avec des selecteurs pour organiser le contenu.
   icon="user-circle"
 >
   <div card-header-actions>
-    <psh-button appearance="ghost" size="sm">
+    <psh-button appearance="text" size="small">
       <i class="ph ph-pencil"></i>
     </psh-button>
-    <psh-button appearance="ghost" size="sm" variant="danger">
+    <psh-button appearance="text" size="small" variant="danger">
       <i class="ph ph-trash"></i>
     </psh-button>
   </div>
@@ -602,6 +602,6 @@ Le composant utilise `ChangeDetectionStrategy.OnPush` et Signals :
 
 ---
 
-**Version :** 1.1
+**Version :** 1.2
 **Derniere mise a jour :** Janvier 2026
 **Compatibilite :** Angular 21+
