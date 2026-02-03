@@ -1,6 +1,6 @@
 <div
   #modalBackdrop
-  class="modal-backdrop"
+  [class]="'modal-backdrop ' + backdropClass()"
   [class.open]="open()"
   (click)="handleBackdropClick($event)"
   role="dialog"

@@ -226,6 +226,17 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
   styleClass = input('');
 
   /**
+   * Custom CSS class(es) to apply to the modal backdrop
+   * Useful for stacked modals with different z-index or opacity
+   *
+   * @example
+   * ```html
+   * <psh-modal backdropClass="higher-z-index" />
+   * ```
+   */
+  backdropClass = input('');
+
+  /**
    * Emitted when the modal is closed
    */
   closed = output<void>();
