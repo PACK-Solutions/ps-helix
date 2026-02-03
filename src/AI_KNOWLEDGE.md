@@ -7,7 +7,7 @@ Reference documentation for the Helix Design System Angular component library. T
 ## Overview
 
 - **Library**: `ps-helix`
-- **Version**: 3.0.4
+- **Version**: 3.0.5
 - **Framework**: Angular 21+
 - **Prefix**: `psh-` (all components)
 - **Import**: `import { ComponentName } from 'ps-helix';`
@@ -536,7 +536,8 @@ interface MenuItem<T = string> {
 | `dismissLabel` | `string` | `'Close'` | Close button label |
 | `confirmLabel` | `string` | `'Confirm'` | Confirm button label |
 | `cancelLabel` | `string` | `'Cancel'` | Cancel button label |
-| `styleClass` | `string` | `''` | Custom CSS class |
+| `styleClass` | `string` | `''` | Custom CSS class for container |
+| `backdropClass` | `string` | `''` | Custom CSS class for backdrop (useful for stacked modals) |
 
 | Output | Type | Description |
 |--------|------|-------------|
@@ -545,7 +546,20 @@ interface MenuItem<T = string> {
 
 **Content Projection Slots**:
 - Default: Modal body content
-- `#modalFooter`: Custom footer
+- `[modal-title]`: Custom title with HTML/components
+- `[modal-footer]` with `#modalFooter`: Custom footer
+
+**Stacked Modals Example**:
+```html
+<psh-modal [(open)]="isSecondaryOpen" backdropClass="stacked-modal">
+  <p>Secondary modal with higher z-index</p>
+</psh-modal>
+```
+```css
+.stacked-modal {
+  z-index: calc(var(--z-index-modal-backdrop) + 10);
+}
+```
 
 ---
 
