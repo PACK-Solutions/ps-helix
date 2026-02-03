@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { PshCheckboxComponent } from './checkbox.component';
 import { CheckboxSize } from './checkbox.types';
 
@@ -8,6 +9,14 @@ import { CheckboxSize } from './checkbox.types';
   imports: [PshCheckboxComponent]
 })
 class TestHostComponent {}
+
+@Component({
+  template: `<psh-checkbox [formControl]="control" label="Form checkbox"></psh-checkbox>`,
+  imports: [PshCheckboxComponent, ReactiveFormsModule]
+})
+class ReactiveFormHostComponent {
+  control = new FormControl(false);
+}
 
 describe('PshCheckboxComponent', () => {
   let fixture: ComponentFixture<PshCheckboxComponent>;
@@ -383,6 +392,151 @@ describe('PshCheckboxComponent', () => {
       fixture.detectChanges();
 
       expect(getHostElement().classList.contains('checkbox-disabled')).toBe(true);
+    });
+  });
+
+  describe('ControlValueAccessor', () => {
+    it('should update checked state via writeValue', () => {
+      fixture.componentInstance.writeValue(true);
+      fixture.detectChanges();
+
+      expect(getCheckboxInput().checked).toBe(true);
+    });
+
+    it('should handle null value in writeValue', () => {
+      fixture.componentInstance.writeValue(null as unknown as boolean);
+      fixture.detectChanges();
+
+      expect(getCheckboxInput().checked).toBe(false);
+    });
+
+    it('should handle undefined value in writeValue', () => {
+      fixture.componentInstance.writeValue(undefined as unknown as boolean);
+      fixture.detectChanges();
+
+      expect(getCheckboxInput().checked).toBe(false);
+    });
+
+    it('should disable input via setDisabledState', () => {
+      fixture.componentInstance.setDisabledState(true);
+      fixture.detectChanges();
+
+      expect(getCheckboxInput().disabled).toBe(true);
+    });
+
+    it('should enable input via setDisabledState', () => {
+      fixture.componentInstance.setDisabledState(true);
+      fixture.detectChanges();
+      fixture.componentInstance.setDisabledState(false);
+      fixture.detectChanges();
+
+      expect(getCheckboxInput().disabled).toBe(false);
+    });
+
+    it('should work with reactive forms', async () => {
+      const hostFixture = TestBed.createComponent(ReactiveFormHostComponent);
+      hostFixture.detectChanges();
+
+      const input = hostFixture.nativeElement.querySelector('input[type="checkbox"]') as HTMLInputElement;
+      expect(input.checked).toBe(false);
+
+      hostFixture.componentInstance.control.setValue(true);
+      hostFixture.detectChanges();
+
+      expect(input.checked).toBe(true);
+    });
+
+    it('should update form control on toggle', async () => {
+      const hostFixture = TestBed.createComponent(ReactiveFormHostComponent);
+      hostFixture.detectChanges();
+
+      const input = hostFixture.nativeElement.querySelector('input[type="checkbox"]') as HTMLInputElement;
+      input.click();
+      hostFixture.detectChanges();
+
+      expect(hostFixture.componentInstance.control.value).toBe(true);
+    });
+
+    it('should respect disabled state from form control', async () => {
+      const hostFixture = TestBed.createComponent(ReactiveFormHostComponent);
+      hostFixture.componentInstance.control.disable();
+      hostFixture.detectChanges();
+
+      const input = hostFixture.nativeElement.querySelector('input[type="checkbox"]') as HTMLInputElement;
+      expect(input.disabled).toBe(true);
+    });
+
+    it('should call onChange callback when toggling', () => {
+      const onChangeSpy = jest.fn();
+      fixture.componentInstance.registerOnChange(onChangeSpy);
+
+      getCheckboxInput().click();
+      fixture.detectChanges();
+
+      expect(onChangeSpy).toHaveBeenCalledWith(true);
+    });
+
+    it('should call onTouched callback when toggling', () => {
+      const onTouchedSpy = jest.fn();
+      fixture.componentInstance.registerOnTouched(onTouchedSpy);
+
+      getCheckboxInput().click();
+      fixture.detectChanges();
+
+      expect(onTouchedSpy).toHaveBeenCalled();
+    });
+  });
+
+  describe('Focus and blur methods', () => {
+    it('should focus the input element when focus() is called', () => {
+      fixture.componentInstance.focus();
+      fixture.detectChanges();
+
+      expect(document.activeElement).toBe(getCheckboxInput());
+    });
+
+    it('should blur the input element when blur() is called', () => {
+      fixture.componentInstance.focus();
+      fixture.detectChanges();
+      expect(document.activeElement).toBe(getCheckboxInput());
+
+      fixture.componentInstance.blur();
+      fixture.detectChanges();
+
+      expect(document.activeElement).not.toBe(getCheckboxInput());
+    });
+  });
+
+  describe('toggle() method with ControlValueAccessor', () => {
+    it('should notify form control when toggled', () => {
+      const hostFixture = TestBed.createComponent(ReactiveFormHostComponent);
+      hostFixture.detectChanges();
+
+      expect(hostFixture.componentInstance.control.value).toBe(false);
+
+      const input = hostFixture.nativeElement.querySelector('input[type="checkbox"]') as HTMLInputElement;
+      input.click();
+      hostFixture.detectChanges();
+
+      expect(hostFixture.componentInstance.control.value).toBe(true);
+
+      input.click();
+      hostFixture.detectChanges();
+
+      expect(hostFixture.componentInstance.control.value).toBe(false);
+    });
+
+    it('should mark form control as touched after toggle', () => {
+      const hostFixture = TestBed.createComponent(ReactiveFormHostComponent);
+      hostFixture.detectChanges();
+
+      expect(hostFixture.componentInstance.control.touched).toBe(false);
+
+      const input = hostFixture.nativeElement.querySelector('input[type="checkbox"]') as HTMLInputElement;
+      input.click();
+      hostFixture.detectChanges();
+
+      expect(hostFixture.componentInstance.control.touched).toBe(true);
     });
   });
 });

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { PshCheckboxComponent } from '@lib/components/checkbox/checkbox.component';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
@@ -6,7 +7,7 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
 
 @Component({
   selector: 'ds-checkboxes-demo',
-  imports: [TranslateModule, PshCheckboxComponent, DemoPageLayoutComponent, CodeSnippetComponent],
+  imports: [TranslateModule, PshCheckboxComponent, DemoPageLayoutComponent, CodeSnippetComponent, ReactiveFormsModule],
   templateUrl: './checkboxes-demo.component.html',
   styleUrls: ['./checkboxes-demo.component.css']
 })
@@ -67,4 +68,30 @@ export class CheckboxesDemoComponent {
 >
   Sélection partielle
 </psh-checkbox>`;
+
+  termsControl = new FormControl(false);
+
+  reactiveFormsCode = `import { FormControl, ReactiveFormsModule } from '@angular/forms';
+
+@Component({
+  imports: [PshCheckboxComponent, ReactiveFormsModule],
+  template: \`
+    <psh-checkbox
+      [formControl]="termsControl"
+      label="J'accepte les conditions"
+    />
+    <p>Valeur: {{ termsControl.value }}</p>
+  \`
+})
+export class MyComponent {
+  termsControl = new FormControl(false);
+
+  toggleProgrammatically() {
+    this.termsControl.setValue(!this.termsControl.value);
+  }
+}`;
+
+  toggleTerms(): void {
+    this.termsControl.setValue(!this.termsControl.value);
+  }
 }

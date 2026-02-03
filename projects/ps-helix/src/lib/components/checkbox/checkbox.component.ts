@@ -3,11 +3,14 @@ import {
   Component,
   computed,
   effect,
+  ElementRef,
   inject,
   InjectionToken,
   input,
-  model
+  model,
+  viewChild
 } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CheckboxSize, CheckboxConfig } from './checkbox.types';
 
 export const CHECKBOX_CONFIG = new InjectionToken<Partial<CheckboxConfig>>('CHECKBOX_CONFIG', {
@@ -30,6 +33,11 @@ let checkboxIdCounter = 0;
   templateUrl: './checkbox.component.html',
   styleUrls: ['./checkbox.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: PshCheckboxComponent,
+    multi: true
+  }],
   host: {
     '[class.checkbox-disabled]': 'disabled()',
     '[class.checkbox-error]': '!!error()',
@@ -39,9 +47,14 @@ let checkboxIdCounter = 0;
     '[attr.data-state]': 'state()'
   }
 })
-export class PshCheckboxComponent {
+export class PshCheckboxComponent implements ControlValueAccessor {
   private config = inject(CHECKBOX_CONFIG);
   private uniqueId = `checkbox-${++checkboxIdCounter}`;
+
+  private checkboxInput = viewChild<ElementRef<HTMLInputElement>>('checkboxInput');
+
+  private onChange = (value: boolean) => {};
+  private onTouched = () => {};
 
   checked = model(this.config.checked ?? false);
   disabled = model(this.config.disabled ?? false);
@@ -95,6 +108,8 @@ export class PshCheckboxComponent {
     if (!this.disabled()) {
       this.checked.update(v => !v);
       this.indeterminate.set(false);
+      this.onChange(this.checked());
+      this.onTouched();
     }
   }
 
@@ -110,4 +125,33 @@ export class PshCheckboxComponent {
     }
   }
 
+  writeValue(value: boolean): void {
+    this.checked.set(value ?? false);
+  }
+
+  registerOnChange(fn: (value: boolean) => void): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled.set(isDisabled);
+  }
+
+  focus(): void {
+    const input = this.checkboxInput();
+    if (input?.nativeElement) {
+      input.nativeElement.focus();
+    }
+  }
+
+  blur(): void {
+    const input = this.checkboxInput();
+    if (input?.nativeElement) {
+      input.nativeElement.blur();
+    }
+  }
 }

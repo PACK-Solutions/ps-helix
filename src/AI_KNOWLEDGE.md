@@ -7,7 +7,7 @@ Reference documentation for the Helix Design System Angular component library. T
 ## Overview
 
 - **Library**: `ps-helix`
-- **Version**: 3.0.5
+- **Version**: 3.0.6
 - **Framework**: Angular 21+
 - **Prefix**: `psh-` (all components)
 - **Import**: `import { ComponentName } from 'ps-helix';`
@@ -351,7 +351,12 @@ Control: `.animate-fast`, `.animate-slow`, `.animate-smooth`
 |--------|------|-------------|
 | `checkedChange` | `boolean` | Checked state change |
 
-Implements `ControlValueAccessor` for reactive forms.
+| Method | Description |
+|--------|-------------|
+| `focus()` | Focuses the checkbox input element |
+| `blur()` | Removes focus from the checkbox input element |
+
+Implements `ControlValueAccessor` for reactive forms (`[formControl]`, `formControlName`).
 
 ---
 

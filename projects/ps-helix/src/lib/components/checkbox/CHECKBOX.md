@@ -37,6 +37,49 @@ import { PshCheckboxComponent } from 'ps-helix';
 </psh-checkbox>
 ```
 
+### Utilisation avec Reactive Forms
+
+Le composant implémente `ControlValueAccessor` pour une intégration complète avec les Reactive Forms d'Angular.
+
+```typescript
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { PshCheckboxComponent } from 'ps-helix';
+
+@Component({
+  imports: [PshCheckboxComponent, ReactiveFormsModule],
+  template: `
+    <form [formGroup]="form">
+      <psh-checkbox
+        formControlName="acceptTerms"
+        label="J'accepte les conditions"
+        [error]="form.controls.acceptTerms.invalid && form.controls.acceptTerms.touched ? 'Ce champ est requis' : ''"
+      />
+    </form>
+  `
+})
+export class FormExampleComponent {
+  form = new FormGroup({
+    acceptTerms: new FormControl(false, Validators.requiredTrue)
+  });
+}
+```
+
+#### Avec FormControl standalone
+
+```typescript
+@Component({
+  imports: [PshCheckboxComponent, ReactiveFormsModule],
+  template: `
+    <psh-checkbox [formControl]="termsControl" label="Accepter les termes" />
+    <p>Valeur: {{ termsControl.value }}</p>
+  `
+})
+export class StandaloneFormControlComponent {
+  termsControl = new FormControl(false);
+}
+```
+
 ## API
 
 ### Model Inputs (bidirectionnels avec `[()]`)
@@ -63,6 +106,34 @@ Les model inputs génèrent automatiquement des events de changement :
 - `disabledChange` : Émis lors du changement d'état désactivé
 - `requiredChange` : Émis lors du changement d'état requis
 - `indeterminateChange` : Émis lors du changement d'état indéterminé
+
+### Méthodes Publiques
+
+| Méthode | Description |
+|---------|-------------|
+| `focus()` | Donne le focus à l'élément input de la checkbox |
+| `blur()` | Enlève le focus de l'élément input de la checkbox |
+| `writeValue(value: boolean)` | Définit la valeur (ControlValueAccessor) |
+| `setDisabledState(isDisabled: boolean)` | Définit l'état désactivé (ControlValueAccessor) |
+
+#### Exemple de contrôle programmatique
+
+```typescript
+@Component({
+  imports: [PshCheckboxComponent],
+  template: `
+    <psh-checkbox #checkbox label="Ma checkbox" />
+    <button (click)="focusCheckbox()">Focus</button>
+  `
+})
+export class ProgrammaticControlComponent {
+  @ViewChild('checkbox') checkbox!: PshCheckboxComponent;
+
+  focusCheckbox() {
+    this.checkbox.focus();
+  }
+}
+```
 
 ### Types
 

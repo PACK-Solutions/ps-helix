@@ -135,6 +135,38 @@
       </div>
     </section>
 
+    <!-- Reactive Forms - Section Pleine Largeur -->
+    <section class="checkbox-reactive-forms-section">
+      <h3 class="section-title">Intégration avec Reactive Forms</h3>
+      <div class="reactive-forms-container">
+        <div class="reactive-forms-intro">
+          <p>Le composant implémente <code>ControlValueAccessor</code> pour une intégration complète avec les Reactive Forms d'Angular. Cela permet d'utiliser <code>[formControl]</code> ou <code>formControlName</code>.</p>
+        </div>
+        <div class="reactive-forms-demo">
+          <div class="reactive-demo-card">
+            <div class="reactive-preview">
+              <psh-checkbox
+                [formControl]="termsControl"
+                label="J'accepte les conditions d'utilisation"
+              />
+              <div class="reactive-value">
+                <span class="value-label">Valeur du FormControl:</span>
+                <span class="value-display" [class.checked]="termsControl.value">{{ termsControl.value }}</span>
+              </div>
+              <button class="toggle-btn" (click)="toggleTerms()">
+                Modifier programmatiquement
+              </button>
+            </div>
+            <div class="reactive-info">
+              <h4>Utilisation avec FormControl</h4>
+              <p>Le composant synchronise automatiquement sa valeur avec le FormControl. Les changements peuvent venir de l'utilisateur ou de modifications programmatiques.</p>
+              <ds-code-snippet [code]="reactiveFormsCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Tailles de Checkbox - Section Pleine Largeur -->
     <section class="checkbox-sizes-section">
       <h3 class="section-title">Tailles Disponibles</h3>

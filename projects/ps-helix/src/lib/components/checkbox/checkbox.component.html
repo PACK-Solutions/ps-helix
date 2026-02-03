@@ -1,6 +1,7 @@
 <div class="checkbox-container">
   <label class="checkbox-label" [class.label-left]="labelPosition() === 'left'">
     <input
+      #checkboxInput
       type="checkbox"
       class="checkbox-input"
       [checked]="checked()"
