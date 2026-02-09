@@ -20,6 +20,7 @@ import { ButtonAppearance, ButtonVariant, ButtonSize, ButtonIconPosition } from 
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.full-width]': 'fullWidth()',
+    '(click)': 'onHostClick($event)',
   },
 })
 export class PshButtonComponent implements AfterContentChecked {
@@ -40,8 +41,8 @@ export class PshButtonComponent implements AfterContentChecked {
   iconOnlyText = input<string>();
   type = input<'button' | 'submit' | 'reset'>('button');
 
-  // Outputs
   clicked = output<MouseEvent>();
+  disabledClick = output<MouseEvent>();
 
   ngAfterContentChecked(): void {
     const button = this.elementRef.nativeElement.querySelector('button');
@@ -81,6 +82,14 @@ export class PshButtonComponent implements AfterContentChecked {
   handleClick(event: MouseEvent): void {
     if (!this.disabled() && !this.loading()) {
       this.clicked.emit(event);
+    }
+  }
+
+  onHostClick(event: MouseEvent): void {
+    if (this.disabled() && !this.loading()) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.disabledClick.emit(event);
     }
   }
 }

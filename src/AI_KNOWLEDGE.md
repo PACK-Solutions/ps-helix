@@ -7,7 +7,7 @@ Reference documentation for the Helix Design System Angular component library. T
 ## Overview
 
 - **Library**: `ps-helix`
-- **Version**: 3.0.6
+- **Version**: 3.0.7
 - **Framework**: Angular 21+
 - **Prefix**: `psh-` (all components)
 - **Import**: `import { ComponentName } from 'ps-helix';`
@@ -292,10 +292,13 @@ Control: `.animate-fast`, `.animate-slow`, `.animate-smooth`
 | `type` | `'button' \| 'submit' \| 'reset'` | `'button'` | Button type |
 | `ariaLabel` | `string` | - | ARIA label |
 | `loadingText` | `string` | `'Loading...'` | Loading state label |
+| `disabledText` | `string` | `'This action is currently unavailable'` | Disabled state label for screen readers |
+| `iconOnlyText` | `string` | - | Label for icon-only buttons |
 
 | Output | Type | Description |
 |--------|------|-------------|
 | `clicked` | `MouseEvent` | Click event |
+| `disabledClick` | `MouseEvent` | Emitted when user clicks while button is disabled (not loading) |
 
 ---
 

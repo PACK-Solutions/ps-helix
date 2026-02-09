@@ -151,6 +151,81 @@ describe('PshButtonComponent', () => {
     });
   });
 
+  describe('disabledClick output', () => {
+    it('should NOT emit disabledClick when button is enabled', () => {
+      const disabledClickSpy = jest.fn();
+      fixture.componentInstance.disabledClick.subscribe(disabledClickSpy);
+
+      fixture.nativeElement.click();
+
+      expect(disabledClickSpy).not.toHaveBeenCalled();
+    });
+
+    it('should emit disabledClick when button is disabled', () => {
+      fixture.componentRef.setInput('disabled', true);
+      fixture.detectChanges();
+
+      const disabledClickSpy = jest.fn();
+      fixture.componentInstance.disabledClick.subscribe(disabledClickSpy);
+
+      fixture.nativeElement.click();
+
+      expect(disabledClickSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should NOT emit clicked when disabledClick fires', () => {
+      fixture.componentRef.setInput('disabled', true);
+      fixture.detectChanges();
+
+      const clickSpy = jest.fn();
+      const disabledClickSpy = jest.fn();
+      fixture.componentInstance.clicked.subscribe(clickSpy);
+      fixture.componentInstance.disabledClick.subscribe(disabledClickSpy);
+
+      fixture.nativeElement.click();
+
+      expect(disabledClickSpy).toHaveBeenCalledTimes(1);
+      expect(clickSpy).not.toHaveBeenCalled();
+    });
+
+    it('should NOT emit disabledClick when loading', () => {
+      fixture.componentRef.setInput('loading', true);
+      fixture.detectChanges();
+
+      const disabledClickSpy = jest.fn();
+      fixture.componentInstance.disabledClick.subscribe(disabledClickSpy);
+
+      fixture.nativeElement.click();
+
+      expect(disabledClickSpy).not.toHaveBeenCalled();
+    });
+
+    it('should NOT emit disabledClick when both disabled and loading', () => {
+      fixture.componentRef.setInput('disabled', true);
+      fixture.componentRef.setInput('loading', true);
+      fixture.detectChanges();
+
+      const disabledClickSpy = jest.fn();
+      fixture.componentInstance.disabledClick.subscribe(disabledClickSpy);
+
+      fixture.nativeElement.click();
+
+      expect(disabledClickSpy).not.toHaveBeenCalled();
+    });
+
+    it('should emit MouseEvent on disabledClick', () => {
+      fixture.componentRef.setInput('disabled', true);
+      fixture.detectChanges();
+
+      const disabledClickSpy = jest.fn();
+      fixture.componentInstance.disabledClick.subscribe(disabledClickSpy);
+
+      fixture.nativeElement.click();
+
+      expect(disabledClickSpy).toHaveBeenCalledWith(expect.any(MouseEvent));
+    });
+  });
+
   describe('data-state attribute', () => {
     it('should have data-state="default" in normal state', () => {
       expect(getButton().getAttribute('data-state')).toBe('default');

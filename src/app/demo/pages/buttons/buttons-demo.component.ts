@@ -74,6 +74,23 @@ export class ButtonsDemoComponent {
   Enregistrer
 </psh-button>`;
 
+  disabledClickCode = `<psh-button
+  [disabled]="true"
+  variant="primary"
+  (disabledClick)="onDisabledAttempt()"
+>
+  Action indisponible
+</psh-button>`;
+
+  disabledClickMessage = '';
+
+  onDisabledAttempt(): void {
+    this.disabledClickMessage = 'Ce bouton est désactivé. Veuillez remplir le formulaire.';
+    setTimeout(() => {
+      this.disabledClickMessage = '';
+    }, 3000);
+  }
+
   handleClick(event: MouseEvent): void {
     console.log('Button clicked:', event);
   }

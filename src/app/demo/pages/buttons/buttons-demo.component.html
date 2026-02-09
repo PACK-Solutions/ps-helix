@@ -288,6 +288,18 @@
             </div>
 
             <div class="state-group">
+              <h4>Clic sur Bouton Désactivé</h4>
+              <div class="state-examples">
+                <psh-button appearance="filled" variant="primary" [disabled]="true" (disabledClick)="onDisabledAttempt()">Cliquez-moi (désactivé)</psh-button>
+              </div>
+              @if (disabledClickMessage) {
+                <p class="state-description" style="color: var(--warning-color); font-weight: 500;">{{ disabledClickMessage }}</p>
+              }
+              <p class="state-description">Utilisez <code>(disabledClick)</code> pour intercepter les clics sur un bouton désactivé et fournir un feedback explicatif à l'utilisateur.</p>
+              <ds-code-snippet [code]="disabledClickCode" />
+            </div>
+
+            <div class="state-group">
               <h4>État de Chargement</h4>
               <div class="state-examples">
                 <psh-button appearance="filled" variant="primary" [loading]="true">Chargement</psh-button>
@@ -436,6 +448,11 @@
                 <td><code>clicked</code></td>
                 <td><code>EventEmitter&lt;MouseEvent&gt;</code></td>
                 <td>Émis lors du clic sur le bouton (si non désactivé ou en chargement)</td>
+              </tr>
+              <tr>
+                <td><code>disabledClick</code></td>
+                <td><code>EventEmitter&lt;MouseEvent&gt;</code></td>
+                <td>Émis lors du clic sur un bouton désactivé (hors chargement)</td>
               </tr>
             </tbody>
           </table>
