@@ -540,3 +540,107 @@ describe('PshCheckboxComponent', () => {
     });
   });
 });
+
+// ── CVA emission safety tests ────────────────────────────────────────
+
+@Component({
+  template: `
+    <psh-checkbox
+      [formControl]="control"
+      label="Test checkbox"
+      (checkedChange)="onCheckedChange($event)"
+      (disabledChange)="onDisabledChange($event)"
+    ></psh-checkbox>
+  `,
+  imports: [PshCheckboxComponent, ReactiveFormsModule]
+})
+class CvaEmissionTestHost {
+  control = new FormControl(false);
+  onCheckedChange = jest.fn();
+  onDisabledChange = jest.fn();
+}
+
+describe('PshCheckboxComponent CVA emission safety', () => {
+  let fixture: ComponentFixture<CvaEmissionTestHost>;
+  let host: CvaEmissionTestHost;
+
+  const getCheckboxInput = () =>
+    fixture.nativeElement.querySelector('input[type="checkbox"]') as HTMLInputElement;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [CvaEmissionTestHost]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(CvaEmissionTestHost);
+    host = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should NOT emit checkedChange when form control sets value via setValue', () => {
+    host.onCheckedChange.mockClear();
+
+    host.control.setValue(true);
+    fixture.detectChanges();
+
+    expect(host.onCheckedChange).not.toHaveBeenCalled();
+  });
+
+  it('should NOT emit checkedChange when form control sets value via patchValue', () => {
+    host.onCheckedChange.mockClear();
+
+    host.control.patchValue(true);
+    fixture.detectChanges();
+
+    expect(host.onCheckedChange).not.toHaveBeenCalled();
+  });
+
+  it('should NOT emit disabledChange when form control is disabled', () => {
+    host.onDisabledChange.mockClear();
+
+    host.control.disable();
+    fixture.detectChanges();
+
+    expect(host.onDisabledChange).not.toHaveBeenCalled();
+  });
+
+  it('should NOT emit disabledChange when form control is enabled', () => {
+    host.control.disable();
+    fixture.detectChanges();
+    host.onDisabledChange.mockClear();
+
+    host.control.enable();
+    fixture.detectChanges();
+
+    expect(host.onDisabledChange).not.toHaveBeenCalled();
+  });
+
+  it('should emit checkedChange exactly once on user click', () => {
+    host.onCheckedChange.mockClear();
+
+    getCheckboxInput().click();
+    fixture.detectChanges();
+
+    expect(host.onCheckedChange).toHaveBeenCalledTimes(1);
+    expect(host.onCheckedChange).toHaveBeenCalledWith(true);
+  });
+
+  it('should NOT emit checkedChange on initial render', () => {
+    expect(host.onCheckedChange).not.toHaveBeenCalled();
+  });
+
+  it('should emit checkedChange once when using formControl and (checkedChange) together', () => {
+    host.onCheckedChange.mockClear();
+
+    // Programmatic set should NOT fire
+    host.control.setValue(true);
+    fixture.detectChanges();
+    expect(host.onCheckedChange).not.toHaveBeenCalled();
+
+    // User click should fire exactly once (toggling from true back to false)
+    getCheckboxInput().click();
+    fixture.detectChanges();
+    expect(host.onCheckedChange).toHaveBeenCalledTimes(1);
+    expect(host.onCheckedChange).toHaveBeenCalledWith(false);
+  });
+});

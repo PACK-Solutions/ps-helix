@@ -4,9 +4,12 @@ import {
   computed,
   DestroyRef,
   ElementRef,
+  EventEmitter,
   inject,
+  Input,
   input,
   model,
+  Output,
   output,
   signal,
   ChangeDetectorRef,
@@ -38,9 +41,15 @@ export class PshInputComponent implements ControlValueAccessor {
   private static nextId = 0;
   readonly inputId = `psh-input-${PshInputComponent.nextId++}`;
 
-  // Model inputs (two-way bindable state)
-  value = model('');
-  disabled = model(false);
+  // CVA-managed state: plain signals + manual @Input/@Output to prevent
+  // auto-emission during writeValue()/setDisabledState().
+  value = signal('');
+  @Input('value') set valueInput(v: string) { this.value.set(v ?? ''); }
+
+  disabled = signal(false);
+  @Input('disabled') set disabledInput(v: boolean) { this.disabled.set(v); }
+
+  // Non-CVA model inputs (two-way bindable, not written by CVA methods)
   readonly = model(false);
   loading = model(false);
 
@@ -76,8 +85,9 @@ export class PshInputComponent implements ControlValueAccessor {
   private blurTimeoutId: number | null = null;
   private debounceTimeoutId: number | null = null;
 
-  // Outputs
-  valueChange = output<string>();
+  // Outputs — valueChange/disabledChange use EventEmitter to decouple from signal writes.
+  @Output() valueChange = new EventEmitter<string>();
+  @Output() disabledChange = new EventEmitter<boolean>();
   inputFocus = output<void>();
   inputBlur = output<void>();
   suggestionSelect = output<string>();

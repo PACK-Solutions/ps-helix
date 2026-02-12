@@ -1212,3 +1212,122 @@ describe('PshSelectComponent with ControlValueAccessor', () => {
     expect(getCombobox().getAttribute('aria-disabled')).toBe('false');
   });
 });
+
+// ── CVA emission safety tests ────────────────────────────────────────
+
+@Component({
+  template: `
+    <psh-select
+      [options]="options"
+      [formControl]="control"
+      (valueChange)="onValueChange($event)"
+      (disabledChange)="onDisabledChange($event)"
+    />
+  `,
+  imports: [PshSelectComponent, ReactiveFormsModule]
+})
+class CvaEmissionTestHost {
+  options: SelectOption<string>[] = [
+    { label: 'Option 1', value: 'opt1' },
+    { label: 'Option 2', value: 'opt2' },
+    { label: 'Option 3', value: 'opt3' }
+  ];
+  control = new FormControl<string | null>(null);
+  onValueChange = jest.fn();
+  onDisabledChange = jest.fn();
+}
+
+describe('PshSelectComponent CVA emission safety', () => {
+  let fixture: ComponentFixture<CvaEmissionTestHost>;
+  let host: CvaEmissionTestHost;
+
+  const getCombobox = () =>
+    fixture.nativeElement.querySelector('[role="combobox"]') as HTMLElement;
+
+  const getOptions = () =>
+    Array.from(fixture.nativeElement.querySelectorAll('[role="option"]')) as HTMLElement[];
+
+  const openSelect = () => {
+    getCombobox().click();
+    fixture.detectChanges();
+  };
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [CvaEmissionTestHost]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(CvaEmissionTestHost);
+    host = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should NOT emit valueChange when form control sets value via setValue', () => {
+    host.onValueChange.mockClear();
+
+    host.control.setValue('opt1');
+    fixture.detectChanges();
+
+    expect(host.onValueChange).not.toHaveBeenCalled();
+  });
+
+  it('should NOT emit valueChange when form control sets value via patchValue', () => {
+    host.onValueChange.mockClear();
+
+    host.control.patchValue('opt2');
+    fixture.detectChanges();
+
+    expect(host.onValueChange).not.toHaveBeenCalled();
+  });
+
+  it('should NOT emit disabledChange when form control is disabled', () => {
+    host.onDisabledChange.mockClear();
+
+    host.control.disable();
+    fixture.detectChanges();
+
+    expect(host.onDisabledChange).not.toHaveBeenCalled();
+  });
+
+  it('should NOT emit disabledChange when form control is enabled', () => {
+    host.control.disable();
+    fixture.detectChanges();
+    host.onDisabledChange.mockClear();
+
+    host.control.enable();
+    fixture.detectChanges();
+
+    expect(host.onDisabledChange).not.toHaveBeenCalled();
+  });
+
+  it('should emit valueChange exactly once on user selection', () => {
+    host.onValueChange.mockClear();
+
+    openSelect();
+    getOptions()[0]!.click();
+    fixture.detectChanges();
+
+    expect(host.onValueChange).toHaveBeenCalledTimes(1);
+    expect(host.onValueChange).toHaveBeenCalledWith('opt1');
+  });
+
+  it('should NOT emit valueChange on initial render', () => {
+    expect(host.onValueChange).not.toHaveBeenCalled();
+  });
+
+  it('should emit valueChange once when using formControlName and (valueChange) together', () => {
+    host.onValueChange.mockClear();
+
+    // Programmatic set should NOT fire
+    host.control.setValue('opt1');
+    fixture.detectChanges();
+    expect(host.onValueChange).not.toHaveBeenCalled();
+
+    // User selection should fire exactly once
+    openSelect();
+    getOptions()[1]!.click();
+    fixture.detectChanges();
+    expect(host.onValueChange).toHaveBeenCalledTimes(1);
+    expect(host.onValueChange).toHaveBeenCalledWith('opt2');
+  });
+});

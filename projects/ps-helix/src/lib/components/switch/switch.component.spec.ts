@@ -480,11 +480,11 @@ describe('PshSwitchComponent', () => {
     });
   });
 
-  describe('Model signals', () => {
-    it('should update size signal when set programmatically', () => {
+  describe('Signal / input updates', () => {
+    it('should update size when set via setInput', () => {
       expect(fixture.componentInstance.size()).toBe('medium');
 
-      fixture.componentInstance.size.set('large');
+      fixture.componentRef.setInput('size', 'large');
       fixture.detectChanges();
 
       expect(fixture.componentInstance.size()).toBe('large');
@@ -499,19 +499,19 @@ describe('PshSwitchComponent', () => {
       expect(fixture.componentInstance.disabled()).toBe(true);
     });
 
-    it('should update required signal when set programmatically', () => {
+    it('should update required when set via setInput', () => {
       expect(fixture.componentInstance.required()).toBe(false);
 
-      fixture.componentInstance.required.set(true);
+      fixture.componentRef.setInput('required', true);
       fixture.detectChanges();
 
       expect(fixture.componentInstance.required()).toBe(true);
     });
 
-    it('should update labelPosition signal when set programmatically', () => {
+    it('should update labelPosition when set via setInput', () => {
       expect(fixture.componentInstance.labelPosition()).toBe('right');
 
-      fixture.componentInstance.labelPosition.set('left');
+      fixture.componentRef.setInput('labelPosition', 'left');
       fixture.detectChanges();
 
       expect(fixture.componentInstance.labelPosition()).toBe('left');
@@ -566,5 +566,108 @@ describe('PshSwitchComponent with custom SWITCH_CONFIG', () => {
 
   it('should use labelPosition value from config', () => {
     expect(fixture.componentInstance.labelPosition()).toBe('left');
+  });
+});
+
+// ── CVA emission safety tests ────────────────────────────────────────
+
+@Component({
+  template: `
+    <psh-switch
+      [formControl]="control"
+      (checkedChange)="onCheckedChange($event)"
+      (disabledChange)="onDisabledChange($event)"
+    ></psh-switch>
+  `,
+  imports: [PshSwitchComponent, ReactiveFormsModule]
+})
+class CvaEmissionTestHost {
+  control = new FormControl(false);
+  onCheckedChange = jest.fn();
+  onDisabledChange = jest.fn();
+}
+
+describe('PshSwitchComponent CVA emission safety', () => {
+  let fixture: ComponentFixture<CvaEmissionTestHost>;
+  let host: CvaEmissionTestHost;
+
+  const getSwitchInput = () =>
+    fixture.nativeElement.querySelector('input[type="checkbox"]') as HTMLInputElement;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [CvaEmissionTestHost]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(CvaEmissionTestHost);
+    host = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should NOT emit checkedChange when form control sets value via setValue', () => {
+    host.onCheckedChange.mockClear();
+
+    host.control.setValue(true);
+    fixture.detectChanges();
+
+    expect(host.onCheckedChange).not.toHaveBeenCalled();
+  });
+
+  it('should NOT emit checkedChange when form control sets value via patchValue', () => {
+    host.onCheckedChange.mockClear();
+
+    host.control.patchValue(true);
+    fixture.detectChanges();
+
+    expect(host.onCheckedChange).not.toHaveBeenCalled();
+  });
+
+  it('should NOT emit disabledChange when form control is disabled', () => {
+    host.onDisabledChange.mockClear();
+
+    host.control.disable();
+    fixture.detectChanges();
+
+    expect(host.onDisabledChange).not.toHaveBeenCalled();
+  });
+
+  it('should NOT emit disabledChange when form control is enabled', () => {
+    host.control.disable();
+    fixture.detectChanges();
+    host.onDisabledChange.mockClear();
+
+    host.control.enable();
+    fixture.detectChanges();
+
+    expect(host.onDisabledChange).not.toHaveBeenCalled();
+  });
+
+  it('should emit checkedChange exactly once on user click', () => {
+    host.onCheckedChange.mockClear();
+
+    getSwitchInput().click();
+    fixture.detectChanges();
+
+    expect(host.onCheckedChange).toHaveBeenCalledTimes(1);
+    expect(host.onCheckedChange).toHaveBeenCalledWith(true);
+  });
+
+  it('should NOT emit checkedChange on initial render', () => {
+    expect(host.onCheckedChange).not.toHaveBeenCalled();
+  });
+
+  it('should emit checkedChange once when using formControl and (checkedChange) together', () => {
+    host.onCheckedChange.mockClear();
+
+    // Programmatic set should NOT fire
+    host.control.setValue(true);
+    fixture.detectChanges();
+    expect(host.onCheckedChange).not.toHaveBeenCalled();
+
+    // User click should fire exactly once (toggling from true back to false)
+    getSwitchInput().click();
+    fixture.detectChanges();
+    expect(host.onCheckedChange).toHaveBeenCalledTimes(1);
+    expect(host.onCheckedChange).toHaveBeenCalledWith(false);
   });
 });

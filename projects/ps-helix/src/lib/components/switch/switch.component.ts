@@ -3,9 +3,12 @@ import {
   Component,
   computed,
   ElementRef,
+  EventEmitter,
   inject,
+  Input,
   input,
-  model,
+  Output,
+  signal,
   viewChild,
   InjectionToken
 } from '@angular/core';
@@ -48,12 +51,22 @@ export class PshSwitchComponent implements ControlValueAccessor {
   private onChange = (value: boolean) => {};
   private onTouched = () => {};
 
-  // Model inputs with defaults from config
-  checked = model(this.config.checked ?? false);
-  disabled = model(this.config.disabled ?? false);
-  required = model(this.config.required ?? false);
-  size = model<SwitchSize>(this.config.size ?? 'medium');
-  labelPosition = model<'left' | 'right'>(this.config.labelPosition ?? 'right');
+  // CVA-managed state: plain signals + manual @Input/@Output to prevent
+  // auto-emission during writeValue()/setDisabledState().
+  checked = signal(this.config.checked ?? false);
+  @Input('checked') set checkedInput(v: boolean) { this.checked.set(v); }
+
+  disabled = signal(this.config.disabled ?? false);
+  @Input('disabled') set disabledInput(v: boolean) { this.disabled.set(v); }
+
+  // Outputs — EventEmitter to decouple from signal writes.
+  @Output() checkedChange = new EventEmitter<boolean>();
+  @Output() disabledChange = new EventEmitter<boolean>();
+
+  // Configuration inputs (not CVA-managed, not written internally)
+  required = input(this.config.required ?? false);
+  size = input<SwitchSize>(this.config.size ?? 'medium');
+  labelPosition = input<'left' | 'right'>(this.config.labelPosition ?? 'right');
 
   // Regular inputs
   label = input('');
@@ -83,6 +96,7 @@ export class PshSwitchComponent implements ControlValueAccessor {
     if (!this.disabled()) {
       this.checked.update(v => !v);
       this.onChange(this.checked());
+      this.checkedChange.emit(this.checked());
       this.onTouched();
     }
   }

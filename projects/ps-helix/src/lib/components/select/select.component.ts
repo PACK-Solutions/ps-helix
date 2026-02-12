@@ -3,9 +3,11 @@ import {
   Component,
   computed,
   ElementRef,
+  EventEmitter,
   inject,
+  Input,
   input,
-  model,
+  Output,
   output,
   signal,
   DestroyRef,
@@ -47,9 +49,14 @@ export class PshSelectComponent<T = any> implements ControlValueAccessor, AfterC
   // Unique ID for the select
   readonly selectId = `select-${Math.random().toString(36).substring(2, 11)}`;
 
-  // Model inputs
-  value = model<T | T[] | null>(null);
-  disabled = model(false);
+  // CVA-managed state: plain signals + manual @Input/@Output to prevent
+  // auto-emission during writeValue()/setDisabledState().
+  // model() would auto-emit on .set(), breaking CVA semantics.
+  value = signal<T | T[] | null>(null);
+  @Input('value') set valueInput(v: T | T[] | null) { this.value.set(v); }
+
+  disabled = signal(false);
+  @Input('disabled') set disabledInput(v: boolean) { this.disabled.set(v); }
 
   size = input<SelectSize>('medium');
   searchable = input(false);
@@ -86,8 +93,10 @@ export class PshSelectComponent<T = any> implements ControlValueAccessor, AfterC
   private initializedSignal = signal(false);
   private activeDescendantId = signal<string | null>(null);
 
-  // Outputs
-  valueChange = output<T | T[] | null>();
+  // Outputs — valueChange/disabledChange use EventEmitter to decouple from signal writes.
+  // output() auto-subscribes to model signals; EventEmitter does not.
+  @Output() valueChange = new EventEmitter<T | T[] | null>();
+  @Output() disabledChange = new EventEmitter<boolean>();
   opened = output<void>();
   closed = output<void>();
   scrollEnd = output<void>();
