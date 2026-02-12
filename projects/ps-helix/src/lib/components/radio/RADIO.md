@@ -59,20 +59,20 @@ export class ExampleComponent {
 
 ### API
 
-#### Model Inputs (@model)
+#### Inputs bidirectionnels (avec `[()]`)
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
 | checked | boolean | false | État coché |
 | disabled | boolean | false | État désactivé |
-| required | boolean | false | État requis |
 
-#### Regular Inputs (@input)
+#### Regular Inputs
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
+| required | boolean | false | État requis |
 | label | string | '' | Label du radio |
 | error | string | '' | Message d'erreur |
 | success | string | '' | Message de succès |
-| name | string | '' | Nom du groupe |
+| name | string | '' | Nom du groupe (OBLIGATOIRE pour le groupement) |
 | value | any | undefined | Valeur associée |
 | ariaLabel | string \| undefined | undefined | Label ARIA personnalisé |
 | size | RadioSize | 'medium' | Taille du radio |
@@ -81,8 +81,11 @@ export class ExampleComponent {
 #### Outputs
 | Nom | Type | Description |
 |-----|------|-------------|
+| checkedChange | EventEmitter\<boolean\> | Émis lors du changement d'état coché par l'utilisateur |
+| disabledChange | EventEmitter\<boolean\> | Émis lors du changement d'état désactivé par l'utilisateur |
 | valueChange | output\<any\> | Émis lors de la sélection |
-| checkedChange | output\<boolean\> | Émis lors du changement d'état coché |
+
+> Les outputs `checkedChange` et `disabledChange` ne sont pas émis lors des appels `writeValue()` ou `setDisabledState()` (ControlValueAccessor), ce qui évite les boucles infinies avec les Reactive Forms.
 
 ### Configuration Globale
 

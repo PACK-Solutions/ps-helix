@@ -64,7 +64,7 @@ import { PshInputComponent } from 'ps-helix';
 
 ## API
 
-### Model Inputs (@model)
+### Inputs bidirectionnels (avec `[()]`)
 
 Propriétés à liaison bidirectionnelle pour les états dynamiques.
 
@@ -72,10 +72,10 @@ Propriétés à liaison bidirectionnelle pour les états dynamiques.
 |-----|------|---------|-------------|
 | value | string | '' | Valeur de l'input |
 | disabled | boolean | false | État désactivé |
-| readonly | boolean | false | État lecture seule |
-| loading | boolean | false | État chargement |
+| readonly | boolean | false | État lecture seule (model) |
+| loading | boolean | false | État chargement (model) |
 
-### Regular Inputs (@input)
+### Regular Inputs
 
 Propriétés de configuration (unidirectionnelles).
 
@@ -101,10 +101,13 @@ Propriétés de configuration (unidirectionnelles).
 ### Outputs
 | Nom | Type | Description |
 |-----|------|-------------|
-| valueChange | EventEmitter<string> | Émis lors du changement |
+| valueChange | EventEmitter<string> | Émis lors du changement de valeur par l'utilisateur |
+| disabledChange | EventEmitter<boolean> | Émis lors du changement d'état désactivé par l'utilisateur |
 | inputFocus | EventEmitter<void> | Émis lors du focus |
 | inputBlur | EventEmitter<void> | Émis lors du blur |
-| suggestionSelect | EventEmitter<string> | Émis lors de la sélection |
+| suggestionSelect | EventEmitter<string> | Émis lors de la sélection d'une suggestion |
+
+> Les outputs `valueChange` et `disabledChange` ne sont pas émis lors des appels `writeValue()` ou `setDisabledState()` (ControlValueAccessor), ce qui évite les boucles infinies avec les Reactive Forms.
 
 ### Types
 

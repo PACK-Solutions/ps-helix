@@ -240,11 +240,11 @@
       <h3 class="section-title">Documentation API</h3>
       <div class="api-container">
         <div class="api-intro">
-          <p>Le composant Checkbox utilise des <strong>model inputs</strong> bidirectionnels pour une synchronisation automatique de l'état, conforme aux standards Angular 20.</p>
+          <p>Le composant Checkbox utilise des <strong>inputs bidirectionnels</strong> pour une synchronisation de l'état, conforme aux standards Angular 21.</p>
         </div>
 
         <div class="api-table-wrapper">
-          <h4>Model Inputs (Bidirectionnels)</h4>
+          <h4>Inputs Bidirectionnels (avec <code>[()]</code>)</h4>
           <table class="api-table">
             <thead>
               <tr>
@@ -268,12 +268,6 @@
                 <td>État désactivé de la checkbox</td>
               </tr>
               <tr>
-                <td><code>required</code></td>
-                <td><code>boolean</code></td>
-                <td><code>false</code></td>
-                <td>Indique si la checkbox est requise</td>
-              </tr>
-              <tr>
                 <td><code>indeterminate</code></td>
                 <td><code>boolean</code></td>
                 <td><code>false</code></td>
@@ -295,6 +289,12 @@
               </tr>
             </thead>
             <tbody>
+              <tr>
+                <td><code>required</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Indique si la checkbox est requise</td>
+              </tr>
               <tr>
                 <td><code>label</code></td>
                 <td><code>string</code></td>

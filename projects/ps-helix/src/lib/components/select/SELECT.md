@@ -54,13 +54,13 @@ import { PshSelectComponent } from 'ps-helix';
 
 ## API
 
-### Model Inputs (@model)
+### Inputs bidirectionnels (avec `[()]`)
 | Nom | Type | Défaut | Description |
 |-----|------|--------|-------------|
 | value | `T \| T[] \| null` | `null` | Valeur sélectionnée (ou tableau en mode multiple) |
 | disabled | `boolean` | `false` | État désactivé |
 
-### Regular Inputs (@input)
+### Regular Inputs
 | Nom | Type | Défaut | Description |
 |-----|------|--------|-------------|
 | options | `(SelectOption<T> \| SelectOptionGroup<T>)[]` | `[]` | Liste des options (simples ou groupées) |
@@ -86,11 +86,14 @@ import { PshSelectComponent } from 'ps-helix';
 ### Outputs
 | Nom | Type | Description |
 |-----|------|-------------|
-| valueChange | `EventEmitter<T \| T[] \| null>` | Émis lors de la sélection |
+| valueChange | `EventEmitter<T \| T[] \| null>` | Émis lors de la sélection par l'utilisateur |
+| disabledChange | `EventEmitter<boolean>` | Émis lors du changement d'état désactivé par l'utilisateur |
 | opened | `EventEmitter<void>` | Émis à l'ouverture du dropdown |
 | closed | `EventEmitter<void>` | Émis à la fermeture du dropdown |
 | searched | `EventEmitter<string>` | Émis lors de la recherche (si `minLength` atteint) |
 | scrollEnd | `EventEmitter<void>` | Émis lorsque l'utilisateur atteint la fin de la liste |
+
+> Les outputs `valueChange` et `disabledChange` ne sont pas émis lors des appels `writeValue()` ou `setDisabledState()` (ControlValueAccessor), ce qui évite les boucles infinies avec les Reactive Forms.
 
 ## Interfaces
 

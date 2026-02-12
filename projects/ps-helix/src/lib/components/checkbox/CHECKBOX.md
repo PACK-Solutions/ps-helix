@@ -82,17 +82,17 @@ export class StandaloneFormControlComponent {
 
 ## API
 
-### Model Inputs (bidirectionnels avec `[()]`)
+### Inputs bidirectionnels (avec `[()]`)
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
 | checked | boolean | false | État coché |
 | disabled | boolean | false | État désactivé |
-| required | boolean | false | État requis |
 | indeterminate | boolean | false | État indéterminé |
 
 ### Regular Inputs
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
+| required | boolean | false | État requis |
 | label | string | '' | Label de la checkbox |
 | error | string | '' | Message d'erreur |
 | success | string | '' | Message de succès |
@@ -101,11 +101,11 @@ export class StandaloneFormControlComponent {
 | labelPosition | 'left' \| 'right' | 'right' | Position du label |
 
 ### Outputs
-Les model inputs génèrent automatiquement des events de changement :
-- `checkedChange` : Émis lors du changement d'état coché
-- `disabledChange` : Émis lors du changement d'état désactivé
-- `requiredChange` : Émis lors du changement d'état requis
-- `indeterminateChange` : Émis lors du changement d'état indéterminé
+- `checkedChange` : Émis lors du changement d'état coché par l'utilisateur
+- `disabledChange` : Émis lors du changement d'état désactivé par l'utilisateur
+- `indeterminateChange` : Émis lors du changement d'état indéterminé par l'utilisateur
+
+> Les outputs ne sont pas émis lors des appels `writeValue()` ou `setDisabledState()` (ControlValueAccessor), ce qui évite les boucles infinies avec les Reactive Forms.
 
 ### Méthodes Publiques
 

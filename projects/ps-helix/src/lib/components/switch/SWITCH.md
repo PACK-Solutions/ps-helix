@@ -71,22 +71,22 @@ export class MyComponent {
 
 ## API
 
-### Model Inputs (@model)
+### Inputs bidirectionnels (avec `[()]`)
 
-Ces inputs supportent le two-way binding avec la syntaxe `[(prop)]` et emettent automatiquement un evenement `propChange`.
+Ces inputs supportent le two-way binding avec la syntaxe `[(prop)]`.
 
 | Nom | Type | Defaut | Description |
 |-----|------|---------|-------------|
 | checked | boolean | false | Etat coche |
 | disabled | boolean | false | Etat desactive |
-| required | boolean | false | Etat requis |
-| size | SwitchSize | 'medium' | Taille du switch |
-| labelPosition | 'left' \| 'right' | 'right' | Position du label |
 
-### Regular Inputs (@input)
+### Regular Inputs
 
 | Nom | Type | Defaut | Description |
 |-----|------|---------|-------------|
+| required | boolean | false | Etat requis |
+| size | SwitchSize | 'medium' | Taille du switch |
+| labelPosition | 'left' \| 'right' | 'right' | Position du label |
 | label | string | '' | Label du switch |
 | error | string | '' | Message d'erreur |
 | success | string | '' | Message de succes |
@@ -96,15 +96,12 @@ Ces inputs supportent le two-way binding avec la syntaxe `[(prop)]` et emettent 
 
 ### Outputs
 
-Les model inputs generent automatiquement des outputs correspondants :
-
 | Nom | Type | Description |
 |-----|------|-------------|
-| checkedChange | ModelSignal<boolean> | Emis lors du changement d'etat |
-| disabledChange | ModelSignal<boolean> | Emis lors du changement d'etat desactive |
-| requiredChange | ModelSignal<boolean> | Emis lors du changement d'etat requis |
-| sizeChange | ModelSignal<SwitchSize> | Emis lors du changement de taille |
-| labelPositionChange | ModelSignal<'left' \| 'right'> | Emis lors du changement de position |
+| checkedChange | EventEmitter\<boolean\> | Emis lors du changement d'etat coche par l'utilisateur |
+| disabledChange | EventEmitter\<boolean\> | Emis lors du changement d'etat desactive par l'utilisateur |
+
+> Les outputs ne sont pas emis lors des appels `writeValue()` ou `setDisabledState()` (ControlValueAccessor), ce qui evite les boucles infinies avec les Reactive Forms.
 
 ### Methodes Publiques
 

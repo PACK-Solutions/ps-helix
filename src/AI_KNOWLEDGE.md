@@ -7,7 +7,7 @@ Reference documentation for the Helix Design System Angular component library. T
 ## Overview
 
 - **Library**: `ps-helix`
-- **Version**: 3.0.7
+- **Version**: 3.0.8
 - **Framework**: Angular 21+
 - **Prefix**: `psh-` (all components)
 - **Import**: `import { ComponentName } from 'ps-helix';`
@@ -337,12 +337,19 @@ Control: `.animate-fast`, `.animate-slow`, `.animate-smooth`
 
 **Selector**: `psh-checkbox`
 
+**Two-way bindable inputs** (with `[()]`):
+
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
 | `checked` | `boolean` | `false` | Checked state (two-way) |
 | `disabled` | `boolean` | `false` | Disabled state (two-way) |
+| `indeterminate` | `boolean` | `false` | Indeterminate state (two-way) |
+
+**Regular inputs**:
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `required` | `boolean` | `false` | Required state |
-| `indeterminate` | `boolean` | `false` | Indeterminate state |
 | `label` | `string` | `''` | Label text |
 | `size` | `'small' \| 'medium' \| 'large'` | `'medium'` | Checkbox size |
 | `labelPosition` | `'left' \| 'right'` | `'right'` | Label position |
@@ -352,14 +359,16 @@ Control: `.animate-fast`, `.animate-slow`, `.animate-smooth`
 
 | Output | Type | Description |
 |--------|------|-------------|
-| `checkedChange` | `boolean` | Checked state change |
+| `checkedChange` | `boolean` | Checked state change (user action only) |
+| `disabledChange` | `boolean` | Disabled state change (user action only) |
+| `indeterminateChange` | `boolean` | Indeterminate state change (user action only) |
 
 | Method | Description |
 |--------|-------------|
 | `focus()` | Focuses the checkbox input element |
 | `blur()` | Removes focus from the checkbox input element |
 
-Implements `ControlValueAccessor` for reactive forms (`[formControl]`, `formControlName`).
+Implements `ControlValueAccessor` for reactive forms (`[formControl]`, `formControlName`). Outputs are not emitted during `writeValue()`/`setDisabledState()` calls.
 
 ---
 
@@ -415,15 +424,22 @@ interface DropdownItem<T = string> {
 
 **Selector**: `psh-input`
 
+**Two-way bindable inputs** (with `[()]`):
+
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
 | `value` | `string` | `''` | Input value (two-way) |
+| `disabled` | `boolean` | `false` | Disabled state (two-way) |
+| `readonly` | `boolean` | `false` | Readonly state (two-way, model) |
+| `loading` | `boolean` | `false` | Loading state (two-way, model) |
+
+**Regular inputs**:
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `type` | `'text' \| 'password' \| 'email' \| 'tel' \| 'url' \| 'search' \| 'date' \| 'number'` | `'text'` | Input type |
 | `variant` | `'outlined' \| 'filled'` | `'outlined'` | Input variant |
 | `size` | `'small' \| 'medium' \| 'large'` | `'medium'` | Input size |
-| `disabled` | `boolean` | `false` | Disabled state (two-way) |
-| `readonly` | `boolean` | `false` | Readonly state (two-way) |
-| `loading` | `boolean` | `false` | Loading state (two-way) |
 | `required` | `boolean` | `false` | Required state |
 | `fullWidth` | `boolean` | `false` | Full width |
 | `showLabel` | `boolean` | `true` | Show label |
@@ -439,12 +455,13 @@ interface DropdownItem<T = string> {
 
 | Output | Type | Description |
 |--------|------|-------------|
-| `valueChange` | `string` | Value change |
+| `valueChange` | `string` | Value change (user action only) |
+| `disabledChange` | `boolean` | Disabled state change (user action only) |
 | `inputFocus` | `void` | Focus event |
 | `inputBlur` | `void` | Blur event |
 | `suggestionSelect` | `string` | Suggestion selected |
 
-Implements `ControlValueAccessor` for reactive forms.
+Implements `ControlValueAccessor` for reactive forms. `valueChange` and `disabledChange` are not emitted during `writeValue()`/`setDisabledState()` calls.
 
 ---
 
@@ -452,12 +469,19 @@ Implements `ControlValueAccessor` for reactive forms.
 
 **Selector**: `psh-select`
 
+**Two-way bindable inputs** (with `[()]`):
+
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
 | `value` | `T \| T[] \| null` | `null` | Selected value (two-way) |
+| `disabled` | `boolean` | `false` | Disabled state (two-way) |
+
+**Regular inputs**:
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `options` | `(SelectOption<T> \| SelectOptionGroup<T>)[]` | `[]` | Options |
 | `size` | `'small' \| 'medium' \| 'large'` | `'medium'` | Select size |
-| `disabled` | `boolean` | `false` | Disabled state (two-way) |
 | `loading` | `boolean` | `false` | Loading state |
 | `multiple` | `boolean` | `false` | Multiple selection |
 | `searchable` | `boolean` | `false` | Enable search |
@@ -474,7 +498,8 @@ Implements `ControlValueAccessor` for reactive forms.
 
 | Output | Type | Description |
 |--------|------|-------------|
-| `valueChange` | `T \| T[] \| null` | Value change |
+| `valueChange` | `T \| T[] \| null` | Value change (user action only) |
+| `disabledChange` | `boolean` | Disabled state change (user action only) |
 | `opened` | `void` | Dropdown opened |
 | `closed` | `void` | Dropdown closed |
 | `searched` | `string` | Search term changed |
@@ -491,7 +516,7 @@ interface SelectOption<T> {
 }
 ```
 
-Implements `ControlValueAccessor` for reactive forms.
+Implements `ControlValueAccessor` for reactive forms. `valueChange` and `disabledChange` are not emitted during `writeValue()`/`setDisabledState()` calls.
 
 ---
 
@@ -709,13 +734,20 @@ interface Tab {
 
 **Selector**: `psh-radio`
 
+**Two-way bindable inputs** (with `[()]`):
+
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
 | `checked` | `boolean` | `false` | Checked state (two-way) |
-| `disabled` | `boolean` | `false` | Disabled state |
+| `disabled` | `boolean` | `false` | Disabled state (two-way) |
+
+**Regular inputs**:
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `required` | `boolean` | `false` | Required state |
 | `label` | `string` | `''` | Label text |
-| `name` | `string` | `''` | Radio group name |
+| `name` | `string` | `''` | Radio group name (mandatory for grouping) |
 | `value` | `any` | - | Radio value |
 | `size` | `'small' \| 'medium' \| 'large'` | `'medium'` | Radio size |
 | `labelPosition` | `'left' \| 'right'` | `'right'` | Label position |
@@ -724,9 +756,10 @@ interface Tab {
 
 | Output | Type | Description |
 |--------|------|-------------|
-| `checkedChange` | `boolean` | Checked state change |
+| `checkedChange` | `boolean` | Checked state change (user action only) |
+| `disabledChange` | `boolean` | Disabled state change (user action only) |
 
-Implements `ControlValueAccessor` for reactive forms.
+Implements `ControlValueAccessor` for reactive forms. Outputs are not emitted during `writeValue()`/`setDisabledState()` calls.
 
 ---
 
@@ -734,22 +767,33 @@ Implements `ControlValueAccessor` for reactive forms.
 
 **Selector**: `psh-switch`
 
+**Two-way bindable inputs** (with `[()]`):
+
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
 | `checked` | `boolean` | `false` | Checked state (two-way) |
-| `disabled` | `boolean` | `false` | Disabled state |
+| `disabled` | `boolean` | `false` | Disabled state (two-way) |
+
+**Regular inputs**:
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `required` | `boolean` | `false` | Required state |
 | `label` | `string` | `''` | Label text |
 | `size` | `'small' \| 'medium' \| 'large'` | `'medium'` | Switch size |
 | `labelPosition` | `'left' \| 'right'` | `'right'` | Label position |
 | `error` | `string` | - | Error message |
 | `success` | `string` | - | Success message |
+| `ariaLabel` | `string` | - | ARIA label |
+| `name` | `string` | - | Native input name attribute |
+| `id` | `string` | auto-generated | Unique switch ID |
 
 | Output | Type | Description |
 |--------|------|-------------|
-| `checkedChange` | `boolean` | Checked state change |
+| `checkedChange` | `boolean` | Checked state change (user action only) |
+| `disabledChange` | `boolean` | Disabled state change (user action only) |
 
-Implements `ControlValueAccessor` for reactive forms.
+Implements `ControlValueAccessor` for reactive forms. Outputs are not emitted during `writeValue()`/`setDisabledState()` calls.
 
 ---
 
