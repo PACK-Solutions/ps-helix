@@ -154,8 +154,8 @@
   font-weight: var(--font-weight-medium);
   color: var(--text-color);
   font-size: var(--font-size-sm);
-  padding-right: var(--size-2);
-  text-align: right;
+  padding-left: var(--size-2);
+  text-align: left;
   min-width: 0;
   flex: 2;
   overflow: hidden;
