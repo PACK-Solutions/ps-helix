@@ -154,7 +154,7 @@
   font-weight: var(--font-weight-medium);
   color: var(--text-color);
   font-size: var(--font-size-sm);
-  padding-left: var(--size-2);
+  padding-right: var(--size-2);
   text-align: right;
   min-width: 0;
   flex: 2;
