@@ -5,7 +5,6 @@
   "description": "Helix Design System",
   "author": "Fabrice PEREZ",
   "license": "MIT",
-  "packageManager": "pnpm@10.27.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/PACK-Solutions/ps-helix"
@@ -17,7 +16,7 @@
     "build": "ng build && cp -r dist/browser/* dist/",
     "dev": "ng serve --configuration development --no-hmr",
     "build:lib": "ng build ps-helix",
-    "publish:lib": "cd dist/ps-helix && pnpm publish",
+    "publish:lib": "cd dist/ps-helix && npm publish",
     "watch:lib": "ng build ps-helix --watch",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -49,15 +48,5 @@
     "ng-packagr": "^21.0.0",
     "typescript": "~5.9.0",
     "zone.js": "^0.15.1"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@parcel/watcher",
-      "esbuild",
-      "less",
-      "lmdb",
-      "msgpackr-extract",
-      "unrs-resolver"
-    ]
   }
 }
