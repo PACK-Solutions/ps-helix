@@ -11,6 +11,7 @@
 .switch-states-section,
 .switch-sizes-section,
 .switch-forms-section,
+.switch-signal-forms-section,
 .api-section {
   margin-bottom: var(--spacing-3xl);
 }
@@ -433,6 +434,7 @@
   .switch-states-section,
   .switch-sizes-section,
   .switch-forms-section,
+  .switch-signal-forms-section,
   .api-section {
     margin-bottom: var(--spacing-2xl);
   }
@@ -497,6 +499,7 @@
   .switch-states-section,
   .switch-sizes-section,
   .switch-forms-section,
+  .switch-signal-forms-section,
   .api-section {
     margin-bottom: var(--spacing-xl);
   }

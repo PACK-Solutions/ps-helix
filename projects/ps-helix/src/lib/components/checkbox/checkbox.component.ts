@@ -4,16 +4,14 @@ import {
   computed,
   effect,
   ElementRef,
-  EventEmitter,
   inject,
   InjectionToken,
-  Input,
   input,
-  Output,
-  signal,
+  model,
   viewChild
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import type { FormCheckboxControl } from '@angular/forms/signals';
 import { CheckboxSize, CheckboxConfig } from './checkbox.types';
 
 export const CHECKBOX_CONFIG = new InjectionToken<Partial<CheckboxConfig>>('CHECKBOX_CONFIG', {
@@ -50,7 +48,7 @@ let checkboxIdCounter = 0;
     '[attr.data-state]': 'state()'
   }
 })
-export class PshCheckboxComponent implements ControlValueAccessor {
+export class PshCheckboxComponent implements ControlValueAccessor, FormCheckboxControl {
   private config = inject(CHECKBOX_CONFIG);
   private uniqueId = `checkbox-${++checkboxIdCounter}`;
 
@@ -59,23 +57,12 @@ export class PshCheckboxComponent implements ControlValueAccessor {
   private onChange = (value: boolean) => {};
   private onTouched = () => {};
 
-  // CVA-managed state: plain signals + manual @Input/@Output to prevent
-  // auto-emission during writeValue()/setDisabledState().
-  checked = signal(this.config.checked ?? false);
-  @Input('checked') set checkedInput(v: boolean) { this.checked.set(v); }
+  readonly checked = model(this.config.checked ?? false);
+  readonly disabled = model(this.config.disabled ?? false);
+  readonly indeterminate = model(this.config.indeterminate ?? false);
 
-  disabled = signal(this.config.disabled ?? false);
-  @Input('disabled') set disabledInput(v: boolean) { this.disabled.set(v); }
-
-  indeterminate = signal(this.config.indeterminate ?? false);
-  @Input('indeterminate') set indeterminateInput(v: boolean) { this.indeterminate.set(v); }
-
+  touched = model(false);
   required = input(this.config.required ?? false);
-
-  // Outputs — EventEmitter to decouple from signal writes.
-  @Output() checkedChange = new EventEmitter<boolean>();
-  @Output() disabledChange = new EventEmitter<boolean>();
-  @Output() indeterminateChange = new EventEmitter<boolean>();
 
   label = input(this.config.label ?? '');
   error = input('');
@@ -125,8 +112,8 @@ export class PshCheckboxComponent implements ControlValueAccessor {
       this.checked.update(v => !v);
       this.indeterminate.set(false);
       this.onChange(this.checked());
-      this.checkedChange.emit(this.checked());
       this.onTouched();
+      this.touched.set(true);
     }
   }
 
@@ -159,16 +146,16 @@ export class PshCheckboxComponent implements ControlValueAccessor {
   }
 
   focus(): void {
-    const input = this.checkboxInput();
-    if (input?.nativeElement) {
-      input.nativeElement.focus();
+    const el = this.checkboxInput();
+    if (el?.nativeElement) {
+      el.nativeElement.focus();
     }
   }
 
   blur(): void {
-    const input = this.checkboxInput();
-    if (input?.nativeElement) {
-      input.nativeElement.blur();
+    const el = this.checkboxInput();
+    if (el?.nativeElement) {
+      el.nativeElement.blur();
     }
   }
 }

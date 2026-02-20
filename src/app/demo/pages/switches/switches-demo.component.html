@@ -245,6 +245,50 @@
       </div>
     </section>
 
+    <!-- Signal Forms (Angular 21+) -->
+    <section class="switch-signal-forms-section">
+      <h3 class="section-title">Signal Forms (Angular 21+)</h3>
+      <div class="forms-container">
+        <div class="forms-intro">
+          <p>Le switch implémente <code>FormCheckboxControl</code> pour une intégration native avec les Signal Forms d'Angular 21+. Utilisez la directive <code>[formField]</code> pour lier directement un champ du formulaire.</p>
+        </div>
+        <div class="forms-content">
+          <div class="forms-demo">
+            <h4>Exemple Interactif</h4>
+            <div class="form-group">
+              <psh-switch [formField]="preferencesForm.notifications">
+                Activer les notifications
+              </psh-switch>
+            </div>
+            <div class="form-group">
+              <psh-switch [formField]="preferencesForm.darkMode">
+                Mode sombre
+              </psh-switch>
+            </div>
+            <div class="form-group">
+              <psh-switch [formField]="preferencesForm.analytics">
+                Statistiques d'utilisation
+              </psh-switch>
+            </div>
+            <div class="form-status">
+              <p><strong>Valeurs du modèle :</strong></p>
+              <pre>{{ preferencesModel() | json }}</pre>
+            </div>
+          </div>
+          <div class="forms-doc">
+            <h4>Caractéristiques</h4>
+            <ul class="feature-list">
+              <li><strong>[formField]</strong> : Liaison directe avec un champ Signal Forms</li>
+              <li><strong>FormCheckboxControl</strong> : Interface implémentée nativement par le switch</li>
+              <li><strong>Réactivité</strong> : Synchronisation automatique via les signals Angular</li>
+              <li><strong>Rétrocompatible</strong> : Fonctionne aussi avec Reactive Forms et [(checked)]</li>
+            </ul>
+            <ds-code-snippet [code]="signalFormsCode" />
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Documentation API - Section Pleine Largeur -->
     <section class="api-section">
       <h3 class="section-title">Documentation API</h3>

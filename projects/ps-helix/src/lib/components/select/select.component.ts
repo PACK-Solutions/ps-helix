@@ -3,11 +3,9 @@ import {
   Component,
   computed,
   ElementRef,
-  EventEmitter,
   inject,
-  Input,
   input,
-  Output,
+  model,
   output,
   signal,
   DestroyRef,
@@ -16,6 +14,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
+import type { FormValueControl } from '@angular/forms/signals';
 import { SelectOption, SelectOptionGroup, SelectSize, SearchConfig } from './select.types';
 
 @Component({
@@ -41,22 +40,16 @@ import { SelectOption, SelectOptionGroup, SelectSize, SearchConfig } from './sel
     '[class.loading]': 'loading()',
   }
 })
-export class PshSelectComponent<T = any> implements ControlValueAccessor, AfterContentInit {
+export class PshSelectComponent<T = unknown> implements ControlValueAccessor, FormValueControl<T | T[] | null>, AfterContentInit {
   private elementRef = inject(ElementRef);
   private cdr = inject(ChangeDetectorRef);
   private destroyRef = inject(DestroyRef);
 
-  // Unique ID for the select
   readonly selectId = `select-${Math.random().toString(36).substring(2, 11)}`;
 
-  // CVA-managed state: plain signals + manual @Input/@Output to prevent
-  // auto-emission during writeValue()/setDisabledState().
-  // model() would auto-emit on .set(), breaking CVA semantics.
-  value = signal<T | T[] | null>(null);
-  @Input('value') set valueInput(v: T | T[] | null) { this.value.set(v); }
-
-  disabled = signal(false);
-  @Input('disabled') set disabledInput(v: boolean) { this.disabled.set(v); }
+  readonly value = model<T | T[] | null>(null);
+  readonly disabled = model<boolean>(false);
+  touched = model(false);
 
   size = input<SelectSize>('medium');
   searchable = input(false);
@@ -66,10 +59,9 @@ export class PshSelectComponent<T = any> implements ControlValueAccessor, AfterC
   fullWidth = input(false);
   required = input(false);
 
-  // Regular inputs
   options = input<(SelectOption<T> | SelectOptionGroup<T>)[]>([]);
-  label = input(''); // Added dedicated label property
-  ariaLabel = input<string | null>(null); // Added dedicated ariaLabel property
+  label = input('');
+  ariaLabel = input<string | null>(null);
   placeholder = input<string>('Sélectionner une option');
   multiplePlaceholder = input<string>('Sélectionner des options');
   error = input('');
@@ -84,7 +76,6 @@ export class PshSelectComponent<T = any> implements ControlValueAccessor, AfterC
     minLength: 1
   });
 
-  // State
   private isOpenSignal = signal(false);
   private searchTermSignal = signal('');
   private selectedLabelSignal = signal('');
@@ -93,16 +84,11 @@ export class PshSelectComponent<T = any> implements ControlValueAccessor, AfterC
   private initializedSignal = signal(false);
   private activeDescendantId = signal<string | null>(null);
 
-  // Outputs — valueChange/disabledChange use EventEmitter to decouple from signal writes.
-  // output() auto-subscribes to model signals; EventEmitter does not.
-  @Output() valueChange = new EventEmitter<T | T[] | null>();
-  @Output() disabledChange = new EventEmitter<boolean>();
   opened = output<void>();
   closed = output<void>();
   scrollEnd = output<void>();
   searched = output<string>();
 
-  // Computed values
   isOpen = computed(() => this.isOpenSignal());
   searchTerm = computed(() => this.searchTermSignal());
   hasLabelContent = computed(() => this.hasLabelContentSignal());
@@ -122,12 +108,12 @@ export class PshSelectComponent<T = any> implements ControlValueAccessor, AfterC
   filteredOptions = computed(() => {
     const term = this.searchTermSignal().toLowerCase();
     const opts = this.options();
-    
+
     if (!term) return opts;
 
     return opts.map(opt => {
       if (this.isOptionGroup(opt)) {
-        const filteredOptions = opt.options.filter(o => 
+        const filteredOptions = opt.options.filter(o =>
           o.label.toLowerCase().includes(term) ||
           o.description?.toLowerCase().includes(term)
         );
@@ -165,8 +151,6 @@ export class PshSelectComponent<T = any> implements ControlValueAccessor, AfterC
     });
   }
 
-
-  // Keyboard navigation
   handleKeyDown(event: KeyboardEvent): void {
     if (this.disabled() || this.loading()) return;
 
@@ -235,7 +219,7 @@ export class PshSelectComponent<T = any> implements ControlValueAccessor, AfterC
         event.preventDefault();
         this.select(option);
         break;
-      
+
       case 'Escape':
         event.preventDefault();
         this.close();
@@ -321,22 +305,21 @@ export class PshSelectComponent<T = any> implements ControlValueAccessor, AfterC
     return activeId === optionId;
   }
 
-  // ControlValueAccessor implementation
-  private onChange = (_: any) => {};
+  private onChange = (_: unknown) => {};
   private onTouched = () => {};
 
-  writeValue(value: any): void {
+  writeValue(value: unknown): void {
     this.initializedSignal.set(true);
-    this.value.set(value);
+    this.value.set(value as T | T[] | null);
     this.updateSelectedLabel();
     this.cdr.markForCheck();
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (_: unknown) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 
@@ -344,17 +327,14 @@ export class PshSelectComponent<T = any> implements ControlValueAccessor, AfterC
     this.disabled.set(isDisabled);
   }
 
-  // Helper method to check if an option is a group
   isOptionGroup(option: SelectOption<T> | SelectOptionGroup<T>): option is SelectOptionGroup<T> {
     return 'options' in option;
   }
 
-  // Get unique key for tracking
   getOptionKey(option: SelectOption<T> | SelectOptionGroup<T>): string {
     return this.isOptionGroup(option) ? `group-${option.label}` : `option-${String(option.value)}`;
   }
 
-  // Check if there is a selected value
   hasValue(): boolean {
     const currentValue = this.value();
     if (this.multiple()) {
@@ -363,15 +343,17 @@ export class PshSelectComponent<T = any> implements ControlValueAccessor, AfterC
     return currentValue !== null && currentValue !== undefined;
   }
 
-  // Focus methods
-  focusSelect(): void {
+  focus(): void {
     const trigger = this.elementRef.nativeElement.querySelector('.select-trigger');
     if (trigger) {
       trigger.focus();
     }
   }
 
-  // Selection methods
+  focusSelect(): void {
+    this.focus();
+  }
+
   select(option: SelectOption<T>): void {
     if (!this.disabled() && !option.disabled) {
       this.activeDescendantId.set(null);
@@ -399,18 +381,17 @@ export class PshSelectComponent<T = any> implements ControlValueAccessor, AfterC
         if (changed) {
           this.value.set(values);
           this.onChange(values);
-          this.valueChange.emit(values);
           this.updateSelectedLabel();
         }
       } else {
         this.value.set(option.value);
         this.onChange(option.value);
-        this.valueChange.emit(option.value);
         this.updateSelectedLabel();
         this.close();
       }
 
       this.onTouched();
+      this.touched.set(true);
     }
   }
 
@@ -451,9 +432,9 @@ export class PshSelectComponent<T = any> implements ControlValueAccessor, AfterC
       const newValue = this.multiple() ? [] : null;
       this.value.set(newValue);
       this.onChange(newValue);
-      this.valueChange.emit(newValue);
       this.updateSelectedLabel();
       this.onTouched();
+      this.touched.set(true);
     }
   }
 
@@ -479,7 +460,7 @@ export class PshSelectComponent<T = any> implements ControlValueAccessor, AfterC
     const currentOptions = this.flattenOptions(this.options());
 
     if (this.multiple() && Array.isArray(currentValue)) {
-      const selected = currentOptions.filter(opt => 
+      const selected = currentOptions.filter(opt =>
         currentValue.some(v => this.compareWith()(v, opt.value))
       );
       if (selected.length > 0) {
@@ -489,7 +470,7 @@ export class PshSelectComponent<T = any> implements ControlValueAccessor, AfterC
         this.selectedLabelSignal.set('');
       }
     } else {
-      const selected = currentOptions.find(opt => 
+      const selected = currentOptions.find(opt =>
         currentValue !== null && this.compareWith()(opt.value, currentValue as T)
       );
       if (selected) {
@@ -509,5 +490,4 @@ export class PshSelectComponent<T = any> implements ControlValueAccessor, AfterC
       return [...acc, opt];
     }, [] as SelectOption<T>[]);
   }
-
 }

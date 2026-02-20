@@ -3,16 +3,14 @@ import {
   Component,
   computed,
   ElementRef,
-  EventEmitter,
   inject,
-  Input,
   input,
-  Output,
-  signal,
+  model,
   viewChild,
   InjectionToken
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import type { FormCheckboxControl } from '@angular/forms/signals';
 import { SwitchSize, SwitchConfig } from './switch.types';
 
 export const SWITCH_CONFIG = new InjectionToken<Partial<SwitchConfig>>('SWITCH_CONFIG', {
@@ -42,7 +40,7 @@ export const SWITCH_CONFIG = new InjectionToken<Partial<SwitchConfig>>('SWITCH_C
     '[class.switch-success]': '!!success()'
   }
 })
-export class PshSwitchComponent implements ControlValueAccessor {
+export class PshSwitchComponent implements ControlValueAccessor, FormCheckboxControl {
   private config = inject(SWITCH_CONFIG);
   private uniqueId = `switch-${crypto.randomUUID()}`;
 
@@ -51,29 +49,19 @@ export class PshSwitchComponent implements ControlValueAccessor {
   private onChange = (value: boolean) => {};
   private onTouched = () => {};
 
-  // CVA-managed state: plain signals + manual @Input/@Output to prevent
-  // auto-emission during writeValue()/setDisabledState().
-  checked = signal(this.config.checked ?? false);
-  @Input('checked') set checkedInput(v: boolean) { this.checked.set(v); }
+  readonly checked = model(this.config.checked ?? false);
+  readonly disabled = model(this.config.disabled ?? false);
+  touched = model(false);
 
-  disabled = signal(this.config.disabled ?? false);
-  @Input('disabled') set disabledInput(v: boolean) { this.disabled.set(v); }
-
-  // Outputs — EventEmitter to decouple from signal writes.
-  @Output() checkedChange = new EventEmitter<boolean>();
-  @Output() disabledChange = new EventEmitter<boolean>();
-
-  // Configuration inputs (not CVA-managed, not written internally)
   required = input(this.config.required ?? false);
   size = input<SwitchSize>(this.config.size ?? 'medium');
   labelPosition = input<'left' | 'right'>(this.config.labelPosition ?? 'right');
 
-  // Regular inputs
   label = input('');
   error = input('');
   success = input('');
   ariaLabel = input<string>();
-  name = input<string>();
+  name = input<string>('');
   id = input<string>(this.uniqueId);
 
   computedAriaLabel = computed(() => {
@@ -96,12 +84,11 @@ export class PshSwitchComponent implements ControlValueAccessor {
     if (!this.disabled()) {
       this.checked.update(v => !v);
       this.onChange(this.checked());
-      this.checkedChange.emit(this.checked());
       this.onTouched();
+      this.touched.set(true);
     }
   }
 
-  // ControlValueAccessor implementation
   writeValue(value: boolean): void {
     this.checked.set(value ?? false);
   }
@@ -118,18 +105,17 @@ export class PshSwitchComponent implements ControlValueAccessor {
     this.disabled.set(isDisabled);
   }
 
-  // Méthodes publiques pour contrôle programmatique
   focus(): void {
-    const input = this.switchInput();
-    if (input?.nativeElement) {
-      input.nativeElement.focus();
+    const el = this.switchInput();
+    if (el?.nativeElement) {
+      el.nativeElement.focus();
     }
   }
 
   blur(): void {
-    const input = this.switchInput();
-    if (input?.nativeElement) {
-      input.nativeElement.blur();
+    const el = this.switchInput();
+    if (el?.nativeElement) {
+      el.nativeElement.blur();
     }
   }
 }

@@ -349,6 +349,68 @@
       </div>
     </section>
 
+    <!-- Signal Forms - Section -->
+    <section class="input-signal-forms-section">
+      <h3 class="section-title">Signal Forms (Angular 21+)</h3>
+      <div class="autocomplete-container">
+        <div class="autocomplete-intro">
+          <p>Les composants ps-helix supportent nativement les Signal Forms d'Angular via <code>[formField]</code>. La synchronisation de la valeur, la validation et les etats sont geres automatiquement par le formulaire.</p>
+        </div>
+        <div class="autocomplete-content">
+          <div class="autocomplete-demo">
+            <div class="autocomplete-group">
+              <h4>Formulaire avec validation</h4>
+              <psh-input
+                [formField]="signalForm.email"
+                type="email"
+                iconStart="envelope"
+                placeholder="votre@email.com"
+              >
+                <span input-label>Email</span>
+              </psh-input>
+              @if (signalForm.email().touched() && signalForm.email().invalid()) {
+                <ul class="signal-form-errors">
+                  @for (error of signalForm.email().errors(); track error) {
+                    <li>{{ error.message }}</li>
+                  }
+                </ul>
+              }
+            </div>
+            <div class="autocomplete-group">
+              <psh-input
+                [formField]="signalForm.password"
+                type="password"
+                placeholder="Mot de passe"
+              >
+                <span input-label>Mot de passe</span>
+              </psh-input>
+              @if (signalForm.password().touched() && signalForm.password().invalid()) {
+                <ul class="signal-form-errors">
+                  @for (error of signalForm.password().errors(); track error) {
+                    <li>{{ error.message }}</li>
+                  }
+                </ul>
+              }
+            </div>
+            <div class="autocomplete-group">
+              <p class="autocomplete-description">Valeur du modele : {{ signalFormModel() | json }}</p>
+            </div>
+          </div>
+          <div class="autocomplete-doc">
+            <h4>Compatibilite des formulaires</h4>
+            <ul class="feature-list">
+              <li><strong>Signal Forms</strong> : <code>[formField]="form.field"</code> via <code>FormValueControl</code></li>
+              <li><strong>Reactive Forms</strong> : <code>[formControl]</code> et <code>formControlName</code> via <code>ControlValueAccessor</code></li>
+              <li><strong>Two-way binding</strong> : <code>[(value)]="myVar"</code> via <code>model()</code></li>
+              <li><strong>Validation</strong> : <code>required()</code>, <code>email()</code>, <code>minLength()</code>, etc.</li>
+              <li><strong>Etat automatique</strong> : <code>touched()</code>, <code>dirty()</code>, <code>valid()</code> synchronises</li>
+            </ul>
+            <ds-code-snippet [code]="signalFormCode" />
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Documentation API - Section Pleine Largeur -->
     <section class="api-section">
       <h3 class="section-title">Documentation API</h3>

@@ -4,12 +4,9 @@ import {
   computed,
   DestroyRef,
   ElementRef,
-  EventEmitter,
   inject,
-  Input,
   input,
   model,
-  Output,
   output,
   signal,
   ChangeDetectorRef,
@@ -17,6 +14,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import type { FormValueControl } from '@angular/forms/signals';
 import { InputType, InputVariant, InputSize, AutocompleteConfig, INPUT_LABELS } from './input.types';
 
 @Component({
@@ -33,7 +31,7 @@ import { InputType, InputVariant, InputSize, AutocompleteConfig, INPUT_LABELS } 
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PshInputComponent implements ControlValueAccessor {
+export class PshInputComponent implements ControlValueAccessor, FormValueControl<string> {
   private elementRef = inject(ElementRef);
   private cdr = inject(ChangeDetectorRef);
   private destroyRef = inject(DestroyRef);
@@ -41,24 +39,17 @@ export class PshInputComponent implements ControlValueAccessor {
   private static nextId = 0;
   readonly inputId = `psh-input-${PshInputComponent.nextId++}`;
 
-  // CVA-managed state: plain signals + manual @Input/@Output to prevent
-  // auto-emission during writeValue()/setDisabledState().
-  value = signal('');
-  @Input('value') set valueInput(v: string) { this.value.set(v ?? ''); }
-
-  disabled = signal(false);
-  @Input('disabled') set disabledInput(v: boolean) { this.disabled.set(v); }
-
-  // Non-CVA model inputs (two-way bindable, not written by CVA methods)
-  readonly = model(false);
+  readonly value = model<string>('');
+  readonly disabled = model<boolean>(false);
+  readonly readonly = model(false);
   loading = model(false);
 
-  // Configuration inputs (one-directional)
+  touched = model(false);
+
   variant = input<InputVariant>('outlined');
   size = input<InputSize>('medium');
   fullWidth = input(false);
 
-  // Regular inputs
   required = input(false);
   showLabel = input(true);
   type = input<InputType>('text');
@@ -76,7 +67,6 @@ export class PshInputComponent implements ControlValueAccessor {
     debounceTime: 300
   });
 
-  // State
   private suggestionsVisible = signal(false);
   private focusedSignal = signal(false);
   private filteredSuggestionsSignal = signal<string[]>([]);
@@ -85,14 +75,10 @@ export class PshInputComponent implements ControlValueAccessor {
   private blurTimeoutId: number | null = null;
   private debounceTimeoutId: number | null = null;
 
-  // Outputs — valueChange/disabledChange use EventEmitter to decouple from signal writes.
-  @Output() valueChange = new EventEmitter<string>();
-  @Output() disabledChange = new EventEmitter<boolean>();
   inputFocus = output<void>();
   inputBlur = output<void>();
   suggestionSelect = output<string>();
 
-  // Computed values
   showSuggestions = computed(() => this.suggestionsVisible() && this.filteredSuggestions().length > 0);
   filteredSuggestions = computed(() => this.filteredSuggestionsSignal());
   focused = computed(() => this.focusedSignal());
@@ -135,20 +121,19 @@ export class PshInputComponent implements ControlValueAccessor {
     });
   }
 
-  // ControlValueAccessor implementation
-  private onChange = (_: any) => {};
+  private onChange = (_: unknown) => {};
   private onTouched = () => {};
 
-  writeValue(value: any): void {
-    this.value.set(value ?? '');
+  writeValue(value: unknown): void {
+    this.value.set((value as string) ?? '');
     this.cdr.markForCheck();
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (_: unknown) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 
@@ -156,15 +141,13 @@ export class PshInputComponent implements ControlValueAccessor {
     this.disabled.set(isDisabled);
   }
 
-  // Event handlers
   handleInput(event: Event): void {
-    const value = (event.target as HTMLInputElement).value;
-    this.value.set(value);
-    this.valueChange.emit(value);
-    this.onChange(value);
+    const val = (event.target as HTMLInputElement).value;
+    this.value.set(val);
+    this.onChange(val);
 
     if (this.suggestions()) {
-      this.debouncedUpdateSuggestions(value);
+      this.debouncedUpdateSuggestions(val);
     }
   }
 
@@ -181,6 +164,7 @@ export class PshInputComponent implements ControlValueAccessor {
     this.focusedSignal.set(false);
     this.inputBlur.emit();
     this.onTouched();
+    this.touched.set(true);
 
     if (this.blurTimeoutId !== null) {
       clearTimeout(this.blurTimeoutId);
@@ -234,7 +218,6 @@ export class PshInputComponent implements ControlValueAccessor {
   handleSuggestionClick(suggestion: string): void {
     if (suggestion) {
       this.value.set(suggestion);
-      this.valueChange.emit(suggestion);
       this.onChange(suggestion);
       this.suggestionSelect.emit(suggestion);
       this.suggestionsVisible.set(false);
@@ -249,11 +232,15 @@ export class PshInputComponent implements ControlValueAccessor {
     return !!this.elementRef.nativeElement.querySelector('[input-label]');
   }
 
-  focusSelect(): void {
-    const input = this.elementRef.nativeElement.querySelector('input');
-    if (input) {
-      input.focus();
+  focus(): void {
+    const inputEl = this.elementRef.nativeElement.querySelector('input');
+    if (inputEl) {
+      inputEl.focus();
     }
+  }
+
+  focusSelect(): void {
+    this.focus();
   }
 
   private debouncedUpdateSuggestions(value: string): void {
