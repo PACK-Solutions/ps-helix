@@ -1,8 +1,9 @@
 [build]
-publish = "dist"
+publish = "dist/browser"
 command = "npm run build"
 
 [build.environment]
+NODE_VERSION = "22"
 NPM_CONFIG_REGISTRY = "https://registry.npmjs.org/"
 NPM_CONFIG_HTTPS_PROXY = ""
 NPM_CONFIG_PROXY = ""
