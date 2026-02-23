@@ -14,7 +14,6 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import type { FormValueControl } from '@angular/forms/signals';
 import { InputType, InputVariant, InputSize, AutocompleteConfig, INPUT_LABELS } from './input.types';
 
 @Component({
@@ -31,7 +30,7 @@ import { InputType, InputVariant, InputSize, AutocompleteConfig, INPUT_LABELS } 
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PshInputComponent implements ControlValueAccessor, FormValueControl<string> {
+export class PshInputComponent implements ControlValueAccessor {
   private elementRef = inject(ElementRef);
   private cdr = inject(ChangeDetectorRef);
   private destroyRef = inject(DestroyRef);

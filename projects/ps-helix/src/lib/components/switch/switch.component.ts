@@ -10,7 +10,6 @@ import {
   InjectionToken
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import type { FormCheckboxControl } from '@angular/forms/signals';
 import { SwitchSize, SwitchConfig } from './switch.types';
 
 export const SWITCH_CONFIG = new InjectionToken<Partial<SwitchConfig>>('SWITCH_CONFIG', {
@@ -40,7 +39,7 @@ export const SWITCH_CONFIG = new InjectionToken<Partial<SwitchConfig>>('SWITCH_C
     '[class.switch-success]': '!!success()'
   }
 })
-export class PshSwitchComponent implements ControlValueAccessor, FormCheckboxControl {
+export class PshSwitchComponent implements ControlValueAccessor {
   private config = inject(SWITCH_CONFIG);
   private uniqueId = `switch-${crypto.randomUUID()}`;
 

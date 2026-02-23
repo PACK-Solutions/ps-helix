@@ -1,6 +1,5 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, computed } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { form, FormField } from '@angular/forms/signals';
 import { CommonModule } from '@angular/common';
 import { PshSwitchComponent } from '@lib/components/switch/switch.component';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
@@ -13,8 +12,7 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
     PshSwitchComponent,
     DemoPageLayoutComponent,
     ReactiveFormsModule,
-    CodeSnippetComponent,
-    FormField
+    CodeSnippetComponent
   ],
   templateUrl: './switches-demo.component.html',
   styleUrls: ['./switches-demo.component.css']
@@ -102,8 +100,14 @@ settingsForm = new FormGroup({
   Activer les notifications
 </psh-switch>`;
 
-  preferencesModel = signal({ notifications: true, darkMode: false, analytics: false });
-  preferencesForm = form(this.preferencesModel);
+  notificationsChecked = signal(true);
+  darkModeChecked = signal(false);
+  analyticsChecked = signal(false);
+  preferencesModel = computed(() => ({
+    notifications: this.notificationsChecked(),
+    darkMode: this.darkModeChecked(),
+    analytics: this.analyticsChecked()
+  }));
 
   signalFormsCode = `import { signal } from '@angular/core';
 import { form, FormField } from '@angular/forms/signals';

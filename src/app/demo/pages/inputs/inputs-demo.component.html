@@ -361,16 +361,16 @@
             <div class="autocomplete-group">
               <h4>Formulaire avec validation</h4>
               <psh-input
-                [formField]="signalForm.email"
+                [formControl]="emailControl"
                 type="email"
                 iconStart="envelope"
                 placeholder="votre@email.com"
               >
                 <span input-label>Email</span>
               </psh-input>
-              @if (signalForm.email().touched() && signalForm.email().invalid()) {
+              @if (emailControl.touched && emailControl.invalid) {
                 <ul class="signal-form-errors">
-                  @for (error of signalForm.email().errors(); track error) {
+                  @for (error of emailErrors; track error) {
                     <li>{{ error.message }}</li>
                   }
                 </ul>
@@ -378,22 +378,22 @@
             </div>
             <div class="autocomplete-group">
               <psh-input
-                [formField]="signalForm.password"
+                [formControl]="passwordControl"
                 type="password"
                 placeholder="Mot de passe"
               >
                 <span input-label>Mot de passe</span>
               </psh-input>
-              @if (signalForm.password().touched() && signalForm.password().invalid()) {
+              @if (passwordControl.touched && passwordControl.invalid) {
                 <ul class="signal-form-errors">
-                  @for (error of signalForm.password().errors(); track error) {
+                  @for (error of passwordErrors; track error) {
                     <li>{{ error.message }}</li>
                   }
                 </ul>
               }
             </div>
             <div class="autocomplete-group">
-              <p class="autocomplete-description">Valeur du modele : {{ signalFormModel() | json }}</p>
+              <p class="autocomplete-description">Valeur du modele : {{ { email: emailControl.value, password: passwordControl.value } | json }}</p>
             </div>
           </div>
           <div class="autocomplete-doc">

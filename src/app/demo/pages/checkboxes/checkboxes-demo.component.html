@@ -178,11 +178,11 @@
           <div class="reactive-demo-card">
             <div class="reactive-preview">
               <psh-checkbox
-                [formField]="settingsForm.terms"
+                [(checked)]="termsChecked"
                 label="J'accepte les conditions d'utilisation"
               />
               <psh-checkbox
-                [formField]="settingsForm.newsletter"
+                [(checked)]="newsletterChecked"
                 label="Recevoir la newsletter"
               />
               <div class="reactive-value">

@@ -1,14 +1,14 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { JsonPipe } from '@angular/common';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { form, FormField, required, email } from '@angular/forms/signals';
 import { PshInputComponent } from '@lib/components/input/input.component';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
 import { CodeSnippetComponent } from '../../shared/code-snippet.component';
 
 @Component({
   selector: 'ds-inputs-demo',
-  imports: [TranslateModule, PshInputComponent, DemoPageLayoutComponent, CodeSnippetComponent, FormField, JsonPipe],
+  imports: [TranslateModule, PshInputComponent, DemoPageLayoutComponent, CodeSnippetComponent, ReactiveFormsModule, JsonPipe],
   templateUrl: './inputs-demo.component.html',
   styleUrls: ['./inputs-demo.component.css'],
 })
@@ -18,12 +18,21 @@ export class InputsDemoComponent {
   searchValue = '';
   passwordValue = '';
 
-  signalFormModel = signal({ email: '', password: '' });
-  signalForm = form(this.signalFormModel, (p) => {
-    required(p.email, { message: 'Email requis' });
-    email(p.email, { message: 'Format email invalide' });
-    required(p.password, { message: 'Mot de passe requis' });
-  });
+  emailControl = new FormControl('', [Validators.required, Validators.email]);
+  passwordControl = new FormControl('', [Validators.required]);
+
+  get emailErrors(): { message: string }[] {
+    const errors: { message: string }[] = [];
+    if (this.emailControl.errors?.['required']) errors.push({ message: 'Email requis' });
+    if (this.emailControl.errors?.['email']) errors.push({ message: 'Format email invalide' });
+    return errors;
+  }
+
+  get passwordErrors(): { message: string }[] {
+    const errors: { message: string }[] = [];
+    if (this.passwordControl.errors?.['required']) errors.push({ message: 'Mot de passe requis' });
+    return errors;
+  }
 
   cities = [
     'Paris', 'Lyon', 'Marseille', 'Toulouse', 'Nice',
