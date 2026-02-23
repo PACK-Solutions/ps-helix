@@ -11,6 +11,7 @@ import {
   viewChild
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import type { FormCheckboxControl } from '@angular/forms/signals';
 import { CheckboxSize, CheckboxConfig } from './checkbox.types';
 
 export const CHECKBOX_CONFIG = new InjectionToken<Partial<CheckboxConfig>>('CHECKBOX_CONFIG', {
@@ -47,7 +48,7 @@ let checkboxIdCounter = 0;
     '[attr.data-state]': 'state()'
   }
 })
-export class PshCheckboxComponent implements ControlValueAccessor {
+export class PshCheckboxComponent implements ControlValueAccessor, FormCheckboxControl {
   private config = inject(CHECKBOX_CONFIG);
   private uniqueId = `checkbox-${++checkboxIdCounter}`;
 

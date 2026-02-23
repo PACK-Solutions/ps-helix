@@ -256,17 +256,17 @@
           <div class="forms-demo">
             <h4>Exemple Interactif</h4>
             <div class="form-group">
-              <psh-switch [(checked)]="notificationsChecked">
+              <psh-switch [formField]="preferencesForm.notifications">
                 Activer les notifications
               </psh-switch>
             </div>
             <div class="form-group">
-              <psh-switch [(checked)]="darkModeChecked">
+              <psh-switch [formField]="preferencesForm.darkMode">
                 Mode sombre
               </psh-switch>
             </div>
             <div class="form-group">
-              <psh-switch [(checked)]="analyticsChecked">
+              <psh-switch [formField]="preferencesForm.analytics">
                 Statistiques d'utilisation
               </psh-switch>
             </div>

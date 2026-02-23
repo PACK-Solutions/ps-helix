@@ -14,6 +14,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
+import type { FormValueControl } from '@angular/forms/signals';
 import { SelectOption, SelectOptionGroup, SelectSize, SearchConfig } from './select.types';
 
 @Component({
@@ -39,7 +40,7 @@ import { SelectOption, SelectOptionGroup, SelectSize, SearchConfig } from './sel
     '[class.loading]': 'loading()',
   }
 })
-export class PshSelectComponent<T = unknown> implements ControlValueAccessor, AfterContentInit {
+export class PshSelectComponent<T = unknown> implements ControlValueAccessor, AfterContentInit, FormValueControl<T | T[] | null> {
   private elementRef = inject(ElementRef);
   private cdr = inject(ChangeDetectorRef);
   private destroyRef = inject(DestroyRef);
