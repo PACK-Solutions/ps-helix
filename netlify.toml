@@ -1,6 +1,6 @@
 [build]
 publish = "dist"
-command = "npm run build"
+command = "npm config set registry https://registry.npmjs.org/ && npm config delete https-proxy && npm config set strict-ssl true && npm run build"
 
 [build.environment]
   NPM_CONFIG_REGISTRY = "https://registry.npmjs.org/"
