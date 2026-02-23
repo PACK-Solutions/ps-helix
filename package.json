@@ -16,7 +16,7 @@
     "build": "ng build && cp -r dist/browser/* dist/",
     "dev": "ng serve --configuration development --no-hmr",
     "build:lib": "ng build ps-helix",
-    "publish:lib": "cd dist/ps-helix && npm publish --access public",
+    "publish:lib": "npm publish ./dist/ps-helix --access public",
     "watch:lib": "ng build ps-helix --watch",
     "test": "jest",
     "test:watch": "jest --watch",
