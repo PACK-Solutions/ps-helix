@@ -120,7 +120,7 @@ L'application de démonstration présente tous les composants avec :
 
 ### Versions requises
 - **Node.js** : 18.x ou supérieur
-- **pnpm** : 10.x ou supérieur (recommandé) ou **npm** : 9.x ou supérieur
+- **npm** : 9.x ou supérieur
 - **Angular** : 21.0.3 ou supérieur
 - **Angular CLI** : 21.0.3 ou supérieur
 - **TypeScript** : 5.9.0 ou supérieur
@@ -141,35 +141,6 @@ L'application de démonstration présente tous les composants avec :
 - **date-fns** : ^3.3.1 - Utilitaires de dates
 - **tslib** : ^2.6.0 - Runtime TypeScript
 
-## Pourquoi pnpm ?
-
-Ce projet utilise **pnpm** comme gestionnaire de paquets recommandé. Voici les avantages principaux :
-
-### Performance
-- Installation jusqu'à **2x plus rapide** que npm
-- Cache global partagé entre tous les projets
-- Téléchargement parallèle optimisé
-
-### Économie d'espace disque
-- Liens symboliques vers un store centralisé
-- Pas de duplication des dépendances entre projets
-- Réduction significative de l'espace utilisé
-
-### Sécurité et fiabilité
-- Structure `node_modules` stricte (pas de "phantom dependencies")
-- Fichier lock déterministe (`pnpm-lock.yaml`)
-- Meilleure isolation des dépendances
-
-### Compatibilité
-- **npm reste utilisable** si vous le préférez
-- Commandes similaires (`pnpm install`, `pnpm run`, etc.)
-- Migration transparente depuis npm
-
-Pour installer pnpm :
-```bash
-npm install -g pnpm
-```
-
 ## Installation et développement
 
 ### Cloner le projet
@@ -179,25 +150,11 @@ cd helix-design-system
 ```
 
 ### Installer les dépendances
-
-**Avec pnpm (recommandé) :**
-```bash
-pnpm install
-```
-
-**Avec npm :**
 ```bash
 npm install
 ```
 
 ### Lancer l'application de démonstration
-
-**Avec pnpm :**
-```bash
-pnpm run dev
-```
-
-**Avec npm :**
 ```bash
 npm run dev
 ```
@@ -205,13 +162,6 @@ npm run dev
 L'application sera accessible sur `http://localhost:4200`
 
 ### Construire la bibliothèque
-
-**Avec pnpm :**
-```bash
-pnpm run build:lib
-```
-
-**Avec npm :**
 ```bash
 npm run build:lib
 ```
@@ -219,13 +169,6 @@ npm run build:lib
 La bibliothèque sera générée dans `dist/ps-helix/`
 
 ### Mode développement de la bibliothèque
-
-**Avec pnpm :**
-```bash
-pnpm run watch:lib
-```
-
-**Avec npm :**
 ```bash
 npm run watch:lib
 ```
@@ -233,13 +176,6 @@ npm run watch:lib
 Reconstruction automatique à chaque modification
 
 ### Publier la bibliothèque
-
-**Avec pnpm :**
-```bash
-pnpm run publish:lib
-```
-
-**Avec npm :**
 ```bash
 npm run publish:lib
 ```
@@ -298,6 +234,32 @@ import { ButtonVariant, ButtonSize, AlertType } from 'ps-helix';
 const variant: ButtonVariant = 'primary';  // Type-safe
 const size: ButtonSize = 'medium';         // Type-safe
 const alertType: AlertType = 'success';    // Type-safe
+```
+
+### Signal Forms et Reactive Forms
+
+Les composants de formulaire (input, checkbox, select, switch) supportent nativement les **Signal Forms** d'Angular 21 via les interfaces `FormValueControl` et `FormCheckboxControl`, tout en conservant la rétrocompatibilité avec les **Reactive Forms** classiques via `ControlValueAccessor`.
+
+Trois modes d'utilisation sont supportés :
+
+```typescript
+// 1. Signal Forms (recommandé pour les nouveaux projets)
+import { signal } from '@angular/core';
+import { form, FormField, required, email } from '@angular/forms/signals';
+
+model = signal({ email: '', password: '' });
+loginForm = form(this.model, (p) => {
+  required(p.email);
+  email(p.email);
+});
+
+// Template : <psh-input [formField]="loginForm.email" />
+
+// 2. Reactive Forms (rétrocompatible)
+// Template : <psh-input [formControl]="emailControl" />
+
+// 3. Two-way binding
+// Template : <psh-input [(value)]="myValue" />
 ```
 
 ### Injection de dépendances moderne
@@ -673,14 +635,6 @@ export class SelecteurLangueComponent {
 
 ### Développement
 
-**Avec pnpm (recommandé) :**
-```bash
-pnpm run dev        # Lancer l'application de démonstration
-pnpm run build      # Construire l'application de démonstration
-pnpm test           # Lancer les tests
-```
-
-**Avec npm :**
 ```bash
 npm run dev         # Lancer l'application de démonstration
 npm run build       # Construire l'application de démonstration
@@ -689,14 +643,6 @@ npm test            # Lancer les tests
 
 ### Bibliothèque
 
-**Avec pnpm (recommandé) :**
-```bash
-pnpm run build:lib    # Construire la bibliothèque
-pnpm run watch:lib    # Mode watch (reconstruction auto)
-pnpm run publish:lib  # Publier sur npm
-```
-
-**Avec npm :**
 ```bash
 npm run build:lib     # Construire la bibliothèque
 npm run watch:lib     # Mode watch (reconstruction auto)
@@ -784,7 +730,7 @@ SOFTWARE.
 
 ---
 
-**Version** : 3.0.5
+**Version** : 3.0.9
 **Construit avec** : Angular 21.0.3, TypeScript 5.9.0, Phosphor Icons 2.0.3
 **Auteur** : Fabrice PEREZ | Product Designer chez PACK Solutions
 **Dernière mise à jour** : Janvier 2026

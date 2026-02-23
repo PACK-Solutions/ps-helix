@@ -1,5 +1,7 @@
 # Checkbox Component Documentation
 
+**Implements**: `FormCheckboxControl` (Signal Forms) + `ControlValueAccessor` (Reactive Forms)
+
 ## Utilisation
 
 1. Importer le composant dans votre module ou composant standalone :
@@ -11,6 +13,21 @@ import { PshCheckboxComponent } from 'ps-helix';
   imports: [PshCheckboxComponent],
   // ...
 })
+```
+
+### Utilisation avec Signal Forms (recommande)
+
+```typescript
+import { signal } from '@angular/core';
+import { form, FormField } from '@angular/forms/signals';
+
+model = signal({ terms: false, newsletter: true });
+settingsForm = form(this.model);
+```
+
+```html
+<psh-checkbox [formField]="settingsForm.terms" label="J'accepte les conditions" />
+<psh-checkbox [formField]="settingsForm.newsletter" label="Recevoir la newsletter" />
 ```
 
 ### Utilisation de Base
@@ -85,9 +102,10 @@ export class StandaloneFormControlComponent {
 ### Inputs bidirectionnels (avec `[()]`)
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
-| checked | boolean | false | État coché |
-| disabled | boolean | false | État désactivé |
-| indeterminate | boolean | false | État indéterminé |
+| checked | boolean | false | État coché (model) |
+| disabled | boolean | false | État désactivé (model) |
+| indeterminate | boolean | false | État indéterminé (model) |
+| touched | boolean | false | État touché (model, positionné sur toggle) |
 
 ### Regular Inputs
 | Nom | Type | Défaut | Description |
@@ -101,11 +119,10 @@ export class StandaloneFormControlComponent {
 | labelPosition | 'left' \| 'right' | 'right' | Position du label |
 
 ### Outputs
-- `checkedChange` : Émis lors du changement d'état coché par l'utilisateur
-- `disabledChange` : Émis lors du changement d'état désactivé par l'utilisateur
-- `indeterminateChange` : Émis lors du changement d'état indéterminé par l'utilisateur
-
-> Les outputs ne sont pas émis lors des appels `writeValue()` ou `setDisabledState()` (ControlValueAccessor), ce qui évite les boucles infinies avec les Reactive Forms.
+- `checkedChange` : Émis automatiquement par le model lors du changement d'état coché
+- `disabledChange` : Émis automatiquement par le model lors du changement d'état désactivé
+- `indeterminateChange` : Émis automatiquement par le model lors du changement d'état indéterminé
+- `touchedChange` : Émis automatiquement par le model lors du changement d'état touché
 
 ### Méthodes Publiques
 

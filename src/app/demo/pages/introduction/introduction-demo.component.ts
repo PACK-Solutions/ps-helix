@@ -39,14 +39,10 @@ export class IntroductionDemoComponent {
     {
       number: 1,
       title: 'Installer le Package',
-      description: 'Installez ps-helix via pnpm (recommande) ou npm dans votre projet Angular.',
+      description: 'Installez ps-helix via npm dans votre projet Angular.',
       codeLabel: 'Terminal',
-      codeSnippet: `# Avec pnpm (recommande)
-pnpm add ps-helix
-
-# Avec npm
-npm install ps-helix`,
-      note: 'Assurez-vous d\'utiliser Angular 21 ou superieur. pnpm offre des performances optimales.'
+      codeSnippet: `npm install ps-helix`,
+      note: 'Assurez-vous d\'utiliser Angular 21 ou superieur.'
     },
     {
       number: 2,

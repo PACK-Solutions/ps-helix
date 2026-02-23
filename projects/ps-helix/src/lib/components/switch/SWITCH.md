@@ -1,5 +1,7 @@
 # Switch Component Documentation
 
+**Implements**: `FormCheckboxControl` (Signal Forms) + `ControlValueAccessor` (Reactive Forms)
+
 ## Utilisation
 
 1. Importer le composant dans votre module ou composant standalone :
@@ -11,6 +13,21 @@ import { PshSwitchComponent } from 'ps-helix';
   imports: [PshSwitchComponent],
   // ...
 })
+```
+
+### Utilisation avec Signal Forms (recommande)
+
+```typescript
+import { signal } from '@angular/core';
+import { form, FormField } from '@angular/forms/signals';
+
+model = signal({ notifications: false, darkMode: true });
+settingsForm = form(this.model);
+```
+
+```html
+<psh-switch [formField]="settingsForm.notifications" label="Activer les notifications" />
+<psh-switch [formField]="settingsForm.darkMode" label="Mode sombre" />
 ```
 
 ### Utilisation de Base
@@ -37,9 +54,9 @@ import { PshSwitchComponent } from 'ps-helix';
 </psh-switch>
 ```
 
-### Utilisation avec les Formulaires Angular
+### Utilisation avec Reactive Forms (retrocompatible)
 
-Le composant implemente `ControlValueAccessor` et s'integre avec les formulaires Angular :
+Le composant implemente `ControlValueAccessor` et s'integre avec les Reactive Forms d'Angular :
 
 ```typescript
 // Avec Reactive Forms
@@ -77,8 +94,9 @@ Ces inputs supportent le two-way binding avec la syntaxe `[(prop)]`.
 
 | Nom | Type | Defaut | Description |
 |-----|------|---------|-------------|
-| checked | boolean | false | Etat coche |
-| disabled | boolean | false | Etat desactive |
+| checked | boolean | false | Etat coche (model) |
+| disabled | boolean | false | Etat desactive (model) |
+| touched | boolean | false | Etat touche (model, positionne sur toggle) |
 
 ### Regular Inputs
 
@@ -98,10 +116,9 @@ Ces inputs supportent le two-way binding avec la syntaxe `[(prop)]`.
 
 | Nom | Type | Description |
 |-----|------|-------------|
-| checkedChange | EventEmitter\<boolean\> | Emis lors du changement d'etat coche par l'utilisateur |
-| disabledChange | EventEmitter\<boolean\> | Emis lors du changement d'etat desactive par l'utilisateur |
-
-> Les outputs ne sont pas emis lors des appels `writeValue()` ou `setDisabledState()` (ControlValueAccessor), ce qui evite les boucles infinies avec les Reactive Forms.
+| checkedChange | boolean | Emis automatiquement par le model lors du changement d'etat coche |
+| disabledChange | boolean | Emis automatiquement par le model lors du changement d'etat desactive |
+| touchedChange | boolean | Emis automatiquement par le model lors du changement d'etat touche |
 
 ### Methodes Publiques
 

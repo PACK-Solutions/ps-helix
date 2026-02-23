@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
+import { JsonPipe } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { form, FormField } from '@angular/forms/signals';
 import { PshSelectComponent } from '@lib/components/select/select.component';
 import { PshButtonComponent } from '@lib/components/button/button.component';
 import { SelectOption, SelectOptionGroup } from '@lib/components/select/select.types';
@@ -8,11 +10,14 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
 
 @Component({
   selector: 'ds-select-demo',
-  imports: [TranslateModule, PshSelectComponent, PshButtonComponent, DemoPageLayoutComponent, CodeSnippetComponent],
+  imports: [TranslateModule, JsonPipe, PshSelectComponent, PshButtonComponent, DemoPageLayoutComponent, CodeSnippetComponent, FormField],
   templateUrl: './select-demo.component.html',
   styleUrls: ['./select-demo.component.css']
 })
 export class SelectDemoComponent {
+  signalFormModel = signal({ country: null as string | null });
+  signalForm = form(this.signalFormModel);
+
   selectedBasic: string | null = null;
   selectedCountry: string | null = null;
   selectedLanguages: string[] = [];
@@ -106,6 +111,22 @@ export class SelectDemoComponent {
   handleClose(): void {
     console.log('Select closed');
   }
+
+  signalFormCode = `import { signal } from '@angular/core';
+import { form, FormField } from '@angular/forms/signals';
+
+model = signal({ country: null as string | null });
+myForm = form(this.model);
+
+// Template :
+<psh-select
+  [formField]="myForm.country"
+  [options]="countries"
+  [searchable]="true"
+  [clearable]="true"
+  label="Pays"
+  placeholder="Sélectionner un pays"
+/>`;
 
   basicSelectCode = `<psh-select
   [options]="options"

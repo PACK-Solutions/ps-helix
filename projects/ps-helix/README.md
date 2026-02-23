@@ -87,26 +87,14 @@ The following dependencies are bundled with ps-helix:
 
 ## Installation
 
-Install the package via your preferred package manager:
+Install the package:
 
-**Avec pnpm (recommandé) :**
-```bash
-pnpm add ps-helix
-```
-
-**Avec npm :**
 ```bash
 npm install ps-helix
 ```
 
 All peer dependencies should be automatically installed. If not, install them manually:
 
-**Avec pnpm :**
-```bash
-pnpm add @angular/common@^21.0.3 @angular/core@^21.0.3 @angular/forms@^21.0.3 @ngx-translate/core@^15.0.0 rxjs@^7.8.0
-```
-
-**Avec npm :**
 ```bash
 npm install @angular/common@^21.0.3 @angular/core@^21.0.3 @angular/forms@^21.0.3 @ngx-translate/core@^15.0.0 rxjs@^7.8.0
 ```
@@ -456,6 +444,18 @@ export class ExampleComponent {
   isOpen = signal(false);
 }
 ```
+
+### Signal Forms Support
+
+Form components natively implement Angular 21 Signal Forms interfaces (`FormValueControl`, `FormCheckboxControl`) while maintaining backward compatibility with Reactive Forms via `ControlValueAccessor`:
+
+| Component | Signal Forms Interface | Reactive Forms |
+|-----------|----------------------|----------------|
+| `psh-input` | `FormValueControl<string>` | `ControlValueAccessor` |
+| `psh-select` | `FormValueControl<T \| T[] \| null>` | `ControlValueAccessor` |
+| `psh-checkbox` | `FormCheckboxControl` | `ControlValueAccessor` |
+| `psh-switch` | `FormCheckboxControl` | `ControlValueAccessor` |
+| `psh-radio` | - | Property binding only |
 
 ### Type Safety
 
@@ -948,8 +948,28 @@ export class MyComponent {
 
 ### Form Integration
 
+Form components (`psh-input`, `psh-checkbox`, `psh-select`, `psh-switch`) support three integration modes:
+
 ```typescript
-// ✅ Good: Reactive forms with FormControl
+// ✅ Recommended: Signal Forms (Angular 21+)
+import { signal } from '@angular/core';
+import { form, FormField, required, email } from '@angular/forms/signals';
+
+export class MyComponent {
+  model = signal({ email: '', password: '' });
+  loginForm = form(this.model, (p) => {
+    required(p.email, { message: 'Email required' });
+    email(p.email, { message: 'Invalid email format' });
+  });
+}
+```
+
+```html
+<psh-input [formField]="loginForm.email" type="email" label="Email" />
+```
+
+```typescript
+// ✅ Also supported: Reactive Forms (backward compatible)
 import { FormControl, Validators } from '@angular/forms';
 
 export class MyComponent {
@@ -961,11 +981,12 @@ export class MyComponent {
 ```
 
 ```html
-<psh-input
-  label="Email"
-  [formControl]="emailControl"
-  [required]="true">
-</psh-input>
+<psh-input label="Email" [formControl]="emailControl" [required]="true" />
+```
+
+```html
+<!-- ✅ Also supported: Two-way binding -->
+<psh-input [(value)]="myValue" label="Email" />
 ```
 
 ### Performance Optimization
@@ -1067,9 +1088,7 @@ See [THEME.md](./THEME.md) for complete theming documentation.
 1. Verify Angular version is 21.0.3 or higher
 2. Check `tsconfig.json` has `"strict": true`
 3. Ensure all peer dependencies are installed
-4. Clear node_modules and reinstall:
-   - Avec pnpm: `rm -rf node_modules && pnpm install`
-   - Avec npm: `rm -rf node_modules && npm install`
+4. Clear node_modules and reinstall: `rm -rf node_modules && npm install`
 
 ### Performance Issues
 
@@ -1118,16 +1137,6 @@ Helix Design System supports:
 
 The following scripts are available for library development:
 
-**Avec pnpm (recommandé) :**
-```bash
-pnpm run build:lib    # Build the library
-pnpm run watch:lib    # Watch for changes and rebuild
-pnpm run publish:lib  # Publish to npm registry
-pnpm run build        # Build demo application
-pnpm run dev          # Run demo application in dev mode
-```
-
-**Avec npm :**
 ```bash
 npm run build:lib     # Build the library
 npm run watch:lib     # Watch for changes and rebuild

@@ -4,6 +4,45 @@
   [showTechnicalSection]="false"
 >
   <div demo-content>
+    <!-- Signal Forms -->
+    <section class="signal-forms-section doc-section">
+      <h3 class="section-title">Signal Forms</h3>
+      <div class="signal-forms-container">
+        <div class="doc-section-intro">
+          <p>Le composant Select implémente <code>FormValueControl&lt;T | T[] | null&gt;</code> et s'intègre nativement avec les Signal Forms d'Angular 21 via <code>[formField]</code>.</p>
+        </div>
+        <div class="doc-grid">
+          <div class="doc-card">
+            <div class="doc-card-preview">
+              <psh-select
+                [formField]="signalForm.country"
+                [options]="countryOptions"
+                [searchable]="true"
+                [clearable]="true"
+                label="Pays"
+                placeholder="Sélectionner un pays"
+                hint="Sélection via Signal Forms"
+              />
+              <p class="autocomplete-description">Valeur du modèle : {{ signalFormModel() | json }}</p>
+            </div>
+            <div class="doc-card-info">
+              <h4>Select avec Signal Forms</h4>
+              <p>Intégration native avec les Signal Forms. Le composant synchronise automatiquement la valeur, l'état touché et la validation.</p>
+              <div class="signal-forms-compat">
+                <h5>Compatibilité</h5>
+                <ul>
+                  <li><strong>Signal Forms</strong> : <code>[formField]="form.field"</code> via <code>FormValueControl</code></li>
+                  <li><strong>Reactive Forms</strong> : <code>[formControl]</code> et <code>formControlName</code> via <code>ControlValueAccessor</code></li>
+                  <li><strong>Two-way binding</strong> : <code>[(value)]="myVar"</code> via <code>model()</code></li>
+                </ul>
+              </div>
+              <ds-code-snippet [code]="signalFormCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Variantes de Select - Section Pleine Largeur -->
     <section class="select-variants-section doc-section">
       <h3 class="section-title">Variantes de Select</h3>
@@ -624,7 +663,6 @@
             <pre><code>import &#123; PshSelectComponent &#125; from 'ps-helix';
 
 &#64;Component(&#123;
-  standalone: true,
   imports: [PshSelectComponent],
   template: `
     &lt;psh-select

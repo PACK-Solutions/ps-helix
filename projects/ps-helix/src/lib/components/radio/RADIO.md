@@ -1,5 +1,7 @@
 # Radio Component Documentation
 
+> **Note** : Le composant Radio n'implémente ni Signal Forms (`FormCheckboxControl`/`FormValueControl`) ni `ControlValueAccessor`. Il utilise uniquement le property binding (`[checked]`, `(valueChange)`).
+
 ## Utilisation
 
 1. Importer le composant dans votre module ou composant standalone :
@@ -84,8 +86,6 @@ export class ExampleComponent {
 | checkedChange | EventEmitter\<boolean\> | Émis lors du changement d'état coché par l'utilisateur |
 | disabledChange | EventEmitter\<boolean\> | Émis lors du changement d'état désactivé par l'utilisateur |
 | valueChange | output\<any\> | Émis lors de la sélection |
-
-> Les outputs `checkedChange` et `disabledChange` ne sont pas émis lors des appels `writeValue()` ou `setDisabledState()` (ControlValueAccessor), ce qui évite les boucles infinies avec les Reactive Forms.
 
 ### Configuration Globale
 

@@ -337,13 +337,21 @@ Control: `.animate-fast`, `.animate-slow`, `.animate-smooth`
 
 **Selector**: `psh-checkbox`
 
+**Implements**: `FormCheckboxControl` (Signal Forms) + `ControlValueAccessor` (Reactive Forms)
+
+**Three usage modes**:
+- Signal Forms: `<psh-checkbox [formField]="myForm.terms" />`
+- Reactive Forms: `<psh-checkbox [formControl]="termsControl" />`
+- Two-way binding: `<psh-checkbox [(checked)]="isChecked" />`
+
 **Two-way bindable inputs** (with `[()]`):
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
-| `checked` | `boolean` | `false` | Checked state (two-way) |
-| `disabled` | `boolean` | `false` | Disabled state (two-way) |
-| `indeterminate` | `boolean` | `false` | Indeterminate state (two-way) |
+| `checked` | `boolean` | `false` | Checked state (model) |
+| `disabled` | `boolean` | `false` | Disabled state (model) |
+| `indeterminate` | `boolean` | `false` | Indeterminate state (model) |
+| `touched` | `boolean` | `false` | Touched state (model, set on toggle) |
 
 **Regular inputs**:
 
@@ -359,16 +367,15 @@ Control: `.animate-fast`, `.animate-slow`, `.animate-smooth`
 
 | Output | Type | Description |
 |--------|------|-------------|
-| `checkedChange` | `boolean` | Checked state change (user action only) |
-| `disabledChange` | `boolean` | Disabled state change (user action only) |
-| `indeterminateChange` | `boolean` | Indeterminate state change (user action only) |
+| `checkedChange` | `boolean` | Checked state change (auto-emitted by model) |
+| `disabledChange` | `boolean` | Disabled state change (auto-emitted by model) |
+| `indeterminateChange` | `boolean` | Indeterminate state change (auto-emitted by model) |
+| `touchedChange` | `boolean` | Touched state change (auto-emitted by model) |
 
 | Method | Description |
 |--------|-------------|
 | `focus()` | Focuses the checkbox input element |
 | `blur()` | Removes focus from the checkbox input element |
-
-Implements `ControlValueAccessor` for reactive forms (`[formControl]`, `formControlName`). Outputs are not emitted during `writeValue()`/`setDisabledState()` calls.
 
 ---
 
@@ -424,14 +431,22 @@ interface DropdownItem<T = string> {
 
 **Selector**: `psh-input`
 
+**Implements**: `FormValueControl<string>` (Signal Forms) + `ControlValueAccessor` (Reactive Forms)
+
+**Three usage modes**:
+- Signal Forms: `<psh-input [formField]="myForm.email" />`
+- Reactive Forms: `<psh-input [formControl]="emailControl" />`
+- Two-way binding: `<psh-input [(value)]="myValue" />`
+
 **Two-way bindable inputs** (with `[()]`):
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
-| `value` | `string` | `''` | Input value (two-way) |
-| `disabled` | `boolean` | `false` | Disabled state (two-way) |
-| `readonly` | `boolean` | `false` | Readonly state (two-way, model) |
-| `loading` | `boolean` | `false` | Loading state (two-way, model) |
+| `value` | `string` | `''` | Input value (model) |
+| `disabled` | `boolean` | `false` | Disabled state (model) |
+| `readonly` | `boolean` | `false` | Readonly state (model) |
+| `loading` | `boolean` | `false` | Loading state (model) |
+| `touched` | `boolean` | `false` | Touched state (model, set on blur) |
 
 **Regular inputs**:
 
@@ -455,13 +470,12 @@ interface DropdownItem<T = string> {
 
 | Output | Type | Description |
 |--------|------|-------------|
-| `valueChange` | `string` | Value change (user action only) |
-| `disabledChange` | `boolean` | Disabled state change (user action only) |
+| `valueChange` | `string` | Value change (auto-emitted by model) |
+| `disabledChange` | `boolean` | Disabled state change (auto-emitted by model) |
+| `touchedChange` | `boolean` | Touched state change (auto-emitted by model) |
 | `inputFocus` | `void` | Focus event |
 | `inputBlur` | `void` | Blur event |
 | `suggestionSelect` | `string` | Suggestion selected |
-
-Implements `ControlValueAccessor` for reactive forms. `valueChange` and `disabledChange` are not emitted during `writeValue()`/`setDisabledState()` calls.
 
 ---
 
@@ -469,12 +483,20 @@ Implements `ControlValueAccessor` for reactive forms. `valueChange` and `disable
 
 **Selector**: `psh-select`
 
+**Implements**: `FormValueControl<T | T[] | null>` (Signal Forms) + `ControlValueAccessor` (Reactive Forms)
+
+**Three usage modes**:
+- Signal Forms: `<psh-select [formField]="myForm.country" [options]="options" />`
+- Reactive Forms: `<psh-select [formControl]="countryControl" [options]="options" />`
+- Two-way binding: `<psh-select [(value)]="selected" [options]="options" />`
+
 **Two-way bindable inputs** (with `[()]`):
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
-| `value` | `T \| T[] \| null` | `null` | Selected value (two-way) |
-| `disabled` | `boolean` | `false` | Disabled state (two-way) |
+| `value` | `T \| T[] \| null` | `null` | Selected value (model) |
+| `disabled` | `boolean` | `false` | Disabled state (model) |
+| `touched` | `boolean` | `false` | Touched state (model, set on select/close) |
 
 **Regular inputs**:
 
@@ -498,8 +520,9 @@ Implements `ControlValueAccessor` for reactive forms. `valueChange` and `disable
 
 | Output | Type | Description |
 |--------|------|-------------|
-| `valueChange` | `T \| T[] \| null` | Value change (user action only) |
-| `disabledChange` | `boolean` | Disabled state change (user action only) |
+| `valueChange` | `T \| T[] \| null` | Value change (auto-emitted by model) |
+| `disabledChange` | `boolean` | Disabled state change (auto-emitted by model) |
+| `touchedChange` | `boolean` | Touched state change (auto-emitted by model) |
 | `opened` | `void` | Dropdown opened |
 | `closed` | `void` | Dropdown closed |
 | `searched` | `string` | Search term changed |
@@ -515,8 +538,6 @@ interface SelectOption<T> {
   description?: string;
 }
 ```
-
-Implements `ControlValueAccessor` for reactive forms. `valueChange` and `disabledChange` are not emitted during `writeValue()`/`setDisabledState()` calls.
 
 ---
 
@@ -734,6 +755,8 @@ interface Tab {
 
 **Selector**: `psh-radio`
 
+**Note**: Does not implement Signal Forms interfaces or ControlValueAccessor. Uses property binding only (`[(checked)]`, `(checkedChange)`).
+
 **Two-way bindable inputs** (with `[()]`):
 
 | Input | Type | Default | Description |
@@ -759,20 +782,26 @@ interface Tab {
 | `checkedChange` | `boolean` | Checked state change (user action only) |
 | `disabledChange` | `boolean` | Disabled state change (user action only) |
 
-Implements `ControlValueAccessor` for reactive forms. Outputs are not emitted during `writeValue()`/`setDisabledState()` calls.
-
 ---
 
 ### PshSwitchComponent
 
 **Selector**: `psh-switch`
 
+**Implements**: `FormCheckboxControl` (Signal Forms) + `ControlValueAccessor` (Reactive Forms)
+
+**Three usage modes**:
+- Signal Forms: `<psh-switch [formField]="myForm.darkMode" />`
+- Reactive Forms: `<psh-switch [formControl]="darkModeControl" />`
+- Two-way binding: `<psh-switch [(checked)]="isDark" />`
+
 **Two-way bindable inputs** (with `[()]`):
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
-| `checked` | `boolean` | `false` | Checked state (two-way) |
-| `disabled` | `boolean` | `false` | Disabled state (two-way) |
+| `checked` | `boolean` | `false` | Checked state (model) |
+| `disabled` | `boolean` | `false` | Disabled state (model) |
+| `touched` | `boolean` | `false` | Touched state (model, set on toggle) |
 
 **Regular inputs**:
 
@@ -790,10 +819,9 @@ Implements `ControlValueAccessor` for reactive forms. Outputs are not emitted du
 
 | Output | Type | Description |
 |--------|------|-------------|
-| `checkedChange` | `boolean` | Checked state change (user action only) |
-| `disabledChange` | `boolean` | Disabled state change (user action only) |
-
-Implements `ControlValueAccessor` for reactive forms. Outputs are not emitted during `writeValue()`/`setDisabledState()` calls.
+| `checkedChange` | `boolean` | Checked state change (auto-emitted by model) |
+| `disabledChange` | `boolean` | Disabled state change (auto-emitted by model) |
+| `touchedChange` | `boolean` | Touched state change (auto-emitted by model) |
 
 ---
 
@@ -1076,6 +1104,42 @@ Examples: `'house'`, `'user'`, `'gear'`, `'check'`, `'x'`, `'warning'`, `'info'`
 
 ---
 
+## Signal Forms Integration
+
+Form components support **Angular 21 Signal Forms** natively alongside Reactive Forms:
+
+| Component | Signal Forms Interface | Binding |
+|-----------|----------------------|---------|
+| `psh-input` | `FormValueControl<string>` | `[formField]` |
+| `psh-select` | `FormValueControl<T \| T[] \| null>` | `[formField]` |
+| `psh-checkbox` | `FormCheckboxControl` | `[formField]` |
+| `psh-switch` | `FormCheckboxControl` | `[formField]` |
+| `psh-radio` | None | `[(checked)]` only |
+
+### Signal Forms imports
+
+```typescript
+import { signal } from '@angular/core';
+import { form, FormField, required, email } from '@angular/forms/signals';
+```
+
+### Signal Forms example
+
+```typescript
+model = signal({ email: '', acceptTerms: false });
+myForm = form(this.model, (p) => {
+  required(p.email, { message: 'Email requis' });
+  email(p.email, { message: 'Format email invalide' });
+});
+```
+
+```html
+<psh-input [formField]="myForm.email" type="email" />
+<psh-checkbox [formField]="myForm.acceptTerms" label="J'accepte" />
+```
+
+---
+
 ## Best Practices
 
 1. **Always use design tokens** for spacing, colors, and typography
@@ -1088,6 +1152,7 @@ Examples: `'house'`, `'user'`, `'gear'`, `'check'`, `'x'`, `'warning'`, `'info'`
 8. **Use two-way binding** with model() inputs when needed
 9. **Handle keyboard navigation** for interactive components
 10. **Test with screen readers** for accessibility
+11. **Use Signal Forms** (`[formField]`) for new forms, Reactive Forms remain supported
 
 ---
 

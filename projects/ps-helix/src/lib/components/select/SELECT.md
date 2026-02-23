@@ -1,5 +1,7 @@
 # Select Component Documentation
 
+**Implements**: `FormValueControl<T | T[] | null>` (Signal Forms) + `ControlValueAccessor` (Reactive Forms)
+
 ## Utilisation
 
 1. Importer le composant dans votre module ou composant standalone :
@@ -11,6 +13,25 @@ import { PshSelectComponent } from 'ps-helix';
   imports: [PshSelectComponent],
   // ...
 })
+```
+
+### Utilisation avec Signal Forms (recommande)
+
+```typescript
+import { signal } from '@angular/core';
+import { form, FormField } from '@angular/forms/signals';
+
+model = signal({ country: null as string | null });
+myForm = form(this.model);
+```
+
+```html
+<psh-select
+  [formField]="myForm.country"
+  [options]="countries"
+  label="Pays"
+  placeholder="Sélectionner un pays"
+/>
 ```
 
 ### Utilisation de Base
@@ -57,8 +78,9 @@ import { PshSelectComponent } from 'ps-helix';
 ### Inputs bidirectionnels (avec `[()]`)
 | Nom | Type | Défaut | Description |
 |-----|------|--------|-------------|
-| value | `T \| T[] \| null` | `null` | Valeur sélectionnée (ou tableau en mode multiple) |
-| disabled | `boolean` | `false` | État désactivé |
+| value | `T \| T[] \| null` | `null` | Valeur sélectionnée (model) |
+| disabled | `boolean` | `false` | État désactivé (model) |
+| touched | `boolean` | `false` | État touché (model, positionné sur fermeture du dropdown) |
 
 ### Regular Inputs
 | Nom | Type | Défaut | Description |
@@ -86,14 +108,13 @@ import { PshSelectComponent } from 'ps-helix';
 ### Outputs
 | Nom | Type | Description |
 |-----|------|-------------|
-| valueChange | `EventEmitter<T \| T[] \| null>` | Émis lors de la sélection par l'utilisateur |
-| disabledChange | `EventEmitter<boolean>` | Émis lors du changement d'état désactivé par l'utilisateur |
-| opened | `EventEmitter<void>` | Émis à l'ouverture du dropdown |
-| closed | `EventEmitter<void>` | Émis à la fermeture du dropdown |
-| searched | `EventEmitter<string>` | Émis lors de la recherche (si `minLength` atteint) |
-| scrollEnd | `EventEmitter<void>` | Émis lorsque l'utilisateur atteint la fin de la liste |
-
-> Les outputs `valueChange` et `disabledChange` ne sont pas émis lors des appels `writeValue()` ou `setDisabledState()` (ControlValueAccessor), ce qui évite les boucles infinies avec les Reactive Forms.
+| valueChange | `T \| T[] \| null` | Émis automatiquement par le model lors du changement de valeur |
+| disabledChange | `boolean` | Émis automatiquement par le model lors du changement d'état désactivé |
+| touchedChange | `boolean` | Émis automatiquement par le model lors du changement d'état touché |
+| opened | `void` | Émis à l'ouverture du dropdown |
+| closed | `void` | Émis à la fermeture du dropdown |
+| searched | `string` | Émis lors de la recherche (si `minLength` atteint) |
+| scrollEnd | `void` | Émis lorsque l'utilisateur atteint la fin de la liste |
 
 ## Interfaces
 
