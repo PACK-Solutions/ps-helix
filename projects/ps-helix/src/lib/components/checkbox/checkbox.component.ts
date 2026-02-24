@@ -30,6 +30,7 @@ let checkboxIdCounter = 0;
 
 @Component({
   selector: 'psh-checkbox',
+  standalone: true,
   imports: [],
   templateUrl: './checkbox.component.html',
   styleUrls: ['./checkbox.component.css'],
@@ -47,14 +48,14 @@ let checkboxIdCounter = 0;
     '[class.checkbox-large]': 'size() === "large"',
     '[class.checkbox-checked]': 'checked() && !indeterminate()',
     '[class.checkbox-indeterminate]': 'indeterminate()',
-    '[attr.data-state]': 'state()'
+    '[attr.data-state]': 'state()',
+    '[attr.aria-checked]': 'ariaChecked()'
   }
 })
 export class PshCheckboxComponent implements ControlValueAccessor, FormCheckboxControl {
   private readonly config = inject(CHECKBOX_CONFIG);
   private readonly checkboxInput = viewChild<ElementRef<HTMLInputElement>>('checkboxInput');
 
-  // Propriété protégée pour accès dans le template
   protected readonly uniqueId = `psh-cb-${++checkboxIdCounter}`;
 
   private onChange = (_: boolean) => {};
@@ -69,7 +70,7 @@ export class PshCheckboxComponent implements ControlValueAccessor, FormCheckboxC
   label = input(this.config.label ?? '');
   error = input<string | null | undefined>(this.config.error);
   success = input<string | null | undefined>(this.config.success);
-  ariaLabel = input<string | undefined>(this.config.ariaLabel); // Correction type undefined
+  ariaLabel = input<string | undefined>(this.config.ariaLabel);
   size = input<CheckboxSize>(this.config.size ?? 'medium');
   labelPosition = input<CheckboxLabelPosition>(this.config.labelPosition ?? 'right');
 
@@ -83,7 +84,13 @@ export class PshCheckboxComponent implements ControlValueAccessor, FormCheckboxC
     return ids.length > 0 ? ids.join(' ') : undefined;
   });
 
-  state = computed(() => this.getState());
+  state = computed(() => {
+    if (this.disabled()) return 'disabled';
+    if (this.indeterminate()) return 'indeterminate';
+    if (this.error()) return 'error';
+    if (this.success()) return 'success';
+    return this.checked() ? 'checked' : 'unchecked';
+  });
 
   constructor() {
     effect(() => {
@@ -91,14 +98,6 @@ export class PshCheckboxComponent implements ControlValueAccessor, FormCheckboxC
         console.warn('[psh-checkbox] Label manquant pour l\'accessibilité.');
       }
     });
-  }
-
-  private getState(): string {
-    if (this.disabled()) return 'disabled';
-    if (this.indeterminate()) return 'indeterminate';
-    if (this.error()) return 'error';
-    if (this.success()) return 'success';
-    return this.checked() ? 'checked' : 'unchecked';
   }
 
   protected toggle(): void {
@@ -112,7 +111,6 @@ export class PshCheckboxComponent implements ControlValueAccessor, FormCheckboxC
     }
   }
 
-  // Correction : Méthode appelée dans le template
   protected handleKeydown(event: KeyboardEvent): void {
     if (this.disabled()) return;
     if (event.key === ' ' || event.key === 'Spacebar' || event.key === 'Enter') {
