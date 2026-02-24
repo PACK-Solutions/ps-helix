@@ -40,7 +40,7 @@
         </div>
       }
       <div class="select-options" (scroll)="onScroll($event)">
-        @for (item of options(); track getOptionKey(item)) {
+        @for (item of filteredOptions(); track getOptionKey(item)) {
           @if (isOptionGroup(item)) {
             <div class="select-group">
               <div class="select-group-label">{{ item.label }}</div>
