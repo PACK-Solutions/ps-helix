@@ -730,7 +730,7 @@ SOFTWARE.
 
 ---
 
-**Version** : 4.0.0
+**Version** : 4.0.1
 **Construit avec** : Angular 21.0.3, TypeScript 5.9.0, Phosphor Icons 2.0.3
 **Auteur** : Fabrice PEREZ | Product Designer chez PACK Solutions
 **Dernière mise à jour** : Janvier 2026
