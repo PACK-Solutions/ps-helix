@@ -19,6 +19,7 @@ import { SelectOption, SelectOptionGroup, SelectSize, SearchConfig } from './sel
 
 @Component({
   selector: 'psh-select',
+  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.css'],
@@ -78,7 +79,6 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Af
 
   private isOpenSignal = signal(false);
   private searchTermSignal = signal('');
-  private selectedLabelSignal = signal('');
   private focusedOptionIndex = signal(-1);
   private hasLabelContentSignal = signal(false);
   private initializedSignal = signal(false);
@@ -98,11 +98,31 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Af
     return this.ariaLabel() || this.label() || this.placeholder();
   });
 
+  /**
+   * REFACTORING: Label de sélection réactif.
+   * Il recalcule automatiquement le texte dès que 'value' OU 'options' changent.
+   */
   selectedLabel = computed(() => {
+    const currentValue = this.value();
+    const currentOptions = this.flattenOptions(this.options());
+
     if (!this.initializedSignal() || !this.hasValue()) {
       return this.multiple() ? this.multiplePlaceholder() : this.placeholder();
     }
-    return this.selectedLabelSignal() || (this.multiple() ? this.multiplePlaceholder() : this.placeholder());
+
+    if (this.multiple() && Array.isArray(currentValue)) {
+      const selected = currentOptions.filter(opt =>
+        currentValue.some(v => this.compareWith()(v, opt.value))
+      );
+      return selected.length > 0 
+        ? selected.map(opt => opt.label).join(', ') 
+        : this.multiplePlaceholder();
+    } else {
+      const selected = currentOptions.find(opt =>
+        currentValue !== null && this.compareWith()(opt.value, currentValue as T)
+      );
+      return selected ? selected.label : this.placeholder();
+    }
   });
 
   filteredOptions = computed(() => {
@@ -166,7 +186,6 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Af
           if (option) this.select(option);
         }
         break;
-
       case 'ArrowDown':
         event.preventDefault();
         if (!this.isOpen()) {
@@ -175,34 +194,29 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Af
           this.focusNextOption();
         }
         break;
-
       case 'ArrowUp':
         event.preventDefault();
         if (this.isOpen()) {
           this.focusPreviousOption();
         }
         break;
-
       case 'Escape':
         if (this.isOpen()) {
           event.preventDefault();
           this.close();
         }
         break;
-
       case 'Tab':
         if (this.isOpen()) {
           this.close();
         }
         break;
-
       case 'Home':
         if (this.isOpen()) {
           event.preventDefault();
           this.focusFirstOption();
         }
         break;
-
       case 'End':
         if (this.isOpen()) {
           event.preventDefault();
@@ -219,7 +233,6 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Af
         event.preventDefault();
         this.select(option);
         break;
-
       case 'Escape':
         event.preventDefault();
         this.close();
@@ -309,9 +322,8 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Af
   private onTouched = () => {};
 
   writeValue(value: unknown): void {
-    this.initializedSignal.set(true);
     this.value.set(value as T | T[] | null);
-    this.updateSelectedLabel();
+    this.initializedSignal.set(true);
     this.cdr.markForCheck();
   }
 
@@ -362,31 +374,23 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Af
         const currentValue = this.value();
         const values = Array.isArray(currentValue) ? [...currentValue] : [];
         const index = values.findIndex(v => this.compareWith()(v, option.value));
-        let changed = false;
-
+        
         if (index === -1) {
-          const maxSelections = this.maxSelections();
-          if (!maxSelections || values.length < maxSelections) {
+          if (!this.maxSelections() || values.length < this.maxSelections()!) {
             values.push(option.value);
-            changed = true;
+            this.value.set(values);
+            this.onChange(values);
           }
         } else {
-          const minSelections = this.minSelections();
-          if (!minSelections || values.length > minSelections) {
+          if (!this.minSelections() || values.length > this.minSelections()!) {
             values.splice(index, 1);
-            changed = true;
+            this.value.set(values);
+            this.onChange(values);
           }
-        }
-
-        if (changed) {
-          this.value.set(values);
-          this.onChange(values);
-          this.updateSelectedLabel();
         }
       } else {
         this.value.set(option.value);
         this.onChange(option.value);
-        this.updateSelectedLabel();
         this.close();
       }
 
@@ -432,7 +436,6 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Af
       const newValue = this.multiple() ? [] : null;
       this.value.set(newValue);
       this.onChange(newValue);
-      this.updateSelectedLabel();
       this.onTouched();
       this.touched.set(true);
     }
@@ -448,38 +451,9 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Af
 
   onScroll(event: Event): void {
     const element = event.target as HTMLElement;
-    if (
-      element.scrollHeight - element.scrollTop === element.clientHeight
-    ) {
+    if (element.scrollHeight - element.scrollTop === element.clientHeight) {
       this.scrollEnd.emit();
     }
-  }
-
-  private updateSelectedLabel(): void {
-    const currentValue = this.value();
-    const currentOptions = this.flattenOptions(this.options());
-
-    if (this.multiple() && Array.isArray(currentValue)) {
-      const selected = currentOptions.filter(opt =>
-        currentValue.some(v => this.compareWith()(v, opt.value))
-      );
-      if (selected.length > 0) {
-        const labels = selected.map(opt => opt.label);
-        this.selectedLabelSignal.set(labels.join(', '));
-      } else {
-        this.selectedLabelSignal.set('');
-      }
-    } else {
-      const selected = currentOptions.find(opt =>
-        currentValue !== null && this.compareWith()(opt.value, currentValue as T)
-      );
-      if (selected) {
-        this.selectedLabelSignal.set(selected.label);
-      } else {
-        this.selectedLabelSignal.set('');
-      }
-    }
-    this.cdr.markForCheck();
   }
 
   private flattenOptions(options: (SelectOption<T> | SelectOptionGroup<T>)[]): SelectOption<T>[] {
