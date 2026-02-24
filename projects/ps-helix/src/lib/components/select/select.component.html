@@ -18,12 +18,27 @@
   @if (isOpen()) {
     <div class="select-dropdown">
       <div class="select-options">
-        @for (opt of options(); track opt.label) {
-          <div class="select-option" 
-               [class.selected]="isSelected(opt)"
-               (click)="select(opt)">
-            {{ opt.label }}
-          </div>
+        @for (item of options(); track getOptionKey(item)) {
+          @if (isOptionGroup(item)) {
+            <div class="select-group">
+              <div class="select-group-label">{{ item.label }}</div>
+              @for (opt of item.options; track opt.label) {
+                <div class="select-option" 
+                     [class.selected]="isSelected(opt)"
+                     (click)="select(opt)">
+                  {{ opt.label }}
+                </div>
+              }
+            </div>
+          } @else {
+            <div class="select-option" 
+                 [class.selected]="isSelected(item)"
+                 (click)="select(item)">
+              {{ item.label }}
+            </div>
+          }
+        } @empty {
+          <div class="select-no-results">Aucun résultat</div>
         }
       </div>
     </div>
