@@ -31,10 +31,11 @@
     <div class="select-dropdown">
       @if (searchable()) {
         <div class="select-search">
-          <input type="text" 
-                 [placeholder]="searchConfig().placeholder" 
-                 [value]="searchTerm()" 
-                 (input)="onSearch($event)" 
+          <i class="ph ph-magnifying-glass select-search-icon"></i>
+          <input type="text"
+                 [placeholder]="searchConfig().placeholder"
+                 [value]="searchTerm()"
+                 (input)="onSearch($event)"
                  (click)="$event.stopPropagation()">
         </div>
       }

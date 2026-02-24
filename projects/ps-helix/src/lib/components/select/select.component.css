@@ -84,6 +84,40 @@
   box-shadow: var(--shadow-lg);
 }
 
+.select-search {
+  position: relative;
+  padding: 0.5rem;
+  border-bottom: 0.0625rem solid var(--surface-border);
+}
+
+.select-search-icon {
+  position: absolute;
+  left: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-color-secondary);
+  font-size: 0.875rem;
+  pointer-events: none;
+}
+
+.select-search input {
+  width: 100%;
+  height: 2rem;
+  padding: 0 0.75rem 0 2rem;
+  background: var(--surface-ground);
+  border: 0.0625rem solid var(--surface-border);
+  border-radius: var(--border-radius);
+  color: var(--text-color);
+  font-size: 0.875rem;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+
+.select-search input::placeholder { color: var(--text-color-secondary); }
+
+.select-search input:focus { border-color: var(--primary-color); }
+
 .select-options { max-height: 15rem; overflow-y: auto; }
 
 .select-group-label {
