@@ -1,7 +1,7 @@
 :host {
   display: inline-flex;
   flex-direction: column;
-  gap: 0.5rem; /* REM */
+  gap: 0.5rem;
 }
 
 .checkbox-container {
@@ -12,7 +12,7 @@
 .checkbox-label {
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem; /* REM */
+  gap: 0.75rem;
   cursor: pointer;
   user-select: none;
   color: var(--text-color);
@@ -30,78 +30,73 @@
   height: 0;
 }
 
+/* Base du carré de sélection */
 .checkbox-control {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 1.25rem; /* REM - 20px */
+  width: 1.25rem; /* 20px */
   height: 1.25rem;
   border: 0.125rem solid var(--surface-border);
   border-radius: var(--border-radius);
   background: var(--surface-card);
   transition: all var(--animation-duration-fast) var(--animation-easing-default);
-  color: var(--primary-color-text);
+  color: white;
   position: relative;
   flex-shrink: 0;
 }
 
-/* On utilise les classes portées par le Host pour le style */
+/* États via les classes du Host */
 :host.checkbox-checked .checkbox-control,
 :host.checkbox-indeterminate .checkbox-control {
   background: var(--primary-color);
   border-color: var(--primary-color);
 }
 
+/* Focus Management */
 .checkbox-input:focus-visible + .checkbox-control {
   outline: 0.125rem solid var(--focus-outline-color);
   outline-offset: 0.125rem;
 }
 
+/* Icônes Phosphor */
 .checkbox-control i {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  font-size: 0.75rem; /* REM */
-  opacity: 0;
-  transition: all var(--animation-duration-fast) var(--animation-easing-default);
+  font-size: 0.875rem;
+  line-height: 1;
 }
 
-:host.checkbox-checked .checkbox-control i,
-:host.checkbox-indeterminate .checkbox-control i {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1.1);
-}
-
-/* States via Host */
-:host.checkbox-disabled .checkbox-label {
-  opacity: var(--opacity-disabled);
-  cursor: not-allowed;
-}
-
-:host.checkbox-error .checkbox-control {
-  border-color: var(--danger-color);
-}
-
-:host.checkbox-error.checkbox-checked .checkbox-control {
-  background: var(--danger-color);
-  border-color: var(--danger-color);
-}
-
-/* Sizes via Host */
+/* Tailles via Host */
 :host.checkbox-small .checkbox-control {
-  width: 1rem; /* 16px */
+  width: 1rem;
   height: 1rem;
 }
 
 :host.checkbox-large .checkbox-control {
-  width: 1.5rem; /* 24px */
+  width: 1.5rem;
   height: 1.5rem;
 }
 
-.checkbox-error-message, .checkbox-success-message {
-  font-size: 0.875rem; /* REM */
+/* États d'erreur et succès */
+:host.checkbox-error .checkbox-control { border-color: var(--danger-color); }
+:host.checkbox-error.checkbox-checked .checkbox-control { background: var(--danger-color); }
+
+:host.checkbox-success .checkbox-control { border-color: var(--success-color); }
+:host.checkbox-success.checkbox-checked .checkbox-control { background: var(--success-color); }
+
+/* Désactivation */
+:host.checkbox-disabled {
+  opacity: var(--opacity-disabled);
+  cursor: not-allowed;
 }
 
-.checkbox-error-message { color: var(--danger-color); }
-.checkbox-success-message { color: var(--success-color); }
+:host.checkbox-disabled .checkbox-label {
+  cursor: not-allowed;
+}
+
+.checkbox-message {
+  font-size: 0.875rem;
+  margin-top: 0.125rem;
+}
+
+.checkbox-message.error { color: var(--danger-color); }
+.checkbox-message.success { color: var(--success-color); }
