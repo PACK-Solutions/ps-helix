@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import type { FormCheckboxControl } from '@angular/forms/signals';
-import { CheckboxSize, CheckboxConfig } from './checkbox.types';
+import { CheckboxSize, CheckboxConfig, CheckboxLabelPosition } from './checkbox.types';
 
 export const CHECKBOX_CONFIG = new InjectionToken<Partial<CheckboxConfig>>('CHECKBOX_CONFIG', {
   factory: () => ({
@@ -52,39 +52,35 @@ let checkboxIdCounter = 0;
 })
 export class PshCheckboxComponent implements ControlValueAccessor, FormCheckboxControl {
   private readonly config = inject(CHECKBOX_CONFIG);
-  private readonly uniqueId = `checkbox-${++checkboxIdCounter}`;
-
+  private readonly uniqueId = `psh-cb-${++checkboxIdCounter}`;
   private readonly checkboxInput = viewChild<ElementRef<HTMLInputElement>>('checkboxInput');
 
   private onChange = (_: boolean) => {};
   private onTouched = () => {};
 
+  // Modèles bidirectionnels (Signal-first)
   readonly checked = model(this.config.checked ?? false);
   readonly disabled = model(this.config.disabled ?? false);
   readonly indeterminate = model(this.config.indeterminate ?? false);
   readonly touched = model(false);
 
+  // Inputs de configuration
   required = input(this.config.required ?? false);
   label = input(this.config.label ?? '');
-  error = input('');
-  success = input('');
-  ariaLabel = input<string>();
+  error = input<string | null | undefined>(this.config.error);
+  success = input<string | null | undefined>(this.config.success);
+  ariaLabel = input<string>(this.config.ariaLabel);
   size = input<CheckboxSize>(this.config.size ?? 'medium');
-  labelPosition = input<'left' | 'right'>(this.config.labelPosition ?? 'right');
+  labelPosition = input<CheckboxLabelPosition>(this.config.labelPosition ?? 'right');
 
-  ariaChecked = computed<'true' | 'false' | 'mixed'>(() =>
-    this.indeterminate() ? 'mixed' : (this.checked() ? 'true' : 'false')
-  );
-
+  // États calculés pour l'accessibilité et l'UI
+  ariaChecked = computed(() => this.indeterminate() ? 'mixed' : (this.checked() ? 'true' : 'false'));
   computedAriaLabel = computed(() => this.ariaLabel() || this.label() || undefined);
-
-  errorMessageId = computed(() => this.error() ? `${this.uniqueId}-error` : undefined);
-  successMessageId = computed(() => this.success() ? `${this.uniqueId}-success` : undefined);
-
+  
   ariaDescribedBy = computed(() => {
-    const ids: string[] = [];
-    if (this.errorMessageId()) ids.push(this.errorMessageId()!);
-    if (this.successMessageId()) ids.push(this.successMessageId()!);
+    const ids = [];
+    if (this.error()) ids.push(`${this.uniqueId}-error`);
+    if (this.success()) ids.push(`${this.uniqueId}-success`);
     return ids.length > 0 ? ids.join(' ') : undefined;
   });
 
@@ -93,7 +89,7 @@ export class PshCheckboxComponent implements ControlValueAccessor, FormCheckboxC
   constructor() {
     effect(() => {
       if (!this.label() && !this.ariaLabel()) {
-        console.warn('[psh-checkbox] No accessible label provided.');
+        console.warn('[psh-checkbox] Label manquant pour l\'accessibilité.');
       }
     });
   }
@@ -117,22 +113,11 @@ export class PshCheckboxComponent implements ControlValueAccessor, FormCheckboxC
     }
   }
 
-  protected handleKeydown(event: KeyboardEvent): void {
-    if (this.disabled()) return;
-    if (event.key === ' ' || event.key === 'Spacebar' || event.key === 'Enter') {
-      event.preventDefault();
-      this.toggle();
-    }
-  }
-
-  writeValue(value: unknown): void {
-    this.checked.set(!!value);
-  }
-
-  registerOnChange(fn: (value: boolean) => void): void { this.onChange = fn; }
+  // Implémentation ControlValueAccessor / FormCheckboxControl
+  writeValue(value: unknown): void { this.checked.set(!!value); }
+  registerOnChange(fn: (v: boolean) => void): void { this.onChange = fn; }
   registerOnTouched(fn: () => void): void { this.onTouched = fn; }
   setDisabledState(isDisabled: boolean): void { this.disabled.set(isDisabled); }
 
   focus(): void { this.checkboxInput()?.nativeElement.focus(); }
-  blur(): void { this.checkboxInput()?.nativeElement.blur(); }
 }
