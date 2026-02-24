@@ -1,8 +1,7 @@
-/* --- Host & Base Container --- */
 :host {
   display: block;
   width: 100%;
-  max-width: 18.75rem; /* 300px */
+  max-width: 18.75rem;
 }
 
 :host.select-full-width { max-width: none; }
@@ -18,55 +17,29 @@
   cursor: pointer;
 }
 
-.select-label.required::after {
-  content: '*';
-  color: var(--danger-color);
-  margin-left: 0.125rem;
-}
-
 .select-trigger {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  min-width: 12rem;
   height: 2.5rem;
   padding: 0 1rem;
   background: var(--surface-card);
   border: 0.0625rem solid var(--surface-border);
   border-radius: var(--border-radius);
   cursor: pointer;
-  transition: all var(--animation-duration-normal);
-  outline: none;
   box-sizing: border-box;
 }
 
 .select-trigger:hover { border-color: var(--primary-color); }
 
-.select-value {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex: 1;
-  min-width: 0;
-}
-
-.select-value span {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: var(--text-color);
-}
-
-.select-value span.placeholder { color: var(--text-color-secondary); }
-
 .select-arrow {
-  transition: transform var(--animation-duration-normal);
+  transition: transform 0.2s;
   font-size: 1rem;
   color: var(--text-color-secondary);
 }
 
-/* CORRECTIF : Syntaxe CSS standard pour cibler l'attribut du Host */
+/* Syntaxe correcte pour le host attribute */
 :host[aria-expanded="true"] .select-arrow {
   transform: rotate(180deg);
 }
@@ -85,10 +58,17 @@
 
 .select-options { max-height: 15rem; overflow-y: auto; }
 
+.select-group-label {
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-color-secondary);
+  background: var(--surface-ground);
+}
+
 .select-option {
   padding: 0.625rem 1rem;
   cursor: pointer;
-  color: var(--text-color);
   transition: background 0.2s;
 }
 
@@ -98,11 +78,3 @@
   color: var(--primary-color);
   font-weight: 500;
 }
-
-/* États Host */
-:host.select-error .select-trigger { border-color: var(--danger-color); }
-:host.select-disabled .select-trigger { background: var(--surface-ground); cursor: not-allowed; opacity: 0.6; }
-
-/* Tailles Host */
-:host.select-small .select-trigger { height: 2rem; font-size: 0.875rem; }
-:host.select-large .select-trigger { height: 3rem; font-size: 1.125rem; }
