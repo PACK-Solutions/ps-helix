@@ -45,6 +45,8 @@ let checkboxIdCounter = 0;
     '[class.checkbox-success]': '!!success()',
     '[class.checkbox-small]': 'size() === "small"',
     '[class.checkbox-large]': 'size() === "large"',
+    '[class.checkbox-checked]': 'checked() && !indeterminate()',
+    '[class.checkbox-indeterminate]': 'indeterminate()',
     '[attr.data-state]': 'state()'
   }
 })
@@ -60,10 +62,9 @@ export class PshCheckboxComponent implements ControlValueAccessor, FormCheckboxC
   readonly checked = model(this.config.checked ?? false);
   readonly disabled = model(this.config.disabled ?? false);
   readonly indeterminate = model(this.config.indeterminate ?? false);
-
   readonly touched = model(false);
-  required = input(this.config.required ?? false);
 
+  required = input(this.config.required ?? false);
   label = input(this.config.label ?? '');
   error = input('');
   success = input('');
@@ -82,10 +83,8 @@ export class PshCheckboxComponent implements ControlValueAccessor, FormCheckboxC
 
   ariaDescribedBy = computed(() => {
     const ids: string[] = [];
-    const errId = this.errorMessageId();
-    const succId = this.successMessageId();
-    if (errId) ids.push(errId);
-    if (succId) ids.push(succId);
+    if (this.errorMessageId()) ids.push(this.errorMessageId()!);
+    if (this.successMessageId()) ids.push(this.successMessageId()!);
     return ids.length > 0 ? ids.join(' ') : undefined;
   });
 
@@ -94,9 +93,7 @@ export class PshCheckboxComponent implements ControlValueAccessor, FormCheckboxC
   constructor() {
     effect(() => {
       if (!this.label() && !this.ariaLabel()) {
-        console.warn(
-          '[psh-checkbox] No accessible label provided. Please use label input or ariaLabel input.'
-        );
+        console.warn('[psh-checkbox] No accessible label provided.');
       }
     });
   }
@@ -122,7 +119,6 @@ export class PshCheckboxComponent implements ControlValueAccessor, FormCheckboxC
 
   protected handleKeydown(event: KeyboardEvent): void {
     if (this.disabled()) return;
-
     if (event.key === ' ' || event.key === 'Spacebar' || event.key === 'Enter') {
       event.preventDefault();
       this.toggle();
@@ -133,23 +129,10 @@ export class PshCheckboxComponent implements ControlValueAccessor, FormCheckboxC
     this.checked.set(!!value);
   }
 
-  registerOnChange(fn: (value: boolean) => void): void {
-    this.onChange = fn;
-  }
+  registerOnChange(fn: (value: boolean) => void): void { this.onChange = fn; }
+  registerOnTouched(fn: () => void): void { this.onTouched = fn; }
+  setDisabledState(isDisabled: boolean): void { this.disabled.set(isDisabled); }
 
-  registerOnTouched(fn: () => void): void {
-    this.onTouched = fn;
-  }
-
-  setDisabledState(isDisabled: boolean): void {
-    this.disabled.set(isDisabled);
-  }
-
-  focus(): void {
-    this.checkboxInput()?.nativeElement.focus();
-  }
-
-  blur(): void {
-    this.checkboxInput()?.nativeElement.blur();
-  }
+  focus(): void { this.checkboxInput()?.nativeElement.focus(); }
+  blur(): void { this.checkboxInput()?.nativeElement.blur(); }
 }
