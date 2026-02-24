@@ -6,18 +6,39 @@
     </label>
   }
 
-  <div class="select-trigger" [id]="selectId" (click)="toggle()">
+  <div class="select-trigger" [id]="selectId" (click)="toggle()" tabindex="0">
     <div class="select-value">
       <span [class.placeholder]="!hasValue()">
         {{ selectedLabel() }}
       </span>
     </div>
-    <i class="ph ph-caret-down select-arrow" aria-hidden="true"></i>
+    
+    <div class="select-actions">
+      @if (clearable() && hasValue() && !disabled()) {
+        <button class="select-clear" (click)="clear($event)">
+          <i class="ph ph-x"></i>
+        </button>
+      }
+      @if (loading()) {
+        <div class="select-loader-trigger"></div>
+      } @else {
+        <i class="ph ph-caret-down select-arrow"></i>
+      }
+    </div>
   </div>
 
   @if (isOpen()) {
     <div class="select-dropdown">
-      <div class="select-options">
+      @if (searchable()) {
+        <div class="select-search">
+          <input type="text" 
+                 [placeholder]="searchConfig().placeholder" 
+                 [value]="searchTerm()" 
+                 (input)="onSearch($event)" 
+                 (click)="$event.stopPropagation()">
+        </div>
+      }
+      <div class="select-options" (scroll)="onScroll($event)">
         @for (item of options(); track getOptionKey(item)) {
           @if (isOptionGroup(item)) {
             <div class="select-group">
