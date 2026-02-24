@@ -1,6 +1,5 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { JsonPipe } from '@angular/common';
-import { form, FormField } from '@angular/forms/signals';
 import { TranslateModule } from '@ngx-translate/core';
 import { PshSelectComponent } from '@lib/components/select/select.component';
 import { PshButtonComponent } from '@lib/components/button/button.component';
@@ -10,13 +9,16 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
 
 @Component({
   selector: 'ds-select-demo',
-  imports: [TranslateModule, JsonPipe, PshSelectComponent, PshButtonComponent, DemoPageLayoutComponent, CodeSnippetComponent, FormField],
+  imports: [TranslateModule, JsonPipe, PshSelectComponent, PshButtonComponent, DemoPageLayoutComponent, CodeSnippetComponent],
   templateUrl: './select-demo.component.html',
   styleUrls: ['./select-demo.component.css']
 })
 export class SelectDemoComponent {
-  signalFormModel = signal({ country: null as string | null });
-  signalForm = form(this.signalFormModel);
+  signalCountry: string | null = null;
+
+  get signalFormModel() {
+    return { country: this.signalCountry };
+  }
 
   selectedBasic: string | null = null;
   selectedCountry: string | null = null;
@@ -113,14 +115,12 @@ export class SelectDemoComponent {
   }
 
   signalFormCode = `import { signal } from '@angular/core';
-import { form, FormField } from '@angular/forms/signals';
 
-model = signal({ country: null as string | null });
-myForm = form(this.model);
+selectedCountry = signal<string | null>(null);
 
 // Template :
 <psh-select
-  [formField]="myForm.country"
+  [(value)]="selectedCountry"
   [options]="countries"
   [searchable]="true"
   [clearable]="true"

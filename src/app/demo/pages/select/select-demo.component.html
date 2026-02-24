@@ -15,15 +15,15 @@
           <div class="doc-card">
             <div class="doc-card-preview">
               <psh-select
-                [formField]="signalForm.country"
+                [(value)]="signalCountry"
                 [options]="countryOptions"
                 [searchable]="true"
                 [clearable]="true"
                 label="Pays"
                 placeholder="Sélectionner un pays"
-                hint="Sélection via Signal Forms"
+                hint="Sélection via signal two-way binding"
               />
-              <p class="autocomplete-description">Valeur du modèle : {{ signalFormModel() | json }}</p>
+              <p class="autocomplete-description">Valeur du modèle : {{ signalFormModel | json }}</p>
             </div>
             <div class="doc-card-info">
               <h4>Select avec Signal Forms</h4>
