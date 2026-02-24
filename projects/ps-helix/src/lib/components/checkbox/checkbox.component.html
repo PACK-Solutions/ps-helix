@@ -11,6 +11,7 @@
       [attr.aria-checked]="ariaChecked()"
       [attr.aria-describedby]="ariaDescribedBy()"
       (change)="toggle()"
+      (keydown)="handleKeydown($event)"
     />
     
     <span class="checkbox-control">
