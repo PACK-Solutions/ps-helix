@@ -38,13 +38,13 @@
   </label>
 
   @if (error()) {
-    <div [id]="errorMessageId()" class="checkbox-error" role="alert">
+    <div [id]="errorMessageId()" class="checkbox-error-message" role="alert">
       {{ error() }}
     </div>
   }
 
   @if (success()) {
-    <div [id]="successMessageId()" class="checkbox-success" role="status">
+    <div [id]="successMessageId()" class="checkbox-success-message" role="status">
       {{ success() }}
     </div>
   }
