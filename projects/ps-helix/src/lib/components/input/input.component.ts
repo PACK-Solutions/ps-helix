@@ -131,7 +131,8 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
   private onTouched = () => {};
 
   writeValue(value: unknown): void {
-    this.value.set(String(value ?? ''));
+    const safeValue = typeof value === 'string' ? value : '';
+    this.value.set(safeValue);
     this.cdr.markForCheck();
   }
 
@@ -194,7 +195,10 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
       case 'Enter':
         if (currentIndex >= 0 && currentIndex < suggestions.length) {
           event.preventDefault();
-          this.handleSuggestionClick(suggestions[currentIndex]);
+          const selected = suggestions[currentIndex];
+          if (selected !== undefined) {
+            this.handleSuggestionClick(selected);
+          }
         }
         break;
       case 'Escape':
@@ -206,12 +210,11 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
   }
 
   handleSuggestionClick(suggestion: string): void {
-    if (suggestion) {
-      this.value.set(suggestion);
-      this.onChange(suggestion);
-      this.suggestionSelect.emit(suggestion);
-      this.suggestionsVisible.set(false);
-    }
+    this.value.set(suggestion);
+    this.onChange(suggestion);
+    this.suggestionSelect.emit(suggestion);
+    this.suggestionsVisible.set(false);
+    this.focusedSuggestionIndex.set(-1);
   }
 
   togglePasswordVisibility(): void {
