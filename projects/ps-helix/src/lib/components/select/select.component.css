@@ -1,81 +1,176 @@
+/* --- Host & Base Container --- */
 :host {
   display: block;
   width: 100%;
   max-width: 18.75rem; /* 300px */
+  font-family: inherit;
 }
 
-:host.select-full-width { max-width: none; }
+:host.select-full-width {
+  max-width: none;
+}
 
-.select-container { width: 100%; }
+.select-container {
+  position: relative;
+  width: 100%;
+}
 
+/* --- Label --- */
 .select-label {
   display: block;
-  font-size: 0.875rem; /* REM - 14px */
+  color: var(--text-color);
+  font-size: 0.875rem;
   font-weight: 500;
   margin-bottom: 0.25rem;
-  color: var(--text-color);
   cursor: pointer;
 }
 
-.select-label.required::after { content: '*'; color: var(--danger-color); margin-left: 0.125rem; }
+.select-label.required::after {
+  content: '*';
+  color: var(--danger-color);
+  margin-left: 0.125rem;
+}
 
+/* --- Trigger (La barre principale) --- */
 .select-trigger {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 2.5rem; /* REM - 40px */
+  width: 100%;
+  min-width: 12rem;
+  height: 2.5rem; /* 40px */
   padding: 0 1rem;
   background: var(--surface-card);
   border: 0.0625rem solid var(--surface-border);
   border-radius: var(--border-radius);
   cursor: pointer;
-  transition: all var(--animation-duration-normal);
+  transition: all var(--animation-duration-normal) var(--animation-easing-default);
+  outline: none;
+  box-sizing: border-box;
 }
 
-.select-trigger:hover { border-color: var(--primary-color); }
+/* Hover & Focus via Host */
+.select-trigger:hover {
+  border-color: var(--primary-color);
+}
 
-.select-value { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
-.select-value .placeholder { color: var(--text-color-secondary); }
+.select-trigger:focus-visible {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.125rem rgba(var(--primary-color-rgb), 0.2);
+}
 
-.select-arrow { transition: transform 0.2s; font-size: 1rem; color: var(--text-color-secondary); }
-.select-arrow.open { transform: rotate(180deg); }
+/* --- Valeur et Placeholder --- */
+.select-value {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 0;
+  margin-right: 0.5rem;
+}
 
-/* États via Host */
-:host.select-error .select-trigger { border-color: var(--danger-color); }
-:host.select-disabled .select-trigger { background: var(--surface-ground); cursor: not-allowed; opacity: 0.6; }
+.select-value span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-color);
+}
 
-/* Tailles via Host */
-:host.select-small .select-trigger { height: 2rem; font-size: 0.875rem; }
-:host.select-large .select-trigger { height: 3rem; font-size: 1.125rem; }
+.select-value span.placeholder {
+  color: var(--text-color-secondary);
+}
 
-/* Dropdown */
+/* --- Actions & Flèche --- */
+.select-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.select-arrow {
+  transition: transform var(--animation-duration-normal);
+  font-size: 1rem;
+  color: var(--text-color-secondary);
+}
+
+/* État ouvert via attribut host */
+:host[attr.aria-expanded="true"] .select-arrow {
+  transform: rotate(180deg);
+}
+
+/* --- Dropdown Panel --- */
 .select-dropdown {
   position: absolute;
-  top: 100%;
+  top: calc(100% + 0.25rem);
   left: 0;
-  right: 0;
-  z-index: 1000;
+  width: 100%;
   background: var(--surface-card);
   border: 0.0625rem solid var(--surface-border);
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-lg);
-  margin-top: 0.25rem;
+  z-index: 1000;
+}
+
+.select-options {
   max-height: 15rem;
   overflow-y: auto;
 }
 
 .select-option {
-  padding: 0.625rem 1rem;
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  padding: 0.625rem 1rem;
   cursor: pointer;
+  transition: background 0.2s;
+  color: var(--text-color);
 }
 
-.select-option:hover { background: var(--surface-hover); }
-.select-option.selected { background: rgba(var(--primary-color-rgb), 0.1); color: var(--primary-color); }
+.select-option:hover {
+  background: var(--surface-hover);
+}
 
-.select-error { color: var(--danger-color); font-size: 0.75rem; margin-top: 0.25rem; }
-.select-hint { color: var(--text-color-secondary); font-size: 0.75rem; margin-top: 0.25rem; }
+.select-option.selected {
+  background: rgba(var(--primary-color-rgb), 0.1);
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+/* --- États Spéciaux via :host --- */
+
+/* Erreur */
+:host.select-error .select-trigger {
+  border-color: var(--danger-color);
+}
+
+/* Disabled */
+:host.select-disabled .select-trigger {
+  background: var(--surface-ground);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Tailles */
+:host.select-small .select-trigger {
+  height: 2rem;
+  font-size: 0.875rem;
+  padding: 0 0.75rem;
+}
+
+:host.select-large .select-trigger {
+  height: 3rem;
+  font-size: 1.125rem;
+  padding: 0 1.25rem;
+}
+
+/* --- Messages --- */
+.select-error, .select-hint {
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.select-error { color: var(--danger-color); }
+.select-hint { color: var(--text-color-secondary); }
 
 @keyframes spin { to { transform: rotate(360deg); } }
