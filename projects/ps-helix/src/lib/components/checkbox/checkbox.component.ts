@@ -49,19 +49,19 @@ let checkboxIdCounter = 0;
   }
 })
 export class PshCheckboxComponent implements ControlValueAccessor, FormCheckboxControl {
-  private config = inject(CHECKBOX_CONFIG);
-  private uniqueId = `checkbox-${++checkboxIdCounter}`;
+  private readonly config = inject(CHECKBOX_CONFIG);
+  private readonly uniqueId = `checkbox-${++checkboxIdCounter}`;
 
-  private checkboxInput = viewChild<ElementRef<HTMLInputElement>>('checkboxInput');
+  private readonly checkboxInput = viewChild<ElementRef<HTMLInputElement>>('checkboxInput');
 
-  private onChange = (value: boolean) => {};
+  private onChange = (_: boolean) => {};
   private onTouched = () => {};
 
   readonly checked = model(this.config.checked ?? false);
   readonly disabled = model(this.config.disabled ?? false);
   readonly indeterminate = model(this.config.indeterminate ?? false);
 
-  touched = model(false);
+  readonly touched = model(false);
   required = input(this.config.required ?? false);
 
   label = input(this.config.label ?? '');
@@ -75,15 +75,17 @@ export class PshCheckboxComponent implements ControlValueAccessor, FormCheckboxC
     this.indeterminate() ? 'mixed' : (this.checked() ? 'true' : 'false')
   );
 
-  computedAriaLabel = computed(() => this.ariaLabel());
+  computedAriaLabel = computed(() => this.ariaLabel() || this.label() || undefined);
 
   errorMessageId = computed(() => this.error() ? `${this.uniqueId}-error` : undefined);
   successMessageId = computed(() => this.success() ? `${this.uniqueId}-success` : undefined);
 
   ariaDescribedBy = computed(() => {
     const ids: string[] = [];
-    if (this.errorMessageId()) ids.push(this.errorMessageId()!);
-    if (this.successMessageId()) ids.push(this.successMessageId()!);
+    const errId = this.errorMessageId();
+    const succId = this.successMessageId();
+    if (errId) ids.push(errId);
+    if (succId) ids.push(succId);
     return ids.length > 0 ? ids.join(' ') : undefined;
   });
 
@@ -96,7 +98,7 @@ export class PshCheckboxComponent implements ControlValueAccessor, FormCheckboxC
           '[psh-checkbox] No accessible label provided. Please use label input or ariaLabel input.'
         );
       }
-    }, { allowSignalWrites: false });
+    });
   }
 
   private getState(): string {
@@ -109,9 +111,10 @@ export class PshCheckboxComponent implements ControlValueAccessor, FormCheckboxC
 
   protected toggle(): void {
     if (!this.disabled()) {
-      this.checked.update(v => !v);
+      const newValue = !this.checked();
+      this.checked.set(newValue);
       this.indeterminate.set(false);
-      this.onChange(this.checked());
+      this.onChange(newValue);
       this.onTouched();
       this.touched.set(true);
     }
@@ -120,17 +123,14 @@ export class PshCheckboxComponent implements ControlValueAccessor, FormCheckboxC
   protected handleKeydown(event: KeyboardEvent): void {
     if (this.disabled()) return;
 
-    if (event.key === ' ' || event.key === 'Spacebar') {
-      event.preventDefault();
-      this.toggle();
-    } else if (event.key === 'Enter') {
+    if (event.key === ' ' || event.key === 'Spacebar' || event.key === 'Enter') {
       event.preventDefault();
       this.toggle();
     }
   }
 
-  writeValue(value: boolean): void {
-    this.checked.set(value ?? false);
+  writeValue(value: unknown): void {
+    this.checked.set(!!value);
   }
 
   registerOnChange(fn: (value: boolean) => void): void {
@@ -146,16 +146,10 @@ export class PshCheckboxComponent implements ControlValueAccessor, FormCheckboxC
   }
 
   focus(): void {
-    const el = this.checkboxInput();
-    if (el?.nativeElement) {
-      el.nativeElement.focus();
-    }
+    this.checkboxInput()?.nativeElement.focus();
   }
 
   blur(): void {
-    const el = this.checkboxInput();
-    if (el?.nativeElement) {
-      el.nativeElement.blur();
-    }
+    this.checkboxInput()?.nativeElement.blur();
   }
 }
