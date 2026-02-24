@@ -30,7 +30,7 @@
       "ps-helix": [
         "projects/ps-helix/src/public-api.ts"
       ],
-      "@angular/forms/signals": ["node_modules/@angular/forms/fesm2022/signals.mjs"]
+      "@angular/forms/signals": ["node_modules/@angular/forms/types/signals.d.ts"]
     },
     "lib": ["ES2022", "dom"]
   },
