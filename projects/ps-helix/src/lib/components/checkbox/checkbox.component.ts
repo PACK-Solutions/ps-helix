@@ -52,28 +52,27 @@ let checkboxIdCounter = 0;
 })
 export class PshCheckboxComponent implements ControlValueAccessor, FormCheckboxControl {
   private readonly config = inject(CHECKBOX_CONFIG);
-  private readonly uniqueId = `psh-cb-${++checkboxIdCounter}`;
   private readonly checkboxInput = viewChild<ElementRef<HTMLInputElement>>('checkboxInput');
+
+  // Propriété protégée pour accès dans le template
+  protected readonly uniqueId = `psh-cb-${++checkboxIdCounter}`;
 
   private onChange = (_: boolean) => {};
   private onTouched = () => {};
 
-  // Modèles bidirectionnels (Signal-first)
   readonly checked = model(this.config.checked ?? false);
   readonly disabled = model(this.config.disabled ?? false);
   readonly indeterminate = model(this.config.indeterminate ?? false);
   readonly touched = model(false);
 
-  // Inputs de configuration
   required = input(this.config.required ?? false);
   label = input(this.config.label ?? '');
   error = input<string | null | undefined>(this.config.error);
   success = input<string | null | undefined>(this.config.success);
-  ariaLabel = input<string>(this.config.ariaLabel);
+  ariaLabel = input<string | undefined>(this.config.ariaLabel); // Correction type undefined
   size = input<CheckboxSize>(this.config.size ?? 'medium');
   labelPosition = input<CheckboxLabelPosition>(this.config.labelPosition ?? 'right');
 
-  // États calculés pour l'accessibilité et l'UI
   ariaChecked = computed(() => this.indeterminate() ? 'mixed' : (this.checked() ? 'true' : 'false'));
   computedAriaLabel = computed(() => this.ariaLabel() || this.label() || undefined);
   
@@ -113,7 +112,15 @@ export class PshCheckboxComponent implements ControlValueAccessor, FormCheckboxC
     }
   }
 
-  // Implémentation ControlValueAccessor / FormCheckboxControl
+  // Correction : Méthode appelée dans le template
+  protected handleKeydown(event: KeyboardEvent): void {
+    if (this.disabled()) return;
+    if (event.key === ' ' || event.key === 'Spacebar' || event.key === 'Enter') {
+      event.preventDefault();
+      this.toggle();
+    }
+  }
+
   writeValue(value: unknown): void { this.checked.set(!!value); }
   registerOnChange(fn: (v: boolean) => void): void { this.onChange = fn; }
   registerOnTouched(fn: () => void): void { this.onTouched = fn; }
