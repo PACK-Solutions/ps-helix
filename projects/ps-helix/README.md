@@ -106,7 +106,7 @@ After installation, verify that ps-helix is in your `package.json`:
 ```json
 {
   "dependencies": {
-    "ps-helix": "^4.0.0"
+    "ps-helix": "^4.0.1"
   }
 }
 ```
