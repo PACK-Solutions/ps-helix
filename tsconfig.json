@@ -29,7 +29,8 @@
       "@demo/*": ["src/app/demo/*"],
       "ps-helix": [
         "projects/ps-helix/src/public-api.ts"
-      ]
+      ],
+      "@angular/forms/signals": ["node_modules/@angular/forms/fesm2022/signals.mjs"]
     },
     "lib": ["ES2022", "dom"]
   },
