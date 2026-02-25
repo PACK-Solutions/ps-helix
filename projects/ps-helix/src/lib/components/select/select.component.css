@@ -39,6 +39,7 @@
 
 .placeholder{
   text-overflow: ellipsis;
+  line-clamp: none;
 }
 
 .select-actions {
