@@ -150,7 +150,7 @@ input:focus {
 }
 
 .input-wrapper i:last-of-type {
-  right: 1rem;
+ padding-right: 1rem;
 }
 
 /* --- Password Toggle --- */
