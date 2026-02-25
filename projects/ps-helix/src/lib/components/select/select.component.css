@@ -36,7 +36,9 @@
   outline: none;
 }
 
-
+.placeholder{
+  text-overflow: ellipsis;
+}
 
 .select-actions {
   display: flex;
