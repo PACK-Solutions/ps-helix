@@ -37,6 +37,7 @@
 .placeholder{
   background:red;
   font-size:3rem;
+  text-overflow: ellipsis;
 }
 
 .select-actions {
