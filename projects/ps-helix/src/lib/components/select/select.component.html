@@ -6,16 +6,19 @@
     </label>
   }
 
-  <div class="select-trigger" [id]="selectId" (click)="toggle()" tabindex="0">
-    <div class="select-value">
-      <span [class.placeholder]="!hasValue()">
-        {{ selectedLabel() }}
-      </span>
-    </div>
+  <div class="select-trigger" 
+       [id]="selectId" 
+       (click)="toggle()" 
+       tabindex="0"
+       [attr.aria-expanded]="isOpen()">
     
+    <div class="select-trigger-text" [class.placeholder]="!hasValue()">
+      {{ selectedLabel() }}
+    </div>
+
     <div class="select-actions">
       @if (clearable() && hasValue() && !disabled()) {
-        <button class="select-clear" (click)="clear($event)">
+        <button class="select-clear" (click)="clear($event)" type="button">
           <i class="ph ph-x"></i>
         </button>
       }
