@@ -145,10 +145,6 @@ input:focus {
   z-index: 2;
 }
 
-.input-wrapper i:last-of-type {
-  right: 1rem;
-}
-
 /* --- Password Toggle --- */
 .password-toggle {
   position: absolute;
