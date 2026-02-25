@@ -27,7 +27,7 @@
   border: 0.0625rem solid var(--surface-border);
   border-radius: var(--border-radius);
   cursor: pointer;
-  text-overflow: ellipsis;
+  
   box-sizing: border-box;
 }
 
@@ -143,7 +143,7 @@
 }
 
 /* Tailles Host */
-:host.select-small .select-trigger { height: 2rem; font-size: 0.875rem; }
-:host.select-large .select-trigger { height: 3rem; font-size: 1.125rem; }
+:host.select-small .select-trigger { text-overflow: ellipsis; height: 2rem; font-size: 0.875rem; }
+:host.select-large .select-trigger { text-overflow: ellipsis; height: 3rem; font-size: 1.125rem; }
 
 @keyframes spin { to { transform: rotate(360deg); } }
