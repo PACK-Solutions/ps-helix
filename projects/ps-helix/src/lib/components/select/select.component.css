@@ -35,11 +35,6 @@
   outline: none;
 }
 
-.placeholder{
-  text-overflow: ellipsis;
-  line-clamp: none;
-  overflow:hidden;
-}
 
 .select-actions {
   display: flex;
