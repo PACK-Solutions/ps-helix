@@ -30,7 +30,7 @@
   text-overflow: ellipsis;
   box-sizing: border-box;
   line-clamp: 1;
-  overflow:hideen;
+  overflow:hidden;
 }
 
 .select-trigger:focus {
