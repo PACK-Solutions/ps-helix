@@ -27,6 +27,7 @@
   border: 0.0625rem solid var(--surface-border);
   border-radius: var(--border-radius);
   cursor: pointer;
+  text-overflow: ellipsis;
   box-sizing: border-box;
 }
 
