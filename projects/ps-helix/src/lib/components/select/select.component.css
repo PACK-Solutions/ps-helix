@@ -3,6 +3,7 @@
   width: 100%;
   max-width: 18.75rem;
   font-family: sans-serif;
+  --primary-rgb: 59, 130, 246; /* Pour les opacités */
 }
 
 :host.select-full-width { max-width: none; }
@@ -21,12 +22,17 @@
   cursor: pointer;
 }
 
-/* --- LE TRIGGER (Correction Ellipsis) --- */
+.required-mark {
+  color: var(--danger-color, #ef4444);
+  margin-left: 0.125rem;
+}
+
+/* --- LE TRIGGER --- */
 .select-trigger {
   display: flex;
   align-items: center;
   width: 100%;
-  height: 2.5rem;
+  height: 2.5rem; /* Fixe la hauteur pour éviter l'écrasement */
   padding: 0 0.75rem;
   background: var(--surface-card, #fff);
   border: 0.0625rem solid var(--surface-border, #d1d5db);
@@ -34,25 +40,25 @@
   cursor: pointer;
   box-sizing: border-box;
   transition: all 0.2s ease;
-  overflow: hidden; /* Crucial */
+  overflow: hidden; 
 }
 
 .select-trigger:focus,
 :host[aria-expanded="true"] .select-trigger {
   border-color: var(--primary-color, #3b82f6);
   outline: none;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+  box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.1);
 }
 
-/* Wrapper de texte obligatoire pour l'ellipsis */
+/* Verrouillage du texte sur une seule ligne */
 .select-trigger-text {
   flex: 1;
-  min-width: 0; /* Force le flex-item à respecter la largeur du parent */
+  min-width: 0; /* Important pour forcer le rétrécissement en flexbox */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 0.875rem;
-  color: var(--text-color);
+  color: var(--text-color, #1a1a1a);
   text-align: left;
 }
 
@@ -65,7 +71,7 @@
   align-items: center;
   gap: 0.5rem;
   margin-left: 0.5rem;
-  flex-shrink: 0; /* Empêche les icônes de s'écraser */
+  flex-shrink: 0; /* Empêche les icônes de disparaître si le texte est long */
 }
 
 /* --- ICONES --- */
@@ -74,9 +80,9 @@
   border: none;
   cursor: pointer;
   padding: 0;
-  color: var(--text-color-secondary);
+  color: var(--text-color-secondary, #6b7280);
   display: flex;
-  transition: color 0.2s;
+  font-size: 1rem;
 }
 
 .select-clear:hover { color: var(--danger-color, #ef4444); }
@@ -84,11 +90,20 @@
 .select-arrow {
   transition: transform 0.2s;
   font-size: 1rem;
-  color: var(--text-color-secondary);
+  color: var(--text-color-secondary, #6b7280);
   display: flex;
 }
 
 :host[aria-expanded="true"] .select-arrow { transform: rotate(180deg); }
+
+.select-loader-trigger {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid var(--surface-border, #d1d5db);
+  border-top-color: var(--primary-color, #3b82f6);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
 
 /* --- DROPDOWN --- */
 .select-dropdown {
@@ -97,25 +112,35 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  background: var(--surface-card);
-  border: 0.0625rem solid var(--surface-border);
-  border-radius: var(--border-radius);
+  background: var(--surface-card, #fff);
+  border: 0.0625rem solid var(--surface-border, #d1d5db);
+  border-radius: var(--border-radius, 6px);
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
 
 .select-search {
+  position: relative;
   padding: 0.5rem;
-  border-bottom: 0.0625rem solid var(--surface-border);
+  border-bottom: 0.0625rem solid var(--surface-border, #d1d5db);
+}
+
+.select-search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-color-secondary, #6b7280);
+  pointer-events: none;
 }
 
 .select-search input {
   width: 100%;
-  height: 2rem;
-  padding: 0 0.75rem;
+  height: 2.25rem;
+  padding: 0 0.75rem 0 2rem;
   background: var(--surface-ground, #f9fafb);
-  border: 0.0625rem solid var(--surface-border);
-  border-radius: var(--border-radius);
+  border: 0.0625rem solid var(--surface-border, #d1d5db);
+  border-radius: 4px;
   font-size: 0.875rem;
   outline: none;
   box-sizing: border-box;
@@ -126,19 +151,36 @@
   overflow-y: auto; 
 }
 
+.select-group-label {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-color-secondary, #6b7280);
+  background: var(--surface-ground, #f9fafb);
+}
+
 .select-option {
-  padding: 0.625rem 1rem;
+  padding: 0.625rem 0.75rem;
   cursor: pointer;
   font-size: 0.875rem;
+  color: var(--text-color, #1a1a1a);
+  transition: background 0.1s;
 }
 
 .select-option:hover { background: var(--surface-hover, #f3f4f6); }
 
 .select-option.selected {
-  background: rgba(59, 130, 246, 0.05);
-  color: var(--primary-color);
-  font-weight: 500;
+  background: rgba(var(--primary-rgb), 0.05);
+  color: var(--primary-color, #3b82f6);
+  font-weight: 600;
 }
 
-/* Animations */
+.select-no-results {
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--text-color-secondary, #6b7280);
+}
+
 @keyframes spin { to { transform: rotate(360deg); } }
