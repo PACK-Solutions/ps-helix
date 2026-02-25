@@ -36,6 +36,7 @@
 }
 .placeholder{
   width:100%;
+  min-width:250px;
   background:red;
   text-overflow: ellipsis;
 }
