@@ -27,10 +27,7 @@
   border: 0.0625rem solid var(--surface-border);
   border-radius: var(--border-radius);
   cursor: pointer;
-  text-overflow: ellipsis;
   box-sizing: border-box;
-  line-clamp: 1;
-  overflow:hidden;
 }
 
 .select-trigger:focus {
@@ -41,6 +38,7 @@
 .placeholder{
   text-overflow: ellipsis;
   line-clamp: none;
+  overflow:hidden;
 }
 
 .select-actions {
