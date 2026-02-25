@@ -156,6 +156,7 @@ input:focus {
 /* --- Password Toggle --- */
 .password-toggle {
   position: absolute;
+  right
   top: 50%;
   transform: translateY(-50%);
   background: transparent;
