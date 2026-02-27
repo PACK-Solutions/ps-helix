@@ -13,7 +13,7 @@
     "access": "restricted"
   },
   "scripts": {
-    "start": "ng serve --configuration development --no-hmr",
+    "start": "ng serve --configuration development",
     "build": "rm -rf dist && ng build",
     "dev": "npm run start",
     "build:lib": "ng build ps-helix",
