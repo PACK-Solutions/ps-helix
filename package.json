@@ -13,8 +13,9 @@
     "access": "restricted"
   },
   "scripts": {
+    "start": "ng serve --configuration development --no-hmr",
     "build": "rm -rf dist && ng build",
-    "dev": "ng serve --configuration development --no-hmr",
+    "dev": "npm run start",
     "build:lib": "ng build ps-helix",
     "publish:lib": "npm publish ./dist/ps-helix --access public",
     "watch:lib": "ng build ps-helix --watch",
