@@ -1,6 +1,5 @@
 {
-  "build": {
-    "command": "npm run build",
-    "output": "dist/browser"
-  }
+  "template": "angular",
+  "buildCommand": "npm run build",
+  "deployOutputDir": "dist/browser"
 }
