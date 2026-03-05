@@ -33,7 +33,7 @@ describe('PshTableComponent', () => {
     Array.from(row.querySelectorAll('td')) as HTMLTableCellElement[];
 
   const getSearchInput = () =>
-    fixture.nativeElement.querySelector('input[type="text"]') as HTMLInputElement;
+    fixture.nativeElement.querySelector('.global-search input') as HTMLInputElement;
 
   const getEmptyRow = () =>
     fixture.nativeElement.querySelector('tbody tr td') as HTMLTableCellElement;
@@ -200,7 +200,7 @@ describe('PshTableComponent', () => {
       expect(sortChangeSpy).toHaveBeenLastCalledWith({ key: 'name', direction: 'desc' });
     });
 
-    it('should update aria-sort to asc after click', () => {
+    it('should update aria-sort to ascending after click', () => {
       fixture.componentRef.setInput('columns', mockColumns);
       fixture.componentRef.setInput('data', mockData);
       fixture.detectChanges();
@@ -209,10 +209,10 @@ describe('PshTableComponent', () => {
       headers[0]!.click();
       fixture.detectChanges();
 
-      expect(headers[0]!.getAttribute('aria-sort')).toBe('asc');
+      expect(headers[0]!.getAttribute('aria-sort')).toBe('ascending');
     });
 
-    it('should update aria-sort to desc after second click', () => {
+    it('should update aria-sort to descending after second click', () => {
       fixture.componentRef.setInput('columns', mockColumns);
       fixture.componentRef.setInput('data', mockData);
       fixture.detectChanges();
@@ -223,7 +223,7 @@ describe('PshTableComponent', () => {
       headers[0]!.click();
       fixture.detectChanges();
 
-      expect(headers[0]!.getAttribute('aria-sort')).toBe('desc');
+      expect(headers[0]!.getAttribute('aria-sort')).toBe('descending');
     });
 
     it('should not emit sortChange when clicking non-sortable column', () => {
