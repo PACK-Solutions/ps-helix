@@ -11,15 +11,18 @@
   [attr.data-state]="state()"
 >
   @if (globalSearch()) {
-    <div class="global-search">
-      <input
-        type="text"
-        [attr.placeholder]="globalSearchPlaceholder()"
-        [value]="searchTerm()"
-        (input)="handleGlobalSearch($event)"
-        [attr.aria-label]="globalSearchPlaceholder()"
+    <div class="global-search" role="search">
+      <psh-input
+        [placeholder]="globalSearchPlaceholder()"
+        [ariaLabel]="globalSearchPlaceholder()"
+        [size]="size()"
+        [fullWidth]="true"
+        [showLabel]="false"
+        iconStart="magnifying-glass"
+        type="search"
+        [(value)]="searchTermSignal"
+        (valueChange)="onSearchValueChange($event)"
       />
-      <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
     </div>
   }
 

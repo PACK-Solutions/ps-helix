@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, output, signal, InjectionToken } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
+import { PshInputComponent } from '../input/input.component';
 import { TableColumn, TableRow, TableSort, TableConfig, TableRowClickEvent } from './table.types';
 
 export const TABLE_CONFIG = new InjectionToken<Partial<TableConfig>>('TABLE_CONFIG', {
@@ -22,7 +23,7 @@ export const TABLE_CONFIG = new InjectionToken<Partial<TableConfig>>('TABLE_CONF
 
 @Component({
   selector: 'psh-table',
-  imports: [NgTemplateOutlet],
+  imports: [NgTemplateOutlet, PshInputComponent],
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -55,7 +56,7 @@ export class PshTableComponent {
   rowClick = output<TableRowClickEvent>();
 
   private currentSortSignal = signal<TableSort | undefined>(undefined);
-  private searchTermSignal = signal('');
+  readonly searchTermSignal = signal('');
 
   currentSort = computed(() => this.currentSortSignal());
   searchTerm = computed(() => this.searchTermSignal());
@@ -149,9 +150,7 @@ export class PshTableComponent {
     this.sortChange.emit(sort);
   }
 
-  handleGlobalSearch(event: Event): void {
-    const value = (event.target as HTMLInputElement).value;
-    this.searchTermSignal.set(value);
+  onSearchValueChange(value: string): void {
     this.globalSearchChange.emit(value);
   }
 
