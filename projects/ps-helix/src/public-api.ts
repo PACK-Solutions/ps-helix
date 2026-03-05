@@ -38,6 +38,7 @@ export * from './lib/components/sidebar/sidebar.types';
 export * from './lib/components/spinloader/spinloader.component';
 export * from './lib/components/spinloader/spinloader.types';
 export * from './lib/components/stepper/stepper.component';
+export * from './lib/components/stepper/step.component';
 export * from './lib/components/stepper/stepper.types';
 export * from './lib/components/switch/switch.component';
 export * from './lib/components/switch/switch.types';
