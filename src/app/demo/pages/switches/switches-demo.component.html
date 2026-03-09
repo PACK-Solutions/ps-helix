@@ -253,6 +253,28 @@
           <p>Le switch implémente <code>FormCheckboxControl</code> pour une intégration native avec les Signal Forms d'Angular 21+. Utilisez la directive <code>[formField]</code> pour lier directement un champ du formulaire.</p>
         </div>
         <div class="forms-content">
+          <div class="forms-demo">
+            <h4>Exemple Interactif</h4>
+            <div class="form-group">
+              <psh-switch [formField]="preferencesForm.notifications">
+                Activer les notifications
+              </psh-switch>
+            </div>
+            <div class="form-group">
+              <psh-switch [formField]="preferencesForm.darkMode">
+                Mode sombre
+              </psh-switch>
+            </div>
+            <div class="form-group">
+              <psh-switch [formField]="preferencesForm.analytics">
+                Statistiques d'utilisation
+              </psh-switch>
+            </div>
+            <div class="form-status">
+              <p><strong>Valeurs du modèle :</strong></p>
+              <pre>{{ preferencesModel() | json }}</pre>
+            </div>
+          </div>
           <div class="forms-doc">
             <h4>Caractéristiques</h4>
             <ul class="feature-list">
