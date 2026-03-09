@@ -10,7 +10,7 @@ import {
   InjectionToken
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import type { FormCheckboxControl } from '@angular/forms/signals';
+import type { FormCheckboxControl } from '../../types/forms-signals.types';
 import { SwitchSize, SwitchConfig } from './switch.types';
 
 export const SWITCH_CONFIG = new InjectionToken<Partial<SwitchConfig>>('SWITCH_CONFIG', {

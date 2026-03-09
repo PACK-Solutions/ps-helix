@@ -11,7 +11,7 @@ import {
   viewChild
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import type { FormCheckboxControl } from '@angular/forms/signals';
+import type { FormCheckboxControl } from '../../types/forms-signals.types';
 import { CheckboxSize, CheckboxConfig, CheckboxLabelPosition } from './checkbox.types';
 
 export const CHECKBOX_CONFIG = new InjectionToken<Partial<CheckboxConfig>>('CHECKBOX_CONFIG', {

@@ -1,6 +1,5 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { JsonPipe } from '@angular/common';
-import { form, FormField, required, email } from '@angular/forms/signals';
 import { TranslateModule } from '@ngx-translate/core';
 import { PshInputComponent } from '@lib/components/input/input.component';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
@@ -8,7 +7,7 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
 
 @Component({
   selector: 'ds-inputs-demo',
-  imports: [TranslateModule, PshInputComponent, DemoPageLayoutComponent, CodeSnippetComponent, JsonPipe, FormField],
+  imports: [TranslateModule, PshInputComponent, DemoPageLayoutComponent, CodeSnippetComponent, JsonPipe],
   templateUrl: './inputs-demo.component.html',
   styleUrls: ['./inputs-demo.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -18,13 +17,6 @@ export class InputsDemoComponent {
   phoneValue = '';
   searchValue = '';
   passwordValue = '';
-
-  loginModel = signal({ email: '', password: '' });
-  loginForm = form(this.loginModel, (p) => {
-    required(p.email, { message: 'Email requis' });
-    email(p.email, { message: 'Format email invalide' });
-    required(p.password, { message: 'Mot de passe requis' });
-  });
 
   cities = [
     'Paris', 'Lyon', 'Marseille', 'Toulouse', 'Nice',

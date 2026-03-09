@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
-import type { FormValueControl } from '@angular/forms/signals';
+import type { FormValueControl } from '../../types/forms-signals.types';
 import { SelectOption, SelectOptionGroup, SelectSize, SearchConfig } from './select.types';
 
 @Component({
