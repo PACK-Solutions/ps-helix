@@ -7,7 +7,7 @@ Reference documentation for the Helix Design System Angular component library. T
 ## Overview
 
 - **Library**: `ps-helix`
-- **Version**: 4.0.6
+- **Version**: 4.0.7
 - **Framework**: Angular 21+
 - **Prefix**: `psh-` (all components)
 - **Import**: `import { ComponentName } from 'ps-helix';`
