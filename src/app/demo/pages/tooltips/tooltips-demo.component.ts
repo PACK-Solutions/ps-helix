@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { PshTooltipComponent } from '@lib/components/tooltip/tooltip.component';
 import { PshButtonComponent } from '@lib/components/button/button.component';
@@ -15,7 +15,8 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
     CodeSnippetComponent
   ],
   templateUrl: './tooltips-demo.component.html',
-  styleUrls: ['./tooltips-demo.component.css']
+  styleUrls: ['./tooltips-demo.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TooltipsDemoComponent {
   demoDelays = {

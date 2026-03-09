@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { JsonPipe } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { form, FormField } from '@angular/forms/signals';
@@ -20,7 +20,8 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
     FormField
   ],
   templateUrl: './checkboxes-demo.component.html',
-  styleUrls: ['./checkboxes-demo.component.css']
+  styleUrls: ['./checkboxes-demo.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CheckboxesDemoComponent {
   standardChecked = false;

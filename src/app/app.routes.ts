@@ -1,16 +1,14 @@
 import { Routes } from '@angular/router';
-import { DemoLayoutComponent } from './demo';
-import { HomeComponent } from './home/home.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
+    loadComponent: () => import('./home/home.component').then(m => m.HomeComponent),
     pathMatch: 'full'
   },
   {
     path: 'demo',
-    component: DemoLayoutComponent,
+    loadComponent: () => import('./demo/layout/demo-layout.component').then(m => m.DemoLayoutComponent),
     children: [
       {
         path: 'introduction',

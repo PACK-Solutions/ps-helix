@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { PshButtonComponent } from '@lib/components/button/button.component';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
@@ -8,7 +8,8 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
   selector: 'ds-buttons-demo',
   imports: [TranslateModule, PshButtonComponent, DemoPageLayoutComponent, CodeSnippetComponent],
   templateUrl: './buttons-demo.component.html',
-  styleUrls: ['./buttons-demo.component.css']
+  styleUrls: ['./buttons-demo.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonsDemoComponent {
   isFormInvalid = false;

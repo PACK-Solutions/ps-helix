@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { PshDropdownComponent } from '@lib/components/dropdown/dropdown.component';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
 import { CodeSnippetComponent } from '../../shared/code-snippet.component';
@@ -8,6 +8,7 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
   imports: [PshDropdownComponent, DemoPageLayoutComponent, CodeSnippetComponent],
   templateUrl: './dropdowns-demo.component.html',
   styleUrls: ['./dropdowns-demo.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DropdownsDemoComponent {
   basicItems = [

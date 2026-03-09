@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
 import { PshButtonComponent } from '@lib/components';
@@ -7,7 +7,8 @@ import { PshButtonComponent } from '@lib/components';
   selector: 'ds-terminology-demo',
   imports: [TranslateModule, DemoPageLayoutComponent, PshButtonComponent],
   templateUrl: './terminology-demo.component.html',
-  styleUrls: ['./terminology-demo.component.css']
+  styleUrls: ['./terminology-demo.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TerminologyDemoComponent {
   // Données pour les concepts du langage ubiquitaire

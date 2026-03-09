@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { PshSpinLoaderComponent } from '@lib/components/spinloader/spinloader.component';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
@@ -8,7 +8,8 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
   selector: 'ds-spinloader-demo',
   imports: [TranslateModule, PshSpinLoaderComponent, DemoPageLayoutComponent, CodeSnippetComponent],
   templateUrl: './spinloader-demo.component.html',
-  styleUrls: ['./spinloader-demo.component.css']
+  styleUrls: ['./spinloader-demo.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SpinLoaderDemoComponent {
   dynamicMessage = signal('Chargement des données...');

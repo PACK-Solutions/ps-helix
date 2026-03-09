@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { PshTabsComponent, PshTabComponent, Tab, TabChangeEvent } from '@lib/components';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
 import { CodeSnippetComponent } from '../../shared/code-snippet.component';
@@ -7,7 +7,8 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
   selector: 'ds-tabs-demo',
   imports: [PshTabsComponent, PshTabComponent, DemoPageLayoutComponent, CodeSnippetComponent],
   templateUrl: './tabs-demo.component.html',
-  styleUrls: ['./tabs-demo.component.css']
+  styleUrls: ['./tabs-demo.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabsDemoComponent {
   activeIndex = signal(0);

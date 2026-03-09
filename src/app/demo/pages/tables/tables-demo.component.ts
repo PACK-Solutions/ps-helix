@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { PshTableComponent } from '@lib/components/table/table.component';
 import { TableColumn, TableRow } from '@lib/components/table/table.types';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
@@ -7,7 +7,8 @@ import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component
   selector: 'ds-tables-demo',
   imports: [PshTableComponent, DemoPageLayoutComponent],
   templateUrl: './tables-demo.component.html',
-  styleUrls: ['./tables-demo.component.css']
+  styleUrls: ['./tables-demo.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TablesDemoComponent {
   basicColumns: TableColumn[] = [

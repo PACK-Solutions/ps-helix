@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { JsonPipe } from '@angular/common';
 import { form, FormField, required, email } from '@angular/forms/signals';
 import { TranslateModule } from '@ngx-translate/core';
@@ -11,6 +11,7 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
   imports: [TranslateModule, PshInputComponent, DemoPageLayoutComponent, CodeSnippetComponent, JsonPipe, FormField],
   templateUrl: './inputs-demo.component.html',
   styleUrls: ['./inputs-demo.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputsDemoComponent {
   emailValue = '';

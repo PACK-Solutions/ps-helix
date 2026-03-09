@@ -1,5 +1,5 @@
 import { Component, computed, signal, viewChild, ChangeDetectionStrategy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { DatePipe, UpperCasePipe } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { PshPaginationComponent, PAGINATION_CONFIG } from '@lib/components/pagination/pagination.component';
 import { PshSpinLoaderComponent } from '@lib/components/spinloader/spinloader.component';
@@ -26,7 +26,8 @@ interface NavigationError {
 @Component({
   selector: 'ds-pagination-demo',
   imports: [
-    CommonModule,
+    DatePipe,
+    UpperCasePipe,
     TranslateModule,
     PshPaginationComponent,
     PshSpinLoaderComponent,

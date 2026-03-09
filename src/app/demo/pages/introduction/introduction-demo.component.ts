@@ -1,13 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { NgOptimizedImage } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
 import { CodeSnippetComponent } from '../../shared/code-snippet.component';
 
 @Component({
   selector: 'ds-introduction-demo',
-  imports: [TranslateModule, DemoPageLayoutComponent, CodeSnippetComponent],
+  imports: [TranslateModule, DemoPageLayoutComponent, CodeSnippetComponent, NgOptimizedImage],
   templateUrl: './introduction-demo.component.html',
   styleUrls: ['./introduction-demo.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IntroductionDemoComponent {
   npmUrl = 'https://www.npmjs.com/package/ps-helix';

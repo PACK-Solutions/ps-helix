@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import {
   PshSidebarComponent,
   PshButtonComponent,
@@ -16,7 +15,6 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
 @Component({
   selector: 'ds-sidebar-demo',
   imports: [
-    CommonModule,
     PshSidebarComponent,
     PshButtonComponent,
     PshMenuComponent,
@@ -27,7 +25,8 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
     CodeSnippetComponent
   ],
   templateUrl: './sidebar-demo.component.html',
-  styleUrls: ['./sidebar-demo.component.css']
+  styleUrls: ['./sidebar-demo.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarDemoComponent {
   isFixedOpen = true;

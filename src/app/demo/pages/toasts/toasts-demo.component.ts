@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { PshButtonComponent } from '@lib/components';
 import { PshToastService } from '@lib/components/toast/toast.service';
@@ -11,6 +11,7 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
   imports: [TranslateModule, PshButtonComponent, DemoPageLayoutComponent, CodeSnippetComponent],
   templateUrl: './toasts-demo.component.html',
   styleUrls: ['./toasts-demo.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToastsDemoComponent {
   private toastService = inject(PshToastService);

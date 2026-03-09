@@ -1,4 +1,4 @@
-import { Component, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { PshMenuComponent } from '@lib/components/menu/menu.component';
 import { PshButtonComponent } from '@lib/components/button/button.component';
@@ -17,6 +17,7 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
   ],
   templateUrl: './menu-demo.component.html',
   styleUrls: ['./menu-demo.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuDemoComponent {
   controlledCollapsed = signal(false);

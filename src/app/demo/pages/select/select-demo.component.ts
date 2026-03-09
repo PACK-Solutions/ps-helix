@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { JsonPipe } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { PshSelectComponent } from '@lib/components/select/select.component';
@@ -11,7 +11,8 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
   selector: 'ds-select-demo',
   imports: [TranslateModule, JsonPipe, PshSelectComponent, PshButtonComponent, DemoPageLayoutComponent, CodeSnippetComponent],
   templateUrl: './select-demo.component.html',
-  styleUrls: ['./select-demo.component.css']
+  styleUrls: ['./select-demo.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectDemoComponent {
   signalCountry: string | null = null;
