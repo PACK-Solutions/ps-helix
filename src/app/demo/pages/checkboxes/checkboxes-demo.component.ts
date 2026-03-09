@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { JsonPipe } from '@angular/common';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { form, FormField } from '@angular/forms/signals';
 import { TranslateModule } from '@ngx-translate/core';
 import { PshCheckboxComponent } from '@lib/components/checkbox/checkbox.component';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
@@ -6,9 +9,19 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
 
 @Component({
   selector: 'ds-checkboxes-demo',
-  imports: [TranslateModule, PshCheckboxComponent, DemoPageLayoutComponent, CodeSnippetComponent],
+  standalone: true,
+  imports: [
+    TranslateModule, 
+    PshCheckboxComponent, 
+    DemoPageLayoutComponent, 
+    CodeSnippetComponent, 
+    ReactiveFormsModule, 
+    JsonPipe, 
+    FormField
+  ],
   templateUrl: './checkboxes-demo.component.html',
-  styleUrls: ['./checkboxes-demo.component.css']
+  styleUrls: ['./checkboxes-demo.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CheckboxesDemoComponent {
   standardChecked = false;
@@ -22,18 +35,32 @@ export class CheckboxesDemoComponent {
   mediumChecked = true;
   largeChecked = false;
 
+  // Signal Forms - Typage explicite requis pour le build
+  settingsModel = signal<{ terms: boolean; newsletter: boolean }>({ 
+    terms: false, 
+    newsletter: true 
+  });
+  
+  settingsForm = form(this.settingsModel);
+
+  termsControl = new FormControl(false);
+
+  toggleTerms(): void {
+    this.termsControl.setValue(!this.termsControl.value);
+  }
+
   labelRightCode = `<psh-checkbox
   [(checked)]="isChecked"
   labelPosition="right"
 >
-  Accepter les conditions
+  Label à droite
 </psh-checkbox>`;
 
   labelLeftCode = `<psh-checkbox
   [(checked)]="isChecked"
   labelPosition="left"
 >
-  Accepter les conditions
+  Label à gauche
 </psh-checkbox>`;
 
   noLabelCode = `<psh-checkbox
@@ -49,15 +76,15 @@ export class CheckboxesDemoComponent {
 </psh-checkbox>`;
 
   errorCode = `<psh-checkbox
-  [error]="'Ce champ est requis'"
+  [error]="'Champ requis'"
   [(checked)]="isChecked"
 >
-  Accepter les conditions
+  Option avec erreur
 </psh-checkbox>`;
 
   successCode = `<psh-checkbox
-  [success]="'Validation réussie'"
-  [(checked)]="isChecked"
+  [checked]="true"
+  [success]="'Sélection valide'"
 >
   Option validée
 </psh-checkbox>`;
@@ -67,4 +94,38 @@ export class CheckboxesDemoComponent {
 >
   Sélection partielle
 </psh-checkbox>`;
+
+  reactiveFormsCode = `import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { PshCheckboxComponent } from 'ps-helix';
+
+@Component({
+  imports: [PshCheckboxComponent, ReactiveFormsModule],
+  template: \`
+    <psh-checkbox
+      [formControl]="termsControl"
+      label="J'accepte les conditions"
+    />
+  \`
+})
+export class MyComponent {
+  termsControl = new FormControl(false);
+}`;
+
+  signalFormsCode = `import { signal } from '@angular/core';
+import { form, FormField } from '@angular/forms/signals';
+import { PshCheckboxComponent } from 'ps-helix';
+
+@Component({
+  imports: [PshCheckboxComponent, FormField],
+  template: \`
+    <psh-checkbox
+      [formField]="settingsForm.terms"
+      label="J'accepte les conditions"
+    />
+  \`
+})
+export class MyComponent {
+  settingsModel = signal({ terms: false });
+  settingsForm = form(this.settingsModel);
+}`;
 }

@@ -1,22 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { NgOptimizedImage } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
 import { CodeSnippetComponent } from '../../shared/code-snippet.component';
 
 @Component({
   selector: 'ds-introduction-demo',
-  imports: [TranslateModule, DemoPageLayoutComponent, CodeSnippetComponent],
+  imports: [TranslateModule, DemoPageLayoutComponent, CodeSnippetComponent, NgOptimizedImage],
   templateUrl: './introduction-demo.component.html',
   styleUrls: ['./introduction-demo.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IntroductionDemoComponent {
   npmUrl = 'https://www.npmjs.com/package/ps-helix';
-  npmVersion = '2.0.8';
+  npmVersion = '4.0.6';
   keyFeatures = [
     {
       icon: 'lightning',
       title: 'Performance Optimale',
-      description: 'Composants légers et réactifs basés sur les signals Angular 20, optimisés pour maximiser l\'efficacité et la productivité.'
+      description: 'Composants légers et réactifs basés sur les signals Angular 21, optimisés pour maximiser l\'efficacité et la productivité.'
     },
     {
       icon: 'heart',
@@ -39,14 +41,10 @@ export class IntroductionDemoComponent {
     {
       number: 1,
       title: 'Installer le Package',
-      description: 'Installez ps-helix via pnpm (recommande) ou npm dans votre projet Angular.',
+      description: 'Installez ps-helix via npm dans votre projet Angular.',
       codeLabel: 'Terminal',
-      codeSnippet: `# Avec pnpm (recommande)
-pnpm add ps-helix
-
-# Avec npm
-npm install ps-helix`,
-      note: 'Assurez-vous d\'utiliser Angular 20 ou superieur. pnpm offre des performances optimales.'
+      codeSnippet: `npm install ps-helix`,
+      note: 'Assurez-vous d\'utiliser Angular 21 ou superieur.'
     },
     {
       number: 2,
@@ -156,10 +154,10 @@ export class AppComponent implements OnInit {
       title: 'Toast Notifications',
       description: 'Service de notifications toast avec plusieurs niveaux',
       code: `import { inject } from '@angular/core';
-import { ToastService } from 'ps-helix';
+import { PshToastService } from 'ps-helix';
 
 export class MyComponent {
-  private toastService = inject(ToastService);
+  private toastService = inject(PshToastService);
 
   showSuccess() {
     this.toastService.success('Opération réussie !');
@@ -223,11 +221,11 @@ export class MyComponent {
 }`
     },
     {
-      name: 'ToastService',
+      name: 'PshToastService',
       icon: 'bell',
       description: 'Service de notifications toast pour afficher des messages temporaires avec différents niveaux de sévérité.',
       features: [
-        'Méthodes success(), error(), warning(), info()',
+        'Méthodes success(), error(), warning(), info(), danger()',
         'Durée d\'affichage configurable',
         'Position configurable',
         'Icônes automatiques selon le type',
@@ -236,10 +234,10 @@ export class MyComponent {
       ],
       codeLabel: 'Utilisation du service',
       codeExample: `import { inject } from '@angular/core';
-import { ToastService } from 'ps-helix';
+import { PshToastService } from 'ps-helix';
 
 export class MyComponent {
-  private toastService = inject(ToastService);
+  private toastService = inject(PshToastService);
 
   showNotifications() {
     this.toastService.success('Enregistré avec succès');

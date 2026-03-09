@@ -6,8 +6,17 @@
 .input-sizes-section,
 .input-states-section,
 .input-icons-section,
-.input-autocomplete-section {
+.input-autocomplete-section,
+.input-signal-forms-section {
   margin-bottom: var(--spacing-3xl);
+}
+
+.signal-form-errors {
+  color: var(--color-error, #dc3545);
+  font-size: var(--font-size-sm, 0.875rem);
+  margin: var(--spacing-xs, 0.25rem) 0 0 0;
+  padding-left: var(--spacing-md, 1rem);
+  list-style-position: inside;
 }
 
 /* Section Title */

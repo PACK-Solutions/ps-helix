@@ -70,6 +70,7 @@ import { PshButtonComponent } from 'ps-helix';
 | Nom | Type | Description |
 |-----|------|-------------|
 | clicked | EventEmitter<MouseEvent> | Émis lors du clic |
+| disabledClick | EventEmitter<MouseEvent> | Émis lors du clic sur un bouton désactivé (hors chargement) |
 
 ### Types
 
@@ -233,6 +234,22 @@ Empêche toute interaction avec le bouton.
 ```html
 <psh-button [disabled]="true" variant="primary">Désactivé</psh-button>
 <psh-button [disabled]="isFormInvalid" variant="primary">Enregistrer</psh-button>
+```
+
+**Réagir au clic sur un bouton désactivé** :
+```html
+<psh-button
+  [disabled]="!form.valid"
+  variant="primary"
+  (disabledClick)="onDisabledAttempt()"
+>
+  Enregistrer
+</psh-button>
+```
+```typescript
+onDisabledAttempt() {
+  this.toastService.warning('Veuillez remplir tous les champs obligatoires.');
+}
 ```
 
 ### Loading (Chargement)
@@ -575,6 +592,7 @@ import { PshButtonComponent } from 'ps-helix';
       ariaLabel="Continuer vers la prochaine étape"
       loadingText="Chargement en cours..."
       (clicked)="handleClick($event)"
+      (disabledClick)="handleDisabledClick()"
     >
       Continuer
     </psh-button>
@@ -590,6 +608,11 @@ export class ExampleComponent {
     setTimeout(() => {
       this.isLoading = false;
     }, 2000);
+  }
+
+  handleDisabledClick() {
+    // Informer l'utilisateur pourquoi l'action est indisponible
+    console.log('Action indisponible');
   }
 }
 ```

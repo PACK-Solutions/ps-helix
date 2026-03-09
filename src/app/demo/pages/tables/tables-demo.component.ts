@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { PshTableComponent } from '@lib/components/table/table.component';
 import { TableColumn, TableRow } from '@lib/components/table/table.types';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
@@ -7,7 +7,8 @@ import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component
   selector: 'ds-tables-demo',
   imports: [PshTableComponent, DemoPageLayoutComponent],
   templateUrl: './tables-demo.component.html',
-  styleUrls: ['./tables-demo.component.css']
+  styleUrls: ['./tables-demo.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TablesDemoComponent {
   basicColumns: TableColumn[] = [
@@ -50,5 +51,44 @@ export class TablesDemoComponent {
     { id: 6, name: 'Diana Prince', email: 'diana@example.com', role: 'Admin', status: 'Actif' },
     { id: 7, name: 'Ethan Hunt', email: 'ethan@example.com', role: 'Utilisateur', status: 'Actif' },
     { id: 8, name: 'Fiona Gallagher', email: 'fiona@example.com', role: 'Éditeur', status: 'Inactif' }
+  ];
+
+  layoutColumns: TableColumn[] = [
+    { key: 'id', label: 'ID', width: '8%' },
+    { key: 'project', label: 'Projet', width: '18%' },
+    { key: 'description', label: 'Description', width: '40%' },
+    { key: 'manager', label: 'Responsable', width: '17%' },
+    { key: 'status', label: 'Statut', width: '17%' }
+  ];
+
+  layoutData: TableRow[] = [
+    {
+      id: 1,
+      project: 'Migration Infrastructure Cloud',
+      description: 'Migration complète de l\'infrastructure on-premise vers AWS incluant la refonte des pipelines CI/CD, la mise en place de Kubernetes et la configuration des services managés.',
+      manager: 'Marie-Claire Dupont-Martin',
+      status: 'En cours de développement'
+    },
+    {
+      id: 2,
+      project: 'Refonte Application Mobile',
+      description: 'Développement d\'une nouvelle version de l\'application mobile avec support iOS et Android, intégration des notifications push et synchronisation temps réel des données utilisateur.',
+      manager: 'Jean-Philippe Beaumont',
+      status: 'Phase de validation'
+    },
+    {
+      id: 3,
+      project: 'Système Analytics',
+      description: 'Mise en place d\'un système complet d\'analyse des données comportementales avec tableaux de bord personnalisés, exports automatisés et alertes configurables selon les seuils définis.',
+      manager: 'Sophie Lefebvre-Moreau',
+      status: 'En attente de ressources'
+    },
+    {
+      id: 4,
+      project: 'API Gateway v2',
+      description: 'Évolution de la passerelle API avec gestion avancée du rate limiting, authentification OAuth 2.0 et OpenID Connect, monitoring en temps réel et documentation Swagger automatique.',
+      manager: 'Thomas Petit',
+      status: 'Déployé en production'
+    }
   ];
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { PshBadgeComponent } from '@lib/components/badge/badge.component';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
@@ -8,7 +8,8 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
   selector: 'ds-badges-demo',
   imports: [TranslateModule, PshBadgeComponent, DemoPageLayoutComponent, CodeSnippetComponent],
   templateUrl: './badges-demo.component.html',
-  styleUrls: ['./badges-demo.component.css']
+  styleUrls: ['./badges-demo.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BadgesDemoComponent {
   priceFormatter = (value: number) => `${value.toFixed(2)}€`;

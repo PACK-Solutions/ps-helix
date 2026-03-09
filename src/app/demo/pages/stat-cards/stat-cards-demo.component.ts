@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   PshStatCardComponent,
@@ -10,14 +9,14 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
 @Component({
   selector: 'ds-stat-cards-demo',
   imports: [
-    CommonModule,
     TranslateModule,
     PshStatCardComponent,
     DemoPageLayoutComponent,
     CodeSnippetComponent,
   ],
   templateUrl: './stat-cards-demo.component.html',
-  styleUrl: './stat-cards-demo.component.css'
+  styleUrl: './stat-cards-demo.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StatCardsDemoComponent {
   title = 'Cartes de Statistiques';

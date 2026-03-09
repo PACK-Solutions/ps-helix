@@ -58,6 +58,9 @@
                     <psh-button appearance="filled" variant="success" (clicked)="completeProcess()">
                       Terminer
                     </psh-button>
+                    <psh-button appearance="outline" variant="secondary" (clicked)="resetBasicStepper()">
+                      Recommencer
+                    </psh-button>
                   </div>
                 </div>
               </psh-step>
@@ -300,6 +303,190 @@
       </div>
     </section>
 
+    <!-- Barre de Progression Visuelle - Section Pleine Largeur -->
+    <section class="stepper-progress-section">
+      <h3 class="section-title">Barre de Progression Visuelle</h3>
+      <div class="progress-container">
+        <div class="progress-intro">
+          <p>Le stepper expose des propriétés calculées (<code>progress()</code>, <code>completedSteps()</code>) permettant d'afficher une barre de progression visuelle en temps réel.</p>
+        </div>
+        <div class="progress-content">
+          <div class="progress-demo">
+            <div class="progress-bar-container">
+              <div class="progress-stats">
+                <span class="progress-percentage">{{ getProgressPercentage() }}%</span>
+                <span class="progress-steps">{{ getCompletedStepsCount() }}/{{ getTotalStepsCount() }} étapes</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-bar-fill" [style.width.%]="getProgressPercentage()"></div>
+              </div>
+            </div>
+            <psh-stepper
+              #progressBarStepper
+              [(activeStep)]="progressBarActiveStep"
+              [linear]="false"
+              (stepChange)="handleProgressBarStepChange($event)"
+            >
+              <psh-step title="Début" icon="flag" [completed]="progressBarStep1Completed()">
+                <div class="step-content-demo">
+                  <h4>Première Étape</h4>
+                  <p>Marquez cette étape comme complétée pour voir la progression augmenter.</p>
+                  <div class="step-actions">
+                    <psh-button
+                      appearance="filled"
+                      [variant]="progressBarStep1Completed() ? 'secondary' : 'success'"
+                      (clicked)="toggleProgressStep1()"
+                    >
+                      {{ progressBarStep1Completed() ? 'Marquer incomplète' : 'Marquer complétée' }}
+                    </psh-button>
+                    <psh-button appearance="filled" variant="primary" (clicked)="progressBarNextStep()">
+                      Suivant
+                    </psh-button>
+                  </div>
+                </div>
+              </psh-step>
+              <psh-step title="Milieu" icon="dots-three" [completed]="progressBarStep2Completed()">
+                <div class="step-content-demo">
+                  <h4>Deuxième Étape</h4>
+                  <p>La barre de progression se met à jour automatiquement grâce aux propriétés calculées.</p>
+                  <div class="step-actions">
+                    <psh-button appearance="text" variant="primary" (clicked)="progressBarPreviousStep()">
+                      Retour
+                    </psh-button>
+                    <psh-button
+                      appearance="filled"
+                      [variant]="progressBarStep2Completed() ? 'secondary' : 'success'"
+                      (clicked)="toggleProgressStep2()"
+                    >
+                      {{ progressBarStep2Completed() ? 'Marquer incomplète' : 'Marquer complétée' }}
+                    </psh-button>
+                    <psh-button appearance="filled" variant="primary" (clicked)="progressBarNextStep()">
+                      Suivant
+                    </psh-button>
+                  </div>
+                </div>
+              </psh-step>
+              <psh-step title="Fin" icon="check-circle" [completed]="progressBarStep3Completed()">
+                <div class="step-content-demo">
+                  <h4>Dernière Étape</h4>
+                  <p>Complétez toutes les étapes pour atteindre 100% de progression.</p>
+                  <div class="step-actions">
+                    <psh-button appearance="text" variant="primary" (clicked)="progressBarPreviousStep()">
+                      Retour
+                    </psh-button>
+                    <psh-button
+                      appearance="filled"
+                      [variant]="progressBarStep3Completed() ? 'secondary' : 'success'"
+                      (clicked)="toggleProgressStep3()"
+                    >
+                      {{ progressBarStep3Completed() ? 'Marquer incomplète' : 'Marquer complétée' }}
+                    </psh-button>
+                    <psh-button appearance="outline" variant="secondary" (clicked)="resetProgressBar()">
+                      Recommencer
+                    </psh-button>
+                  </div>
+                </div>
+              </psh-step>
+            </psh-stepper>
+          </div>
+          <div class="progress-doc">
+            <h4>Utilisation des Propriétés Calculées</h4>
+            <ul class="feature-list">
+              <li><strong>progress()</strong> : Pourcentage de progression basé sur l'étape active</li>
+              <li><strong>completedSteps()</strong> : Nombre d'étapes marquées comme complétées</li>
+              <li><strong>isFirstStep()</strong> : Vérifie si on est à la première étape</li>
+              <li><strong>isLastStep()</strong> : Vérifie si on est à la dernière étape</li>
+            </ul>
+            <ds-code-snippet [code]="progressBarCode" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gestion des Erreurs - Section Pleine Largeur -->
+    <section class="stepper-error-section">
+      <h3 class="section-title">Gestion des Erreurs</h3>
+      <div class="error-container">
+        <div class="error-intro">
+          <p>Le stepper émet un événement <code>navigationError</code> lors d'erreurs de navigation, permettant d'afficher des messages explicites à l'utilisateur.</p>
+        </div>
+        <div class="error-content">
+          <div class="error-demo">
+            @if (navigationErrorMessage()) {
+              <div class="error-alert" role="alert">
+                <i class="ph ph-warning-circle"></i>
+                <span>{{ navigationErrorMessage() }}</span>
+                <button class="error-dismiss" (click)="dismissError()" aria-label="Fermer">
+                  <i class="ph ph-x"></i>
+                </button>
+              </div>
+            }
+            <psh-stepper
+              #errorStepper
+              [(activeStep)]="errorActiveStep"
+              [linear]="true"
+              [beforeStepChange]="validateErrorStepChange.bind(this)"
+              (navigationError)="handleNavigationError($event)"
+            >
+              <psh-step
+                title="Validation Requise"
+                icon="shield-check"
+                [completed]="errorStepCompleted()"
+                [error]="!errorStepCompleted() && errorStepTouched() ? 'Cette étape doit être validée' : undefined"
+              >
+                <div class="step-content-demo">
+                  <h4>Étape avec Validation</h4>
+                  <p>Cette étape nécessite une validation explicite. Essayez de passer à l'étape suivante sans valider pour voir le message d'erreur.</p>
+                  <div class="validation-checkbox">
+                    <input
+                      type="checkbox"
+                      id="errorValidation"
+                      [checked]="errorStepCompleted()"
+                      (change)="toggleErrorStepValidation()"
+                    />
+                    <label for="errorValidation">J'accepte les conditions d'utilisation</label>
+                  </div>
+                  <div class="step-actions">
+                    <psh-button
+                      appearance="filled"
+                      variant="primary"
+                      (clicked)="errorStepTouched.set(true); errorNextStep()"
+                    >
+                      Suivant (déclenche erreur si non validé)
+                    </psh-button>
+                  </div>
+                </div>
+              </psh-step>
+              <psh-step title="Succès" icon="check">
+                <div class="step-content-demo">
+                  <h4>Navigation Réussie</h4>
+                  <p>Vous avez correctement validé l'étape précédente et navigué vers cette étape.</p>
+                  <div class="step-actions">
+                    <psh-button appearance="text" variant="primary" (clicked)="errorPreviousStep()">
+                      Retour
+                    </psh-button>
+                    <psh-button appearance="outline" variant="secondary" (clicked)="resetErrorStepper()">
+                      Recommencer
+                    </psh-button>
+                  </div>
+                </div>
+              </psh-step>
+            </psh-stepper>
+          </div>
+          <div class="error-doc">
+            <h4>Événement navigationError</h4>
+            <ul class="feature-list">
+              <li><strong>Index invalide</strong> : Erreur si l'index demandé est hors limites</li>
+              <li><strong>Validation bloquée</strong> : Erreur si <code>beforeStepChange</code> retourne false</li>
+              <li><strong>Étape non accessible</strong> : Erreur si une étape précédente n'est pas complétée (mode linéaire)</li>
+              <li><strong>Erreur de callback</strong> : Capture les exceptions dans <code>beforeStepChange</code></li>
+            </ul>
+            <ds-code-snippet [code]="errorHandlingCode" />
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Documentation API - Section Pleine Largeur -->
     <section class="api-section">
       <h3 class="section-title">Documentation API</h3>
@@ -461,6 +648,11 @@
                 <td><code>OutputEmitterRef&lt;void&gt;</code></td>
                 <td>Émis lorsque la dernière étape est complétée</td>
               </tr>
+              <tr>
+                <td><code>navigationError</code></td>
+                <td><code>OutputEmitterRef&lt;string&gt;</code></td>
+                <td>Émis lors d'une erreur de navigation (validation bloquée, index invalide)</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -492,6 +684,11 @@
                 <td>Navigue vers une étape spécifique par index</td>
               </tr>
               <tr>
+                <td><code>reset()</code></td>
+                <td><code>(): void</code></td>
+                <td>Réinitialise le stepper à l'étape 0</td>
+              </tr>
+              <tr>
                 <td><code>canGoNext()</code></td>
                 <td><code>(): boolean</code></td>
                 <td>Vérifie si la navigation vers l'étape suivante est possible</td>
@@ -500,6 +697,56 @@
                 <td><code>canGoPrevious()</code></td>
                 <td><code>(): boolean</code></td>
                 <td>Vérifie si la navigation vers l'étape précédente est possible</td>
+              </tr>
+              <tr>
+                <td><code>canActivateStep()</code></td>
+                <td><code>(index: number): boolean</code></td>
+                <td>Vérifie si une étape spécifique peut être activée</td>
+              </tr>
+              <tr>
+                <td><code>isStepValid()</code></td>
+                <td><code>(index: number): boolean</code></td>
+                <td>Vérifie si une étape est valide (complétée et sans erreur)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés Calculées (Computed)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>isFirstStep()</code></td>
+                <td><code>boolean</code></td>
+                <td>Retourne true si on est à la première étape</td>
+              </tr>
+              <tr>
+                <td><code>isLastStep()</code></td>
+                <td><code>boolean</code></td>
+                <td>Retourne true si on est à la dernière étape</td>
+              </tr>
+              <tr>
+                <td><code>progress()</code></td>
+                <td><code>number</code></td>
+                <td>Retourne le pourcentage de progression (0-100)</td>
+              </tr>
+              <tr>
+                <td><code>completedSteps()</code></td>
+                <td><code>number</code></td>
+                <td>Retourne le nombre d'étapes complétées</td>
+              </tr>
+              <tr>
+                <td><code>steps()</code></td>
+                <td><code>StepConfig[]</code></td>
+                <td>Retourne la configuration de toutes les étapes</td>
               </tr>
             </tbody>
           </table>

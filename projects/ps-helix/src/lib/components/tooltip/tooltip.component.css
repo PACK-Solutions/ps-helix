@@ -1,3 +1,46 @@
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(calc(-1 * var(--spacing-md)));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(calc(-1 * var(--spacing-sm)));
+  }
+}
+
+@keyframes tooltipFadeInBottom {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(var(--spacing-md));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(var(--spacing-sm));
+  }
+}
+
+@keyframes tooltipFadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) translateX(calc(-1 * var(--spacing-md)));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) translateX(calc(-1 * var(--spacing-sm)));
+  }
+}
+
+@keyframes tooltipFadeInRight {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) translateX(var(--spacing-md));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) translateX(var(--spacing-sm));
+  }
+}
 
 .tooltip {
   position: absolute;
@@ -8,10 +51,8 @@
   white-space: normal;
   word-wrap: break-word;
   z-index: var(--z-index-tooltip);
-  animation: fadeIn var(--animation-duration-normal) var(--animation-easing-default);
 }
 
-/* Variants */
 .tooltip.dark {
   background: var(--surface-800);
   color: var(--surface-0);
@@ -25,32 +66,34 @@
   box-shadow: var(--shadow-sm);
 }
 
-/* Positions */
 .tooltip.top {
   bottom: 100%;
   left: 50%;
   transform: translateX(-50%) translateY(calc(-1 * var(--spacing-sm)));
+  animation: tooltipFadeIn var(--animation-duration-normal) var(--animation-easing-default);
 }
 
 .tooltip.bottom {
   top: 100%;
   left: 50%;
   transform: translateX(-50%) translateY(var(--spacing-sm));
+  animation: tooltipFadeInBottom var(--animation-duration-normal) var(--animation-easing-default);
 }
 
 .tooltip.left {
   right: 100%;
   top: 50%;
   transform: translateY(-50%) translateX(calc(-1 * var(--spacing-sm)));
+  animation: tooltipFadeInLeft var(--animation-duration-normal) var(--animation-easing-default);
 }
 
 .tooltip.right {
   left: 100%;
   top: 50%;
   transform: translateY(-50%) translateX(var(--spacing-sm));
+  animation: tooltipFadeInRight var(--animation-duration-normal) var(--animation-easing-default);
 }
 
-/* Arrows */
 .tooltip-arrow {
   position: absolute;
   width: var(--spacing-sm);
@@ -99,4 +142,3 @@
   border-right: none;
   border-top: none;
 }
-

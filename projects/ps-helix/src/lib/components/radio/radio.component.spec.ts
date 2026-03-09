@@ -636,3 +636,77 @@ describe('PshRadioComponent with custom configuration', () => {
     });
   });
 });
+
+// ── Emission safety tests ────────────────────────────────────────────
+
+@Component({
+  template: `
+    <psh-radio
+      name="test-group"
+      [value]="'radio1'"
+      [checked]="checked"
+      (checkedChange)="onCheckedChange($event)"
+      (disabledChange)="onDisabledChange($event)"
+    >
+      Option
+    </psh-radio>
+  `,
+  imports: [PshRadioComponent]
+})
+class EmissionTestHost {
+  checked = false;
+  onCheckedChange = jest.fn();
+  onDisabledChange = jest.fn();
+}
+
+describe('PshRadioComponent emission safety', () => {
+  let fixture: ComponentFixture<EmissionTestHost>;
+  let host: EmissionTestHost;
+
+  const getRadioInput = () =>
+    fixture.nativeElement.querySelector('input[type="radio"]') as HTMLInputElement;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [EmissionTestHost]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(EmissionTestHost);
+    host = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should NOT emit checkedChange when parent sets [checked] programmatically', () => {
+    host.onCheckedChange.mockClear();
+
+    host.checked = true;
+    fixture.detectChanges();
+
+    expect(host.onCheckedChange).not.toHaveBeenCalled();
+  });
+
+  it('should emit checkedChange exactly once on user click', () => {
+    host.onCheckedChange.mockClear();
+
+    getRadioInput().click();
+    fixture.detectChanges();
+
+    expect(host.onCheckedChange).toHaveBeenCalledTimes(1);
+    expect(host.onCheckedChange).toHaveBeenCalledWith(true);
+  });
+
+  it('should NOT emit checkedChange on initial render', () => {
+    expect(host.onCheckedChange).not.toHaveBeenCalled();
+  });
+
+  it('should NOT emit checkedChange when clicking already checked radio', () => {
+    getRadioInput().click();
+    fixture.detectChanges();
+    host.onCheckedChange.mockClear();
+
+    getRadioInput().click();
+    fixture.detectChanges();
+
+    expect(host.onCheckedChange).not.toHaveBeenCalled();
+  });
+});

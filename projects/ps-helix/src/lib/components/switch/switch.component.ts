@@ -2,20 +2,17 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  ElementRef,
   inject,
   input,
   model,
-  output,
   viewChild,
-  InjectionToken,
-  effect
+  InjectionToken
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import type { FormCheckboxControl } from '@angular/forms/signals';
 import { SwitchSize, SwitchConfig } from './switch.types';
 
-/**
- * Token d'injection pour la configuration globale des switches
- */
 export const SWITCH_CONFIG = new InjectionToken<Partial<SwitchConfig>>('SWITCH_CONFIG', {
   factory: () => ({
     checked: false,
@@ -26,16 +23,8 @@ export const SWITCH_CONFIG = new InjectionToken<Partial<SwitchConfig>>('SWITCH_C
   })
 });
 
-/**
- * Token d'injection pour les styles personnalisés
- */
-export const SWITCH_STYLES = new InjectionToken<Record<string, string>[]>('SWITCH_STYLES', {
-  factory: () => []
-});
-
 @Component({
   selector: 'psh-switch',
-  imports: [],
   templateUrl: './switch.component.html',
   styleUrls: ['./switch.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -51,35 +40,30 @@ export const SWITCH_STYLES = new InjectionToken<Record<string, string>[]>('SWITC
     '[class.switch-success]': '!!success()'
   }
 })
-export class PshSwitchComponent implements ControlValueAccessor {
+export class PshSwitchComponent implements ControlValueAccessor, FormCheckboxControl {
   private config = inject(SWITCH_CONFIG);
-  private styles = inject(SWITCH_STYLES, { optional: true }) ?? [];
   private uniqueId = `switch-${crypto.randomUUID()}`;
 
-  private switchInput = viewChild<any>('switchInput');
+  private switchInput = viewChild<ElementRef<HTMLInputElement>>('switchInput');
 
   private onChange = (value: boolean) => {};
   private onTouched = () => {};
 
-  // Model inputs with defaults from config
-  checked = model(this.config.checked ?? false);
-  disabled = model(this.config.disabled ?? false);
-  required = model(this.config.required ?? false);
-  size = model<SwitchSize>(this.config.size ?? 'medium');
-  labelPosition = model<'left' | 'right'>(this.config.labelPosition ?? 'right');
+  readonly checked = model(this.config.checked ?? false);
+  readonly disabled = model(this.config.disabled ?? false);
+  touched = model(false);
 
-  // Regular inputs
+  required = input(this.config.required ?? false);
+  size = input<SwitchSize>(this.config.size ?? 'medium');
+  labelPosition = input<'left' | 'right'>(this.config.labelPosition ?? 'right');
+
   label = input('');
   error = input('');
   success = input('');
   ariaLabel = input<string>();
-  name = input<string>();
+  name = input<string>('');
   id = input<string>(this.uniqueId);
 
-  // Outputs
-  checkedChange = output<boolean>();
-
-  // Computed values
   computedAriaLabel = computed(() => {
     const customLabel = this.ariaLabel();
     if (customLabel) return customLabel;
@@ -89,16 +73,6 @@ export class PshSwitchComponent implements ControlValueAccessor {
 
     return 'Switch';
   });
-
-  customStyles = computed(() => Object.assign({}, ...this.styles));
-
-  // Computed helpers publics
-  readonly isChecked = computed(() => this.checked());
-  readonly isDisabled = computed(() => this.disabled());
-  readonly hasError = computed(() => !!this.error());
-  readonly hasSuccess = computed(() => !!this.success());
-
-  // IDs uniques pour l'accessibilité
   errorId = computed(() => this.error() ? `${this.id()}-error` : null);
   successId = computed(() => this.success() ? `${this.id()}-success` : null);
   describedBy = computed(() => {
@@ -106,25 +80,15 @@ export class PshSwitchComponent implements ControlValueAccessor {
     return ids.length > 0 ? ids.join(' ') : null;
   });
 
-  constructor() {
-    effect(() => {
-      if (this.checked()) {
-        this.onChange(true);
-      } else {
-        this.onChange(false);
-      }
-    });
-  }
-
   toggle(): void {
     if (!this.disabled()) {
       this.checked.update(v => !v);
+      this.onChange(this.checked());
       this.onTouched();
-      this.checkedChange.emit(this.checked());
+      this.touched.set(true);
     }
   }
 
-  // ControlValueAccessor implementation
   writeValue(value: boolean): void {
     this.checked.set(value ?? false);
   }
@@ -141,18 +105,17 @@ export class PshSwitchComponent implements ControlValueAccessor {
     this.disabled.set(isDisabled);
   }
 
-  // Méthodes publiques pour contrôle programmatique
   focus(): void {
-    const input = this.switchInput();
-    if (input?.nativeElement) {
-      input.nativeElement.focus();
+    const el = this.switchInput();
+    if (el?.nativeElement) {
+      el.nativeElement.focus();
     }
   }
 
   blur(): void {
-    const input = this.switchInput();
-    if (input?.nativeElement) {
-      input.nativeElement.blur();
+    const el = this.switchInput();
+    if (el?.nativeElement) {
+      el.nativeElement.blur();
     }
   }
 }

@@ -78,8 +78,16 @@ export interface TableConfig {
   loading: boolean;
   /** Message quand vide */
   emptyMessage: string;
+  /** Message quand recherche sans resultat */
+  noResultsMessage: string;
   /** Recherche globale */
   globalSearch: boolean;
   /** Placeholder de recherche */
   globalSearchPlaceholder: string;
+  /** Table layout (auto or fixed for percentage widths) */
+  tableLayout: 'auto' | 'fixed';
+  /** Truncate text with ellipsis */
+  truncateText: boolean;
+  /** Full width mode */
+  fullWidth: boolean;
 }

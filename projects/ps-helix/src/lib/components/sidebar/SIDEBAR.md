@@ -1,8 +1,8 @@
 # Sidebar Component Documentation
 
-## Utilisation
+## Usage
 
-1. Importer le composant dans votre module ou composant standalone :
+1. Import the component in your module or standalone component:
 ```typescript
 import { PshSidebarComponent } from 'ps-helix';
 
@@ -13,18 +13,18 @@ import { PshSidebarComponent } from 'ps-helix';
 })
 ```
 
-### Utilisation de Base
+### Basic Usage
 
-```typescript
-// Sidebar fixe
-<psh-sidebar [(open)]="true" [(mode)]="fixed" [(width)]="250px">
+```html
+<!-- Fixed sidebar -->
+<psh-sidebar [(open)]="isOpen" mode="fixed" width="250px">
   <psh-menu [items]="menuItems"></psh-menu>
 </psh-sidebar>
 
-// Sidebar overlay
+<!-- Overlay sidebar -->
 <psh-sidebar
   [(open)]="isOpen"
-  [(mode)]="overlay"
+  mode="overlay"
   (toggle)="handleToggle($event)"
   (opened)="onOpened()"
   (closed)="onClosed()"
@@ -35,68 +35,71 @@ import { PshSidebarComponent } from 'ps-helix';
 
 ## API
 
-### Model Inputs (two-way binding)
-| Nom | Type | Défaut | Description |
-|-----|------|---------|-------------|
-| open | boolean | false | État d'ouverture (two-way binding) |
-| mode | SidebarMode | 'fixed' | Mode d'affichage (two-way binding) |
-| position | SidebarPosition | 'left' | Position (two-way binding) |
-| width | string | '250px' | Largeur de la sidebar (two-way binding) |
-| breakpoint | string | '768px' | Breakpoint mobile (two-way binding) |
+### Model Input (two-way binding)
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| open | boolean | false | Open state (two-way binding) |
 
-### Regular Inputs
-| Nom | Type | Défaut | Description |
-|-----|------|---------|-------------|
-| autoFocus | boolean | true | Focus automatique sur le premier élément focusable à l'ouverture |
-| ariaLabel | string | 'Sidebar navigation' | Label ARIA pour la sidebar |
+### Inputs
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| mode | SidebarMode | 'fixed' | Display mode ('fixed' or 'overlay') |
+| position | SidebarPosition | 'left' | Position ('left' or 'right') |
+| width | string | '250px' | Sidebar width |
+| breakpoint | string | '768px' | Mobile breakpoint |
+| autoFocus | boolean | true | Auto-focus first focusable element on open |
+| ariaLabel | string | 'Sidebar navigation' | ARIA label for the sidebar |
+| closeOnBackdrop | boolean | true | Close sidebar when clicking the backdrop (overlay mode only) |
+| closeOnEscape | boolean | true | Close sidebar when pressing Escape key (overlay mode only) |
 
 ### Outputs
-| Nom | Type | Description |
-|-----|------|-------------|
-| toggle | EventEmitter<boolean> | Émis lors du toggle (état ouvert/fermé) |
-| opened | EventEmitter<void> | Émis après l'ouverture complète de la sidebar |
-| closed | EventEmitter<void> | Émis après la fermeture complète de la sidebar |
-| transitionStart | EventEmitter<boolean> | Émis au début de la transition (true = ouverture, false = fermeture) |
+| Name | Type | Description |
+|------|------|-------------|
+| toggle | EventEmitter<boolean> | Emitted on toggle (open/close state) |
+| opened | EventEmitter<void> | Emitted after sidebar is fully opened |
+| closed | EventEmitter<void> | Emitted after sidebar is fully closed |
+| transitionStart | EventEmitter<boolean> | Emitted at start of transition (true = opening, false = closing) |
 
-## Modes Disponibles
+## Available Modes
 
 ### Fixed
-- Toujours visible
-- Adapté aux layouts fixes
-- Pas de superposition du contenu
-- Mode par défaut
+- Always visible
+- Suited for fixed layouts
+- No content overlay
+- Default mode
 
 ### Overlay
-- Se superpose au contenu
-- Fermeture au clic extérieur
-- Idéal pour mobile et actions temporaires
+- Overlays the content
+- Closes on outside click (configurable via `closeOnBackdrop`)
+- Closes on Escape key (configurable via `closeOnEscape`)
+- Ideal for mobile and temporary actions
 
-## Accessibilité
+## Accessibility
 
-### Attributs ARIA
-- `role="complementary"`: Rôle sémantique automatiquement ajouté
-- `aria-label`: Label personnalisable via l'input `ariaLabel`
-- `aria-hidden`: État de visibilité géré automatiquement
-- `aria-expanded`: État d'expansion géré automatiquement
-- `aria-modal`: Activé automatiquement en mode overlay
-- Support complet du clavier
+### ARIA Attributes
+- `role="complementary"`: Semantic role automatically added
+- `aria-label`: Customizable via `ariaLabel` input
+- `aria-hidden`: Visibility state managed automatically
+- `aria-expanded`: Expansion state managed automatically
+- `aria-modal`: Enabled automatically in overlay mode
+- Full keyboard support
 
 ### Navigation
-- `Escape`: Ferme la sidebar (mode overlay uniquement)
-- `Tab`: Navigation piégée automatiquement dans la sidebar ouverte
-- Focus automatique sur le premier élément focusable (désactivable via `autoFocus`)
-- Restauration du focus sur l'élément précédent à la fermeture
+- `Escape`: Closes the sidebar (overlay mode only, configurable via `closeOnEscape`)
+- `Tab`: Focus trapped automatically within the open sidebar
+- Auto-focus on first focusable element (disableable via `autoFocus`)
+- Focus restored to previous element on close
 
 ## Responsive Design
 
-- Passage automatique en mode overlay sur mobile
-- Largeur adaptative
-- Support des gestures tactiles
-- Breakpoint configurable
+- Automatic switch to overlay mode on mobile
+- Adaptive width
+- Touch gesture support
+- Configurable breakpoint
 
-## Configuration Globale
+## Global Configuration
 
-Vous pouvez fournir une configuration par défaut pour toutes les sidebars de votre application :
+You can provide default configuration for all sidebars in your application:
 
 ```typescript
 import { SIDEBAR_CONFIG } from 'ps-helix';
@@ -111,18 +114,20 @@ import { SIDEBAR_CONFIG } from 'ps-helix';
         width: '250px',
         breakpoint: '768px',
         autoFocus: true,
-        ariaLabel: 'Navigation principale'
+        ariaLabel: 'Main navigation',
+        closeOnBackdrop: true,
+        closeOnEscape: true
       }
     }
   ]
 })
 ```
 
-## Exemples Avancés
+## Advanced Examples
 
-### Événements de transition
+### Transition Events
 
-```typescript
+```html
 <psh-sidebar
   [(open)]="isOpen"
   (transitionStart)="onTransitionStart($event)"
@@ -131,28 +136,29 @@ import { SIDEBAR_CONFIG } from 'ps-helix';
 >
   <psh-menu [items]="menuItems"></psh-menu>
 </psh-sidebar>
+```
 
-// Component
+```typescript
 onTransitionStart(opening: boolean) {
   if (opening) {
-    console.log('La sidebar commence à s\'ouvrir');
+    console.log('Sidebar is starting to open');
   } else {
-    console.log('La sidebar commence à se fermer');
+    console.log('Sidebar is starting to close');
   }
 }
 
 onSidebarOpened() {
-  console.log('La sidebar est complètement ouverte');
+  console.log('Sidebar is fully opened');
 }
 
 onSidebarClosed() {
-  console.log('La sidebar est complètement fermée');
+  console.log('Sidebar is fully closed');
 }
 ```
 
-### Désactiver le focus automatique
+### Disable Auto-Focus
 
-```typescript
+```html
 <psh-sidebar
   [(open)]="isOpen"
   mode="overlay"
@@ -162,32 +168,50 @@ onSidebarClosed() {
 </psh-sidebar>
 ```
 
-### Largeur personnalisée
+### Custom Width
 
-```typescript
+```html
 <psh-sidebar
   [(open)]="isOpen"
   mode="fixed"
-  [(width)]="280px"
+  width="280px"
 >
   <psh-menu [items]="menuItems"></psh-menu>
 </psh-sidebar>
 ```
 
-## Bonnes Pratiques
+### Prevent Backdrop Close
+
+```html
+<psh-sidebar
+  [(open)]="isOpen"
+  mode="overlay"
+  [closeOnBackdrop]="false"
+  [closeOnEscape]="false"
+>
+  <p>This sidebar requires explicit close action</p>
+  <button (click)="isOpen = false">Close</button>
+</psh-sidebar>
+```
+
+## Best Practices
 
 1. **Structure**
-   - Contenu organisé et accessible
-   - Navigation claire
-   - Hiérarchie visuelle
+   - Organized and accessible content
+   - Clear navigation
+   - Visual hierarchy
 
 2. **Performance**
-   - Animations optimisées
-   - Gestion efficace des états
-   - Nettoyage des ressources
+   - Optimized animations
+   - Efficient state management
+   - Resource cleanup
 
 3. **UX**
-   - Transitions fluides
-   - Feedback visuel
-   - Comportement intuitif
-   - Support mobile
+   - Smooth transitions
+   - Visual feedback
+   - Intuitive behavior
+   - Mobile support
+
+4. **SSR Compatibility**
+   - Component is SSR-safe with platform checks
+   - No direct `window` or `document` access during server rendering

@@ -4,7 +4,8 @@
 /* Checkbox component specific containers */
 .checkbox-variants-section,
 .checkbox-states-section,
-.checkbox-sizes-section {
+.checkbox-sizes-section,
+.checkbox-reactive-forms-section {
   margin-bottom: var(--spacing-3xl);
 }
 
@@ -225,5 +226,110 @@
   .states-intro,
   .sizes-intro {
     font-size: var(--font-size-base);
+  }
+}
+
+/* Reactive Forms Section */
+.reactive-forms-container {
+  width: 100%;
+}
+
+.reactive-forms-intro {
+  margin-bottom: var(--spacing-xl);
+  color: var(--text-color-secondary);
+  font-size: var(--font-size-lg);
+  line-height: 1.6;
+}
+
+.reactive-forms-intro code {
+  background: var(--surface-ground);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  font-family: 'Courier New', monospace;
+  font-size: var(--font-size-sm);
+}
+
+.reactive-demo-card {
+  background: var(--surface-card);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xl);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-2xl);
+}
+
+.reactive-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-xl);
+  background: var(--surface-ground);
+  border-radius: var(--border-radius);
+}
+
+.reactive-value {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background: var(--surface-card);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--surface-border);
+}
+
+.value-label {
+  color: var(--text-color-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.value-display {
+  font-weight: var(--font-weight-semibold);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  background: var(--danger-color-lighter);
+  color: var(--danger-color);
+  transition: all 0.2s ease;
+}
+
+.value-display.checked {
+  background: var(--success-color-lighter);
+  color: var(--success-color);
+}
+
+.toggle-btn {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background: var(--primary-color);
+  color: var(--primary-color-text);
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  transition: all 0.2s ease;
+}
+
+.toggle-btn:hover {
+  background: var(--primary-color-dark);
+}
+
+.reactive-info h4 {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-color);
+  margin-bottom: var(--spacing-sm);
+}
+
+.reactive-info p {
+  color: var(--text-color-secondary);
+  margin-bottom: var(--spacing-md);
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .reactive-demo-card {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
   }
 }

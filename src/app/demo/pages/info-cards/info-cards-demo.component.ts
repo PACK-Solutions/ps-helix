@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   PshInfoCardComponent,
   PshButtonComponent,
+  PshBadgeComponent,
 } from '@lib/components';
 import { InfoCardData } from '@lib/components/info-card/info-card.types';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
@@ -12,15 +12,16 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
 @Component({
   selector: 'ds-info-cards-demo',
   imports: [
-    CommonModule,
     TranslateModule,
     PshInfoCardComponent,
     PshButtonComponent,
+    PshBadgeComponent,
     DemoPageLayoutComponent,
     CodeSnippetComponent,
   ],
   templateUrl: './info-cards-demo.component.html',
-  styleUrl: './info-cards-demo.component.css'
+  styleUrl: './info-cards-demo.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InfoCardsDemoComponent {
   title = 'Cartes d\'Information';
@@ -47,7 +48,7 @@ export class InfoCardsDemoComponent {
   ];
 
   systemInfoData: InfoCardData[] = [
-    { label: 'Version', value: 'v2.1.0' },
+    { label: 'Version', value: 'v2.1.1' },
     { label: 'Environnement', value: 'Production' },
     { label: 'Dernière mise à jour', value: '28 Octobre 2025' },
     { label: 'Uptime', value: '99.98%' },
@@ -98,6 +99,44 @@ export class InfoCardsDemoComponent {
   [disabled]="isDisabled"
   (clicked)="handleClick($event)"
 ></psh-info-card>`;
+
+  headerActionsCode = `<psh-info-card
+  title="Profil Utilisateur"
+  [data]="userData"
+  variant="elevated"
+  icon="user-circle"
+>
+  <div card-header-actions>
+    <psh-button appearance="text" size="small">
+      <i class="ph ph-pencil"></i>
+    </psh-button>
+  </div>
+</psh-info-card>`;
+
+  headerActionsWithBadgeCode = `<psh-info-card
+  title="Détails du Projet"
+  [data]="projectData"
+  variant="outlined"
+  icon="folder"
+>
+  <div card-header-actions>
+    <psh-badge variant="success">Actif</psh-badge>
+  </div>
+</psh-info-card>`;
+
+  bothSlotsCode = `<psh-info-card
+  title="Commande"
+  [data]="orderData"
+  variant="elevated"
+  icon="package"
+>
+  <div card-header-actions>
+    <psh-badge variant="warning">En cours</psh-badge>
+  </div>
+  <div card-actions>
+    <psh-button variant="primary">Suivre</psh-button>
+  </div>
+</psh-info-card>`;
 
   handleSimulateLoading(): void {
     this.isLoading = true;

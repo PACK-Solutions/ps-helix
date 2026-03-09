@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { PshRadioComponent } from '@lib/components/radio/radio.component';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
@@ -8,7 +8,8 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
   selector: 'ds-radios-demo',
   imports: [TranslateModule, PshRadioComponent, DemoPageLayoutComponent, CodeSnippetComponent],
   templateUrl: './radios-demo.component.html',
-  styleUrls: ['./radios-demo.component.css']
+  styleUrls: ['./radios-demo.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RadiosDemoComponent {
   labelPositionChecked = false;

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { JsonPipe } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { PshSelectComponent } from '@lib/components/select/select.component';
 import { PshButtonComponent } from '@lib/components/button/button.component';
@@ -8,11 +9,18 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
 
 @Component({
   selector: 'ds-select-demo',
-  imports: [TranslateModule, PshSelectComponent, PshButtonComponent, DemoPageLayoutComponent, CodeSnippetComponent],
+  imports: [TranslateModule, JsonPipe, PshSelectComponent, PshButtonComponent, DemoPageLayoutComponent, CodeSnippetComponent],
   templateUrl: './select-demo.component.html',
-  styleUrls: ['./select-demo.component.css']
+  styleUrls: ['./select-demo.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectDemoComponent {
+  signalCountry: string | null = null;
+
+  get signalFormModel() {
+    return { country: this.signalCountry };
+  }
+
   selectedBasic: string | null = null;
   selectedCountry: string | null = null;
   selectedLanguages: string[] = [];
@@ -107,14 +115,27 @@ export class SelectDemoComponent {
     console.log('Select closed');
   }
 
+  signalFormCode = `import { signal } from '@angular/core';
+
+selectedCountry = signal<string | null>(null);
+
+// Template :
+<psh-select
+  [(value)]="selectedCountry"
+  [options]="countries"
+  [searchable]="true"
+  [clearable]="true"
+  label="Pays"
+  placeholder="Sélectionner un pays"
+/>`;
+
   basicSelectCode = `<psh-select
   [options]="options"
   [(value)]="selected"
   placeholder="Choisir"
   [clearable]="true"
->
-  <span select-hint>Texte d'aide</span>
-</psh-select>`;
+  hint="Texte d'aide"
+/>`;
 
   searchableSelectCode = `<psh-select
   [options]="options"
