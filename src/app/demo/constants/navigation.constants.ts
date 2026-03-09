@@ -165,6 +165,11 @@ export const NAVIGATION_SECTIONS: NavigationSection[] = [
         keywords: ['etapes', 'steps', 'wizard', 'assistant', 'progression', 'workflow', 'process', 'processus', 'sequence', 'guide', 'multi-step', 'form']
       },
       {
+        path: '/demo/state-flow-indicator',
+        label: 'NAVIGATION.STATE_FLOW_INDICATOR',
+        keywords: ['flux', 'flow', 'etat', 'state', 'indicateur', 'indicator', 'progression', 'breadcrumb', 'chevron', 'etapes', 'steps', 'process', 'processus', 'workflow']
+      },
+      {
         path: '/demo/switches',
         label: 'NAVIGATION.SWITCHES',
         keywords: ['interrupteur', 'toggle', 'on/off', 'activer', 'desactiver', 'enable', 'disable', 'boolean', 'switch', 'flip', 'slide', 'binary']

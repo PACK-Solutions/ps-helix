@@ -109,6 +109,10 @@ export const routes: Routes = [
         loadComponent: () => import('./demo/pages/stepper/stepper-demo.component').then(m => m.StepperDemoComponent)
       },
       {
+        path: 'state-flow-indicator',
+        loadComponent: () => import('./demo/pages/state-flow-indicator/state-flow-indicator-demo.component').then(m => m.StateFlowIndicatorDemoComponent)
+      },
+      {
         path: 'badges',
         loadComponent: () => import('./demo/pages/badges/badges-demo.component').then(m => m.BadgesDemoComponent)
       },
