@@ -16,7 +16,6 @@
 .stepper-header {
   display: flex;
   flex-direction: row;
-  margin-bottom: var(--spacing-xl);
 }
 
 .step-header {
