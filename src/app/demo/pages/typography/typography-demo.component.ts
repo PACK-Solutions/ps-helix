@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
 
@@ -6,8 +6,7 @@ import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component
   selector: 'ds-typography-demo',
   imports: [TranslateModule, DemoPageLayoutComponent],
   templateUrl: './typography-demo.component.html',
-  styleUrls: ['./typography-demo.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./typography-demo.component.css']
 })
 export class TypographyDemoComponent {
   

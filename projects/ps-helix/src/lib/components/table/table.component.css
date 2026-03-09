@@ -1,12 +1,3 @@
-:host {
-  display: block;
-}
-
-:host(.full-width) {
-  max-width: none;
-  width: 100%;
-}
-
 .table-wrapper {
   width: 100%;
   overflow-x: auto;
@@ -127,7 +118,35 @@ th.sortable:hover .sort-icon-neutral {
 
 /* Global Search */
 .global-search {
+  position: relative;
   margin-bottom: var(--spacing-md);
+}
+
+.global-search input {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  padding-left: calc(var(--spacing-xl) + var(--spacing-xs));
+  border: var(--border-width-1) solid var(--surface-border);
+  border-radius: var(--border-radius);
+  background: var(--surface-card);
+  color: var(--text-color);
+  font-size: var(--font-size-base);
+  transition: all var(--animation-duration-normal) var(--animation-easing-default);
+}
+
+.global-search input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 var(--focus-outline-width) var(--focus-ring-color);
+}
+
+.global-search i {
+  position: absolute;
+  left: var(--spacing-md);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-color-secondary);
+  font-size: var(--icon-size-md);
 }
 
 /* Sort Button */
@@ -150,24 +169,6 @@ th.sortable:hover .sort-icon-neutral {
   box-shadow: 0 0 0 var(--focus-outline-width) var(--focus-ring-color);
 }
 
-/* Table Layout Fixed */
-.table-wrapper.table-fixed table {
-  table-layout: fixed;
-}
-
-/* Truncate Text */
-.table-wrapper.truncate td {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 0;
-}
-
-.table-wrapper.truncate th {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 /* Responsive Design */
 @media (max-width: 48em) {
   .table-wrapper {
@@ -180,6 +181,12 @@ th.sortable:hover .sort-icon-neutral {
   
   .global-search {
     margin-bottom: var(--spacing-sm);
+  }
+  
+  .global-search input {
+    padding: var(--spacing-xs) var(--spacing-md);
+    padding-left: calc(var(--spacing-lg) + 4px);
+    font-size: var(--font-size-sm);
   }
 }
 
@@ -202,4 +209,9 @@ th.sortable:hover .sort-icon-neutral {
     font-size: var(--font-size-sm);
   }
   
+  .global-search input {
+    padding: var(--spacing-xs);
+    padding-left: var(--spacing-md);
+    font-size: var(--font-size-xs);
+  }
 }

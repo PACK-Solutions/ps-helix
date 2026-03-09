@@ -6,7 +6,6 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  container-type: inline-size;
 }
 
 /* ============================================
@@ -16,6 +15,7 @@
 .stepper-header {
   display: flex;
   flex-direction: row;
+  margin-bottom: var(--spacing-xl);
 }
 
 .step-header {
@@ -222,6 +222,15 @@
 .stepper-content {
   flex: 1;
   min-width: 0;
+}
+
+.step-content {
+  display: none;
+  animation: fadeIn var(--animation-duration-default) var(--animation-easing-smooth);
+}
+
+.step-content.active {
+  display: block;
 }
 
 psh-step {

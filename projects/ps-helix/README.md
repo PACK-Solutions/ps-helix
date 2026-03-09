@@ -1,11 +1,11 @@
 # Helix Design System
 
-A comprehensive Angular component library built with Angular 21+ featuring modern design patterns, accessibility-first development, and optimal developer experience.
+A comprehensive Angular component library built with Angular 20+ featuring modern design patterns, accessibility-first development, and optimal developer experience.
 
-[![npm version](https://img.shields.io/badge/npm-4.0.6-blue.svg)](https://www.npmjs.com/package/ps-helix)
+[![npm version](https://img.shields.io/badge/npm-2.0.8-blue.svg)](https://www.npmjs.com/package/ps-helix)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Angular](https://img.shields.io/badge/Angular-21.0.3-red.svg)](https://angular.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.9.0-blue.svg)](https://www.typescriptlang.org/)
+[![Angular](https://img.shields.io/badge/Angular-20.0.0-red.svg)](https://angular.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8.0-blue.svg)](https://www.typescriptlang.org/)
 
 ## Table of Contents
 
@@ -45,7 +45,7 @@ A comprehensive Angular component library built with Angular 21+ featuring moder
 Helix is a production-ready design system that provides:
 
 - **28 Standalone Components** - All components are standalone, no NgModules required
-- **Signal-Based Reactivity** - Built with Angular 21 signals for optimal performance
+- **Signal-Based Reactivity** - Built with Angular 20 signals for optimal performance
 - **Accessibility First** - WCAG 2.1 AA compliant out of the box
 - **TypeScript Strict Mode** - Full type safety and IntelliSense support
 - **Complete Type Exports** - All component types and enums exported for type-safe development
@@ -53,7 +53,7 @@ Helix is a production-ready design system that provides:
 - **Phosphor Icons** - 6000+ icons with multiple weight variants
 - **i18n Support** - Built-in internationalization with ngx-translate
 - **Responsive Design** - Mobile-first approach with comprehensive breakpoint system
-- **Modern Architecture** - Built with Angular 21 standalone components and signals
+- **Modern Architecture** - Built with Angular 20 standalone components and signals
 
 ## Prerequisites
 
@@ -61,17 +61,17 @@ Before installing Helix, ensure your development environment meets these require
 
 - **Node.js**: 18.x or higher
 - **npm**: 9.x or higher
-- **Angular**: 21.0.3 or higher
-- **Angular CLI**: 21.0.3 or higher
-- **TypeScript**: 5.9.0 or higher
+- **Angular**: 20.0.0 or higher
+- **Angular CLI**: 20.0.0 or higher
+- **TypeScript**: 5.8.0 or higher
 
 ### Required Peer Dependencies
 
 ```json
 {
-  "@angular/common": "^21.0.3",
-  "@angular/core": "^21.0.3",
-  "@angular/forms": "^21.0.3",
+  "@angular/common": "^20.0.0",
+  "@angular/core": "^20.0.0",
+  "@angular/forms": "^20.0.0",
   "@ngx-translate/core": "^15.0.0",
   "rxjs": "^7.8.0"
 }
@@ -87,16 +87,28 @@ The following dependencies are bundled with ps-helix:
 
 ## Installation
 
-Install the package:
+Install the package via your preferred package manager:
 
+**Avec pnpm (recommandé) :**
+```bash
+pnpm add ps-helix
+```
+
+**Avec npm :**
 ```bash
 npm install ps-helix
 ```
 
 All peer dependencies should be automatically installed. If not, install them manually:
 
+**Avec pnpm :**
 ```bash
-npm install @angular/common@^21.0.3 @angular/core@^21.0.3 @angular/forms@^21.0.3 @ngx-translate/core@^15.0.0 rxjs@^7.8.0
+pnpm add @angular/common@^20.0.0 @angular/core@^20.0.0 @angular/forms@^20.0.0 @ngx-translate/core@^15.0.0 rxjs@^7.8.0
+```
+
+**Avec npm :**
+```bash
+npm install @angular/common@^20.0.0 @angular/core@^20.0.0 @angular/forms@^20.0.0 @ngx-translate/core@^15.0.0 rxjs@^7.8.0
 ```
 
 ### Verify Installation
@@ -106,7 +118,7 @@ After installation, verify that ps-helix is in your `package.json`:
 ```json
 {
   "dependencies": {
-    "ps-helix": "^4.0.6"
+    "ps-helix": "^2.0.8"
   }
 }
 ```
@@ -445,18 +457,6 @@ export class ExampleComponent {
 }
 ```
 
-### Signal Forms Support
-
-Form components natively implement Angular 21 Signal Forms interfaces (`FormValueControl`, `FormCheckboxControl`) while maintaining backward compatibility with Reactive Forms via `ControlValueAccessor`:
-
-| Component | Signal Forms Interface | Reactive Forms |
-|-----------|----------------------|----------------|
-| `psh-input` | `FormValueControl<string>` | `ControlValueAccessor` |
-| `psh-select` | `FormValueControl<T \| T[] \| null>` | `ControlValueAccessor` |
-| `psh-checkbox` | `FormCheckboxControl` | `ControlValueAccessor` |
-| `psh-switch` | `FormCheckboxControl` | `ControlValueAccessor` |
-| `psh-radio` | - | Property binding only |
-
 ### Type Safety
 
 All components export TypeScript types for type-safe development:
@@ -768,29 +768,11 @@ const size: ModalSize = 'small' | 'medium' | 'large' | 'fullscreen';
 ### Select Types
 
 ```typescript
-import { SelectOption, SelectOptionGroup, SelectSize, SearchConfig } from 'ps-helix';
+import { SelectFilterMode, SelectPlacement, SelectSize } from 'ps-helix';
 
-interface SelectOption<T> {
-  label: string;
-  value: T;
-  icon?: string;
-  disabled?: boolean;
-  description?: string;
-}
-
-interface SelectOptionGroup<T> {
-  label: string;
-  options: SelectOption<T>[];
-  disabled?: boolean;
-}
-
-interface SearchConfig {
-  debounceTime: number;
-  placeholder: string;
-  minLength: number;
-}
-
-type SelectSize = 'small' | 'medium' | 'large';
+const filterMode: SelectFilterMode = 'none' | 'startsWith' | 'contains';
+const placement: SelectPlacement = 'bottom' | 'top';
+const size: SelectSize = 'small' | 'medium' | 'large';
 ```
 
 ### Stepper Types
@@ -948,28 +930,8 @@ export class MyComponent {
 
 ### Form Integration
 
-Form components (`psh-input`, `psh-checkbox`, `psh-select`, `psh-switch`) support three integration modes:
-
 ```typescript
-// ✅ Recommended: Signal Forms (Angular 21+)
-import { signal } from '@angular/core';
-import { form, FormField, required, email } from '@angular/forms/signals';
-
-export class MyComponent {
-  model = signal({ email: '', password: '' });
-  loginForm = form(this.model, (p) => {
-    required(p.email, { message: 'Email required' });
-    email(p.email, { message: 'Invalid email format' });
-  });
-}
-```
-
-```html
-<psh-input [formField]="loginForm.email" type="email" label="Email" />
-```
-
-```typescript
-// ✅ Also supported: Reactive Forms (backward compatible)
+// ✅ Good: Reactive forms with FormControl
 import { FormControl, Validators } from '@angular/forms';
 
 export class MyComponent {
@@ -981,12 +943,11 @@ export class MyComponent {
 ```
 
 ```html
-<psh-input label="Email" [formControl]="emailControl" [required]="true" />
-```
-
-```html
-<!-- ✅ Also supported: Two-way binding -->
-<psh-input [(value)]="myValue" label="Email" />
+<psh-input
+  label="Email"
+  [formControl]="emailControl"
+  [required]="true">
+</psh-input>
 ```
 
 ### Performance Optimization
@@ -1085,10 +1046,12 @@ See [THEME.md](./THEME.md) for complete theming documentation.
 **Problem**: TypeScript compilation errors with component imports.
 
 **Solution**:
-1. Verify Angular version is 21.0.3 or higher
+1. Verify Angular version is 20.0.0 or higher
 2. Check `tsconfig.json` has `"strict": true`
 3. Ensure all peer dependencies are installed
-4. Clear node_modules and reinstall: `rm -rf node_modules && npm install`
+4. Clear node_modules and reinstall:
+   - Avec pnpm: `rm -rf node_modules && pnpm install`
+   - Avec npm: `rm -rf node_modules && npm install`
 
 ### Performance Issues
 
@@ -1137,6 +1100,16 @@ Helix Design System supports:
 
 The following scripts are available for library development:
 
+**Avec pnpm (recommandé) :**
+```bash
+pnpm run build:lib    # Build the library
+pnpm run watch:lib    # Watch for changes and rebuild
+pnpm run publish:lib  # Publish to npm registry
+pnpm run build        # Build demo application
+pnpm run dev          # Run demo application in dev mode
+```
+
+**Avec npm :**
 ```bash
 npm run build:lib     # Build the library
 npm run watch:lib     # Watch for changes and rebuild
@@ -1182,7 +1155,7 @@ Copyright (c) 2025 PACK Solutions
 
 ---
 
-**Version**: 4.0.6
-**Built with**: Angular 21.0.3, TypeScript 5.9.0, Phosphor Icons 2.0.3
+**Version**: 2.0.8
+**Built with**: Angular 20.0.0, TypeScript 5.8.0, Phosphor Icons 2.0.3
 **Author**: Fabrice PEREZ | Product Designer at PACK Solutions
-**Last Updated**: January 2026
+**Last Updated**: December 2025

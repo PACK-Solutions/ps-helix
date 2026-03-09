@@ -6,8 +6,7 @@ module.exports = {
   testMatch: ['**/*.spec.ts'],
   moduleNameMapper: {
     '^ps-helix$': '<rootDir>/projects/ps-helix/src/public-api.ts',
-    '^ps-helix/(.*)$': '<rootDir>/projects/ps-helix/src/$1',
-    '^@angular/forms/signals$': '<rootDir>/node_modules/@angular/forms/fesm2022/signals.mjs'
+    '^ps-helix/(.*)$': '<rootDir>/projects/ps-helix/src/$1'
   },
   collectCoverageFrom: [
     'projects/ps-helix/src/**/*.ts',

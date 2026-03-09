@@ -4,16 +4,7 @@
 
 1. Importer le composant dans votre module ou composant standalone :
 ```typescript
-import {
-  PshTableComponent,
-  TableColumn,
-  TableRow,
-  TableSort,
-  TableRowClickEvent,
-  TableCellContext,
-  TableConfig,
-  TABLE_CONFIG
-} from 'ps-helix';
+import { PshTableComponent, TableColumn, TableRow } from 'ps-helix';
 
 @Component({
   // ...
@@ -91,24 +82,25 @@ const data: TableRow[] = [
 
 ## API
 
-### Inputs
+### Model Inputs (@model)
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
-| variant | 'default' \| 'outline' | 'default' | Style de la table |
-| size | 'small' \| 'medium' \| 'large' | 'medium' | Taille de la table |
+| variant | string | 'default' | Style de la table |
+| size | string | 'medium' | Taille de la table |
 | striped | boolean | false | Lignes alternées |
 | hoverable | boolean | false | Effet au survol |
 | bordered | boolean | false | Bordures |
 | loading | boolean | false | État de chargement |
 | globalSearch | boolean | false | Recherche globale |
-| columns | TableColumn[] | [] | Configuration des colonnes |
-| data | TableRow[] | [] | Données à afficher |
+
+### Regular Inputs (@input)
+| Nom | Type | Défaut | Description |
+|-----|------|---------|-------------|
+| columns | TableColumn[] | [...] | Configuration des colonnes |
+| data | TableRow[] | [...] | Données à afficher |
 | emptyMessage | string | 'No data available' | Message quand aucune donnée |
 | noResultsMessage | string | 'No results found' | Message quand recherche sans résultat |
 | globalSearchPlaceholder | string | 'Search in all columns...' | Placeholder de recherche |
-| tableLayout | 'auto' \| 'fixed' | 'auto' | Algorithme de layout de la table |
-| truncateText | boolean | false | Tronque le texte avec ellipsis |
-| fullWidth | boolean | false | Mode pleine largeur |
 
 ### Outputs
 | Nom | Type | Description |
@@ -363,121 +355,6 @@ const columns: TableColumn[] = [
 
 **Note** : Quand `sortFn` est défini, elle a la priorité sur le tri par défaut (même si `path` est aussi défini).
 
-## Layout et Troncature de Texte
-
-### Algorithme de Layout (`tableLayout`)
-
-La propriété `tableLayout` contrôle l'algorithme utilisé pour calculer les largeurs de colonnes :
-
-#### `tableLayout="auto"` (par défaut)
-Le navigateur calcule automatiquement les largeurs en fonction du contenu. Les largeurs définies en pourcentage peuvent ne pas être respectées exactement.
-
-```html
-<psh-table
-  [columns]="columns"
-  [data]="data"
-></psh-table>
-```
-
-#### `tableLayout="fixed"`
-Les largeurs de colonnes sont strictement respectées. Recommandé lorsque vous utilisez des largeurs en pourcentage.
-
-```typescript
-const columns: TableColumn[] = [
-  { key: 'id', label: 'ID', width: '10%' },
-  { key: 'name', label: 'Nom', width: '20%' },
-  { key: 'description', label: 'Description', width: '40%' },
-  { key: 'status', label: 'Statut', width: '15%' },
-  { key: 'date', label: 'Date', width: '15%' }
-];
-```
-
-```html
-<psh-table
-  tableLayout="fixed"
-  [columns]="columns"
-  [data]="data"
-></psh-table>
-```
-
-### Troncature de Texte (`truncateText`)
-
-La propriété `truncateText` permet de tronquer automatiquement le texte qui dépasse la largeur de la cellule, en affichant des points de suspension (ellipsis).
-
-```html
-<psh-table
-  [truncateText]="true"
-  [columns]="columns"
-  [data]="data"
-></psh-table>
-```
-
-Le texte tronqué affiche automatiquement une info-bulle native (`title`) au survol, permettant de visualiser le contenu complet.
-
-### Combinaison Recommandée
-
-Pour un contrôle optimal des largeurs de colonnes avec des textes potentiellement longs, combinez les deux propriétés :
-
-```html
-<psh-table
-  tableLayout="fixed"
-  [truncateText]="true"
-  [columns]="columns"
-  [data]="data"
-></psh-table>
-```
-
-Cette combinaison garantit :
-- Les largeurs de colonnes sont respectées (grâce à `tableLayout="fixed"`)
-- Les textes longs sont tronqués proprement avec ellipsis (grâce à `truncateText`)
-- L'utilisateur peut toujours accéder au contenu complet via l'info-bulle au survol
-
-## Mode Pleine Largeur (`fullWidth`)
-
-La propriété `fullWidth` permet à la table de prendre toute la largeur disponible de son conteneur parent.
-
-### Comportement par défaut
-
-Sans `fullWidth`, la table utilise `display: block` et sa largeur s'adapte au contenu.
-
-```html
-<psh-table
-  [columns]="columns"
-  [data]="data"
-></psh-table>
-```
-
-### Avec `fullWidth` activé
-
-Lorsque `fullWidth="true"`, la table s'étend pour occuper 100% de la largeur disponible.
-
-```html
-<psh-table
-  [fullWidth]="true"
-  [columns]="columns"
-  [data]="data"
-></psh-table>
-```
-
-### Combinaison avec les autres propriétés
-
-`fullWidth` se combine parfaitement avec les autres propriétés de layout :
-
-```html
-<psh-table
-  [fullWidth]="true"
-  tableLayout="fixed"
-  [truncateText]="true"
-  [columns]="columns"
-  [data]="data"
-></psh-table>
-```
-
-Cette combinaison est idéale pour :
-- Tables dans des conteneurs flexibles ou grilles
-- Interfaces responsives
-- Dashboards avec plusieurs panneaux
-
 ## Configuration Globale
 
 ```typescript
@@ -495,10 +372,7 @@ Cette combinaison est idéale pour :
         globalSearch: false,
         emptyMessage: 'No data available',
         noResultsMessage: 'No results found',
-        globalSearchPlaceholder: 'Search in all columns...',
-        tableLayout: 'auto',
-        truncateText: false,
-        fullWidth: false
+        globalSearchPlaceholder: 'Search in all columns...'
       }
     }
   ]

@@ -245,60 +245,16 @@
       </div>
     </section>
 
-    <!-- Signal Forms (Angular 21+) -->
-    <section class="switch-signal-forms-section">
-      <h3 class="section-title">Signal Forms (Angular 21+)</h3>
-      <div class="forms-container">
-        <div class="forms-intro">
-          <p>Le switch implémente <code>FormCheckboxControl</code> pour une intégration native avec les Signal Forms d'Angular 21+. Utilisez la directive <code>[formField]</code> pour lier directement un champ du formulaire.</p>
-        </div>
-        <div class="forms-content">
-          <div class="forms-demo">
-            <h4>Exemple Interactif</h4>
-            <div class="form-group">
-              <psh-switch [formField]="preferencesForm.notifications">
-                Activer les notifications
-              </psh-switch>
-            </div>
-            <div class="form-group">
-              <psh-switch [formField]="preferencesForm.darkMode">
-                Mode sombre
-              </psh-switch>
-            </div>
-            <div class="form-group">
-              <psh-switch [formField]="preferencesForm.analytics">
-                Statistiques d'utilisation
-              </psh-switch>
-            </div>
-            <div class="form-status">
-              <p><strong>Valeurs du modèle :</strong></p>
-              <pre>{{ preferencesModel() | json }}</pre>
-            </div>
-          </div>
-          <div class="forms-doc">
-            <h4>Caractéristiques</h4>
-            <ul class="feature-list">
-              <li><strong>[formField]</strong> : Liaison directe avec un champ Signal Forms</li>
-              <li><strong>FormCheckboxControl</strong> : Interface implémentée nativement par le switch</li>
-              <li><strong>Réactivité</strong> : Synchronisation automatique via les signals Angular</li>
-              <li><strong>Rétrocompatible</strong> : Fonctionne aussi avec Reactive Forms et [(checked)]</li>
-            </ul>
-            <ds-code-snippet [code]="signalFormsCode" />
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- Documentation API - Section Pleine Largeur -->
     <section class="api-section">
       <h3 class="section-title">Documentation API</h3>
       <div class="api-container">
         <div class="api-intro">
-          <p>Le composant Switch utilise des <strong>inputs bidirectionnels</strong> pour une synchronisation de l'état, conforme aux standards Angular 21.</p>
+          <p>Le composant Switch utilise des <strong>model inputs</strong> bidirectionnels pour une synchronisation automatique de l'état, conforme aux standards Angular 20.</p>
         </div>
 
         <div class="api-table-wrapper">
-          <h4>Inputs Bidirectionnels (avec <code>[()]</code>)</h4>
+          <h4>Model Inputs (Bidirectionnels)</h4>
           <table class="api-table">
             <thead>
               <tr>
@@ -321,22 +277,6 @@
                 <td><code>false</code></td>
                 <td>État désactivé du switch</td>
               </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="api-table-wrapper">
-          <h4>Propriétés (Input Signals)</h4>
-          <table class="api-table">
-            <thead>
-              <tr>
-                <th>Propriété</th>
-                <th>Type</th>
-                <th>Défaut</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
               <tr>
                 <td><code>required</code></td>
                 <td><code>boolean</code></td>
@@ -355,6 +295,22 @@
                 <td><code>'right'</code></td>
                 <td>Position du label par rapport au switch</td>
               </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Input Signals)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
               <tr>
                 <td><code>label</code></td>
                 <td><code>string</code></td>
@@ -440,6 +396,41 @@
           </table>
         </div>
 
+        <div class="api-table-wrapper">
+          <h4>Computed Signals (Read-only)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Signal</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>isChecked</code></td>
+                <td><code>Signal&lt;boolean&gt;</code></td>
+                <td>Signal read-only de l'état coché</td>
+              </tr>
+              <tr>
+                <td><code>isDisabled</code></td>
+                <td><code>Signal&lt;boolean&gt;</code></td>
+                <td>Signal read-only de l'état désactivé</td>
+              </tr>
+              <tr>
+                <td><code>hasError</code></td>
+                <td><code>Signal&lt;boolean&gt;</code></td>
+                <td>Indique si le switch a une erreur</td>
+              </tr>
+              <tr>
+                <td><code>hasSuccess</code></td>
+                <td><code>Signal&lt;boolean&gt;</code></td>
+                <td>Indique si le switch a un message de succès</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
         <div class="api-usage-example">
           <h4>Exemple d'Utilisation Complète</h4>
           <div class="code-block">
@@ -451,8 +442,8 @@
   template: `
     &lt;psh-switch
       [(checked)]="isEnabled"
-      [disabled]="isDisabled"
-      [required]="isRequired"
+      [(disabled)]="isDisabled"
+      [(required)]="isRequired"
       size="medium"
       labelPosition="right"
       [error]="errorMessage"

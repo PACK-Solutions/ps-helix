@@ -20,7 +20,7 @@
     "sourceMap": true,
     "declaration": false,
     "experimentalDecorators": true,
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "importHelpers": true,
     "baseUrl": "./",
     "paths": {
@@ -29,8 +29,7 @@
       "@demo/*": ["src/app/demo/*"],
       "ps-helix": [
         "projects/ps-helix/src/public-api.ts"
-      ],
-      "@angular/forms/signals": ["node_modules/@angular/forms/types/signals.d.ts"]
+      ]
     },
     "lib": ["ES2022", "dom"]
   },

@@ -8,8 +8,10 @@ import {
   input,
   model,
   output,
+  signal,
   InjectionToken
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { TabsVariant, TabsSize, Tab, TabsConfig, TabChangeEvent } from './tabs.types';
 import { PshTabComponent } from './tab.component';
 
@@ -22,8 +24,13 @@ export const TABS_CONFIG = new InjectionToken<Partial<TabsConfig>>('TABS_CONFIG'
   })
 });
 
+export const TABS_STYLES = new InjectionToken<Record<string, string>[]>('TABS_STYLES', {
+  factory: () => []
+});
+
 @Component({
   selector: 'psh-tabs',
+  imports: [CommonModule],
   templateUrl: './tabs.component.html',
   styleUrls: ['./tabs.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -35,11 +42,18 @@ export const TABS_CONFIG = new InjectionToken<Partial<TabsConfig>>('TABS_CONFIG'
 })
 export class PshTabsComponent {
   private config = inject(TABS_CONFIG);
+  private styles = inject(TABS_STYLES, { optional: true }) ?? [];
+
+  private defaultTabs: Tab[] = [
+    { header: 'Onglet 1', content: 'Contenu de l\'onglet 1' },
+    { header: 'Onglet 2', content: 'Contenu de l\'onglet 2' },
+    { header: 'Onglet 3', content: 'Contenu de l\'onglet 3' }
+  ];
 
   variant = input<TabsVariant>(this.config.variant ?? 'default');
   size = input<TabsSize>(this.config.size ?? 'medium');
   animated = input(this.config.animated ?? true);
-  tabs = input<Tab[]>([]);
+  tabs = input<Tab[]>();
   ariaLabel = input<string>();
   ariaOrientation = input<'horizontal' | 'vertical'>('horizontal');
 
@@ -47,15 +61,24 @@ export class PshTabsComponent {
 
   tabComponents = contentChildren(PshTabComponent);
 
+  private tabsSignal = signal<Tab[]>(this.defaultTabs);
+
   tabsToDisplay = computed(() => {
+    const inputTabs = this.tabs();
+    if (inputTabs && inputTabs.length > 0) return inputTabs;
+
     const components = this.tabComponents();
     if (components.length > 0) {
       return components.map(c => c.toTabData());
     }
-    return this.tabs();
-  });
 
-  hasContentProjection = computed(() => this.tabComponents().length > 0);
+    const signalTabs = this.tabsSignal();
+    if (signalTabs.length > 0 && signalTabs !== this.defaultTabs) {
+      return signalTabs;
+    }
+
+    return this.defaultTabs;
+  });
 
   activeIndexChange = output<number>();
   tabChange = output<TabChangeEvent>();
@@ -72,12 +95,13 @@ export class PshTabsComponent {
     return classes.join(' ');
   });
 
+  customStyles = computed(() => Object.assign({}, ...this.styles));
+
   constructor() {
     effect(() => {
       const tabs = this.tabComponents();
       const currentIndex = this.activeIndex();
       tabs.forEach((tab, index) => {
-        tab.setIndex(index);
         tab.setActive(index === currentIndex);
       });
     });
@@ -85,10 +109,8 @@ export class PshTabsComponent {
     effect(() => {
       const currentIndex = this.activeIndex();
       const tabs = this.tabsToDisplay();
-      if (tabs.length > 0 && currentIndex >= tabs.length) {
-        const clampedIndex = Math.max(0, tabs.length - 1);
-        this.activeIndex.set(clampedIndex);
-        this.activeIndexChange.emit(clampedIndex);
+      if (currentIndex >= tabs.length) {
+        this.activeIndex.set(Math.max(0, tabs.length - 1));
       }
     });
   }
@@ -105,11 +127,11 @@ export class PshTabsComponent {
         break;
       case 'Home':
         event.preventDefault();
-        this.selectFirst();
+        this.selectTab(0);
         break;
       case 'End':
         event.preventDefault();
-        this.selectLast();
+        this.selectTab(this.tabsToDisplay().length - 1);
         break;
     }
   }
@@ -154,37 +176,11 @@ export class PshTabsComponent {
     }
   }
 
-  selectFirst(): void {
-    const tabs = this.tabsToDisplay();
-    let firstIndex = 0;
-
-    while (tabs[firstIndex]?.disabled && firstIndex < tabs.length - 1) {
-      firstIndex++;
-    }
-
-    if (!tabs[firstIndex]?.disabled && firstIndex !== this.activeIndex()) {
-      this.selectTab(firstIndex);
-    }
-  }
-
-  selectLast(): void {
-    const tabs = this.tabsToDisplay();
-    let lastIndex = tabs.length - 1;
-
-    while (tabs[lastIndex]?.disabled && lastIndex > 0) {
-      lastIndex--;
-    }
-
-    if (!tabs[lastIndex]?.disabled && lastIndex !== this.activeIndex()) {
-      this.selectTab(lastIndex);
-    }
-  }
-
   getActiveTab(): Tab | undefined {
     return this.tabsToDisplay()[this.activeIndex()];
   }
 
-  getTabComponent(index: number): PshTabComponent | undefined {
-    return this.tabComponents()[index];
+  setTabsFromLegacyContent(tabs: Tab[]): void {
+    this.tabsSignal.set(tabs);
   }
 }

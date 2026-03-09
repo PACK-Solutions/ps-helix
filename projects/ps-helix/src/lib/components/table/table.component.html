@@ -1,4 +1,4 @@
-<div
+<div 
   class="table-wrapper"
   [class.striped]="striped()"
   [class.hoverable]="hoverable()"
@@ -6,23 +6,18 @@
   [class.small]="size() === 'small'"
   [class.large]="size() === 'large'"
   [class.outline]="variant() === 'outline'"
-  [class.table-fixed]="tableLayout() === 'fixed'"
-  [class.truncate]="truncateText()"
   [attr.data-state]="state()"
 >
   @if (globalSearch()) {
-    <div class="global-search" role="search">
-      <psh-input
-        [placeholder]="globalSearchPlaceholder()"
-        [ariaLabel]="globalSearchPlaceholder()"
-        [size]="size()"
-        [fullWidth]="true"
-        [showLabel]="false"
-        iconStart="magnifying-glass"
-        type="search"
-        [(value)]="searchTermSignal"
-        (valueChange)="onSearchValueChange($event)"
+    <div class="global-search">
+      <input
+        type="text"
+        [attr.placeholder]="globalSearchPlaceholder()"
+        [value]="searchTerm()"
+        (input)="handleGlobalSearch($event)"
+        [attr.aria-label]="globalSearchPlaceholder()"
       />
+      <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
     </div>
   }
 
@@ -32,7 +27,7 @@
         @for (column of columns(); track column.key) {
           <th 
             [style.width]="column.width"
-            [attr.aria-sort]="column.sortable ? (currentSort()?.key === column.key ? (currentSort()?.direction === 'asc' ? 'ascending' : 'descending') : 'none') : null"
+            [attr.aria-sort]="column.sortable ? (currentSort()?.key === column.key ? currentSort()?.direction : 'none') : null"
             [class.sortable]="column.sortable" 
             (click)="handleSort(column)"
           >

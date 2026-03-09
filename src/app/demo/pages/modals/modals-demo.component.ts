@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { PshButtonComponent, PshModalComponent } from '@lib/components';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
@@ -9,7 +9,6 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
   imports: [TranslateModule, PshButtonComponent, PshModalComponent, DemoPageLayoutComponent, CodeSnippetComponent],
   templateUrl: './modals-demo.component.html',
   styleUrls: ['./modals-demo.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalsDemoComponent {
   basicModalOpen = false;

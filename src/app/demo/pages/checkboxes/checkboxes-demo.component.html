@@ -135,71 +135,6 @@
       </div>
     </section>
 
-    <!-- Reactive Forms - Section Pleine Largeur -->
-    <section class="checkbox-reactive-forms-section">
-      <h3 class="section-title">Intégration avec Reactive Forms</h3>
-      <div class="reactive-forms-container">
-        <div class="reactive-forms-intro">
-          <p>Le composant implémente <code>ControlValueAccessor</code> pour une intégration complète avec les Reactive Forms d'Angular. Cela permet d'utiliser <code>[formControl]</code> ou <code>formControlName</code>.</p>
-        </div>
-        <div class="reactive-forms-demo">
-          <div class="reactive-demo-card">
-            <div class="reactive-preview">
-              <psh-checkbox
-                [formControl]="termsControl"
-                label="J'accepte les conditions d'utilisation"
-              />
-              <div class="reactive-value">
-                <span class="value-label">Valeur du FormControl:</span>
-                <span class="value-display" [class.checked]="termsControl.value">{{ termsControl.value }}</span>
-              </div>
-              <button class="toggle-btn" (click)="toggleTerms()">
-                Modifier programmatiquement
-              </button>
-            </div>
-            <div class="reactive-info">
-              <h4>Utilisation avec FormControl</h4>
-              <p>Le composant synchronise automatiquement sa valeur avec le FormControl. Les changements peuvent venir de l'utilisateur ou de modifications programmatiques.</p>
-              <ds-code-snippet [code]="reactiveFormsCode" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Signal Forms - Section -->
-    <section class="checkbox-signal-forms-section">
-      <h3 class="section-title">Signal Forms (Angular 21+)</h3>
-      <div class="reactive-forms-container">
-        <div class="reactive-forms-intro">
-          <p>Le composant implemente <code>FormCheckboxControl</code> pour une integration native avec les Signal Forms d'Angular. Utilisez <code>[formField]</code> pour lier un champ booleeen.</p>
-        </div>
-        <div class="reactive-forms-demo">
-          <div class="reactive-demo-card">
-            <div class="reactive-preview">
-              <psh-checkbox
-                [formField]="settingsForm.terms"
-                label="J'accepte les conditions d'utilisation"
-              />
-              <psh-checkbox
-                [formField]="settingsForm.newsletter"
-                label="Recevoir la newsletter"
-              />
-              <div class="reactive-value">
-                <span class="value-label">Modele :</span>
-                <span class="value-display">{{ settingsModel() | json }}</span>
-              </div>
-            </div>
-            <div class="reactive-info">
-              <h4>Utilisation avec Signal Forms</h4>
-              <p>Les checkboxes se lient directement aux champs booleens du formulaire signal. L'etat <code>checked</code> est synchronise via <code>FormCheckboxControl</code>.</p>
-              <ds-code-snippet [code]="signalFormsCode" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- Tailles de Checkbox - Section Pleine Largeur -->
     <section class="checkbox-sizes-section">
       <h3 class="section-title">Tailles Disponibles</h3>
@@ -273,11 +208,11 @@
       <h3 class="section-title">Documentation API</h3>
       <div class="api-container">
         <div class="api-intro">
-          <p>Le composant Checkbox utilise des <strong>inputs bidirectionnels</strong> pour une synchronisation de l'état, conforme aux standards Angular 21.</p>
+          <p>Le composant Checkbox utilise des <strong>model inputs</strong> bidirectionnels pour une synchronisation automatique de l'état, conforme aux standards Angular 20.</p>
         </div>
 
         <div class="api-table-wrapper">
-          <h4>Inputs Bidirectionnels (avec <code>[()]</code>)</h4>
+          <h4>Model Inputs (Bidirectionnels)</h4>
           <table class="api-table">
             <thead>
               <tr>
@@ -301,6 +236,12 @@
                 <td>État désactivé de la checkbox</td>
               </tr>
               <tr>
+                <td><code>required</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Indique si la checkbox est requise</td>
+              </tr>
+              <tr>
                 <td><code>indeterminate</code></td>
                 <td><code>boolean</code></td>
                 <td><code>false</code></td>
@@ -322,12 +263,6 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td><code>required</code></td>
-                <td><code>boolean</code></td>
-                <td><code>false</code></td>
-                <td>Indique si la checkbox est requise</td>
-              </tr>
               <tr>
                 <td><code>label</code></td>
                 <td><code>string</code></td>

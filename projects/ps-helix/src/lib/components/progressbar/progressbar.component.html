@@ -1,4 +1,4 @@
-@if (showLabel()) {
+@if (showLabel() && !isIndeterminate()) {
   <span class="progress-label">{{ displayLabel() }}</span>
 }
 <div
@@ -15,6 +15,6 @@
   <div
     class="progress-track"
     [class]="variant()"
-    [style.width.%]="percentage()"
+    [style.width.%]="isIndeterminate() ? 100 : percentage()"
   ></div>
 </div>

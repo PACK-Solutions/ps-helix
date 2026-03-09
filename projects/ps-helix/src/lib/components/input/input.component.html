@@ -1,11 +1,22 @@
-<div class="input-container">
+<div 
+  class="input-container"
+  [class.full-width]="fullWidth()"
+  [class.small]="size() === 'small'"
+  [class.large]="size() === 'large'"
+  [class.error]="!!error()"
+  [class.success]="!!success()"
+  [class.disabled]="disabled()"
+  [class.readonly]="readonly()"
+  [class.loading]="loading()"
+  [class.focused]="focused()"
+  [class.has-start-icon]="!!iconStart()"
+  [class.has-end-icon]="!!iconEnd() || type() === 'password'"
+  [class.outlined]="variant() === 'outlined'"
+  [class.filled]="variant() === 'filled'"
+>
+  <!-- Label slot -->
   @if (showLabel()) {
-    <label 
-      class="input-label" 
-      [for]="inputId" 
-      (click)="focusSelect()" 
-      [class.required]="required()"
-    >
+    <label class="input-label" [for]="inputId" (click)="focusSelect()" [class.required]="required()">
       <ng-content select="[input-label]"></ng-content>
       @if (!hasLabelContent()) {
         {{ label() }}
@@ -80,6 +91,7 @@
     }
   </div>
 
+  <!-- Error message slot -->
   @if (error()) {
     <div id="error-message" class="input-error" role="alert">
       <ng-content select="[input-error]">
@@ -88,6 +100,7 @@
     </div>
   }
 
+  <!-- Success message slot -->
   @if (success()) {
     <div id="success-message" class="input-success" role="status">
       <ng-content select="[input-success]">
@@ -96,6 +109,7 @@
     </div>
   }
 
+  <!-- Hint message slot -->
   @if (hint()) {
     <div id="hint-message" class="input-hint">
       <ng-content select="[input-hint]">

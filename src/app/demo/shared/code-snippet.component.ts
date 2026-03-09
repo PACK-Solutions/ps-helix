@@ -1,11 +1,11 @@
-import { Component, input, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, input, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'ds-code-snippet',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './code-snippet.component.html',
-  styleUrls: ['./code-snippet.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./code-snippet.component.css']
 })
 export class CodeSnippetComponent {
   code = input.required<string>();

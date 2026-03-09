@@ -10,10 +10,9 @@ import {
   signal,
   effect,
   OnDestroy,
-  InjectionToken,
-  PLATFORM_ID
+  InjectionToken
 } from '@angular/core';
-import { isPlatformBrowser, CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { SidebarMode, SidebarPosition, SidebarConfig } from './sidebar.types';
 
 export const SIDEBAR_CONFIG = new InjectionToken<Partial<SidebarConfig>>('SIDEBAR_CONFIG', {
@@ -23,9 +22,7 @@ export const SIDEBAR_CONFIG = new InjectionToken<Partial<SidebarConfig>>('SIDEBA
     width: '250px',
     breakpoint: '768px',
     autoFocus: true,
-    ariaLabel: 'Sidebar navigation',
-    closeOnBackdrop: true,
-    closeOnEscape: true
+    ariaLabel: 'Sidebar navigation'
   })
 });
 
@@ -45,46 +42,39 @@ export const SIDEBAR_CONFIG = new InjectionToken<Partial<SidebarConfig>>('SIDEBA
   }
 })
 export class PshSidebarComponent implements OnDestroy {
-  private readonly config = inject(SIDEBAR_CONFIG);
-  private readonly elementRef = inject(ElementRef);
-  private readonly platformId = inject(PLATFORM_ID);
+  private config = inject(SIDEBAR_CONFIG);
+  private elementRef = inject(ElementRef);
   private focusedElementBeforeOpen: HTMLElement | null = null;
-  private mediaQueryList: MediaQueryList | null = null;
-  private mediaQueryHandler: ((e: MediaQueryListEvent) => void) | null = null;
 
+  // Model inputs with defaults from config
   open = model(false);
-  mode = input<SidebarMode>(this.config.mode ?? 'fixed');
-  position = input<SidebarPosition>(this.config.position ?? 'left');
-  width = input<string>(this.config.width ?? '250px');
-  breakpoint = input<string>(this.config.breakpoint ?? '768px');
+  mode = model<SidebarMode>(this.config.mode ?? 'fixed');
+  position = model<SidebarPosition>(this.config.position ?? 'left');
+  width = model<string>(this.config.width ?? '250px');
+  breakpoint = model<string>(this.config.breakpoint ?? '768px');
+
+  // Regular inputs
   autoFocus = input<boolean>(this.config.autoFocus ?? true);
   ariaLabel = input<string>(this.config.ariaLabel ?? 'Sidebar navigation');
-  closeOnBackdrop = input<boolean>(this.config.closeOnBackdrop ?? true);
-  closeOnEscape = input<boolean>(this.config.closeOnEscape ?? true);
 
+  // Outputs
   toggle = output<boolean>();
   opened = output<void>();
   closed = output<void>();
   transitionStart = output<boolean>();
 
-  private readonly mobileSignal = signal(false);
-  private previousOpenState: boolean | null = null;
+  // State
+  private mobileSignal = signal(false);
+  private overlayModeSignal = signal(false);
 
+  // Computed values
   isMobile = computed(() => this.mobileSignal());
-  effectiveMode = computed(() => this.isMobile() ? 'overlay' : this.mode());
+  isOverlayMode = computed(() => this.overlayModeSignal());
+  effectiveMode = computed(() => 
+    this.isMobile() ? 'overlay' : this.mode()
+  );
+
   state = computed(() => this.getState());
-
-  private readonly escapeHandler = (event: KeyboardEvent) => {
-    if (event.key === 'Escape' && this.closeOnEscape() && this.effectiveMode() === 'overlay') {
-      this.closeSidebar();
-    }
-  };
-
-  private readonly focusTrapHandler = (event: KeyboardEvent) => {
-    if (event.key === 'Tab') {
-      this.trapFocus(event);
-    }
-  };
 
   private getState(): string {
     if (this.isMobile()) return 'mobile';
@@ -94,94 +84,49 @@ export class PshSidebarComponent implements OnDestroy {
 
   constructor() {
     effect(() => {
-      const bp = this.breakpoint();
-      this.setupMediaQuery(bp);
+      const mediaQuery = window.matchMedia(`(max-width: ${this.breakpoint()})`);
+      const handleResize = (e: MediaQueryListEvent | MediaQueryList) => {
+        this.mobileSignal.set(e.matches);
+        this.overlayModeSignal.set(e.matches || this.mode() === 'overlay');
+      };
+
+      handleResize(mediaQuery);
+      const listener = (e: MediaQueryListEvent) => handleResize(e);
+      mediaQuery.addEventListener('change', listener);
+
+      return () => mediaQuery.removeEventListener('change', listener);
     });
 
     effect(() => {
-      const isOpen = this.open();
-      const wasOpen = this.previousOpenState;
-      this.previousOpenState = isOpen;
+      if (this.open()) {
+        const handleKeyDown = (event: KeyboardEvent) => {
+          if (event.key === 'Escape' && this.isOverlayMode()) {
+            this.closeSidebar();
+          }
+          if (event.key === 'Tab') {
+            this.trapFocus(event);
+          }
+        };
 
-      if (wasOpen === null) return;
-
-      if (isOpen && !wasOpen) {
-        this.onSidebarOpen();
-      } else if (!isOpen && wasOpen) {
-        this.onSidebarClose();
+        document.addEventListener('keydown', handleKeyDown);
+        return () => document.removeEventListener('keydown', handleKeyDown);
       }
+      return;
     });
-  }
 
-  private setupMediaQuery(breakpoint: string): void {
-    if (!isPlatformBrowser(this.platformId)) return;
+    effect(() => {
+      if (this.open() && this.isOverlayMode()) {
+        const handleClickOutside = (event: MouseEvent) => {
+          if (!this.elementRef.nativeElement.contains(event.target)) {
+            this.closeSidebar();
+          }
+        };
 
-    this.cleanupMediaQuery();
-
-    this.mediaQueryList = window.matchMedia(`(max-width: ${breakpoint})`);
-    this.mobileSignal.set(this.mediaQueryList.matches);
-
-    this.mediaQueryHandler = (e: MediaQueryListEvent) => {
-      this.mobileSignal.set(e.matches);
-    };
-
-    this.mediaQueryList.addEventListener('change', this.mediaQueryHandler);
-  }
-
-  private cleanupMediaQuery(): void {
-    if (this.mediaQueryList && this.mediaQueryHandler) {
-      this.mediaQueryList.removeEventListener('change', this.mediaQueryHandler);
-      this.mediaQueryList = null;
-      this.mediaQueryHandler = null;
-    }
-  }
-
-  private onSidebarOpen(): void {
-    if (!isPlatformBrowser(this.platformId)) return;
-
-    this.focusedElementBeforeOpen = document.activeElement as HTMLElement;
-    this.addEventListeners();
-
-    if (this.autoFocus()) {
-      requestAnimationFrame(() => {
-        const firstFocusable = this.elementRef.nativeElement.querySelector(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-        ) as HTMLElement;
-        if (firstFocusable) {
-          firstFocusable.focus();
-        }
-      });
-    }
-
-    requestAnimationFrame(() => {
-      this.opened.emit();
+        document.addEventListener('click', handleClickOutside);
+        return () => document.removeEventListener('click', handleClickOutside);
+      }
+      return;
     });
-  }
-
-  private onSidebarClose(): void {
-    if (!isPlatformBrowser(this.platformId)) return;
-
-    this.removeEventListeners();
-
-    if (this.focusedElementBeforeOpen) {
-      this.focusedElementBeforeOpen.focus();
-    }
-
-    requestAnimationFrame(() => {
-      this.closed.emit();
-    });
-  }
-
-  private addEventListeners(): void {
-    if (!isPlatformBrowser(this.platformId)) return;
-    document.addEventListener('keydown', this.escapeHandler);
-    document.addEventListener('keydown', this.focusTrapHandler);
-  }
-
-  private removeEventListeners(): void {
-    if (!isPlatformBrowser(this.platformId)) return;
-    document.removeEventListener('keydown', this.escapeHandler);
-    document.removeEventListener('keydown', this.focusTrapHandler);
   }
 
   toggleSidebar(): void {
@@ -189,6 +134,30 @@ export class PshSidebarComponent implements OnDestroy {
     this.transitionStart.emit(newState);
     this.open.set(newState);
     this.toggle.emit(newState);
+
+    if (newState) {
+      this.focusedElementBeforeOpen = document.activeElement as HTMLElement;
+      if (this.autoFocus()) {
+        requestAnimationFrame(() => {
+          const firstFocusable = this.elementRef.nativeElement.querySelector(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          ) as HTMLElement;
+          if (firstFocusable) {
+            firstFocusable.focus();
+          }
+        });
+      }
+      requestAnimationFrame(() => {
+        this.opened.emit();
+      });
+    } else {
+      if (this.focusedElementBeforeOpen) {
+        this.focusedElementBeforeOpen.focus();
+      }
+      requestAnimationFrame(() => {
+        this.closed.emit();
+      });
+    }
   }
 
   closeSidebar(): void {
@@ -196,12 +165,12 @@ export class PshSidebarComponent implements OnDestroy {
       this.transitionStart.emit(false);
       this.open.set(false);
       this.toggle.emit(false);
-    }
-  }
-
-  handleBackdropClick(): void {
-    if (this.closeOnBackdrop()) {
-      this.closeSidebar();
+      if (this.focusedElementBeforeOpen) {
+        this.focusedElementBeforeOpen.focus();
+      }
+      requestAnimationFrame(() => {
+        this.closed.emit();
+      });
     }
   }
 
@@ -209,15 +178,8 @@ export class PshSidebarComponent implements OnDestroy {
     const focusableElements = this.elementRef.nativeElement.querySelectorAll(
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
     );
-
-    if (focusableElements.length === 0) return;
-
     const firstFocusable = focusableElements[0] as HTMLElement;
     const lastFocusable = focusableElements[focusableElements.length - 1] as HTMLElement;
-
-    if (!firstFocusable || !lastFocusable) return;
-
-    if (!isPlatformBrowser(this.platformId)) return;
 
     if (event.shiftKey) {
       if (document.activeElement === firstFocusable) {
@@ -233,8 +195,8 @@ export class PshSidebarComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.cleanupMediaQuery();
-    this.removeEventListeners();
-    this.focusedElementBeforeOpen = null;
+    if (this.focusedElementBeforeOpen) {
+      this.focusedElementBeforeOpen = null;
+    }
   }
 }
