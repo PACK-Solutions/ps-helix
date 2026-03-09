@@ -11,7 +11,7 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
 })
 export class IntroductionDemoComponent {
   npmUrl = 'https://www.npmjs.com/package/ps-helix';
-  npmVersion = '4.0.4';
+  npmVersion = '4.0.5';
   keyFeatures = [
     {
       icon: 'lightning',
