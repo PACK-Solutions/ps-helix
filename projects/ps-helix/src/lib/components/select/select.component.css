@@ -5,7 +5,8 @@
 }
 
 :host.full-width { max-width: none; }
-.select-container { position: relative; width: 100%; }
+.select-container { width: 100%; }
+.select-trigger-wrapper { position: relative; }
 
 .select-label {
   display: block;
