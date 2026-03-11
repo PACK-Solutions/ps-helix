@@ -4,7 +4,7 @@
   max-width: 18.75rem;
 }
 
-:host.select-full-width { max-width: none; }
+:host.full-width { max-width: none; }
 .select-container { position: relative; width: 100%; }
 
 .select-label {
@@ -35,6 +35,12 @@
   outline: none;
 }
 
+:host.error .select-trigger { border-color: var(--danger-color); }
+:host.error .select-trigger:focus { box-shadow: 0 0 0 0.125rem var(--focus-ring-error); }
+:host.success .select-trigger { border-color: var(--success-color); }
+:host.success .select-trigger:focus { box-shadow: 0 0 0 0.125rem var(--focus-ring-success); }
+:host.disabled .select-trigger { background: var(--surface-ground); cursor: not-allowed; opacity: var(--opacity-disabled); }
+
 .select-value {
   flex: 1;
   min-width: 0;
@@ -50,8 +56,6 @@
   flex-shrink: 0;
 }
 
-
-
 .select-clear {
   background: none;
   border: none;
@@ -62,6 +66,7 @@
 }
 
 .select-clear:hover { color: var(--danger-color); }
+
 .select-loader-trigger {
   width: 1rem;
   height: 1rem;
@@ -138,6 +143,9 @@
 .select-option {
   padding: 0.625rem 1rem;
   cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
 }
 
 .select-option:hover { background: var(--surface-hover); }
@@ -148,8 +156,37 @@
   font-weight: 500;
 }
 
-/* Tailles Host */
-:host.select-small .select-trigger { text-overflow: ellipsis; height: 2rem; font-size: 0.875rem; }
-:host.select-large .select-trigger { text-overflow: ellipsis; height: 3rem; font-size: 1.125rem; }
+.select-option.focused { background: var(--surface-hover); }
+.select-option.disabled { opacity: var(--opacity-disabled); cursor: not-allowed; }
+
+.select-option i {
+  flex-shrink: 0;
+  line-height: 1.4;
+}
+
+.select-option-label {
+  flex: 1;
+  min-width: 0;
+}
+
+.select-option-description {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-color-secondary);
+}
+
+.select-error-message,
+.select-success-message,
+.select-hint {
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.select-error-message { color: var(--danger-color); }
+.select-success-message { color: var(--success-color); }
+.select-hint { color: var(--text-color-secondary); }
+
+:host.small .select-trigger { text-overflow: ellipsis; height: 2rem; font-size: 0.875rem; }
+:host.large .select-trigger { text-overflow: ellipsis; height: 3rem; font-size: 1.125rem; }
 
 @keyframes spin { to { transform: rotate(360deg); } }

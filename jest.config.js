@@ -21,7 +21,8 @@ module.exports = {
       'jest-preset-angular',
       {
         tsconfig: '<rootDir>/projects/ps-helix/tsconfig.spec.json',
-        stringifyContentPathRegex: '\\.(html|svg)$'
+        stringifyContentPathRegex: '\\.(html|svg)$',
+        diagnostics: false
       }
     ]
   }
