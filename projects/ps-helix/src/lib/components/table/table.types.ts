@@ -36,8 +36,20 @@ export interface TableColumn {
 export interface TableRow {
   /** Identifiant unique */
   id: string | number;
+  /** Lignes enfants (un seul niveau) */
+  children?: TableRow[];
   /** Données de la ligne */
   [key: string]: any;
+}
+
+export interface TableRowExpandEvent {
+  id: string | number;
+  row: TableRow;
+  expanded: boolean;
+}
+
+export interface TableExpandedRowContext {
+  $implicit: TableRow;
 }
 
 /**
@@ -90,4 +102,8 @@ export interface TableConfig {
   truncateText: boolean;
   /** Full width mode */
   fullWidth: boolean;
+  /** Lignes extensibles */
+  expandable: boolean;
+  /** Mode accordéon (une seule ligne ouverte à la fois) */
+  singleExpand: boolean;
 }

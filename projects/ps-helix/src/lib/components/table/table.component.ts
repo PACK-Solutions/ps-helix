@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, output, signal, InjectionToken } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output, signal, InjectionToken, TemplateRef } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { PshInputComponent } from '../input/input.component';
-import { TableColumn, TableRow, TableSort, TableConfig, TableRowClickEvent } from './table.types';
+import { TableColumn, TableRow, TableSort, TableConfig, TableRowClickEvent, TableRowExpandEvent, TableExpandedRowContext } from './table.types';
 
 export const TABLE_CONFIG = new InjectionToken<Partial<TableConfig>>('TABLE_CONFIG', {
   factory: () => ({
@@ -17,7 +17,9 @@ export const TABLE_CONFIG = new InjectionToken<Partial<TableConfig>>('TABLE_CONF
     globalSearchPlaceholder: 'Search in all columns...',
     tableLayout: 'auto',
     truncateText: false,
-    fullWidth: false
+    fullWidth: false,
+    expandable: false,
+    singleExpand: false
   })
 });
 
@@ -50,13 +52,19 @@ export class PshTableComponent {
   globalSearchPlaceholder = input(this.config.globalSearchPlaceholder ?? 'Search in all columns...');
   tableLayout = input<'auto' | 'fixed'>(this.config.tableLayout ?? 'auto');
   truncateText = input(this.config.truncateText ?? false);
+  expandable = input(this.config.expandable ?? false);
+  singleExpand = input(this.config.singleExpand ?? false);
+  expandedRowTemplate = input<TemplateRef<TableExpandedRowContext>>();
 
   sortChange = output<TableSort>();
   globalSearchChange = output<string>();
   rowClick = output<TableRowClickEvent>();
+  rowExpand = output<TableRowExpandEvent>();
+  rowCollapse = output<TableRowExpandEvent>();
 
   private currentSortSignal = signal<TableSort | undefined>(undefined);
   readonly searchTermSignal = signal('');
+  private expandedRowIds = signal<Set<string | number>>(new Set());
 
   currentSort = computed(() => this.currentSortSignal());
   searchTerm = computed(() => this.searchTermSignal());
@@ -158,10 +166,52 @@ export class PshTableComponent {
     this.rowClick.emit({ id: row.id, row });
   }
 
-  /**
-   * Récupère la valeur d'une cellule pour affichage
-   */
   protected getCellValue(row: TableRow, column: TableColumn): any {
     return this.getNestedValue(row, column.path || column.key);
+  }
+
+  totalColumns = computed(() => this.columns().length + (this.expandable() ? 1 : 0));
+
+  isRowExpandable(row: TableRow): boolean {
+    return !!(row.children?.length || this.expandedRowTemplate());
+  }
+
+  isRowExpanded(row: TableRow): boolean {
+    return this.expandedRowIds().has(row.id);
+  }
+
+  toggleRow(row: TableRow): void {
+    if (!this.isRowExpandable(row)) return;
+
+    const ids = new Set(this.expandedRowIds());
+    const wasExpanded = ids.has(row.id);
+
+    if (this.singleExpand()) {
+      ids.clear();
+    }
+
+    if (wasExpanded) {
+      ids.delete(row.id);
+      this.expandedRowIds.set(ids);
+      this.rowCollapse.emit({ id: row.id, row, expanded: false });
+    } else {
+      ids.add(row.id);
+      this.expandedRowIds.set(ids);
+      this.rowExpand.emit({ id: row.id, row, expanded: true });
+    }
+  }
+
+  expandAll(): void {
+    const ids = new Set<string | number>();
+    for (const row of this.filteredData()) {
+      if (this.isRowExpandable(row)) {
+        ids.add(row.id);
+      }
+    }
+    this.expandedRowIds.set(ids);
+  }
+
+  collapseAll(): void {
+    this.expandedRowIds.set(new Set());
   }
 }

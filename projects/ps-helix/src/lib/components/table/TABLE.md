@@ -109,6 +109,9 @@ const data: TableRow[] = [
 | tableLayout | 'auto' \| 'fixed' | 'auto' | Algorithme de layout de la table |
 | truncateText | boolean | false | Tronque le texte avec ellipsis |
 | fullWidth | boolean | false | Mode pleine largeur |
+| expandable | boolean | false | Active les lignes extensibles |
+| singleExpand | boolean | false | Mode accordéon (une seule ligne ouverte) |
+| expandedRowTemplate | TemplateRef | undefined | Template personnalisé pour le contenu étendu |
 
 ### Outputs
 | Nom | Type | Description |
@@ -116,6 +119,8 @@ const data: TableRow[] = [
 | sortChange | EventEmitter<TableSort> | Émis lors du tri |
 | globalSearchChange | EventEmitter<string> | Émis lors de la recherche |
 | rowClick | EventEmitter<TableRowClickEvent> | Émis lors du clic sur une ligne |
+| rowExpand | EventEmitter<TableRowExpandEvent> | Émis lors de l'expansion d'une ligne |
+| rowCollapse | EventEmitter<TableRowExpandEvent> | Émis lors du repli d'une ligne |
 
 ### Interface TableColumn
 ```typescript
@@ -135,8 +140,9 @@ interface TableColumn {
 ### Interface TableRow
 ```typescript
 interface TableRow {
-  id: string | number;  // Identifiant unique
-  [key: string]: any;   // Données de la ligne
+  id: string | number;    // Identifiant unique
+  children?: TableRow[];  // Lignes enfants (un seul niveau)
+  [key: string]: any;     // Données de la ligne
 }
 ```
 
@@ -161,6 +167,97 @@ interface TableRowClickEvent {
 interface TableCellContext<T = TableRow> {
   $implicit: T;      // Données de la ligne (accessible via let-row)
   column: TableColumn; // Configuration de la colonne (accessible via let-column="column")
+}
+```
+
+### Interface TableRowExpandEvent
+```typescript
+interface TableRowExpandEvent {
+  id: string | number;  // Identifiant de la ligne
+  row: TableRow;        // Données complètes de la ligne
+  expanded: boolean;    // État d'expansion
+}
+```
+
+### Interface TableExpandedRowContext
+```typescript
+interface TableExpandedRowContext {
+  $implicit: TableRow;  // Données de la ligne parent (accessible via let-row)
+}
+```
+
+## Lignes Extensibles
+
+Le composant table supporte l'expansion des lignes pour afficher des sous-lignes enfants ou du contenu personnalisé via un template.
+
+### Sous-lignes Enfants
+
+Ajoutez une propriété `children` aux lignes de données pour définir les sous-lignes :
+
+```typescript
+const data: TableRow[] = [
+  {
+    id: 1,
+    name: 'Ingénierie',
+    children: [
+      { id: 11, name: 'Frontend' },
+      { id: 12, name: 'Backend' }
+    ]
+  }
+];
+```
+
+```html
+<psh-table
+  [columns]="columns"
+  [data]="data"
+  [expandable]="true"
+></psh-table>
+```
+
+### Contenu Personnalisé (Template)
+
+Utilisez `expandedRowTemplate` pour afficher du contenu riche au lieu de sous-lignes :
+
+```html
+<psh-table
+  [columns]="columns"
+  [data]="data"
+  [expandable]="true"
+  [expandedRowTemplate]="detailTpl"
+></psh-table>
+
+<ng-template #detailTpl let-row>
+  <div>{{ row.description }}</div>
+</ng-template>
+```
+
+### Mode Accordéon
+
+Activez `singleExpand` pour n'autoriser qu'une seule ligne ouverte à la fois :
+
+```html
+<psh-table
+  [columns]="columns"
+  [data]="data"
+  [expandable]="true"
+  [singleExpand]="true"
+></psh-table>
+```
+
+### Contrôle Programmatique
+
+Le composant expose les méthodes `expandAll()` et `collapseAll()` pour contrôler l'état d'expansion :
+
+```typescript
+@ViewChild(PshTableComponent) table!: PshTableComponent;
+
+expandAll() {
+  this.table.expandAll();
+}
+
+collapseAll() {
+  this.table.collapseAll();
 }
 ```
 
@@ -498,7 +595,9 @@ Cette combinaison est idéale pour :
         globalSearchPlaceholder: 'Search in all columns...',
         tableLayout: 'auto',
         truncateText: false,
-        fullWidth: false
+        fullWidth: false,
+        expandable: false,
+        singleExpand: false
       }
     }
   ]

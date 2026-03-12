@@ -1,3 +1,4 @@
+import { Component, TemplateRef, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PshTableComponent } from './table.component';
 import { TableColumn, TableRow } from './table.types';
@@ -639,5 +640,334 @@ describe('PshTableComponent', () => {
       expect(getCells(rows[0]!)[0]!.textContent).toContain('Diana');
       expect(getCells(rows[1]!)[0]!.textContent).toContain('Charlie');
     });
+  });
+
+  describe('Expandable rows', () => {
+    const expandableColumns: TableColumn[] = [
+      { key: 'name', label: 'Name' },
+      { key: 'role', label: 'Role' }
+    ];
+
+    const expandableData: TableRow[] = [
+      {
+        id: 1, name: 'Engineering', role: 'Department',
+        children: [
+          { id: 11, name: 'Alice', role: 'Developer' },
+          { id: 12, name: 'Bob', role: 'Designer' }
+        ]
+      },
+      {
+        id: 2, name: 'Marketing', role: 'Department',
+        children: [
+          { id: 21, name: 'Charlie', role: 'Manager' }
+        ]
+      },
+      { id: 3, name: 'Sales', role: 'Department' }
+    ];
+
+    const getExpandToggle = (row: HTMLTableRowElement) =>
+      row.querySelector('.expand-toggle') as HTMLButtonElement | null;
+
+    it('should not render expand column when expandable is false', () => {
+      fixture.componentRef.setInput('columns', expandableColumns);
+      fixture.componentRef.setInput('data', expandableData);
+      fixture.detectChanges();
+
+      const expandHeader = fixture.nativeElement.querySelector('.expand-header');
+      expect(expandHeader).toBeFalsy();
+    });
+
+    it('should render an extra th in the header when expandable is true', () => {
+      fixture.componentRef.setInput('columns', expandableColumns);
+      fixture.componentRef.setInput('data', expandableData);
+      fixture.componentRef.setInput('expandable', true);
+      fixture.detectChanges();
+
+      const headers = getColumnHeaders();
+      expect(headers.length).toBe(3);
+      expect(headers[0]!.classList.contains('expand-header')).toBe(true);
+    });
+
+    it('should render a caret button for expandable rows', () => {
+      fixture.componentRef.setInput('columns', expandableColumns);
+      fixture.componentRef.setInput('data', expandableData);
+      fixture.componentRef.setInput('expandable', true);
+      fixture.detectChanges();
+
+      const rows = getRows();
+      expect(getExpandToggle(rows[0]!)).toBeTruthy();
+      expect(getExpandToggle(rows[1]!)).toBeTruthy();
+    });
+
+    it('should not show caret for rows without children and without expandedRowTemplate', () => {
+      fixture.componentRef.setInput('columns', expandableColumns);
+      fixture.componentRef.setInput('data', expandableData);
+      fixture.componentRef.setInput('expandable', true);
+      fixture.detectChanges();
+
+      const rows = getRows();
+      const salesRow = rows[2]!;
+      expect(getExpandToggle(salesRow)).toBeFalsy();
+    });
+
+    it('should toggle expanded state on caret button click', () => {
+      fixture.componentRef.setInput('columns', expandableColumns);
+      fixture.componentRef.setInput('data', expandableData);
+      fixture.componentRef.setInput('expandable', true);
+      fixture.detectChanges();
+
+      const rows = getRows();
+      const toggle = getExpandToggle(rows[0]!)!;
+      expect(toggle.getAttribute('aria-expanded')).toBe('false');
+
+      toggle.click();
+      fixture.detectChanges();
+
+      const updatedRows = getRows();
+      const updatedToggle = getExpandToggle(updatedRows[0]!)!;
+      expect(updatedToggle.getAttribute('aria-expanded')).toBe('true');
+    });
+
+    it('should emit rowExpand with correct data when expanding', () => {
+      fixture.componentRef.setInput('columns', expandableColumns);
+      fixture.componentRef.setInput('data', expandableData);
+      fixture.componentRef.setInput('expandable', true);
+      fixture.detectChanges();
+
+      const expandSpy = jest.fn();
+      fixture.componentInstance.rowExpand.subscribe(expandSpy);
+
+      const rows = getRows();
+      getExpandToggle(rows[0]!)!.click();
+
+      expect(expandSpy).toHaveBeenCalledWith({
+        id: 1,
+        row: expandableData[0],
+        expanded: true
+      });
+    });
+
+    it('should emit rowCollapse with correct data when collapsing', () => {
+      fixture.componentRef.setInput('columns', expandableColumns);
+      fixture.componentRef.setInput('data', expandableData);
+      fixture.componentRef.setInput('expandable', true);
+      fixture.detectChanges();
+
+      const collapseSpy = jest.fn();
+      fixture.componentInstance.rowCollapse.subscribe(collapseSpy);
+
+      const rows = getRows();
+      getExpandToggle(rows[0]!)!.click();
+      fixture.detectChanges();
+
+      const updatedRows = getRows();
+      getExpandToggle(updatedRows[0]!)!.click();
+
+      expect(collapseSpy).toHaveBeenCalledWith({
+        id: 1,
+        row: expandableData[0],
+        expanded: false
+      });
+    });
+
+    it('should render child rows below parent when expanded', () => {
+      fixture.componentRef.setInput('columns', expandableColumns);
+      fixture.componentRef.setInput('data', expandableData);
+      fixture.componentRef.setInput('expandable', true);
+      fixture.detectChanges();
+
+      const rows = getRows();
+      getExpandToggle(rows[0]!)!.click();
+      fixture.detectChanges();
+
+      const childRows = fixture.nativeElement.querySelectorAll('.child-row');
+      expect(childRows.length).toBe(2);
+      expect(childRows[0].textContent).toContain('Alice');
+      expect(childRows[1].textContent).toContain('Bob');
+    });
+
+    it('should set aria-expanded correctly', () => {
+      fixture.componentRef.setInput('columns', expandableColumns);
+      fixture.componentRef.setInput('data', expandableData);
+      fixture.componentRef.setInput('expandable', true);
+      fixture.detectChanges();
+
+      const rows = getRows();
+      const toggle = getExpandToggle(rows[0]!)!;
+      expect(toggle.getAttribute('aria-expanded')).toBe('false');
+
+      toggle.click();
+      fixture.detectChanges();
+
+      const updatedRows = getRows();
+      const updatedToggle = getExpandToggle(updatedRows[0]!)!;
+      expect(updatedToggle.getAttribute('aria-expanded')).toBe('true');
+    });
+
+    it('should collapse previously open row in singleExpand mode', () => {
+      fixture.componentRef.setInput('columns', expandableColumns);
+      fixture.componentRef.setInput('data', expandableData);
+      fixture.componentRef.setInput('expandable', true);
+      fixture.componentRef.setInput('singleExpand', true);
+      fixture.detectChanges();
+
+      const rows = getRows();
+      getExpandToggle(rows[0]!)!.click();
+      fixture.detectChanges();
+
+      let childRows = fixture.nativeElement.querySelectorAll('.child-row');
+      expect(childRows.length).toBe(2);
+
+      const updatedRows = getRows();
+      getExpandToggle(updatedRows[3]!)!.click();
+      fixture.detectChanges();
+
+      childRows = fixture.nativeElement.querySelectorAll('.child-row');
+      expect(childRows.length).toBe(1);
+      expect(childRows[0].textContent).toContain('Charlie');
+    });
+
+    it('should not emit rowClick when clicking expand toggle', () => {
+      fixture.componentRef.setInput('columns', expandableColumns);
+      fixture.componentRef.setInput('data', expandableData);
+      fixture.componentRef.setInput('expandable', true);
+      fixture.detectChanges();
+
+      const rowClickSpy = jest.fn();
+      fixture.componentInstance.rowClick.subscribe(rowClickSpy);
+
+      const rows = getRows();
+      getExpandToggle(rows[0]!)!.click();
+
+      expect(rowClickSpy).not.toHaveBeenCalled();
+    });
+
+    it('should have correct colspan on loading row when expandable', () => {
+      fixture.componentRef.setInput('columns', expandableColumns);
+      fixture.componentRef.setInput('loading', true);
+      fixture.componentRef.setInput('expandable', true);
+      fixture.detectChanges();
+
+      const loadingCell = fixture.nativeElement.querySelector('tbody td');
+      expect(loadingCell.getAttribute('colspan')).toBe('3');
+    });
+
+    it('should have correct colspan on empty row when expandable', () => {
+      fixture.componentRef.setInput('columns', expandableColumns);
+      fixture.componentRef.setInput('data', []);
+      fixture.componentRef.setInput('expandable', true);
+      fixture.detectChanges();
+
+      const emptyCell = fixture.nativeElement.querySelector('tbody td');
+      expect(emptyCell.getAttribute('colspan')).toBe('3');
+    });
+
+    it('should preserve expand state after sort', () => {
+      const sortableExpandColumns: TableColumn[] = [
+        { key: 'name', label: 'Name', sortable: true },
+        { key: 'role', label: 'Role' }
+      ];
+
+      fixture.componentRef.setInput('columns', sortableExpandColumns);
+      fixture.componentRef.setInput('data', expandableData);
+      fixture.componentRef.setInput('expandable', true);
+      fixture.detectChanges();
+
+      const rows = getRows();
+      getExpandToggle(rows[0]!)!.click();
+      fixture.detectChanges();
+
+      let childRows = fixture.nativeElement.querySelectorAll('.child-row');
+      expect(childRows.length).toBe(2);
+
+      const headers = getColumnHeaders();
+      headers[1]!.click();
+      fixture.detectChanges();
+
+      childRows = fixture.nativeElement.querySelectorAll('.child-row');
+      expect(childRows.length).toBe(2);
+    });
+
+    it('should support keyboard activation on expand toggle', () => {
+      fixture.componentRef.setInput('columns', expandableColumns);
+      fixture.componentRef.setInput('data', expandableData);
+      fixture.componentRef.setInput('expandable', true);
+      fixture.detectChanges();
+
+      const rows = getRows();
+      const toggle = getExpandToggle(rows[0]!)!;
+
+      toggle.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+      toggle.click();
+      fixture.detectChanges();
+
+      const updatedRows = getRows();
+      const updatedToggle = getExpandToggle(updatedRows[0]!)!;
+      expect(updatedToggle.getAttribute('aria-expanded')).toBe('true');
+    });
+  });
+
+});
+
+@Component({
+  imports: [PshTableComponent],
+  template: `
+    <psh-table
+      [columns]="columns"
+      [data]="data"
+      [expandable]="true"
+      [expandedRowTemplate]="detailTpl"
+    ></psh-table>
+    <ng-template #detailTpl let-row>
+      <div class="custom-detail">Detail for {{ row.name }}</div>
+    </ng-template>
+  `
+})
+class TestHostComponent {
+  columns: TableColumn[] = [
+    { key: 'name', label: 'Name' }
+  ];
+  data: TableRow[] = [
+    { id: 1, name: 'Alpha' },
+    { id: 2, name: 'Beta' }
+  ];
+}
+
+describe('PshTableComponent - Expandable rows with custom template', () => {
+  let hostFixture: ComponentFixture<TestHostComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [TestHostComponent]
+    }).compileComponents();
+
+    hostFixture = TestBed.createComponent(TestHostComponent);
+    hostFixture.detectChanges();
+  });
+
+  it('should show expand toggle when expandedRowTemplate is provided even without children', () => {
+    const toggles = hostFixture.nativeElement.querySelectorAll('.expand-toggle');
+    expect(toggles.length).toBe(2);
+  });
+
+  it('should render custom template content when expanded', () => {
+    const toggles = hostFixture.nativeElement.querySelectorAll('.expand-toggle');
+    toggles[0].click();
+    hostFixture.detectChanges();
+
+    const detail = hostFixture.nativeElement.querySelector('.custom-detail');
+    expect(detail).toBeTruthy();
+    expect(detail.textContent).toContain('Detail for Alpha');
+  });
+
+  it('should render expanded-content-row instead of child-row for custom template', () => {
+    const toggles = hostFixture.nativeElement.querySelectorAll('.expand-toggle');
+    toggles[0].click();
+    hostFixture.detectChanges();
+
+    const expandedRow = hostFixture.nativeElement.querySelector('.expanded-content-row');
+    const childRow = hostFixture.nativeElement.querySelector('.child-row');
+    expect(expandedRow).toBeTruthy();
+    expect(childRow).toBeFalsy();
   });
 });

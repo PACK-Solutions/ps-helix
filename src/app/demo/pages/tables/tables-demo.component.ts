@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, TemplateRef, viewChild } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
 import { PshTableComponent } from '@lib/components/table/table.component';
 import { TableColumn, TableRow } from '@lib/components/table/table.types';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
@@ -90,5 +91,48 @@ export class TablesDemoComponent {
       manager: 'Thomas Petit',
       status: 'Déployé en production'
     }
+  ];
+
+  expandColumns: TableColumn[] = [
+    { key: 'name', label: 'Département' },
+    { key: 'manager', label: 'Responsable' },
+    { key: 'headcount', label: 'Effectif' }
+  ];
+
+  expandData: TableRow[] = [
+    {
+      id: 1, name: 'Ingénierie', manager: 'Alice Martin', headcount: 12,
+      children: [
+        { id: 11, name: 'Frontend', manager: 'Bob Dupont', headcount: 5 },
+        { id: 12, name: 'Backend', manager: 'Claire Moreau', headcount: 4 },
+        { id: 13, name: 'DevOps', manager: 'David Petit', headcount: 3 }
+      ]
+    },
+    {
+      id: 2, name: 'Design', manager: 'Emma Lefebvre', headcount: 6,
+      children: [
+        { id: 21, name: 'UX Research', manager: 'François Blanc', headcount: 2 },
+        { id: 22, name: 'UI Design', manager: 'Gabrielle Roux', headcount: 4 }
+      ]
+    },
+    {
+      id: 3, name: 'Marketing', manager: 'Hugo Bernard', headcount: 8,
+      children: [
+        { id: 31, name: 'Digital', manager: 'Isabelle Thomas', headcount: 5 },
+        { id: 32, name: 'Communication', manager: 'Julien Richard', headcount: 3 }
+      ]
+    }
+  ];
+
+  expandDetailColumns: TableColumn[] = [
+    { key: 'name', label: 'Projet' },
+    { key: 'status', label: 'Statut' },
+    { key: 'progress', label: 'Progression' }
+  ];
+
+  expandDetailData: TableRow[] = [
+    { id: 1, name: 'Refonte UI', status: 'En cours', progress: '65%', detail: 'Migration vers Angular 21 avec le nouveau design system. Inclut la refonte complète de l\'interface utilisateur et l\'optimisation des performances.' },
+    { id: 2, name: 'API v3', status: 'Planifié', progress: '10%', detail: 'Nouvelle version de l\'API REST avec support GraphQL. Amélioration de la documentation et ajout de webhooks.' },
+    { id: 3, name: 'App Mobile', status: 'Terminé', progress: '100%', detail: 'Application mobile cross-platform déployée sur iOS et Android. Synchronisation temps réel des données.' }
   ];
 }

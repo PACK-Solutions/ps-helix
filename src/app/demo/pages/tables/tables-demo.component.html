@@ -507,6 +507,97 @@
       </div>
     </section>
 
+    <!-- Lignes Extensibles - Section Pleine Largeur -->
+    <section class="table-expandable-section">
+      <h3 class="section-title">Lignes Extensibles</h3>
+      <div class="expandable-container">
+        <div class="expandable-intro">
+          <p>Les tables supportent l'expansion des lignes pour afficher des sous-lignes enfants ou du contenu personnalisé. Un mode accordéon permet de n'ouvrir qu'une seule ligne à la fois.</p>
+        </div>
+        <div class="expandable-grid">
+          <div class="expandable-card">
+            <div class="expandable-preview">
+              <psh-table
+                [columns]="expandColumns"
+                [data]="expandData"
+                [expandable]="true"
+                [hoverable]="true"
+              ></psh-table>
+            </div>
+            <div class="expandable-info">
+              <h4>Sous-lignes Enfants</h4>
+              <p>Cliquez sur la flèche pour afficher les sous-éléments. Chaque ligne parent peut contenir des lignes enfants qui partagent la même structure de colonnes.</p>
+              <div class="code-example">
+                <pre><code>&lt;psh-table
+  [columns]="columns"
+  [data]="data"
+  [expandable]="true"
+&gt;&lt;/psh-table&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="expandable-card">
+            <div class="expandable-preview">
+              <psh-table
+                [columns]="expandColumns"
+                [data]="expandData"
+                [expandable]="true"
+                [singleExpand]="true"
+                [striped]="true"
+              ></psh-table>
+            </div>
+            <div class="expandable-info">
+              <h4>Mode Accordéon (Single Expand)</h4>
+              <p>Une seule ligne peut être ouverte à la fois. L'ouverture d'une nouvelle ligne ferme automatiquement la précédente.</p>
+              <div class="code-example">
+                <pre><code>&lt;psh-table
+  [columns]="columns"
+  [data]="data"
+  [expandable]="true"
+  [singleExpand]="true"
+&gt;&lt;/psh-table&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="expandable-card">
+            <div class="expandable-preview">
+              <psh-table
+                [columns]="expandDetailColumns"
+                [data]="expandDetailData"
+                [expandable]="true"
+                [expandedRowTemplate]="detailTemplate"
+                [bordered]="true"
+              ></psh-table>
+              <ng-template #detailTemplate let-row>
+                <div class="detail-content">
+                  <strong>{{ row.name }}</strong>
+                  <p>{{ row.detail }}</p>
+                </div>
+              </ng-template>
+            </div>
+            <div class="expandable-info">
+              <h4>Contenu Personnalisé (Template)</h4>
+              <p>Utilisez un template personnalisé pour afficher du contenu riche dans la zone d'expansion, au lieu de sous-lignes classiques.</p>
+              <div class="code-example" ngNonBindable>
+                <pre><code>&lt;psh-table
+  [columns]="columns"
+  [data]="data"
+  [expandable]="true"
+  [expandedRowTemplate]="detailTpl"
+&gt;&lt;/psh-table&gt;
+
+&lt;ng-template #detailTpl let-row&gt;
+  &lt;div&gt;&#123;&#123; row.detail &#125;&#125;&lt;/div&gt;
+&lt;/ng-template&gt;</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Documentation API - Section Pleine Largeur -->
     <section class="api-section">
       <h3 class="section-title">Documentation API</h3>
@@ -587,6 +678,24 @@
                 <td><code>false</code></td>
                 <td>Permet a la table de prendre toute la largeur disponible</td>
               </tr>
+              <tr>
+                <td><code>expandable</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Active les lignes extensibles avec colonne d'expansion</td>
+              </tr>
+              <tr>
+                <td><code>singleExpand</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Mode accordéon : une seule ligne ouverte à la fois</td>
+              </tr>
+              <tr>
+                <td><code>expandedRowTemplate</code></td>
+                <td><code>TemplateRef</code></td>
+                <td><code>undefined</code></td>
+                <td>Template personnalisé pour le contenu de la zone d'expansion</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -663,6 +772,16 @@
                 <td><code>EventEmitter&lt;TableRowClickEvent&gt;</code></td>
                 <td>Émis lorsque l'utilisateur clique sur une ligne</td>
               </tr>
+              <tr>
+                <td><code>rowExpand</code></td>
+                <td><code>EventEmitter&lt;TableRowExpandEvent&gt;</code></td>
+                <td>Émis lorsqu'une ligne est dépliée</td>
+              </tr>
+              <tr>
+                <td><code>rowCollapse</code></td>
+                <td><code>EventEmitter&lt;TableRowExpandEvent&gt;</code></td>
+                <td>Émis lorsqu'une ligne est repliée</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -685,8 +804,8 @@
               </tr>
               <tr>
                 <td><code>TableRow</code></td>
-                <td>id, [key: string]: any</td>
-                <td>Ligne de données avec identifiant unique et propriétés dynamiques</td>
+                <td>id, children?, [key: string]: any</td>
+                <td>Ligne de données avec identifiant unique, enfants optionnels et propriétés dynamiques</td>
               </tr>
               <tr>
                 <td><code>TableSort</code></td>
@@ -704,8 +823,18 @@
                 <td>Contexte pour les templates personnalisés de cellule</td>
               </tr>
               <tr>
+                <td><code>TableRowExpandEvent</code></td>
+                <td>id, row: TableRow, expanded: boolean</td>
+                <td>Événement émis lors de l'expansion ou du repli d'une ligne</td>
+              </tr>
+              <tr>
+                <td><code>TableExpandedRowContext</code></td>
+                <td>$implicit: TableRow</td>
+                <td>Contexte pour le template personnalisé de contenu étendu</td>
+              </tr>
+              <tr>
                 <td><code>TableConfig</code></td>
-                <td>variant, size, striped, hoverable, bordered, loading, emptyMessage, noResultsMessage, globalSearch, globalSearchPlaceholder, tableLayout, truncateText, fullWidth</td>
+                <td>variant, size, striped, hoverable, bordered, loading, emptyMessage, noResultsMessage, globalSearch, globalSearchPlaceholder, tableLayout, truncateText, fullWidth, expandable, singleExpand</td>
                 <td>Configuration globale injectable via TABLE_CONFIG</td>
               </tr>
             </tbody>
