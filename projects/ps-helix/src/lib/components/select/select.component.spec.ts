@@ -338,15 +338,12 @@ describe('PshSelectComponent', () => {
       expect(getCombobox().textContent).toContain('Apple');
     });
 
-    it('should emit valueChange with selected value', () => {
-      const valueChangeSpy = jest.fn();
-      fixture.componentInstance.valueChange.subscribe(valueChangeSpy);
-
+    it('should update value on selection', () => {
       openSelect();
       getOption(1).click();
       fixture.detectChanges();
 
-      expect(valueChangeSpy).toHaveBeenCalledWith('banana');
+      expect(fixture.componentInstance.value()).toBe('banana');
     });
 
     it('should close after single selection', () => {
@@ -374,14 +371,11 @@ describe('PshSelectComponent', () => {
       fixture.componentRef.setInput('options', mockOptionsWithDisabled);
       fixture.detectChanges();
 
-      const valueChangeSpy = jest.fn();
-      fixture.componentInstance.valueChange.subscribe(valueChangeSpy);
-
       openSelect();
       getOption(1).click();
       fixture.detectChanges();
 
-      expect(valueChangeSpy).not.toHaveBeenCalled();
+      expect(fixture.componentInstance.value()).toBeNull();
       expect(getCombobox().textContent).toContain('Sélectionner une option');
     });
 
@@ -400,19 +394,16 @@ describe('PshSelectComponent', () => {
       fixture.componentRef.setInput('multiple', true);
       fixture.detectChanges();
 
-      const valueChangeSpy = jest.fn();
-      fixture.componentInstance.valueChange.subscribe(valueChangeSpy);
-
       openSelect();
       getOption(0).click();
       fixture.detectChanges();
 
-      expect(valueChangeSpy).toHaveBeenLastCalledWith(['apple']);
+      expect(fixture.componentInstance.value()).toEqual(['apple']);
 
       getOption(0).click();
       fixture.detectChanges();
 
-      expect(valueChangeSpy).toHaveBeenLastCalledWith([]);
+      expect(fixture.componentInstance.value()).toEqual([]);
     });
 
     it('should display multiple selected labels separated by comma', () => {
@@ -451,10 +442,7 @@ describe('PshSelectComponent', () => {
       expect(getClearButton()).toBeTruthy();
     });
 
-    it('should clear selection and emit event when clear button clicked', () => {
-      const valueChangeSpy = jest.fn();
-      fixture.componentInstance.valueChange.subscribe(valueChangeSpy);
-
+    it('should clear selection when clear button clicked', () => {
       openSelect();
       getOption(0).click();
       fixture.detectChanges();
@@ -462,16 +450,13 @@ describe('PshSelectComponent', () => {
       getClearButton().click();
       fixture.detectChanges();
 
-      expect(valueChangeSpy).toHaveBeenLastCalledWith(null);
+      expect(fixture.componentInstance.value()).toBeNull();
       expect(getCombobox().textContent).toContain('Sélectionner une option');
     });
 
     it('should clear to empty array in multiple mode', () => {
       fixture.componentRef.setInput('multiple', true);
       fixture.detectChanges();
-
-      const valueChangeSpy = jest.fn();
-      fixture.componentInstance.valueChange.subscribe(valueChangeSpy);
 
       openSelect();
       getOption(0).click();
@@ -483,7 +468,7 @@ describe('PshSelectComponent', () => {
       getClearButton().click();
       fixture.detectChanges();
 
-      expect(valueChangeSpy).toHaveBeenLastCalledWith([]);
+      expect(fixture.componentInstance.value()).toEqual([]);
     });
   });
 
@@ -586,25 +571,19 @@ describe('PshSelectComponent', () => {
     });
 
     it('should select focused option on Enter', () => {
-      const valueChangeSpy = jest.fn();
-      fixture.componentInstance.valueChange.subscribe(valueChangeSpy);
-
       openSelect();
       pressKey('ArrowDown');
       pressKey('Enter');
 
-      expect(valueChangeSpy).toHaveBeenCalledWith('apple');
+      expect(fixture.componentInstance.value()).toBe('apple');
     });
 
     it('should select focused option on Space', () => {
-      const valueChangeSpy = jest.fn();
-      fixture.componentInstance.valueChange.subscribe(valueChangeSpy);
-
       openSelect();
       pressKey('ArrowDown');
       pressKey(' ');
 
-      expect(valueChangeSpy).toHaveBeenCalledWith('apple');
+      expect(fixture.componentInstance.value()).toBe('apple');
     });
   });
 
@@ -986,9 +965,6 @@ describe('PshSelectComponent', () => {
       fixture.componentRef.setInput('maxSelections', 2);
       fixture.detectChanges();
 
-      const valueChangeSpy = jest.fn();
-      fixture.componentInstance.valueChange.subscribe(valueChangeSpy);
-
       openSelect();
       getOption(0).click();
       fixture.detectChanges();
@@ -997,7 +973,7 @@ describe('PshSelectComponent', () => {
       getOption(2).click();
       fixture.detectChanges();
 
-      expect(valueChangeSpy).toHaveBeenLastCalledWith(['apple', 'banana']);
+      expect(fixture.componentInstance.value()).toEqual(['apple', 'banana']);
     });
 
     it('should respect minSelections in multiple mode', () => {
@@ -1005,20 +981,16 @@ describe('PshSelectComponent', () => {
       fixture.componentRef.setInput('minSelections', 1);
       fixture.detectChanges();
 
-      const valueChangeSpy = jest.fn();
-      fixture.componentInstance.valueChange.subscribe(valueChangeSpy);
-
       openSelect();
       getOption(0).click();
       fixture.detectChanges();
 
-      expect(valueChangeSpy).toHaveBeenCalledTimes(1);
-      expect(valueChangeSpy).toHaveBeenCalledWith(['apple']);
+      expect(fixture.componentInstance.value()).toEqual(['apple']);
 
       getOption(0).click();
       fixture.detectChanges();
 
-      expect(valueChangeSpy).toHaveBeenCalledTimes(1);
+      expect(fixture.componentInstance.value()).toEqual(['apple']);
     });
   });
 
@@ -1061,28 +1033,22 @@ describe('PshSelectComponent', () => {
       fixture.componentRef.setInput('options', mockDisabledGroup);
       fixture.detectChanges();
 
-      const valueChangeSpy = jest.fn();
-      fixture.componentInstance.valueChange.subscribe(valueChangeSpy);
-
       openSelect();
       getOption(0).click();
       fixture.detectChanges();
 
-      expect(valueChangeSpy).not.toHaveBeenCalled();
+      expect(fixture.componentInstance.value()).toBeNull();
     });
 
     it('should allow selecting options from enabled group', () => {
       fixture.componentRef.setInput('options', mockDisabledGroup);
       fixture.detectChanges();
 
-      const valueChangeSpy = jest.fn();
-      fixture.componentInstance.valueChange.subscribe(valueChangeSpy);
-
       openSelect();
       getOption(2).click();
       fixture.detectChanges();
 
-      expect(valueChangeSpy).toHaveBeenCalledWith('c');
+      expect(fixture.componentInstance.value()).toBe('c');
     });
   });
 
@@ -1091,14 +1057,11 @@ describe('PshSelectComponent', () => {
       fixture.componentRef.setInput('options', mockOptionGroups);
       fixture.detectChanges();
 
-      const valueChangeSpy = jest.fn();
-      fixture.componentInstance.valueChange.subscribe(valueChangeSpy);
-
       openSelect();
       getOption(2).click();
       fixture.detectChanges();
 
-      expect(valueChangeSpy).toHaveBeenCalledWith('carrot');
+      expect(fixture.componentInstance.value()).toBe('carrot');
     });
 
     it('should display selected option label from group', () => {
@@ -1213,8 +1176,6 @@ describe('PshSelectComponent with ControlValueAccessor', () => {
   });
 });
 
-// ── CVA emission safety tests ────────────────────────────────────────
-
 @Component({
   template: `
     <psh-select
@@ -1237,7 +1198,7 @@ class CvaEmissionTestHost {
   onDisabledChange = jest.fn();
 }
 
-describe('PshSelectComponent CVA emission safety', () => {
+describe('PshSelectComponent CVA emission with model()', () => {
   let fixture: ComponentFixture<CvaEmissionTestHost>;
   let host: CvaEmissionTestHost;
 
@@ -1262,34 +1223,37 @@ describe('PshSelectComponent CVA emission safety', () => {
     fixture.detectChanges();
   });
 
-  it('should NOT emit valueChange when form control sets value via setValue', () => {
+  it('should emit valueChange when form control sets value via setValue', () => {
     host.onValueChange.mockClear();
 
     host.control.setValue('opt1');
     fixture.detectChanges();
 
-    expect(host.onValueChange).not.toHaveBeenCalled();
+    expect(host.onValueChange).toHaveBeenCalledTimes(1);
+    expect(host.onValueChange).toHaveBeenCalledWith('opt1');
   });
 
-  it('should NOT emit valueChange when form control sets value via patchValue', () => {
+  it('should emit valueChange when form control sets value via patchValue', () => {
     host.onValueChange.mockClear();
 
     host.control.patchValue('opt2');
     fixture.detectChanges();
 
-    expect(host.onValueChange).not.toHaveBeenCalled();
+    expect(host.onValueChange).toHaveBeenCalledTimes(1);
+    expect(host.onValueChange).toHaveBeenCalledWith('opt2');
   });
 
-  it('should NOT emit disabledChange when form control is disabled', () => {
+  it('should emit disabledChange when form control is disabled', () => {
     host.onDisabledChange.mockClear();
 
     host.control.disable();
     fixture.detectChanges();
 
-    expect(host.onDisabledChange).not.toHaveBeenCalled();
+    expect(host.onDisabledChange).toHaveBeenCalledTimes(1);
+    expect(host.onDisabledChange).toHaveBeenCalledWith(true);
   });
 
-  it('should NOT emit disabledChange when form control is enabled', () => {
+  it('should emit disabledChange when form control is enabled', () => {
     host.control.disable();
     fixture.detectChanges();
     host.onDisabledChange.mockClear();
@@ -1297,10 +1261,11 @@ describe('PshSelectComponent CVA emission safety', () => {
     host.control.enable();
     fixture.detectChanges();
 
-    expect(host.onDisabledChange).not.toHaveBeenCalled();
+    expect(host.onDisabledChange).toHaveBeenCalledTimes(1);
+    expect(host.onDisabledChange).toHaveBeenCalledWith(false);
   });
 
-  it('should emit valueChange exactly once on user selection', () => {
+  it('should emit valueChange on user selection', () => {
     host.onValueChange.mockClear();
 
     openSelect();
@@ -1315,15 +1280,16 @@ describe('PshSelectComponent CVA emission safety', () => {
     expect(host.onValueChange).not.toHaveBeenCalled();
   });
 
-  it('should emit valueChange once when using formControlName and (valueChange) together', () => {
+  it('should emit valueChange on both programmatic set and user selection', () => {
     host.onValueChange.mockClear();
 
-    // Programmatic set should NOT fire
     host.control.setValue('opt1');
     fixture.detectChanges();
-    expect(host.onValueChange).not.toHaveBeenCalled();
+    expect(host.onValueChange).toHaveBeenCalledTimes(1);
+    expect(host.onValueChange).toHaveBeenCalledWith('opt1');
 
-    // User selection should fire exactly once
+    host.onValueChange.mockClear();
+
     openSelect();
     getOptions()[1]!.click();
     fixture.detectChanges();

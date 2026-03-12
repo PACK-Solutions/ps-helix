@@ -5,15 +5,14 @@ import {
   ElementRef,
   inject,
   input,
+  model,
   output,
   signal,
-  linkedSignal,
-  DestroyRef,
-  ChangeDetectorRef,
-  AfterContentInit
+  DestroyRef
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
+import type { FormValueControl } from '@angular/forms/signals';
 import { SelectOption, SelectOptionGroup, SelectSize, SearchConfig } from './select.types';
 
 interface FlatOption<T> {
@@ -46,25 +45,15 @@ interface FlatOption<T> {
     '[attr.data-state]': 'state()'
   }
 })
-export class PshSelectComponent<T = unknown> implements ControlValueAccessor, AfterContentInit {
+export class PshSelectComponent<T = unknown> implements ControlValueAccessor, FormValueControl<T | T[] | null> {
   private readonly elementRef = inject(ElementRef);
-  private readonly cdr = inject(ChangeDetectorRef);
   private readonly destroyRef = inject(DestroyRef);
 
   protected readonly selectId = `psh-sel-${Math.random().toString(36).substring(2, 11)}`;
 
-  readonly _valueIn = input<T | T[] | null>(null, { alias: 'value' });
-  readonly _disabledIn = input<boolean>(false, { alias: 'disabled' });
-
-  private readonly _value = linkedSignal(() => this._valueIn());
-  private readonly _disabled = linkedSignal(() => this._disabledIn());
-  readonly touched = signal(false);
-
-  readonly value = computed(() => this._value());
-  readonly disabled = computed(() => this._disabled());
-
-  readonly valueChange = output<T | T[] | null>();
-  readonly disabledChange = output<boolean>();
+  readonly value = model<T | T[] | null>(null);
+  readonly disabled = model<boolean>(false);
+  readonly touched = model<boolean>(false);
 
   size = input<SelectSize>('medium');
   searchable = input(false);
@@ -93,7 +82,6 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Af
 
   private readonly isOpenSignal = signal(false);
   private readonly searchTermSignal = signal('');
-  private readonly initializedSignal = signal(false);
   readonly focusedIndex = signal(-1);
 
   opened = output<void>();
@@ -148,7 +136,7 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Af
     const currentValue = this.value();
     const currentOptions = this.flattenOptions(this.options());
 
-    if (!this.initializedSignal() || (currentValue === null || currentValue === undefined)) {
+    if (currentValue === null || currentValue === undefined) {
       return this.multiple() ? this.multiplePlaceholder() : this.placeholder();
     }
 
@@ -193,22 +181,16 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Af
     this.destroyRef.onDestroy(() => document.removeEventListener('click', clickHandler));
   }
 
-  ngAfterContentInit() {
-    this.initializedSignal.set(true);
-  }
-
   private onChange = (_: unknown) => {};
   private onTouched = () => {};
 
   writeValue(value: unknown): void {
-    this._value.set(value as T | T[] | null);
-    this.initializedSignal.set(true);
-    this.cdr.markForCheck();
+    this.value.set(value as T | T[] | null);
   }
 
   registerOnChange(fn: any): void { this.onChange = fn; }
   registerOnTouched(fn: any): void { this.onTouched = fn; }
-  setDisabledState(isDisabled: boolean): void { this._disabled.set(isDisabled); }
+  setDisabledState(isDisabled: boolean): void { this.disabled.set(isDisabled); }
 
   toggle(): void {
     if (this.disabled() || this.loading()) return;
@@ -243,14 +225,12 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Af
         if (min !== undefined && current.length <= min) return;
         current.splice(index, 1);
       }
-      this._value.set(current as T | T[] | null);
+      this.value.set(current as T | T[] | null);
       this.onChange(current);
-      this.valueChange.emit(current as T | T[] | null);
     } else {
-      this._value.set(option.value as T | T[] | null);
+      this.value.set(option.value as T | T[] | null);
       this.onChange(option.value);
       this.close();
-      this.valueChange.emit(option.value as T | T[] | null);
     }
     this.onTouched();
     this.touched.set(true);
@@ -259,9 +239,8 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Af
   clear(event: MouseEvent): void {
     event.stopPropagation();
     const newVal = (this.multiple() ? [] : null) as T | T[] | null;
-    this._value.set(newVal);
+    this.value.set(newVal);
     this.onChange(this.value());
-    this.valueChange.emit(this.value());
   }
 
   onSearch(event: Event): void {
