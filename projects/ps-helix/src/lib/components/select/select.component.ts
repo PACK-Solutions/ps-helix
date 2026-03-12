@@ -13,7 +13,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
-import { SelectOption, SelectOptionGroup, SelectSize, SearchConfig } from './select.types';
+import { SelectOption, SelectOptionGroup, SelectSize, SelectVariant, SearchConfig } from './select.types';
 
 interface FlatOption<T> {
   option: SelectOption<T>;
@@ -37,6 +37,8 @@ interface FlatOption<T> {
     '[class.full-width]': 'fullWidth()',
     '[class.small]': 'size() === "small"',
     '[class.large]': 'size() === "large"',
+    '[class.outlined]': 'variant() === "outlined"',
+    '[class.filled]': 'variant() === "filled"',
     '[class.error]': '!!error()',
     '[class.success]': '!!success()',
     '[class.disabled]': 'disabled()',
@@ -56,6 +58,7 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
   readonly touched = model<boolean>(false);
 
   size = input<SelectSize>('medium');
+  variant = input<SelectVariant>('outlined');
   searchable = input(false);
   multiple = input(false);
   clearable = input(false);

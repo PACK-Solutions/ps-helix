@@ -13,6 +13,7 @@ export interface SelectOptionGroup<T> {
 }
 
 export type SelectSize = 'small' | 'medium' | 'large';
+export type SelectVariant = 'outlined' | 'filled';
 
 export interface SearchConfig {
   debounceTime: number;

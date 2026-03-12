@@ -24,8 +24,8 @@
   width: 100%;
   height: 2.5rem;
   padding: 0 1rem;
-  background: var(--surface-card);
-  border: 0.0625rem solid var(--surface-border);
+  background: var(--surface-0);
+  border: 0.125rem solid var(--surface-border);
   border-radius: var(--border-radius);
   cursor: pointer;
   box-sizing: border-box;
@@ -34,13 +34,23 @@
 .select-trigger:focus {
   border-color: var(--primary-color);
   outline: none;
+  box-shadow: 0 0 0 0.125rem var(--focus-ring-color);
 }
 
 :host.error .select-trigger { border-color: var(--danger-color); }
-:host.error .select-trigger:focus { box-shadow: 0 0 0 0.5rem var(--focus-ring-error); }
+:host.error .select-trigger:focus { box-shadow: 0 0 0 0.125rem var(--focus-ring-error); }
 :host.success .select-trigger { border-color: var(--success-color); }
-:host.success .select-trigger:focus { box-shadow: 0 0 0 0.5rem var(--focus-ring-success); }
+:host.success .select-trigger:focus { box-shadow: 0 0 0 0.125rem var(--focus-ring-success); }
 :host.disabled .select-trigger { background: var(--surface-ground); cursor: not-allowed; opacity: var(--opacity-disabled); }
+
+:host.filled .select-trigger {
+  background: var(--surface-ground);
+  border: 0.125rem solid var(--surface-border);
+}
+
+:host.filled .select-trigger:hover:not([disabled]):not(:focus) {
+  background: var(--surface-hover);
+}
 
 .select-value {
   flex: 1;
@@ -93,8 +103,8 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  background: var(--surface-card);
-  border: 0.0625rem solid var(--surface-border);
+  background: var(--surface-0);
+  border: 0.125rem solid var(--surface-border);
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-lg);
 }

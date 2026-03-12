@@ -48,7 +48,7 @@ input {
   font-size: 1rem; /* var(--font-size-base) */
   color: var(--text-color);
   background: var(--surface-0);
-  border: 0.0625rem solid var(--surface-border); /* 1px */
+  border: 0.125rem solid var(--surface-border); /* 2px */
   border-radius: var(--border-radius);
   transition: all var(--animation-duration-default) var(--animation-easing-default);
 }
@@ -71,12 +71,11 @@ input:focus {
 /* --- Variantes (Via Host) --- */
 :host.outlined input {
   background: transparent;
-  border: 0.125rem solid var(--surface-border); /* 2px */
 }
 
 :host.filled input {
   background: var(--surface-ground);
-  border: 0.0625rem solid transparent;
+  border: 0.125rem solid var(--surface-border); /* 2px */
 }
 
 :host.filled input:hover:not(:disabled):not(:focus) {
