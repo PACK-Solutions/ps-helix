@@ -37,9 +37,9 @@
 }
 
 :host.error .select-trigger { border-color: var(--danger-color); }
-:host.error .select-trigger:focus { box-shadow: 0 0 0 0.125rem var(--focus-ring-error); }
+:host.error .select-trigger:focus { box-shadow: 0 0 0 0.5rem var(--focus-ring-error); }
 :host.success .select-trigger { border-color: var(--success-color); }
-:host.success .select-trigger:focus { box-shadow: 0 0 0 0.125rem var(--focus-ring-success); }
+:host.success .select-trigger:focus { box-shadow: 0 0 0 0.5rem var(--focus-ring-success); }
 :host.disabled .select-trigger { background: var(--surface-ground); cursor: not-allowed; opacity: var(--opacity-disabled); }
 
 .select-value {
