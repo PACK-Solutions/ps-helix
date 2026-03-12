@@ -115,9 +115,7 @@ export class SelectDemoComponent {
     console.log('Select closed');
   }
 
-  signalFormCode = `import { signal } from '@angular/core';
-
-selectedCountry = signal<string | null>(null);
+  signalFormCode = `selectedCountry: string | null = null;
 
 // Template :
 <psh-select

@@ -15,19 +15,15 @@ import { PshSelectComponent } from 'ps-helix';
 })
 ```
 
-### Utilisation avec Signal Forms (recommande)
+### Two-Way Binding (recommandé)
 
 ```typescript
-import { signal } from '@angular/core';
-import { form, FormField } from '@angular/forms/signals';
-
-model = signal({ country: null as string | null });
-myForm = form(this.model);
+selectedCountry: string | null = null;
 ```
 
 ```html
 <psh-select
-  [formField]="myForm.country"
+  [(value)]="selectedCountry"
   [options]="countries"
   label="Pays"
   placeholder="Sélectionner un pays"
@@ -108,9 +104,9 @@ myForm = form(this.model);
 ### Outputs
 | Nom | Type | Description |
 |-----|------|-------------|
-| valueChange | `T \| T[] \| null` | Émis automatiquement par le model lors du changement de valeur |
-| disabledChange | `boolean` | Émis automatiquement par le model lors du changement d'état désactivé |
-| touchedChange | `boolean` | Émis automatiquement par le model lors du changement d'état touché |
+| valueChange | `T \| T[] \| null` | Émis automatiquement par le `model()` — y compris lors des écritures programmatiques via `writeValue()` |
+| disabledChange | `boolean` | Émis automatiquement par le `model()` — y compris lors des appels programmatiques via `setDisabledState()` |
+| touchedChange | `boolean` | Émis automatiquement par le `model()` lors du changement d'état touché |
 | opened | `void` | Émis à l'ouverture du dropdown |
 | closed | `void` | Émis à la fermeture du dropdown |
 | searched | `string` | Émis lors de la recherche (si `minLength` atteint) |
@@ -267,11 +263,11 @@ export class SelectDemoComponent {
   selectedCountry = '';
 
   countries: SelectOption<string>[] = [
-    { label: 'France', value: 'FR', icon: 'ph-flag' },
-    { label: 'Allemagne', value: 'DE', icon: 'ph-flag' },
-    { label: 'Italie', value: 'IT', icon: 'ph-flag' },
-    { label: 'Espagne', value: 'ES', icon: 'ph-flag' },
-    { label: 'Royaume-Uni', value: 'UK', icon: 'ph-flag' }
+    { label: 'France', value: 'FR', icon: 'flag' },
+    { label: 'Allemagne', value: 'DE', icon: 'flag' },
+    { label: 'Italie', value: 'IT', icon: 'flag' },
+    { label: 'Espagne', value: 'ES', icon: 'flag' },
+    { label: 'Royaume-Uni', value: 'UK', icon: 'flag' }
   ];
 
   handleCountryChange(value: string) {

@@ -4,12 +4,12 @@
   [showTechnicalSection]="false"
 >
   <div demo-content>
-    <!-- Signal Forms -->
+    <!-- Two-Way Binding -->
     <section class="signal-forms-section doc-section">
-      <h3 class="section-title">Signal Forms</h3>
+      <h3 class="section-title">Two-Way Binding</h3>
       <div class="signal-forms-container">
         <div class="doc-section-intro">
-          <p>Le composant Select implémente <code>FormValueControl&lt;T | T[] | null&gt;</code> et s'intègre nativement avec les Signal Forms d'Angular 21 via <code>[formField]</code>.</p>
+          <p>Le composant Select utilise <code>model()</code> d'Angular pour exposer <code>value</code>, <code>disabled</code> et <code>touched</code> comme des signaux bidirectionnels. Il implémente également <code>ControlValueAccessor</code> pour la compatibilité avec les Reactive Forms.</p>
         </div>
         <div class="doc-grid">
           <div class="doc-card">
@@ -21,19 +21,18 @@
                 [clearable]="true"
                 label="Pays"
                 placeholder="Sélectionner un pays"
-                hint="Sélection via signal two-way binding"
+                hint="Sélection via two-way binding"
               />
               <p class="autocomplete-description">Valeur du modèle : {{ signalFormModel | json }}</p>
             </div>
             <div class="doc-card-info">
-              <h4>Select avec Signal Forms</h4>
-              <p>Intégration native avec les Signal Forms. Le composant synchronise automatiquement la valeur, l'état touché et la validation.</p>
+              <h4>Select avec Two-Way Binding</h4>
+              <p>Le two-way binding via <code>[(value)]</code> synchronise automatiquement la valeur sélectionnée. Le composant supporte également les Reactive Forms via <code>ControlValueAccessor</code>.</p>
               <div class="signal-forms-compat">
                 <h5>Compatibilité</h5>
                 <ul>
-                  <li><strong>Signal Forms</strong> : <code>[formField]="form.field"</code> via <code>FormValueControl</code></li>
-                  <li><strong>Reactive Forms</strong> : <code>[formControl]</code> et <code>formControlName</code> via <code>ControlValueAccessor</code></li>
                   <li><strong>Two-way binding</strong> : <code>[(value)]="myVar"</code> via <code>model()</code></li>
+                  <li><strong>Reactive Forms</strong> : <code>[formControl]</code> et <code>formControlName</code> via <code>ControlValueAccessor</code></li>
                 </ul>
               </div>
               <ds-code-snippet [code]="signalFormCode" />

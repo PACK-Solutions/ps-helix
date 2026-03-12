@@ -75,8 +75,10 @@
                      [class.focused]="getFlatIndex(opt) === focusedIndex()"
                      (click)="select(opt, !!item.disabled)">
                   @if (opt.icon) { <i [class]="'ph ph-' + opt.icon" aria-hidden="true"></i> }
-                  <span class="select-option-label">{{ opt.label }}</span>
-                  @if (opt.description) { <span class="select-option-description">{{ opt.description }}</span> }
+                  <div class="select-option-content">
+                    <span class="select-option-label">{{ opt.label }}</span>
+                    @if (opt.description) { <span class="select-option-description">{{ opt.description }}</span> }
+                  </div>
                 </div>
               }
             </div>
@@ -92,8 +94,10 @@
                  [class.focused]="getFlatIndex(item) === focusedIndex()"
                  (click)="select(item)">
               @if (item.icon) { <i [class]="'ph ph-' + item.icon" aria-hidden="true"></i> }
-              <span class="select-option-label">{{ item.label }}</span>
-              @if (item.description) { <span class="select-option-description">{{ item.description }}</span> }
+              <div class="select-option-content">
+                <span class="select-option-label">{{ item.label }}</span>
+                @if (item.description) { <span class="select-option-description">{{ item.description }}</span> }
+              </div>
             </div>
           }
         } @empty {
