@@ -2,16 +2,18 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   ElementRef,
   inject,
   input,
+  isDevMode,
   model,
   output,
   signal,
   OnDestroy
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DropdownItem, DropdownPlacement, DropdownSize } from './dropdown.types';
+import { DropdownIconPosition, DropdownItem, DropdownPlacement, DropdownSize } from './dropdown.types';
 
 @Component({
   selector: 'psh-dropdown',
@@ -31,6 +33,7 @@ export class PshDropdownComponent<T = string> implements OnDestroy {
   items = input<DropdownItem<T>[]>([]);
   label = input('Dropdown Menu');
   icon = input<string>();
+  iconPosition = input<DropdownIconPosition>('left');
   ariaLabel = input<string>();
 
   // Model inputs
@@ -50,9 +53,16 @@ export class PshDropdownComponent<T = string> implements OnDestroy {
   isOpen = computed(() => this.isOpenSignal());
   selectedItem = computed(() => this.selectedItemSignal());
 
-  computedAriaLabel = computed(() => 
-    this.ariaLabel() || 'Toggle dropdown menu'
-  );
+  hasLeftIcon = computed(() => !!this.icon() && this.iconPosition() === 'left');
+  hasRightIcon = computed(() => !!this.icon() && this.iconPosition() === 'right');
+  isIconOnly = computed(() => !!this.icon() && this.iconPosition() === 'only');
+
+  computedAriaLabel = computed(() => {
+    if (this.isIconOnly()) {
+      return this.ariaLabel() || this.label() || 'Toggle dropdown menu';
+    }
+    return this.ariaLabel() || 'Toggle dropdown menu';
+  });
 
   state = computed(() => this.getState());
 
@@ -64,6 +74,20 @@ export class PshDropdownComponent<T = string> implements OnDestroy {
 
   constructor() {
     this.setupClickOutsideListener();
+    if (isDevMode()) {
+      effect(() => {
+        if (this.iconPosition() === 'only' && !this.icon()) {
+          console.warn(
+            '[PshDropdownComponent] iconPosition="only" requires an icon input.',
+          );
+        }
+        if (this.isIconOnly() && !this.ariaLabel() && !this.label()) {
+          console.warn(
+            '[PshDropdownComponent] iconPosition="only" requires an ariaLabel (or label) for accessibility (WCAG 4.1.2).',
+          );
+        }
+      });
+    }
   }
 
   private setupClickOutsideListener(): void {

@@ -98,6 +98,32 @@
   min-width: 8.75rem;
 }
 
+/* Icon-only trigger: square button, no label, no caret */
+.dropdown-trigger.icon-only {
+  min-width: 0;
+  width: var(--height-input-md);
+  padding: 0;
+}
+
+.dropdown-trigger.icon-only .trigger-content {
+  gap: 0;
+}
+
+.dropdown-container.small .dropdown-trigger.icon-only {
+  width: var(--height-input-sm);
+  padding: 0;
+}
+
+.dropdown-container.large .dropdown-trigger.icon-only {
+  width: var(--height-input-lg);
+  padding: 0;
+}
+
+/* Right icon: keep the caret tight against the icon */
+.dropdown-trigger.has-icon-right .trigger-arrow {
+  margin-left: 0;
+}
+
 /* Menu */
 .dropdown-menu {
   position: absolute;

@@ -306,6 +306,47 @@
 
           <div class="icon-card">
             <div class="icon-preview">
+              <div class="icon-examples">
+                <psh-dropdown variant="primary" icon="user" iconPosition="left" label="Compte">
+                  <div dropdown-menu>
+                    @for (item of basicItems; track item.value) {
+                      <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
+                    }
+                  </div>
+                </psh-dropdown>
+                <psh-dropdown variant="outline" icon="arrow-right" iconPosition="right" label="Suivant">
+                  <div dropdown-menu>
+                    @for (item of basicItems; track item.value) {
+                      <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
+                    }
+                  </div>
+                </psh-dropdown>
+                <psh-dropdown
+                  variant="outline"
+                  icon="dots-three-vertical"
+                  iconPosition="only"
+                  ariaLabel="Ouvrir le menu d'actions"
+                >
+                  <div dropdown-menu>
+                    @for (item of iconItems; track item.value) {
+                      <button class="dropdown-item" (click)="selectItem(item.value)" [class.disabled]="item.disabled">
+                        <i class="ph ph-{{ item.icon }}" aria-hidden="true"></i>
+                        {{ item.content }}
+                      </button>
+                    }
+                  </div>
+                </psh-dropdown>
+              </div>
+            </div>
+            <div class="icon-info">
+              <h4>Position de l'icône</h4>
+              <p class="icon-usage">Contrôlez le placement de l'icône via <code>iconPosition</code> : <code>left</code> (défaut), <code>right</code> ou <code>only</code>. Le mode <code>only</code> rend un bouton carré sans label ni flèche et requiert <code>ariaLabel</code> pour rester accessible.</p>
+              <ds-code-snippet [code]="iconPositionCode" />
+            </div>
+          </div>
+
+          <div class="icon-card">
+            <div class="icon-preview">
               <psh-dropdown variant="primary">
                 <span dropdown-trigger>Menu avec icônes</span>
                 <div dropdown-menu>

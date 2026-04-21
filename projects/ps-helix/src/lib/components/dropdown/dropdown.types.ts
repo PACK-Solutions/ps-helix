@@ -25,6 +25,13 @@ export type DropdownSize = 'small' | 'medium' | 'large';
 export type DropdownPlacement = 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end';
 
 /**
+ * Placement de l'icône dans le trigger du dropdown.
+ * `'only'` rend un bouton carré sans label ni flèche : `icon` est requis et
+ * `ariaLabel` (ou `label`) est obligatoire pour respecter WCAG 4.1.2.
+ */
+export type DropdownIconPosition = 'left' | 'right' | 'only';
+
+/**
  * Configuration complète du dropdown
  */
 export interface DropdownConfig {
@@ -34,6 +41,8 @@ export interface DropdownConfig {
   size?: DropdownSize;
   /** Position du menu */
   placement?: DropdownPlacement;
+  /** Placement de l'icône dans le trigger */
+  iconPosition?: DropdownIconPosition;
   /** État désactivé */
   disabled?: boolean;
 }

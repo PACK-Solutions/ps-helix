@@ -122,6 +122,25 @@ export class DropdownsDemoComponent {
   </div>
 </psh-dropdown>`;
 
+  iconPositionCode = `<!-- Icône à gauche (défaut) -->
+<psh-dropdown icon="user" iconPosition="left" label="Compte">
+  <div dropdown-menu>...</div>
+</psh-dropdown>
+
+<!-- Icône à droite -->
+<psh-dropdown icon="arrow-right" iconPosition="right" label="Suivant">
+  <div dropdown-menu>...</div>
+</psh-dropdown>
+
+<!-- Icône seule : ariaLabel obligatoire -->
+<psh-dropdown
+  icon="dots-three-vertical"
+  iconPosition="only"
+  ariaLabel="Ouvrir le menu d'actions"
+>
+  <div dropdown-menu>...</div>
+</psh-dropdown>`;
+
   iconItemsCode = `<button class="dropdown-item">
   <i class="ph ph-pencil-simple"></i>
   Modifier
