@@ -1,14 +1,116 @@
-import { Component } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  signal,
+} from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
+import {
+  contrastRatio,
+  parseColor,
+  resolveCssVariable,
+  wcagLevel,
+  type WcagLevel,
+} from '../../utils/contrast.util';
+
+interface ContrastInfo {
+  ratio: number;
+  ratioLabel: string;
+  level: WcagLevel;
+  levelKey: 'aaa' | 'aa' | 'aa-large' | 'fail';
+  resolvedValue: string;
+  background: string;
+  backgroundValue: string;
+}
+
+type ContrastReference = 'surface' | 'text';
 
 @Component({
   selector: 'ds-colors-demo',
   imports: [TranslateModule, DemoPageLayoutComponent],
   templateUrl: './colors-demo.component.html',
-  styleUrls: ['./colors-demo.component.css']
+  styleUrls: ['./colors-demo.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ColorsDemoComponent {
+export class ColorsDemoComponent implements AfterViewInit, OnDestroy {
+  private themeObserver?: MutationObserver;
+
+  readonly contrastReference = signal<ContrastReference>('surface');
+  readonly contrastInfos = signal<Record<string, ContrastInfo>>({});
+
+  readonly levelToneLabels: Record<WcagLevel, string> = {
+    AAA: 'AAA',
+    AA: 'AA',
+    'AA Large': 'AA Large',
+    Fail: 'Échec',
+  };
+
+  ngAfterViewInit(): void {
+    this.computeContrasts();
+    this.themeObserver = new MutationObserver(() => this.computeContrasts());
+    this.themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme', 'style'],
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.themeObserver?.disconnect();
+  }
+
+  setContrastReference(reference: ContrastReference): void {
+    this.contrastReference.set(reference);
+    this.computeContrasts();
+  }
+
+  private computeContrasts(): void {
+    const reference = this.contrastReference();
+    const backgroundVar = reference === 'text' ? '--text-color' : '--surface-0';
+    const backgroundLabel =
+      reference === 'text' ? 'texte principal' : 'fond principal';
+    const backgroundValue = resolveCssVariable(backgroundVar);
+    const bg = parseColor(backgroundValue);
+    if (!bg) {
+      this.contrastInfos.set({});
+      return;
+    }
+
+    const next: Record<string, ContrastInfo> = {};
+    for (const palette of this.colorPalettes) {
+      for (const color of palette.colors) {
+        const value = resolveCssVariable(color.variable);
+        const fg = parseColor(value);
+        if (!fg) continue;
+        const ratio = contrastRatio(fg, bg);
+        const level = wcagLevel(ratio);
+        next[color.variable] = {
+          ratio,
+          ratioLabel: `${ratio.toFixed(2)} : 1`,
+          level,
+          levelKey: this.toLevelKey(level),
+          resolvedValue: value,
+          background: backgroundLabel,
+          backgroundValue,
+        };
+      }
+    }
+    this.contrastInfos.set(next);
+  }
+
+  private toLevelKey(level: WcagLevel): ContrastInfo['levelKey'] {
+    switch (level) {
+      case 'AAA':
+        return 'aaa';
+      case 'AA':
+        return 'aa';
+      case 'AA Large':
+        return 'aa-large';
+      default:
+        return 'fail';
+    }
+  }
 
   colorPrinciples = [
     {

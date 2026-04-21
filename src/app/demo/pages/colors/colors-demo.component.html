@@ -32,6 +32,31 @@
         <div class="palettes-intro">
           <p>Notre système organise les couleurs par fonction et sémantique. Chaque palette a un rôle spécifique dans la construction d'interfaces cohérentes et accessibles.</p>
         </div>
+
+        <div class="contrast-toolbar" role="group" aria-label="Référence de calcul de contraste">
+          <span class="contrast-toolbar-label">Contraste calculé vs</span>
+          <div class="contrast-toggle">
+            <button
+              type="button"
+              class="contrast-toggle-btn"
+              [class.active]="contrastReference() === 'surface'"
+              [attr.aria-pressed]="contrastReference() === 'surface'"
+              (click)="setContrastReference('surface')"
+            >
+              Fond principal
+            </button>
+            <button
+              type="button"
+              class="contrast-toggle-btn"
+              [class.active]="contrastReference() === 'text'"
+              [attr.aria-pressed]="contrastReference() === 'text'"
+              (click)="setContrastReference('text')"
+            >
+              Texte principal
+            </button>
+          </div>
+        </div>
+
         @for (palette of colorPalettes; track palette.category) {
           <div class="palette-section">
             <div class="palette-header">
@@ -53,6 +78,18 @@
                     <span class="color-name">{{ color.name }}</span>
                     <code class="color-variable">{{ color.variable }}</code>
                     <span class="color-usage">{{ color.usage }}</span>
+                    @if (contrastInfos()[color.variable]; as info) {
+                      <span
+                        class="contrast-indicator"
+                        [attr.data-level]="info.levelKey"
+                        [attr.aria-label]="'Contraste ' + info.ratioLabel + ' sur ' + info.background + ', niveau WCAG ' + levelToneLabels[info.level]"
+                        [title]="info.resolvedValue + ' sur ' + info.backgroundValue"
+                      >
+                        <span class="contrast-dot" aria-hidden="true"></span>
+                        <span class="contrast-ratio">{{ info.ratioLabel }}</span>
+                        <span class="contrast-level">{{ levelToneLabels[info.level] }}</span>
+                      </span>
+                    }
                   </div>
                 </div>
               }
