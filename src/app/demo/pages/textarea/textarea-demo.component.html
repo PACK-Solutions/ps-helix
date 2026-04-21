@@ -315,47 +315,11 @@
       <h3 class="section-title">Documentation API</h3>
       <div class="api-container">
         <div class="api-intro">
-          <p>Le composant <code>psh-textarea</code> utilise des <strong>model inputs</strong> et des <strong>input signals</strong> conformes aux standards Angular 20. Le signal <code>value</code> sert de source de vérité unique aux deux contrats Forms.</p>
+          <p>Le composant <code>psh-textarea</code> utilise des <strong>input signals</strong> et des <strong>model inputs</strong> pour une API simple et performante, conforme aux standards Angular 20.</p>
         </div>
 
         <div class="api-table-wrapper">
-          <h4>Propriétés (Model Inputs)</h4>
-          <p class="api-table-description">Propriétés à liaison bidirectionnelle (<code>[(ngModel)]</code>, <code>[(value)]</code>, <code>[formControl]</code>).</p>
-          <table class="api-table">
-            <thead>
-              <tr>
-                <th>Propriété</th>
-                <th>Type</th>
-                <th>Défaut</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><code>value</code></td>
-                <td><code>string</code></td>
-                <td><code>''</code></td>
-                <td>Valeur courante du textarea (source de vérité partagée CVA / Signal Forms)</td>
-              </tr>
-              <tr>
-                <td><code>disabled</code></td>
-                <td><code>boolean</code></td>
-                <td><code>false</code></td>
-                <td>Désactive le champ et empêche toute interaction</td>
-              </tr>
-              <tr>
-                <td><code>readonly</code></td>
-                <td><code>boolean</code></td>
-                <td><code>false</code></td>
-                <td>Champ visible mais non modifiable</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="api-table-wrapper">
-          <h4>Propriétés (Input Signals)</h4>
-          <p class="api-table-description">Propriétés de configuration unidirectionnelles.</p>
+          <h4>Inputs</h4>
           <table class="api-table">
             <thead>
               <tr>
@@ -371,6 +335,18 @@
                 <td><code>string</code></td>
                 <td><strong>requis</strong></td>
                 <td>Texte du label associé (déclaré via <code>input.required()</code>)</td>
+              </tr>
+              <tr>
+                <td><code>variant</code></td>
+                <td><code>TextareaVariant</code></td>
+                <td><code>'outlined'</code></td>
+                <td>'outlined' | 'filled'</td>
+              </tr>
+              <tr>
+                <td><code>size</code></td>
+                <td><code>TextareaSize</code></td>
+                <td><code>'medium'</code></td>
+                <td>'small' | 'medium' | 'large'</td>
               </tr>
               <tr>
                 <td><code>placeholder</code></td>
@@ -415,18 +391,6 @@
                 <td>Ajuste la hauteur au contenu via <code>effect()</code></td>
               </tr>
               <tr>
-                <td><code>variant</code></td>
-                <td><code>TextareaVariant</code></td>
-                <td><code>'outlined'</code></td>
-                <td>'outlined' | 'filled'</td>
-              </tr>
-              <tr>
-                <td><code>size</code></td>
-                <td><code>TextareaSize</code></td>
-                <td><code>'medium'</code></td>
-                <td>'small' | 'medium' | 'large'</td>
-              </tr>
-              <tr>
                 <td><code>fullWidth</code></td>
                 <td><code>boolean</code></td>
                 <td><code>false</code></td>
@@ -455,6 +419,40 @@
                 <td><code>string | null</code></td>
                 <td><code>null</code></td>
                 <td>Message d'erreur explicite (force l'état erreur)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Model Inputs (two-way binding)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>value</code></td>
+                <td><code>string</code></td>
+                <td><code>''</code></td>
+                <td>Valeur courante. Supporte <code>[(value)]</code>, <code>[(ngModel)]</code> et <code>[formControl]</code></td>
+              </tr>
+              <tr>
+                <td><code>disabled</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Désactive le champ. Supporte <code>[(disabled)]</code></td>
+              </tr>
+              <tr>
+                <td><code>readonly</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Champ visible mais non modifiable. Supporte <code>[(readonly)]</code></td>
               </tr>
             </tbody>
           </table>
@@ -492,7 +490,6 @@
 
         <div class="api-table-wrapper">
           <h4>Intégration Forms</h4>
-          <p class="api-table-description">Le composant détecte automatiquement les trois modes de liaison.</p>
           <table class="api-table">
             <thead>
               <tr>
@@ -523,6 +520,11 @@
               </tr>
             </tbody>
           </table>
+        </div>
+
+        <div class="api-usage-example">
+          <h4>Exemple d'Utilisation Complète</h4>
+          <ds-code-snippet [code]="usageCode" />
         </div>
 
         <div class="api-best-practices">

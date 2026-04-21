@@ -92,6 +92,34 @@ commentControl = new FormControl('', {
   [formControl]="commentControl"
 />`;
 
+  usageCode = `import { PshTextareaComponent } from 'ps-helix';
+
+@Component({
+  imports: [PshTextareaComponent],
+  template: \`
+    <psh-textarea
+      variant="outlined"
+      size="medium"
+      label="Votre commentaire"
+      placeholder="Partagez votre avis..."
+      helperText="200 caracteres maximum"
+      [rows]="4"
+      [maxLength]="200"
+      [showCharacterCount]="true"
+      [required]="true"
+      [(value)]="commentValue"
+      (valueChange)="handleChange($event)"
+    />
+  \`
+})
+export class MyComponent {
+  commentValue = signal('');
+
+  handleChange(value: string): void {
+    // ...
+  }
+}`;
+
   signalCode = `// Signal two-way (Angular 20+)
 bioValue = signal('');
 
