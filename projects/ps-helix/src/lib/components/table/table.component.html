@@ -1,4 +1,4 @@
-<div 
+<div
   class="table-wrapper"
   [class.striped]="striped()"
   [class.hoverable]="hoverable()"
@@ -6,29 +6,37 @@
   [class.small]="size() === 'small'"
   [class.large]="size() === 'large'"
   [class.outline]="variant() === 'outline'"
+  [class.table-fixed]="tableLayout() === 'fixed'"
+  [class.truncate]="truncateText()"
   [attr.data-state]="state()"
 >
   @if (globalSearch()) {
-    <div class="global-search">
-      <input
-        type="text"
-        [attr.placeholder]="globalSearchPlaceholder()"
-        [value]="searchTerm()"
-        (input)="handleGlobalSearch($event)"
-        [attr.aria-label]="globalSearchPlaceholder()"
+    <div class="global-search" role="search">
+      <psh-input
+        [placeholder]="globalSearchPlaceholder()"
+        [ariaLabel]="globalSearchPlaceholder()"
+        [size]="size()"
+        [fullWidth]="true"
+        [showLabel]="false"
+        iconStart="magnifying-glass"
+        type="search"
+        [(value)]="searchTermSignal"
+        (valueChange)="onSearchValueChange($event)"
       />
-      <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
     </div>
   }
 
   <table role="table">
     <thead>
       <tr>
+        @if (expandable()) {
+          <th class="expand-header" aria-label="Expand"></th>
+        }
         @for (column of columns(); track column.key) {
-          <th 
+          <th
             [style.width]="column.width"
-            [attr.aria-sort]="column.sortable ? (currentSort()?.key === column.key ? currentSort()?.direction : 'none') : null"
-            [class.sortable]="column.sortable" 
+            [attr.aria-sort]="column.sortable ? (currentSort()?.key === column.key ? (currentSort()?.direction === 'asc' ? 'ascending' : 'descending') : 'none') : null"
+            [class.sortable]="column.sortable"
             (click)="handleSort(column)"
           >
             <div class="th-content">
@@ -53,11 +61,11 @@
         }
       </tr>
     </thead>
-    
+
     <tbody>
       @if (loading()) {
         <tr class="loading-row">
-          <td [attr.colspan]="columns().length">
+          <td [attr.colspan]="totalColumns()">
             <div class="loading-indicator">
               <div class="spinner"></div>
             </div>
@@ -65,13 +73,28 @@
         </tr>
       } @else if (filteredData().length === 0) {
         <tr class="empty-row">
-          <td [attr.colspan]="columns().length">
+          <td [attr.colspan]="totalColumns()">
             {{ computedEmptyMessage() }}
           </td>
         </tr>
       } @else {
         @for (row of filteredData(); track row.id) {
-          <tr (click)="handleRowClick(row)">
+          <tr (click)="handleRowClick(row)" [class.expanded]="expandable() && isRowExpanded(row)">
+            @if (expandable()) {
+              <td class="expand-cell">
+                @if (isRowExpandable(row)) {
+                  <button
+                    type="button"
+                    class="expand-toggle"
+                    [attr.aria-expanded]="isRowExpanded(row)"
+                    [attr.aria-label]="isRowExpanded(row) ? 'Collapse row' : 'Expand row'"
+                    (click)="toggleRow(row); $event.stopPropagation()"
+                  >
+                    <i class="ph ph-caret-right"></i>
+                  </button>
+                }
+              </td>
+            }
             @for (column of columns(); track column.key) {
               <td>
                 @if (column.template) {
@@ -85,6 +108,39 @@
               </td>
             }
           </tr>
+
+          @if (expandable() && isRowExpanded(row)) {
+            @if (expandedRowTemplate()) {
+              <tr class="expanded-content-row">
+                <td [attr.colspan]="totalColumns()">
+                  <ng-container
+                    [ngTemplateOutlet]="expandedRowTemplate()!"
+                    [ngTemplateOutletContext]="{ $implicit: row }"
+                  ></ng-container>
+                </td>
+              </tr>
+            } @else if (row.children?.length) {
+              @for (child of row.children; track child.id) {
+                <tr class="child-row">
+                  @if (expandable()) {
+                    <td class="expand-cell"></td>
+                  }
+                  @for (column of columns(); track column.key) {
+                    <td>
+                      @if (column.template) {
+                        <ng-container
+                          [ngTemplateOutlet]="column.template"
+                          [ngTemplateOutletContext]="{ $implicit: child, column: column }"
+                        ></ng-container>
+                      } @else {
+                        {{ getCellValue(child, column) }}
+                      }
+                    </td>
+                  }
+                </tr>
+              }
+            }
+          }
         }
       }
     </tbody>

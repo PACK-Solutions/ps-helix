@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, output, InjectionToken } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output, InjectionToken, ElementRef, AfterContentChecked, signal } from '@angular/core';
 import { TagVariant, TagSize, TagConfig } from './tag.types';
 
 export const TAG_CONFIG = new InjectionToken<Partial<TagConfig>>('TAG_CONFIG', {
@@ -9,29 +8,20 @@ export const TAG_CONFIG = new InjectionToken<Partial<TagConfig>>('TAG_CONFIG', {
     closable: false,
     disabled: false,
     interactive: false,
-    closeLabel: 'Supprimer le tag',
-    ariaLabels: {
-      close: 'Supprimer le tag',
-      disabled: 'Tag désactivé',
-      status: 'État'
-    }
+    closeLabel: 'Supprimer le tag'
   })
-});
-
-export const TAG_STYLES = new InjectionToken<Record<string, string>[]>('TAG_STYLES', {
-  factory: () => []
 });
 
 @Component({
   selector: 'psh-tag',
-  imports: [CommonModule],
   templateUrl: './tag.component.html',
   styleUrls: ['./tag.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PshTagComponent {
+export class PshTagComponent implements AfterContentChecked {
   private readonly config = inject(TAG_CONFIG);
-  private readonly styles = inject(TAG_STYLES, { optional: true }) ?? [];
+  private readonly elementRef = inject(ElementRef);
+  private readonly projectedText = signal('');
 
   readonly variant = input<TagVariant>(this.config.variant ?? 'primary');
   readonly size = input<TagSize>(this.config.size ?? 'medium');
@@ -51,10 +41,23 @@ export class PshTagComponent {
     if (customLabel) return customLabel;
 
     const contentText = this.content();
-    if (contentText) return contentText;
+    if (contentText && contentText !== 'Tag') return contentText;
+
+    const projected = this.projectedText();
+    if (projected) return projected;
 
     return 'Tag';
   });
+
+  ngAfterContentChecked(): void {
+    const contentElement = this.elementRef.nativeElement.querySelector('.tag-content');
+    if (contentElement) {
+      const text = (contentElement.textContent || '').trim();
+      if (text !== this.projectedText()) {
+        this.projectedText.set(text);
+      }
+    }
+  }
 
   readonly computedRole = computed(() =>
     this.interactive() ? 'button' : 'status'
@@ -64,13 +67,20 @@ export class PshTagComponent {
     this.interactive() && !this.disabled() ? 0 : -1
   );
 
-  readonly customStyles = computed(() => Object.assign({}, ...this.styles));
-
   readonly state = computed(() => this.disabled() ? 'disabled' : 'default');
 
   handleClick(event: MouseEvent): void {
-    if (!this.disabled()) {
+    if (!this.disabled() && this.interactive()) {
       this.clicked.emit(event);
+    }
+  }
+
+  handleKeydown(event: KeyboardEvent): void {
+    if (this.disabled() || !this.interactive()) return;
+
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      this.clicked.emit(event as unknown as MouseEvent);
     }
   }
 

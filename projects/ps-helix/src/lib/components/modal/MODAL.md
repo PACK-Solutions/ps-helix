@@ -82,6 +82,7 @@ import { PshModalComponent, PshButtonComponent } from 'ps-helix';
 | confirmLabel | string | 'Confirm' | Label du bouton de confirmation |
 | cancelLabel | string | 'Cancel' | Label du bouton d'annulation |
 | styleClass | string | '' | Classes CSS personnalisées pour le conteneur |
+| backdropClass | string | '' | Classes CSS personnalisées pour l'arrière-plan |
 
 ### Computed Signals (Public)
 | Nom | Type | Description |
@@ -194,6 +195,46 @@ Empêche la fermeture via le backdrop et la touche Échap :
 >
   <p>Contenu avec style personnalisé.</p>
 </psh-modal>
+```
+
+### Modales Superposées
+
+Pour gérer plusieurs modales superposées avec des z-index différents, utilisez `backdropClass` :
+
+```html
+<!-- Modale principale -->
+<psh-modal [(open)]="isPrimaryOpen" title="Modale Principale">
+  <p>Contenu principal</p>
+  <psh-button (clicked)="isSecondaryOpen = true">Ouvrir sous-modale</psh-button>
+</psh-modal>
+
+<!-- Modale secondaire avec z-index plus élevé -->
+<psh-modal
+  [(open)]="isSecondaryOpen"
+  title="Sous-modale"
+  backdropClass="stacked-modal"
+>
+  <p>Cette modale apparaît au-dessus de la première.</p>
+</psh-modal>
+```
+
+```css
+.stacked-modal {
+  z-index: calc(var(--z-index-modal-backdrop) + 10);
+}
+
+.stacked-modal .modal-container {
+  z-index: calc(var(--z-index-modal-backdrop) + 11);
+}
+```
+
+Vous pouvez également personnaliser l'opacité ou le flou du backdrop :
+
+```css
+.lighter-backdrop {
+  --modal-backdrop-opacity: 0.3;
+  --modal-backdrop-blur: 2px;
+}
 ```
 
 ## Content Slots

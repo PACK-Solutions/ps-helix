@@ -78,27 +78,101 @@ describe('PshPaginationComponent', () => {
   });
 
   describe('Size variants', () => {
-    it.each<PaginationSize>(['small', 'medium', 'large'])(
-      'should accept size="%s"',
-      (size) => {
-        fixture.componentRef.setInput('size', size);
-        fixture.detectChanges();
+    it('should apply small class for size="small"', () => {
+      fixture.componentRef.setInput('size', 'small');
+      fixture.detectChanges();
 
-        expect(getNavigation()).toBeTruthy();
-      }
-    );
+      const nav = getNavigation();
+      expect(nav.classList.contains('small')).toBe(true);
+      expect(nav.classList.contains('large')).toBe(false);
+    });
+
+    it('should not apply size class for size="medium" (default)', () => {
+      fixture.componentRef.setInput('size', 'medium');
+      fixture.detectChanges();
+
+      const nav = getNavigation();
+      expect(nav.classList.contains('small')).toBe(false);
+      expect(nav.classList.contains('large')).toBe(false);
+    });
+
+    it('should apply large class for size="large"', () => {
+      fixture.componentRef.setInput('size', 'large');
+      fixture.detectChanges();
+
+      const nav = getNavigation();
+      expect(nav.classList.contains('large')).toBe(true);
+      expect(nav.classList.contains('small')).toBe(false);
+    });
   });
 
   describe('Visual variants', () => {
-    it.each<PaginationVariant>(['default', 'outline'])(
-      'should accept variant="%s"',
-      (variant) => {
-        fixture.componentRef.setInput('variant', variant);
-        fixture.detectChanges();
+    it('should not apply outline class for variant="default"', () => {
+      fixture.componentRef.setInput('variant', 'default');
+      fixture.detectChanges();
 
-        expect(getNavigation()).toBeTruthy();
-      }
-    );
+      const nav = getNavigation();
+      expect(nav.classList.contains('outline')).toBe(false);
+    });
+
+    it('should apply outline class for variant="outline"', () => {
+      fixture.componentRef.setInput('variant', 'outline');
+      fixture.detectChanges();
+
+      const nav = getNavigation();
+      expect(nav.classList.contains('outline')).toBe(true);
+    });
+  });
+
+  describe('Input transforms and validation', () => {
+    it('should warn and fallback to "medium" for invalid size', () => {
+      const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
+      fixture.componentRef.setInput('size', 'invalid' as any);
+      fixture.detectChanges();
+
+      expect(consoleSpy).toHaveBeenCalledWith(
+        expect.stringContaining('Invalid size')
+      );
+      const nav = getNavigation();
+      expect(nav.classList.contains('small')).toBe(false);
+      expect(nav.classList.contains('large')).toBe(false);
+      consoleSpy.mockRestore();
+    });
+
+    it('should warn and fallback to "default" for invalid variant', () => {
+      const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
+      fixture.componentRef.setInput('variant', 'invalid' as any);
+      fixture.detectChanges();
+
+      expect(consoleSpy).toHaveBeenCalledWith(
+        expect.stringContaining('Invalid variant')
+      );
+      const nav = getNavigation();
+      expect(nav.classList.contains('outline')).toBe(false);
+      consoleSpy.mockRestore();
+    });
+
+    it('should warn for invalid maxVisiblePages', () => {
+      const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
+      fixture.componentRef.setInput('maxVisiblePages', 0);
+      fixture.detectChanges();
+
+      expect(consoleSpy).toHaveBeenCalledWith(
+        expect.stringContaining('Invalid maxVisiblePages')
+      );
+      consoleSpy.mockRestore();
+    });
+
+    it('should warn for negative maxVisiblePages', () => {
+      const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
+      fixture.componentRef.setInput('maxVisiblePages', -5);
+      fixture.detectChanges();
+
+      expect(consoleSpy).toHaveBeenCalledWith(
+        expect.stringContaining('Invalid maxVisiblePages')
+      );
+      consoleSpy.mockRestore();
+    });
   });
 
   describe('Page navigation by click', () => {
@@ -645,6 +719,182 @@ describe('PshPaginationComponent', () => {
       const id = getNavigation().getAttribute('id');
       expect(id).toBeTruthy();
       expect(id).toMatch(/^pagination-\d+$/);
+    });
+  });
+
+  describe('Edge cases - totalPages', () => {
+    it('should normalize totalPages = 0 to 1', () => {
+      const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
+      fixture.componentInstance.totalPages.set(0);
+      fixture.detectChanges();
+
+      expect(consoleSpy).toHaveBeenCalledWith(
+        expect.stringContaining('Invalid totalPages')
+      );
+      expect(fixture.componentInstance.totalPages()).toBe(1);
+      consoleSpy.mockRestore();
+    });
+
+    it('should normalize negative totalPages to 1', () => {
+      const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
+      fixture.componentInstance.totalPages.set(-5);
+      fixture.detectChanges();
+
+      expect(consoleSpy).toHaveBeenCalledWith(
+        expect.stringContaining('Invalid totalPages')
+      );
+      expect(fixture.componentInstance.totalPages()).toBe(1);
+      consoleSpy.mockRestore();
+    });
+
+    it('should handle totalPages = 1 correctly', () => {
+      fixture.componentInstance.totalPages.set(1);
+      fixture.componentInstance.currentPage.set(1);
+      fixture.detectChanges();
+
+      expect(getFirstButton()?.disabled).toBe(true);
+      expect(getLastButton()?.disabled).toBe(true);
+      expect(getPreviousButton()?.disabled).toBe(true);
+      expect(getNextButton()?.disabled).toBe(true);
+    });
+
+    it('should normalize currentPage > totalPages', () => {
+      const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
+      fixture.componentInstance.totalPages.set(5);
+      fixture.componentInstance.currentPage.set(10);
+      fixture.detectChanges();
+
+      expect(consoleSpy).toHaveBeenCalledWith(
+        expect.stringContaining('exceeds totalPages')
+      );
+      expect(fixture.componentInstance.currentPage()).toBe(5);
+      consoleSpy.mockRestore();
+    });
+
+    it('should normalize negative currentPage to 1', () => {
+      const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
+      fixture.componentInstance.currentPage.set(-3);
+      fixture.detectChanges();
+
+      expect(consoleSpy).toHaveBeenCalledWith(
+        expect.stringContaining('Invalid currentPage')
+      );
+      expect(fixture.componentInstance.currentPage()).toBe(1);
+      consoleSpy.mockRestore();
+    });
+
+    it('should normalize currentPage = 0 to 1', () => {
+      const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
+      fixture.componentInstance.currentPage.set(0);
+      fixture.detectChanges();
+
+      expect(consoleSpy).toHaveBeenCalledWith(
+        expect.stringContaining('Invalid currentPage')
+      );
+      expect(fixture.componentInstance.currentPage()).toBe(1);
+      consoleSpy.mockRestore();
+    });
+  });
+
+  describe('Edge cases - maxVisiblePages', () => {
+    it('should handle maxVisiblePages = 1', () => {
+      fixture.componentRef.setInput('totalPages', 10);
+      fixture.componentRef.setInput('currentPage', 5);
+      fixture.componentRef.setInput('maxVisiblePages', 1);
+      fixture.detectChanges();
+
+      const pageButtons = getPageButtons();
+      expect(pageButtons.length).toBe(1);
+    });
+
+    it('should handle maxVisiblePages > totalPages', () => {
+      fixture.componentRef.setInput('totalPages', 3);
+      fixture.componentRef.setInput('currentPage', 2);
+      fixture.componentRef.setInput('maxVisiblePages', 10);
+      fixture.detectChanges();
+
+      const pageButtons = getPageButtons();
+      expect(pageButtons.length).toBe(3);
+    });
+
+    it('should handle maxVisiblePages with even number', () => {
+      fixture.componentRef.setInput('totalPages', 20);
+      fixture.componentRef.setInput('currentPage', 10);
+      fixture.componentRef.setInput('maxVisiblePages', 4);
+      fixture.detectChanges();
+
+      const pageButtons = getPageButtons();
+      expect(pageButtons.length).toBe(4);
+
+      const pageNumbers = pageButtons.map((btn) => {
+        const match = btn.getAttribute('aria-label')?.match(/\d+/);
+        return match ? parseInt(match[0]) : 0;
+      });
+      expect(pageNumbers).toEqual([8, 9, 10, 11]);
+    });
+
+    it('should handle maxVisiblePages = 2 at start', () => {
+      fixture.componentRef.setInput('totalPages', 20);
+      fixture.componentRef.setInput('currentPage', 1);
+      fixture.componentRef.setInput('maxVisiblePages', 2);
+      fixture.detectChanges();
+
+      const pageButtons = getPageButtons();
+      expect(pageButtons.length).toBe(2);
+
+      const pageNumbers = pageButtons.map((btn) => {
+        const match = btn.getAttribute('aria-label')?.match(/\d+/);
+        return match ? parseInt(match[0]) : 0;
+      });
+      expect(pageNumbers).toEqual([1, 2]);
+    });
+  });
+
+  describe('Keyboard navigation - preventDefault', () => {
+    beforeEach(() => {
+      fixture.componentRef.setInput('totalPages', 10);
+      fixture.componentRef.setInput('currentPage', 5);
+      fixture.detectChanges();
+    });
+
+    it('should prevent default on ArrowRight', () => {
+      const event = new KeyboardEvent('keydown', { key: 'ArrowRight' });
+      const preventDefaultSpy = jest.spyOn(event, 'preventDefault');
+      getNavigation().dispatchEvent(event);
+
+      expect(preventDefaultSpy).toHaveBeenCalled();
+    });
+
+    it('should prevent default on ArrowLeft', () => {
+      const event = new KeyboardEvent('keydown', { key: 'ArrowLeft' });
+      const preventDefaultSpy = jest.spyOn(event, 'preventDefault');
+      getNavigation().dispatchEvent(event);
+
+      expect(preventDefaultSpy).toHaveBeenCalled();
+    });
+
+    it('should prevent default on Home', () => {
+      const event = new KeyboardEvent('keydown', { key: 'Home' });
+      const preventDefaultSpy = jest.spyOn(event, 'preventDefault');
+      getNavigation().dispatchEvent(event);
+
+      expect(preventDefaultSpy).toHaveBeenCalled();
+    });
+
+    it('should prevent default on End', () => {
+      const event = new KeyboardEvent('keydown', { key: 'End' });
+      const preventDefaultSpy = jest.spyOn(event, 'preventDefault');
+      getNavigation().dispatchEvent(event);
+
+      expect(preventDefaultSpy).toHaveBeenCalled();
+    });
+
+    it('should not prevent default on other keys', () => {
+      const event = new KeyboardEvent('keydown', { key: 'Enter' });
+      const preventDefaultSpy = jest.spyOn(event, 'preventDefault');
+      getNavigation().dispatchEvent(event);
+
+      expect(preventDefaultSpy).not.toHaveBeenCalled();
     });
   });
 });

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { PshAlertComponent } from '@lib/components/alert/alert.component';
 import { PshButtonComponent } from '@lib/components/button/button.component';
@@ -15,7 +15,8 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
     CodeSnippetComponent
   ],
   templateUrl: './alerts-demo.component.html',
-  styleUrls: ['./alerts-demo.component.css']
+  styleUrls: ['./alerts-demo.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AlertsDemoComponent {
   showDismissibleAlert = true;

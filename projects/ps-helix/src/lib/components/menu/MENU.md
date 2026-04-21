@@ -39,10 +39,20 @@ import { MenuItem } from 'ps-helix';
       [(collapsed)]="isCollapsed"
       (submenuToggle)="handleSubmenuToggle($event)"
     />
+
+    <!-- Menu avec contrôle d'expansion -->
+    <psh-menu
+      #menuRef
+      [items]="menuItems"
+      [(expandedItemIds)]="expandedIds"
+    />
+    <button (click)="menuRef.expandAll()">Tout ouvrir</button>
+    <button (click)="menuRef.collapseAll()">Tout fermer</button>
   `
 })
 export class ExampleComponent {
   isCollapsed = false;
+  expandedIds: string[] = [];
 
   menuItems: MenuItem[] = [
     { id: 'home', content: 'Home', icon: 'house', path: '/home' },
@@ -82,12 +92,22 @@ export class ExampleComponent {
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
 | collapsed | boolean | false | État plié du menu (utiliser [(collapsed)]) |
+| expandedItemIds | string[] | [] | Liste des IDs des sous-menus ouverts (utiliser [(expandedItemIds)]) |
 
 ### Outputs
 | Nom | Type | Description |
 |-----|------|-------------|
 | itemClick | EventEmitter<MenuItem<T>> | Émis lors du clic sur un item sans children |
 | submenuToggle | EventEmitter<{item, expanded}> | Émis lors du toggle d'un sous-menu |
+
+### Méthodes Publiques
+| Méthode | Paramètres | Description |
+|---------|------------|-------------|
+| expandItem() | itemId: string | Ouvre le sous-menu de l'item spécifié |
+| collapseItem() | itemId: string | Ferme le sous-menu de l'item spécifié |
+| toggleItemExpansion() | itemId: string | Bascule l'état d'expansion du sous-menu |
+| expandAll() | - | Ouvre tous les sous-menus du menu |
+| collapseAll() | - | Ferme tous les sous-menus du menu |
 
 ### Interface MenuItem<T>
 ```typescript

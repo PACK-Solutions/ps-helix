@@ -1,20 +1,12 @@
-/**
- * Positions possibles pour le tooltip
- */
 export type TooltipPosition = 'top' | 'right' | 'bottom' | 'left';
 
-/**
- * Configuration complète d'un tooltip
- */
+export type TooltipVariant = 'light' | 'dark';
+
 export interface TooltipConfig {
-  /** Variante visuelle */
-  variant: 'light' | 'dark';
-  /** Position du tooltip */
+  variant: TooltipVariant;
   position: TooltipPosition;
-  /** Délai avant affichage */
   showDelay: number;
-  /** Délai avant masquage */
   hideDelay: number;
-  /** Largeur maximale */
   maxWidth: number;
+  autoFlip: boolean;
 }

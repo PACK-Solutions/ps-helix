@@ -1,3 +1,7 @@
+.doc-card-preview {
+  background: transparent;
+}
+
 /* States Section Layout */
 .states-content {
   display: grid;

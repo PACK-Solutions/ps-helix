@@ -1,15 +1,12 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
   inject,
   input,
   model,
   output,
-  signal,
   InjectionToken
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { TabBarItem, TabBarConfig, TabBarChangeEvent } from './tab-bar.types';
 
 /**
@@ -26,7 +23,6 @@ export const TAB_BAR_CONFIG = new InjectionToken<Partial<TabBarConfig>>('TAB_BAR
 
 @Component({
   selector: 'psh-tab-bar',
-  imports: [CommonModule],
   templateUrl: './tab-bar.component.html',
   styleUrls: ['./tab-bar.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
