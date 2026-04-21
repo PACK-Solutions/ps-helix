@@ -12,6 +12,10 @@
   --spacing-3xl: 4rem;        /* 64px */
   --spacing-4xl: 5rem;        /* 80px */
 
+  /* Form field spacing (shared by psh-input, psh-select, psh-textarea, etc.) */
+  --field-vertical-gap: var(--spacing-xs);   /* gap label/field/messages */
+  --field-messages-gap: var(--spacing-xxs);  /* gap between stacked messages */
+
   /* Negative spacing scale (for negative margins) */
   --negative-spacing-xxs: -0.125rem;
   --negative-spacing-xs: -0.25rem;

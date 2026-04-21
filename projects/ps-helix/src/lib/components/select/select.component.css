@@ -11,6 +11,9 @@
 .select-container {
   position: relative;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--field-vertical-gap);
 }
 
 .select-label {
@@ -18,7 +21,7 @@
   color: var(--text-color);
   font-size: var(--font-size-sm);
   font-weight: 500;
-  margin-bottom: var(--spacing-xs);
+  line-height: 1.2;
   width: 100%;
   cursor: pointer;
 }
@@ -277,13 +280,11 @@
 }
 
 .select-error {
-  margin-top: var(--spacing-xs);
   color: var(--danger-color);
   font-size: var(--font-size-sm);
 }
 
 .select-success {
-  margin-top: var(--spacing-xs);
   color: var(--success-color);
   font-size: var(--font-size-sm);
 }
@@ -291,7 +292,6 @@
 .select-hint {
   font-size: var(--font-size-sm);
   color: var(--text-color-secondary);
-  margin-top: var(--spacing-xs);
 }
 
 /* Virtual Scroll */

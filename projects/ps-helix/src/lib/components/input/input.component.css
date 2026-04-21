@@ -4,6 +4,9 @@
   position: relative;
   width: 100%;
   max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--field-vertical-gap);
 }
 
 .input-container.full-width {
@@ -15,7 +18,7 @@
   color: var(--text-color);
   font-size: var(--font-size-sm);
   font-weight: 500;
-  margin-bottom: var(--spacing-xs);
+  line-height: 1.2;
   width: 100%;
   cursor: pointer;
 }
@@ -193,7 +196,6 @@ input:focus {
 .input-success,
 .input-hint {
   font-size: var(--font-size-sm);
-  margin-top: var(--spacing-xs);
 }
 
 .input-error {
