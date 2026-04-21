@@ -1,0 +1,55 @@
+.demo-block {
+  margin-bottom: var(--spacing-xxl, 3rem);
+}
+
+.section-title {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  margin-bottom: var(--spacing-sm);
+  color: var(--text-color);
+}
+
+.section-intro {
+  color: var(--text-color-secondary);
+  margin-bottom: var(--spacing-md);
+  line-height: 1.6;
+}
+
+.preview-card {
+  background: var(--surface-0);
+  border: var(--border-width-1) solid var(--surface-border);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.status-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  font-size: var(--font-size-sm);
+  color: var(--text-color-secondary);
+  padding-top: var(--spacing-sm);
+  border-top: var(--border-width-1) solid var(--surface-border);
+}
+
+.states-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+  background: var(--surface-0);
+  border: var(--border-width-1) solid var(--surface-border);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-lg);
+}
+
+code {
+  background: var(--surface-ground);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-family: var(--font-family-mono, monospace);
+}

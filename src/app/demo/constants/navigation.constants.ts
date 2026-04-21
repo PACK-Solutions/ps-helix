@@ -122,7 +122,12 @@ export const NAVIGATION_SECTIONS: NavigationSection[] = [
       {
         path: '/demo/inputs',
         label: 'NAVIGATION.INPUTS',
-        keywords: ['champ', 'field', 'text', 'texte', 'saisie', 'form', 'formulaire', 'input', 'textarea', 'entree', 'entry', 'type', 'ecrire', 'write']
+        keywords: ['champ', 'field', 'text', 'texte', 'saisie', 'form', 'formulaire', 'input', 'entree', 'entry', 'type', 'ecrire', 'write']
+      },
+      {
+        path: '/demo/textarea',
+        label: 'NAVIGATION.TEXTAREA',
+        keywords: ['textarea', 'zone de texte', 'multiline', 'multiligne', 'paragraph', 'paragraphe', 'comment', 'commentaire', 'description', 'message']
       },
       {
         path: '/demo/menu',

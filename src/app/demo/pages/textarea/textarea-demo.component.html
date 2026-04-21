@@ -1,0 +1,100 @@
+<ds-demo-page-layout
+  title="Zone de Texte (Textarea)"
+  introText="Le composant psh-textarea est un champ de saisie multi-lignes hybride, compatible à la fois avec les Reactive Forms (ControlValueAccessor) et les Signal Forms (Angular 21+). Il prend en charge l'auto-dimensionnement, le comptage de caractères et une gestion complète des états."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <section class="demo-block">
+      <h3 class="section-title">Reactive Forms (FormControl)</h3>
+      <p class="section-intro">
+        Utilisation classique via <code>[formControl]</code> avec validation. L'état d'erreur est automatiquement détecté via <code>NgControl</code> lorsque le contrôle est invalide et touché.
+      </p>
+      <div class="preview-card">
+        <psh-textarea
+          label="Votre commentaire"
+          placeholder="Partagez votre avis..."
+          helperText="Expliquez votre retour en quelques lignes."
+          [maxLength]="200"
+          [showCharacterCount]="true"
+          [required]="true"
+          [formControl]="commentControl"
+        />
+        <div class="status-row">
+          <span>Valide : {{ commentControl.valid }}</span>
+          <span>Touché : {{ commentControl.touched }}</span>
+          <span>Valeur : {{ commentControl.value.length }} car.</span>
+        </div>
+      </div>
+      <ds-code-snippet [code]="reactiveCode" />
+    </section>
+
+    <section class="demo-block">
+      <h3 class="section-title">Signal Forms / Two-way Binding</h3>
+      <p class="section-intro">
+        Compatible Signal Forms (Angular 21+) : le composant expose un <code>model&lt;string&gt;</code> utilisable directement via <code>[(value)]</code> ou <code>[field]</code>.
+      </p>
+      <div class="preview-card">
+        <psh-textarea
+          label="Biographie"
+          placeholder="Parlez de vous..."
+          helperText="Décrivez-vous en quelques phrases."
+          [rows]="5"
+          [maxLength]="500"
+          [showCharacterCount]="true"
+          [(value)]="bioValue"
+        />
+        <div class="status-row">
+          <span>Signal courant : {{ bioValue().length }} caractères</span>
+        </div>
+      </div>
+      <ds-code-snippet [code]="signalCode" />
+    </section>
+
+    <section class="demo-block">
+      <h3 class="section-title">Auto-dimensionnement</h3>
+      <p class="section-intro">
+        Activez <code>[autoSize]="true"</code> : un <code>effect()</code> ajuste la hauteur du textarea à son contenu.
+      </p>
+      <div class="preview-card">
+        <psh-textarea
+          label="Message"
+          placeholder="Écrivez plusieurs lignes..."
+          [autoSize]="true"
+          [(value)]="autoSizeValue"
+          resize="none"
+        />
+      </div>
+      <ds-code-snippet [code]="autoSizeCode" />
+    </section>
+
+    <section class="demo-block">
+      <h3 class="section-title">États</h3>
+      <div class="states-grid">
+        <psh-textarea
+          label="Désactivé"
+          placeholder="Indisponible"
+          [disabled]="true"
+          [(value)]="feedbackValue"
+        />
+        <psh-textarea
+          label="Lecture seule"
+          [readonly]="true"
+          [(value)]="bioValue"
+        />
+        <psh-textarea
+          label="Erreur"
+          placeholder="Champ invalide"
+          error="Ce champ est obligatoire."
+          [(value)]="feedbackValue"
+        />
+        <psh-textarea
+          label="Variante filled"
+          variant="filled"
+          placeholder="Style rempli"
+          helperText="Arrière-plan coloré pour formulaires denses."
+          [(value)]="feedbackValue"
+        />
+      </div>
+    </section>
+  </div>
+</ds-demo-page-layout>

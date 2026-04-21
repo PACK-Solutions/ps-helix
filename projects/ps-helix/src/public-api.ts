@@ -21,6 +21,8 @@ export * from './lib/components/dropdown/dropdown.component';
 export * from './lib/components/dropdown/dropdown.types';
 export * from './lib/components/input/input.component';
 export * from './lib/components/input/input.types';
+export * from './lib/components/textarea/textarea.component';
+export * from './lib/components/textarea/textarea.types';
 export * from './lib/components/menu/menu.component';
 export * from './lib/components/menu/menu.types';
 export * from './lib/components/modal/modal.component';
