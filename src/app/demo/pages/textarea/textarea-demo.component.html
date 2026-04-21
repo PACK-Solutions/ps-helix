@@ -68,6 +68,224 @@
     </section>
 
     <section class="demo-block">
+      <h3 class="section-title">Documentation API</h3>
+      <div class="api-container">
+        <div class="api-intro">
+          <p>
+            Le composant <code>psh-textarea</code> est hybride : il implémente <strong>ControlValueAccessor</strong> pour les Reactive Forms et expose un <code>model&lt;string&gt;</code> compatible <strong>FormValueControl</strong> (Signal Forms, Angular 21+). Un seul signal <code>value</code> sert de source de vérité aux deux contrats.
+          </p>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Model Inputs)</h4>
+          <p class="api-table-description">Propriétés à liaison bidirectionnelle (<code>[(ngModel)]</code>, <code>[(value)]</code>, <code>[formControl]</code>).</p>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>value</code></td>
+                <td><code>string</code></td>
+                <td><code>''</code></td>
+                <td>Valeur courante du textarea (source de vérité partagée CVA / Signal Forms)</td>
+              </tr>
+              <tr>
+                <td><code>disabled</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Désactive le champ et empêche toute interaction</td>
+              </tr>
+              <tr>
+                <td><code>readonly</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Champ visible mais non modifiable</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Propriétés (Input Signals)</h4>
+          <p class="api-table-description">Propriétés de configuration unidirectionnelles.</p>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Propriété</th>
+                <th>Type</th>
+                <th>Défaut</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>label</code></td>
+                <td><code>string</code></td>
+                <td><strong>requis</strong></td>
+                <td>Texte du label associé (déclaré via <code>input.required()</code>)</td>
+              </tr>
+              <tr>
+                <td><code>placeholder</code></td>
+                <td><code>string</code></td>
+                <td><code>''</code></td>
+                <td>Texte indicatif affiché quand le champ est vide</td>
+              </tr>
+              <tr>
+                <td><code>helperText</code></td>
+                <td><code>string</code></td>
+                <td><code>''</code></td>
+                <td>Texte d'aide affiché sous le champ</td>
+              </tr>
+              <tr>
+                <td><code>rows</code></td>
+                <td><code>number</code></td>
+                <td><code>4</code></td>
+                <td>Nombre de lignes visibles par défaut</td>
+              </tr>
+              <tr>
+                <td><code>maxLength</code></td>
+                <td><code>number | undefined</code></td>
+                <td><code>undefined</code></td>
+                <td>Longueur maximale autorisée (déclenche un état erreur si dépassée)</td>
+              </tr>
+              <tr>
+                <td><code>showCharacterCount</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Affiche le compteur de caractères (<code>aria-live="polite"</code>)</td>
+              </tr>
+              <tr>
+                <td><code>resize</code></td>
+                <td><code>TextareaResize</code></td>
+                <td><code>'vertical'</code></td>
+                <td>Sens de redimensionnement (<code>none | vertical | horizontal | both</code>)</td>
+              </tr>
+              <tr>
+                <td><code>autoSize</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Ajuste la hauteur au contenu via <code>effect()</code></td>
+              </tr>
+              <tr>
+                <td><code>variant</code></td>
+                <td><code>TextareaVariant</code></td>
+                <td><code>'outlined'</code></td>
+                <td>Style visuel (<code>outlined | filled</code>)</td>
+              </tr>
+              <tr>
+                <td><code>size</code></td>
+                <td><code>TextareaSize</code></td>
+                <td><code>'medium'</code></td>
+                <td>Taille du champ (<code>small | medium | large</code>)</td>
+              </tr>
+              <tr>
+                <td><code>fullWidth</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Supprime la largeur maximale par défaut</td>
+              </tr>
+              <tr>
+                <td><code>required</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Marque le champ comme requis (<code>aria-required</code> + astérisque)</td>
+              </tr>
+              <tr>
+                <td><code>showLabel</code></td>
+                <td><code>boolean</code></td>
+                <td><code>true</code></td>
+                <td>Affiche ou masque visuellement le label</td>
+              </tr>
+              <tr>
+                <td><code>ariaLabel</code></td>
+                <td><code>string | null</code></td>
+                <td><code>null</code></td>
+                <td>Label ARIA personnalisé (prioritaire sur <code>label</code>)</td>
+              </tr>
+              <tr>
+                <td><code>error</code></td>
+                <td><code>string | null</code></td>
+                <td><code>null</code></td>
+                <td>Message d'erreur explicite (force l'état erreur)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Événements (Outputs)</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Événement</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>valueChange</code></td>
+                <td><code>EventEmitter&lt;string&gt;</code></td>
+                <td>Émis à chaque modification de la valeur</td>
+              </tr>
+              <tr>
+                <td><code>textareaFocus</code></td>
+                <td><code>EventEmitter&lt;void&gt;</code></td>
+                <td>Émis lorsque le champ reçoit le focus</td>
+              </tr>
+              <tr>
+                <td><code>textareaBlur</code></td>
+                <td><code>EventEmitter&lt;void&gt;</code></td>
+                <td>Émis lorsque le champ perd le focus (déclenche aussi <code>onTouched</code>)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Intégration Forms</h4>
+          <p class="api-table-description">Le composant détecte automatiquement les deux API de formulaires Angular.</p>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>API</th>
+                <th>Contrat</th>
+                <th>Liaison template</th>
+                <th>Détection d'erreur</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Reactive Forms</td>
+                <td><code>ControlValueAccessor</code></td>
+                <td><code>[formControl]</code>, <code>[formControlName]</code>, <code>[(ngModel)]</code></td>
+                <td>Via <code>NgControl</code> injecté : <code>invalid &amp;&amp; (touched || dirty)</code></td>
+              </tr>
+              <tr>
+                <td>Signal Forms (Angular 21+)</td>
+                <td><code>FormValueControl&lt;string&gt;</code></td>
+                <td><code>[field]="form.xxx"</code></td>
+                <td>Propagée par la directive <code>FormField</code></td>
+              </tr>
+              <tr>
+                <td>Signal two-way (Angular 20)</td>
+                <td><code>model&lt;string&gt;</code></td>
+                <td><code>[(value)]="mySignal"</code></td>
+                <td>Via l'input <code>error</code> ou dépassement de <code>maxLength</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-block">
       <h3 class="section-title">États</h3>
       <div class="states-grid">
         <psh-textarea
