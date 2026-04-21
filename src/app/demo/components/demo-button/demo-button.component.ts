@@ -1,10 +1,10 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'ds-demo-button',
-  imports: [CommonModule, TranslateModule],
+  imports: [TranslateModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <button
       [class]="variant"

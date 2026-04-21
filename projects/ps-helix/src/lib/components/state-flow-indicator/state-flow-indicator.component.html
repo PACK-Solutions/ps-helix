@@ -1,0 +1,38 @@
+<div class="flow-track" role="tablist">
+  @for (step of steps(); track $index; let i = $index) {
+    <div
+      class="flow-segment"
+      [class.active]="i === activeStep()"
+      [class.completed]="step.completed"
+      [class.disabled]="step.disabled || (!step.completed && i !== activeStep() && !canActivateStep(i))"
+      [class.error]="!!step.error"
+      [class.warning]="!!step.warning"
+      [class.loading]="step.loading"
+      [class.first]="i === 0"
+      [class.last]="i === steps().length - 1"
+      role="tab"
+      [attr.tabindex]="step.disabled ? -1 : 0"
+      [attr.id]="'flow-step-' + i"
+      [attr.aria-selected]="i === activeStep()"
+      [attr.aria-disabled]="step.disabled || (!step.completed && i !== activeStep() && !canActivateStep(i))"
+      [attr.aria-label]="getStepAriaLabel(step, i)"
+      [attr.aria-current]="i === activeStep() ? 'step' : null"
+      [attr.aria-busy]="step.loading"
+      (click)="handleStepClick(i)"
+      (keydown)="handleKeydown($event, i)"
+    >
+      <span class="flow-segment-content">
+        @if (step.loading) {
+          <i class="ph ph-circle-notch spinner" aria-hidden="true"></i>
+        } @else if (step.error) {
+          <i class="ph ph-x-circle" aria-hidden="true"></i>
+        } @else if (step.warning) {
+          <i class="ph ph-warning" aria-hidden="true"></i>
+        } @else if (step.completed) {
+          <i class="ph ph-check-circle" aria-hidden="true"></i>
+        }
+        <span class="flow-segment-title">{{ step.title }}</span>
+      </span>
+    </div>
+  }
+</div>

@@ -28,7 +28,7 @@ import { PshTabBarComponent } from 'ps-helix';
     { id: 'profile', label: 'Profil', icon: 'user' }
   ]"
   [(activeIndex)]="activeTabIndex"
-  (activeIndexChange)="handleTabChange($event)"
+  (tabChange)="handleTabChange($event)"
 ></psh-tab-bar>
 ```
 
@@ -40,7 +40,6 @@ import { PshTabBarComponent } from 'ps-helix';
 | disabled | boolean | false | État désactivé |
 | position | 'bottom' \| 'top' | 'bottom' | Position de la barre |
 | animated | boolean | true | Animation activée |
-| iconSize | 'small' \| 'medium' \| 'large' | 'medium' | Taille des icônes |
 | activeIndex | number | 0 | Index de l'onglet actif |
 
 ### Regular Inputs (@input)
@@ -51,7 +50,7 @@ import { PshTabBarComponent } from 'ps-helix';
 ### Outputs
 | Nom | Type | Description |
 |-----|------|-------------|
-| activeIndexChange | EventEmitter<number> | Émis lors du changement d'onglet |
+| tabChange | EventEmitter\<TabBarChangeEvent\> | Émis lors du changement d'onglet |
 
 ### Interface TabBarItem
 ```typescript
@@ -61,6 +60,15 @@ interface TabBarItem {
   icon: string;    // Icône Phosphor
   disabled?: boolean; // État désactivé
   badge?: string | number; // Badge optionnel
+}
+```
+
+### Interface TabBarChangeEvent
+```typescript
+interface TabBarChangeEvent {
+  index: number;           // Index du nouvel onglet actif
+  item: TabBarItem;        // Item sélectionné
+  previousIndex: number;   // Index précédent
 }
 ```
 
@@ -74,8 +82,7 @@ interface TabBarItem {
       useValue: {
         disabled: false,
         position: 'bottom',
-        animated: true,
-        iconSize: 'medium'
+        animated: true
       }
     }
   ]

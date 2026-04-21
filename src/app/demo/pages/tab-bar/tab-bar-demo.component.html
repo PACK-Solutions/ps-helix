@@ -277,7 +277,7 @@
             <tbody>
               <tr>
                 <td><code>tabChange</code></td>
-                <td><code>EventEmitter&lt;TabChangeEvent&gt;</code></td>
+                <td><code>EventEmitter&lt;TabBarChangeEvent&gt;</code></td>
                 <td>Émis lors du changement d'onglet. Contient l'index, l'item sélectionné et l'index précédent</td>
               </tr>
             </tbody>
@@ -295,7 +295,7 @@
   badge?: string | number; // Compteur ou texte du badge
 &#125;
 
-interface TabChangeEvent &#123;
+interface TabBarChangeEvent &#123;
   index: number;           // Index du nouvel onglet actif
   item: TabBarItem;        // Item sélectionné
   previousIndex: number;   // Index précédent
@@ -308,7 +308,7 @@ interface TabChangeEvent &#123;
           <div class="code-block">
             <pre><code>import &#123; Component, signal &#125; from '@angular/core';
 import &#123; PshTabBarComponent &#125; from 'ps-helix';
-import &#123; TabBarItem, TabChangeEvent &#125; from 'ps-helix';
+import &#123; TabBarItem, TabBarChangeEvent &#125; from 'ps-helix';
 
 &#64;Component(&#123;
   selector: 'app-main',
@@ -335,7 +335,7 @@ export class MainComponent &#123;
     &#123; id: 'profile', label: 'Profil', icon: 'user' &#125;
   ];
 
-  handleTabChange(event: TabChangeEvent): void &#123;
+  handleTabChange(event: TabBarChangeEvent): void &#123;
     console.log('Tab changed:', event);
     // Navigation ou logique métier ici
   &#125;

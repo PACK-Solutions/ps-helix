@@ -1,5 +1,9 @@
 /* Global Application Styles */
 
+:root {
+  color-scheme: light dark;
+}
+
 /* Set core body defaults */
 body {
   min-height: 100vh;

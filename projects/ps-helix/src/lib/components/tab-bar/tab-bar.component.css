@@ -5,11 +5,14 @@
   left: 0;
   right: 0;
   z-index: var(--z-index-navigation);
+  border-top: var(--border-width-1) solid var(--surface-border);
 }
 
 :host.top {
   top: 0;
   bottom: auto;
+  border-top: none;
+  border-bottom: var(--border-width-1) solid var(--surface-border);
 }
 
 .tab-bar {
@@ -19,15 +22,6 @@
   min-height: var(--size-14);
   background: var(--surface-card);
   padding: var(--spacing-xs) var(--spacing-xxs);
-}
-
-:host {
-  border-top: var(--border-width-1) solid var(--surface-border);
-}
-
-:host.top {
-  border-top: none;
-  border-bottom: var(--border-width-1) solid var(--surface-border);
 }
 
 .tab-item {

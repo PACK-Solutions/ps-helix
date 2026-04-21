@@ -7,7 +7,6 @@ import {
 
 @Component({
   selector: 'psh-step',
-  standalone: true,
   template: `<ng-content />`,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {

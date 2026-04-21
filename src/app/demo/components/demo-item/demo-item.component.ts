@@ -1,15 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
-/**
- * Composant d'élément de démonstration
- * 
- * Composant utilitaire pour structurer chaque section de démonstration
- * avec une zone d'exemple et une zone de documentation
- */
 @Component({
   selector: 'ds-demo-item',
-  imports: [CommonModule],
+  imports: [],
   template: `
     <div class="demo-item">
       <!-- Zone d'exemple/showcase -->

@@ -1,21 +1,27 @@
-/* Component-Specific Design Tokens */
-.input-container {
-  /* Container styles */
-  position: relative;
+/* --- Host & Container --- */
+:host {
+  display: block;
   width: 100%;
-  max-width: 300px;
+  max-width: 18.75rem; /* 300px */
+  transition: all var(--animation-duration-default) var(--animation-easing-default);
 }
 
-.input-container.full-width {
+:host.full-width {
   max-width: none;
 }
 
+.input-container {
+  position: relative;
+  width: 100%;
+}
+
+/* --- Label --- */
 .input-label {
   display: block;
   color: var(--text-color);
-  font-size: var(--font-size-sm);
+  font-size: 0.875rem; /* var(--font-size-sm) */
   font-weight: 500;
-  margin-bottom: var(--spacing-xs);
+  margin-bottom: 0.25rem; /* var(--spacing-xs) */
   width: 100%;
   cursor: pointer;
 }
@@ -23,9 +29,10 @@
 .input-label.required::after {
   content: '*';
   color: var(--danger-color);
-  margin-left: var(--spacing-xxs);
+  margin-left: 0.125rem; /* var(--spacing-xxs) */
 }
 
+/* --- Wrapper & Input Base --- */
 .input-wrapper {
   position: relative;
   display: flex;
@@ -35,13 +42,13 @@
 
 input {
   width: 100%;
-  height: var(--height-input-md);
-  padding: 0 var(--spacing-md);
+  height: 2.5rem; /* var(--height-input-md) -> 40px */
+  padding: 0 1rem; /* var(--spacing-md) */
   font-family: inherit;
-  font-size: var(--font-size-base);
+  font-size: 1rem; /* var(--font-size-base) */
   color: var(--text-color);
   background: var(--surface-0);
-  border: var(--border-width-1) solid var(--surface-border);
+  border: 0.125rem solid var(--surface-border); /* 2px */
   border-radius: var(--border-radius);
   transition: all var(--animation-duration-default) var(--animation-easing-default);
 }
@@ -58,201 +65,162 @@ input::placeholder {
 input:focus {
   outline: none;
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
+  box-shadow: 0 0 0 0.125rem var(--focus-ring-color); /* 2px */
 }
 
-/* Variants */
-.input-container.outlined input {
+/* --- Variantes (Via Host) --- */
+:host.outlined input {
   background: transparent;
-  border: var(--border-width-2) solid var(--surface-border);
 }
 
-.input-container.outlined input:hover:not(:disabled):not(:focus) {
-  border-color: var(--primary-color);
-}
-
-.input-container.outlined input:focus {
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
-}
-
-.input-container.filled input {
+:host.filled input {
   background: var(--surface-ground);
-  border: var(--border-width-1) solid transparent;
+  border: 0.125rem solid var(--surface-border); /* 2px */
 }
 
-.input-container.filled input:hover:not(:disabled):not(:focus) {
+:host.filled input:hover:not(:disabled):not(:focus) {
   background: var(--surface-hover);
 }
 
-.input-container.filled input:focus {
+:host.filled input:focus {
   background: var(--surface-0);
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
 }
 
-/* States */
-.input-container.error input {
+/* --- États (Via Host) --- */
+:host.error input {
   border-color: var(--danger-color);
 }
 
-.input-container.error input:focus {
-  box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-error);
+:host.error input:focus {
+  box-shadow: 0 0 0 0.125rem var(--focus-ring-error);
 }
 
-.input-container.success input {
+:host.success input {
   border-color: var(--success-color);
 }
 
-.input-container.success input:focus {
-  box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-success);
+:host.success input:focus {
+  box-shadow: 0 0 0 0.125rem var(--focus-ring-success);
 }
 
-.input-container.disabled input {
+:host.disabled input {
   background: var(--surface-ground);
   cursor: not-allowed;
   opacity: var(--opacity-disabled);
 }
 
-.input-container.readonly input {
+:host.readonly input {
   background: var(--surface-ground);
   cursor: default;
 }
 
-/* Icons */
-.input-container.has-start-icon input {
-  padding-left: calc(var(--spacing-md) * 2 + 1rem);
+/* --- Tailles (Via Host) --- */
+:host.small input {
+  height: 2rem; /* 32px */
+  font-size: 0.875rem; /* 14px */
 }
 
-.input-container.has-end-icon input {
-  padding-right: calc(var(--spacing-md) * 2 + 1rem);
+:host.large input {
+  height: 3rem; /* 48px */
+  font-size: 1.125rem; /* 18px */
+}
+
+/* --- Icônes (Correction Alignement) --- */
+:host.has-start-icon input {
+  padding-left: 2.75rem; /* Espace pour icône + padding */
+}
+
+:host.has-end-icon input {
+  padding-right: 2.75rem;
 }
 
 .input-wrapper i {
   position: absolute;
-  font-size: var(--icon-size-md);
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.25rem; /* var(--icon-size-md) */
   color: var(--text-color-secondary);
   pointer-events: none;
+  z-index: 2;
 }
 
-.input-wrapper i:first-child {
-  left: var(--spacing-md);
+.input-wrapper i:first-of-type {
+  padding-left: 1rem;
 }
 
-.input-wrapper i:last-child {
-  right: var(--spacing-md);
+.input-wrapper i:last-of-type {
+ padding-right: 1rem;
 }
 
-/* Password toggle */
+/* --- Password Toggle --- */
 .password-toggle {
   position: absolute;
-  right: var(--spacing-md);
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2rem;
+  height: 2rem;
   background: transparent;
   border: none;
   color: var(--text-color-secondary);
   cursor: pointer;
-  padding: var(--spacing-xs);
+  padding: 0;
   border-radius: var(--border-radius);
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
+  z-index: 3;
 }
 
-.password-toggle:hover {
+.password-toggle:hover:not(:disabled) {
   background: var(--surface-hover);
   color: var(--text-color);
 }
 
-.password-toggle:focus {
-  outline: none;
-  box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
-}
-
 .password-toggle i {
-  font-size: var(--icon-size-md);
   position: static;
+  transform: none;
   pointer-events: auto;
 }
 
-/* Sizes */
-.input-container.small input {
-  height: var(--height-input-sm);
-  padding: 0 var(--spacing-md);
-  font-size: var(--font-size-sm);
-}
-
-.input-container.large input {
-  height: var(--height-input-lg);
-  padding: 0 var(--spacing-lg);
-  font-size: var(--font-size-lg);
-}
-
-/* Messages */
-.input-error,
-.input-success,
-.input-hint {
-  font-size: var(--font-size-sm);
-  margin-top: var(--spacing-xs);
-}
-
-.input-error {
-  color: var(--danger-color);
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-}
-
-.input-error i {
-  font-size: var(--icon-size-sm);
-}
-
-.input-success {
-  color: var(--success-color);
-}
-
-.input-hint {
-  color: var(--text-color-secondary);
-}
-
-/* Loader */
+/* --- Loader --- */
 .input-loader {
   position: absolute;
-  right: var(--spacing-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
 }
 
 .loader {
-  width: var(--icon-size-sm);
-  height: var(--icon-size-sm);
-  border: var(--border-width-2) solid var(--surface-border);
+  width: 1rem; /* var(--icon-size-sm) */
+  height: 1rem;
+  border: 0.125rem solid var(--surface-border);
   border-top-color: var(--primary-color);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
 
-/* Suggestions */
+/* --- Suggestions & Messages --- */
 .suggestions-list {
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
   background: var(--surface-0);
-  border: var(--border-width-1) solid var(--surface-border);
+  border: 0.0625rem solid var(--surface-border);
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-lg);
   z-index: var(--z-index-dropdown);
-  max-height: var(--size-48);
+  max-height: 12.5rem; /* 200px */
   overflow-y: auto;
-  margin-top: var(--spacing-xs);
+  margin-top: 0.25rem;
 }
 
 .suggestion-item {
-  padding: var(--spacing-sm) var(--spacing-md);
+  padding: 0.5rem 1rem;
   cursor: pointer;
-  transition: all var(--animation-duration-default) var(--animation-easing-default);
   color: var(--text-color);
 }
 
@@ -262,8 +230,15 @@ input:focus {
   color: var(--primary-color);
 }
 
+.input-error, .input-success, .input-hint {
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.input-error { color: var(--danger-color); }
+.input-success { color: var(--success-color); }
+.input-hint { color: var(--text-color-secondary); }
+
 @keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+  to { transform: translateY(-50%) rotate(360deg); }
 }

@@ -2,7 +2,6 @@
   class="tooltip-wrapper"
   [attr.id]="triggerId()"
   [attr.aria-describedby]="isVisible() ? tooltipId() : null"
-  [attr.aria-label]="ariaLabel()"
 >
   <ng-content></ng-content>
 
@@ -10,12 +9,14 @@
     <div
       [attr.id]="tooltipId()"
       class="tooltip"
-      [class]="position()"
+      [class.top]="computedPosition() === 'top'"
+      [class.bottom]="computedPosition() === 'bottom'"
+      [class.left]="computedPosition() === 'left'"
+      [class.right]="computedPosition() === 'right'"
       [class.light]="variant() === 'light'"
       [class.dark]="variant() === 'dark'"
       [style.max-width.px]="maxWidth()"
       role="tooltip"
-      [attr.aria-hidden]="!isVisible()"
     >
       {{ content() }}
       <div class="tooltip-arrow"></div>

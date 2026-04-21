@@ -1,14 +1,25 @@
 # Stepper Component Documentation
 
-## Overview
+## Table des Matières
+- [Utilisation](#utilisation)
+- [API](#api)
+- [Variantes](#variantes)
+- [Gestion des Erreurs](#gestion-des-erreurs)
+- [Configuration Globale](#configuration-globale)
+- [Types](#types)
+- [Accessibilité](#accessibilité)
+- [Bonnes Pratiques](#bonnes-pratiques)
+- [Exemple Complet](#exemple-complet)
 
-The Stepper component is a horizontal navigation component for multi-step processes. It provides visual feedback about the progress through a series of sequential steps.
+## Vue d'ensemble
 
-**Note:** This component is designed exclusively for horizontal layouts. For vertical timeline displays, use the Timeline component (coming soon).
+Le composant Stepper est un composant de navigation horizontale pour les processus multi-étapes. Il fournit un retour visuel sur la progression à travers une série d'étapes séquentielles.
 
-## Usage
+**Note :** Ce composant est conçu exclusivement pour les dispositions horizontales. Pour les affichages verticaux de type timeline, utilisez le composant Timeline (à venir).
 
-1. Import the component in your module or standalone component:
+## Utilisation
+
+1. Importer le composant dans votre module ou composant standalone :
 ```typescript
 import { PshStepperComponent, PshStepComponent } from 'ps-helix';
 
@@ -17,7 +28,7 @@ import { PshStepperComponent, PshStepComponent } from 'ps-helix';
 })
 ```
 
-### Basic Usage
+### Utilisation de Base
 
 ```html
 <psh-stepper
@@ -25,30 +36,30 @@ import { PshStepperComponent, PshStepComponent } from 'ps-helix';
   (stepChange)="handleStepChange($event)"
   (completed)="handleComplete()"
 >
-  <psh-step title="Account" icon="user">
-    Step 1 content
+  <psh-step title="Compte" icon="user">
+    Contenu de l'étape 1
   </psh-step>
-  <psh-step title="Details" icon="info">
-    Step 2 content
+  <psh-step title="Détails" icon="info">
+    Contenu de l'étape 2
   </psh-step>
   <psh-step title="Confirmation" icon="check">
-    Step 3 content
+    Contenu de l'étape 3
   </psh-step>
 </psh-stepper>
 ```
 
-### With Form Validation
+### Avec Validation de Formulaire
 
 ```html
 <psh-stepper [linear]="true">
   <psh-step
-    title="Information"
+    title="Informations"
     icon="user"
     [completed]="isStep1Valid()"
     [error]="step1Error"
   >
     <form [formGroup]="step1Form">
-      <!-- Form content -->
+      <!-- Contenu du formulaire -->
     </form>
   </psh-step>
 
@@ -57,7 +68,7 @@ import { PshStepperComponent, PshStepComponent } from 'ps-helix';
     icon="check"
     [disabled]="!isStep1Valid()"
   >
-    <!-- Validation content -->
+    <!-- Contenu de validation -->
   </psh-step>
 </psh-stepper>
 ```
@@ -68,92 +79,226 @@ import { PshStepperComponent, PshStepComponent } from 'ps-helix';
 
 #### Model Inputs
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| activeStep | number | 0 | Index of the active step |
+| Nom | Type | Défaut | Description |
+|-----|------|--------|-------------|
+| activeStep | number | 0 | Index de l'étape active (support two-way binding) |
 
-#### Regular Inputs
+#### Input Signals
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| variant | StepperVariant | 'default' | Visual variant |
-| linear | boolean | true | Enforce linear progression |
-| ariaLabels | Record<string, string> | {...} | ARIA labels for accessibility |
-| beforeStepChange | (from: number, to: number) => Promise<boolean> \| boolean | undefined | Validation hook before step change |
+| Nom | Type | Défaut | Description |
+|-----|------|--------|-------------|
+| variant | StepperVariant | 'default' | Variante visuelle ('default' \| 'numbered' \| 'progress') |
+| linear | boolean | true | Force la progression séquentielle des étapes |
+| ariaLabels | StepperAriaLabels | {...} | Labels ARIA personnalisés pour l'accessibilité |
+| beforeStepChange | (from: number, to: number) => Promise\<boolean\> \| boolean | undefined | Hook de validation avant changement d'étape |
 
 #### Outputs
 
-| Name | Type | Description |
-|------|------|-------------|
-| stepChange | OutputEmitterRef<number> | Emitted when step changes |
-| completed | OutputEmitterRef<void> | Emitted when process completes |
+| Nom | Type | Description |
+|-----|------|-------------|
+| stepChange | OutputEmitterRef\<number\> | Émis lors du changement d'étape active |
+| completed | OutputEmitterRef\<void\> | Émis lorsque la dernière étape complétée est atteinte |
+| navigationError | OutputEmitterRef\<string\> | Émis lors d'une erreur de navigation (validation bloquée, index invalide) |
 
-#### Public Methods
+#### Propriétés Calculées (Computed)
+
+| Nom | Type | Description |
+|-----|------|-------------|
+| isFirstStep() | boolean | Retourne true si on est à la première étape |
+| isLastStep() | boolean | Retourne true si on est à la dernière étape |
+| progress() | number | Retourne le pourcentage de progression (0-100) |
+| completedSteps() | number | Retourne le nombre d'étapes complétées |
+| effectiveAriaLabels() | StepperAriaLabels | Retourne les labels ARIA effectifs (configurés ou par défaut) |
+| steps() | StepConfig[] | Retourne la configuration de toutes les étapes |
+
+#### Méthodes Publiques
 
 ```typescript
 next(): Promise<void>;
 previous(): Promise<void>;
 goToStep(index: number): Promise<void>;
+reset(): void;
 canGoNext(): boolean;
 canGoPrevious(): boolean;
 canActivateStep(index: number): boolean;
 isStepValid(index: number): boolean;
+getStepAriaLabel(step: StepConfig, index: number): string;
+getStepDescribedBy(step: StepConfig, index: number): string | null;
 ```
+
+| Méthode | Description |
+|---------|-------------|
+| `next()` | Navigue vers l'étape suivante si possible |
+| `previous()` | Navigue vers l'étape précédente |
+| `goToStep(index)` | Navigue vers une étape spécifique par index |
+| `reset()` | Réinitialise le stepper à l'étape 0 |
+| `canGoNext()` | Vérifie si la navigation vers l'étape suivante est possible |
+| `canGoPrevious()` | Vérifie si la navigation vers l'étape précédente est possible |
+| `canActivateStep(index)` | Vérifie si une étape spécifique peut être activée |
+| `isStepValid(index)` | Vérifie si une étape est valide (complétée et sans erreur) |
+| `getStepAriaLabel(step, index)` | Génère le label ARIA pour une étape |
+| `getStepDescribedBy(step, index)` | Retourne l'ID de description pour les messages (erreur, warning, success) |
 
 ### PshStepComponent
 
 #### Inputs
 
-| Name | Type | Default | Description |
-|------|------|---------|-------------|
-| title | string | required | Step title |
-| subtitle | string | undefined | Optional subtitle |
-| icon | string | undefined | Phosphor icon name |
-| completed | boolean | false | Completed state |
-| disabled | boolean | false | Disabled state |
-| loading | boolean | false | Shows a loading spinner in the header (only for variant="progress") |
-| error | string | undefined | Error message |
-| warning | string | undefined | Warning message |
-| success | string | undefined | Success message |
+| Nom | Type | Défaut | Description |
+|-----|------|--------|-------------|
+| title | string | required | Titre de l'étape affiché dans le header |
+| subtitle | string | undefined | Sous-titre optionnel pour plus de contexte |
+| icon | string | undefined | Nom de l'icône Phosphor à afficher |
+| completed | boolean | false | Marque l'étape comme complétée |
+| disabled | boolean | false | Désactive l'accès à l'étape |
+| loading | boolean | false | Affiche un spinner dans le header (uniquement pour variant="progress") |
+| error | string | undefined | Message d'erreur affiché sous le titre |
+| warning | string | undefined | Message d'avertissement affiché sous le titre |
+| success | string | undefined | Message de succès affiché sous le titre |
 
-## Variants
+## Variantes
 
 ### Default
 
-The default variant displays icons or dots with inline labels.
+La variante par défaut affiche des icônes ou des points avec des labels inline.
 
 ```html
 <psh-stepper variant="default">
-  <psh-step title="Step 1" icon="user">Content</psh-step>
-  <psh-step title="Step 2" icon="info">Content</psh-step>
+  <psh-step title="Étape 1" icon="user">Contenu</psh-step>
+  <psh-step title="Étape 2" icon="info">Contenu</psh-step>
 </psh-stepper>
 ```
+
+**Cas d'utilisation** : Processus standard avec icônes contextuelles.
 
 ### Numbered
 
-Displays numbered indicators instead of icons.
+Affiche des indicateurs numérotés au lieu des icônes.
 
 ```html
 <psh-stepper variant="numbered">
-  <psh-step title="Step 1">Content</psh-step>
-  <psh-step title="Step 2">Content</psh-step>
+  <psh-step title="Configuration">Contenu</psh-step>
+  <psh-step title="Validation">Contenu</psh-step>
 </psh-stepper>
 ```
+
+**Cas d'utilisation** : Processus séquentiels et formulaires multi-pages.
 
 ### Progress
 
-Shows a progress animation on the active step indicator.
+Affiche une animation de progression sur l'indicateur de l'étape active.
 
 ```html
 <psh-stepper variant="progress">
-  <psh-step title="Step 1">Content</psh-step>
-  <psh-step title="Step 2">Content</psh-step>
+  <psh-step title="Début" [loading]="isLoading">Contenu</psh-step>
+  <psh-step title="Fin">Contenu</psh-step>
 </psh-stepper>
 ```
 
-## Configuration
+**Cas d'utilisation** : Onboarding, processus d'installation et opérations asynchrones.
 
-### Global Configuration
+**Fonctionnalité** : Utilisez `[loading]="true"` pour afficher un spinner rotatif dans le header de l'étape.
+
+## Gestion des Erreurs
+
+Le stepper émet des événements `navigationError` pour signaler les problèmes de navigation. Cela permet d'afficher des messages d'erreur appropriés à l'utilisateur.
+
+### Utilisation avec navigationError
+
+```typescript
+import { Component, signal } from '@angular/core';
+import { PshStepperComponent, PshStepComponent, PshAlertComponent } from 'ps-helix';
+
+@Component({
+  selector: 'app-example',
+  imports: [PshStepperComponent, PshStepComponent, PshAlertComponent],
+  template: `
+    @if (errorMessage()) {
+      <psh-alert variant="danger" [dismissible]="true" (dismissed)="errorMessage.set('')">
+        {{ errorMessage() }}
+      </psh-alert>
+    }
+
+    <psh-stepper
+      [(activeStep)]="activeStep"
+      [linear]="true"
+      [beforeStepChange]="validateStep"
+      (navigationError)="handleNavigationError($event)"
+    >
+      <psh-step
+        title="Informations"
+        icon="user"
+        [completed]="isStep1Valid()"
+      >
+        <form [formGroup]="form">
+          <!-- Champs du formulaire -->
+        </form>
+      </psh-step>
+
+      <psh-step title="Confirmation" icon="check">
+        <p>Vérifiez vos informations</p>
+      </psh-step>
+    </psh-stepper>
+  `
+})
+export class ExampleComponent {
+  activeStep = signal(0);
+  errorMessage = signal('');
+
+  validateStep = async (from: number, to: number): Promise<boolean> => {
+    if (from === 0 && !this.isStep1Valid()) {
+      return false;
+    }
+    return true;
+  };
+
+  handleNavigationError(error: string): void {
+    this.errorMessage.set(error);
+    setTimeout(() => this.errorMessage.set(''), 5000);
+  }
+
+  isStep1Valid(): boolean {
+    return this.form.valid;
+  }
+}
+```
+
+### Types d'Erreurs Émises
+
+| Situation | Message d'erreur |
+|-----------|------------------|
+| Index invalide | `Invalid step index: X. Valid range: 0-Y` |
+| Validation bloquée | `Navigation from step X to step Y was blocked by validation` |
+| Étape non accessible | `Cannot activate step X. Please complete previous steps first` |
+| Erreur dans beforeStepChange | Message de l'erreur ou `Unknown error in beforeStepChange` |
+
+### Réinitialisation du Stepper
+
+Utilisez la méthode `reset()` pour revenir à l'étape initiale :
+
+```typescript
+@Component({
+  template: `
+    <psh-stepper #stepper [(activeStep)]="activeStep">
+      <!-- Steps -->
+    </psh-stepper>
+
+    <psh-button (clicked)="resetStepper()">
+      Recommencer
+    </psh-button>
+  `
+})
+export class ExampleComponent {
+  stepperRef = viewChild<PshStepperComponent>('stepper');
+
+  resetStepper(): void {
+    this.stepperRef()?.reset();
+  }
+}
+```
+
+## Configuration Globale
+
+Utilisez `STEPPER_CONFIG` pour définir les valeurs par défaut :
 
 ```typescript
 import { STEPPER_CONFIG } from 'ps-helix';
@@ -166,11 +311,11 @@ import { STEPPER_CONFIG } from 'ps-helix';
         variant: 'default',
         linear: true,
         ariaLabels: {
-          step: 'Step',
-          completed: 'Completed step',
-          active: 'Active step',
-          incomplete: 'Incomplete step',
-          disabled: 'Disabled step'
+          step: 'Étape',
+          completed: 'Étape complétée',
+          active: 'Étape active',
+          incomplete: 'Étape incomplète',
+          disabled: 'Étape désactivée'
         }
       }
     }
@@ -189,6 +334,7 @@ interface StepConfig {
   icon?: string;
   disabled: boolean;
   completed: boolean;
+  loading: boolean;
   error?: string;
   warning?: string;
   success?: string;
@@ -197,21 +343,126 @@ interface StepConfig {
 interface StepperConfig {
   variant: StepperVariant;
   linear: boolean;
-  ariaLabels?: Record<string, string>;
+  ariaLabels?: StepperAriaLabels;
+}
+
+interface StepperAriaLabels {
+  step: string;
+  completed: string;
+  active: string;
+  incomplete: string;
+  disabled: string;
 }
 ```
 
-## Complete Example
+## Accessibilité
+
+Le composant Stepper respecte les directives WCAG 2.1 AA avec un support complet de l'accessibilité.
+
+### Navigation au Clavier
+
+| Touche | Action |
+|--------|--------|
+| Flèches Gauche/Droite | Naviguer entre les headers d'étapes |
+| Home | Aller à la première étape |
+| End | Aller à la dernière étape |
+| Enter/Espace | Activer l'étape focalisée |
+| Tab | Déplacer le focus entre les éléments interactifs |
+
+### Rôles ARIA
+
+- `role="tablist"` sur le conteneur du stepper
+- `role="tab"` sur chaque header d'étape
+- `role="tabpanel"` sur chaque panneau de contenu
+
+### États ARIA (gérés automatiquement)
+
+- `aria-selected` : Indique l'étape active
+- `aria-current="step"` : Marque l'étape courante
+- `aria-disabled` : Indique les étapes désactivées
+- `aria-describedby` : Lie les messages d'erreur aux étapes
+
+### Annonces Dynamiques
+
+- Messages d'erreur annoncés avec `aria-live="polite"`
+- Outline de focus visible avec ratio de contraste minimum 3:1
+
+### Labels ARIA Personnalisés
+
+```html
+<psh-stepper
+  [ariaLabels]="{
+    step: 'Étape',
+    completed: 'Étape terminée',
+    active: 'Étape en cours',
+    incomplete: 'Étape à venir',
+    disabled: 'Étape indisponible'
+  }"
+>
+  <!-- Steps -->
+</psh-stepper>
+```
+
+## Bonnes Pratiques
+
+### Structure et Contenu
+
+- Gardez le contenu des étapes focalisé et concis
+- Fournissez des titres d'étapes clairs et descriptifs
+- Utilisez les icônes de manière cohérente sur toutes les étapes
+- Validez chaque étape avant de permettre la progression
+- Gérez les états d'erreur explicitement
+
+### Validation
+
+- Implémentez `beforeStepChange` pour une logique de validation personnalisée
+- Marquez clairement les étapes complétées
+- Affichez les messages d'erreur inline avec les étapes
+- Empêchez la navigation vers les étapes incomplètes en mode linéaire
+- Écoutez `navigationError` pour afficher des messages d'erreur à l'utilisateur
+
+### Performance
+
+- Utilisez la stratégie de détection de changements OnPush
+- Tirez parti des signals pour l'état réactif
+- Implémentez un nettoyage approprié dans les composants
+- Utilisez des fonctions trackBy pour les boucles
+
+### Design Responsive
+
+- Le stepper s'adapte automatiquement aux écrans mobiles
+- Sur les petits viewports, les labels s'empilent verticalement
+- Les connecteurs sont masqués sur mobile pour un meilleur espacement
+- Testez sur différentes tailles d'écran pour assurer l'utilisabilité
+
+## Exemple Complet
 
 ```typescript
-import { Component, signal, viewChild } from '@angular/core';
+import { Component, signal, viewChild, computed } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { PshStepperComponent, PshStepComponent } from 'ps-helix';
+import { PshStepperComponent, PshStepComponent, PshButtonComponent, PshAlertComponent } from 'ps-helix';
 
 @Component({
   selector: 'app-example',
-  imports: [PshStepperComponent, PshStepComponent, ReactiveFormsModule],
+  imports: [
+    PshStepperComponent,
+    PshStepComponent,
+    PshButtonComponent,
+    PshAlertComponent,
+    ReactiveFormsModule
+  ],
   template: `
+    @if (errorMessage()) {
+      <psh-alert variant="danger" [dismissible]="true" (dismissed)="errorMessage.set('')">
+        {{ errorMessage() }}
+      </psh-alert>
+    }
+
+    <div class="progress-indicator">
+      Progression: {{ stepper.progress() | number:'1.0-0' }}%
+      ({{ stepper.completedSteps() }}/{{ stepper.steps().length }} étapes)
+    </div>
+
     <psh-stepper
       #stepper
       [(activeStep)]="activeStep"
@@ -219,33 +470,40 @@ import { PshStepperComponent, PshStepComponent } from 'ps-helix';
       [beforeStepChange]="validateStepChange"
       (stepChange)="handleStepChange($event)"
       (completed)="handleComplete()"
+      (navigationError)="handleError($event)"
     >
       <psh-step
-        title="Personal Info"
+        title="Informations Personnelles"
         icon="user"
         [completed]="isStep1Valid()"
         [error]="step1Error()"
       >
         <form [formGroup]="step1Form">
-          <input formControlName="firstName" placeholder="First Name" />
-          <input formControlName="lastName" placeholder="Last Name" />
+          <input formControlName="firstName" placeholder="Prénom" />
+          <input formControlName="lastName" placeholder="Nom" />
           <input formControlName="email" placeholder="Email" />
         </form>
-        <button (click)="nextStep()">Next</button>
+        <div class="actions">
+          <psh-button variant="primary" (clicked)="nextStep()">
+            Suivant
+          </psh-button>
+        </div>
       </psh-step>
 
       <psh-step
-        title="Address"
+        title="Adresse"
         icon="map-pin"
         [completed]="isStep2Valid()"
         [disabled]="!isStep1Valid()"
       >
         <form [formGroup]="step2Form">
-          <input formControlName="address" placeholder="Address" />
-          <input formControlName="city" placeholder="City" />
+          <input formControlName="address" placeholder="Adresse" />
+          <input formControlName="city" placeholder="Ville" />
         </form>
-        <button (click)="previousStep()">Back</button>
-        <button (click)="nextStep()">Next</button>
+        <div class="actions">
+          <psh-button appearance="text" (clicked)="previousStep()">Retour</psh-button>
+          <psh-button variant="primary" (clicked)="nextStep()">Suivant</psh-button>
+        </div>
       </psh-step>
 
       <psh-step
@@ -253,9 +511,12 @@ import { PshStepperComponent, PshStepComponent } from 'ps-helix';
         icon="check"
         [disabled]="!isStep2Valid()"
       >
-        <p>Review your information</p>
-        <button (click)="previousStep()">Back</button>
-        <button (click)="submit()">Submit</button>
+        <p>Vérifiez vos informations</p>
+        <div class="actions">
+          <psh-button appearance="text" (clicked)="previousStep()">Retour</psh-button>
+          <psh-button variant="success" (clicked)="submit()">Soumettre</psh-button>
+          <psh-button appearance="outline" (clicked)="resetStepper()">Recommencer</psh-button>
+        </div>
       </psh-step>
     </psh-stepper>
   `
@@ -264,6 +525,7 @@ export class ExampleComponent {
   stepperRef = viewChild<PshStepperComponent>('stepper');
   activeStep = signal(0);
   step1Error = signal<string | undefined>(undefined);
+  errorMessage = signal('');
 
   step1Form: FormGroup;
   step2Form: FormGroup;
@@ -289,10 +551,17 @@ export class ExampleComponent {
     this.stepperRef()?.previous();
   }
 
+  resetStepper(): void {
+    this.stepperRef()?.reset();
+    this.step1Form.reset();
+    this.step2Form.reset();
+    this.step1Error.set(undefined);
+  }
+
   validateStepChange = async (from: number, to: number): Promise<boolean> => {
     if (from === 0 && !this.step1Form.valid) {
       this.step1Form.markAllAsTouched();
-      this.step1Error.set('Please complete all required fields');
+      this.step1Error.set('Veuillez compléter tous les champs requis');
       return false;
     }
     if (from === 1 && !this.step2Form.valid) {
@@ -304,11 +573,16 @@ export class ExampleComponent {
   };
 
   handleStepChange(step: number): void {
-    console.log('Active step:', step);
+    console.log('Étape active:', step);
   }
 
   handleComplete(): void {
-    console.log('All steps completed!');
+    console.log('Toutes les étapes sont complétées!');
+  }
+
+  handleError(error: string): void {
+    this.errorMessage.set(error);
+    setTimeout(() => this.errorMessage.set(''), 5000);
   }
 
   isStep1Valid(): boolean {
@@ -321,7 +595,7 @@ export class ExampleComponent {
 
   submit(): void {
     if (this.step1Form.valid && this.step2Form.valid) {
-      console.log('Submitting:', {
+      console.log('Soumission:', {
         ...this.step1Form.value,
         ...this.step2Form.value
       });
@@ -330,83 +604,23 @@ export class ExampleComponent {
 }
 ```
 
-## Best Practices
+## Fonctionnalités
 
-### Structure and Content
+- Navigation horizontale par étapes
+- Trois variantes visuelles (default, numbered, progress)
+- Progression linéaire ou non-linéaire
+- Support de validation de formulaires
+- Navigation au clavier (ArrowLeft, ArrowRight, Enter, Space, Home, End)
+- Indicateurs d'état (active, completed, disabled, error, warning, success)
+- Entièrement accessible avec attributs ARIA
+- Design responsive avec optimisations mobiles
+- Transitions animées entre les étapes
+- Labels ARIA personnalisables
+- Hook de validation beforeStepChange
+- Événement navigationError pour la gestion des erreurs
+- Méthode reset() pour réinitialiser le stepper
+- Propriétés calculées pour la progression (progress, completedSteps, isFirstStep, isLastStep)
 
-- Keep step content focused and concise
-- Provide clear, descriptive step titles
-- Use icons consistently across all steps
-- Validate each step before allowing progression
-- Handle error states explicitly
+## Composants Associés
 
-### Accessibility
-
-The Stepper component follows WCAG 2.1 AA guidelines with comprehensive accessibility support:
-
-**Keyboard Navigation:**
-- Left/Right arrows: Navigate between step headers
-- Home/End: Jump to first/last step
-- Enter/Space: Activate focused step
-- Tab: Move focus between interactive elements
-
-**ARIA Roles:**
-- `role="tablist"` on the stepper container
-- `role="tab"` on each step header
-- `role="tabpanel"` on each step content panel
-
-**ARIA States (automatically managed):**
-- `aria-selected`: Indicates active step
-- `aria-current="step"`: Marks current step
-- `aria-disabled`: Indicates disabled steps
-- `aria-describedby`: Links error messages to steps
-
-**Dynamic Announcements:**
-- Error messages use `aria-live="polite"` for screen reader announcements
-- Focus outline visible with minimum 3:1 contrast ratio
-
-**Best Practices:**
-- Provide descriptive ARIA labels via `ariaLabels` input
-- Include clear titles and subtitles for each step
-- Validate each step individually for reduced cognitive load
-- Maintain proper focus management between steps
-
-### Performance
-
-- Use OnPush change detection strategy
-- Leverage signals for reactive state
-- Implement proper cleanup in components
-- Use trackBy functions for loops
-
-### Validation
-
-- Implement beforeStepChange for custom validation logic
-- Mark completed steps clearly
-- Display error messages inline with steps
-- Prevent navigation to incomplete steps in linear mode
-- Provide immediate feedback on validation errors
-
-### Responsive Design
-
-- The stepper automatically adapts to mobile screens
-- On small viewports, step labels stack vertically
-- Connectors are hidden on mobile for better spacing
-- Test on various screen sizes to ensure usability
-
-## Features
-
-- Horizontal step navigation
-- Three visual variants (default, numbered, progress)
-- Linear or non-linear progression
-- Form validation support
-- Keyboard navigation (ArrowLeft, ArrowRight, Enter, Space, Home, End)
-- State indicators (active, completed, disabled, error, warning, success)
-- Fully accessible with ARIA attributes
-- Responsive design with mobile optimizations
-- Animation transitions between steps
-- Customizable ARIA labels
-- beforeStepChange validation hook
-
-## Related Components
-
-For vertical timeline displays, consider using the Timeline component (coming soon), which is specifically designed for chronological vertical layouts.
+Pour les affichages verticaux de type timeline, considérez l'utilisation du composant Timeline (à venir), qui est spécifiquement conçu pour les dispositions verticales chronologiques.

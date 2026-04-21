@@ -108,6 +108,78 @@
       </div>
     </section>
 
+    <!-- Controle de l'Expansion - Section Pleine Largeur -->
+    <section class="menu-expansion-section">
+      <h3 class="section-title">Controle de l'Expansion</h3>
+      <div class="collapsible-container">
+        <div class="collapsible-intro">
+          <p>Les sous-menus peuvent etre controles programmatiquement via le two-way binding <code>[(expandedItemIds)]</code> ou via les methodes publiques du composant.</p>
+        </div>
+        <div class="collapsible-content">
+          <div class="collapsible-demo">
+            <div class="menu-wrapper">
+              <psh-menu
+                #expansionControlMenu
+                [items]="expansionControlItems"
+                [(expandedItemIds)]="controlledExpandedIds"
+                (itemClick)="handleItemClick($event)"
+              ></psh-menu>
+            </div>
+            <div class="control-buttons">
+              <psh-button
+                appearance="filled"
+                variant="primary"
+                size="small"
+                (clicked)="expandAllItems()"
+              >
+                Tout ouvrir
+              </psh-button>
+              <psh-button
+                appearance="filled"
+                variant="secondary"
+                size="small"
+                (clicked)="collapseAllItems()"
+              >
+                Tout fermer
+              </psh-button>
+              <psh-button
+                appearance="outline"
+                variant="primary"
+                size="small"
+                (clicked)="expandUsers()"
+              >
+                Ouvrir Utilisateurs
+              </psh-button>
+              <psh-button
+                appearance="outline"
+                variant="secondary"
+                size="small"
+                (clicked)="collapseUsers()"
+              >
+                Fermer Utilisateurs
+              </psh-button>
+            </div>
+            <div class="expanded-ids-display">
+              <strong>IDs ouverts:</strong> {{ controlledExpandedIds().length > 0 ? controlledExpandedIds().join(', ') : '(aucun)' }}
+            </div>
+          </div>
+          <div class="collapsible-doc">
+            <h4>Methodes de Controle</h4>
+            <ul class="feature-list">
+              <li><strong>expandItem(id)</strong> : Ouvre un sous-menu specifique</li>
+              <li><strong>collapseItem(id)</strong> : Ferme un sous-menu specifique</li>
+              <li><strong>toggleItemExpansion(id)</strong> : Bascule l'etat d'un sous-menu</li>
+              <li><strong>expandAll()</strong> : Ouvre tous les sous-menus</li>
+              <li><strong>collapseAll()</strong> : Ferme tous les sous-menus</li>
+            </ul>
+            <ds-code-snippet [code]="expansionControlCode" />
+            <h4 style="margin-top: var(--spacing-lg);">Controle Programmatique</h4>
+            <ds-code-snippet [code]="programmaticControlCode" />
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Variantes de Menu - Section Pleine Largeur -->
     <section class="menu-variants-section">
       <h3 class="section-title">Variantes de Menu</h3>
@@ -318,7 +390,13 @@
                 <td><code>collapsed</code></td>
                 <td><code>boolean</code></td>
                 <td><code>false</code></td>
-                <td>État replié du menu (supporte two-way binding avec [(collapsed)])</td>
+                <td>Etat replie du menu (supporte two-way binding avec [(collapsed)])</td>
+              </tr>
+              <tr>
+                <td><code>expandedItemIds</code></td>
+                <td><code>string[]</code></td>
+                <td><code>[]</code></td>
+                <td>Liste des IDs des sous-menus ouverts (supporte two-way binding avec [(expandedItemIds)])</td>
               </tr>
               <tr>
                 <td><code>ariaLabels</code></td>
@@ -376,7 +454,52 @@
               <tr>
                 <td><code>collapsedChange</code></td>
                 <td><code>EventEmitter&lt;boolean&gt;</code></td>
-                <td>Émis lors du changement d'état collapsed (généré par model pour two-way binding)</td>
+                <td>Emis lors du changement d'etat collapsed (genere par model pour two-way binding)</td>
+              </tr>
+              <tr>
+                <td><code>expandedItemIdsChange</code></td>
+                <td><code>EventEmitter&lt;string[]&gt;</code></td>
+                <td>Emis lors du changement des sous-menus ouverts (genere par model pour two-way binding)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="api-table-wrapper">
+          <h4>Methodes Publiques</h4>
+          <table class="api-table">
+            <thead>
+              <tr>
+                <th>Methode</th>
+                <th>Parametres</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>expandItem()</code></td>
+                <td><code>itemId: string</code></td>
+                <td>Ouvre le sous-menu de l'item specifie</td>
+              </tr>
+              <tr>
+                <td><code>collapseItem()</code></td>
+                <td><code>itemId: string</code></td>
+                <td>Ferme le sous-menu de l'item specifie</td>
+              </tr>
+              <tr>
+                <td><code>toggleItemExpansion()</code></td>
+                <td><code>itemId: string</code></td>
+                <td>Bascule l'etat d'expansion du sous-menu de l'item specifie</td>
+              </tr>
+              <tr>
+                <td><code>expandAll()</code></td>
+                <td>-</td>
+                <td>Ouvre tous les sous-menus du menu</td>
+              </tr>
+              <tr>
+                <td><code>collapseAll()</code></td>
+                <td>-</td>
+                <td>Ferme tous les sous-menus du menu</td>
               </tr>
             </tbody>
           </table>

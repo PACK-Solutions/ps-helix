@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   inject,
   input,
   model,
@@ -23,10 +24,6 @@ export const PAGINATION_CONFIG = new InjectionToken<Partial<PaginationConfig>>('
   })
 });
 
-export const PAGINATION_STYLES = new InjectionToken<Record<string, string>[]>('PAGINATION_STYLES', {
-  factory: () => []
-});
-
 @Component({
   selector: 'psh-pagination',
   imports: [CommonModule],
@@ -36,13 +33,41 @@ export const PAGINATION_STYLES = new InjectionToken<Record<string, string>[]>('P
 })
 export class PshPaginationComponent {
   private config = inject(PAGINATION_CONFIG);
-  private styles = inject(PAGINATION_STYLES, { optional: true }) ?? [];
   private static idCounter = 0;
   private readonly uniqueId = `pagination-${++PshPaginationComponent.idCounter}`;
 
   currentPage = model(1);
   totalPages = model(1);
   itemsPerPage = model(10);
+
+  constructor() {
+    effect(() => {
+      const total = this.totalPages();
+      if (total < 1 || !Number.isFinite(total)) {
+        console.warn(`[psh-pagination] Invalid totalPages "${total}", setting to 1`);
+        this.totalPages.set(1);
+      }
+    });
+
+    effect(() => {
+      const current = this.currentPage();
+      const total = this.totalPages();
+      if (current < 1 || !Number.isFinite(current)) {
+        console.warn(`[psh-pagination] Invalid currentPage "${current}", setting to 1`);
+        this.currentPage.set(1);
+      } else if (current > total && total >= 1) {
+        console.warn(`[psh-pagination] currentPage "${current}" exceeds totalPages "${total}", setting to ${total}`);
+        this.currentPage.set(total);
+      }
+    });
+
+    effect(() => {
+      const maxVisible = this.maxVisiblePages();
+      if (maxVisible < 1 || !Number.isFinite(maxVisible)) {
+        console.warn(`[psh-pagination] Invalid maxVisiblePages "${maxVisible}", must be >= 1`);
+      }
+    });
+  }
 
   readonly size = input(this.config.size ?? 'medium' as PaginationSize, {
     transform: (value: PaginationSize): PaginationSize => {
@@ -102,8 +127,6 @@ export class PshPaginationComponent {
 
     return pages;
   });
-
-  protected readonly customStyles = computed(() => Object.assign({}, ...this.styles));
 
   protected readonly state = computed(() => this.getState());
 
