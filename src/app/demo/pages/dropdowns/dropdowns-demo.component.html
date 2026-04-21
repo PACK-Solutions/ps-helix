@@ -80,28 +80,12 @@
       <h3 class="section-title">Variantes sémantiques</h3>
       <div class="variants-container">
         <div class="variants-intro">
-          <p>Chaque apparence se combine librement avec cinq variantes semantiques qui communiquent l'intention de l'action. Forme et couleur sont deux axes orthogonaux.</p>
+          <p>Les cinq variantes semantiques communiquent l'intention de l'action. Elles se combinent librement avec chacune des trois apparences : forme et couleur sont deux axes orthogonaux.</p>
         </div>
         <div class="variants-grid">
           <div class="variant-card">
             <div class="variant-preview">
               <psh-dropdown appearance="filled" variant="primary">
-                <span dropdown-trigger>Primary</span>
-                <div dropdown-menu>
-                  @for (item of basicItems; track item.value) {
-                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
-                  }
-                </div>
-              </psh-dropdown>
-              <psh-dropdown appearance="outline" variant="primary">
-                <span dropdown-trigger>Primary</span>
-                <div dropdown-menu>
-                  @for (item of basicItems; track item.value) {
-                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
-                  }
-                </div>
-              </psh-dropdown>
-              <psh-dropdown appearance="text" variant="primary">
                 <span dropdown-trigger>Primary</span>
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
@@ -126,22 +110,6 @@
                   }
                 </div>
               </psh-dropdown>
-              <psh-dropdown appearance="outline" variant="secondary">
-                <span dropdown-trigger>Secondary</span>
-                <div dropdown-menu>
-                  @for (item of basicItems; track item.value) {
-                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
-                  }
-                </div>
-              </psh-dropdown>
-              <psh-dropdown appearance="text" variant="secondary">
-                <span dropdown-trigger>Secondary</span>
-                <div dropdown-menu>
-                  @for (item of basicItems; track item.value) {
-                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
-                  }
-                </div>
-              </psh-dropdown>
             </div>
             <div class="variant-info">
               <h4>Secondary</h4>
@@ -152,22 +120,6 @@
           <div class="variant-card">
             <div class="variant-preview">
               <psh-dropdown appearance="filled" variant="success">
-                <span dropdown-trigger>Success</span>
-                <div dropdown-menu>
-                  @for (item of basicItems; track item.value) {
-                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
-                  }
-                </div>
-              </psh-dropdown>
-              <psh-dropdown appearance="outline" variant="success">
-                <span dropdown-trigger>Success</span>
-                <div dropdown-menu>
-                  @for (item of basicItems; track item.value) {
-                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
-                  }
-                </div>
-              </psh-dropdown>
-              <psh-dropdown appearance="text" variant="success">
                 <span dropdown-trigger>Success</span>
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
@@ -192,22 +144,6 @@
                   }
                 </div>
               </psh-dropdown>
-              <psh-dropdown appearance="outline" variant="warning">
-                <span dropdown-trigger>Warning</span>
-                <div dropdown-menu>
-                  @for (item of basicItems; track item.value) {
-                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
-                  }
-                </div>
-              </psh-dropdown>
-              <psh-dropdown appearance="text" variant="warning">
-                <span dropdown-trigger>Warning</span>
-                <div dropdown-menu>
-                  @for (item of basicItems; track item.value) {
-                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
-                  }
-                </div>
-              </psh-dropdown>
             </div>
             <div class="variant-info">
               <h4>Warning</h4>
@@ -225,29 +161,17 @@
                   }
                 </div>
               </psh-dropdown>
-              <psh-dropdown appearance="outline" variant="danger">
-                <span dropdown-trigger>Danger</span>
-                <div dropdown-menu>
-                  @for (item of basicItems; track item.value) {
-                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
-                  }
-                </div>
-              </psh-dropdown>
-              <psh-dropdown appearance="text" variant="danger">
-                <span dropdown-trigger>Danger</span>
-                <div dropdown-menu>
-                  @for (item of basicItems; track item.value) {
-                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
-                  }
-                </div>
-              </psh-dropdown>
             </div>
             <div class="variant-info">
               <h4>Danger</h4>
               <p>Actions destructives et irreversibles.</p>
-              <ds-code-snippet [code]="semanticVariantCode" />
             </div>
           </div>
+        </div>
+        <div class="variants-combination">
+          <h4>Combinaison apparence × variante</h4>
+          <p>Combinez librement l'<code>appearance</code> (forme) avec la <code>variant</code> (intention) pour couvrir tous les cas d'usage.</p>
+          <ds-code-snippet [code]="semanticVariantCode" />
         </div>
       </div>
     </section>

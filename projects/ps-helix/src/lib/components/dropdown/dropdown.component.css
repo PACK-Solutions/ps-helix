@@ -88,7 +88,6 @@
 .dropdown-trigger.outline {
   background: transparent;
   border: var(--border-width-2) solid currentColor;
-  color: currentColor;
 }
 
 .dropdown-trigger.outline .trigger-content { color: inherit; }
@@ -106,7 +105,6 @@
 /* Text */
 .dropdown-trigger.text {
   background: transparent;
-  color: currentColor;
 }
 
 .dropdown-trigger.text .trigger-content { color: inherit; }
