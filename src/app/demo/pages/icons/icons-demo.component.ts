@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
 
@@ -6,7 +6,8 @@ import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component
   selector: 'ds-icons-demo',
   imports: [TranslateModule, DemoPageLayoutComponent],
   templateUrl: './icons-demo.component.html',
-  styleUrls: ['./icons-demo.component.css']
+  styleUrls: ['./icons-demo.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IconsDemoComponent {
   keyFeatures = [

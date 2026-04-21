@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { PshDropdownComponent } from './dropdown.component';
-import { DropdownAppearance, DropdownItem, DropdownPlacement, DropdownSize, DropdownVariant } from './dropdown.types';
+import { DropdownItem, DropdownPlacement, DropdownSize } from './dropdown.types';
 
 describe('PshDropdownComponent', () => {
   let fixture: ComponentFixture<PshDropdownComponent<string>>;
@@ -705,14 +705,11 @@ describe('PshDropdownComponent', () => {
   });
 
   describe('Variants', () => {
-    const ALL_VARIANTS: DropdownVariant[] = ['primary', 'secondary', 'success', 'warning', 'danger'];
-
-    it.each<[DropdownVariant]>([
+    it.each<['primary' | 'secondary' | 'outline' | 'text']>([
       ['primary'],
       ['secondary'],
-      ['success'],
-      ['warning'],
-      ['danger']
+      ['outline'],
+      ['text']
     ])('should apply %s variant class to trigger', (variant) => {
       fixture.componentRef.setInput('variant', variant);
       fixture.detectChanges();
@@ -722,63 +719,6 @@ describe('PshDropdownComponent', () => {
 
     it('should have primary variant by default', () => {
       expect(getTrigger().classList.contains('primary')).toBe(true);
-    });
-
-    it.each<[DropdownVariant]>([
-      ['primary'],
-      ['secondary'],
-      ['success'],
-      ['warning'],
-      ['danger']
-    ])('should only have "%s" variant class and no other variant classes', (variant) => {
-      fixture.componentRef.setInput('variant', variant);
-      fixture.detectChanges();
-
-      const others = ALL_VARIANTS.filter(v => v !== variant);
-      others.forEach(other => {
-        expect(getTrigger().classList.contains(other)).toBe(false);
-      });
-    });
-  });
-
-  describe('Appearances', () => {
-    const ALL_APPEARANCES: DropdownAppearance[] = ['filled', 'outline', 'text'];
-
-    it.each<[DropdownAppearance]>([['filled'], ['outline'], ['text']])(
-      'should apply %s appearance class to trigger',
-      (appearance) => {
-        fixture.componentRef.setInput('appearance', appearance);
-        fixture.detectChanges();
-
-        expect(getTrigger().classList.contains(appearance)).toBe(true);
-      }
-    );
-
-    it('should have filled appearance by default', () => {
-      expect(getTrigger().classList.contains('filled')).toBe(true);
-    });
-
-    it.each<[DropdownAppearance]>([['filled'], ['outline'], ['text']])(
-      'should only have "%s" appearance class and no other appearance classes',
-      (appearance) => {
-        fixture.componentRef.setInput('appearance', appearance);
-        fixture.detectChanges();
-
-        const others = ALL_APPEARANCES.filter(a => a !== appearance);
-        others.forEach(other => {
-          expect(getTrigger().classList.contains(other)).toBe(false);
-        });
-      }
-    );
-
-    it('should combine appearance and variant classes', () => {
-      fixture.componentRef.setInput('appearance', 'outline');
-      fixture.componentRef.setInput('variant', 'danger');
-      fixture.detectChanges();
-
-      const trigger = getTrigger();
-      expect(trigger.classList.contains('outline')).toBe(true);
-      expect(trigger.classList.contains('danger')).toBe(true);
     });
   });
 

@@ -21,8 +21,6 @@ export * from './lib/components/dropdown/dropdown.component';
 export * from './lib/components/dropdown/dropdown.types';
 export * from './lib/components/input/input.component';
 export * from './lib/components/input/input.types';
-export * from './lib/components/textarea/textarea.component';
-export * from './lib/components/textarea/textarea.types';
 export * from './lib/components/menu/menu.component';
 export * from './lib/components/menu/menu.types';
 export * from './lib/components/modal/modal.component';
@@ -40,7 +38,11 @@ export * from './lib/components/sidebar/sidebar.types';
 export * from './lib/components/spinloader/spinloader.component';
 export * from './lib/components/spinloader/spinloader.types';
 export * from './lib/components/stepper/stepper.component';
+export * from './lib/components/stepper/step.component';
 export * from './lib/components/stepper/stepper.types';
+export * from './lib/components/state-flow-indicator/state-flow-indicator.component';
+export * from './lib/components/state-flow-indicator/flow-step.component';
+export * from './lib/components/state-flow-indicator/state-flow-indicator.types';
 export * from './lib/components/switch/switch.component';
 export * from './lib/components/switch/switch.types';
 export * from './lib/components/tab-bar/tab-bar.component';
@@ -48,26 +50,20 @@ export * from './lib/components/tab-bar/tab-bar.types';
 export * from './lib/components/table/table.component';
 export * from './lib/components/table/table.types';
 export * from './lib/components/tabs/tabs.component';
+export * from './lib/components/tabs/tab.component';
 export * from './lib/components/tabs/tabs.types';
 export * from './lib/components/tag/tag.component';
 export * from './lib/components/tag/tag.types';
 export * from './lib/components/toast/toast.component';
 export * from './lib/components/toast/toast.service';
+export * from './lib/components/toast/toast.tokens';
 export * from './lib/components/toast/toast.types';
 export * from './lib/components/tooltip/tooltip.component';
 export * from './lib/components/tooltip/tooltip.types';
 
 export * from './lib/services/theme/theme.service';
-export {
-  CUSTOMER_CONTEXT_SERVICE,
-  CustomerContextService,
-  INSURER_CONTEXT_SERVICE,
-  InsurerContextService,
-} from './lib/services/theme/theme.service';
+export { INSURER_CONTEXT_SERVICE, InsurerContextService } from './lib/services/theme/theme.service';
 export * from './lib/services/theme/types/theme.types';
 export * from './lib/services/translation/translation.service';
 export * from './lib/services/translation/types/i18n.types';
 export * from './lib/services/scroll.service';
-
-export * from './lib/utils/contrast.util';
-export * from './lib/utils/color-math.util';

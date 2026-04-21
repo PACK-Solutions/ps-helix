@@ -49,15 +49,16 @@ import { PshButtonComponent } from 'ps-helix';
 
 ## API
 
-### Inputs (signaux)
+### Inputs
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
-| appearance | ButtonAppearance | 'filled' | Apparence du bouton (`filled`, `outline`, `text`) |
-| variant | ButtonVariant | 'primary' | Variante sémantique (`primary`, `secondary`, `success`, `warning`, `danger`) |
-| size | ButtonSize | 'medium' | Taille du bouton (`small`, `medium`, `large`) |
+| appearance | ButtonAppearance | 'filled' | Apparence du bouton |
+| variant | ButtonVariant | 'primary' | Style du bouton |
+| size | ButtonSize | 'medium' | Taille du bouton |
 | disabled | boolean | false | État désactivé |
 | loading | boolean | false | État de chargement |
-| iconPosition | ButtonIconPosition | 'left' | Position de l'icône (`left`, `right`, `only`) |
+| fullWidth | boolean | false | Largeur complète |
+| iconPosition | ButtonIconPosition | 'left' | Position de l'icône |
 | icon | string | undefined | Nom de l'icône Phosphor |
 | ariaLabel | string | undefined | Label ARIA personnalisé |
 | loadingText | string | 'Loading...' | Texte de chargement |
@@ -65,34 +66,21 @@ import { PshButtonComponent } from 'ps-helix';
 | iconOnlyText | string | undefined | Label pour icône seule |
 | type | 'button' \| 'submit' \| 'reset' | 'button' | Type HTML du bouton |
 
-### Model Inputs (two-way binding)
-| Nom | Type | Défaut | Description |
-|-----|------|---------|-------------|
-| fullWidth | boolean | false | Largeur complète. Supporte `[(fullWidth)]` pour une synchronisation parent/enfant |
-
 ### Outputs
 | Nom | Type | Description |
 |-----|------|-------------|
 | clicked | EventEmitter<MouseEvent> | Émis lors du clic |
+| disabledClick | EventEmitter<MouseEvent> | Émis lors du clic sur un bouton désactivé (hors chargement) |
 
 ### Types
 
 ```typescript
-type ButtonAppearance = 'filled' | 'outline' | 'text';
+type ButtonAppearance = 'filled' | 'outline' | 'rounded' | 'text';
 type ButtonVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
 type ButtonSize = 'small' | 'medium' | 'large';
 type ButtonIconPosition = 'left' | 'right' | 'only';
 type ButtonType = 'button' | 'submit' | 'reset';
 ```
-
-### Contrat du design system
-
-Deux axes orthogonaux, reutilises par tous les composants cliquables (button, dropdown, ...) :
-
-- **`appearance`** — forme / style de remplissage (`filled` | `outline` | `text`).
-- **`variant`** — intention semantique / couleur (`primary` | `secondary` | `success` | `warning` | `danger`).
-
-L'arrondi des boutons n'est pas expose par composant : il est pilote globalement via le token CSS `--border-radius`. Si un besoin specifique de bouton circulaire (FAB) apparait, il sera traite par un composant dedie, pas par une apparence supplementaire.
 
 ## Apparences
 
@@ -126,6 +114,21 @@ L'arrondi des boutons n'est pas expose par composant : il est pilote globalement
 <psh-button appearance="outline" variant="primary">Modifier</psh-button>
 <psh-button appearance="outline" variant="secondary">Retour</psh-button>
 <psh-button appearance="outline" variant="success">Approuver</psh-button>
+```
+
+### Rounded
+**Description**: Style avec coins complètement arrondis (border-radius: 50px).
+
+**Cas d'utilisation**:
+- Design moderne
+- Interfaces ludiques
+- Actions spéciales
+- Floating action buttons
+
+**Exemple**:
+```html
+<psh-button appearance="rounded" variant="primary">Commencer</psh-button>
+<psh-button appearance="rounded" variant="secondary">Explorer</psh-button>
 ```
 
 ### Text
@@ -163,7 +166,7 @@ Taille standard pour la majorité des cas d'utilisation.
 ```html
 <psh-button size="medium" variant="primary">Moyen</psh-button>
 <psh-button size="medium" appearance="outline" variant="secondary">Annuler</psh-button>
-<psh-button size="medium" appearance="text" variant="primary">Action</psh-button>
+<psh-button size="medium" appearance="rounded" variant="primary">Action</psh-button>
 ```
 
 ### Large (48px)
@@ -173,7 +176,7 @@ Utilisé pour les actions importantes ou les interfaces tactiles.
 ```html
 <psh-button size="large" variant="primary">Grand</psh-button>
 <psh-button size="large" appearance="outline" variant="success">Valider</psh-button>
-<psh-button size="large" appearance="filled" variant="primary">Confirmer</psh-button>
+<psh-button size="large" appearance="rounded" variant="primary">Confirmer</psh-button>
 ```
 
 ## Variantes de Couleur
@@ -233,6 +236,22 @@ Empêche toute interaction avec le bouton.
 <psh-button [disabled]="isFormInvalid" variant="primary">Enregistrer</psh-button>
 ```
 
+**Réagir au clic sur un bouton désactivé** :
+```html
+<psh-button
+  [disabled]="!form.valid"
+  variant="primary"
+  (disabledClick)="onDisabledAttempt()"
+>
+  Enregistrer
+</psh-button>
+```
+```typescript
+onDisabledAttempt() {
+  this.toastService.warning('Veuillez remplir tous les champs obligatoires.');
+}
+```
+
 ### Loading (Chargement)
 Affiche un spinner de chargement et désactive les interactions.
 
@@ -262,7 +281,8 @@ Occupe toute la largeur du conteneur parent.
 ### Choix de l'Apparence
 1. **Filled**: Utilisez pour l'action principale d'une page ou d'un formulaire
 2. **Outline**: Utilisez pour les actions secondaires ou alternatives
-3. **Text**: Utilisez pour les actions tertiaires, les liens ou la navigation
+3. **Rounded**: Utilisez pour des actions spéciales ou des FAB (Floating Action Buttons)
+4. **Text**: Utilisez pour les actions tertiaires, les liens ou la navigation
 
 ### Choix de la Variante
 1. **Primary**: Action principale de la page (ex: Enregistrer, Continuer)
@@ -338,16 +358,6 @@ Le composant génère automatiquement les attributs ARIA appropriés:
 - `aria-disabled="true"`: Lorsque le bouton est désactivé
 - `aria-busy="true"`: Lorsque le bouton est en chargement
 - `aria-label`: Utilise `ariaLabel` ou génère automatiquement à partir du contenu
-
-### Résolution automatique du label ARIA
-
-Le composant calcule `aria-label` selon l'ordre de priorité suivant :
-
-1. `ariaLabel` s'il est fourni explicitement
-2. `loadingText` lorsque `loading` est actif
-3. `disabledText` lorsque `disabled` est actif
-4. `iconOnlyText` (ou `'Button'` en dernier recours) lorsque `iconPosition="only"`
-5. `undefined` pour les boutons avec contenu textuel (le texte sert de label)
 
 ### Labels Accessibles
 
@@ -454,7 +464,7 @@ Le design system garantit:
   iconPosition="only"
   iconOnlyText="Ajouter un élément"
   variant="primary"
-  appearance="filled"
+  appearance="rounded"
 ></psh-button>
 ```
 
@@ -537,7 +547,7 @@ Utilisez n'importe quelle icône de [Phosphor Icons](https://phosphoricons.com/)
   Retour
 </psh-button>
 <psh-button
-  appearance="filled"
+  appearance="rounded"
   variant="primary"
   icon="arrow-right"
   iconPosition="right"
@@ -545,6 +555,19 @@ Utilisez n'importe quelle icône de [Phosphor Icons](https://phosphoricons.com/)
 >
   Continuer
 </psh-button>
+```
+
+### Floating Action Button (FAB)
+```html
+<psh-button
+  appearance="rounded"
+  variant="primary"
+  icon="plus"
+  iconPosition="only"
+  iconOnlyText="Ajouter un nouvel élément"
+  size="large"
+  (clicked)="onCreate()"
+></psh-button>
 ```
 
 ## Exemple Complet avec Toutes les Options
@@ -569,6 +592,7 @@ import { PshButtonComponent } from 'ps-helix';
       ariaLabel="Continuer vers la prochaine étape"
       loadingText="Chargement en cours..."
       (clicked)="handleClick($event)"
+      (disabledClick)="handleDisabledClick()"
     >
       Continuer
     </psh-button>
@@ -584,6 +608,11 @@ export class ExampleComponent {
     setTimeout(() => {
       this.isLoading = false;
     }, 2000);
+  }
+
+  handleDisabledClick() {
+    // Informer l'utilisateur pourquoi l'action est indisponible
+    console.log('Action indisponible');
   }
 }
 ```

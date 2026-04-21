@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { PshButtonComponent } from '@lib/components/button/button.component';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
@@ -8,7 +8,8 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
   selector: 'ds-buttons-demo',
   imports: [TranslateModule, PshButtonComponent, DemoPageLayoutComponent, CodeSnippetComponent],
   templateUrl: './buttons-demo.component.html',
-  styleUrls: ['./buttons-demo.component.css']
+  styleUrls: ['./buttons-demo.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonsDemoComponent {
   isFormInvalid = false;
@@ -27,6 +28,13 @@ export class ButtonsDemoComponent {
   variant="primary"
 >
   Action secondaire
+</psh-button>`;
+
+  roundedAppearanceCode = `<psh-button
+  appearance="rounded"
+  variant="primary"
+>
+  Action spéciale
 </psh-button>`;
 
   textAppearanceCode = `<psh-button
@@ -66,6 +74,23 @@ export class ButtonsDemoComponent {
 >
   Enregistrer
 </psh-button>`;
+
+  disabledClickCode = `<psh-button
+  [disabled]="true"
+  variant="primary"
+  (disabledClick)="onDisabledAttempt()"
+>
+  Action indisponible
+</psh-button>`;
+
+  disabledClickMessage = '';
+
+  onDisabledAttempt(): void {
+    this.disabledClickMessage = 'Ce bouton est désactivé. Veuillez remplir le formulaire.';
+    setTimeout(() => {
+      this.disabledClickMessage = '';
+    }, 3000);
+  }
 
   handleClick(event: MouseEvent): void {
     console.log('Button clicked:', event);

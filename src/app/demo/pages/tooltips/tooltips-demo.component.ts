@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { PshTooltipComponent } from '@lib/components/tooltip/tooltip.component';
 import { PshButtonComponent } from '@lib/components/button/button.component';
@@ -15,7 +15,8 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
     CodeSnippetComponent
   ],
   templateUrl: './tooltips-demo.component.html',
-  styleUrls: ['./tooltips-demo.component.css']
+  styleUrls: ['./tooltips-demo.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TooltipsDemoComponent {
   demoDelays = {
@@ -36,10 +37,16 @@ export class TooltipsDemoComponent {
 
   helpTooltipCode = `<psh-tooltip
   content="Help text"
-  (showed)="onShow()"
+  (shown)="onShow()"
   (hidden)="onHide()"
 >
-  <psh-button icon="question" />
+  <psh-button
+    appearance="outline"
+    variant="secondary"
+    icon="question"
+    iconPosition="only"
+    ariaLabel="Help"
+  />
 </psh-tooltip>`;
 
   topPositionCode = `<psh-tooltip
@@ -108,7 +115,23 @@ export class TooltipsDemoComponent {
   <psh-button>Delayed</psh-button>
 </psh-tooltip>`;
 
-  handleTooltipShowed(): void {
+  autoFlipCode = `<psh-tooltip
+  content="Auto-flip enabled"
+  position="top"
+  [autoFlip]="true"
+>
+  <psh-button>Auto-flip</psh-button>
+</psh-tooltip>`;
+
+  noAutoFlipCode = `<psh-tooltip
+  content="Fixed position"
+  position="top"
+  [autoFlip]="false"
+>
+  <psh-button>No auto-flip</psh-button>
+</psh-tooltip>`;
+
+  handleTooltipShown(): void {
     console.log('Tooltip shown');
   }
 

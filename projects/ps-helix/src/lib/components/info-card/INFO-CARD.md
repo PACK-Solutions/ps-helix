@@ -13,6 +13,7 @@ Composant carte d'information - affiche des donnees structurees sous forme de pa
 - [Comportement Responsive](#comportement-responsive)
 - [Exemples Pratiques](#exemples-pratiques)
 - [Accessibilite](#accessibilite)
+- [Comportement de Layout](#comportement-de-layout)
 - [Bonnes Pratiques](#bonnes-pratiques)
 
 ## Utilisation
@@ -144,9 +145,29 @@ Le composant utilise `ng-content` avec des selecteurs pour organiser le contenu.
 
 | Slot | Selecteur | Description | Position |
 |------|-----------|-------------|----------|
+| **Header Actions** | `[card-header-actions]` | Actions dans l'en-tete | En-tete de carte (a droite du titre) |
 | **Actions** | `[card-actions]` | Boutons d'action | Pied de carte |
 
-### Exemple avec Zone d'Actions
+### Exemple avec Zone d'Actions Header
+
+```html
+<psh-info-card
+  title="Profil Utilisateur"
+  [data]="userData"
+  icon="user-circle"
+>
+  <div card-header-actions>
+    <psh-button appearance="text" size="small">
+      <i class="ph ph-pencil"></i>
+    </psh-button>
+    <psh-button appearance="text" size="small" variant="danger">
+      <i class="ph ph-trash"></i>
+    </psh-button>
+  </div>
+</psh-info-card>
+```
+
+### Exemple avec Zone d'Actions Footer
 
 ```html
 <psh-info-card
@@ -161,7 +182,25 @@ Le composant utilise `ng-content` avec des selecteurs pour organiser le contenu.
 </psh-info-card>
 ```
 
-**Note sur le responsive :** Les boutons places dans `card-actions` deviennent automatiquement pleine largeur sur mobile (<= 640px) grace a la propriete `autoFullWidthOnMobile`.
+### Exemple avec Actions Header et Footer
+
+```html
+<psh-info-card
+  title="Details du Projet"
+  [data]="projectData"
+  icon="folder"
+>
+  <div card-header-actions>
+    <psh-badge variant="success">Actif</psh-badge>
+  </div>
+  <div card-actions>
+    <psh-button appearance="outline">Annuler</psh-button>
+    <psh-button variant="primary">Sauvegarder</psh-button>
+  </div>
+</psh-info-card>
+```
+
+**Note sur le responsive :** Les boutons places dans `card-actions` deviennent automatiquement pleine largeur sur mobile (<= 640px) grace a la propriete `autoFullWidthOnMobile`. Le slot `card-header-actions` reste aligne a droite du titre sur tous les breakpoints, mais peut passer sous le titre sur mobile (<= 480px) si l'espace est insuffisant.
 
 ## Variantes Visuelles
 
@@ -449,6 +488,53 @@ Pour les cartes interactives (`interactive=true`) :
 4. Tester la navigation au clavier
 5. Fournir un feedback visuel clair pour l'etat de focus
 
+## Comportement de Layout
+
+### Host Element
+
+Le composant utilise `ViewEncapsulation.None` et definit des styles sur son element hote :
+
+```typescript
+host: {
+  style: 'display: block; height: 100%;'
+}
+```
+
+**Implications :**
+- **display: block** : Le composant occupe toute la largeur disponible par defaut
+- **height: 100%** : Le composant remplit la hauteur de son conteneur parent
+
+### Hauteur Egale dans les Grilles
+
+Grace a `height: 100%`, les cartes s'alignent automatiquement en hauteur dans une grille CSS :
+
+```html
+<div class="cards-grid">
+  <psh-info-card title="Carte 1" [data]="data1"></psh-info-card>
+  <psh-info-card title="Carte 2" [data]="data2"></psh-info-card>
+  <psh-info-card title="Carte 3" [data]="data3"></psh-info-card>
+</div>
+```
+
+```css
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+  gap: var(--size-4);
+}
+```
+
+**Resultat :** Toutes les cartes auront la meme hauteur, determinee par la carte la plus haute de chaque ligne.
+
+### ViewEncapsulation.None
+
+Le composant utilise `ViewEncapsulation.None`, ce qui permet :
+- Les styles du composant s'appliquent globalement
+- Les styles externes peuvent facilement personnaliser l'apparence
+- Les selecteurs CSS du composant ne sont pas encapsules
+
+**Note importante :** Utilisez les classes CSS fournies (`.info-card`, `.variant-elevated`, etc.) ou les inputs (`cssClass`, `customStyle`) pour personnaliser le composant plutot que de cibler directement les elements internes.
+
 ## Bonnes Pratiques
 
 ### 1. Utilisation des Design Tokens
@@ -516,6 +602,6 @@ Le composant utilise `ChangeDetectionStrategy.OnPush` et Signals :
 
 ---
 
-**Version :** 1.0
+**Version :** 1.2
 **Derniere mise a jour :** Janvier 2026
-**Compatibilite :** Angular 20+
+**Compatibilite :** Angular 21+

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { NgOptimizedImage } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   PshHorizontalCardComponent,
@@ -14,8 +14,9 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
   selector: 'ds-horizontal-cards-demo',
   templateUrl: './horizontal-cards-demo.component.html',
   styleUrls: ['./horizontal-cards-demo.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
+    NgOptimizedImage,
     TranslateModule,
     PshHorizontalCardComponent,
     PshButtonComponent,

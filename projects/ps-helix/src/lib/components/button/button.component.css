@@ -222,6 +222,62 @@ button.outline:not(.primary):not(.secondary):not(.success):not(.warning):not(.da
   color: var(--text-on-surface);
 }
 
+/* Rounded */
+button.rounded {
+  border-radius: var(--radius-full);
+  background-color: currentColor;
+}
+
+button.rounded.primary {
+  background: var(--primary-gradient);
+  color: var(--text-on-primary);
+}
+
+button.rounded.primary .button-content {
+  color: var(--text-on-primary);
+}
+
+button.rounded.secondary .button-content {
+  color: var(--text-on-secondary);
+}
+
+button.rounded.success .button-content {
+  color: var(--text-on-success);
+}
+
+button.rounded.warning .button-content {
+  color: var(--text-on-warning);
+}
+
+button.rounded.danger .button-content {
+  color: var(--text-on-danger);
+}
+
+button.rounded:not(.primary):not(.secondary):not(.success):not(.warning):not(.danger) .button-content {
+  color: var(--text-on-surface);
+}
+
+/* Rounded hover states for each variant */
+button.rounded.primary:hover:not(.disabled):not(.loading) {
+  background: var(--primary-gradient-hover);
+}
+
+button.rounded.secondary:hover:not(.disabled):not(.loading) {
+  background-color: var(--secondary-color-light);
+}
+
+button.rounded.success:hover:not(.disabled):not(.loading) {
+  background-color: var(--green-400);
+}
+
+button.rounded.warning:hover:not(.disabled):not(.loading) {
+  background-color: var(--orange-400);
+}
+
+button.rounded.danger:hover:not(.disabled):not(.loading) {
+  background-color: var(--red-400);
+}
+
 /* Text */
 button.text {
   background: transparent;

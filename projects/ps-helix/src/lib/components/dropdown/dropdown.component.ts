@@ -2,27 +2,16 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  effect,
   ElementRef,
   inject,
   input,
-  isDevMode,
   model,
   output,
   signal,
   OnDestroy
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  DropdownAppearance,
-  DropdownIconPosition,
-  DropdownItem,
-  DropdownPlacement,
-  DropdownSize,
-  DropdownVariant
-} from './dropdown.types';
-
-const LEGACY_VARIANT_APPEARANCES = new Set(['outline', 'text']);
+import { DropdownItem, DropdownPlacement, DropdownSize } from './dropdown.types';
 
 @Component({
   selector: 'psh-dropdown',
@@ -36,14 +25,12 @@ export class PshDropdownComponent<T = string> implements OnDestroy {
   private clickOutsideHandler: ((event: MouseEvent) => void) | null = null;
 
   // Regular inputs
-  appearance = input<DropdownAppearance>('filled');
-  variant = input<DropdownVariant>('primary');
+  variant = input<'primary' | 'secondary' | 'outline' | 'text'>('primary');
   size = input<DropdownSize>('medium');
   placement = input<DropdownPlacement>('bottom-start');
   items = input<DropdownItem<T>[]>([]);
   label = input('Dropdown Menu');
   icon = input<string>();
-  iconPosition = input<DropdownIconPosition>('left');
   ariaLabel = input<string>();
 
   // Model inputs
@@ -63,15 +50,9 @@ export class PshDropdownComponent<T = string> implements OnDestroy {
   isOpen = computed(() => this.isOpenSignal());
   selectedItem = computed(() => this.selectedItemSignal());
 
-  hasLeftIcon = computed(() => !!this.icon() && this.iconPosition() === 'left');
-  isIconOnly = computed(() => !!this.icon() && this.iconPosition() === 'only');
-
-  computedAriaLabel = computed(() => {
-    if (this.isIconOnly()) {
-      return this.ariaLabel() || this.label() || 'Toggle dropdown menu';
-    }
-    return this.ariaLabel() || 'Toggle dropdown menu';
-  });
+  computedAriaLabel = computed(() => 
+    this.ariaLabel() || 'Toggle dropdown menu'
+  );
 
   state = computed(() => this.getState());
 
@@ -83,25 +64,6 @@ export class PshDropdownComponent<T = string> implements OnDestroy {
 
   constructor() {
     this.setupClickOutsideListener();
-    if (isDevMode()) {
-      effect(() => {
-        if (this.iconPosition() === 'only' && !this.icon()) {
-          console.warn(
-            '[PshDropdownComponent] iconPosition="only" requires an icon input.',
-          );
-        }
-        if (this.isIconOnly() && !this.ariaLabel() && !this.label()) {
-          console.warn(
-            '[PshDropdownComponent] iconPosition="only" requires an ariaLabel (or label) for accessibility (WCAG 4.1.2).',
-          );
-        }
-        if (LEGACY_VARIANT_APPEARANCES.has(this.variant() as string)) {
-          console.warn(
-            `[PshDropdownComponent] variant="${this.variant()}" is no longer supported. Use appearance="${this.variant()}" with a semantic variant (primary, secondary, success, warning, danger).`,
-          );
-        }
-      });
-    }
   }
 
   private setupClickOutsideListener(): void {

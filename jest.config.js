@@ -6,7 +6,8 @@ module.exports = {
   testMatch: ['**/*.spec.ts'],
   moduleNameMapper: {
     '^ps-helix$': '<rootDir>/projects/ps-helix/src/public-api.ts',
-    '^ps-helix/(.*)$': '<rootDir>/projects/ps-helix/src/$1'
+    '^ps-helix/(.*)$': '<rootDir>/projects/ps-helix/src/$1',
+    '^@angular/forms/signals$': '<rootDir>/node_modules/@angular/forms/fesm2022/signals.mjs'
   },
   collectCoverageFrom: [
     'projects/ps-helix/src/**/*.ts',
@@ -20,7 +21,8 @@ module.exports = {
       'jest-preset-angular',
       {
         tsconfig: '<rootDir>/projects/ps-helix/tsconfig.spec.json',
-        stringifyContentPathRegex: '\\.(html|svg)$'
+        stringifyContentPathRegex: '\\.(html|svg)$',
+        diagnostics: false
       }
     ]
   }

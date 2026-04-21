@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { JsonPipe } from '@angular/common';
+import { form, FormField, required, email } from '@angular/forms/signals';
 import { TranslateModule } from '@ngx-translate/core';
 import { PshInputComponent } from '@lib/components/input/input.component';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
@@ -6,15 +8,23 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
 
 @Component({
   selector: 'ds-inputs-demo',
-  imports: [TranslateModule, PshInputComponent, DemoPageLayoutComponent, CodeSnippetComponent],
+  imports: [TranslateModule, PshInputComponent, DemoPageLayoutComponent, CodeSnippetComponent, JsonPipe, FormField],
   templateUrl: './inputs-demo.component.html',
   styleUrls: ['./inputs-demo.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputsDemoComponent {
   emailValue = '';
   phoneValue = '';
   searchValue = '';
   passwordValue = '';
+
+  loginModel = signal({ email: '', password: '' });
+  loginForm = form(this.loginModel, (p) => {
+    required(p.email, { message: 'Email requis' });
+    email(p.email, { message: 'Format email invalide' });
+    required(p.password, { message: 'Mot de passe requis' });
+  });
 
   cities = [
     'Paris', 'Lyon', 'Marseille', 'Toulouse', 'Nice',
@@ -26,6 +36,24 @@ export class InputsDemoComponent {
   handleCitySelect(city: string) {
     console.log('City selected:', city);
   }
+
+  signalFormCode = `import { signal } from '@angular/core';
+import { form, FormField, required, email } from '@angular/forms/signals';
+
+model = signal({ email: '', password: '' });
+loginForm = form(this.model, (p) => {
+  required(p.email, { message: 'Email requis' });
+  email(p.email, { message: 'Format email invalide' });
+  required(p.password, { message: 'Mot de passe requis' });
+});
+
+// Template :
+<psh-input [formField]="loginForm.email" type="email">
+  <span input-label>Email</span>
+</psh-input>
+<psh-input [formField]="loginForm.password" type="password">
+  <span input-label>Mot de passe</span>
+</psh-input>`;
 
   outlinedVariantCode = `<psh-input
   variant="outlined"

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { PshAvatarComponent } from '@lib/components/avatar/avatar.component';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
@@ -8,7 +8,8 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
   selector: 'ds-avatar-demo',
   imports: [TranslateModule, PshAvatarComponent, DemoPageLayoutComponent, CodeSnippetComponent],
   templateUrl: './avatar-demo.component.html',
-  styleUrls: ['./avatar-demo.component.css']
+  styleUrls: ['./avatar-demo.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AvatarDemoComponent {
   title = 'Avatar';

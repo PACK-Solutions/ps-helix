@@ -122,12 +122,7 @@ export const NAVIGATION_SECTIONS: NavigationSection[] = [
       {
         path: '/demo/inputs',
         label: 'NAVIGATION.INPUTS',
-        keywords: ['champ', 'field', 'text', 'texte', 'saisie', 'form', 'formulaire', 'input', 'entree', 'entry', 'type', 'ecrire', 'write']
-      },
-      {
-        path: '/demo/textarea',
-        label: 'NAVIGATION.TEXTAREA',
-        keywords: ['textarea', 'zone de texte', 'multiline', 'multiligne', 'paragraph', 'paragraphe', 'comment', 'commentaire', 'description', 'message']
+        keywords: ['champ', 'field', 'text', 'texte', 'saisie', 'form', 'formulaire', 'input', 'textarea', 'entree', 'entry', 'type', 'ecrire', 'write']
       },
       {
         path: '/demo/menu',
@@ -168,6 +163,11 @@ export const NAVIGATION_SECTIONS: NavigationSection[] = [
         path: '/demo/stepper',
         label: 'NAVIGATION.STEPPER',
         keywords: ['etapes', 'steps', 'wizard', 'assistant', 'progression', 'workflow', 'process', 'processus', 'sequence', 'guide', 'multi-step', 'form']
+      },
+      {
+        path: '/demo/state-flow-indicator',
+        label: 'NAVIGATION.STATE_FLOW_INDICATOR',
+        keywords: ['flux', 'flow', 'etat', 'state', 'indicateur', 'indicator', 'progression', 'breadcrumb', 'chevron', 'etapes', 'steps', 'process', 'processus', 'workflow']
       },
       {
         path: '/demo/switches',

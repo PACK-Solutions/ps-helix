@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { PshDropdownComponent } from '@lib/components/dropdown/dropdown.component';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
 import { CodeSnippetComponent } from '../../shared/code-snippet.component';
@@ -8,6 +8,7 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
   imports: [PshDropdownComponent, DemoPageLayoutComponent, CodeSnippetComponent],
   templateUrl: './dropdowns-demo.component.html',
   styleUrls: ['./dropdowns-demo.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DropdownsDemoComponent {
   basicItems = [
@@ -77,7 +78,7 @@ export class DropdownsDemoComponent {
     console.log('Selected:', value);
   }
 
-  filledAppearanceCode = `<psh-dropdown appearance="filled" variant="primary">
+  primaryVariantCode = `<psh-dropdown variant="primary">
   <span dropdown-trigger>Menu</span>
   <div dropdown-menu>
     <button class="dropdown-item">
@@ -86,7 +87,7 @@ export class DropdownsDemoComponent {
   </div>
 </psh-dropdown>`;
 
-  outlineAppearanceCode = `<psh-dropdown appearance="outline" variant="primary">
+  secondaryVariantCode = `<psh-dropdown variant="secondary">
   <span dropdown-trigger>Menu</span>
   <div dropdown-menu>
     <button class="dropdown-item">
@@ -95,7 +96,7 @@ export class DropdownsDemoComponent {
   </div>
 </psh-dropdown>`;
 
-  textAppearanceCode = `<psh-dropdown appearance="text" variant="primary">
+  outlineVariantCode = `<psh-dropdown variant="outline">
   <span dropdown-trigger>Menu</span>
   <div dropdown-menu>
     <button class="dropdown-item">
@@ -104,12 +105,11 @@ export class DropdownsDemoComponent {
   </div>
 </psh-dropdown>`;
 
-  semanticVariantCode = `<!-- Combinez librement apparence et variante semantique -->
-<psh-dropdown appearance="outline" variant="danger">
-  <span dropdown-trigger>Supprimer</span>
+  textVariantCode = `<psh-dropdown variant="text">
+  <span dropdown-trigger>Menu</span>
   <div dropdown-menu>
     <button class="dropdown-item">
-      Confirmer la suppression
+      Option 1
     </button>
   </div>
 </psh-dropdown>`;
@@ -123,20 +123,6 @@ export class DropdownsDemoComponent {
   </div>
 </psh-dropdown>`;
 
-  iconPositionCode = `<!-- Icône à gauche + label (comportement par défaut) -->
-<psh-dropdown icon="user" label="Compte">
-  <div dropdown-menu>...</div>
-</psh-dropdown>
-
-<!-- Mode icon-only : ariaLabel obligatoire -->
-<psh-dropdown
-  icon="dots-three-vertical"
-  iconPosition="only"
-  ariaLabel="Ouvrir le menu d'actions"
->
-  <div dropdown-menu>...</div>
-</psh-dropdown>`;
-
   iconItemsCode = `<button class="dropdown-item">
   <i class="ph ph-pencil-simple"></i>
   Modifier
@@ -147,7 +133,6 @@ export class DropdownsDemoComponent {
 </button>`;
 
   statesCode = `<psh-dropdown
-  appearance="filled"
   variant="primary"
   [disabled]="isFormInvalid"
   (selected)="handleSelect($event)"

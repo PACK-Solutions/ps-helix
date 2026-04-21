@@ -152,6 +152,10 @@
   overflow: hidden;
 }
 
+.card-body.no-padding {
+  padding: 0;
+}
+
 .card-body > * {
   margin: 0;
 }

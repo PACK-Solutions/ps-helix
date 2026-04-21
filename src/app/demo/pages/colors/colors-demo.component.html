@@ -25,63 +25,6 @@
       </div>
     </section>
 
-    <!-- Audit WCAG pour thème client -->
-    <section class="preview-section">
-      <h3 class="section-title">Prévisualisation thème client</h3>
-      <div class="preview-container">
-        <p class="preview-intro">
-          Saisissez les couleurs de marque de votre client. Le service de thème les ajuste
-          automatiquement pour garantir un contraste WCAG AA sur le thème courant et affiche
-          le rapport détaillé.
-        </p>
-        <div class="preview-form" role="group" aria-label="Test d'une couleur de marque">
-          <label class="preview-field">
-            <span>Couleur primaire</span>
-            <input type="color" [ngModel]="previewPrimary()" (ngModelChange)="previewPrimary.set($event)" />
-            <code>{{ previewPrimary() }}</code>
-          </label>
-          <label class="preview-field">
-            <span>Couleur secondaire</span>
-            <input type="color" [ngModel]="previewSecondary()" (ngModelChange)="previewSecondary.set($event)" />
-            <code>{{ previewSecondary() }}</code>
-          </label>
-          <button type="button" class="preview-submit" (click)="runPreview()">
-            Appliquer et auditer
-          </button>
-        </div>
-
-        @if (previewReport(); as report) {
-          <div class="preview-report" [attr.data-pass]="report.allPassAA">
-            <div class="preview-report-head">
-              <span class="preview-report-badge">
-                {{ report.allPassAA ? 'Conforme WCAG AA' : 'Non conforme' }}
-              </span>
-              <span class="preview-report-theme">Thème : {{ report.theme }}</span>
-            </div>
-            <div class="preview-palettes">
-              @for (palette of [report.primary, report.secondary]; track $index) {
-                @if (palette) {
-                  <div class="preview-palette">
-                    <h4>{{ palette.base.name }}</h4>
-                    <ul>
-                      @for (token of [palette.base, palette.text].concat(palette.variants); track token.name) {
-                        <li [attr.data-pass]="token.passes">
-                          <code>{{ token.name }}</code>
-                          <span class="preview-token-value" [style.background]="token.value"></span>
-                          <span class="preview-token-ratio">{{ token.ratio.toFixed(2) }} : 1</span>
-                          <span class="preview-token-level">{{ levelToneLabels[token.level] }}</span>
-                        </li>
-                      }
-                    </ul>
-                  </div>
-                }
-              }
-            </div>
-          </div>
-        }
-      </div>
-    </section>
-
     <!-- Palettes de Couleurs - Section Pleine Largeur -->
     <section class="palettes-section">
       <h3 class="section-title">Palettes de Couleurs</h3>
@@ -89,31 +32,6 @@
         <div class="palettes-intro">
           <p>Notre système organise les couleurs par fonction et sémantique. Chaque palette a un rôle spécifique dans la construction d'interfaces cohérentes et accessibles.</p>
         </div>
-
-        <div class="contrast-toolbar" role="group" aria-label="Référence de calcul de contraste">
-          <span class="contrast-toolbar-label">Contraste calculé vs</span>
-          <div class="contrast-toggle">
-            <button
-              type="button"
-              class="contrast-toggle-btn"
-              [class.active]="contrastReference() === 'surface'"
-              [attr.aria-pressed]="contrastReference() === 'surface'"
-              (click)="setContrastReference('surface')"
-            >
-              Fond principal
-            </button>
-            <button
-              type="button"
-              class="contrast-toggle-btn"
-              [class.active]="contrastReference() === 'text'"
-              [attr.aria-pressed]="contrastReference() === 'text'"
-              (click)="setContrastReference('text')"
-            >
-              Texte principal
-            </button>
-          </div>
-        </div>
-
         @for (palette of colorPalettes; track palette.category) {
           <div class="palette-section">
             <div class="palette-header">
@@ -135,18 +53,6 @@
                     <span class="color-name">{{ color.name }}</span>
                     <code class="color-variable">{{ color.variable }}</code>
                     <span class="color-usage">{{ color.usage }}</span>
-                    @if (contrastInfos()[color.variable]; as info) {
-                      <span
-                        class="contrast-indicator"
-                        [attr.data-level]="info.levelKey"
-                        [attr.aria-label]="'Contraste ' + info.ratioLabel + ' sur ' + info.background + ', niveau WCAG ' + levelToneLabels[info.level]"
-                        [title]="info.resolvedValue + ' sur ' + info.backgroundValue"
-                      >
-                        <span class="contrast-dot" aria-hidden="true"></span>
-                        <span class="contrast-ratio">{{ info.ratioLabel }}</span>
-                        <span class="contrast-level">{{ levelToneLabels[info.level] }}</span>
-                      </span>
-                    }
                   </div>
                 </div>
               }

@@ -978,3 +978,110 @@ describe('PshInputComponent with Reactive Forms', () => {
     expect(hostFixture.componentInstance.control.touched).toBe(true);
   });
 });
+
+// ── CVA emission safety tests ────────────────────────────────────────
+
+@Component({
+  template: `
+    <psh-input
+      [formControl]="control"
+      (valueChange)="onValueChange($event)"
+      (disabledChange)="onDisabledChange($event)"
+    ></psh-input>
+  `,
+  imports: [PshInputComponent, ReactiveFormsModule]
+})
+class CvaEmissionTestHost {
+  control = new FormControl('');
+  onValueChange = jest.fn();
+  onDisabledChange = jest.fn();
+}
+
+describe('PshInputComponent CVA emission safety', () => {
+  let fixture: ComponentFixture<CvaEmissionTestHost>;
+  let host: CvaEmissionTestHost;
+
+  const getInput = () =>
+    fixture.nativeElement.querySelector('input') as HTMLInputElement;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [CvaEmissionTestHost]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(CvaEmissionTestHost);
+    host = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should NOT emit valueChange when form control sets value via setValue', () => {
+    host.onValueChange.mockClear();
+
+    host.control.setValue('programmatic');
+    fixture.detectChanges();
+
+    expect(host.onValueChange).not.toHaveBeenCalled();
+  });
+
+  it('should NOT emit valueChange when form control sets value via patchValue', () => {
+    host.onValueChange.mockClear();
+
+    host.control.patchValue('patched');
+    fixture.detectChanges();
+
+    expect(host.onValueChange).not.toHaveBeenCalled();
+  });
+
+  it('should NOT emit disabledChange when form control is disabled', () => {
+    host.onDisabledChange.mockClear();
+
+    host.control.disable();
+    fixture.detectChanges();
+
+    expect(host.onDisabledChange).not.toHaveBeenCalled();
+  });
+
+  it('should NOT emit disabledChange when form control is enabled', () => {
+    host.control.disable();
+    fixture.detectChanges();
+    host.onDisabledChange.mockClear();
+
+    host.control.enable();
+    fixture.detectChanges();
+
+    expect(host.onDisabledChange).not.toHaveBeenCalled();
+  });
+
+  it('should emit valueChange exactly once on user input', () => {
+    host.onValueChange.mockClear();
+
+    const input = getInput();
+    input.value = 'user typed';
+    input.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    expect(host.onValueChange).toHaveBeenCalledTimes(1);
+    expect(host.onValueChange).toHaveBeenCalledWith('user typed');
+  });
+
+  it('should NOT emit valueChange on initial render', () => {
+    expect(host.onValueChange).not.toHaveBeenCalled();
+  });
+
+  it('should emit valueChange once when using formControl and (valueChange) together', () => {
+    host.onValueChange.mockClear();
+
+    // Programmatic set should NOT fire
+    host.control.setValue('set-by-code');
+    fixture.detectChanges();
+    expect(host.onValueChange).not.toHaveBeenCalled();
+
+    // User input should fire exactly once
+    const input = getInput();
+    input.value = 'typed-by-user';
+    input.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+    expect(host.onValueChange).toHaveBeenCalledTimes(1);
+    expect(host.onValueChange).toHaveBeenCalledWith('typed-by-user');
+  });
+});
