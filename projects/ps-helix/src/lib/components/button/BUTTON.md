@@ -74,12 +74,21 @@ import { PshButtonComponent } from 'ps-helix';
 ### Types
 
 ```typescript
-type ButtonAppearance = 'filled' | 'outline' | 'rounded' | 'text';
+type ButtonAppearance = 'filled' | 'outline' | 'text';
 type ButtonVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
 type ButtonSize = 'small' | 'medium' | 'large';
 type ButtonIconPosition = 'left' | 'right' | 'only';
 type ButtonType = 'button' | 'submit' | 'reset';
 ```
+
+### Contrat du design system
+
+Deux axes orthogonaux, reutilises par tous les composants cliquables (button, dropdown, ...) :
+
+- **`appearance`** — forme / style de remplissage (`filled` | `outline` | `text`).
+- **`variant`** — intention semantique / couleur (`primary` | `secondary` | `success` | `warning` | `danger`).
+
+L'arrondi des boutons n'est pas expose par composant : il est pilote globalement via le token CSS `--border-radius`. Si un besoin specifique de bouton circulaire (FAB) apparait, il sera traite par un composant dedie, pas par une apparence supplementaire.
 
 ## Apparences
 
@@ -113,21 +122,6 @@ type ButtonType = 'button' | 'submit' | 'reset';
 <psh-button appearance="outline" variant="primary">Modifier</psh-button>
 <psh-button appearance="outline" variant="secondary">Retour</psh-button>
 <psh-button appearance="outline" variant="success">Approuver</psh-button>
-```
-
-### Rounded
-**Description**: Style avec coins complètement arrondis (border-radius: 50px).
-
-**Cas d'utilisation**:
-- Design moderne
-- Interfaces ludiques
-- Actions spéciales
-- Floating action buttons
-
-**Exemple**:
-```html
-<psh-button appearance="rounded" variant="primary">Commencer</psh-button>
-<psh-button appearance="rounded" variant="secondary">Explorer</psh-button>
 ```
 
 ### Text
@@ -165,7 +159,7 @@ Taille standard pour la majorité des cas d'utilisation.
 ```html
 <psh-button size="medium" variant="primary">Moyen</psh-button>
 <psh-button size="medium" appearance="outline" variant="secondary">Annuler</psh-button>
-<psh-button size="medium" appearance="rounded" variant="primary">Action</psh-button>
+<psh-button size="medium" appearance="text" variant="primary">Action</psh-button>
 ```
 
 ### Large (48px)
@@ -175,7 +169,7 @@ Utilisé pour les actions importantes ou les interfaces tactiles.
 ```html
 <psh-button size="large" variant="primary">Grand</psh-button>
 <psh-button size="large" appearance="outline" variant="success">Valider</psh-button>
-<psh-button size="large" appearance="rounded" variant="primary">Confirmer</psh-button>
+<psh-button size="large" appearance="filled" variant="primary">Confirmer</psh-button>
 ```
 
 ## Variantes de Couleur
@@ -264,8 +258,7 @@ Occupe toute la largeur du conteneur parent.
 ### Choix de l'Apparence
 1. **Filled**: Utilisez pour l'action principale d'une page ou d'un formulaire
 2. **Outline**: Utilisez pour les actions secondaires ou alternatives
-3. **Rounded**: Utilisez pour des actions spéciales ou des FAB (Floating Action Buttons)
-4. **Text**: Utilisez pour les actions tertiaires, les liens ou la navigation
+3. **Text**: Utilisez pour les actions tertiaires, les liens ou la navigation
 
 ### Choix de la Variante
 1. **Primary**: Action principale de la page (ex: Enregistrer, Continuer)
@@ -447,7 +440,7 @@ Le design system garantit:
   iconPosition="only"
   iconOnlyText="Ajouter un élément"
   variant="primary"
-  appearance="rounded"
+  appearance="filled"
 ></psh-button>
 ```
 
@@ -530,7 +523,7 @@ Utilisez n'importe quelle icône de [Phosphor Icons](https://phosphoricons.com/)
   Retour
 </psh-button>
 <psh-button
-  appearance="rounded"
+  appearance="filled"
   variant="primary"
   icon="arrow-right"
   iconPosition="right"
@@ -538,19 +531,6 @@ Utilisez n'importe quelle icône de [Phosphor Icons](https://phosphoricons.com/)
 >
   Continuer
 </psh-button>
-```
-
-### Floating Action Button (FAB)
-```html
-<psh-button
-  appearance="rounded"
-  variant="primary"
-  icon="plus"
-  iconPosition="only"
-  iconOnlyText="Ajouter un nouvel élément"
-  size="large"
-  (clicked)="onCreate()"
-></psh-button>
 ```
 
 ## Exemple Complet avec Toutes les Options

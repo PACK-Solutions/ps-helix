@@ -4,18 +4,18 @@
   [showTechnicalSection]="false"
 >
   <div demo-content>
-    <!-- Variantes de Dropdown - Section Pleine Largeur -->
+    <!-- Apparences de Dropdown - forme / remplissage -->
     <section class="dropdown-variants-section">
-      <h3 class="section-title">Variantes de Dropdown</h3>
+      <h3 class="section-title">Apparences de Dropdown</h3>
       <div class="variants-container">
         <div class="variants-intro">
-          <p>Les menus déroulants offrent quatre variantes distinctes pour s'adapter à différents contextes d'utilisation et niveaux de hiérarchie visuelle dans l'interface.</p>
+          <p>L'apparence decrit uniquement la facon dont le trigger remplit l'espace. Elle est independante de la couleur semantique (variante) et suit exactement la meme convention que <code>psh-button</code>.</p>
         </div>
         <div class="variants-grid">
           <div class="variant-card">
             <div class="variant-preview">
-              <psh-dropdown variant="primary">
-                <span dropdown-trigger>Primary</span>
+              <psh-dropdown appearance="filled" variant="primary">
+                <span dropdown-trigger>Filled</span>
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
                   <button class="dropdown-item" (click)="selectItem(item.value)">
@@ -26,35 +26,15 @@
               </psh-dropdown>
             </div>
             <div class="variant-info">
-              <h4>Primary</h4>
-              <p>Style par défaut avec fond plein. Idéal pour les actions principales et les menus critiques nécessitant une forte visibilité dans l'interface.</p>
-              <ds-code-snippet [code]="primaryVariantCode" />
+              <h4>Filled</h4>
+              <p>Style par défaut avec fond plein. Idéal pour les actions principales et les menus nécessitant une forte visibilité.</p>
+              <ds-code-snippet [code]="filledAppearanceCode" />
             </div>
           </div>
 
           <div class="variant-card">
             <div class="variant-preview">
-              <psh-dropdown variant="secondary">
-                <span dropdown-trigger>Secondary</span>
-                <div dropdown-menu>
-                  @for (item of basicItems; track item.value) {
-                  <button class="dropdown-item" (click)="selectItem(item.value)">
-                    {{ item.content }}
-                  </button>
-                  }
-                </div>
-              </psh-dropdown>
-            </div>
-            <div class="variant-info">
-              <h4>Secondary</h4>
-              <p>Style alternatif avec fond plein. Parfait pour les actions secondaires et les menus complémentaires qui accompagnent l'action principale.</p>
-              <ds-code-snippet [code]="secondaryVariantCode" />
-            </div>
-          </div>
-
-          <div class="variant-card">
-            <div class="variant-preview">
-              <psh-dropdown variant="outline">
+              <psh-dropdown appearance="outline" variant="primary">
                 <span dropdown-trigger>Outline</span>
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
@@ -67,14 +47,14 @@
             </div>
             <div class="variant-info">
               <h4>Outline</h4>
-              <p>Style avec bordure sans fond. Utilisé pour les interfaces épurées et les menus tertiaires nécessitant moins de poids visuel tout en restant visibles.</p>
-              <ds-code-snippet [code]="outlineVariantCode" />
+              <p>Style avec bordure sans fond. Utilisé pour les menus secondaires ou les interfaces épurées nécessitant moins de poids visuel.</p>
+              <ds-code-snippet [code]="outlineAppearanceCode" />
             </div>
           </div>
 
           <div class="variant-card">
             <div class="variant-preview">
-              <psh-dropdown variant="text">
+              <psh-dropdown appearance="text" variant="primary">
                 <span dropdown-trigger>Text</span>
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
@@ -87,8 +67,185 @@
             </div>
             <div class="variant-info">
               <h4>Text</h4>
-              <p>Style minimaliste sans fond ni bordure. Parfait pour les menus discrets, la navigation contextuelle et les interfaces où la sobriété est privilégiée.</p>
-              <ds-code-snippet [code]="textVariantCode" />
+              <p>Style minimaliste sans fond ni bordure. Parfait pour les menus discrets et la navigation contextuelle.</p>
+              <ds-code-snippet [code]="textAppearanceCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Variantes semantiques (couleur d'intention) -->
+    <section class="dropdown-variants-section">
+      <h3 class="section-title">Variantes sémantiques</h3>
+      <div class="variants-container">
+        <div class="variants-intro">
+          <p>Chaque apparence se combine librement avec cinq variantes semantiques qui communiquent l'intention de l'action. Forme et couleur sont deux axes orthogonaux.</p>
+        </div>
+        <div class="variants-grid">
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-dropdown appearance="filled" variant="primary">
+                <span dropdown-trigger>Primary</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown appearance="outline" variant="primary">
+                <span dropdown-trigger>Primary</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown appearance="text" variant="primary">
+                <span dropdown-trigger>Primary</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
+                  }
+                </div>
+              </psh-dropdown>
+            </div>
+            <div class="variant-info">
+              <h4>Primary</h4>
+              <p>Actions principales et menus critiques. Utilisée avec parcimonie pour guider l'utilisateur.</p>
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-dropdown appearance="filled" variant="secondary">
+                <span dropdown-trigger>Secondary</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown appearance="outline" variant="secondary">
+                <span dropdown-trigger>Secondary</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown appearance="text" variant="secondary">
+                <span dropdown-trigger>Secondary</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
+                  }
+                </div>
+              </psh-dropdown>
+            </div>
+            <div class="variant-info">
+              <h4>Secondary</h4>
+              <p>Actions alternatives ou complémentaires qui n'entrent pas en concurrence avec l'action principale.</p>
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-dropdown appearance="filled" variant="success">
+                <span dropdown-trigger>Success</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown appearance="outline" variant="success">
+                <span dropdown-trigger>Success</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown appearance="text" variant="success">
+                <span dropdown-trigger>Success</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
+                  }
+                </div>
+              </psh-dropdown>
+            </div>
+            <div class="variant-info">
+              <h4>Success</h4>
+              <p>Actions positives et confirmations.</p>
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-dropdown appearance="filled" variant="warning">
+                <span dropdown-trigger>Warning</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown appearance="outline" variant="warning">
+                <span dropdown-trigger>Warning</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown appearance="text" variant="warning">
+                <span dropdown-trigger>Warning</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
+                  }
+                </div>
+              </psh-dropdown>
+            </div>
+            <div class="variant-info">
+              <h4>Warning</h4>
+              <p>Actions necessitant attention sans etre destructives.</p>
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-dropdown appearance="filled" variant="danger">
+                <span dropdown-trigger>Danger</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown appearance="outline" variant="danger">
+                <span dropdown-trigger>Danger</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown appearance="text" variant="danger">
+                <span dropdown-trigger>Danger</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
+                  }
+                </div>
+              </psh-dropdown>
+            </div>
+            <div class="variant-info">
+              <h4>Danger</h4>
+              <p>Actions destructives et irreversibles.</p>
+              <ds-code-snippet [code]="semanticVariantCode" />
             </div>
           </div>
         </div>
@@ -182,7 +339,7 @@
         <div class="placements-grid">
           <div class="placement-card">
             <div class="placement-preview">
-              <psh-dropdown placement="bottom-start" variant="outline">
+              <psh-dropdown placement="bottom-start" appearance="outline" variant="primary">
                 <span dropdown-trigger>Bottom Start</span>
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
@@ -204,7 +361,7 @@
 
           <div class="placement-card">
             <div class="placement-preview">
-              <psh-dropdown placement="bottom-end" variant="outline">
+              <psh-dropdown placement="bottom-end" appearance="outline" variant="primary">
                 <span dropdown-trigger>Bottom End</span>
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
@@ -226,7 +383,7 @@
 
           <div class="placement-card">
             <div class="placement-preview">
-              <psh-dropdown placement="top-start" variant="outline">
+              <psh-dropdown placement="top-start" appearance="outline" variant="primary">
                 <span dropdown-trigger>Top Start</span>
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
@@ -248,7 +405,7 @@
 
           <div class="placement-card">
             <div class="placement-preview">
-              <psh-dropdown placement="top-end" variant="outline">
+              <psh-dropdown placement="top-end" appearance="outline" variant="primary">
                 <span dropdown-trigger>Top End</span>
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
@@ -281,7 +438,7 @@
         <div class="icons-grid">
           <div class="icon-card">
             <div class="icon-preview">
-              <psh-dropdown icon="dots-three" variant="outline">
+              <psh-dropdown icon="dots-three" appearance="outline" variant="primary">
                 <span dropdown-trigger>Actions</span>
                 <div dropdown-menu>
                   @for (item of iconItems; track item.value) {
@@ -315,7 +472,8 @@
                   </div>
                 </psh-dropdown>
                 <psh-dropdown
-                  variant="outline"
+                  appearance="outline"
+                  variant="primary"
                   icon="dots-three-vertical"
                   iconPosition="only"
                   ariaLabel="Ouvrir le menu d'actions"
@@ -497,10 +655,16 @@
             </thead>
             <tbody>
               <tr>
+                <td><code>appearance</code></td>
+                <td><code>DropdownAppearance</code></td>
+                <td><code>'filled'</code></td>
+                <td>'filled' | 'outline' | 'text'</td>
+              </tr>
+              <tr>
                 <td><code>variant</code></td>
                 <td><code>DropdownVariant</code></td>
                 <td><code>'primary'</code></td>
-                <td>'primary' | 'secondary' | 'outline' | 'text'</td>
+                <td>'primary' | 'secondary' | 'success' | 'warning' | 'danger'</td>
               </tr>
               <tr>
                 <td><code>size</code></td>
@@ -640,6 +804,7 @@ import &#123; DropdownItem &#125; from 'ps-helix';
   imports: [PshDropdownComponent],
   template: `
     &lt;psh-dropdown
+      appearance="filled"
       variant="primary"
       placement="bottom-start"
       icon="dots-three"

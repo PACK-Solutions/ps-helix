@@ -13,7 +13,16 @@ import {
   OnDestroy
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DropdownIconPosition, DropdownItem, DropdownPlacement, DropdownSize } from './dropdown.types';
+import {
+  DropdownAppearance,
+  DropdownIconPosition,
+  DropdownItem,
+  DropdownPlacement,
+  DropdownSize,
+  DropdownVariant
+} from './dropdown.types';
+
+const LEGACY_VARIANT_APPEARANCES = new Set(['outline', 'text']);
 
 @Component({
   selector: 'psh-dropdown',
@@ -27,7 +36,8 @@ export class PshDropdownComponent<T = string> implements OnDestroy {
   private clickOutsideHandler: ((event: MouseEvent) => void) | null = null;
 
   // Regular inputs
-  variant = input<'primary' | 'secondary' | 'outline' | 'text'>('primary');
+  appearance = input<DropdownAppearance>('filled');
+  variant = input<DropdownVariant>('primary');
   size = input<DropdownSize>('medium');
   placement = input<DropdownPlacement>('bottom-start');
   items = input<DropdownItem<T>[]>([]);
@@ -83,6 +93,11 @@ export class PshDropdownComponent<T = string> implements OnDestroy {
         if (this.isIconOnly() && !this.ariaLabel() && !this.label()) {
           console.warn(
             '[PshDropdownComponent] iconPosition="only" requires an ariaLabel (or label) for accessibility (WCAG 4.1.2).',
+          );
+        }
+        if (LEGACY_VARIANT_APPEARANCES.has(this.variant() as string)) {
+          console.warn(
+            `[PshDropdownComponent] variant="${this.variant()}" is no longer supported. Use appearance="${this.variant()}" with a semantic variant (primary, secondary, success, warning, danger).`,
           );
         }
       });

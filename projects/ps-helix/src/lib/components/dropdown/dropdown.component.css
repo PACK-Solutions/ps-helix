@@ -43,41 +43,73 @@
   transform: rotate(180deg);
 }
 
-/* Variants */
-.dropdown-trigger.primary {
-  background: var(--primary-gradient);
-  color: var(--primary-color-text);
+/* Appearances x Variants (shared contract with psh-button) */
+
+/* Variant base colors (currentColor drives outline border and text) */
+.dropdown-trigger.primary { color: var(--primary-color); }
+.dropdown-trigger.secondary { color: var(--secondary-color); }
+.dropdown-trigger.success { color: var(--success-color); }
+.dropdown-trigger.warning { color: var(--warning-color); }
+.dropdown-trigger.danger { color: var(--danger-color); }
+
+/* Filled */
+.dropdown-trigger.filled {
+  background-color: currentColor;
 }
 
-.dropdown-trigger.primary:hover:not(.disabled) {
+.dropdown-trigger.filled.primary {
+  background: var(--primary-gradient);
+  color: var(--text-on-primary);
+}
+
+.dropdown-trigger.filled.primary .trigger-content { color: var(--text-on-primary); }
+.dropdown-trigger.filled.secondary .trigger-content { color: var(--text-on-secondary); }
+.dropdown-trigger.filled.success .trigger-content { color: var(--text-on-success); }
+.dropdown-trigger.filled.warning .trigger-content { color: var(--text-on-warning); }
+.dropdown-trigger.filled.danger .trigger-content { color: var(--text-on-danger); }
+
+.dropdown-trigger.filled.primary:hover:not(.disabled) {
   background: var(--primary-gradient-hover);
 }
-
-.dropdown-trigger.secondary {
-  background: var(--secondary-color);
-  color: var(--secondary-color-text);
+.dropdown-trigger.filled.secondary:hover:not(.disabled) {
+  background-color: var(--secondary-color-light);
+}
+.dropdown-trigger.filled.success:hover:not(.disabled) {
+  background-color: var(--green-400);
+}
+.dropdown-trigger.filled.warning:hover:not(.disabled) {
+  background-color: var(--orange-400);
+}
+.dropdown-trigger.filled.danger:hover:not(.disabled) {
+  background-color: var(--red-400);
 }
 
-.dropdown-trigger.secondary:hover:not(.disabled) {
-  background: var(--secondary-color-light);
-}
-
+/* Outline */
 .dropdown-trigger.outline {
   background: transparent;
-  border: var(--border-width-2) solid var(--primary-color);
-  color: var(--primary-color);
+  border: var(--border-width-2) solid currentColor;
+  color: currentColor;
 }
+
+.dropdown-trigger.outline .trigger-content { color: inherit; }
 
 .dropdown-trigger.outline:hover:not(.disabled) {
-  background: var(--primary-color);
-  border-color: var(--primary-color);
-  color: var(--primary-color-text);
+  background: currentColor;
 }
 
+.dropdown-trigger.outline.primary:hover:not(.disabled) .trigger-content { color: var(--text-on-primary); }
+.dropdown-trigger.outline.secondary:hover:not(.disabled) .trigger-content { color: var(--text-on-secondary); }
+.dropdown-trigger.outline.success:hover:not(.disabled) .trigger-content { color: var(--text-on-success); }
+.dropdown-trigger.outline.warning:hover:not(.disabled) .trigger-content { color: var(--text-on-warning); }
+.dropdown-trigger.outline.danger:hover:not(.disabled) .trigger-content { color: var(--text-on-danger); }
+
+/* Text */
 .dropdown-trigger.text {
   background: transparent;
-  color: var(--primary-color);
+  color: currentColor;
 }
+
+.dropdown-trigger.text .trigger-content { color: inherit; }
 
 .dropdown-trigger.text:hover:not(.disabled) {
   background: var(--surface-hover);

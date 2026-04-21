@@ -16,7 +16,7 @@ import { PshDropdownComponent } from 'ps-helix';
 
 ### Approche Recommandee (avec contenu personnalise)
 ```typescript
-<psh-dropdown [variant]="'primary'">
+<psh-dropdown appearance="filled" variant="primary">
   <span dropdown-trigger>{{ 'DROPDOWN.TITLE' | translate }}</span>
   <div dropdown-menu>
     <button class="dropdown-item" (click)="handleSelect('1')">
@@ -37,18 +37,31 @@ import { PshDropdownComponent } from 'ps-helix';
     { content: 'Option 2', value: '2', icon: 'check' },
     { content: 'Option 3', value: '3', disabled: true }
   ]"
-  [variant]="'primary'"
-  [label]="'Actions'"
+  appearance="outline"
+  variant="primary"
+  label="Actions"
   (selected)="handleSelect($event)"
 ></psh-dropdown>
 ```
+
+## Contrat du design system
+
+Le dropdown partage le meme contrat a deux axes orthogonaux que `psh-button` (voir `BUTTON.md`) :
+
+- **`appearance`** — forme / style de remplissage (`filled` | `outline` | `text`).
+- **`variant`** — intention semantique / couleur (`primary` | `secondary` | `success` | `warning` | `danger`).
+
+Les types `DropdownAppearance` et `DropdownVariant` sont des alias des types equivalents du bouton, garantissant une coherence totale entre les deux composants.
+
+> Migration : les anciennes valeurs `variant="outline"` et `variant="text"` sont depreciees. Utilisez `appearance="outline"` ou `appearance="text"` combinees a une `variant` semantique (par defaut `primary`). Un avertissement est emis en mode dev lorsque l'ancienne API est utilisee.
 
 ## API
 
 ### Inputs
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
-| variant | string | 'primary' | Style du dropdown (primary, secondary, outline, text) |
+| appearance | DropdownAppearance | 'filled' | Apparence du dropdown (`filled`, `outline`, `text`) |
+| variant | DropdownVariant | 'primary' | Variante semantique (`primary`, `secondary`, `success`, `warning`, `danger`) |
 | size | DropdownSize | 'medium' | Taille du dropdown (small, medium, large) |
 | placement | DropdownPlacement | 'bottom-start' | Position du menu |
 | items | DropdownItem[] | [] | Liste des éléments |

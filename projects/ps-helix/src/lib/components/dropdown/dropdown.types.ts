@@ -1,3 +1,5 @@
+import type { ButtonAppearance, ButtonVariant } from '../button/button.types';
+
 /**
  * Interface pour un élément du dropdown
  */
@@ -13,6 +15,23 @@ export interface DropdownItem<T = string> {
   /** État actif */
   active?: boolean;
 }
+
+/**
+ * Apparences disponibles pour le dropdown.
+ *
+ * Axe partage avec `psh-button` : decrit uniquement le style de remplissage
+ * du trigger (plein, contour, plat). La couleur semantique est portee par
+ * `DropdownVariant`.
+ */
+export type DropdownAppearance = ButtonAppearance;
+
+/**
+ * Variantes semantiques du dropdown (couleur d'intention).
+ *
+ * Axe partage avec `psh-button` pour garantir une API coherente entre tous
+ * les composants cliquables du design system.
+ */
+export type DropdownVariant = ButtonVariant;
 
 /**
  * Tailles disponibles pour le dropdown
@@ -36,8 +55,10 @@ export type DropdownIconPosition = 'left' | 'only';
  * Configuration complète du dropdown
  */
 export interface DropdownConfig {
-  /** Variante visuelle */
-  variant?: 'primary' | 'secondary' | 'outline' | 'text';
+  /** Apparence visuelle (forme / remplissage) */
+  appearance?: DropdownAppearance;
+  /** Variante semantique (couleur d'intention) */
+  variant?: DropdownVariant;
   /** Taille du dropdown */
   size?: DropdownSize;
   /** Position du menu */

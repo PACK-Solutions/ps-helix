@@ -7,7 +7,12 @@
 >
   <button
     class="dropdown-trigger"
-    [class]="variant()"
+    [class]="appearance()"
+    [class.primary]="variant() === 'primary'"
+    [class.secondary]="variant() === 'secondary'"
+    [class.success]="variant() === 'success'"
+    [class.warning]="variant() === 'warning'"
+    [class.danger]="variant() === 'danger'"
     [class.icon-only]="isIconOnly()"
     [class.has-icon-left]="hasLeftIcon()"
     (click)="toggleDropdown()"

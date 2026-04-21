@@ -1,10 +1,15 @@
 /**
- * Apparences disponibles pour le bouton
+ * Apparences disponibles pour le bouton.
+ *
+ * Contrat du design system : l'apparence decrit uniquement la facon dont
+ * le bouton remplit l'espace (fond plein, contour, plat). L'arrondi n'est
+ * pas expose par composant : il est gere globalement via le token
+ * `--border-radius` du design system.
  */
-export type ButtonAppearance = 'filled' | 'outline' | 'rounded' | 'text';
+export type ButtonAppearance = 'filled' | 'outline' | 'text';
 
 /**
- * Variantes disponibles pour le bouton
+ * Variantes semantiques disponibles pour le bouton (couleur d'intention).
  */
 export type ButtonVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
 
