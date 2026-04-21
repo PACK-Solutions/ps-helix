@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
 
@@ -6,8 +6,7 @@ import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component
   selector: 'ds-colors-demo',
   imports: [TranslateModule, DemoPageLayoutComponent],
   templateUrl: './colors-demo.component.html',
-  styleUrls: ['./colors-demo.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./colors-demo.component.css']
 })
 export class ColorsDemoComponent {
 

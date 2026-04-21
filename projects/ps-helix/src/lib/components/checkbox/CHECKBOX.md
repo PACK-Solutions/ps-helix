@@ -1,7 +1,5 @@
 # Checkbox Component Documentation
 
-**Implements**: `FormCheckboxControl` (Signal Forms) + `ControlValueAccessor` (Reactive Forms)
-
 ## Utilisation
 
 1. Importer le composant dans votre module ou composant standalone :
@@ -13,21 +11,6 @@ import { PshCheckboxComponent } from 'ps-helix';
   imports: [PshCheckboxComponent],
   // ...
 })
-```
-
-### Utilisation avec Signal Forms (recommande)
-
-```typescript
-import { signal } from '@angular/core';
-import { form, FormField } from '@angular/forms/signals';
-
-model = signal({ terms: false, newsletter: true });
-settingsForm = form(this.model);
-```
-
-```html
-<psh-checkbox [formField]="settingsForm.terms" label="J'accepte les conditions" />
-<psh-checkbox [formField]="settingsForm.newsletter" label="Recevoir la newsletter" />
 ```
 
 ### Utilisation de Base
@@ -54,63 +37,19 @@ settingsForm = form(this.model);
 </psh-checkbox>
 ```
 
-### Utilisation avec Reactive Forms
-
-Le composant implémente `ControlValueAccessor` pour une intégration complète avec les Reactive Forms d'Angular.
-
-```typescript
-import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { PshCheckboxComponent } from 'ps-helix';
-
-@Component({
-  imports: [PshCheckboxComponent, ReactiveFormsModule],
-  template: `
-    <form [formGroup]="form">
-      <psh-checkbox
-        formControlName="acceptTerms"
-        label="J'accepte les conditions"
-        [error]="form.controls.acceptTerms.invalid && form.controls.acceptTerms.touched ? 'Ce champ est requis' : ''"
-      />
-    </form>
-  `
-})
-export class FormExampleComponent {
-  form = new FormGroup({
-    acceptTerms: new FormControl(false, Validators.requiredTrue)
-  });
-}
-```
-
-#### Avec FormControl standalone
-
-```typescript
-@Component({
-  imports: [PshCheckboxComponent, ReactiveFormsModule],
-  template: `
-    <psh-checkbox [formControl]="termsControl" label="Accepter les termes" />
-    <p>Valeur: {{ termsControl.value }}</p>
-  `
-})
-export class StandaloneFormControlComponent {
-  termsControl = new FormControl(false);
-}
-```
-
 ## API
 
-### Inputs bidirectionnels (avec `[()]`)
+### Model Inputs (bidirectionnels avec `[()]`)
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
-| checked | boolean | false | État coché (model) |
-| disabled | boolean | false | État désactivé (model) |
-| indeterminate | boolean | false | État indéterminé (model) |
-| touched | boolean | false | État touché (model, positionné sur toggle) |
+| checked | boolean | false | État coché |
+| disabled | boolean | false | État désactivé |
+| required | boolean | false | État requis |
+| indeterminate | boolean | false | État indéterminé |
 
 ### Regular Inputs
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
-| required | boolean | false | État requis |
 | label | string | '' | Label de la checkbox |
 | error | string | '' | Message d'erreur |
 | success | string | '' | Message de succès |
@@ -119,38 +58,11 @@ export class StandaloneFormControlComponent {
 | labelPosition | 'left' \| 'right' | 'right' | Position du label |
 
 ### Outputs
-- `checkedChange` : Émis automatiquement par le model lors du changement d'état coché
-- `disabledChange` : Émis automatiquement par le model lors du changement d'état désactivé
-- `indeterminateChange` : Émis automatiquement par le model lors du changement d'état indéterminé
-- `touchedChange` : Émis automatiquement par le model lors du changement d'état touché
-
-### Méthodes Publiques
-
-| Méthode | Description |
-|---------|-------------|
-| `focus()` | Donne le focus à l'élément input de la checkbox |
-| `blur()` | Enlève le focus de l'élément input de la checkbox |
-| `writeValue(value: boolean)` | Définit la valeur (ControlValueAccessor) |
-| `setDisabledState(isDisabled: boolean)` | Définit l'état désactivé (ControlValueAccessor) |
-
-#### Exemple de contrôle programmatique
-
-```typescript
-@Component({
-  imports: [PshCheckboxComponent],
-  template: `
-    <psh-checkbox #checkbox label="Ma checkbox" />
-    <button (click)="focusCheckbox()">Focus</button>
-  `
-})
-export class ProgrammaticControlComponent {
-  @ViewChild('checkbox') checkbox!: PshCheckboxComponent;
-
-  focusCheckbox() {
-    this.checkbox.focus();
-  }
-}
-```
+Les model inputs génèrent automatiquement des events de changement :
+- `checkedChange` : Émis lors du changement d'état coché
+- `disabledChange` : Émis lors du changement d'état désactivé
+- `requiredChange` : Émis lors du changement d'état requis
+- `indeterminateChange` : Émis lors du changement d'état indéterminé
 
 ### Types
 

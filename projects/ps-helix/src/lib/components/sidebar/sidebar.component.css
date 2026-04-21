@@ -21,6 +21,7 @@
 /* Mode variants */
 .sidebar.fixed {
   position: relative;
+  height: 100%;
   width: var(--sidebar-width);
   border: var(--border-width-1) solid var(--surface-border);
   flex-shrink: 0;
@@ -97,7 +98,9 @@
   }
 }
 
-/* Responsive - mobile constraint handled by JS, this is a fallback */
-.sidebar.overlay {
-  max-width: 100vw;
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    width: min(var(--sidebar-width), 100vw) !important;
+  }
 }

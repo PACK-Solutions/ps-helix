@@ -1,11 +1,10 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ThemeService } from '@lib/services/theme/theme.service';
 
 @Component({
   selector: 'ds-theme-demo',
-  imports: [DatePipe],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [CommonModule],
   template: `
     <div class="theme-info">
       <p>Current theme: {{ themeService.themeName() }}</p>

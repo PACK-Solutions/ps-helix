@@ -1,14 +1,16 @@
 import { Routes } from '@angular/router';
+import { DemoLayoutComponent } from './demo';
+import { HomeComponent } from './home/home.component';
 
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./home/home.component').then(m => m.HomeComponent),
+    component: HomeComponent,
     pathMatch: 'full'
   },
   {
     path: 'demo',
-    loadComponent: () => import('./demo/layout/demo-layout.component').then(m => m.DemoLayoutComponent),
+    component: DemoLayoutComponent,
     children: [
       {
         path: 'introduction',
@@ -105,10 +107,6 @@ export const routes: Routes = [
       {
         path: 'stepper',
         loadComponent: () => import('./demo/pages/stepper/stepper-demo.component').then(m => m.StepperDemoComponent)
-      },
-      {
-        path: 'state-flow-indicator',
-        loadComponent: () => import('./demo/pages/state-flow-indicator/state-flow-indicator-demo.component').then(m => m.StateFlowIndicatorDemoComponent)
       },
       {
         path: 'badges',

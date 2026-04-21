@@ -9,11 +9,11 @@ import {
   model,
   output,
   signal,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  forwardRef
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import type { FormValueControl } from '@angular/forms/signals';
 import { InputType, InputVariant, InputSize, AutocompleteConfig, INPUT_LABELS } from './input.types';
 
 @Component({
@@ -24,44 +24,32 @@ import { InputType, InputVariant, InputSize, AutocompleteConfig, INPUT_LABELS } 
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: PshInputComponent,
+      useExisting: forwardRef(() => PshInputComponent),
       multi: true
     }
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {
-    '[class.full-width]': 'fullWidth()',
-    '[class.small]': 'size() === "small"',
-    '[class.large]': 'size() === "large"',
-    '[class.error]': '!!error()',
-    '[class.success]': '!!success()',
-    '[class.disabled]': 'disabled()',
-    '[class.readonly]': 'readonly()',
-    '[class.loading]': 'loading()',
-    '[class.focused]': 'focused()',
-    '[class.has-start-icon]': '!!iconStart()',
-    '[class.has-end-icon]': '!!iconEnd() || type() === "password"',
-    '[class.outlined]': 'variant() === "outlined"',
-    '[class.filled]': 'variant() === "filled"',
-  }
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PshInputComponent implements ControlValueAccessor, FormValueControl<string> {
-  private readonly elementRef = inject(ElementRef);
-  private readonly cdr = inject(ChangeDetectorRef);
-  private readonly destroyRef = inject(DestroyRef);
+export class PshInputComponent implements ControlValueAccessor {
+  private elementRef = inject(ElementRef);
+  private cdr = inject(ChangeDetectorRef);
+  private destroyRef = inject(DestroyRef);
 
   private static nextId = 0;
   readonly inputId = `psh-input-${PshInputComponent.nextId++}`;
 
-  readonly value = model<string>('');
-  readonly disabled = model<boolean>(false);
-  readonly readonly = model(false);
-  readonly loading = model(false);
-  readonly touched = model(false);
+  // Model inputs (two-way bindable state)
+  value = model('');
+  disabled = model(false);
+  readonly = model(false);
+  loading = model(false);
 
+  // Configuration inputs (one-directional)
   variant = input<InputVariant>('outlined');
   size = input<InputSize>('medium');
   fullWidth = input(false);
+
+  // Regular inputs
   required = input(false);
   showLabel = input(true);
   type = input<InputType>('text');
@@ -73,31 +61,32 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
   error = input<string | null | undefined>(null);
   success = input<string | null | undefined>(null);
   hint = input<string | null | undefined>(null);
-  
   suggestions = input<string[] | ((query: string) => Promise<string[]>)>([]);
   autocompleteConfig = input<AutocompleteConfig>({
     minLength: 1,
     debounceTime: 300
   });
 
-  private readonly suggestionsVisible = signal(false);
-  private readonly focusedSignal = signal(false);
-  private readonly filteredSuggestionsSignal = signal<string[]>([]);
-  readonly focusedSuggestionIndex = signal(-1);
-  private readonly passwordVisibleSignal = signal(false);
-  
+  // State
+  private suggestionsVisible = signal(false);
+  private focusedSignal = signal(false);
+  private filteredSuggestionsSignal = signal<string[]>([]);
+  focusedSuggestionIndex = signal(-1);
+  private passwordVisibleSignal = signal(false);
   private blurTimeoutId: number | null = null;
   private debounceTimeoutId: number | null = null;
 
+  // Outputs
+  valueChange = output<string>();
   inputFocus = output<void>();
   inputBlur = output<void>();
   suggestionSelect = output<string>();
 
+  // Computed values
   showSuggestions = computed(() => this.suggestionsVisible() && this.filteredSuggestions().length > 0);
   filteredSuggestions = computed(() => this.filteredSuggestionsSignal());
   focused = computed(() => this.focusedSignal());
   passwordVisible = computed(() => this.passwordVisibleSignal());
-  
   effectiveType = computed(() => {
     if (this.type() === 'password') {
       return this.passwordVisible() ? 'text' : 'password';
@@ -105,8 +94,13 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
     return this.type();
   });
 
-  computedAriaLabel = computed(() => this.ariaLabel() || this.label() || this.placeholder());
-  passwordToggleLabel = computed(() => this.passwordVisible() ? INPUT_LABELS.hidePassword : INPUT_LABELS.showPassword);
+  computedAriaLabel = computed(() => {
+    return this.ariaLabel() || this.label() || this.placeholder();
+  });
+
+  passwordToggleLabel = computed(() => {
+    return this.passwordVisible() ? INPUT_LABELS.hidePassword : INPUT_LABELS.showPassword;
+  });
 
   state = computed(() => this.getState());
 
@@ -122,34 +116,45 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
 
   constructor() {
     this.destroyRef.onDestroy(() => {
-      if (this.blurTimeoutId) window.clearTimeout(this.blurTimeoutId);
-      if (this.debounceTimeoutId) window.clearTimeout(this.debounceTimeoutId);
+      if (this.blurTimeoutId !== null) {
+        clearTimeout(this.blurTimeoutId);
+      }
+      if (this.debounceTimeoutId !== null) {
+        clearTimeout(this.debounceTimeoutId);
+      }
     });
   }
 
-  private onChange = (_: string) => {};
+  // ControlValueAccessor implementation
+  private onChange = (_: any) => {};
   private onTouched = () => {};
 
-  writeValue(value: unknown): void {
-    const safeValue = typeof value === 'string' ? value : '';
-    this.value.set(safeValue);
+  writeValue(value: any): void {
+    this.value.set(value ?? '');
     this.cdr.markForCheck();
   }
 
-  registerOnChange(fn: (v: string) => void): void { this.onChange = fn; }
-  registerOnTouched(fn: () => void): void { this.onTouched = fn; }
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
 
   setDisabledState(isDisabled: boolean): void {
     this.disabled.set(isDisabled);
   }
 
+  // Event handlers
   handleInput(event: Event): void {
-    const val = (event.target as HTMLInputElement).value;
-    this.value.set(val);
-    this.onChange(val);
+    const value = (event.target as HTMLInputElement).value;
+    this.value.set(value);
+    this.valueChange.emit(value);
+    this.onChange(value);
 
     if (this.suggestions()) {
-      this.debouncedUpdateSuggestions(val);
+      this.debouncedUpdateSuggestions(value);
     }
   }
 
@@ -157,9 +162,8 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
     this.focusedSignal.set(true);
     this.inputFocus.emit();
 
-    const val = this.value();
-    if (this.suggestions() && val.length >= this.autocompleteConfig().minLength) {
-      this.updateSuggestions(val);
+    if (this.suggestions() && this.value().length >= this.autocompleteConfig().minLength) {
+      this.updateSuggestions(this.value());
     }
   }
 
@@ -167,9 +171,10 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
     this.focusedSignal.set(false);
     this.inputBlur.emit();
     this.onTouched();
-    this.touched.set(true);
 
-    if (this.blurTimeoutId) window.clearTimeout(this.blurTimeoutId);
+    if (this.blurTimeoutId !== null) {
+      clearTimeout(this.blurTimeoutId);
+    }
     this.blurTimeoutId = window.setTimeout(() => {
       this.suggestionsVisible.set(false);
       this.focusedSuggestionIndex.set(-1);
@@ -186,21 +191,28 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
     switch (event.key) {
       case 'ArrowDown':
         event.preventDefault();
-        this.focusedSuggestionIndex.update(i => (i < suggestions.length - 1 ? i + 1 : 0));
+        this.focusedSuggestionIndex.update(i =>
+          i < suggestions.length - 1 ? i + 1 : 0
+        );
         break;
+
       case 'ArrowUp':
         event.preventDefault();
-        this.focusedSuggestionIndex.update(i => (i > 0 ? i - 1 : suggestions.length - 1));
+        this.focusedSuggestionIndex.update(i =>
+          i > 0 ? i - 1 : suggestions.length - 1
+        );
         break;
+
       case 'Enter':
+        event.preventDefault();
         if (currentIndex >= 0 && currentIndex < suggestions.length) {
-          event.preventDefault();
-          const selected = suggestions[currentIndex];
-          if (selected !== undefined) {
-            this.handleSuggestionClick(selected);
+          const selectedSuggestion = suggestions[currentIndex];
+          if (selectedSuggestion) {
+            this.handleSuggestionClick(selectedSuggestion);
           }
         }
         break;
+
       case 'Escape':
         event.preventDefault();
         this.suggestionsVisible.set(false);
@@ -210,11 +222,13 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
   }
 
   handleSuggestionClick(suggestion: string): void {
-    this.value.set(suggestion);
-    this.onChange(suggestion);
-    this.suggestionSelect.emit(suggestion);
-    this.suggestionsVisible.set(false);
-    this.focusedSuggestionIndex.set(-1);
+    if (suggestion) {
+      this.value.set(suggestion);
+      this.valueChange.emit(suggestion);
+      this.onChange(suggestion);
+      this.suggestionSelect.emit(suggestion);
+      this.suggestionsVisible.set(false);
+    }
   }
 
   togglePasswordVisibility(): void {
@@ -225,38 +239,45 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
     return !!this.elementRef.nativeElement.querySelector('[input-label]');
   }
 
-  focus(): void {
-    const inputEl = this.elementRef.nativeElement.querySelector('input');
-    inputEl?.focus();
-  }
-
   focusSelect(): void {
-    this.focus();
+    const input = this.elementRef.nativeElement.querySelector('input');
+    if (input) {
+      input.focus();
+    }
   }
 
   private debouncedUpdateSuggestions(value: string): void {
-    if (this.debounceTimeoutId) window.clearTimeout(this.debounceTimeoutId);
+    if (this.debounceTimeoutId !== null) {
+      clearTimeout(this.debounceTimeoutId);
+    }
+
+    const debounceTime = this.autocompleteConfig().debounceTime;
     this.debounceTimeoutId = window.setTimeout(() => {
       this.updateSuggestions(value);
       this.debounceTimeoutId = null;
-    }, this.autocompleteConfig().debounceTime);
+    }, debounceTime);
   }
 
-  private async updateSuggestions(value: string): Promise<void> {
-    const provider = this.suggestions();
+  private async updateSuggestions(value: string) {
+    const suggestionsValue = this.suggestions();
 
-    try {
-      let results: string[] = [];
-      if (typeof provider === 'function') {
-        results = await provider(value);
-      } else if (Array.isArray(provider)) {
-        results = provider.filter(s => s.toLowerCase().includes(value.toLowerCase()));
+    if (typeof suggestionsValue === 'function') {
+      try {
+        const results = await suggestionsValue(value);
+        if (Array.isArray(results)) {
+          this.filteredSuggestionsSignal.set(results);
+          this.suggestionsVisible.set(true);
+        }
+      } catch (error) {
+        console.error('Error fetching suggestions:', error);
+        this.filteredSuggestionsSignal.set([]);
       }
-      
-      this.filteredSuggestionsSignal.set(results);
-      this.suggestionsVisible.set(results.length > 0);
-    } catch (error) {
-      this.filteredSuggestionsSignal.set([]);
+    } else if (Array.isArray(suggestionsValue)) {
+      const filtered = suggestionsValue.filter(suggestion =>
+        suggestion.toLowerCase().includes(value.toLowerCase())
+      );
+      this.filteredSuggestionsSignal.set(filtered);
+      this.suggestionsVisible.set(true);
     }
   }
 }

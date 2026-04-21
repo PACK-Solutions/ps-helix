@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { PshTabsComponent, PshTabComponent, Tab, TabChangeEvent } from '@lib/components';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
 import { CodeSnippetComponent } from '../../shared/code-snippet.component';
@@ -7,8 +7,7 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
   selector: 'ds-tabs-demo',
   imports: [PshTabsComponent, PshTabComponent, DemoPageLayoutComponent, CodeSnippetComponent],
   templateUrl: './tabs-demo.component.html',
-  styleUrls: ['./tabs-demo.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./tabs-demo.component.css']
 })
 export class TabsDemoComponent {
   activeIndex = signal(0);
@@ -16,10 +15,10 @@ export class TabsDemoComponent {
   lastChange = signal<string>('');
 
   programmaticTabs: Tab[] = [
-    { header: 'Dashboard', icon: 'squares-four', content: 'Vue d\'ensemble de vos donnees' },
-    { header: 'Analytics', icon: 'chart-line', content: 'Statistiques detaillees' },
-    { header: 'Settings', icon: 'gear', content: 'Configuration de l\'application' },
-    { header: 'Disabled', icon: 'prohibit', content: 'Cet onglet est desactive', disabled: true }
+    { header: 'Dashboard', icon: 'squares-four', content: '<p>Vue d\'ensemble de vos données</p>' },
+    { header: 'Analytics', icon: 'chart-line', content: '<p>Statistiques détaillées</p>' },
+    { header: 'Settings', icon: 'gear', content: '<p>Configuration de l\'application</p>' },
+    { header: 'Disabled', icon: 'prohibit', content: '<p>Cet onglet est désactivé</p>', disabled: true }
   ];
 
   twoWayBindingCode = `<psh-tabs [(activeIndex)]="activeIndex">
@@ -41,12 +40,12 @@ export class TabsDemoComponent {
   {
     header: 'Dashboard',
     icon: 'squares-four',
-    content: 'Contenu du dashboard'
+    content: '<p>Contenu</p>'
   },
   {
     header: 'Disabled',
     icon: 'prohibit',
-    content: 'Contenu desactive',
+    content: '...',
     disabled: true
   }
 ];

@@ -8,17 +8,13 @@ import {
   model,
   output,
   signal,
-  DestroyRef
+  DestroyRef,
+  ChangeDetectorRef,
+  AfterContentInit
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
-import type { FormValueControl } from '@angular/forms/signals';
-import { SelectOption, SelectOptionGroup, SelectSize, SelectVariant, SearchConfig } from './select.types';
-
-interface FlatOption<T> {
-  option: SelectOption<T>;
-  effectiveDisabled: boolean;
-}
+import { SelectOption, SelectOptionGroup, SelectSize, SearchConfig, VirtualScrollConfig } from './select.types';
 
 @Component({
   selector: 'psh-select',
@@ -37,43 +33,42 @@ interface FlatOption<T> {
     '[class.full-width]': 'fullWidth()',
     '[class.small]': 'size() === "small"',
     '[class.large]': 'size() === "large"',
-    '[class.outlined]': 'variant() === "outlined"',
-    '[class.filled]': 'variant() === "filled"',
     '[class.error]': '!!error()',
     '[class.success]': '!!success()',
     '[class.disabled]': 'disabled()',
     '[class.loading]': 'loading()',
-    '[attr.aria-expanded]': 'isOpen().toString()',
-    '[attr.data-state]': 'state()'
   }
 })
-export class PshSelectComponent<T = unknown> implements ControlValueAccessor, FormValueControl<T | T[] | null> {
-  private readonly elementRef = inject(ElementRef);
-  private readonly destroyRef = inject(DestroyRef);
+export class PshSelectComponent<T = any> implements ControlValueAccessor, AfterContentInit {
+  private elementRef = inject(ElementRef);
+  private cdr = inject(ChangeDetectorRef);
+  private destroyRef = inject(DestroyRef);
 
-  protected readonly selectId = `psh-sel-${Math.random().toString(36).substring(2, 11)}`;
+  // Unique ID for the select
+  readonly selectId = `select-${Math.random().toString(36).substring(2, 11)}`;
 
-  readonly value = model<T | T[] | null>(null);
-  readonly disabled = model<boolean>(false);
-  readonly touched = model<boolean>(false);
+  // Model inputs
+  value = model<T | T[] | null>(null);
+  disabled = model(false);
 
   size = input<SelectSize>('medium');
-  variant = input<SelectVariant>('outlined');
   searchable = input(false);
   multiple = input(false);
   clearable = input(false);
   loading = input(false);
   fullWidth = input(false);
-  required = input(false);
+  virtualScroll = input(false);
+  required = input(false); // Moved back to input as it doesn't need two-way binding
 
+  // Regular inputs
   options = input<(SelectOption<T> | SelectOptionGroup<T>)[]>([]);
-  label = input('');
+  label = input(''); // Added dedicated label property
+  ariaLabel = input<string | null>(null); // Added dedicated ariaLabel property
   placeholder = input<string>('Sélectionner une option');
   multiplePlaceholder = input<string>('Sélectionner des options');
-  error = input<string | null | undefined>(null);
-  success = input<string | null | undefined>(null);
-  hint = input<string | null | undefined>(null);
-  ariaLabel = input<string | null>(null);
+  error = input('');
+  success = input('');
+  hint = input('');
   maxSelections = input<number | undefined>(undefined);
   minSelections = input<number | undefined>(undefined);
   compareWith = input<(a: T, b: T) => boolean>((a, b) => a === b);
@@ -82,292 +77,402 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
     placeholder: 'Rechercher...',
     minLength: 1
   });
+  virtualScrollConfig = input<VirtualScrollConfig>({
+    itemSize: 40,
+    buffer: 4
+  });
 
-  private readonly isOpenSignal = signal(false);
-  private readonly searchTermSignal = signal('');
-  readonly focusedIndex = signal(-1);
+  // State
+  private isOpenSignal = signal(false);
+  private searchTermSignal = signal('');
+  private selectedLabelSignal = signal('');
+  private focusedOptionIndex = signal(-1);
+  private hasLabelContentSignal = signal(false);
+  private initializedSignal = signal(false);
+  private activeDescendantId = signal<string | null>(null);
 
+  // Outputs
+  valueChange = output<T | T[] | null>();
   opened = output<void>();
   closed = output<void>();
-  searched = output<string>();
   scrollEnd = output<void>();
+  loadOptions = output<string>();
+  searched = output<string>();
 
+  // Computed values
   isOpen = computed(() => this.isOpenSignal());
   searchTerm = computed(() => this.searchTermSignal());
+  hasLabelContent = computed(() => this.hasLabelContentSignal());
+  activeDescendant = computed(() => this.activeDescendantId());
 
-  state = computed(() => {
+  // Computed aria-label pour l'accessibilité
+  computedAriaLabel = computed(() => {
+    return this.ariaLabel() || this.label() || this.placeholder();
+  });
+
+  state = computed(() => this.getState());
+
+  private getState(): string {
     if (this.disabled()) return 'disabled';
+    if (this.loading()) return 'loading';
     if (this.error()) return 'error';
     if (this.success()) return 'success';
-    return 'default';
-  });
-
-  computedAriaLabel = computed(() => this.ariaLabel() || this.label() || this.placeholder());
-
-  describedBy = computed(() => {
-    if (this.error()) return 'error-message';
-    if (this.success()) return 'success-message';
-    if (this.hint()) return 'hint-message';
-    return null;
-  });
-
-  flatFilteredOptions = computed<FlatOption<T>[]>(() => {
-    const opts = this.filteredOptions();
-    const result: FlatOption<T>[] = [];
-    for (const item of opts) {
-      if (this.isOptionGroup(item)) {
-        for (const opt of item.options) {
-          result.push({ option: opt, effectiveDisabled: !!(item.disabled || opt.disabled) });
-        }
-      } else {
-        result.push({ option: item, effectiveDisabled: !!item.disabled });
-      }
-    }
-    return result;
-  });
-
-  activeDescendant = computed(() => {
-    const idx = this.focusedIndex();
-    const flat = this.flatFilteredOptions();
-    if (idx < 0 || idx >= flat.length) return null;
-    const item = flat[idx];
-    if (!item) return null;
-    return `${this.selectId}-${item.option.value}`;
-  });
+    if (this.isOpen()) return 'open';
+    return 'closed';
+  }
 
   selectedLabel = computed(() => {
-    const currentValue = this.value();
-    const currentOptions = this.flattenOptions(this.options());
-
-    if (currentValue === null || currentValue === undefined) {
+    if (!this.initializedSignal() || !this.hasValue()) {
       return this.multiple() ? this.multiplePlaceholder() : this.placeholder();
     }
-
-    if (this.multiple() && Array.isArray(currentValue)) {
-      const selected = currentOptions.filter(opt =>
-        currentValue.some(v => this.compareWith()(v, opt.value))
-      );
-      return selected.length > 0 ? selected.map(o => o.label).join(', ') : this.multiplePlaceholder();
-    }
-
-    const selected = currentOptions.find(opt => this.compareWith()(opt.value, currentValue as T));
-    return selected ? selected.label : this.placeholder();
+    return this.selectedLabelSignal() || (this.multiple() ? this.multiplePlaceholder() : this.placeholder());
   });
 
   filteredOptions = computed(() => {
     const term = this.searchTermSignal().toLowerCase();
     const opts = this.options();
+    
     if (!term) return opts;
 
     return opts.map(opt => {
       if (this.isOptionGroup(opt)) {
-        const filtered = opt.options.filter(o => {
-          const matchesLabel = o.label.toLowerCase().includes(term);
-          const matchesDesc = o.description ? o.description.toLowerCase().includes(term) : false;
-          return matchesLabel || matchesDesc;
-        });
-        return filtered.length > 0 ? { ...opt, options: filtered } : null;
+        const filteredOptions = opt.options.filter(o => 
+          o.label.toLowerCase().includes(term) ||
+          o.description?.toLowerCase().includes(term)
+        );
+        return filteredOptions.length > 0 ? { ...opt, options: filteredOptions } : null;
       }
-      const matchesLabel = opt.label.toLowerCase().includes(term);
-      const matchesDesc = opt.description ? opt.description.toLowerCase().includes(term) : false;
-      return (matchesLabel || matchesDesc) ? opt : null;
+      return opt.label.toLowerCase().includes(term) ||
+             opt.description?.toLowerCase().includes(term)
+        ? opt
+        : null;
     }).filter((opt): opt is (SelectOption<T> | SelectOptionGroup<T>) => opt !== null);
   });
 
   constructor() {
     const clickHandler = (event: MouseEvent) => {
-      if (this.isOpen() && !this.elementRef.nativeElement.contains(event.target)) {
-        this.close();
+      if (this.isOpen()) {
+        const target = event.target as HTMLElement;
+        if (!this.elementRef.nativeElement.contains(target)) {
+          this.close();
+        }
       }
     };
+
     document.addEventListener('click', clickHandler);
-    this.destroyRef.onDestroy(() => document.removeEventListener('click', clickHandler));
+    this.destroyRef.onDestroy(() => {
+      document.removeEventListener('click', clickHandler);
+    });
   }
 
-  private onChange = (_: unknown) => {};
-  private onTouched = () => {};
-
-  writeValue(value: unknown): void {
-    this.value.set(value as T | T[] | null);
+  ngAfterContentInit() {
+    Promise.resolve().then(() => {
+      const hasLabel = !!this.elementRef.nativeElement.querySelector('[select-label]');
+      this.hasLabelContentSignal.set(hasLabel);
+      this.initializedSignal.set(true);
+      this.cdr.markForCheck();
+    });
   }
 
-  registerOnChange(fn: any): void { this.onChange = fn; }
-  registerOnTouched(fn: any): void { this.onTouched = fn; }
-  setDisabledState(isDisabled: boolean): void { this.disabled.set(isDisabled); }
 
-  toggle(): void {
+  // Keyboard navigation
+  handleKeyDown(event: KeyboardEvent): void {
     if (this.disabled() || this.loading()) return;
-    if (this.isOpen()) {
-      this.close();
-    } else {
-      this.isOpenSignal.set(true);
-      this.opened.emit();
-    }
-  }
 
-  close(): void {
-    if (!this.isOpenSignal()) return;
-    this.isOpenSignal.set(false);
-    this.searchTermSignal.set('');
-    this.focusedIndex.set(-1);
-    this.closed.emit();
-  }
-
-  select(option: SelectOption<T>, groupDisabled = false): void {
-    if (this.disabled() || option.disabled || groupDisabled) return;
-
-    if (this.multiple()) {
-      const current = Array.isArray(this.value()) ? [...(this.value() as T[])] : [];
-      const index = current.findIndex(v => this.compareWith()(v, option.value));
-      if (index === -1) {
-        const max = this.maxSelections();
-        if (max !== undefined && current.length >= max) return;
-        current.push(option.value);
-      } else {
-        const min = this.minSelections();
-        if (min !== undefined && current.length <= min) return;
-        current.splice(index, 1);
-      }
-      this.value.set(current as T | T[] | null);
-      this.onChange(current);
-    } else {
-      this.value.set(option.value as T | T[] | null);
-      this.onChange(option.value);
-      this.close();
-    }
-    this.onTouched();
-    this.touched.set(true);
-  }
-
-  clear(event: MouseEvent): void {
-    event.stopPropagation();
-    const newVal = (this.multiple() ? [] : null) as T | T[] | null;
-    this.value.set(newVal);
-    this.onChange(this.value());
-  }
-
-  onSearch(event: Event): void {
-    const term = (event.target as HTMLInputElement).value;
-    this.searchTermSignal.set(term);
-    this.searched.emit(term);
-  }
-
-  onScroll(event: Event): void {
-    const el = event.target as HTMLElement;
-    if (el.scrollHeight - el.scrollTop === el.clientHeight) {
-      this.scrollEnd.emit();
-    }
-  }
-
-  handleKeydown(event: KeyboardEvent): void {
     switch (event.key) {
       case 'Enter':
       case ' ':
         event.preventDefault();
         if (!this.isOpen()) {
           this.toggle();
-        } else if (this.focusedIndex() >= 0) {
-          const flat = this.flatFilteredOptions();
-          const item = flat[this.focusedIndex()];
-          if (item && !item.effectiveDisabled) {
-            this.select(item.option);
-          }
+        } else if (this.focusedOptionIndex() >= 0) {
+          const options = this.flattenOptions(this.filteredOptions());
+          const option = options[this.focusedOptionIndex()];
+          if (option) this.select(option);
         }
         break;
+
       case 'ArrowDown':
         event.preventDefault();
         if (!this.isOpen()) {
           this.toggle();
         } else {
-          this.moveFocus(1);
+          this.focusNextOption();
         }
         break;
+
       case 'ArrowUp':
         event.preventDefault();
-        this.moveFocus(-1);
+        if (this.isOpen()) {
+          this.focusPreviousOption();
+        }
         break;
-      case 'Home':
-        event.preventDefault();
-        this.focusFirst();
-        break;
-      case 'End':
-        event.preventDefault();
-        this.focusLast();
-        break;
+
       case 'Escape':
-        this.close();
+        if (this.isOpen()) {
+          event.preventDefault();
+          this.close();
+        }
         break;
+
       case 'Tab':
+        if (this.isOpen()) {
+          this.close();
+        }
+        break;
+    }
+  }
+
+  handleOptionKeyDown(event: KeyboardEvent, option: SelectOption<T>): void {
+    switch (event.key) {
+      case 'Enter':
+      case ' ':
+        event.preventDefault();
+        this.select(option);
+        break;
+      
+      case 'Escape':
+        event.preventDefault();
         this.close();
         break;
     }
   }
 
-  protected isOptionGroup(item: SelectOption<T> | SelectOptionGroup<T>): item is SelectOptionGroup<T> {
-    return 'options' in item;
-  }
+  private focusNextOption(): void {
+    const options = this.flattenOptions(this.filteredOptions());
+    if (options.length === 0) return;
 
-  protected getOptionKey(item: SelectOption<T> | SelectOptionGroup<T>): string {
-    return this.isOptionGroup(item) ? `g-${item.label}` : `o-${item.label}`;
-  }
-
-  protected isSelected(option: SelectOption<T>): boolean {
-    const val = this.value();
-    if (this.multiple() && Array.isArray(val)) {
-      return val.some(v => this.compareWith()(v, option.value));
+    const currentIndex = this.focusedOptionIndex();
+    const nextIndex = currentIndex < options.length - 1 ? currentIndex + 1 : 0;
+    this.focusedOptionIndex.set(nextIndex);
+    const nextOption = options[nextIndex];
+    if (nextOption) {
+      this.updateActiveDescendant(nextOption);
     }
-    return val !== null && this.compareWith()(val as T, option.value);
+    this.scrollOptionIntoView(nextIndex);
   }
 
-  protected hasValue(): boolean {
-    const val = this.value();
-    if (this.multiple()) return Array.isArray(val) && val.length > 0;
-    return val !== null && val !== undefined;
+  private focusPreviousOption(): void {
+    const options = this.flattenOptions(this.filteredOptions());
+    if (options.length === 0) return;
+
+    const currentIndex = this.focusedOptionIndex();
+    const previousIndex = currentIndex > 0 ? currentIndex - 1 : options.length - 1;
+    this.focusedOptionIndex.set(previousIndex);
+    const prevOption = options[previousIndex];
+    if (prevOption) {
+      this.updateActiveDescendant(prevOption);
+    }
+    this.scrollOptionIntoView(previousIndex);
   }
 
-  protected getFlatIndex(option: SelectOption<T>): number {
-    return this.flatFilteredOptions().findIndex(item => item.option === option);
+  private scrollOptionIntoView(index: number): void {
+    requestAnimationFrame(() => {
+      const activeId = this.activeDescendantId();
+      if (activeId) {
+        const option = this.elementRef.nativeElement.querySelector(`#${activeId}`);
+        if (option) {
+          option.scrollIntoView({ block: 'nearest' });
+        }
+      }
+    });
   }
 
-  protected focusSelect(): void {
-    this.elementRef.nativeElement.querySelector('.select-trigger')?.focus();
+  private updateActiveDescendant(option: SelectOption<T>): void {
+    const optionId = `${this.selectId}-option-${String(option.value)}`;
+    this.activeDescendantId.set(optionId);
+    this.cdr.markForCheck();
+  }
+
+  isFocused(option: SelectOption<T>): boolean {
+    const activeId = this.activeDescendantId();
+    if (!activeId) return false;
+    const optionId = `${this.selectId}-option-${String(option.value)}`;
+    return activeId === optionId;
+  }
+
+  // ControlValueAccessor implementation
+  private onChange = (_: any) => {};
+  private onTouched = () => {};
+
+  writeValue(value: any): void {
+    this.initializedSignal.set(true);
+    this.value.set(value);
+    this.updateSelectedLabel();
+    this.cdr.markForCheck();
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled.set(isDisabled);
+  }
+
+  // Helper method to check if an option is a group
+  isOptionGroup(option: SelectOption<T> | SelectOptionGroup<T>): option is SelectOptionGroup<T> {
+    return 'options' in option;
+  }
+
+  // Get unique key for tracking
+  getOptionKey(option: SelectOption<T> | SelectOptionGroup<T>): string {
+    return this.isOptionGroup(option) ? `group-${option.label}` : `option-${String(option.value)}`;
+  }
+
+  // Check if there is a selected value
+  hasValue(): boolean {
+    const currentValue = this.value();
+    if (this.multiple()) {
+      return Array.isArray(currentValue) && currentValue.length > 0;
+    }
+    return currentValue !== null && currentValue !== undefined;
+  }
+
+  // Focus methods
+  focusSelect(): void {
+    const trigger = this.elementRef.nativeElement.querySelector('.select-trigger');
+    if (trigger) {
+      trigger.focus();
+    }
+  }
+
+  // Selection methods
+  select(option: SelectOption<T>): void {
+    if (!this.disabled() && !option.disabled) {
+      this.activeDescendantId.set(null);
+
+      if (this.multiple()) {
+        const currentValue = this.value();
+        const values = Array.isArray(currentValue) ? [...currentValue] : [];
+        const index = values.findIndex(v => this.compareWith()(v, option.value));
+
+        if (index === -1) {
+          const maxSelections = this.maxSelections();
+          if (!maxSelections || values.length < maxSelections) {
+            values.push(option.value);
+          }
+        } else {
+          const minSelections = this.minSelections();
+          if (!minSelections || values.length > minSelections) {
+            values.splice(index, 1);
+          }
+        }
+
+        this.value.set(values);
+        this.onChange(values);
+      } else {
+        this.value.set(option.value);
+        this.onChange(option.value);
+        this.close();
+      }
+
+      this.valueChange.emit(this.value());
+      this.updateSelectedLabel();
+      this.onTouched();
+    }
+  }
+
+  isSelected(option: SelectOption<T>): boolean {
+    const currentValue = this.value();
+    if (this.multiple() && Array.isArray(currentValue)) {
+      return currentValue.some(v => this.compareWith()(v, option.value));
+    }
+    return currentValue !== null && this.compareWith()(currentValue as T, option.value);
+  }
+
+  // UI methods
+  toggle(): void {
+    if (!this.disabled() && !this.loading()) {
+      event?.stopPropagation();
+      const newValue = !this.isOpenSignal();
+      this.isOpenSignal.set(newValue);
+      if (newValue) {
+        this.opened.emit();
+      } else {
+        this.activeDescendantId.set(null);
+        this.closed.emit();
+      }
+    }
+  }
+
+  close(): void {
+    if (this.isOpenSignal()) {
+      this.isOpenSignal.set(false);
+      this.focusedOptionIndex.set(-1);
+      this.activeDescendantId.set(null);
+      this.searchTermSignal.set('');
+      this.closed.emit();
+    }
+  }
+
+  clear(event: Event): void {
+    event.stopPropagation();
+    if (!this.disabled() && !this.loading()) {
+      const newValue = this.multiple() ? [] : null;
+      this.value.set(newValue);
+      this.onChange(newValue);
+      this.valueChange.emit(newValue);
+      this.updateSelectedLabel();
+      this.onTouched();
+    }
+  }
+
+  onSearch(event: Event): void {
+    const term = (event.target as HTMLInputElement).value;
+    this.searchTermSignal.set(term);
+    if (term.length >= (this.searchConfig().minLength ?? 1)) {
+      this.searched.emit(term);
+    }
+  }
+
+  onScroll(event: Event): void {
+    const element = event.target as HTMLElement;
+    if (
+      element.scrollHeight - element.scrollTop === element.clientHeight
+    ) {
+      this.scrollEnd.emit();
+    }
+  }
+
+  private updateSelectedLabel(): void {
+    const currentValue = this.value();
+    const currentOptions = this.flattenOptions(this.options());
+
+    if (this.multiple() && Array.isArray(currentValue)) {
+      const selected = currentOptions.filter(opt => 
+        currentValue.some(v => this.compareWith()(v, opt.value))
+      );
+      if (selected.length > 0) {
+        const labels = selected.map(opt => opt.label);
+        this.selectedLabelSignal.set(labels.join(', '));
+      } else {
+        this.selectedLabelSignal.set('');
+      }
+    } else {
+      const selected = currentOptions.find(opt => 
+        currentValue !== null && this.compareWith()(opt.value, currentValue as T)
+      );
+      if (selected) {
+        this.selectedLabelSignal.set(selected.label);
+      } else {
+        this.selectedLabelSignal.set('');
+      }
+    }
+    this.cdr.markForCheck();
   }
 
   private flattenOptions(options: (SelectOption<T> | SelectOptionGroup<T>)[]): SelectOption<T>[] {
-    return options.reduce((acc, opt) => this.isOptionGroup(opt) ? [...acc, ...opt.options] : [...acc, opt], [] as SelectOption<T>[]);
+    return options.reduce((acc, opt) => {
+      if (this.isOptionGroup(opt)) {
+        return [...acc, ...opt.options];
+      }
+      return [...acc, opt];
+    }, [] as SelectOption<T>[]);
   }
 
-  private moveFocus(direction: 1 | -1): void {
-    const flat = this.flatFilteredOptions();
-    if (flat.length === 0) return;
-    const current = this.focusedIndex();
-    let next = current;
-    for (let i = 0; i < flat.length; i++) {
-      next = ((next + direction) % flat.length + flat.length) % flat.length;
-      if (!flat[next]!.effectiveDisabled) {
-        this.focusedIndex.set(next);
-        return;
-      }
-    }
-  }
-
-  private focusFirst(): void {
-    const flat = this.flatFilteredOptions();
-    for (let i = 0; i < flat.length; i++) {
-      if (!flat[i]!.effectiveDisabled) {
-        this.focusedIndex.set(i);
-        return;
-      }
-    }
-  }
-
-  private focusLast(): void {
-    const flat = this.flatFilteredOptions();
-    for (let i = flat.length - 1; i >= 0; i--) {
-      if (!flat[i]!.effectiveDisabled) {
-        this.focusedIndex.set(i);
-        return;
-      }
-    }
-  }
 }

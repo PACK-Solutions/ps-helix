@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
 
@@ -6,8 +6,7 @@ import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component
   selector: 'ds-grid-demo',
   imports: [TranslateModule, DemoPageLayoutComponent],
   templateUrl: './grid-demo.component.html',
-  styleUrls: ['./grid-demo.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./grid-demo.component.css']
 })
 export class GridDemoComponent {
   Math = Math;

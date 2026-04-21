@@ -14,7 +14,6 @@
   [attr.aria-disabled]="disabled() || null"
   [attr.data-state]="state()"
   (click)="handleClick($event)"
-  (keydown)="handleKeydown($event)"
 >
   @if (icon()) {
     <i class="ph ph-{{ icon() }}" aria-hidden="true"></i>

@@ -1,31 +1,27 @@
 /**
- * Display modes for the sidebar
+ * Modes disponibles pour la sidebar
  */
 export type SidebarMode = 'fixed' | 'overlay';
 
 /**
- * Possible positions for the sidebar
+ * Positions possibles pour la sidebar
  */
 export type SidebarPosition = 'left' | 'right';
 
 /**
- * Complete sidebar configuration
+ * Configuration complète de la sidebar
  */
 export interface SidebarConfig {
-  /** Display mode */
+  /** Mode d'affichage */
   mode: SidebarMode;
-  /** Sidebar position */
+  /** Position de la sidebar */
   position: SidebarPosition;
-  /** Sidebar width */
+  /** Largeur de la sidebar */
   width: string;
-  /** Mobile breakpoint */
+  /** Breakpoint mobile */
   breakpoint: string;
-  /** Enable auto-focus on open */
+  /** Activer le focus automatique à l'ouverture */
   autoFocus: boolean;
-  /** ARIA label for the sidebar */
+  /** Label ARIA pour la sidebar */
   ariaLabel: string;
-  /** Close sidebar when clicking the backdrop (overlay mode only) */
-  closeOnBackdrop: boolean;
-  /** Close sidebar when pressing Escape key (overlay mode only) */
-  closeOnEscape: boolean;
 }

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, computed, input, signal, PLATFORM_ID, inject, output, ViewEncapsulation, ElementRef, AfterContentInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, computed, input, signal, PLATFORM_ID, inject, output, ViewEncapsulation } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { InfoCardData, InfoCardOptions, InfoCardVariant } from './info-card.types';
 
@@ -32,13 +32,8 @@ import { InfoCardData, InfoCardOptions, InfoCardVariant } from './info-card.type
   styleUrl: './info-card.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: {
-    style: 'display: block; height: 100%;'
-  }
 })
-export class PshInfoCardComponent implements AfterContentInit {
-
-  hasHeaderActions = signal<boolean>(false);
+export class PshInfoCardComponent {
 
   /** Title displayed in the card header */
   title = input<string>('');
@@ -146,8 +141,6 @@ export class PshInfoCardComponent implements AfterContentInit {
     return classes.join(' ');
   });
 
-  private elementRef = inject(ElementRef);
-
   constructor() {
     if (isPlatformBrowser(this.platformId)) {
       this.checkMobileViewport();
@@ -158,17 +151,6 @@ export class PshInfoCardComponent implements AfterContentInit {
         });
         this.resizeObserver.observe(document.documentElement);
       }
-    }
-  }
-
-  ngAfterContentInit(): void {
-    this.checkHeaderActionsContent();
-  }
-
-  private checkHeaderActionsContent(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      const headerActionsEl = this.elementRef.nativeElement.querySelector('[card-header-actions]');
-      this.hasHeaderActions.set(!!headerActionsEl);
     }
   }
 
