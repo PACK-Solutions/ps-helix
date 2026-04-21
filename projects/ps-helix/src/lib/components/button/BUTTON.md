@@ -49,22 +49,26 @@ import { PshButtonComponent } from 'ps-helix';
 
 ## API
 
-### Inputs
+### Inputs (signaux)
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
-| appearance | ButtonAppearance | 'filled' | Apparence du bouton |
-| variant | ButtonVariant | 'primary' | Style du bouton |
-| size | ButtonSize | 'medium' | Taille du bouton |
+| appearance | ButtonAppearance | 'filled' | Apparence du bouton (`filled`, `outline`, `text`) |
+| variant | ButtonVariant | 'primary' | Variante sémantique (`primary`, `secondary`, `success`, `warning`, `danger`) |
+| size | ButtonSize | 'medium' | Taille du bouton (`small`, `medium`, `large`) |
 | disabled | boolean | false | État désactivé |
 | loading | boolean | false | État de chargement |
-| fullWidth | boolean | false | Largeur complète |
-| iconPosition | ButtonIconPosition | 'left' | Position de l'icône |
+| iconPosition | ButtonIconPosition | 'left' | Position de l'icône (`left`, `right`, `only`) |
 | icon | string | undefined | Nom de l'icône Phosphor |
 | ariaLabel | string | undefined | Label ARIA personnalisé |
 | loadingText | string | 'Loading...' | Texte de chargement |
 | disabledText | string | 'This action is currently unavailable' | Texte pour lecteurs d'écran quand désactivé |
 | iconOnlyText | string | undefined | Label pour icône seule |
 | type | 'button' \| 'submit' \| 'reset' | 'button' | Type HTML du bouton |
+
+### Model Inputs (two-way binding)
+| Nom | Type | Défaut | Description |
+|-----|------|---------|-------------|
+| fullWidth | boolean | false | Largeur complète. Supporte `[(fullWidth)]` pour une synchronisation parent/enfant |
 
 ### Outputs
 | Nom | Type | Description |
@@ -334,6 +338,16 @@ Le composant génère automatiquement les attributs ARIA appropriés:
 - `aria-disabled="true"`: Lorsque le bouton est désactivé
 - `aria-busy="true"`: Lorsque le bouton est en chargement
 - `aria-label`: Utilise `ariaLabel` ou génère automatiquement à partir du contenu
+
+### Résolution automatique du label ARIA
+
+Le composant calcule `aria-label` selon l'ordre de priorité suivant :
+
+1. `ariaLabel` s'il est fourni explicitement
+2. `loadingText` lorsque `loading` est actif
+3. `disabledText` lorsque `disabled` est actif
+4. `iconOnlyText` (ou `'Button'` en dernier recours) lorsque `iconPosition="only"`
+5. `undefined` pour les boutons avec contenu textuel (le texte sert de label)
 
 ### Labels Accessibles
 

@@ -44,6 +44,25 @@ import { PshDropdownComponent } from 'ps-helix';
 ></psh-dropdown>
 ```
 
+### Mode icon-only
+
+Rend un trigger carré sans label ni caret. `icon` est requis et `ariaLabel` est **obligatoire** pour respecter WCAG 4.1.2 (Name, Role, Value).
+
+```typescript
+<psh-dropdown
+  appearance="outline"
+  variant="primary"
+  icon="dots-three-vertical"
+  iconPosition="only"
+  ariaLabel="Ouvrir le menu d'actions"
+>
+  <div dropdown-menu>
+    <button class="dropdown-item" (click)="edit()">Modifier</button>
+    <button class="dropdown-item" (click)="remove()">Supprimer</button>
+  </div>
+</psh-dropdown>
+```
+
 ## Contrat du design system
 
 Le dropdown partage le meme contrat a deux axes orthogonaux que `psh-button` (voir `BUTTON.md`) :
@@ -57,38 +76,51 @@ Les types `DropdownAppearance` et `DropdownVariant` sont des alias des types equ
 
 ## API
 
-### Inputs
+### Inputs (signaux)
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
-| appearance | DropdownAppearance | 'filled' | Apparence du dropdown (`filled`, `outline`, `text`) |
-| variant | DropdownVariant | 'primary' | Variante semantique (`primary`, `secondary`, `success`, `warning`, `danger`) |
-| size | DropdownSize | 'medium' | Taille du dropdown (small, medium, large) |
-| placement | DropdownPlacement | 'bottom-start' | Position du menu |
-| items | DropdownItem[] | [] | Liste des éléments |
-| label | string | 'Dropdown Menu' | Label du bouton |
-| icon | string | undefined | Icône du bouton |
-| ariaLabel | string | undefined | Label ARIA personnalisé |
+| appearance | DropdownAppearance | 'filled' | Apparence du trigger (`filled`, `outline`, `text`) |
+| variant | DropdownVariant | 'primary' | Variante sémantique (`primary`, `secondary`, `success`, `warning`, `danger`) |
+| size | DropdownSize | 'medium' | Taille du dropdown (`small`, `medium`, `large`) |
+| placement | DropdownPlacement | 'bottom-start' | Position du menu (`bottom-start`, `bottom-end`, `top-start`, `top-end`) |
+| items | DropdownItem<T>[] | [] | Liste des éléments (optionnel, remplace la content projection) |
+| label | string | 'Dropdown Menu' | Label par défaut du trigger |
+| icon | string | undefined | Nom de l'icône Phosphor à afficher dans le trigger |
+| iconPosition | DropdownIconPosition | 'left' | Placement de l'icône (`left`, `only`) |
+| ariaLabel | string | undefined | Label ARIA personnalisé (obligatoire en mode `iconPosition="only"`) |
 
-### Model (Two-way binding)
+### Model Inputs (two-way binding)
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
-| disabled | boolean | false | État désactivé (utiliser [(disabled)]) |
+| disabled | boolean | false | État désactivé. Supporte `[(disabled)]` |
 
 ### Outputs
 | Nom | Type | Description |
 |-----|------|-------------|
-| selected | EventEmitter<DropdownItem> | Émis lors de la sélection |
-| opened | EventEmitter<void> | Émis à l'ouverture |
-| closed | EventEmitter<void> | Émis à la fermeture |
+| selected | EventEmitter<DropdownItem<T>> | Émis lors de la sélection d'un item |
+| opened | EventEmitter<void> | Émis à l'ouverture du menu |
+| closed | EventEmitter<void> | Émis à la fermeture du menu |
+
+### Types
+
+```typescript
+type DropdownAppearance = 'filled' | 'outline' | 'text';
+type DropdownVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
+type DropdownSize = 'small' | 'medium' | 'large';
+type DropdownPlacement = 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end';
+type DropdownIconPosition = 'left' | 'only';
+```
+
+Les types `DropdownAppearance` et `DropdownVariant` sont des alias de `ButtonAppearance` et `ButtonVariant` pour garantir un contrat homogène entre les composants cliquables.
 
 ### Interface DropdownItem
 ```typescript
 interface DropdownItem<T = string> {
   content: string;    // Contenu à afficher
-  value: T;          // Valeur associée
-  icon?: string;     // Icône optionnelle
+  value: T;           // Valeur associée
+  icon?: string;      // Icône Phosphor optionnelle
   disabled?: boolean; // État désactivé
-  active?: boolean;  // État actif
+  active?: boolean;   // État actif
 }
 ```
 
@@ -148,3 +180,82 @@ Le composant gère automatiquement:
 - `aria-haspopup="menu"`: Indique la présence d'un menu
 - `aria-disabled`: État désactivé des items
 - `aria-label`: Label accessible pour le bouton
+
+## Avertissements en mode développement
+
+Le composant emet des `console.warn` en mode dev pour prevenir les erreurs courantes. Ces messages sont silencieux en production.
+
+- `iconPosition="only"` sans `icon` fourni : le rendu icon-only necessite une icone Phosphor.
+- `iconPosition="only"` sans `ariaLabel` (ni `label`) : obligatoire pour respecter WCAG 4.1.2 (Name, Role, Value).
+- `variant="outline"` ou `variant="text"` : API heritee. Utiliser `appearance="outline"` ou `appearance="text"` combine a une `variant` semantique (`primary`, `secondary`, `success`, `warning`, `danger`).
+
+## Exemple Complet
+
+Combine toutes les options : apparence, variante, taille, placement, icône, mode icon-only, état désactivé two-way bindé, content projection et trois événements.
+
+```typescript
+import { Component, signal } from '@angular/core';
+import { PshDropdownComponent, DropdownItem } from 'ps-helix';
+
+@Component({
+  standalone: true,
+  imports: [PshDropdownComponent],
+  template: `
+    <psh-dropdown
+      appearance="filled"
+      variant="primary"
+      size="medium"
+      placement="bottom-end"
+      icon="dots-three"
+      iconPosition="left"
+      [(disabled)]="isLoading"
+      ariaLabel="Menu d'actions sur l'élément"
+      (selected)="handleSelect($event)"
+      (opened)="handleOpened()"
+      (closed)="handleClosed()"
+    >
+      <span dropdown-trigger>Actions</span>
+      <div dropdown-menu>
+        <button class="dropdown-item" (click)="edit()">
+          <i class="ph ph-pencil-simple" aria-hidden="true"></i>
+          Modifier
+        </button>
+        <button
+          class="dropdown-item"
+          [class.disabled]="!canDelete()"
+          (click)="remove()"
+        >
+          <i class="ph ph-trash" aria-hidden="true"></i>
+          Supprimer
+        </button>
+      </div>
+    </psh-dropdown>
+  `
+})
+export class ActionsMenuComponent {
+  readonly isLoading = signal(false);
+  readonly canDelete = signal(true);
+
+  handleSelect(item: DropdownItem): void {
+    console.log('Item selectionne', item);
+  }
+
+  handleOpened(): void {
+    console.log('Menu ouvert');
+  }
+
+  handleClosed(): void {
+    console.log('Menu ferme');
+  }
+
+  edit(): void {
+    // ...
+  }
+
+  remove(): void {
+    if (this.canDelete()) {
+      // ...
+    }
+  }
+}
+```
