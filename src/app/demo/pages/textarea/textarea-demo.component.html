@@ -1,80 +1,321 @@
 <ds-demo-page-layout
   title="Zone de Texte (Textarea)"
-  introText="Le composant psh-textarea est un champ de saisie multi-lignes hybride, compatible à la fois avec les Reactive Forms (ControlValueAccessor) et les Signal Forms (Angular 21+). Il prend en charge l'auto-dimensionnement, le comptage de caractères et une gestion complète des états."
+  introText="Le composant psh-textarea est un champ de saisie multi-lignes hybride. Il implémente ControlValueAccessor pour les Reactive Forms et expose un model signal compatible FormValueControl (Signal Forms, Angular 21+). Il prend en charge l'auto-dimensionnement, le comptage de caractères et une gestion complète des états."
   [showTechnicalSection]="false"
 >
   <div demo-content>
-    <section class="demo-block">
-      <h3 class="section-title">Reactive Forms (FormControl)</h3>
-      <p class="section-intro">
-        Utilisation classique via <code>[formControl]</code> avec validation. L'état d'erreur est automatiquement détecté via <code>NgControl</code> lorsque le contrôle est invalide et touché.
-      </p>
-      <div class="preview-card">
-        <psh-textarea
-          label="Votre commentaire"
-          placeholder="Partagez votre avis..."
-          helperText="Expliquez votre retour en quelques lignes."
-          [maxLength]="200"
-          [showCharacterCount]="true"
-          [required]="true"
-          [formControl]="commentControl"
-        />
-        <div class="status-row">
-          <span>Valide : {{ commentControl.valid }}</span>
-          <span>Touché : {{ commentControl.touched }}</span>
-          <span>Valeur : {{ commentControl.value.length }} car.</span>
+    <!-- Variantes -->
+    <section class="textarea-variants-section">
+      <h3 class="section-title">Variantes</h3>
+      <div class="variants-container">
+        <div class="variants-intro">
+          <p>Deux variantes distinctes s'adaptent à différents contextes d'interface et niveaux de densité visuelle.</p>
+        </div>
+        <div class="variants-grid">
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-textarea
+                variant="outlined"
+                label="Outlined"
+                placeholder="Partagez votre avis..."
+                helperText="Style par défaut avec bordure"
+              />
+            </div>
+            <div class="variant-info">
+              <h4>Outlined</h4>
+              <p>Style par défaut avec bordure prononcée. Idéal pour les formulaires où une délimitation claire des champs est nécessaire.</p>
+              <ds-code-snippet [code]="outlinedVariantCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-textarea
+                variant="filled"
+                label="Filled"
+                placeholder="Partagez votre avis..."
+                helperText="Style avec fond coloré"
+              />
+            </div>
+            <div class="variant-info">
+              <h4>Filled</h4>
+              <p>Style avec fond coloré. Parfait pour les interfaces denses et les formulaires modernes nécessitant une apparence plus subtile.</p>
+              <ds-code-snippet [code]="filledVariantCode" />
+            </div>
+          </div>
         </div>
       </div>
-      <ds-code-snippet [code]="reactiveCode" />
     </section>
 
-    <section class="demo-block">
-      <h3 class="section-title">Signal Forms / Two-way Binding</h3>
-      <p class="section-intro">
-        Compatible Signal Forms (Angular 21+) : le composant expose un <code>model&lt;string&gt;</code> utilisable directement via <code>[(value)]</code> ou <code>[field]</code>.
-      </p>
-      <div class="preview-card">
-        <psh-textarea
-          label="Biographie"
-          placeholder="Parlez de vous..."
-          helperText="Décrivez-vous en quelques phrases."
-          [rows]="5"
-          [maxLength]="500"
-          [showCharacterCount]="true"
-          [(value)]="bioValue"
-        />
-        <div class="status-row">
-          <span>Signal courant : {{ bioValue().length }} caractères</span>
+    <!-- Tailles -->
+    <section class="textarea-sizes-section">
+      <h3 class="section-title">Tailles Disponibles</h3>
+      <div class="sizes-container">
+        <div class="sizes-intro">
+          <p>Trois tailles pour s'adapter à différents contextes d'utilisation et densités d'interface.</p>
+        </div>
+        <div class="sizes-grid">
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-textarea
+                size="small"
+                label="Small"
+                placeholder="Interface compacte"
+                [rows]="3"
+              />
+            </div>
+            <div class="size-info">
+              <h4>Small</h4>
+              <div class="size-specs">
+                <code class="size-code">size="small"</code>
+              </div>
+              <p class="size-usage">Pour les interfaces denses, tableaux ou formulaires compacts nécessitant peu d'espace vertical.</p>
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-textarea
+                size="medium"
+                label="Medium (Défaut)"
+                placeholder="Usage standard"
+                [rows]="4"
+              />
+            </div>
+            <div class="size-info">
+              <h4>Medium (Défaut)</h4>
+              <div class="size-specs">
+                <code class="size-code">size="medium"</code>
+              </div>
+              <p class="size-usage">Taille équilibrée, adaptée à la majorité des cas d'usage avec une bonne lisibilité.</p>
+            </div>
+          </div>
+
+          <div class="size-card">
+            <div class="size-preview">
+              <psh-textarea
+                size="large"
+                label="Large"
+                placeholder="Mise en avant"
+                [rows]="4"
+              />
+            </div>
+            <div class="size-info">
+              <h4>Large</h4>
+              <div class="size-specs">
+                <code class="size-code">size="large"</code>
+              </div>
+              <p class="size-usage">Pour les formulaires importants, interfaces mobiles ou zones de texte nécessitant une grande visibilité.</p>
+            </div>
+          </div>
+        </div>
+        <ds-code-snippet [code]="sizesCode" />
+      </div>
+    </section>
+
+    <!-- États -->
+    <section class="textarea-states-section">
+      <h3 class="section-title">États</h3>
+      <div class="states-container">
+        <div class="states-intro">
+          <p>Le textarea supporte différents états pour communiquer clairement sa disponibilité et son statut de validation.</p>
+        </div>
+        <div class="states-content">
+          <div class="states-demo">
+            <div class="state-group">
+              <h4>État Désactivé</h4>
+              <div class="state-examples">
+                <psh-textarea
+                  label="Champ désactivé"
+                  placeholder="Indisponible"
+                  [disabled]="true"
+                />
+              </div>
+              <p class="state-description">Champ temporairement non modifiable. Utilisé lors d'une soumission ou d'un formulaire incomplet.</p>
+            </div>
+
+            <div class="state-group">
+              <h4>État Lecture Seule</h4>
+              <div class="state-examples">
+                <psh-textarea
+                  label="Lecture seule"
+                  [readonly]="true"
+                  [(value)]="readonlyValue"
+                />
+              </div>
+              <p class="state-description">Contenu visible et sélectionnable mais non modifiable. Permet de copier sans éditer.</p>
+            </div>
+
+            <div class="state-group">
+              <h4>État Erreur</h4>
+              <div class="state-examples">
+                <psh-textarea
+                  label="Champ en erreur"
+                  placeholder="Saisissez une description"
+                  error="Ce champ est obligatoire."
+                  [required]="true"
+                />
+              </div>
+              <p class="state-description">Indique une validation échouée avec un message clair et actionnable (<code>role="alert"</code>).</p>
+            </div>
+
+            <div class="state-group">
+              <h4>État Requis</h4>
+              <div class="state-examples">
+                <psh-textarea
+                  label="Champ obligatoire"
+                  placeholder="Ce champ doit être rempli"
+                  helperText="Un astérisque signale le caractère obligatoire"
+                  [required]="true"
+                />
+              </div>
+              <p class="state-description">Ajoute un astérisque visuel et <code>aria-required="true"</code> pour les lecteurs d'écran.</p>
+            </div>
+          </div>
+
+          <div class="states-doc">
+            <h4>Caractéristiques des États</h4>
+            <ul class="feature-list">
+              <li><strong>Hover</strong> : Bordure surlignée pour signaler l'interactivité</li>
+              <li><strong>Focus</strong> : Anneau coloré visible pour la navigation au clavier</li>
+              <li><strong>Disabled</strong> : Curseur <code>not-allowed</code>, opacité réduite</li>
+              <li><strong>Readonly</strong> : Curseur <code>default</code>, fond distinct</li>
+              <li><strong>Error</strong> : Bordure rouge, message d'erreur avec <code>aria-invalid="true"</code></li>
+              <li><strong>Required</strong> : Astérisque et <code>aria-required="true"</code></li>
+            </ul>
+            <ds-code-snippet [code]="statesCode" />
+          </div>
         </div>
       </div>
-      <ds-code-snippet [code]="signalCode" />
     </section>
 
-    <section class="demo-block">
+    <!-- Largeur complète -->
+    <section class="textarea-fullwidth-section">
+      <h3 class="section-title">Largeur Complète</h3>
+      <div class="fullwidth-container">
+        <div class="fullwidth-intro">
+          <p>La propriété <code>fullWidth</code> supprime la largeur maximale par défaut (480px) pour étendre le champ sur toute la largeur de son conteneur, idéal pour les descriptions longues ou les éditeurs de contenu.</p>
+        </div>
+        <div class="fullwidth-preview">
+          <psh-textarea
+            label="Description complète"
+            placeholder="Rédigez une description détaillée sur toute la largeur..."
+            helperText="Le champ s'étend sur 100% de la largeur disponible"
+            [fullWidth]="true"
+            [rows]="5"
+            [(value)]="fullWidthValue"
+          />
+        </div>
+        <ds-code-snippet [code]="fullWidthCode" />
+      </div>
+    </section>
+
+    <!-- Compteur de caractères -->
+    <section class="textarea-counter-section">
+      <h3 class="section-title">Compteur de Caractères</h3>
+      <div class="counter-container">
+        <div class="counter-intro">
+          <p>Combinez <code>maxLength</code> et <code>showCharacterCount</code> pour afficher un compteur en temps réel. Le compteur passe en erreur au dépassement et est annoncé via <code>aria-live="polite"</code>.</p>
+        </div>
+        <div class="counter-content">
+          <div class="counter-demo">
+            <psh-textarea
+              label="Commentaire limité"
+              placeholder="Écrivez votre commentaire..."
+              helperText="Limité à 200 caractères"
+              [maxLength]="200"
+              [showCharacterCount]="true"
+              [(value)]="feedbackValue"
+            />
+          </div>
+          <div class="counter-doc">
+            <h4>Comportement</h4>
+            <ul class="feature-list">
+              <li><strong>Format</strong> : Affichage <code>0 / 200</code> quand <code>maxLength</code> est défini</li>
+              <li><strong>Sans limite</strong> : Affichage simple du nombre courant</li>
+              <li><strong>Dépassement</strong> : Passage en couleur erreur et <code>aria-invalid</code></li>
+              <li><strong>A11y</strong> : <code>aria-live="polite"</code> pour l'annonce en direct</li>
+            </ul>
+            <ds-code-snippet [code]="counterCode" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Auto-dimensionnement -->
+    <section class="textarea-autosize-section">
       <h3 class="section-title">Auto-dimensionnement</h3>
-      <p class="section-intro">
-        Activez <code>[autoSize]="true"</code> : un <code>effect()</code> ajuste la hauteur du textarea à son contenu.
-      </p>
-      <div class="preview-card">
-        <psh-textarea
-          fullwidth="true"
-          label="Message"
-          placeholder="Écrivez plusieurs lignes..."
-          [autoSize]="true"
-          [(value)]="autoSizeValue"
-          resize="none"
-        />
+      <div class="autosize-container">
+        <div class="autosize-intro">
+          <p>Avec <code>autoSize</code>, un <code>effect()</code> réactif ajuste automatiquement la hauteur du textarea à son contenu. Combinez avec <code>resize="none"</code> pour un comportement propre.</p>
+        </div>
+        <div class="autosize-preview">
+          <psh-textarea
+            label="Message auto-redimensionnable"
+            placeholder="Tapez plusieurs lignes..."
+            helperText="La hauteur s'adapte à votre contenu"
+            [autoSize]="true"
+            resize="none"
+            [(value)]="autoSizeValue"
+          />
+        </div>
+        <ds-code-snippet [code]="autoSizeCode" />
       </div>
-      <ds-code-snippet [code]="autoSizeCode" />
     </section>
 
-    <section class="demo-block">
+    <!-- Intégration Forms -->
+    <section class="textarea-forms-section">
+      <h3 class="section-title">Intégration Forms</h3>
+      <div class="forms-container">
+        <div class="forms-intro">
+          <p>Le composant est compatible avec les deux API de formulaires Angular. La détection de <code>NgControl</code> active automatiquement les états d'erreur basés sur <code>invalid &amp;&amp; (touched || dirty)</code>.</p>
+        </div>
+        <div class="forms-content">
+          <div class="forms-group">
+            <h4>Reactive Forms (FormControl)</h4>
+            <psh-textarea
+              label="Votre commentaire"
+              placeholder="Partagez votre avis..."
+              helperText="Expliquez votre retour en quelques lignes."
+              [maxLength]="200"
+              [showCharacterCount]="true"
+              [required]="true"
+              [formControl]="commentControl"
+            />
+            <div class="form-status">
+              <span>Valide : <code>{{ commentControl.valid }}</code></span>
+              <span>Touché : <code>{{ commentControl.touched }}</code></span>
+              <span>Longueur : <code>{{ commentControl.value.length }}</code></span>
+            </div>
+            <ds-code-snippet [code]="reactiveCode" />
+          </div>
+
+          <div class="forms-group">
+            <h4>Signal two-way / Signal Forms</h4>
+            <psh-textarea
+              label="Biographie"
+              placeholder="Parlez de vous..."
+              helperText="Pattern compatible Signal Forms (Angular 21+)"
+              [rows]="5"
+              [maxLength]="500"
+              [showCharacterCount]="true"
+              [(value)]="bioValue"
+            />
+            <div class="form-status">
+              <span>Signal courant : <code>{{ bioValue().length }} caractères</code></span>
+            </div>
+            <ds-code-snippet [code]="signalCode" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Documentation API -->
+    <section class="api-section">
       <h3 class="section-title">Documentation API</h3>
       <div class="api-container">
         <div class="api-intro">
-          <p>
-            Le composant <code>psh-textarea</code> est hybride : il implémente <strong>ControlValueAccessor</strong> pour les Reactive Forms et expose un <code>model&lt;string&gt;</code> compatible <strong>FormValueControl</strong> (Signal Forms, Angular 21+). Un seul signal <code>value</code> sert de source de vérité aux deux contrats.
-          </p>
+          <p>Le composant <code>psh-textarea</code> utilise des <strong>model inputs</strong> et des <strong>input signals</strong> conformes aux standards Angular 20. Le signal <code>value</code> sert de source de vérité unique aux deux contrats Forms.</p>
         </div>
 
         <div class="api-table-wrapper">
@@ -153,19 +394,19 @@
                 <td><code>maxLength</code></td>
                 <td><code>number | undefined</code></td>
                 <td><code>undefined</code></td>
-                <td>Longueur maximale autorisée (déclenche un état erreur si dépassée)</td>
+                <td>Longueur maximale autorisée (déclenche l'état erreur si dépassée)</td>
               </tr>
               <tr>
                 <td><code>showCharacterCount</code></td>
                 <td><code>boolean</code></td>
                 <td><code>false</code></td>
-                <td>Affiche le compteur de caractères (<code>aria-live="polite"</code>)</td>
+                <td>Affiche le compteur de caractères avec <code>aria-live="polite"</code></td>
               </tr>
               <tr>
                 <td><code>resize</code></td>
                 <td><code>TextareaResize</code></td>
                 <td><code>'vertical'</code></td>
-                <td>Sens de redimensionnement (<code>none | vertical | horizontal | both</code>)</td>
+                <td>'none' | 'vertical' | 'horizontal' | 'both'</td>
               </tr>
               <tr>
                 <td><code>autoSize</code></td>
@@ -177,31 +418,31 @@
                 <td><code>variant</code></td>
                 <td><code>TextareaVariant</code></td>
                 <td><code>'outlined'</code></td>
-                <td>Style visuel (<code>outlined | filled</code>)</td>
+                <td>'outlined' | 'filled'</td>
               </tr>
               <tr>
                 <td><code>size</code></td>
                 <td><code>TextareaSize</code></td>
                 <td><code>'medium'</code></td>
-                <td>Taille du champ (<code>small | medium | large</code>)</td>
+                <td>'small' | 'medium' | 'large'</td>
               </tr>
               <tr>
                 <td><code>fullWidth</code></td>
                 <td><code>boolean</code></td>
                 <td><code>false</code></td>
-                <td>Supprime la largeur maximale par défaut</td>
+                <td>Étend le champ sur toute la largeur du conteneur</td>
               </tr>
               <tr>
                 <td><code>required</code></td>
                 <td><code>boolean</code></td>
                 <td><code>false</code></td>
-                <td>Marque le champ comme requis (<code>aria-required</code> + astérisque)</td>
+                <td>Marque le champ comme obligatoire (astérisque + <code>aria-required</code>)</td>
               </tr>
               <tr>
                 <td><code>showLabel</code></td>
                 <td><code>boolean</code></td>
                 <td><code>true</code></td>
-                <td>Affiche ou masque visuellement le label</td>
+                <td>Afficher ou masquer visuellement le label</td>
               </tr>
               <tr>
                 <td><code>ariaLabel</code></td>
@@ -251,7 +492,7 @@
 
         <div class="api-table-wrapper">
           <h4>Intégration Forms</h4>
-          <p class="api-table-description">Le composant détecte automatiquement les deux API de formulaires Angular.</p>
+          <p class="api-table-description">Le composant détecte automatiquement les trois modes de liaison.</p>
           <table class="api-table">
             <thead>
               <tr>
@@ -265,54 +506,39 @@
               <tr>
                 <td>Reactive Forms</td>
                 <td><code>ControlValueAccessor</code></td>
-                <td><code>[formControl]</code>, <code>[formControlName]</code>, <code>[(ngModel)]</code></td>
-                <td>Via <code>NgControl</code> injecté : <code>invalid &amp;&amp; (touched || dirty)</code></td>
+                <td><code>[formControl]</code>, <code>[(ngModel)]</code></td>
+                <td><code>NgControl.invalid &amp;&amp; (touched || dirty)</code></td>
               </tr>
               <tr>
-                <td>Signal Forms (Angular 21+)</td>
+                <td>Signal Forms (21+)</td>
                 <td><code>FormValueControl&lt;string&gt;</code></td>
                 <td><code>[field]="form.xxx"</code></td>
                 <td>Propagée par la directive <code>FormField</code></td>
               </tr>
               <tr>
-                <td>Signal two-way (Angular 20)</td>
+                <td>Signal two-way</td>
                 <td><code>model&lt;string&gt;</code></td>
                 <td><code>[(value)]="mySignal"</code></td>
-                <td>Via l'input <code>error</code> ou dépassement de <code>maxLength</code></td>
+                <td>Input <code>error</code> ou dépassement de <code>maxLength</code></td>
               </tr>
             </tbody>
           </table>
         </div>
-      </div>
-    </section>
 
-    <section class="demo-block">
-      <h3 class="section-title">États</h3>
-      <div class="states-grid">
-        <psh-textarea
-          label="Désactivé"
-          placeholder="Indisponible"
-          [disabled]="true"
-          [(value)]="feedbackValue"
-        />
-        <psh-textarea
-          label="Lecture seule"
-          [readonly]="true"
-          [(value)]="bioValue"
-        />
-        <psh-textarea
-          label="Erreur"
-          placeholder="Champ invalide"
-          error="Ce champ est obligatoire."
-          [(value)]="feedbackValue"
-        />
-        <psh-textarea
-          label="Variante filled"
-          variant="filled"
-          placeholder="Style rempli"
-          helperText="Arrière-plan coloré pour formulaires denses."
-          [(value)]="feedbackValue"
-        />
+        <div class="api-best-practices">
+          <h4>Bonnes Pratiques d'Accessibilité</h4>
+          <ul class="best-practices-list">
+            <li><strong>Label obligatoire</strong> : <code>label</code> est déclaré via <code>input.required()</code> pour forcer une description explicite à chaque usage</li>
+            <li><strong>Messages d'erreur</strong> : Le conteneur d'erreur utilise <code>role="alert"</code> pour annoncer immédiatement les échecs de validation</li>
+            <li><strong>Attributs ARIA</strong> : <code>aria-invalid</code>, <code>aria-required</code> et <code>aria-describedby</code> sont gérés automatiquement (helper, compteur, erreur)</li>
+            <li><strong>Compteur live</strong> : Le compteur de caractères utilise <code>aria-live="polite"</code> pour être annoncé sans interrompre l'utilisateur</li>
+            <li><strong>Focus visible</strong> : Anneau de focus conforme WCAG 2.1 AA (contraste minimum 3:1)</li>
+            <li><strong>Support clavier</strong> : Navigation native via <code>Tab</code>, <code>Shift+Tab</code>, et édition standard</li>
+            <li><strong>Label cliquable</strong> : Cliquer sur le label donne le focus au champ (association <code>for</code> / <code>id</code>)</li>
+            <li><strong>Placeholder non substitutif</strong> : Le placeholder complète le label mais ne le remplace jamais</li>
+            <li><strong>Redimensionnement</strong> : L'utilisateur conserve la possibilité de redimensionner manuellement sauf si <code>autoSize</code> est activé</li>
+          </ul>
+        </div>
       </div>
     </section>
   </div>

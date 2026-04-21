@@ -17,16 +17,65 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TextareaDemoComponent {
-  // Reactive Forms binding
   commentControl = new FormControl('', {
     nonNullable: true,
     validators: [Validators.required, Validators.maxLength(200)]
   });
 
-  // Signal-based two-way binding (Signal Forms compatible pattern)
   bioValue = signal('Je suis passionné par le design système.');
   feedbackValue = signal('');
-  autoSizeValue = signal('Écris plusieurs lignes pour voir la hauteur s\'adapter automatiquement...');
+  autoSizeValue = signal('Écrivez plusieurs lignes pour voir la hauteur s\'adapter automatiquement...');
+  fullWidthValue = signal('');
+  readonlyValue = signal('Contenu affiché en lecture seule, sélectionnable mais non modifiable.');
+
+  outlinedVariantCode = `<psh-textarea
+  variant="outlined"
+  label="Commentaire"
+  placeholder="Partagez votre avis..."
+  [(value)]="commentValue"
+/>`;
+
+  filledVariantCode = `<psh-textarea
+  variant="filled"
+  label="Commentaire"
+  placeholder="Partagez votre avis..."
+  [(value)]="commentValue"
+/>`;
+
+  sizesCode = `<psh-textarea size="small" label="Compact" />
+<psh-textarea size="medium" label="Standard" />
+<psh-textarea size="large" label="Confortable" />`;
+
+  statesCode = `<psh-textarea
+  [disabled]="isSubmitting"
+  [readonly]="isReadonly"
+  [error]="errorMessage"
+  [required]="true"
+  label="Description"
+/>`;
+
+  fullWidthCode = `<psh-textarea
+  [fullWidth]="true"
+  label="Description complète"
+  placeholder="Occupe toute la largeur du conteneur..."
+  [rows]="5"
+  [(value)]="descriptionValue"
+/>`;
+
+  counterCode = `<psh-textarea
+  label="Commentaire"
+  [maxLength]="200"
+  [showCharacterCount]="true"
+  helperText="200 caractères maximum"
+  [(value)]="commentValue"
+/>`;
+
+  autoSizeCode = `<psh-textarea
+  label="Message"
+  [autoSize]="true"
+  resize="none"
+  [(value)]="messageValue"
+/>`;
 
   reactiveCode = `// Component
 commentControl = new FormControl('', {
@@ -37,18 +86,15 @@ commentControl = new FormControl('', {
 // Template
 <psh-textarea
   label="Votre commentaire"
-  placeholder="Écrivez ici..."
-  helperText="200 caractères maximum"
   [maxLength]="200"
   [showCharacterCount]="true"
+  [required]="true"
   [formControl]="commentControl"
 />`;
 
-  signalCode = `// Component - compatible Signal Forms (Angular 21+)
-// ou binding signal via two-way [(value)]
+  signalCode = `// Signal two-way (Angular 20+)
 bioValue = signal('');
 
-// Template
 <psh-textarea
   label="Biographie"
   [(value)]="bioValue"
@@ -59,10 +105,4 @@ bioValue = signal('');
 
 // Signal Forms (Angular 21+)
 // <psh-textarea [field]="myForm.bio" label="Biographie" />`;
-
-  autoSizeCode = `<psh-textarea
-  label="Message"
-  [autoSize]="true"
-  [(value)]="messageValue"
-/>`;
 }
