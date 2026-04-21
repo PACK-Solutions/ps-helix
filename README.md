@@ -85,7 +85,7 @@ L'application de démonstration présente tous les composants avec :
 - Support multilingue (EN/FR/ES/DE)
 - Toggle thème clair/sombre
 
-## Fonctionnalités principales
+## Fonctionnalités principales 👍🏻👍🏻
 
 ### Composants (28)
 - **Formulaires** : Button, Input, Checkbox, Radio, Select, Switch
