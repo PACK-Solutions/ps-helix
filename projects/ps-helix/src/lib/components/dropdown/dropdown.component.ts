@@ -54,7 +54,6 @@ export class PshDropdownComponent<T = string> implements OnDestroy {
   selectedItem = computed(() => this.selectedItemSignal());
 
   hasLeftIcon = computed(() => !!this.icon() && this.iconPosition() === 'left');
-  hasRightIcon = computed(() => !!this.icon() && this.iconPosition() === 'right');
   isIconOnly = computed(() => !!this.icon() && this.iconPosition() === 'only');
 
   computedAriaLabel = computed(() => {

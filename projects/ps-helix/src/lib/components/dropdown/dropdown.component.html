@@ -10,7 +10,6 @@
     [class]="variant()"
     [class.icon-only]="isIconOnly()"
     [class.has-icon-left]="hasLeftIcon()"
-    [class.has-icon-right]="hasRightIcon()"
     (click)="toggleDropdown()"
     (keydown)="handleTriggerKeyDown($event)"
     [attr.aria-expanded]="isOpen()"
@@ -32,9 +31,6 @@
             {{ label() }}
           }
         </ng-content>
-        @if (hasRightIcon()) {
-          <i class="ph ph-{{ icon() }}" aria-hidden="true"></i>
-        }
         <i
           class="ph ph-caret-down trigger-arrow"
           [class.open]="isOpen()"

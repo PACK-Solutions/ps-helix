@@ -26,10 +26,11 @@ export type DropdownPlacement = 'bottom-start' | 'bottom-end' | 'top-start' | 't
 
 /**
  * Placement de l'icône dans le trigger du dropdown.
- * `'only'` rend un bouton carré sans label ni flèche : `icon` est requis et
- * `ariaLabel` (ou `label`) est obligatoire pour respecter WCAG 4.1.2.
+ * - `'left'` (défaut) : icône avant le label, suivie de la flèche caret.
+ * - `'only'` : rend un bouton carré sans label ni caret. `icon` est requis
+ *   et `ariaLabel` est obligatoire pour respecter WCAG 4.1.2.
  */
-export type DropdownIconPosition = 'left' | 'right' | 'only';
+export type DropdownIconPosition = 'left' | 'only';
 
 /**
  * Configuration complète du dropdown

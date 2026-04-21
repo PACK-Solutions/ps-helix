@@ -119,11 +119,6 @@
   padding: 0;
 }
 
-/* Right icon: keep the caret tight against the icon */
-.dropdown-trigger.has-icon-right .trigger-arrow {
-  margin-left: 0;
-}
-
 /* Menu */
 .dropdown-menu {
   position: absolute;
