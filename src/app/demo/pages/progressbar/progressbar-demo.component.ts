@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { PshProgressbarComponent } from '@lib/components/progressbar/progressbar.component';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
@@ -8,8 +8,7 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
   selector: 'ds-progressbar-demo',
   imports: [TranslateModule, PshProgressbarComponent, DemoPageLayoutComponent, CodeSnippetComponent],
   templateUrl: './progressbar-demo.component.html',
-  styleUrls: ['./progressbar-demo.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./progressbar-demo.component.css']
 })
 export class ProgressbarDemoComponent {
   uploadProgress = 35;

@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { PshButtonComponent } from '@lib/components';
-import { PshToastService } from '@lib/components/toast/toast.service';
+import { ToastService } from '@lib/components/toast/toast.service';
 import type { ToastPosition, ToastType } from '@lib/components/toast/toast.types';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
 import { CodeSnippetComponent } from '../../shared/code-snippet.component';
@@ -11,10 +11,9 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
   imports: [TranslateModule, PshButtonComponent, DemoPageLayoutComponent, CodeSnippetComponent],
   templateUrl: './toasts-demo.component.html',
   styleUrls: ['./toasts-demo.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ToastsDemoComponent {
-  private toastService = inject(PshToastService);
+  private toastService = inject(ToastService);
 
   infoToastCode = `this.toastService.show({
   message: 'Nouvelle information',

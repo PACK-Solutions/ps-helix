@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { PshTagComponent } from '@lib/components/tag/tag.component';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
@@ -17,8 +17,7 @@ interface ClosableTag {
   selector: 'ds-tags-demo',
   imports: [TranslateModule, PshTagComponent, DemoPageLayoutComponent, PshButtonComponent, CodeSnippetComponent],
   templateUrl: './tags-demo.component.html',
-  styleUrls: ['./tags-demo.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./tags-demo.component.css']
 })
 export class TagsDemoComponent {
   readonly initialClosableTags: ClosableTag[] = [

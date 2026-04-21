@@ -29,22 +29,18 @@
   </div>
 
   <div class="tabs-content">
-    @if (hasContentProjection()) {
-      <ng-content />
-    } @else {
-      @for (tab of tabsToDisplay(); track $index; let i = $index) {
-        <div
-          class="tab-panel"
-          role="tabpanel"
-          [class.active]="i === activeIndex()"
-          [attr.aria-labelledby]="'tab-' + i"
-          [attr.id]="'panel-' + i"
-          [attr.tabindex]="i === activeIndex() ? 0 : -1"
-          [attr.hidden]="i !== activeIndex() || null"
-        >
-          {{ tab.content }}
-        </div>
-      }
+    @for (tab of tabsToDisplay(); track $index; let i = $index) {
+      <div
+        class="tab-panel"
+        role="tabpanel"
+        [class.active]="i === activeIndex()"
+        [attr.aria-labelledby]="'tab-' + i"
+        [attr.id]="'panel-' + i"
+        [attr.tabindex]="i === activeIndex() ? 0 : -1"
+        [attr.hidden]="i !== activeIndex() || null"
+      >
+        <div [innerHTML]="tab.content"></div>
+      </div>
     }
   </div>
 </div>

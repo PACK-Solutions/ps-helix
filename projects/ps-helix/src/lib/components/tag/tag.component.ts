@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, output, InjectionToken, ElementRef, AfterContentChecked, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output, InjectionToken } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { TagVariant, TagSize, TagConfig } from './tag.types';
 
 export const TAG_CONFIG = new InjectionToken<Partial<TagConfig>>('TAG_CONFIG', {
@@ -8,20 +9,29 @@ export const TAG_CONFIG = new InjectionToken<Partial<TagConfig>>('TAG_CONFIG', {
     closable: false,
     disabled: false,
     interactive: false,
-    closeLabel: 'Supprimer le tag'
+    closeLabel: 'Supprimer le tag',
+    ariaLabels: {
+      close: 'Supprimer le tag',
+      disabled: 'Tag désactivé',
+      status: 'État'
+    }
   })
+});
+
+export const TAG_STYLES = new InjectionToken<Record<string, string>[]>('TAG_STYLES', {
+  factory: () => []
 });
 
 @Component({
   selector: 'psh-tag',
+  imports: [CommonModule],
   templateUrl: './tag.component.html',
   styleUrls: ['./tag.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PshTagComponent implements AfterContentChecked {
+export class PshTagComponent {
   private readonly config = inject(TAG_CONFIG);
-  private readonly elementRef = inject(ElementRef);
-  private readonly projectedText = signal('');
+  private readonly styles = inject(TAG_STYLES, { optional: true }) ?? [];
 
   readonly variant = input<TagVariant>(this.config.variant ?? 'primary');
   readonly size = input<TagSize>(this.config.size ?? 'medium');
@@ -41,23 +51,10 @@ export class PshTagComponent implements AfterContentChecked {
     if (customLabel) return customLabel;
 
     const contentText = this.content();
-    if (contentText && contentText !== 'Tag') return contentText;
-
-    const projected = this.projectedText();
-    if (projected) return projected;
+    if (contentText) return contentText;
 
     return 'Tag';
   });
-
-  ngAfterContentChecked(): void {
-    const contentElement = this.elementRef.nativeElement.querySelector('.tag-content');
-    if (contentElement) {
-      const text = (contentElement.textContent || '').trim();
-      if (text !== this.projectedText()) {
-        this.projectedText.set(text);
-      }
-    }
-  }
 
   readonly computedRole = computed(() =>
     this.interactive() ? 'button' : 'status'
@@ -67,20 +64,13 @@ export class PshTagComponent implements AfterContentChecked {
     this.interactive() && !this.disabled() ? 0 : -1
   );
 
+  readonly customStyles = computed(() => Object.assign({}, ...this.styles));
+
   readonly state = computed(() => this.disabled() ? 'disabled' : 'default');
 
   handleClick(event: MouseEvent): void {
-    if (!this.disabled() && this.interactive()) {
+    if (!this.disabled()) {
       this.clicked.emit(event);
-    }
-  }
-
-  handleKeydown(event: KeyboardEvent): void {
-    if (this.disabled() || !this.interactive()) return;
-
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      this.clicked.emit(event as unknown as MouseEvent);
     }
   }
 

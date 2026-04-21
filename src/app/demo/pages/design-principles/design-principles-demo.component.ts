@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
 
@@ -6,8 +6,7 @@ import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component
   selector: 'ds-design-principles-demo',
   imports: [TranslateModule, DemoPageLayoutComponent],
   templateUrl: './design-principles-demo.component.html',
-  styleUrls: ['./design-principles-demo.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./design-principles-demo.component.css']
 })
 export class DesignPrinciplesDemoComponent {
   principles = [

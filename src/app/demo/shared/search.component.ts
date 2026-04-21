@@ -1,4 +1,5 @@
-import { Component, signal, computed, output, effect, ChangeDetectionStrategy } from '@angular/core';
+import { Component, signal, computed, output, effect } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NavigationItem, NavigationSection } from '../types';
@@ -11,10 +12,9 @@ interface SearchResult {
 
 @Component({
   selector: 'ds-search',
-  imports: [FormsModule, TranslateModule],
+  imports: [CommonModule, FormsModule, TranslateModule],
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./search.component.css']
 })
 export class SearchComponent {
   searchQuery = signal<string>('');

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { PshMenuComponent } from '@lib/components/menu/menu.component';
 import { PshButtonComponent } from '@lib/components/button/button.component';
@@ -17,11 +17,9 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
   ],
   templateUrl: './menu-demo.component.html',
   styleUrls: ['./menu-demo.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuDemoComponent {
   controlledCollapsed = signal(false);
-  controlledExpandedIds = signal<string[]>([]);
 
   navigationItems: MenuItem[] = [
     {
@@ -277,70 +275,4 @@ export class MenuDemoComponent {
   toggleControlled(): void {
     this.controlledCollapsed.update(v => !v);
   }
-
-  expansionControlMenu = viewChild<PshMenuComponent>('expansionControlMenu');
-
-  expansionControlItems: MenuItem[] = [
-    { id: 'home', content: 'Accueil', icon: 'house' },
-    {
-      id: 'users',
-      content: 'Utilisateurs',
-      icon: 'users',
-      children: [
-        { id: 'all-users', content: 'Tous les utilisateurs' },
-        { id: 'add-user', content: 'Ajouter un utilisateur' }
-      ]
-    },
-    {
-      id: 'settings',
-      content: 'Parametres',
-      icon: 'gear',
-      children: [
-        { id: 'general', content: 'General' },
-        { id: 'security', content: 'Securite' }
-      ]
-    }
-  ];
-
-  expandAllItems(): void {
-    this.expansionControlMenu()?.expandAll();
-  }
-
-  collapseAllItems(): void {
-    this.expansionControlMenu()?.collapseAll();
-  }
-
-  expandUsers(): void {
-    this.expansionControlMenu()?.expandItem('users');
-  }
-
-  collapseUsers(): void {
-    this.expansionControlMenu()?.collapseItem('users');
-  }
-
-  expansionControlCode = `<psh-menu
-  [items]="menuItems"
-  [(expandedItemIds)]="expandedIds"
-  (itemClick)="handleClick($event)"
-></psh-menu>
-
-<psh-button (clicked)="menu.expandAll()">Tout ouvrir</psh-button>
-<psh-button (clicked)="menu.collapseAll()">Tout fermer</psh-button>`;
-
-  programmaticControlCode = `@ViewChild('menu') menu!: PshMenuComponent;
-
-// Ouvrir un item specifique
-menu.expandItem('users');
-
-// Fermer un item specifique
-menu.collapseItem('users');
-
-// Basculer l'etat d'un item
-menu.toggleItemExpansion('users');
-
-// Ouvrir tous les sous-menus
-menu.expandAll();
-
-// Fermer tous les sous-menus
-menu.collapseAll();`;
 }

@@ -1,4 +1,5 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   PshCardComponent,
@@ -11,6 +12,7 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
 @Component({
   selector: 'ds-cards-demo',
   imports: [
+    CommonModule,
     TranslateModule,
     PshCardComponent,
     PshButtonComponent,
@@ -19,8 +21,7 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
     CodeSnippetComponent,
   ],
   templateUrl: './cards-demo.component.html',
-  styleUrls: ['./cards-demo.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./cards-demo.component.css']
 })
 export class CardsDemoComponent {
   title = 'Cartes';

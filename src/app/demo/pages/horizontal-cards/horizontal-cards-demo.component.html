@@ -53,7 +53,7 @@
               (clicked)="handleCardClick($event, 'Product ' + product.id)"
             >
               <div horizontal-side>
-                <img [ngSrc]="product.image" [alt]="product.imageAlt" class="product-image" fill loading="lazy">
+                <img [src]="product.image" [alt]="product.imageAlt" class="product-image">
               </div>
               <div horizontal-header>
                 <div class="product-header">
@@ -160,7 +160,7 @@
               (clicked)="handleCardClick($event, 'Article ' + article.id)"
             >
               <div horizontal-side>
-                <img [ngSrc]="article.image" [alt]="article.imageAlt" class="article-image" fill loading="lazy">
+                <img [src]="article.image" [alt]="article.imageAlt" class="article-image">
               </div>
               <div horizontal-header>
                 <div class="article-header">

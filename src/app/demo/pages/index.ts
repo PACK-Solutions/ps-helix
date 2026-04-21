@@ -24,4 +24,3 @@ export * from './i18n/i18n-demo.component';
 export * from './terminology/terminology-demo.component';
 export * from './sidebar/sidebar-demo.component';
 export * from './stat-cards/stat-cards-demo.component';
-export * from './state-flow-indicator/state-flow-indicator-demo.component';

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, viewChild, effect, AfterViewInit } from '@angular/core';
+import { Component, viewChild, effect, AfterViewInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { output, computed } from '@angular/core';
@@ -10,8 +10,7 @@ import { SearchComponent } from '../../shared';
   selector: 'ds-demo-navigation',
   imports: [RouterModule, TranslateModule, SearchComponent],
   templateUrl: './demo-navigation.component.html',
-  styleUrls: ['./demo-navigation.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./demo-navigation.component.css']
 })
 export class DemoNavigationComponent implements AfterViewInit {
   navigationSections = this.navigationService.getSections();

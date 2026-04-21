@@ -1,7 +1,5 @@
 # Radio Component Documentation
 
-> **Note** : Le composant Radio n'implémente ni Signal Forms (`FormCheckboxControl`/`FormValueControl`) ni `ControlValueAccessor`. Il utilise uniquement le property binding (`[checked]`, `(valueChange)`).
-
 ## Utilisation
 
 1. Importer le composant dans votre module ou composant standalone :
@@ -61,20 +59,20 @@ export class ExampleComponent {
 
 ### API
 
-#### Inputs bidirectionnels (avec `[()]`)
+#### Model Inputs (@model)
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
 | checked | boolean | false | État coché |
 | disabled | boolean | false | État désactivé |
+| required | boolean | false | État requis |
 
-#### Regular Inputs
+#### Regular Inputs (@input)
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
-| required | boolean | false | État requis |
 | label | string | '' | Label du radio |
 | error | string | '' | Message d'erreur |
 | success | string | '' | Message de succès |
-| name | string | '' | Nom du groupe (OBLIGATOIRE pour le groupement) |
+| name | string | '' | Nom du groupe |
 | value | any | undefined | Valeur associée |
 | ariaLabel | string \| undefined | undefined | Label ARIA personnalisé |
 | size | RadioSize | 'medium' | Taille du radio |
@@ -83,9 +81,8 @@ export class ExampleComponent {
 #### Outputs
 | Nom | Type | Description |
 |-----|------|-------------|
-| checkedChange | EventEmitter\<boolean\> | Émis lors du changement d'état coché par l'utilisateur |
-| disabledChange | EventEmitter\<boolean\> | Émis lors du changement d'état désactivé par l'utilisateur |
 | valueChange | output\<any\> | Émis lors de la sélection |
+| checkedChange | output\<boolean\> | Émis lors du changement d'état coché |
 
 ### Configuration Globale
 

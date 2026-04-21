@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { PshCollapseComponent } from '@lib/components/collapse/collapse.component';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
@@ -9,7 +9,6 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
   imports: [TranslateModule, PshCollapseComponent, DemoPageLayoutComponent, CodeSnippetComponent],
   templateUrl: './collapse-demo.component.html',
   styleUrls: ['./collapse-demo.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CollapseDemoComponent {
   title = 'Sections Pliables';

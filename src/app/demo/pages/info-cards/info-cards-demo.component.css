@@ -1,5 +1,4 @@
 .info-card-variants-section,
-.info-card-header-actions-section,
 .info-card-usage-section,
 .info-card-states-section,
 .info-card-customization-section,
@@ -18,7 +17,6 @@
 }
 
 .variants-intro,
-.header-actions-intro,
 .usage-intro,
 .states-intro,
 .customization-intro,
@@ -31,7 +29,6 @@
 }
 
 .variants-grid,
-.header-actions-grid,
 .usage-grid,
 .customization-grid {
   display: grid;
@@ -40,19 +37,11 @@
 }
 
 .variant-card,
-.header-actions-card,
 .usage-card,
 .customization-card {
   display: flex;
   flex-direction: column;
   gap: var(--size-4);
-}
-
-.header-actions-description {
-  font-size: var(--font-size-sm);
-  color: var(--text-color-secondary);
-  line-height: var(--line-height-normal);
-  margin-bottom: var(--size-2);
 }
 
 .variant-preview {
@@ -315,7 +304,6 @@
   }
 
   .variants-grid,
-  .header-actions-grid,
   .usage-grid,
   .customization-grid {
     grid-template-columns: 1fr;
@@ -330,7 +318,6 @@
   }
 
   .variants-intro,
-  .header-actions-intro,
   .usage-intro,
   .states-intro,
   .customization-intro,
@@ -374,7 +361,6 @@
 
 @media (max-width: 480px) {
   .info-card-variants-section,
-  .info-card-header-actions-section,
   .info-card-usage-section,
   .info-card-states-section,
   .info-card-customization-section,

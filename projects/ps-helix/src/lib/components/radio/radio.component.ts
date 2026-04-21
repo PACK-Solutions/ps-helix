@@ -4,11 +4,9 @@ import {
   computed,
   contentChild,
   effect,
-  EventEmitter,
   inject,
-  Input,
   input,
-  Output,
+  model,
   output,
   signal
 } from '@angular/core';
@@ -54,16 +52,10 @@ export class PshRadioComponent {
   private styles = inject(RADIO_STYLES, { optional: true }) ?? [];
   private uniqueId = `radio-${++radioIdCounter}`;
 
-  // Plain signals + manual @Input/@Output to prevent auto-emission
-  // when parent sets [checked] or [disabled] via template binding.
-  // model() would auto-emit checkedChange/disabledChange on .set().
-  checked = signal(this.config.checked ?? false);
-  @Input('checked') set checkedInput(v: boolean) { this.checked.set(v); }
-
-  disabled = signal(this.config.disabled ?? false);
-  @Input('disabled') set disabledInput(v: boolean) { this.disabled.set(v); }
-
-  required = input(this.config.required ?? false);
+  // Model inputs with defaults from config
+  checked = model(this.config.checked ?? false);
+  disabled = model(this.config.disabled ?? false);
+  required = model(this.config.required ?? false);
 
   // Regular inputs
   label = input('');
@@ -79,10 +71,9 @@ export class PshRadioComponent {
   private radioText = contentChild<any>('.radio-text');
   protected hasProjectedContent = signal(false);
 
-  // Outputs — checkedChange/disabledChange use EventEmitter to decouple from signal writes.
-  @Output() checkedChange = new EventEmitter<boolean>();
-  @Output() disabledChange = new EventEmitter<boolean>();
+  // Outputs
   valueChange = output<any>();
+  checkedChange = output<boolean>();
 
   // Computed values
   customStyles = computed(() => Object.assign({}, ...this.styles));
