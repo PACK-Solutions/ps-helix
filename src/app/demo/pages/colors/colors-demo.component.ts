@@ -3,8 +3,10 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnDestroy,
+  inject,
   signal,
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
 import {
@@ -14,6 +16,7 @@ import {
   wcagLevel,
   type WcagLevel,
 } from '../../utils/contrast.util';
+import { ThemeService, type ContrastReport } from 'ps-helix';
 
 interface ContrastInfo {
   ratio: number;
@@ -29,16 +32,21 @@ type ContrastReference = 'surface' | 'text';
 
 @Component({
   selector: 'ds-colors-demo',
-  imports: [TranslateModule, DemoPageLayoutComponent],
+  imports: [TranslateModule, DemoPageLayoutComponent, FormsModule],
   templateUrl: './colors-demo.component.html',
   styleUrls: ['./colors-demo.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ColorsDemoComponent implements AfterViewInit, OnDestroy {
   private themeObserver?: MutationObserver;
+  private readonly themeService = inject(ThemeService);
 
   readonly contrastReference = signal<ContrastReference>('surface');
   readonly contrastInfos = signal<Record<string, ContrastInfo>>({});
+
+  readonly previewPrimary = signal<string>('#0B0191');
+  readonly previewSecondary = signal<string>('#5E5E5E');
+  readonly previewReport = signal<ContrastReport | null>(null);
 
   readonly levelToneLabels: Record<WcagLevel, string> = {
     AAA: 'AAA',
@@ -46,6 +54,14 @@ export class ColorsDemoComponent implements AfterViewInit, OnDestroy {
     'AA Large': 'AA Large',
     Fail: 'Échec',
   };
+
+  runPreview(): void {
+    const report = this.themeService.previewCustomerTheme(
+      this.previewPrimary(),
+      this.previewSecondary(),
+    );
+    this.previewReport.set(report);
+  }
 
   ngAfterViewInit(): void {
     this.computeContrasts();

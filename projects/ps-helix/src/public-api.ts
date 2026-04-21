@@ -58,8 +58,16 @@ export * from './lib/components/tooltip/tooltip.component';
 export * from './lib/components/tooltip/tooltip.types';
 
 export * from './lib/services/theme/theme.service';
-export { INSURER_CONTEXT_SERVICE, InsurerContextService } from './lib/services/theme/theme.service';
+export {
+  CUSTOMER_CONTEXT_SERVICE,
+  CustomerContextService,
+  INSURER_CONTEXT_SERVICE,
+  InsurerContextService,
+} from './lib/services/theme/theme.service';
 export * from './lib/services/theme/types/theme.types';
 export * from './lib/services/translation/translation.service';
 export * from './lib/services/translation/types/i18n.types';
 export * from './lib/services/scroll.service';
+
+export * from './lib/utils/contrast.util';
+export * from './lib/utils/color-math.util';

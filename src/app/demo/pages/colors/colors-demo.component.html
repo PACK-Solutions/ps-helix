@@ -25,6 +25,63 @@
       </div>
     </section>
 
+    <!-- Audit WCAG pour thème client -->
+    <section class="preview-section">
+      <h3 class="section-title">Prévisualisation thème client</h3>
+      <div class="preview-container">
+        <p class="preview-intro">
+          Saisissez les couleurs de marque de votre client. Le service de thème les ajuste
+          automatiquement pour garantir un contraste WCAG AA sur le thème courant et affiche
+          le rapport détaillé.
+        </p>
+        <div class="preview-form" role="group" aria-label="Test d'une couleur de marque">
+          <label class="preview-field">
+            <span>Couleur primaire</span>
+            <input type="color" [ngModel]="previewPrimary()" (ngModelChange)="previewPrimary.set($event)" />
+            <code>{{ previewPrimary() }}</code>
+          </label>
+          <label class="preview-field">
+            <span>Couleur secondaire</span>
+            <input type="color" [ngModel]="previewSecondary()" (ngModelChange)="previewSecondary.set($event)" />
+            <code>{{ previewSecondary() }}</code>
+          </label>
+          <button type="button" class="preview-submit" (click)="runPreview()">
+            Appliquer et auditer
+          </button>
+        </div>
+
+        @if (previewReport(); as report) {
+          <div class="preview-report" [attr.data-pass]="report.allPassAA">
+            <div class="preview-report-head">
+              <span class="preview-report-badge">
+                {{ report.allPassAA ? 'Conforme WCAG AA' : 'Non conforme' }}
+              </span>
+              <span class="preview-report-theme">Thème : {{ report.theme }}</span>
+            </div>
+            <div class="preview-palettes">
+              @for (palette of [report.primary, report.secondary]; track $index) {
+                @if (palette) {
+                  <div class="preview-palette">
+                    <h4>{{ palette.base.name }}</h4>
+                    <ul>
+                      @for (token of [palette.base, palette.text].concat(palette.variants); track token.name) {
+                        <li [attr.data-pass]="token.passes">
+                          <code>{{ token.name }}</code>
+                          <span class="preview-token-value" [style.background]="token.value"></span>
+                          <span class="preview-token-ratio">{{ token.ratio.toFixed(2) }} : 1</span>
+                          <span class="preview-token-level">{{ levelToneLabels[token.level] }}</span>
+                        </li>
+                      }
+                    </ul>
+                  </div>
+                }
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+
     <!-- Palettes de Couleurs - Section Pleine Largeur -->
     <section class="palettes-section">
       <h3 class="section-title">Palettes de Couleurs</h3>
