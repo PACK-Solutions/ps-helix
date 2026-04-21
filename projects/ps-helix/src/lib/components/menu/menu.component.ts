@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, effect, input, model, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, model, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuItem, MenuMode, MenuVariant } from './menu.types';
 import { PshTooltipComponent } from '../tooltip/tooltip.component';
@@ -25,24 +25,15 @@ export class PshMenuComponent<T = string> {
   items = input<MenuItem<T>[]>([]);
 
   collapsed = model(false);
-  expandedItemIds = model<string[]>([]);
 
   itemClick = output<MenuItem<T>>();
   submenuToggle = output<{ item: MenuItem<T>; expanded: boolean }>();
 
-  protected expandedItemsSet = computed(() => new Set(this.expandedItemIds()));
+  expandedItems = signal(new Set<string>());
 
   state = computed(() => this.getState());
 
   showTooltip = computed(() => this.collapsed() && this.mode() === 'vertical');
-
-  constructor() {
-    effect(() => {
-      if (this.collapsed()) {
-        this.expandedItemIds.set([]);
-      }
-    });
-  }
 
   private getState(): string {
     if (this.collapsed()) return 'collapsed';
@@ -55,9 +46,18 @@ export class PshMenuComponent<T = string> {
 
     if (item.children?.length) {
       event?.preventDefault();
-      this.toggleItemExpansion(item.id);
-      const expanded = this.expandedItemsSet().has(item.id);
-      this.submenuToggle.emit({ item, expanded });
+      const newExpanded = new Set(this.expandedItems());
+      const wasExpanded = newExpanded.has(item.id);
+
+      if (wasExpanded) {
+        newExpanded.delete(item.id);
+        this.expandedItems.set(newExpanded);
+        this.submenuToggle.emit({ item, expanded: false });
+      } else if (!this.collapsed()) {
+        newExpanded.add(item.id);
+        this.expandedItems.set(newExpanded);
+        this.submenuToggle.emit({ item, expanded: true });
+      }
     } else {
       this.itemClick.emit(item);
     }
@@ -65,58 +65,15 @@ export class PshMenuComponent<T = string> {
 
   toggleCollapse(): void {
     if (this.collapsible()) {
+      if (!this.collapsed()) {
+        this.expandedItems.set(new Set());
+      }
       this.collapsed.update((v) => !v);
     }
   }
 
   isExpanded(item: MenuItem<T>): boolean {
-    return !this.collapsed() && this.expandedItemsSet().has(item.id);
-  }
-
-  expandItem(itemId: string): void {
-    if (this.collapsed()) return;
-    const current = this.expandedItemIds();
-    if (!current.includes(itemId)) {
-      this.expandedItemIds.set([...current, itemId]);
-    }
-  }
-
-  collapseItem(itemId: string): void {
-    const current = this.expandedItemIds();
-    if (current.includes(itemId)) {
-      this.expandedItemIds.set(current.filter(id => id !== itemId));
-    }
-  }
-
-  toggleItemExpansion(itemId: string): void {
-    if (this.collapsed()) return;
-    const current = this.expandedItemIds();
-    if (current.includes(itemId)) {
-      this.expandedItemIds.set(current.filter(id => id !== itemId));
-    } else {
-      this.expandedItemIds.set([...current, itemId]);
-    }
-  }
-
-  expandAll(): void {
-    if (this.collapsed()) return;
-    const allIds = this.collectItemIdsWithChildren(this.items());
-    this.expandedItemIds.set(allIds);
-  }
-
-  collapseAll(): void {
-    this.expandedItemIds.set([]);
-  }
-
-  private collectItemIdsWithChildren(items: MenuItem<T>[]): string[] {
-    const ids: string[] = [];
-    for (const item of items) {
-      if (item.children?.length) {
-        ids.push(item.id);
-        ids.push(...this.collectItemIdsWithChildren(item.children));
-      }
-    }
-    return ids;
+    return !this.collapsed() && this.expandedItems().has(item.id);
   }
 
   getAriaLabel(item: MenuItem<T>): string {

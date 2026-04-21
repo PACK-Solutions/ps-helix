@@ -33,25 +33,7 @@
 @import '../projects/ps-helix/src/lib/styles/utilities/focus.utils.css';
 @import '../projects/ps-helix/src/lib/styles/utilities/responsive.utils.css';
 
-@font-face {
-  font-family: 'Phosphor';
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Phosphor-Bold';
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Phosphor-Fill';
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Phosphor-Light';
-  font-display: swap;
-}
+/* Demo application utility classes only - all component-specific styles moved to demo-page-layout.component.css */
 
 .inputs-column {
   flex-direction: column;

@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, input, ViewEncapsulation } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'ds-demo-page-layout',
-  imports: [TranslateModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './demo-page-layout.component.html',
   styleUrls: ['./demo-page-layout.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

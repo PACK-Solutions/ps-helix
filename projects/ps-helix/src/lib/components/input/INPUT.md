@@ -1,7 +1,5 @@
 # Input Component Documentation
 
-**Implements**: `FormValueControl<string>` (Signal Forms) + `ControlValueAccessor` (Reactive Forms)
-
 ## Utilisation
 
 1. Importer le composant dans votre module ou composant standalone :
@@ -13,36 +11,6 @@ import { PshInputComponent } from 'ps-helix';
   imports: [PshInputComponent],
   // ...
 })
-```
-
-### Utilisation avec Signal Forms (recommande)
-
-```typescript
-import { signal } from '@angular/core';
-import { form, FormField, required, email } from '@angular/forms/signals';
-
-model = signal({ email: '', password: '' });
-loginForm = form(this.model, (p) => {
-  required(p.email, { message: 'Email requis' });
-  email(p.email, { message: 'Format email invalide' });
-  required(p.password, { message: 'Mot de passe requis' });
-});
-```
-
-```html
-<psh-input [formField]="loginForm.email" type="email" iconStart="envelope">
-  <span input-label>Email</span>
-</psh-input>
-
-<psh-input [formField]="loginForm.password" type="password" iconStart="lock">
-  <span input-label>Mot de passe</span>
-</psh-input>
-```
-
-### Utilisation avec Reactive Forms (retrocompatible)
-
-```html
-<psh-input [formControl]="emailControl" type="email" label="Email" />
 ```
 
 ### Utilisation de Base
@@ -96,19 +64,18 @@ loginForm = form(this.model, (p) => {
 
 ## API
 
-### Inputs bidirectionnels (avec `[()]`)
+### Model Inputs (@model)
 
 Propriétés à liaison bidirectionnelle pour les états dynamiques.
 
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
-| value | string | '' | Valeur de l'input (model) |
-| disabled | boolean | false | État désactivé (model) |
-| readonly | boolean | false | État lecture seule (model) |
-| loading | boolean | false | État chargement (model) |
-| touched | boolean | false | État touché (model, positionné sur blur) |
+| value | string | '' | Valeur de l'input |
+| disabled | boolean | false | État désactivé |
+| readonly | boolean | false | État lecture seule |
+| loading | boolean | false | État chargement |
 
-### Regular Inputs
+### Regular Inputs (@input)
 
 Propriétés de configuration (unidirectionnelles).
 
@@ -134,12 +101,10 @@ Propriétés de configuration (unidirectionnelles).
 ### Outputs
 | Nom | Type | Description |
 |-----|------|-------------|
-| valueChange | string | Émis automatiquement par le model lors du changement de valeur |
-| disabledChange | boolean | Émis automatiquement par le model |
-| touchedChange | boolean | Émis automatiquement par le model |
-| inputFocus | void | Émis lors du focus |
-| inputBlur | void | Émis lors du blur |
-| suggestionSelect | string | Émis lors de la sélection d'une suggestion |
+| valueChange | EventEmitter<string> | Émis lors du changement |
+| inputFocus | EventEmitter<void> | Émis lors du focus |
+| inputBlur | EventEmitter<void> | Émis lors du blur |
+| suggestionSelect | EventEmitter<string> | Émis lors de la sélection |
 
 ### Types
 

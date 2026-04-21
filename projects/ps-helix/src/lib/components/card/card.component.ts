@@ -46,9 +46,6 @@ import { CardVariant, CardColorVariant, CardDensity, CardActionsAlignment } from
   styleUrls: ['./card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: {
-    style: 'display: block;',
-  },
 })
 export class PshCardComponent implements OnDestroy {
   private platformId = inject(PLATFORM_ID);
@@ -89,9 +86,6 @@ export class PshCardComponent implements OnDestroy {
 
   /** Alignement des actions dans la zone card-actions */
   actionsAlignment = input<CardActionsAlignment>('right');
-
-  /** Activer/désactiver le padding du body */
-  bodyPadding = input<boolean>(true);
 
   /** Classes CSS additionnelles */
   cssClass = input<string>('');

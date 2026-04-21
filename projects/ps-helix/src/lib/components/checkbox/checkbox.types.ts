@@ -1,25 +1,30 @@
 /**
- * Tailles disponibles pour la checkbox (mappées en rem dans le CSS)
+ * Tailles disponibles pour la checkbox
  */
 export type CheckboxSize = 'small' | 'medium' | 'large';
 
 /**
- * Positionnement du label par rapport au contrôle visuel
- */
-export type CheckboxLabelPosition = 'left' | 'right';
-
-/**
- * Configuration immuable pour l'injection via InjectionToken
+ * Configuration complète d'une checkbox
  */
 export interface CheckboxConfig {
-  readonly checked: boolean;
-  readonly disabled: boolean;
-  readonly required: boolean;
-  readonly indeterminate: boolean;
-  readonly label: string;
-  readonly size: CheckboxSize;
-  readonly labelPosition: CheckboxLabelPosition;
-  readonly ariaLabel?: string;
-  readonly error?: string | null;
-  readonly success?: string | null;
+  /** État coché */
+  checked: boolean;
+  /** État désactivé */
+  disabled: boolean;
+  /** État requis */
+  required: boolean;
+  /** État indéterminé */
+  indeterminate: boolean;
+  /** Label de la checkbox */
+  label: string;
+  /** Taille de la checkbox */
+  size: CheckboxSize;
+  /** Position du label */
+  labelPosition: 'left' | 'right';
+  /** Label ARIA pour l'accessibilité */
+  ariaLabel?: string;
+  /** Message d'erreur */
+  error?: string;
+  /** Message de succès */
+  success?: string;
 }

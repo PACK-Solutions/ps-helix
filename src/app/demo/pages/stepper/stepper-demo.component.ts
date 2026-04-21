@@ -23,27 +23,13 @@ export class StepperDemoComponent {
   basicStepperRef = viewChild<PshStepperComponent>('basicStepper');
   formStepperRef = viewChild<PshStepperComponent>('formStepper');
   progressStepperRef = viewChild<PshStepperComponent>('progressStepper');
-  progressBarStepperRef = viewChild<PshStepperComponent>('progressBarStepper');
-  errorStepperRef = viewChild<PshStepperComponent>('errorStepper');
 
   activeStep = signal(0);
   formActiveStep = signal(0);
   progressActiveStep = signal(0);
-  progressBarActiveStep = signal(0);
-  errorActiveStep = signal(0);
-
   isProgressLoading = signal(false);
   progressStep1Completed = signal(false);
   progressStep2Completed = signal(false);
-
-  progressBarStep1Completed = signal(false);
-  progressBarStep2Completed = signal(false);
-  progressBarStep3Completed = signal(false);
-
-  errorStepCompleted = signal(false);
-  errorStepTouched = signal(false);
-  navigationErrorMessage = signal('');
-
   step1Form: FormGroup;
   step2Form: FormGroup;
 
@@ -160,37 +146,6 @@ export class StepperDemoComponent {
   </psh-step>
 </psh-stepper>`;
 
-  progressBarCode = `<div class="progress-bar-container">
-  <div class="progress-stats">
-    <span>{{ stepper.progress() }}%</span>
-    <span>{{ stepper.completedSteps() }}/{{ stepper.steps().length }}</span>
-  </div>
-  <div class="progress-bar">
-    <div [style.width.%]="stepper.progress()"></div>
-  </div>
-</div>
-
-<psh-stepper #stepper [(activeStep)]="activeStep">
-  <psh-step title="Étape 1" [completed]="step1Done">
-    <!-- Contenu -->
-  </psh-step>
-</psh-stepper>`;
-
-  errorHandlingCode = `<psh-stepper
-  [linear]="true"
-  [beforeStepChange]="validate"
-  (navigationError)="handleError($event)"
->
-  <psh-step [completed]="isValid" [error]="errorMsg">
-    <!-- Contenu -->
-  </psh-step>
-</psh-stepper>
-
-handleError(error: string): void {
-  this.errorMessage.set(error);
-  setTimeout(() => this.errorMessage.set(''), 5000);
-}`;
-
   async simulateProgressLoading(): Promise<void> {
     if (this.isProgressLoading()) return;
 
@@ -213,111 +168,5 @@ handleError(error: string): void {
     }
 
     this.isProgressLoading.set(false);
-  }
-
-  resetBasicStepper(): void {
-    const stepper = this.basicStepperRef();
-    if (stepper) {
-      stepper.reset();
-    }
-  }
-
-  getProgressPercentage(): number {
-    const stepper = this.progressBarStepperRef();
-    return stepper ? Math.round(stepper.progress()) : 0;
-  }
-
-  getCompletedStepsCount(): number {
-    const stepper = this.progressBarStepperRef();
-    return stepper ? stepper.completedSteps() : 0;
-  }
-
-  getTotalStepsCount(): number {
-    const stepper = this.progressBarStepperRef();
-    return stepper ? stepper.steps().length : 3;
-  }
-
-  handleProgressBarStepChange(step: number): void {
-    console.log('Progress bar step changed to:', step);
-  }
-
-  progressBarNextStep(): void {
-    const stepper = this.progressBarStepperRef();
-    if (stepper) {
-      stepper.next();
-    }
-  }
-
-  progressBarPreviousStep(): void {
-    const stepper = this.progressBarStepperRef();
-    if (stepper) {
-      stepper.previous();
-    }
-  }
-
-  toggleProgressStep1(): void {
-    this.progressBarStep1Completed.update(v => !v);
-  }
-
-  toggleProgressStep2(): void {
-    this.progressBarStep2Completed.update(v => !v);
-  }
-
-  toggleProgressStep3(): void {
-    this.progressBarStep3Completed.update(v => !v);
-  }
-
-  resetProgressBar(): void {
-    const stepper = this.progressBarStepperRef();
-    if (stepper) {
-      stepper.reset();
-    }
-    this.progressBarStep1Completed.set(false);
-    this.progressBarStep2Completed.set(false);
-    this.progressBarStep3Completed.set(false);
-  }
-
-  async validateErrorStepChange(from: number, to: number): Promise<boolean> {
-    if (from === 0 && !this.errorStepCompleted()) {
-      return false;
-    }
-    return true;
-  }
-
-  handleNavigationError(error: string): void {
-    this.navigationErrorMessage.set(error);
-    setTimeout(() => this.navigationErrorMessage.set(''), 5000);
-  }
-
-  dismissError(): void {
-    this.navigationErrorMessage.set('');
-  }
-
-  toggleErrorStepValidation(): void {
-    this.errorStepCompleted.update(v => !v);
-  }
-
-  errorNextStep(): void {
-    const stepper = this.errorStepperRef();
-    if (stepper) {
-      stepper.next();
-    }
-  }
-
-  errorPreviousStep(): void {
-    const stepper = this.errorStepperRef();
-    if (stepper) {
-      stepper.previous();
-    }
-  }
-
-  resetErrorStepper(): void {
-    const stepper = this.errorStepperRef();
-    if (stepper) {
-      stepper.reset();
-    }
-    this.errorStepCompleted.set(false);
-    this.errorStepTouched.set(false);
-    this.navigationErrorMessage.set('');
   }
 }

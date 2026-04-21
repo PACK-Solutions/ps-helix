@@ -1,26 +1,48 @@
-import { ChangeDetectionStrategy, Component, effect, inject, OnDestroy } from '@angular/core';
-import { Toast, ToastType } from './toast.types';
-import { PshToastService } from './toast.service';
-import { TOAST_CONFIG } from './toast.tokens';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, InjectionToken, OnDestroy, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Toast, ToastType, ToastConfig } from './toast.types';
+import { ToastService } from './toast.service';
+
+/**
+ * Token d'injection pour la configuration globale des toasts
+ */
+export const TOAST_CONFIG = new InjectionToken<Partial<ToastConfig>>('TOAST_CONFIG', {
+  factory: () => ({
+    position: 'top-right',
+    duration: 5000,
+    maxToasts: 5,
+    pauseOnHover: true,
+    showIcon: true,
+    showCloseButton: true
+  })
+});
+
+/**
+ * Token d'injection pour les styles personnalisés
+ */
+export const TOAST_STYLES = new InjectionToken<Record<string, string>[]>('TOAST_STYLES', {
+  factory: () => []
+});
 
 @Component({
   selector: 'psh-toast',
+  imports: [CommonModule],
   templateUrl: './toast.component.html',
   styleUrls: ['./toast.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {
-    '(document:keydown.escape)': 'handleEscapeKey()'
-  }
 })
-export class PshToastComponent implements OnDestroy {
-  private toastService = inject(PshToastService);
+export class ToastComponent implements OnDestroy {
+  private toastService = inject(ToastService);
   public config = inject(TOAST_CONFIG);
+  private styles = inject(TOAST_STYLES, { optional: true }) ?? [];
 
+  private pausedToastIds = signal<Set<string>>(new Set());
   private timeoutMap = new Map<string, number>();
   private scheduledToastIds = new Set<string>();
 
   readonly toasts = this.toastService.toasts;
   readonly position = this.toastService.position;
+  readonly customStyles = computed(() => Object.assign({}, ...this.styles));
 
   constructor() {
     effect(() => {
@@ -45,14 +67,6 @@ export class PshToastComponent implements OnDestroy {
     });
   }
 
-  handleEscapeKey(): void {
-    const toasts = this.toasts();
-    const lastToast = toasts[toasts.length - 1];
-    if (lastToast?.id) {
-      this.handleDismiss(lastToast.id);
-    }
-  }
-
   handleDismiss(id: string | undefined): void {
     if (id) {
       this.clearTimeout(id);
@@ -62,12 +76,22 @@ export class PshToastComponent implements OnDestroy {
 
   handleMouseEnter(id: string): void {
     if (this.config.pauseOnHover) {
+      this.pausedToastIds.update(set => {
+        const newSet = new Set(set);
+        newSet.add(id);
+        return newSet;
+      });
       this.clearTimeout(id);
     }
   }
 
   handleMouseLeave(id: string): void {
     if (this.config.pauseOnHover) {
+      this.pausedToastIds.update(set => {
+        const newSet = new Set(set);
+        newSet.delete(id);
+        return newSet;
+      });
       const toast = this.toasts().find(t => t.id === id);
       if (toast?.duration && toast.duration > 0) {
         this.scheduleRemoval(id, toast.duration);
@@ -90,10 +114,6 @@ export class PshToastComponent implements OnDestroy {
       return toast.showCloseButton;
     }
     return this.config.showCloseButton !== false;
-  }
-
-  getCloseButtonAriaLabel(toast: Toast): string {
-    return toast.closeButtonAriaLabel ?? this.config.closeButtonAriaLabel ?? 'Close notification';
   }
 
   private scheduleRemoval(id: string, duration: number): void {
@@ -121,5 +141,3 @@ export class PshToastComponent implements OnDestroy {
     this.scheduledToastIds.clear();
   }
 }
-
-export { ToastComponent } from './toast.compat';

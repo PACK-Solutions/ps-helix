@@ -36,20 +36,8 @@ export interface TableColumn {
 export interface TableRow {
   /** Identifiant unique */
   id: string | number;
-  /** Lignes enfants (un seul niveau) */
-  children?: TableRow[];
   /** Données de la ligne */
   [key: string]: any;
-}
-
-export interface TableRowExpandEvent {
-  id: string | number;
-  row: TableRow;
-  expanded: boolean;
-}
-
-export interface TableExpandedRowContext {
-  $implicit: TableRow;
 }
 
 /**
@@ -90,20 +78,8 @@ export interface TableConfig {
   loading: boolean;
   /** Message quand vide */
   emptyMessage: string;
-  /** Message quand recherche sans resultat */
-  noResultsMessage: string;
   /** Recherche globale */
   globalSearch: boolean;
   /** Placeholder de recherche */
   globalSearchPlaceholder: string;
-  /** Table layout (auto or fixed for percentage widths) */
-  tableLayout: 'auto' | 'fixed';
-  /** Truncate text with ellipsis */
-  truncateText: boolean;
-  /** Full width mode */
-  fullWidth: boolean;
-  /** Lignes extensibles */
-  expandable: boolean;
-  /** Mode accordéon (une seule ligne ouverte à la fois) */
-  singleExpand: boolean;
 }

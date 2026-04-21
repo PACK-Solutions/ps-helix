@@ -1,12 +1,10 @@
-import { Component, signal, inject, ChangeDetectionStrategy } from '@angular/core';
-import { NgOptimizedImage } from '@angular/common';
+import { Component, signal, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'ds-home',
-  imports: [NgOptimizedImage],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
   animations: [

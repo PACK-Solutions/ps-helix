@@ -1,10 +1,11 @@
 {
   "name": "Ps-helix-design-system",
   "private": true,
-  "version": "4.1.1",
+  "version": "2.0.8",
   "description": "Helix Design System",
   "author": "Fabrice PEREZ",
   "license": "MIT",
+  "packageManager": "pnpm@10.27.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/PACK-Solutions/ps-helix"
@@ -13,42 +14,50 @@
     "access": "restricted"
   },
   "scripts": {
-    "start": "ng serve --configuration development",
-    "build": "rm -rf dist && ng build",
-    "start": "ng serve --configuration development --no-hmr",
-    "dev": "npm run start",
+    "build": "ng build && cp -r dist/browser/* dist/",
+    "dev": "ng serve --configuration development --no-hmr",
     "build:lib": "ng build ps-helix",
-    "publish:lib": "npm publish ./dist/ps-helix --access public",
+    "publish:lib": "cd dist/ps-helix && pnpm publish",
     "watch:lib": "ng build ps-helix --watch",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
-    "@angular/animations": "21.2.9",
-    "@angular/common": "21.2.9",
-    "@angular/compiler": "21.2.9",
-    "@angular/core": "21.2.9",
-    "@angular/forms": "21.2.9",
-    "@angular/platform-browser": "21.2.9",
-    "@angular/platform-browser-dynamic": "21.2.9",
-    "@angular/router": "21.2.9",
+    "@angular/animations": "^20.0.0",
+    "@angular/common": "^20.0.0",
+    "@angular/compiler": "^20.0.0",
+    "@angular/core": "^20.0.0",
+    "@angular/forms": "^20.0.0",
+    "@angular/platform-browser": "^20.0.0",
+    "@angular/platform-browser-dynamic": "^20.0.0",
+    "@angular/router": "^20.0.0",
     "@ngx-translate/core": "^15.0.0",
     "@phosphor-icons/web": "^2.0.3",
     "date-fns": "^3.3.1",
     "rxjs": "^7.8.1",
-    "tslib": "^2.6.0",
-    "zone.js": "^0.16.1"
+    "tslib": "^2.6.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "21.2.7",
-    "@angular/cli": "21.2.7",
-    "@angular/compiler-cli": "21.2.9",
+    "@angular-devkit/build-angular": "^20.0.0",
+    "@angular/cli": "^20.0.0",
+    "@angular/compiler-cli": "^20.0.0",
     "@types/jest": "^30.0.0",
     "jest": "^30.2.0",
     "jest-environment-jsdom": "^30.2.0",
     "jest-preset-angular": "^16.0.0",
-    "ng-packagr": "21.2.0",
-    "typescript": "~5.9.0"
+    "ng-packagr": "^20.0.0",
+    "typescript": "~5.8.0",
+    "zone.js": "^0.15.1"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "esbuild",
+      "less",
+      "lmdb",
+      "msgpackr-extract",
+      "unrs-resolver"
+    ]
   }
 }

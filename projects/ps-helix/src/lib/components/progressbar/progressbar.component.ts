@@ -25,7 +25,7 @@ export const PROGRESSBAR_CONFIG = new InjectionToken<Partial<ProgressbarConfig>>
     '[class.large]': 'size() === "large"',
     '[class.label-bottom]': 'labelPosition() === "bottom"',
     '[class.label-inline]': 'labelPosition() === "inline"',
-    '[attr.data-state]': 'mode()',
+    '[attr.data-state]': 'state()',
     '[attr.aria-live]': '"polite"'
   }
 })
@@ -76,22 +76,18 @@ export class PshProgressbarComponent {
     return this.label() || `${Math.round(this.percentage())}%`;
   });
 
+  state = computed(() => this.mode());
+
   constructor() {
     let previousThreshold = -1;
-    let hasCompleted = false;
 
     effect(() => {
       const percentage = this.percentage();
       const val = this.value();
       const maxVal = this.max();
 
-      if (val >= maxVal && maxVal > 0 && !hasCompleted) {
+      if (val >= maxVal && maxVal > 0) {
         this.completed.emit();
-        hasCompleted = true;
-      }
-
-      if (val < maxVal) {
-        hasCompleted = false;
       }
 
       const thresholds = [25, 50, 75];

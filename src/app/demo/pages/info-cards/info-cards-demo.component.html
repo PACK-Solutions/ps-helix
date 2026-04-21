@@ -63,74 +63,6 @@
       </div>
     </section>
 
-    <!-- Actions dans le Header -->
-    <section class="info-card-header-actions-section">
-      <h3 class="section-title">Actions dans le Header</h3>
-      <div class="header-actions-container">
-        <div class="header-actions-intro">
-          <p>Le slot <code>card-header-actions</code> permet de projeter du contenu a droite du titre dans l'en-tete de la carte. Ideal pour les boutons d'action rapide, badges de statut ou indicateurs.</p>
-        </div>
-        <div class="header-actions-grid">
-          <div class="header-actions-card">
-            <h4>Actions avec Boutons</h4>
-            <psh-info-card
-              title="Informations Personnelles"
-              [data]="userProfileData"
-              variant="elevated"
-              icon="user-circle"
-            >
-              <div card-header-actions>
-                <psh-button appearance="text" size="small" ariaLabel="Modifier">
-                  <i class="ph ph-pencil"></i>
-                </psh-button>
-                <psh-button appearance="text" size="small" variant="danger" ariaLabel="Supprimer">
-                  <i class="ph ph-trash"></i>
-                </psh-button>
-              </div>
-            </psh-info-card>
-            <p class="header-actions-description">Boutons d'action dans le header pour modifier ou supprimer.</p>
-            <ds-code-snippet [code]="headerActionsCode" />
-          </div>
-
-          <div class="header-actions-card">
-            <h4>Badge de Statut</h4>
-            <psh-info-card
-              title="Projet Alpha"
-              [data]="compactData"
-              variant="outlined"
-              icon="folder"
-            >
-              <div card-header-actions>
-                <psh-badge variant="success">Actif</psh-badge>
-              </div>
-            </psh-info-card>
-            <p class="header-actions-description">Badge indiquant le statut directement dans le header.</p>
-            <ds-code-snippet [code]="headerActionsWithBadgeCode" />
-          </div>
-
-          <div class="header-actions-card">
-            <h4>Header + Footer Actions</h4>
-            <psh-info-card
-              title="Ma Commande"
-              [data]="orderDetailsData"
-              variant="elevated"
-              icon="package"
-            >
-              <div card-header-actions>
-                <psh-badge variant="warning">En cours</psh-badge>
-              </div>
-              <div card-actions>
-                <psh-button variant="primary">Suivre</psh-button>
-                <psh-button variant="secondary" appearance="text">Annuler</psh-button>
-              </div>
-            </psh-info-card>
-            <p class="header-actions-description">Combinaison des deux slots pour une carte complete.</p>
-            <ds-code-snippet [code]="bothSlotsCode" />
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- Cas d'Usage Pratiques -->
     <section class="info-card-usage-section">
       <h3 class="section-title">Cas d'Usage Pratiques</h3>
@@ -148,13 +80,8 @@
               icon="identification-card"
               [hoverable]="true"
             >
-              <div card-header-actions>
-                <psh-button appearance="text" size="small" ariaLabel="Modifier">
-                  <i class="ph ph-pencil"></i>
-                </psh-button>
-              </div>
               <div card-actions>
-                <psh-button variant="primary" appearance="outline">Enregistrer</psh-button>
+                <psh-button variant="primary" appearance="outline">Modifier</psh-button>
               </div>
             </psh-info-card>
             <p class="usage-description">
@@ -171,9 +98,6 @@
               icon="package"
               [hoverable]="true"
             >
-              <div card-header-actions>
-                <psh-badge variant="info">En livraison</psh-badge>
-              </div>
               <div card-actions>
                 <psh-button variant="primary">Suivre</psh-button>
                 <psh-button variant="secondary" appearance="text">Détails</psh-button>
@@ -191,11 +115,7 @@
               [data]="systemInfoData"
               variant="elevated"
               icon="monitor"
-            >
-              <div card-header-actions>
-                <psh-badge variant="success">En ligne</psh-badge>
-              </div>
-            </psh-info-card>
+            ></psh-info-card>
             <p class="usage-description">
               Affichage des métriques système pour un tableau de bord d'administration.
             </p>
@@ -371,7 +291,7 @@
       <h3 class="section-title">Layout en Grille</h3>
       <div class="grid-container">
         <div class="grid-intro">
-          <p>Organisez plusieurs cartes d'information dans une grille responsive pour créer des tableaux de bord complets. Grace au comportement <code>height: 100%</code> du composant, toutes les cartes s'alignent automatiquement en hauteur au sein de chaque ligne.</p>
+          <p>Organisez plusieurs cartes d'information dans une grille responsive pour créer des tableaux de bord complets.</p>
         </div>
         <div class="info-cards-grid">
           <psh-info-card
@@ -414,7 +334,7 @@
       <h3 class="section-title">Documentation API</h3>
       <div class="api-container">
         <div class="api-intro">
-          <p>Le composant Info Card utilise des <strong>input signals</strong> pour une API simple et performante, conforme aux standards Angular 21. Le composant utilise <code>ViewEncapsulation.None</code> et <code>height: 100%</code> pour une integration optimale dans les grilles.</p>
+          <p>Le composant Info Card utilise des <strong>input signals</strong> pour une API simple et performante, conforme aux standards Angular 20.</p>
         </div>
 
         <div class="api-table-wrapper">
@@ -623,19 +543,12 @@
             <thead>
               <tr>
                 <th>Slot</th>
-                <th>Position</th>
                 <th>Description</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><code>card-header-actions</code></td>
-                <td>Header (droite)</td>
-                <td>Actions ou indicateurs dans l'en-tete, a droite du titre</td>
-              </tr>
-              <tr>
                 <td><code>card-actions</code></td>
-                <td>Footer</td>
                 <td>Boutons d'action en bas de carte avec alignement automatique</td>
               </tr>
             </tbody>
