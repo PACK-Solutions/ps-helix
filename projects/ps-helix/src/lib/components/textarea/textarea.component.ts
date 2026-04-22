@@ -8,13 +8,12 @@ import {
   inject,
   input,
   model,
-  OnInit,
   output,
   signal,
   ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ControlValueAccessor, NgControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
 import {
   TEXTAREA_LABELS,
@@ -52,11 +51,10 @@ import {
   },
 })
 export class PshTextareaComponent
-  implements ControlValueAccessor, FormValueControl<string>, OnInit
+  implements ControlValueAccessor, FormValueControl<string>
 {
   private readonly elementRef = inject(ElementRef<HTMLElement>);
   private readonly cdr = inject(ChangeDetectorRef);
-  private readonly ngControl = inject(NgControl, { optional: true, self: true });
 
   private static nextId = 0;
   readonly textareaId = `psh-textarea-${PshTextareaComponent.nextId++}`;
@@ -84,7 +82,6 @@ export class PshTextareaComponent
   ariaLabel = input<string | null>(null);
 
   private readonly focusedSignal = signal<boolean>(false);
-  private readonly controlInvalidSignal = signal<boolean>(false);
 
   inputFocus = output<void>();
   inputBlur = output<void>();
@@ -120,7 +117,7 @@ export class PshTextareaComponent
   );
 
   hasError = computed(
-    () => !!this.error() || this.isOverLimit() || this.controlInvalidSignal(),
+    () => !!this.error() || this.isOverLimit(),
   );
 
   computedAriaLabel = computed(
@@ -146,10 +143,6 @@ export class PshTextareaComponent
   characterCountLabel = TEXTAREA_LABELS.characterCountSuffix;
 
   constructor() {
-    if (this.ngControl) {
-      this.ngControl.valueAccessor = this;
-    }
-
     effect(() => {
       this.value();
       this.autoSize();
@@ -157,18 +150,6 @@ export class PshTextareaComponent
       if (this.autoSize()) {
         queueMicrotask(() => this.applyAutoSize());
       }
-    });
-  }
-
-  ngOnInit(): void {
-    const control = this.ngControl?.control;
-    if (!control) return;
-
-    this.controlInvalidSignal.set(!!control.invalid && !!control.touched);
-
-    control.statusChanges?.subscribe(() => {
-      this.controlInvalidSignal.set(!!control.invalid && !!control.touched);
-      this.cdr.markForCheck();
     });
   }
 
@@ -214,11 +195,6 @@ export class PshTextareaComponent
     this.touched.set(true);
     this.onTouched();
     this.inputBlur.emit();
-    if (this.ngControl?.control) {
-      this.controlInvalidSignal.set(
-        !!this.ngControl.control.invalid && !!this.ngControl.control.touched,
-      );
-    }
   }
 
   focus(): void {
