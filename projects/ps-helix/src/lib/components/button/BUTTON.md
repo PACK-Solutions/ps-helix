@@ -57,7 +57,7 @@ import { PshButtonComponent } from 'ps-helix';
 | size | ButtonSize | 'medium' | Taille du bouton |
 | disabled | boolean | false | État désactivé |
 | loading | boolean | false | État de chargement |
-| fullWidth | boolean | false | Largeur complète |
+| fullWidth | boolean (model) | false | Largeur complète. Exposé via `model()`, supporte `[(fullWidth)]` |
 | iconPosition | ButtonIconPosition | 'left' | Position de l'icône |
 | icon | string | undefined | Nom de l'icône Phosphor |
 | ariaLabel | string | undefined | Label ARIA personnalisé |
@@ -266,8 +266,7 @@ Occupe toute la largeur du conteneur parent.
 ### Choix de l'Apparence
 1. **Filled**: Utilisez pour l'action principale d'une page ou d'un formulaire
 2. **Outline**: Utilisez pour les actions secondaires ou alternatives
-3. **Rounded**: Utilisez pour des actions spéciales ou des FAB (Floating Action Buttons)
-4. **Text**: Utilisez pour les actions tertiaires, les liens ou la navigation
+3. **Text**: Utilisez pour les actions tertiaires, les liens ou la navigation
 
 ### Choix de la Variante
 1. **Primary**: Action principale de la page (ex: Enregistrer, Continuer)
@@ -337,12 +336,12 @@ handleSubmit() {
 ## Accessibilité
 
 ### Attributs ARIA Générés Automatiquement
-Le composant génère automatiquement les attributs ARIA appropriés:
+Le composant s'appuie sur un élément `<button>` natif (rôle implicite `button`) et émet uniquement les attributs ARIA suivants :
 
-- `role="button"`: Rôle sémantique du bouton
-- `aria-disabled="true"`: Lorsque le bouton est désactivé
+- `aria-label`: Utilise `ariaLabel` si fourni, sinon dérivé du contenu (texte projeté, `loadingText`, `disabledText` ou `iconOnlyText` selon l'état)
 - `aria-busy="true"`: Lorsque le bouton est en chargement
-- `aria-label`: Utilise `ariaLabel` ou génère automatiquement à partir du contenu
+
+L'état désactivé s'appuie sur l'attribut natif `disabled` (pas de `aria-disabled` émis).
 
 ### Labels Accessibles
 
