@@ -1,0 +1,77 @@
+<div class="textarea-container">
+  @if (showLabel()) {
+    <label
+      class="textarea-label"
+      [for]="textareaId"
+      (click)="focus()"
+      [class.required]="required()"
+    >
+      <ng-content select="[textarea-label]"></ng-content>
+      @if (!hasLabelContent()) {
+        {{ label() }}
+      }
+    </label>
+  }
+
+  <div class="textarea-wrapper">
+    <textarea
+      #textareaRef
+      [id]="textareaId"
+      [rows]="rows()"
+      [attr.placeholder]="placeholder()"
+      [attr.maxlength]="maxLength() ?? null"
+      [attr.aria-label]="computedAriaLabel()"
+      [attr.aria-invalid]="hasError()"
+      [attr.aria-required]="required()"
+      [attr.aria-describedby]="describedBy()"
+      [attr.data-state]="state()"
+      [disabled]="disabled()"
+      [readonly]="readonly()"
+      [required]="required()"
+      [value]="value()"
+      [style.resize]="effectiveResize()"
+      (input)="handleInput($event)"
+      (focus)="handleFocus()"
+      (blur)="handleBlur()"
+    ></textarea>
+  </div>
+
+  @if (error() || success() || hint() || shouldShowCount()) {
+    <div class="textarea-footer">
+      <div class="textarea-messages">
+        @if (error()) {
+          <div [id]="textareaId + '-error'" class="textarea-error" role="alert">
+            <ng-content select="[textarea-error]">
+              {{ error() }}
+            </ng-content>
+          </div>
+        } @else if (success()) {
+          <div [id]="textareaId + '-success'" class="textarea-success" role="status">
+            <ng-content select="[textarea-success]">
+              {{ success() }}
+            </ng-content>
+          </div>
+        } @else if (hint()) {
+          <div [id]="textareaId + '-hint'" class="textarea-hint">
+            <ng-content select="[textarea-hint]">
+              {{ hint() }}
+            </ng-content>
+          </div>
+        }
+      </div>
+
+      @if (shouldShowCount()) {
+        <div
+          class="textarea-count"
+          [class.at-limit]="isAtLimit() && !isOverLimit()"
+          [class.over-limit]="isOverLimit()"
+          aria-live="polite"
+        >
+          {{ characterCount().current }}@if (maxLength() !== undefined) {
+            <span>/{{ maxLength() }}</span>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>

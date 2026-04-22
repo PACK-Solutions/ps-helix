@@ -30,13 +30,6 @@ export class ButtonsDemoComponent {
   Action secondaire
 </psh-button>`;
 
-  roundedAppearanceCode = `<psh-button
-  appearance="rounded"
-  variant="primary"
->
-  Action spéciale
-</psh-button>`;
-
   textAppearanceCode = `<psh-button
   appearance="text"
   variant="primary"

@@ -13,6 +13,9 @@
 .input-container {
   position: relative;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--form-field-gap);
 }
 
 /* --- Label --- */
@@ -21,7 +24,6 @@
   color: var(--text-color);
   font-size: 0.875rem; /* var(--font-size-sm) */
   font-weight: 500;
-  margin-bottom: 0.25rem; /* var(--spacing-xs) */
   width: 100%;
   cursor: pointer;
 }
@@ -232,7 +234,6 @@ input:focus {
 
 .input-error, .input-success, .input-hint {
   font-size: 0.875rem;
-  margin-top: 0.25rem;
 }
 
 .input-error { color: var(--danger-color); }
@@ -240,5 +241,5 @@ input:focus {
 .input-hint { color: var(--text-color-secondary); }
 
 @keyframes spin {
-  to { transform: translateY(-50%) rotate(360deg); }
+  to { transform: rotate(360deg); }
 }

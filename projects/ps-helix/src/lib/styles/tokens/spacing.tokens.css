@@ -12,6 +12,10 @@
   --spacing-3xl: 4rem;        /* 64px */
   --spacing-4xl: 5rem;        /* 80px */
 
+  /* Form field semantic spacing */
+  --form-field-gap: var(--spacing-xs);  /* label <-> control <-> message */
+  --form-label-gap: var(--spacing-sm);  /* control <-> inline label (checkbox/radio/switch) */
+
   /* Negative spacing scale (for negative margins) */
   --negative-spacing-xxs: -0.125rem;
   --negative-spacing-xs: -0.25rem;

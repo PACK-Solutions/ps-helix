@@ -131,6 +131,18 @@
   height: 80px;
 }
 
+.helix-logo-dark {
+  display: none;
+}
+
+:host-context([data-theme='dark']) .helix-logo-light {
+  display: none;
+}
+
+:host-context([data-theme='dark']) .helix-logo-dark {
+  display: inline-block;
+}
+
 .brand-text {
   text-align: center;
 }

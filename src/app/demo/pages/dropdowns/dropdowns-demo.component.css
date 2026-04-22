@@ -2,15 +2,109 @@
 /* Global styles are inherited from demo-page-layout.component.css */
 
 /* Dropdown component specific sections */
+.dropdown-appearances-section,
 .dropdown-variants-section,
 .dropdown-sizes-section,
 .dropdown-placements-section,
 .dropdown-icons-section,
+.dropdown-icon-only-section,
 .dropdown-states-section {
   margin-bottom: var(--spacing-3xl);
 }
 
+.icon-only-container {
+  width: 100%;
+}
+
+.icon-only-intro {
+  margin-bottom: var(--spacing-xl);
+  color: var(--text-color-secondary);
+  font-size: var(--font-size-lg);
+  line-height: 1.6;
+}
+
+.icon-only-intro code {
+  background: var(--surface-ground);
+  padding: 2px 6px;
+  border-radius: var(--border-radius-sm);
+  font-family: 'Courier New', monospace;
+  font-size: var(--font-size-sm);
+  color: var(--primary-color);
+}
+
+.icon-only-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: var(--spacing-xl);
+}
+
+.icon-only-card {
+  background: var(--surface-card);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xl);
+  transition: all 0.3s ease;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.icon-only-card:hover {
+  border-color: var(--primary-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.icon-only-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+  padding: var(--spacing-2xl);
+  background: var(--surface-ground);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--spacing-lg);
+  min-height: 100px;
+}
+
+.icon-only-info h4 {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-color);
+  margin-bottom: var(--spacing-sm);
+}
+
+.icon-only-info p {
+  color: var(--text-color-secondary);
+  margin-bottom: var(--spacing-md);
+  line-height: 1.6;
+}
+
+.icon-only-info code {
+  background: var(--surface-ground);
+  padding: 2px 6px;
+  border-radius: var(--border-radius-sm);
+  font-family: 'Courier New', monospace;
+  font-size: var(--font-size-sm);
+  color: var(--primary-color);
+}
+
+.icon-only-a11y {
+  font-size: var(--font-size-sm);
+}
+
+@media (max-width: 768px) {
+  .icon-only-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .icon-only-card {
+    padding: var(--spacing-md);
+  }
+}
+
 /* Containers */
+.appearances-container,
 .variants-container,
 .sizes-container,
 .placements-container,
@@ -19,6 +113,7 @@
   width: 100%;
 }
 
+.appearances-intro,
 .variants-intro,
 .sizes-intro,
 .placements-intro,
@@ -31,6 +126,7 @@
 }
 
 /* Grid Layouts */
+.appearances-grid,
 .variants-grid,
 .sizes-grid,
 .placements-grid,
@@ -41,6 +137,7 @@
 }
 
 /* Cards */
+.appearance-card,
 .variant-card,
 .size-card,
 .placement-card,
@@ -54,6 +151,7 @@
   overflow: hidden;
 }
 
+.appearance-card:hover,
 .variant-card:hover,
 .size-card:hover,
 .placement-card:hover,
@@ -64,7 +162,7 @@
 }
 
 /* Preview Areas */
-.variant-preview,
+.appearance-preview,
 .size-preview,
 .placement-preview,
 .icon-preview {
@@ -78,7 +176,31 @@
   min-height: 100px;
 }
 
+/* Variant preview stacks 3 dropdowns (one per appearance) vertically */
+.variant-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-2xl);
+  background: var(--surface-ground);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--spacing-lg);
+  min-height: 180px;
+}
+
+.variant-preview psh-dropdown {
+  display: flex;
+  width: 100%;
+}
+
+.variant-preview psh-dropdown .dropdown-container,
+.variant-preview psh-dropdown .dropdown-trigger {
+  width: 100%;
+}
+
 /* Info Sections */
+.appearance-info h4,
 .variant-info h4,
 .size-info h4,
 .placement-info h4,
@@ -96,6 +218,24 @@
   color: var(--text-color-secondary);
   margin-bottom: var(--spacing-md);
   line-height: 1.6;
+}
+
+/* Variant Specifications */
+.variant-specs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-md);
+}
+
+.variant-code {
+  display: inline-block;
+  background: var(--surface-ground);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  font-family: 'Courier New', monospace;
+  font-size: var(--font-size-sm);
+  color: var(--text-color);
 }
 
 /* Size Specifications */
@@ -320,6 +460,7 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .appearances-grid,
   .variants-grid,
   .sizes-grid,
   .placements-grid,
@@ -328,6 +469,7 @@
     grid-template-columns: 1fr;
   }
 
+  .appearance-card,
   .variant-card,
   .size-card,
   .placement-card,
@@ -346,6 +488,7 @@
 }
 
 @media (max-width: 480px) {
+  .appearances-grid,
   .variants-grid,
   .sizes-grid,
   .placements-grid,
@@ -355,6 +498,7 @@
     gap: var(--spacing-md);
   }
 
+  .appearance-card,
   .variant-card,
   .size-card,
   .placement-card,
@@ -362,6 +506,7 @@
     padding: var(--spacing-sm) var(--spacing-md);
   }
 
+  .appearance-preview,
   .variant-preview,
   .size-preview,
   .placement-preview,
@@ -383,6 +528,7 @@
     font-size: calc(var(--font-size-sm) * 0.9);
   }
 
+  .appearance-info h4,
   .variant-info h4,
   .size-info h4,
   .placement-info h4,
@@ -398,6 +544,7 @@
 }
 
 @media (max-width: 375px) {
+  .appearance-card,
   .variant-card,
   .size-card,
   .placement-card,
@@ -405,6 +552,7 @@
     padding: var(--spacing-xs) var(--spacing-sm);
   }
 
+  .appearance-preview,
   .variant-preview,
   .size-preview,
   .placement-preview,

@@ -21,6 +21,8 @@ export * from './lib/components/dropdown/dropdown.component';
 export * from './lib/components/dropdown/dropdown.types';
 export * from './lib/components/input/input.component';
 export * from './lib/components/input/input.types';
+export * from './lib/components/textarea/textarea.component';
+export * from './lib/components/textarea/textarea.types';
 export * from './lib/components/menu/menu.component';
 export * from './lib/components/menu/menu.types';
 export * from './lib/components/modal/modal.component';
@@ -62,7 +64,12 @@ export * from './lib/components/tooltip/tooltip.component';
 export * from './lib/components/tooltip/tooltip.types';
 
 export * from './lib/services/theme/theme.service';
-export { INSURER_CONTEXT_SERVICE, InsurerContextService } from './lib/services/theme/theme.service';
+export {
+  CUSTOMER_CONTEXT_SERVICE,
+  CustomerContextService,
+  PSH_THEME_OPTIONS,
+  PshThemeOptions,
+} from './lib/services/theme/theme.service';
 export * from './lib/services/theme/types/theme.types';
 export * from './lib/services/translation/translation.service';
 export * from './lib/services/translation/types/i18n.types';

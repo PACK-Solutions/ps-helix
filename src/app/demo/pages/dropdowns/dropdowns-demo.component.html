@@ -4,17 +4,108 @@
   [showTechnicalSection]="false"
 >
   <div demo-content>
+    <!-- Apparences de Dropdown - Section Pleine Largeur -->
+    <section class="dropdown-appearances-section">
+      <h3 class="section-title">Apparences de Dropdown</h3>
+      <div class="appearances-container">
+        <div class="appearances-intro">
+          <p>Les menus déroulants offrent trois apparences distinctes pour s'adapter à différents contextes d'utilisation et niveaux de hiérarchie visuelle dans l'interface.</p>
+        </div>
+        <div class="appearances-grid">
+          <div class="appearance-card">
+            <div class="appearance-preview">
+              <psh-dropdown appearance="filled" variant="primary">
+                <span dropdown-trigger>Filled</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+            </div>
+            <div class="appearance-info">
+              <h4>Filled</h4>
+              <p>Style par défaut avec fond plein. Idéal pour les actions principales et les menus critiques nécessitant une forte visibilité dans l'interface.</p>
+              <ds-code-snippet [code]="filledAppearanceCode" />
+            </div>
+          </div>
+
+          <div class="appearance-card">
+            <div class="appearance-preview">
+              <psh-dropdown appearance="outline" variant="primary">
+                <span dropdown-trigger>Outline</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+            </div>
+            <div class="appearance-info">
+              <h4>Outline</h4>
+              <p>Style avec bordure sans fond. Parfait pour les actions secondaires et les interfaces épurées nécessitant moins de poids visuel.</p>
+              <ds-code-snippet [code]="outlineAppearanceCode" />
+            </div>
+          </div>
+
+          <div class="appearance-card">
+            <div class="appearance-preview">
+              <psh-dropdown appearance="text" variant="primary">
+                <span dropdown-trigger>Text</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+            </div>
+            <div class="appearance-info">
+              <h4>Text</h4>
+              <p>Style minimaliste sans fond ni bordure. Utilisé pour les menus tertiaires, la navigation et les contextes où la discrétion est nécessaire.</p>
+              <ds-code-snippet [code]="textAppearanceCode" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Variantes de Dropdown - Section Pleine Largeur -->
     <section class="dropdown-variants-section">
       <h3 class="section-title">Variantes de Dropdown</h3>
       <div class="variants-container">
         <div class="variants-intro">
-          <p>Les menus déroulants offrent quatre variantes distinctes pour s'adapter à différents contextes d'utilisation et niveaux de hiérarchie visuelle dans l'interface.</p>
+          <p>Chaque apparence supporte cinq variantes de couleur pour communiquer différents niveaux d'importance et de sémantique adaptés à chaque action.</p>
         </div>
         <div class="variants-grid">
           <div class="variant-card">
             <div class="variant-preview">
-              <psh-dropdown variant="primary">
+              <psh-dropdown appearance="filled" variant="primary">
+                <span dropdown-trigger>Primary</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown appearance="outline" variant="primary">
+                <span dropdown-trigger>Primary</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown appearance="text" variant="primary">
                 <span dropdown-trigger>Primary</span>
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
@@ -27,14 +118,36 @@
             </div>
             <div class="variant-info">
               <h4>Primary</h4>
-              <p>Style par défaut avec fond plein. Idéal pour les actions principales et les menus critiques nécessitant une forte visibilité dans l'interface.</p>
-              <ds-code-snippet [code]="primaryVariantCode" />
+              <div class="variant-specs">
+                <code class="variant-code">variant="primary"</code>
+              </div>
+              <p>Actions principales de l'application, CTA et conversions. Utilisé avec parcimonie pour guider l'utilisateur vers l'action la plus importante.</p>
             </div>
           </div>
 
           <div class="variant-card">
             <div class="variant-preview">
-              <psh-dropdown variant="secondary">
+              <psh-dropdown appearance="filled" variant="secondary">
+                <span dropdown-trigger>Secondary</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown appearance="outline" variant="secondary">
+                <span dropdown-trigger>Secondary</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown appearance="text" variant="secondary">
                 <span dropdown-trigger>Secondary</span>
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
@@ -47,15 +160,37 @@
             </div>
             <div class="variant-info">
               <h4>Secondary</h4>
-              <p>Style alternatif avec fond plein. Parfait pour les actions secondaires et les menus complémentaires qui accompagnent l'action principale.</p>
-              <ds-code-snippet [code]="secondaryVariantCode" />
+              <div class="variant-specs">
+                <code class="variant-code">variant="secondary"</code>
+              </div>
+              <p>Actions secondaires et alternatives. Offre une option complémentaire sans rivaliser avec l'action principale.</p>
             </div>
           </div>
 
           <div class="variant-card">
             <div class="variant-preview">
-              <psh-dropdown variant="outline">
-                <span dropdown-trigger>Outline</span>
+              <psh-dropdown appearance="filled" variant="success">
+                <span dropdown-trigger>Success</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown appearance="outline" variant="success">
+                <span dropdown-trigger>Success</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown appearance="text" variant="success">
+                <span dropdown-trigger>Success</span>
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
                   <button class="dropdown-item" (click)="selectItem(item.value)">
@@ -66,16 +201,38 @@
               </psh-dropdown>
             </div>
             <div class="variant-info">
-              <h4>Outline</h4>
-              <p>Style avec bordure sans fond. Utilisé pour les interfaces épurées et les menus tertiaires nécessitant moins de poids visuel tout en restant visibles.</p>
-              <ds-code-snippet [code]="outlineVariantCode" />
+              <h4>Success</h4>
+              <div class="variant-specs">
+                <code class="variant-code">variant="success"</code>
+              </div>
+              <p>Actions positives et confirmations. Utilisé pour valider des modifications, créer de nouveaux éléments ou confirmer des actions bénéfiques.</p>
             </div>
           </div>
 
           <div class="variant-card">
             <div class="variant-preview">
-              <psh-dropdown variant="text">
-                <span dropdown-trigger>Text</span>
+              <psh-dropdown appearance="filled" variant="warning">
+                <span dropdown-trigger>Warning</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown appearance="outline" variant="warning">
+                <span dropdown-trigger>Warning</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown appearance="text" variant="warning">
+                <span dropdown-trigger>Warning</span>
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
                   <button class="dropdown-item" (click)="selectItem(item.value)">
@@ -86,9 +243,53 @@
               </psh-dropdown>
             </div>
             <div class="variant-info">
-              <h4>Text</h4>
-              <p>Style minimaliste sans fond ni bordure. Parfait pour les menus discrets, la navigation contextuelle et les interfaces où la sobriété est privilégiée.</p>
-              <ds-code-snippet [code]="textVariantCode" />
+              <h4>Warning</h4>
+              <div class="variant-specs">
+                <code class="variant-code">variant="warning"</code>
+              </div>
+              <p>Actions nécessitant attention ou prudence. Alerte l'utilisateur sur des conséquences potentielles sans être destructif.</p>
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-dropdown appearance="filled" variant="danger">
+                <span dropdown-trigger>Danger</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown appearance="outline" variant="danger">
+                <span dropdown-trigger>Danger</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown appearance="text" variant="danger">
+                <span dropdown-trigger>Danger</span>
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+            </div>
+            <div class="variant-info">
+              <h4>Danger</h4>
+              <div class="variant-specs">
+                <code class="variant-code">variant="danger"</code>
+              </div>
+              <p>Actions destructives et irréversibles. Réservé aux suppressions, annulations définitives et actions à haut risque nécessitant confirmation.</p>
             </div>
           </div>
         </div>
@@ -182,7 +383,7 @@
         <div class="placements-grid">
           <div class="placement-card">
             <div class="placement-preview">
-              <psh-dropdown placement="bottom-start" variant="outline">
+              <psh-dropdown placement="bottom-start" appearance="outline" variant="primary">
                 <span dropdown-trigger>Bottom Start</span>
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
@@ -204,7 +405,7 @@
 
           <div class="placement-card">
             <div class="placement-preview">
-              <psh-dropdown placement="bottom-end" variant="outline">
+              <psh-dropdown placement="bottom-end" appearance="outline" variant="primary">
                 <span dropdown-trigger>Bottom End</span>
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
@@ -226,7 +427,7 @@
 
           <div class="placement-card">
             <div class="placement-preview">
-              <psh-dropdown placement="top-start" variant="outline">
+              <psh-dropdown placement="top-start" appearance="outline" variant="primary">
                 <span dropdown-trigger>Top Start</span>
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
@@ -248,7 +449,7 @@
 
           <div class="placement-card">
             <div class="placement-preview">
-              <psh-dropdown placement="top-end" variant="outline">
+              <psh-dropdown placement="top-end" appearance="outline" variant="primary">
                 <span dropdown-trigger>Top End</span>
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
@@ -281,7 +482,7 @@
         <div class="icons-grid">
           <div class="icon-card">
             <div class="icon-preview">
-              <psh-dropdown icon="dots-three" variant="outline">
+              <psh-dropdown icon="dots-three" appearance="outline" variant="primary">
                 <span dropdown-trigger>Actions</span>
                 <div dropdown-menu>
                   @for (item of iconItems; track item.value) {
@@ -357,6 +558,189 @@
                 <li><code>archive</code> pour archiver</li>
                 <li><code>download</code> pour télécharger</li>
               </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dropdown Icon Only - Section Pleine Largeur -->
+    <section class="dropdown-icon-only-section">
+      <h3 class="section-title">Dropdown Icône Seule</h3>
+      <div class="icon-only-container">
+        <div class="icon-only-intro">
+          <p>Le mode <code>iconOnly</code> transforme le déclencheur en un bouton carré compact affichant uniquement une icône. Le caret est masqué : l'icône métier (menu kebab, filtre, paramètres) devient elle-même l'affordance du menu. La sémantique ARIA (<code>aria-haspopup</code>, <code>aria-expanded</code>) est préservée pour les lecteurs d'écran.</p>
+        </div>
+        <div class="icon-only-grid">
+          <div class="icon-only-card">
+            <div class="icon-only-preview">
+              <psh-dropdown
+                icon="dots-three-vertical"
+                [iconOnly]="true"
+                iconOnlyText="Menu d'actions"
+                appearance="filled"
+                variant="primary"
+              >
+                <div dropdown-menu>
+                  @for (item of iconItems; track item.value) {
+                  <button
+                    class="dropdown-item"
+                    (click)="selectItem(item.value)"
+                    [class.disabled]="item.disabled"
+                  >
+                    <i class="ph ph-{{ item.icon }}" aria-hidden="true"></i>
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown
+                icon="dots-three-vertical"
+                [iconOnly]="true"
+                iconOnlyText="Menu d'actions"
+                appearance="outline"
+                variant="primary"
+              >
+                <div dropdown-menu>
+                  @for (item of iconItems; track item.value) {
+                  <button
+                    class="dropdown-item"
+                    (click)="selectItem(item.value)"
+                    [class.disabled]="item.disabled"
+                  >
+                    <i class="ph ph-{{ item.icon }}" aria-hidden="true"></i>
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown
+                icon="dots-three-vertical"
+                [iconOnly]="true"
+                iconOnlyText="Menu d'actions"
+                appearance="text"
+                variant="primary"
+              >
+                <div dropdown-menu>
+                  @for (item of iconItems; track item.value) {
+                  <button
+                    class="dropdown-item"
+                    (click)="selectItem(item.value)"
+                    [class.disabled]="item.disabled"
+                  >
+                    <i class="ph ph-{{ item.icon }}" aria-hidden="true"></i>
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+            </div>
+            <div class="icon-only-info">
+              <h4>Apparences</h4>
+              <p>Les trois apparences (filled, outline, text) sont supportées en mode icon-only, pour s'adapter au niveau de hiérarchie visuelle souhaité.</p>
+              <ds-code-snippet [code]="iconOnlyCode" />
+            </div>
+          </div>
+
+          <div class="icon-only-card">
+            <div class="icon-only-preview">
+              <psh-dropdown
+                icon="funnel"
+                [iconOnly]="true"
+                iconOnlyText="Filtrer les résultats"
+                appearance="outline"
+                variant="primary"
+                size="small"
+              >
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown
+                icon="funnel"
+                [iconOnly]="true"
+                iconOnlyText="Filtrer les résultats"
+                appearance="outline"
+                variant="primary"
+                size="medium"
+              >
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown
+                icon="funnel"
+                [iconOnly]="true"
+                iconOnlyText="Filtrer les résultats"
+                appearance="outline"
+                variant="primary"
+                size="large"
+              >
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+            </div>
+            <div class="icon-only-info">
+              <h4>Tailles</h4>
+              <p>Le trigger carré s'aligne sur la hauteur des inputs standards (small, medium, large) pour une cohérence visuelle avec les autres composants du formulaire.</p>
+            </div>
+          </div>
+
+          <div class="icon-only-card">
+            <div class="icon-only-preview">
+              <psh-dropdown icon="gear" [iconOnly]="true" iconOnlyText="Paramètres" appearance="filled" variant="primary">
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown icon="gear" [iconOnly]="true" iconOnlyText="Paramètres" appearance="filled" variant="secondary">
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown icon="gear" [iconOnly]="true" iconOnlyText="Paramètres" appearance="filled" variant="success">
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown icon="gear" [iconOnly]="true" iconOnlyText="Paramètres" appearance="filled" variant="warning">
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown icon="gear" [iconOnly]="true" iconOnlyText="Paramètres" appearance="filled" variant="danger">
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
+                  }
+                </div>
+              </psh-dropdown>
+            </div>
+            <div class="icon-only-info">
+              <h4>Variantes de couleur</h4>
+              <p>Les cinq variantes (primary, secondary, success, warning, danger) restent disponibles et cohérentes avec le reste du design system.</p>
+              <p class="icon-only-a11y"><strong>Accessibilité :</strong> toujours fournir <code>iconOnlyText</code> pour garantir un <code>aria-label</code> descriptif aux lecteurs d'écran.</p>
             </div>
           </div>
         </div>
@@ -463,10 +847,16 @@
             </thead>
             <tbody>
               <tr>
+                <td><code>appearance</code></td>
+                <td><code>DropdownAppearance</code></td>
+                <td><code>'filled'</code></td>
+                <td>'filled' | 'outline' | 'text'</td>
+              </tr>
+              <tr>
                 <td><code>variant</code></td>
                 <td><code>DropdownVariant</code></td>
                 <td><code>'primary'</code></td>
-                <td>'primary' | 'secondary' | 'outline' | 'text'</td>
+                <td>'primary' | 'secondary' | 'success' | 'warning' | 'danger'</td>
               </tr>
               <tr>
                 <td><code>size</code></td>
@@ -503,6 +893,18 @@
                 <td><code>string | undefined</code></td>
                 <td><code>undefined</code></td>
                 <td>Label ARIA personnalisé pour l'accessibilité</td>
+              </tr>
+              <tr>
+                <td><code>iconOnly</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Active le mode icône seule (masque le label et le caret). Nécessite <code>icon</code>.</td>
+              </tr>
+              <tr>
+                <td><code>iconOnlyText</code></td>
+                <td><code>string | undefined</code></td>
+                <td><code>undefined</code></td>
+                <td>Label accessible (aria-label) utilisé en mode icon-only</td>
               </tr>
             </tbody>
           </table>
@@ -606,6 +1008,7 @@ import &#123; DropdownItem &#125; from 'ps-helix';
   imports: [PshDropdownComponent],
   template: `
     &lt;psh-dropdown
+      appearance="filled"
       variant="primary"
       placement="bottom-start"
       icon="dots-three"

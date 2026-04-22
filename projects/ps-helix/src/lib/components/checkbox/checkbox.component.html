@@ -36,8 +36,7 @@
     <div [id]="uniqueId + '-error'" class="checkbox-message error" role="alert">
       {{ error() }}
     </div>
-  }
-  @if (success()) {
+  } @else if (success()) {
     <div [id]="uniqueId + '-success'" class="checkbox-message success" role="status">
       {{ success() }}
     </div>

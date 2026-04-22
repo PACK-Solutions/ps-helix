@@ -13,7 +13,7 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
 })
 export class IntroductionDemoComponent {
   npmUrl = 'https://www.npmjs.com/package/ps-helix';
-  npmVersion = '4.1.1';
+  npmVersion = '5.0.0';
   keyFeatures = [
     {
       icon: 'lightning',
@@ -113,11 +113,11 @@ export class AppComponent implements OnInit {
     {
       number: 6,
       title: 'Personnaliser les Couleurs (Optionnel)',
-      description: 'Pour utiliser vos couleurs de marque, créez un service implémentant InsurerContextService et configurez le provider INSURER_CONTEXT_SERVICE. Consultez le guide complet dans la documentation THEME.md.',
+      description: 'Pour utiliser vos couleurs de marque, créez un service implémentant CustomerContextService et configurez le provider CUSTOMER_CONTEXT_SERVICE. Consultez le guide complet dans la documentation THEME.md.',
       codeLabel: 'Aperçu rapide',
-      codeSnippet: `// 1. Créer AppThemeContextService implements InsurerContextService
+      codeSnippet: `// 1. Créer AppThemeContextService implements CustomerContextService
 // 2. Définir primaryColor() et secondaryColor() avec signals
-// 3. Provider: { provide: INSURER_CONTEXT_SERVICE, useExisting: ... }
+// 3. Provider: { provide: CUSTOMER_CONTEXT_SERVICE, useExisting: ... }
 
 // Exemple complet dans la documentation THEME.md`,
       note: 'Guide détaillé disponible : consultez THEME.md pour la configuration complète'

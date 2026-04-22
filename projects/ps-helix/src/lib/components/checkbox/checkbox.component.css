@@ -1,18 +1,18 @@
 :host {
   display: inline-flex;
   flex-direction: column;
-  gap: 0.5rem;
 }
 
 .checkbox-container {
   display: flex;
   flex-direction: column;
+  gap: var(--form-field-gap);
 }
 
 .checkbox-label {
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--form-label-gap);
   cursor: pointer;
   user-select: none;
   color: var(--text-color);
@@ -95,7 +95,6 @@
 
 .checkbox-message {
   font-size: 0.875rem;
-  margin-top: 0.125rem;
 }
 
 .checkbox-message.error { color: var(--danger-color); }

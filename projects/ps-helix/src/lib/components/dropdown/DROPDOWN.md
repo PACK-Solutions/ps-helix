@@ -16,7 +16,7 @@ import { PshDropdownComponent } from 'ps-helix';
 
 ### Approche Recommandee (avec contenu personnalise)
 ```typescript
-<psh-dropdown [variant]="'primary'">
+<psh-dropdown appearance="filled" variant="primary">
   <span dropdown-trigger>{{ 'DROPDOWN.TITLE' | translate }}</span>
   <div dropdown-menu>
     <button class="dropdown-item" (click)="handleSelect('1')">
@@ -29,6 +29,29 @@ import { PshDropdownComponent } from 'ps-helix';
 </psh-dropdown>
 ```
 
+### Mode Icône Seule (icon-only)
+
+Transforme le déclencheur en bouton carré compact affichant uniquement une icône. Le caret est masqué : l'icône métier (kebab, filtre, paramètres) devient l'affordance visuelle du menu. La sémantique ARIA (`aria-haspopup`, `aria-expanded`) est conservée.
+
+```typescript
+<psh-dropdown
+  icon="dots-three-vertical"
+  [iconOnly]="true"
+  iconOnlyText="Menu d'actions"
+  appearance="outline"
+  variant="primary"
+>
+  <div dropdown-menu>
+    <button class="dropdown-item">
+      <i class="ph ph-pencil-simple"></i>
+      Modifier
+    </button>
+  </div>
+</psh-dropdown>
+```
+
+> **Accessibilité** : toujours fournir `iconOnlyText` pour garantir un `aria-label` descriptif aux lecteurs d'écran lorsque `iconOnly` est actif.
+
 ### Alternative (avec l'API items)
 ```typescript
 <psh-dropdown
@@ -37,7 +60,8 @@ import { PshDropdownComponent } from 'ps-helix';
     { content: 'Option 2', value: '2', icon: 'check' },
     { content: 'Option 3', value: '3', disabled: true }
   ]"
-  [variant]="'primary'"
+  appearance="filled"
+  variant="primary"
   [label]="'Actions'"
   (selected)="handleSelect($event)"
 ></psh-dropdown>
@@ -48,13 +72,16 @@ import { PshDropdownComponent } from 'ps-helix';
 ### Inputs
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
-| variant | string | 'primary' | Style du dropdown (primary, secondary, outline, text) |
+| appearance | DropdownAppearance | 'filled' | Apparence du dropdown |
+| variant | DropdownVariant | 'primary' | Couleur sémantique du dropdown |
 | size | DropdownSize | 'medium' | Taille du dropdown (small, medium, large) |
-| placement | DropdownPlacement | 'bottom-start' | Position du menu |
+| placement | DropdownPlacement | 'bottom-start' | Position du menu (appliquée via classe CSS, sans repositionnement dynamique en fonction du viewport) |
 | items | DropdownItem[] | [] | Liste des éléments |
 | label | string | 'Dropdown Menu' | Label du bouton |
 | icon | string | undefined | Icône du bouton |
 | ariaLabel | string | undefined | Label ARIA personnalisé |
+| iconOnly | boolean | false | Mode icône seule (masque label et caret, requiert `icon`) |
+| iconOnlyText | string | undefined | Label accessible (aria-label) utilisé en mode icon-only |
 
 ### Model (Two-way binding)
 | Nom | Type | Défaut | Description |
@@ -68,6 +95,43 @@ import { PshDropdownComponent } from 'ps-helix';
 | opened | EventEmitter<void> | Émis à l'ouverture |
 | closed | EventEmitter<void> | Émis à la fermeture |
 
+### Méthodes publiques
+| Nom | Signature | Description |
+|-----|-----------|-------------|
+| toggleDropdown() | `() => void` | Bascule l'état ouvert/fermé du menu |
+| close() | `() => void` | Ferme le menu s'il est ouvert |
+
+Ces méthodes sont accessibles via une référence template (`#dropdownRef` / `ViewChild`) pour piloter le composant depuis le parent.
+
+### Utilisation générique (valeurs typées)
+
+`PshDropdownComponent` est paramétré par un type générique `T` (défaut `string`) aligné avec `DropdownItem<T>`. Vous pouvez donc typer les valeurs émises par `selected` :
+
+```typescript
+interface UserAction {
+  id: number;
+  label: string;
+}
+
+items: DropdownItem<UserAction>[] = [
+  { content: 'Modifier', value: { id: 1, label: 'edit' } },
+  { content: 'Supprimer', value: { id: 2, label: 'delete' } }
+];
+
+handleSelect(item: DropdownItem<UserAction>) {
+  // item.value est typé UserAction
+}
+```
+
+### Types
+
+```typescript
+type DropdownAppearance = 'filled' | 'outline' | 'text';
+type DropdownVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
+type DropdownSize = 'small' | 'medium' | 'large';
+type DropdownPlacement = 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end';
+```
+
 ### Interface DropdownItem
 ```typescript
 interface DropdownItem<T = string> {
@@ -77,6 +141,47 @@ interface DropdownItem<T = string> {
   disabled?: boolean; // État désactivé
   active?: boolean;  // État actif
 }
+```
+
+## Apparences
+
+Le dropdown suit la même logique que le bouton : l'`appearance` contrôle la forme (remplissage) et `variant` contrôle la couleur sémantique.
+
+### Filled (Par défaut)
+Fond plein, idéal pour les actions principales.
+```html
+<psh-dropdown appearance="filled" variant="primary">
+  <span dropdown-trigger>Actions</span>
+  <div dropdown-menu>...</div>
+</psh-dropdown>
+```
+
+### Outline
+Bordure sans fond, pour les actions secondaires.
+```html
+<psh-dropdown appearance="outline" variant="primary">
+  <span dropdown-trigger>Actions</span>
+  <div dropdown-menu>...</div>
+</psh-dropdown>
+```
+
+### Text
+Sans fond ni bordure, pour les actions tertiaires et les menus discrets.
+```html
+<psh-dropdown appearance="text" variant="primary">
+  <span dropdown-trigger>Actions</span>
+  <div dropdown-menu>...</div>
+</psh-dropdown>
+```
+
+## Variantes de Couleur
+
+Toutes les apparences acceptent les cinq variantes sémantiques : `primary`, `secondary`, `success`, `warning`, `danger`.
+
+```html
+<psh-dropdown appearance="filled" variant="success"><span dropdown-trigger>Valider</span>...</psh-dropdown>
+<psh-dropdown appearance="outline" variant="danger"><span dropdown-trigger>Supprimer</span>...</psh-dropdown>
+<psh-dropdown appearance="text" variant="warning"><span dropdown-trigger>Attention</span>...</psh-dropdown>
 ```
 
 ## Bonnes Pratiques
@@ -108,8 +213,8 @@ Le composant implémente une navigation clavier complète:
 
 **Bouton Trigger:**
 - **Enter/Space**: Ouvrir/fermer le dropdown
-- **Arrow Down**: Ouvrir le dropdown et focus le premier item
-- **Arrow Up**: Ouvrir le dropdown et focus le premier item
+- **Arrow Down**: Ouvrir le dropdown et placer le focus sur le premier item
+- **Arrow Up**: Ouvrir le dropdown et placer le focus sur le premier item (le composant ne remet pas le focus sur le dernier item)
 - **Escape**: Fermer le dropdown
 
 **Menu Ouvert:**
@@ -125,13 +230,14 @@ Le composant gère automatiquement:
 - Le focus sur les items actifs
 - Le skip des items désactivés
 - Le cycle de navigation (du dernier au premier item)
-- La fermeture au clic en dehors
+- La fermeture au clic en dehors du composant (click-outside)
 
 ### Attributs ARIA
 
 - `role="menu"`: Pour le conteneur du menu
-- `role="menuitem"`: Pour chaque item
-- `aria-expanded`: État d'ouverture du dropdown
-- `aria-haspopup="menu"`: Indique la présence d'un menu
-- `aria-disabled`: État désactivé des items
-- `aria-label`: Label accessible pour le bouton
+- `role="menuitem"`: Pour chaque item rendu via l'API `items`
+- `aria-expanded`: État d'ouverture du trigger
+- `aria-haspopup="menu"`: Indique la présence d'un menu sur le trigger
+- `aria-disabled` sur le trigger: reflète l'état `disabled` du composant
+- `aria-disabled` sur les items: appliqué automatiquement uniquement pour les items fournis via l'input `items`. Les items projetés via le slot `[dropdown-menu]` doivent déclarer leurs propres attributs ARIA côté consommateur.
+- `aria-label`: Label accessible pour le bouton (utilise `ariaLabel`, `iconOnlyText` ou `label` selon la configuration)

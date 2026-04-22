@@ -1,7 +1,7 @@
 /**
  * Apparences disponibles pour le bouton
  */
-export type ButtonAppearance = 'filled' | 'outline' | 'rounded' | 'text';
+export type ButtonAppearance = 'filled' | 'outline' | 'text';
 
 /**
  * Variantes disponibles pour le bouton

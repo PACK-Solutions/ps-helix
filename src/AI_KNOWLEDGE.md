@@ -7,7 +7,7 @@ Reference documentation for the Helix Design System Angular component library. T
 ## Overview
 
 - **Library**: `ps-helix`
-- **Version**: 4.1.1
+- **Version**: 5.0.0
 - **Framework**: Angular 21+
 - **Prefix**: `psh-` (all components)
 - **Import**: `import { ComponentName } from 'ps-helix';`
@@ -281,7 +281,7 @@ Control: `.animate-fast`, `.animate-slow`, `.animate-smooth`
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
-| `appearance` | `'filled' \| 'outline' \| 'rounded' \| 'text'` | `'filled'` | Button appearance |
+| `appearance` | `'filled' \| 'outline' \| 'text'` | `'filled'` | Button appearance |
 | `variant` | `'primary' \| 'secondary' \| 'success' \| 'warning' \| 'danger'` | `'primary'` | Button variant |
 | `size` | `'small' \| 'medium' \| 'large'` | `'medium'` | Button size |
 | `disabled` | `boolean` | `false` | Disabled state |
@@ -404,7 +404,8 @@ Control: `.animate-fast`, `.animate-slow`, `.animate-smooth`
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
 | `items` | `DropdownItem[]` | `[]` | Dropdown items |
-| `variant` | `'primary' \| 'secondary' \| 'outline' \| 'text'` | `'primary'` | Button variant |
+| `appearance` | `'filled' \| 'outline' \| 'text'` | `'filled'` | Dropdown appearance (shape) |
+| `variant` | `'primary' \| 'secondary' \| 'success' \| 'warning' \| 'danger'` | `'primary'` | Semantic color variant |
 | `size` | `'small' \| 'medium' \| 'large'` | `'medium'` | Dropdown size |
 | `placement` | `'bottom-start' \| 'bottom-end' \| 'top-start' \| 'top-end'` | `'bottom-start'` | Menu placement |
 | `disabled` | `boolean` | `false` | Disabled state |

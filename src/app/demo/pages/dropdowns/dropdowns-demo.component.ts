@@ -78,7 +78,7 @@ export class DropdownsDemoComponent {
     console.log('Selected:', value);
   }
 
-  primaryVariantCode = `<psh-dropdown variant="primary">
+  filledAppearanceCode = `<psh-dropdown appearance="filled" variant="primary">
   <span dropdown-trigger>Menu</span>
   <div dropdown-menu>
     <button class="dropdown-item">
@@ -87,7 +87,7 @@ export class DropdownsDemoComponent {
   </div>
 </psh-dropdown>`;
 
-  secondaryVariantCode = `<psh-dropdown variant="secondary">
+  outlineAppearanceCode = `<psh-dropdown appearance="outline" variant="primary">
   <span dropdown-trigger>Menu</span>
   <div dropdown-menu>
     <button class="dropdown-item">
@@ -96,16 +96,7 @@ export class DropdownsDemoComponent {
   </div>
 </psh-dropdown>`;
 
-  outlineVariantCode = `<psh-dropdown variant="outline">
-  <span dropdown-trigger>Menu</span>
-  <div dropdown-menu>
-    <button class="dropdown-item">
-      Option 1
-    </button>
-  </div>
-</psh-dropdown>`;
-
-  textVariantCode = `<psh-dropdown variant="text">
+  textAppearanceCode = `<psh-dropdown appearance="text" variant="primary">
   <span dropdown-trigger>Menu</span>
   <div dropdown-menu>
     <button class="dropdown-item">
@@ -123,6 +114,25 @@ export class DropdownsDemoComponent {
   </div>
 </psh-dropdown>`;
 
+  iconOnlyCode = `<psh-dropdown
+  icon="dots-three-vertical"
+  [iconOnly]="true"
+  iconOnlyText="Menu d'actions"
+  appearance="outline"
+  variant="primary"
+>
+  <div dropdown-menu>
+    <button class="dropdown-item">
+      <i class="ph ph-pencil-simple"></i>
+      Modifier
+    </button>
+    <button class="dropdown-item">
+      <i class="ph ph-trash"></i>
+      Supprimer
+    </button>
+  </div>
+</psh-dropdown>`;
+
   iconItemsCode = `<button class="dropdown-item">
   <i class="ph ph-pencil-simple"></i>
   Modifier
@@ -133,6 +143,7 @@ export class DropdownsDemoComponent {
 </button>`;
 
   statesCode = `<psh-dropdown
+  appearance="filled"
   variant="primary"
   [disabled]="isFormInvalid"
   (selected)="handleSelect($event)"

@@ -1,0 +1,181 @@
+/* --- Host & Container --- */
+:host {
+  display: block;
+  width: 100%;
+  max-width: 32rem;
+  transition: all var(--animation-duration-default) var(--animation-easing-default);
+}
+
+:host.full-width {
+  max-width: none;
+}
+
+.textarea-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--form-field-gap);
+}
+
+/* --- Label --- */
+.textarea-label {
+  display: block;
+  color: var(--text-color);
+  font-size: 0.875rem;
+  font-weight: 500;
+  width: 100%;
+  cursor: pointer;
+}
+
+.textarea-label.required::after {
+  content: '*';
+  color: var(--danger-color);
+  margin-left: 0.125rem;
+}
+
+/* --- Wrapper & Textarea Base --- */
+.textarea-wrapper {
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+
+textarea {
+  width: 100%;
+  min-height: 5rem;
+  padding: 0.625rem 1rem;
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--text-color);
+  background: var(--surface-0);
+  border: 0.125rem solid var(--surface-border);
+  border-radius: var(--border-radius);
+  transition: border-color var(--animation-duration-default) var(--animation-easing-default),
+              box-shadow var(--animation-duration-default) var(--animation-easing-default),
+              background var(--animation-duration-default) var(--animation-easing-default);
+}
+
+textarea:hover:not(:disabled):not(:focus):not([readonly]) {
+  border-color: var(--primary-color);
+}
+
+textarea::placeholder {
+  color: var(--text-color-tertiary);
+  opacity: 1;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.125rem var(--focus-ring-color);
+}
+
+/* --- Variantes --- */
+:host.outlined textarea {
+  background: transparent;
+}
+
+:host.filled textarea {
+  background: var(--surface-ground);
+  border: 0.125rem solid var(--surface-border);
+}
+
+:host.filled textarea:hover:not(:disabled):not(:focus):not([readonly]) {
+  background: var(--surface-hover);
+}
+
+:host.filled textarea:focus {
+  background: var(--surface-0);
+}
+
+/* --- États --- */
+:host.error textarea {
+  border-color: var(--danger-color);
+}
+
+:host.error textarea:focus {
+  box-shadow: 0 0 0 0.125rem var(--focus-ring-error);
+}
+
+:host.success textarea {
+  border-color: var(--success-color);
+}
+
+:host.success textarea:focus {
+  box-shadow: 0 0 0 0.125rem var(--focus-ring-success);
+}
+
+:host.disabled textarea {
+  background: var(--surface-ground);
+  cursor: not-allowed;
+  opacity: var(--opacity-disabled);
+}
+
+:host.readonly textarea {
+  background: var(--surface-ground);
+  cursor: default;
+}
+
+/* --- Tailles --- */
+:host.small textarea {
+  font-size: 0.875rem;
+  padding: 0.5rem 0.75rem;
+  min-height: 4rem;
+}
+
+:host.large textarea {
+  font-size: 1.125rem;
+  padding: 0.75rem 1.125rem;
+  min-height: 6rem;
+}
+
+/* --- Auto-size --- */
+:host.auto-size textarea {
+  overflow: hidden;
+  resize: none;
+}
+
+/* --- Footer, messages & compteur --- */
+.textarea-footer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.textarea-messages {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.textarea-error,
+.textarea-success,
+.textarea-hint {
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.textarea-error { color: var(--danger-color); }
+.textarea-success { color: var(--success-color); }
+.textarea-hint { color: var(--text-color-secondary); }
+
+.textarea-count {
+  flex: 0 0 auto;
+  font-size: 0.8125rem;
+  color: var(--text-color-tertiary);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.textarea-count.at-limit {
+  color: var(--warning-color);
+  font-weight: 500;
+}
+
+.textarea-count.over-limit {
+  color: var(--danger-color);
+  font-weight: 600;
+}

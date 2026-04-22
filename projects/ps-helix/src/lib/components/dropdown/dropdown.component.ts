@@ -11,7 +11,7 @@ import {
   OnDestroy
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DropdownItem, DropdownPlacement, DropdownSize } from './dropdown.types';
+import { DropdownAppearance, DropdownItem, DropdownPlacement, DropdownSize, DropdownVariant } from './dropdown.types';
 
 @Component({
   selector: 'psh-dropdown',
@@ -25,13 +25,16 @@ export class PshDropdownComponent<T = string> implements OnDestroy {
   private clickOutsideHandler: ((event: MouseEvent) => void) | null = null;
 
   // Regular inputs
-  variant = input<'primary' | 'secondary' | 'outline' | 'text'>('primary');
+  appearance = input<DropdownAppearance>('filled');
+  variant = input<DropdownVariant>('primary');
   size = input<DropdownSize>('medium');
   placement = input<DropdownPlacement>('bottom-start');
   items = input<DropdownItem<T>[]>([]);
   label = input('Dropdown Menu');
   icon = input<string>();
   ariaLabel = input<string>();
+  iconOnly = input<boolean>(false);
+  iconOnlyText = input<string>();
 
   // Model inputs
   disabled = model(false);
@@ -50,9 +53,14 @@ export class PshDropdownComponent<T = string> implements OnDestroy {
   isOpen = computed(() => this.isOpenSignal());
   selectedItem = computed(() => this.selectedItemSignal());
 
-  computedAriaLabel = computed(() => 
-    this.ariaLabel() || 'Toggle dropdown menu'
-  );
+  isIconOnly = computed(() => this.iconOnly() && !!this.icon());
+
+  computedAriaLabel = computed(() => {
+    if (this.isIconOnly()) {
+      return this.iconOnlyText() || this.ariaLabel() || 'Toggle dropdown menu';
+    }
+    return this.ariaLabel() || 'Toggle dropdown menu';
+  });
 
   state = computed(() => this.getState());
 
