@@ -220,6 +220,24 @@
   line-height: 1.6;
 }
 
+/* Variant Specifications */
+.variant-specs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-md);
+}
+
+.variant-code {
+  display: inline-block;
+  background: var(--surface-ground);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  font-family: 'Courier New', monospace;
+  font-size: var(--font-size-sm);
+  color: var(--text-color);
+}
+
 /* Size Specifications */
 .size-specs {
   display: flex;
