@@ -20,12 +20,7 @@
             "inlineStyleLanguage": "css",
             "assets": [
               "src/favicon.ico",
-              "src/assets",
-              {
-                "glob": "**/*",
-                "input": "projects/ps-helix/src/lib/assets",
-                "output": "/assets"
-              }
+              "src/assets"
             ],
             "styles": [
               "src/styles.css"
