@@ -42,7 +42,8 @@
 }
 
 .variant-preview {
-  background: var(--surface-ground);
+  background: var(--surface-0);
+  border-bottom: 1px solid var(--surface-border);
   padding: var(--spacing-xl);
   display: flex;
   align-items: flex-start;
