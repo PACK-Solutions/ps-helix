@@ -64,7 +64,12 @@ export * from './lib/components/tooltip/tooltip.component';
 export * from './lib/components/tooltip/tooltip.types';
 
 export * from './lib/services/theme/theme.service';
-export { INSURER_CONTEXT_SERVICE, InsurerContextService } from './lib/services/theme/theme.service';
+export {
+  CUSTOMER_CONTEXT_SERVICE,
+  CustomerContextService,
+  PSH_THEME_OPTIONS,
+  PshThemeOptions,
+} from './lib/services/theme/theme.service';
 export * from './lib/services/theme/types/theme.types';
 export * from './lib/services/translation/translation.service';
 export * from './lib/services/translation/types/i18n.types';
