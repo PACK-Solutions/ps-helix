@@ -86,17 +86,13 @@
         {{ error() }}
       </ng-content>
     </div>
-  }
-
-  @if (success()) {
+  } @else if (success()) {
     <div id="success-message" class="input-success" role="status">
       <ng-content select="[input-success]">
         {{ success() }}
       </ng-content>
     </div>
-  }
-
-  @if (hint()) {
+  } @else if (hint()) {
     <div id="hint-message" class="input-hint">
       <ng-content select="[input-hint]">
         {{ hint() }}

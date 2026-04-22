@@ -36,9 +36,7 @@
     <div [id]="errorId()!" class="switch-error" role="alert" aria-live="polite">
       {{ error() }}
     </div>
-  }
-
-  @if (success()) {
+  } @else if (success()) {
     <div [id]="successId()!" class="switch-success" role="status" aria-live="polite">
       {{ success() }}
     </div>

@@ -1,13 +1,13 @@
 .radio-container {
   display: inline-flex;
   flex-direction: column;
-  gap: var(--spacing-xs);
+  gap: var(--form-field-gap);
 }
 
 .radio-label {
   display: inline-flex;
   align-items: center;
-  gap: var(--spacing-sm);
+  gap: var(--form-label-gap);
   cursor: pointer;
   user-select: none;
   color: var(--text-color);

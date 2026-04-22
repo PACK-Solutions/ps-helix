@@ -36,9 +36,7 @@
     <div [id]="errorMessageId()" class="radio-error" role="alert">
       {{ error() }}
     </div>
-  }
-
-  @if (success()) {
+  } @else if (success()) {
     <div [id]="successMessageId()" class="radio-success" role="status">
       {{ success() }}
     </div>
