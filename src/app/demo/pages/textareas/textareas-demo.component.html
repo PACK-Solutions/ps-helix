@@ -1,0 +1,241 @@
+<ds-demo-page-layout
+  title="Textarea"
+  introText="Le composant psh-textarea permet la saisie de texte multiligne. Il est compatible avec les Reactive Forms et les Signal Forms, supporte l'auto-resize, un compteur de caracteres et s'aligne sur l'ensemble des conventions visuelles et d'accessibilite du design system."
+  [showTechnicalSection]="false"
+>
+  <div demo-content>
+    <!-- Variantes -->
+    <section class="textarea-section">
+      <h3 class="section-title">Variantes</h3>
+      <p class="section-intro">Deux variantes visuelles pour s'adapter au niveau de densite de l'interface.</p>
+      <div class="cards-grid two-cols">
+        <div class="variant-card">
+          <div class="variant-preview">
+            <psh-textarea
+              variant="outlined"
+              label="Outlined"
+              placeholder="Votre message..."
+            ></psh-textarea>
+          </div>
+          <div class="variant-info">
+            <h4>Outlined</h4>
+            <div class="variant-specs">
+              <code class="variant-code">variant="outlined"</code>
+            </div>
+            <p>Style par defaut avec bordure marquee. Ideal pour les formulaires classiques.</p>
+            <ds-code-snippet [code]="outlinedCode" />
+          </div>
+        </div>
+        <div class="variant-card">
+          <div class="variant-preview">
+            <psh-textarea
+              variant="filled"
+              label="Filled"
+              placeholder="Votre message..."
+            ></psh-textarea>
+          </div>
+          <div class="variant-info">
+            <h4>Filled</h4>
+            <div class="variant-specs">
+              <code class="variant-code">variant="filled"</code>
+            </div>
+            <p>Style avec fond colore, pour les interfaces denses ou modernes.</p>
+            <ds-code-snippet [code]="filledCode" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tailles -->
+    <section class="textarea-section">
+      <h3 class="section-title">Tailles</h3>
+      <p class="section-intro">Trois tailles disponibles pour s'adapter a la hierarchie visuelle.</p>
+      <div class="cards-grid three-cols">
+        <div class="variant-card">
+          <div class="variant-preview">
+            <psh-textarea size="small" label="Small" placeholder="Saisie compacte"></psh-textarea>
+          </div>
+          <div class="variant-info">
+            <h4>Small</h4>
+            <div class="variant-specs">
+              <code class="variant-code">size="small"</code>
+            </div>
+            <p>Taille compacte, pour formulaires denses.</p>
+          </div>
+        </div>
+        <div class="variant-card">
+          <div class="variant-preview">
+            <psh-textarea size="medium" label="Medium (Defaut)" placeholder="Saisie standard"></psh-textarea>
+          </div>
+          <div class="variant-info">
+            <h4>Medium</h4>
+            <div class="variant-specs">
+              <code class="variant-code">size="medium"</code>
+            </div>
+            <p>Taille standard, recommandee dans la plupart des cas.</p>
+          </div>
+        </div>
+        <div class="variant-card">
+          <div class="variant-preview">
+            <psh-textarea size="large" label="Large" placeholder="Saisie confortable"></psh-textarea>
+          </div>
+          <div class="variant-info">
+            <h4>Large</h4>
+            <div class="variant-specs">
+              <code class="variant-code">size="large"</code>
+            </div>
+            <p>Taille confortable pour la redaction de contenus longs.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Auto-size et compteur -->
+    <section class="textarea-section">
+      <h3 class="section-title">Auto-size et compteur</h3>
+      <p class="section-intro">Le redimensionnement automatique et le compteur de caracteres aident l'utilisateur a visualiser sa progression.</p>
+      <div class="cards-grid two-cols">
+        <div class="variant-card">
+          <div class="variant-preview">
+            <psh-textarea
+              label="Auto-size"
+              placeholder="Tapez plusieurs lignes..."
+              [autoSize]="true"
+              hint="La hauteur s'adapte a votre saisie"
+              [value]="autoSizeValue()"
+              (inputBlur)="null"
+            ></psh-textarea>
+          </div>
+          <div class="variant-info">
+            <h4>Auto-size</h4>
+            <div class="variant-specs">
+              <code class="variant-code">[autoSize]="true"</code>
+            </div>
+            <p>Recalcule la hauteur a chaque saisie et force <code>resize=none</code>.</p>
+            <ds-code-snippet [code]="autoSizeCode" />
+          </div>
+        </div>
+        <div class="variant-card">
+          <div class="variant-preview">
+            <psh-textarea
+              label="Message (140 max)"
+              placeholder="Ecrivez votre message..."
+              [maxLength]="140"
+              [showCharacterCount]="true"
+            ></psh-textarea>
+          </div>
+          <div class="variant-info">
+            <h4>Compteur</h4>
+            <div class="variant-specs">
+              <code class="variant-code">[showCharacterCount]="true"</code>
+            </div>
+            <p>Indique la progression vers la limite. Passe en warning puis en erreur lorsque la limite est atteinte ou depassee.</p>
+            <ds-code-snippet [code]="counterCode" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resize -->
+    <section class="textarea-section">
+      <h3 class="section-title">Resize</h3>
+      <p class="section-intro">Controle manuel du redimensionnement : <code>none</code>, <code>vertical</code> (defaut), <code>horizontal</code>, <code>both</code>.</p>
+      <div class="cards-grid two-cols">
+        <div class="variant-card">
+          <div class="variant-preview">
+            <psh-textarea label="Resize vertical (defaut)" resize="vertical"></psh-textarea>
+          </div>
+          <div class="variant-info">
+            <h4>Vertical</h4>
+            <div class="variant-specs">
+              <code class="variant-code">resize="vertical"</code>
+            </div>
+            <p>Comportement recommande. L'utilisateur peut agrandir verticalement seulement.</p>
+          </div>
+        </div>
+        <div class="variant-card">
+          <div class="variant-preview">
+            <psh-textarea label="Resize libre" resize="both"></psh-textarea>
+          </div>
+          <div class="variant-info">
+            <h4>Both</h4>
+            <div class="variant-specs">
+              <code class="variant-code">resize="both"</code>
+            </div>
+            <p>Redimensionnement libre dans les deux axes.</p>
+            <ds-code-snippet [code]="resizeCode" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Full width -->
+    <section class="textarea-section">
+      <h3 class="section-title">Full width</h3>
+      <p class="section-intro">Active <code>fullWidth</code> pour faire occuper au composant toute la largeur disponible.</p>
+      <div class="full-width-demo">
+        <psh-textarea
+          label="Description"
+          placeholder="Ce textarea prend toute la largeur du conteneur"
+          [fullWidth]="true"
+          [rows]="3"
+        ></psh-textarea>
+      </div>
+      <ds-code-snippet [code]="fullWidthCode" />
+    </section>
+
+    <!-- Etats -->
+    <section class="textarea-section">
+      <h3 class="section-title">Etats</h3>
+      <p class="section-intro">Erreur, succes, aide, lecture seule et desactive.</p>
+      <div class="cards-grid two-cols">
+        <psh-textarea label="Avec aide" hint="Ce texte sera visible dans votre profil" />
+        <psh-textarea label="Avec succes" success="Votre saisie est valide" value="Parfait" />
+        <psh-textarea label="Avec erreur" error="Ce champ est requis" />
+        <psh-textarea label="Lecture seule" [readonly]="true" value="Contenu non modifiable" />
+        <psh-textarea label="Desactive" [disabled]="true" />
+      </div>
+      <ds-code-snippet [code]="statesCode" />
+    </section>
+
+    <!-- Reactive Forms -->
+    <section class="textarea-section">
+      <h3 class="section-title">Integration Reactive Forms</h3>
+      <p class="section-intro">Compatible via <code>ControlValueAccessor</code>. L'etat invalide + touched declenche automatiquement la mise en forme d'erreur.</p>
+      <div class="form-demo">
+        <psh-textarea
+          [formControl]="reactiveControl"
+          label="Commentaire"
+          placeholder="Tapez votre commentaire..."
+          [maxLength]="140"
+          [showCharacterCount]="true"
+          [required]="true"
+          [error]="reactiveControl.touched && reactiveControl.hasError('required') ? 'Ce champ est requis' : null"
+        ></psh-textarea>
+        <div class="form-meta">
+          <span>Valeur : <strong>{{ reactiveControl.value || '(vide)' }}</strong></span>
+          <span>Statut : <strong>{{ reactiveControl.status }}</strong></span>
+        </div>
+      </div>
+      <ds-code-snippet [code]="reactiveCode" />
+    </section>
+
+    <!-- Signal Forms -->
+    <section class="textarea-section">
+      <h3 class="section-title">Integration Signal Forms</h3>
+      <p class="section-intro">Le composant expose sa valeur via <code>model&lt;string&gt;</code> et implemente <code>FormValueControl&lt;string&gt;</code>.</p>
+      <div class="form-demo">
+        <psh-textarea
+          [formField]="signalForm.description"
+          label="Description"
+          placeholder="Decrivez votre demande..."
+          hint="Entre 1 et 200 caracteres"
+        ></psh-textarea>
+        <div class="form-meta">
+          <span>Model : <code>{{ signalModel() | json }}</code></span>
+        </div>
+      </div>
+      <ds-code-snippet [code]="signalFormsCode" />
+    </section>
+  </div>
+</ds-demo-page-layout>
