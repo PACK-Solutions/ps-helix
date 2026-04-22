@@ -549,6 +549,189 @@
       </div>
     </section>
 
+    <!-- Dropdown Icon Only - Section Pleine Largeur -->
+    <section class="dropdown-icon-only-section">
+      <h3 class="section-title">Dropdown Icône Seule</h3>
+      <div class="icon-only-container">
+        <div class="icon-only-intro">
+          <p>Le mode <code>iconOnly</code> transforme le déclencheur en un bouton carré compact affichant uniquement une icône. Le caret est masqué : l'icône métier (menu kebab, filtre, paramètres) devient elle-même l'affordance du menu. La sémantique ARIA (<code>aria-haspopup</code>, <code>aria-expanded</code>) est préservée pour les lecteurs d'écran.</p>
+        </div>
+        <div class="icon-only-grid">
+          <div class="icon-only-card">
+            <div class="icon-only-preview">
+              <psh-dropdown
+                icon="dots-three-vertical"
+                [iconOnly]="true"
+                iconOnlyText="Menu d'actions"
+                appearance="filled"
+                variant="primary"
+              >
+                <div dropdown-menu>
+                  @for (item of iconItems; track item.value) {
+                  <button
+                    class="dropdown-item"
+                    (click)="selectItem(item.value)"
+                    [class.disabled]="item.disabled"
+                  >
+                    <i class="ph ph-{{ item.icon }}" aria-hidden="true"></i>
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown
+                icon="dots-three-vertical"
+                [iconOnly]="true"
+                iconOnlyText="Menu d'actions"
+                appearance="outline"
+                variant="primary"
+              >
+                <div dropdown-menu>
+                  @for (item of iconItems; track item.value) {
+                  <button
+                    class="dropdown-item"
+                    (click)="selectItem(item.value)"
+                    [class.disabled]="item.disabled"
+                  >
+                    <i class="ph ph-{{ item.icon }}" aria-hidden="true"></i>
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown
+                icon="dots-three-vertical"
+                [iconOnly]="true"
+                iconOnlyText="Menu d'actions"
+                appearance="text"
+                variant="primary"
+              >
+                <div dropdown-menu>
+                  @for (item of iconItems; track item.value) {
+                  <button
+                    class="dropdown-item"
+                    (click)="selectItem(item.value)"
+                    [class.disabled]="item.disabled"
+                  >
+                    <i class="ph ph-{{ item.icon }}" aria-hidden="true"></i>
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+            </div>
+            <div class="icon-only-info">
+              <h4>Apparences</h4>
+              <p>Les trois apparences (filled, outline, text) sont supportées en mode icon-only, pour s'adapter au niveau de hiérarchie visuelle souhaité.</p>
+              <ds-code-snippet [code]="iconOnlyCode" />
+            </div>
+          </div>
+
+          <div class="icon-only-card">
+            <div class="icon-only-preview">
+              <psh-dropdown
+                icon="funnel"
+                [iconOnly]="true"
+                iconOnlyText="Filtrer les résultats"
+                appearance="outline"
+                variant="primary"
+                size="small"
+              >
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown
+                icon="funnel"
+                [iconOnly]="true"
+                iconOnlyText="Filtrer les résultats"
+                appearance="outline"
+                variant="primary"
+                size="medium"
+              >
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown
+                icon="funnel"
+                [iconOnly]="true"
+                iconOnlyText="Filtrer les résultats"
+                appearance="outline"
+                variant="primary"
+                size="large"
+              >
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">
+                    {{ item.content }}
+                  </button>
+                  }
+                </div>
+              </psh-dropdown>
+            </div>
+            <div class="icon-only-info">
+              <h4>Tailles</h4>
+              <p>Le trigger carré s'aligne sur la hauteur des inputs standards (small, medium, large) pour une cohérence visuelle avec les autres composants du formulaire.</p>
+            </div>
+          </div>
+
+          <div class="icon-only-card">
+            <div class="icon-only-preview">
+              <psh-dropdown icon="gear" [iconOnly]="true" iconOnlyText="Paramètres" appearance="filled" variant="primary">
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown icon="gear" [iconOnly]="true" iconOnlyText="Paramètres" appearance="filled" variant="secondary">
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown icon="gear" [iconOnly]="true" iconOnlyText="Paramètres" appearance="filled" variant="success">
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown icon="gear" [iconOnly]="true" iconOnlyText="Paramètres" appearance="filled" variant="warning">
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
+                  }
+                </div>
+              </psh-dropdown>
+              <psh-dropdown icon="gear" [iconOnly]="true" iconOnlyText="Paramètres" appearance="filled" variant="danger">
+                <div dropdown-menu>
+                  @for (item of basicItems; track item.value) {
+                  <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
+                  }
+                </div>
+              </psh-dropdown>
+            </div>
+            <div class="icon-only-info">
+              <h4>Variantes de couleur</h4>
+              <p>Les cinq variantes (primary, secondary, success, warning, danger) restent disponibles et cohérentes avec le reste du design system.</p>
+              <p class="icon-only-a11y"><strong>Accessibilité :</strong> toujours fournir <code>iconOnlyText</code> pour garantir un <code>aria-label</code> descriptif aux lecteurs d'écran.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- États des Dropdowns - Section Pleine Largeur -->
     <section class="dropdown-states-section">
       <h3 class="section-title">États des Dropdowns</h3>
@@ -695,6 +878,18 @@
                 <td><code>string | undefined</code></td>
                 <td><code>undefined</code></td>
                 <td>Label ARIA personnalisé pour l'accessibilité</td>
+              </tr>
+              <tr>
+                <td><code>iconOnly</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Active le mode icône seule (masque le label et le caret). Nécessite <code>icon</code>.</td>
+              </tr>
+              <tr>
+                <td><code>iconOnlyText</code></td>
+                <td><code>string | undefined</code></td>
+                <td><code>undefined</code></td>
+                <td>Label accessible (aria-label) utilisé en mode icon-only</td>
               </tr>
             </tbody>
           </table>

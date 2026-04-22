@@ -3,6 +3,7 @@
   [class]="size()"
   [class.open]="isOpen()"
   [class.disabled]="disabled()"
+  [class.icon-only]="isIconOnly()"
   [attr.data-state]="state()"
 >
   <button
@@ -23,19 +24,23 @@
     [disabled]="disabled()"
   >
     <span class="trigger-content">
-      @if (icon()) {
+      @if (isIconOnly()) {
         <i class="ph ph-{{ icon() }}" aria-hidden="true"></i>
-      }
-      <ng-content select="[dropdown-trigger]">
-        @if (label()) {
-          {{ label() }}
+      } @else {
+        @if (icon()) {
+          <i class="ph ph-{{ icon() }}" aria-hidden="true"></i>
         }
-      </ng-content>
-      <i 
-        class="ph ph-caret-down trigger-arrow"
-        [class.open]="isOpen()"
-        aria-hidden="true"
-      ></i>
+        <ng-content select="[dropdown-trigger]">
+          @if (label()) {
+            {{ label() }}
+          }
+        </ng-content>
+        <i
+          class="ph ph-caret-down trigger-arrow"
+          [class.open]="isOpen()"
+          aria-hidden="true"
+        ></i>
+      }
     </span>
   </button>
 

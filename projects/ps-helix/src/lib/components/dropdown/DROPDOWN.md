@@ -29,6 +29,29 @@ import { PshDropdownComponent } from 'ps-helix';
 </psh-dropdown>
 ```
 
+### Mode Icône Seule (icon-only)
+
+Transforme le déclencheur en bouton carré compact affichant uniquement une icône. Le caret est masqué : l'icône métier (kebab, filtre, paramètres) devient l'affordance visuelle du menu. La sémantique ARIA (`aria-haspopup`, `aria-expanded`) est conservée.
+
+```typescript
+<psh-dropdown
+  icon="dots-three-vertical"
+  [iconOnly]="true"
+  iconOnlyText="Menu d'actions"
+  appearance="outline"
+  variant="primary"
+>
+  <div dropdown-menu>
+    <button class="dropdown-item">
+      <i class="ph ph-pencil-simple"></i>
+      Modifier
+    </button>
+  </div>
+</psh-dropdown>
+```
+
+> **Accessibilité** : toujours fournir `iconOnlyText` pour garantir un `aria-label` descriptif aux lecteurs d'écran lorsque `iconOnly` est actif.
+
 ### Alternative (avec l'API items)
 ```typescript
 <psh-dropdown
@@ -57,6 +80,8 @@ import { PshDropdownComponent } from 'ps-helix';
 | label | string | 'Dropdown Menu' | Label du bouton |
 | icon | string | undefined | Icône du bouton |
 | ariaLabel | string | undefined | Label ARIA personnalisé |
+| iconOnly | boolean | false | Mode icône seule (masque label et caret, requiert `icon`) |
+| iconOnlyText | string | undefined | Label accessible (aria-label) utilisé en mode icon-only |
 
 ### Model (Two-way binding)
 | Nom | Type | Défaut | Description |

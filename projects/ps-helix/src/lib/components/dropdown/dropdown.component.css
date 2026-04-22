@@ -172,6 +172,34 @@
   min-width: 8.75rem;
 }
 
+/* Icon-only mode: square trigger, centered icon, no caret */
+.dropdown-container.icon-only .dropdown-trigger {
+  min-width: 0;
+  width: var(--height-input-md);
+  padding: 0;
+}
+
+.dropdown-container.icon-only.small .dropdown-trigger {
+  width: var(--height-input-sm);
+  padding: 0;
+  min-width: 0;
+}
+
+.dropdown-container.icon-only.large .dropdown-trigger {
+  width: var(--height-input-lg);
+  padding: 0;
+  min-width: 0;
+}
+
+.dropdown-container.icon-only .trigger-content {
+  gap: 0;
+  justify-content: center;
+}
+
+.dropdown-container.icon-only .trigger-content i {
+  margin: 0;
+}
+
 /* Menu */
 .dropdown-menu {
   position: absolute;

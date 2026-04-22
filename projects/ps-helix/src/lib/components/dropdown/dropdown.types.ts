@@ -48,4 +48,8 @@ export interface DropdownConfig {
   placement?: DropdownPlacement;
   /** État désactivé */
   disabled?: boolean;
+  /** Mode icône seule (masque le label et le caret) */
+  iconOnly?: boolean;
+  /** Texte accessible (aria-label) quand iconOnly est actif */
+  iconOnlyText?: string;
 }

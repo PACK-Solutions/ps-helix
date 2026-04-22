@@ -795,6 +795,78 @@ describe('PshDropdownComponent', () => {
     });
   });
 
+  describe('Icon-only mode', () => {
+    beforeEach(() => {
+      fixture.componentRef.setInput('icon', 'dots-three-vertical');
+      fixture.componentRef.setInput('iconOnly', true);
+      fixture.componentRef.setInput('iconOnlyText', 'Actions menu');
+      fixture.detectChanges();
+    });
+
+    it('should apply icon-only class to container', () => {
+      expect(getContainer().classList.contains('icon-only')).toBe(true);
+    });
+
+    it('should render the icon in the trigger', () => {
+      const icon = getTrigger().querySelector('i.ph-dots-three-vertical');
+      expect(icon).toBeTruthy();
+    });
+
+    it('should NOT render the caret arrow in icon-only mode', () => {
+      expect(getTriggerArrow()).toBeFalsy();
+    });
+
+    it('should NOT render the label text in icon-only mode', () => {
+      expect(getTrigger().textContent?.includes('Dropdown Menu')).toBe(false);
+    });
+
+    it('should use iconOnlyText as aria-label', () => {
+      expect(getTrigger().getAttribute('aria-label')).toBe('Actions menu');
+    });
+
+    it('should preserve aria-haspopup in icon-only mode', () => {
+      expect(getTrigger().getAttribute('aria-haspopup')).toBe('menu');
+    });
+
+    it('should preserve aria-expanded in icon-only mode', () => {
+      expect(getTrigger().getAttribute('aria-expanded')).toBe('false');
+      openDropdown();
+      expect(getTrigger().getAttribute('aria-expanded')).toBe('true');
+    });
+
+    it('should still open menu on click in icon-only mode', () => {
+      getTrigger().click();
+      fixture.detectChanges();
+
+      expect(fixture.componentInstance.isOpen()).toBe(true);
+      expect(getMenu()).toBeTruthy();
+    });
+
+    it('should fallback to ariaLabel when iconOnlyText is missing', () => {
+      fixture.componentRef.setInput('iconOnlyText', undefined);
+      fixture.componentRef.setInput('ariaLabel', 'Fallback label');
+      fixture.detectChanges();
+
+      expect(getTrigger().getAttribute('aria-label')).toBe('Fallback label');
+    });
+
+    it('should NOT enter icon-only mode when icon is missing', () => {
+      fixture.componentRef.setInput('icon', undefined);
+      fixture.detectChanges();
+
+      expect(getContainer().classList.contains('icon-only')).toBe(false);
+      expect(getTriggerArrow()).toBeTruthy();
+    });
+
+    it('should NOT enter icon-only mode when iconOnly is false', () => {
+      fixture.componentRef.setInput('iconOnly', false);
+      fixture.detectChanges();
+
+      expect(getContainer().classList.contains('icon-only')).toBe(false);
+      expect(getTriggerArrow()).toBeTruthy();
+    });
+  });
+
   describe('Edge cases', () => {
     it('should handle empty items array', () => {
       fixture.componentRef.setInput('items', []);

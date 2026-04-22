@@ -114,6 +114,25 @@ export class DropdownsDemoComponent {
   </div>
 </psh-dropdown>`;
 
+  iconOnlyCode = `<psh-dropdown
+  icon="dots-three-vertical"
+  [iconOnly]="true"
+  iconOnlyText="Menu d'actions"
+  appearance="outline"
+  variant="primary"
+>
+  <div dropdown-menu>
+    <button class="dropdown-item">
+      <i class="ph ph-pencil-simple"></i>
+      Modifier
+    </button>
+    <button class="dropdown-item">
+      <i class="ph ph-trash"></i>
+      Supprimer
+    </button>
+  </div>
+</psh-dropdown>`;
+
   iconItemsCode = `<button class="dropdown-item">
   <i class="ph ph-pencil-simple"></i>
   Modifier
