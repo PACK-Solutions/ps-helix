@@ -35,12 +35,16 @@
   filter: drop-shadow(0 12px 24px rgba(var(--primary-color-rgb), 0.3));
 }
 
+.helix-logo-dark {
+  display: none;
+}
+
 :host-context([data-theme='dark']) .helix-logo-light {
   display: none;
 }
 
-:host-context(:not([data-theme='dark'])) .helix-logo-dark {
-  display: none;
+:host-context([data-theme='dark']) .helix-logo-dark {
+  display: inline-block;
 }
 
 .title-text {
