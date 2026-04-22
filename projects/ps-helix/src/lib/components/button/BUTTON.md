@@ -75,7 +75,7 @@ import { PshButtonComponent } from 'ps-helix';
 ### Types
 
 ```typescript
-type ButtonAppearance = 'filled' | 'outline' | 'rounded' | 'text';
+type ButtonAppearance = 'filled' | 'outline' | 'text';
 type ButtonVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
 type ButtonSize = 'small' | 'medium' | 'large';
 type ButtonIconPosition = 'left' | 'right' | 'only';
@@ -116,21 +116,6 @@ type ButtonType = 'button' | 'submit' | 'reset';
 <psh-button appearance="outline" variant="success">Approuver</psh-button>
 ```
 
-### Rounded
-**Description**: Style avec coins complètement arrondis (border-radius: 50px).
-
-**Cas d'utilisation**:
-- Design moderne
-- Interfaces ludiques
-- Actions spéciales
-- Floating action buttons
-
-**Exemple**:
-```html
-<psh-button appearance="rounded" variant="primary">Commencer</psh-button>
-<psh-button appearance="rounded" variant="secondary">Explorer</psh-button>
-```
-
 ### Text
 **Description**: Style minimaliste sans fond ni bordure, uniquement la couleur du texte.
 
@@ -166,7 +151,7 @@ Taille standard pour la majorité des cas d'utilisation.
 ```html
 <psh-button size="medium" variant="primary">Moyen</psh-button>
 <psh-button size="medium" appearance="outline" variant="secondary">Annuler</psh-button>
-<psh-button size="medium" appearance="rounded" variant="primary">Action</psh-button>
+<psh-button size="medium" appearance="text" variant="primary">Action</psh-button>
 ```
 
 ### Large (48px)
@@ -176,7 +161,7 @@ Utilisé pour les actions importantes ou les interfaces tactiles.
 ```html
 <psh-button size="large" variant="primary">Grand</psh-button>
 <psh-button size="large" appearance="outline" variant="success">Valider</psh-button>
-<psh-button size="large" appearance="rounded" variant="primary">Confirmer</psh-button>
+<psh-button size="large" appearance="filled" variant="primary">Confirmer</psh-button>
 ```
 
 ## Variantes de Couleur
@@ -464,7 +449,7 @@ Le design system garantit:
   iconPosition="only"
   iconOnlyText="Ajouter un élément"
   variant="primary"
-  appearance="rounded"
+  appearance="filled"
 ></psh-button>
 ```
 
@@ -547,7 +532,7 @@ Utilisez n'importe quelle icône de [Phosphor Icons](https://phosphoricons.com/)
   Retour
 </psh-button>
 <psh-button
-  appearance="rounded"
+  appearance="filled"
   variant="primary"
   icon="arrow-right"
   iconPosition="right"
@@ -555,19 +540,6 @@ Utilisez n'importe quelle icône de [Phosphor Icons](https://phosphoricons.com/)
 >
   Continuer
 </psh-button>
-```
-
-### Floating Action Button (FAB)
-```html
-<psh-button
-  appearance="rounded"
-  variant="primary"
-  icon="plus"
-  iconPosition="only"
-  iconOnlyText="Ajouter un nouvel élément"
-  size="large"
-  (clicked)="onCreate()"
-></psh-button>
 ```
 
 ## Exemple Complet avec Toutes les Options

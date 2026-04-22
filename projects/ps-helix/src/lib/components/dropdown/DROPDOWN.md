@@ -16,7 +16,7 @@ import { PshDropdownComponent } from 'ps-helix';
 
 ### Approche Recommandee (avec contenu personnalise)
 ```typescript
-<psh-dropdown [variant]="'primary'">
+<psh-dropdown appearance="filled" variant="primary">
   <span dropdown-trigger>{{ 'DROPDOWN.TITLE' | translate }}</span>
   <div dropdown-menu>
     <button class="dropdown-item" (click)="handleSelect('1')">
@@ -37,7 +37,8 @@ import { PshDropdownComponent } from 'ps-helix';
     { content: 'Option 2', value: '2', icon: 'check' },
     { content: 'Option 3', value: '3', disabled: true }
   ]"
-  [variant]="'primary'"
+  appearance="filled"
+  variant="primary"
   [label]="'Actions'"
   (selected)="handleSelect($event)"
 ></psh-dropdown>
@@ -48,7 +49,8 @@ import { PshDropdownComponent } from 'ps-helix';
 ### Inputs
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
-| variant | string | 'primary' | Style du dropdown (primary, secondary, outline, text) |
+| appearance | DropdownAppearance | 'filled' | Apparence du dropdown |
+| variant | DropdownVariant | 'primary' | Couleur sémantique du dropdown |
 | size | DropdownSize | 'medium' | Taille du dropdown (small, medium, large) |
 | placement | DropdownPlacement | 'bottom-start' | Position du menu |
 | items | DropdownItem[] | [] | Liste des éléments |
@@ -68,6 +70,15 @@ import { PshDropdownComponent } from 'ps-helix';
 | opened | EventEmitter<void> | Émis à l'ouverture |
 | closed | EventEmitter<void> | Émis à la fermeture |
 
+### Types
+
+```typescript
+type DropdownAppearance = 'filled' | 'outline' | 'text';
+type DropdownVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
+type DropdownSize = 'small' | 'medium' | 'large';
+type DropdownPlacement = 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end';
+```
+
 ### Interface DropdownItem
 ```typescript
 interface DropdownItem<T = string> {
@@ -77,6 +88,47 @@ interface DropdownItem<T = string> {
   disabled?: boolean; // État désactivé
   active?: boolean;  // État actif
 }
+```
+
+## Apparences
+
+Le dropdown suit la même logique que le bouton : l'`appearance` contrôle la forme (remplissage) et `variant` contrôle la couleur sémantique.
+
+### Filled (Par défaut)
+Fond plein, idéal pour les actions principales.
+```html
+<psh-dropdown appearance="filled" variant="primary">
+  <span dropdown-trigger>Actions</span>
+  <div dropdown-menu>...</div>
+</psh-dropdown>
+```
+
+### Outline
+Bordure sans fond, pour les actions secondaires.
+```html
+<psh-dropdown appearance="outline" variant="primary">
+  <span dropdown-trigger>Actions</span>
+  <div dropdown-menu>...</div>
+</psh-dropdown>
+```
+
+### Text
+Sans fond ni bordure, pour les actions tertiaires et les menus discrets.
+```html
+<psh-dropdown appearance="text" variant="primary">
+  <span dropdown-trigger>Actions</span>
+  <div dropdown-menu>...</div>
+</psh-dropdown>
+```
+
+## Variantes de Couleur
+
+Toutes les apparences acceptent les cinq variantes sémantiques : `primary`, `secondary`, `success`, `warning`, `danger`.
+
+```html
+<psh-dropdown appearance="filled" variant="success"><span dropdown-trigger>Valider</span>...</psh-dropdown>
+<psh-dropdown appearance="outline" variant="danger"><span dropdown-trigger>Supprimer</span>...</psh-dropdown>
+<psh-dropdown appearance="text" variant="warning"><span dropdown-trigger>Attention</span>...</psh-dropdown>
 ```
 
 ## Bonnes Pratiques

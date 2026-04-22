@@ -44,7 +44,7 @@ describe('PshButtonComponent', () => {
 
   const ALL_VARIANTS = ['primary', 'secondary', 'success', 'warning', 'danger'] as const;
   const ALL_SIZES = ['small', 'medium', 'large'] as const;
-  const ALL_APPEARANCES = ['filled', 'outline', 'rounded', 'text'] as const;
+  const ALL_APPEARANCES = ['filled', 'outline', 'text'] as const;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -557,7 +557,7 @@ describe('PshButtonComponent', () => {
   });
 
   describe('Appearance classes', () => {
-    it.each<[ButtonAppearance]>([['filled'], ['outline'], ['rounded'], ['text']])(
+    it.each<[ButtonAppearance]>([['filled'], ['outline'], ['text']])(
       'should apply "%s" appearance class',
       (appearance) => {
         fixture.componentRef.setInput('appearance', appearance);
@@ -571,7 +571,7 @@ describe('PshButtonComponent', () => {
       expect(getButton().classList.contains('filled')).toBe(true);
     });
 
-    it.each<[ButtonAppearance]>([['filled'], ['outline'], ['rounded'], ['text']])(
+    it.each<[ButtonAppearance]>([['filled'], ['outline'], ['text']])(
       'should only have "%s" appearance class and no other appearance classes',
       (appearance) => {
         fixture.componentRef.setInput('appearance', appearance);

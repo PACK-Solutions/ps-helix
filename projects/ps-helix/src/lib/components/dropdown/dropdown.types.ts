@@ -15,6 +15,16 @@ export interface DropdownItem<T = string> {
 }
 
 /**
+ * Apparences disponibles pour le dropdown
+ */
+export type DropdownAppearance = 'filled' | 'outline' | 'text';
+
+/**
+ * Variantes disponibles pour le dropdown
+ */
+export type DropdownVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
+
+/**
  * Tailles disponibles pour le dropdown
  */
 export type DropdownSize = 'small' | 'medium' | 'large';
@@ -28,8 +38,10 @@ export type DropdownPlacement = 'bottom-start' | 'bottom-end' | 'top-start' | 't
  * Configuration complète du dropdown
  */
 export interface DropdownConfig {
-  /** Variante visuelle */
-  variant?: 'primary' | 'secondary' | 'outline' | 'text';
+  /** Apparence visuelle */
+  appearance?: DropdownAppearance;
+  /** Variante de couleur */
+  variant?: DropdownVariant;
   /** Taille du dropdown */
   size?: DropdownSize;
   /** Position du menu */
