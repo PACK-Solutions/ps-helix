@@ -241,5 +241,5 @@ input:focus {
 .input-hint { color: var(--text-color-secondary); }
 
 @keyframes spin {
-  to { transform: translateY(-50%) rotate(360deg); }
+  to { transform: rotate(360deg); }
 }
