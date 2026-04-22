@@ -2,6 +2,7 @@
 /* Global styles are inherited from demo-page-layout.component.css */
 
 /* Dropdown component specific sections */
+.dropdown-appearances-section,
 .dropdown-variants-section,
 .dropdown-sizes-section,
 .dropdown-placements-section,
@@ -11,6 +12,7 @@
 }
 
 /* Containers */
+.appearances-container,
 .variants-container,
 .sizes-container,
 .placements-container,
@@ -19,6 +21,7 @@
   width: 100%;
 }
 
+.appearances-intro,
 .variants-intro,
 .sizes-intro,
 .placements-intro,
@@ -31,6 +34,7 @@
 }
 
 /* Grid Layouts */
+.appearances-grid,
 .variants-grid,
 .sizes-grid,
 .placements-grid,
@@ -41,6 +45,7 @@
 }
 
 /* Cards */
+.appearance-card,
 .variant-card,
 .size-card,
 .placement-card,
@@ -54,6 +59,7 @@
   overflow: hidden;
 }
 
+.appearance-card:hover,
 .variant-card:hover,
 .size-card:hover,
 .placement-card:hover,
@@ -64,7 +70,7 @@
 }
 
 /* Preview Areas */
-.variant-preview,
+.appearance-preview,
 .size-preview,
 .placement-preview,
 .icon-preview {
@@ -78,7 +84,31 @@
   min-height: 100px;
 }
 
+/* Variant preview stacks 3 dropdowns (one per appearance) vertically */
+.variant-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-2xl);
+  background: var(--surface-ground);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--spacing-lg);
+  min-height: 180px;
+}
+
+.variant-preview psh-dropdown {
+  display: flex;
+  width: 100%;
+}
+
+.variant-preview psh-dropdown .dropdown-container,
+.variant-preview psh-dropdown .dropdown-trigger {
+  width: 100%;
+}
+
 /* Info Sections */
+.appearance-info h4,
 .variant-info h4,
 .size-info h4,
 .placement-info h4,
@@ -320,6 +350,7 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .appearances-grid,
   .variants-grid,
   .sizes-grid,
   .placements-grid,
@@ -328,6 +359,7 @@
     grid-template-columns: 1fr;
   }
 
+  .appearance-card,
   .variant-card,
   .size-card,
   .placement-card,
@@ -346,6 +378,7 @@
 }
 
 @media (max-width: 480px) {
+  .appearances-grid,
   .variants-grid,
   .sizes-grid,
   .placements-grid,
@@ -355,6 +388,7 @@
     gap: var(--spacing-md);
   }
 
+  .appearance-card,
   .variant-card,
   .size-card,
   .placement-card,
@@ -362,6 +396,7 @@
     padding: var(--spacing-sm) var(--spacing-md);
   }
 
+  .appearance-preview,
   .variant-preview,
   .size-preview,
   .placement-preview,
@@ -383,6 +418,7 @@
     font-size: calc(var(--font-size-sm) * 0.9);
   }
 
+  .appearance-info h4,
   .variant-info h4,
   .size-info h4,
   .placement-info h4,
@@ -398,6 +434,7 @@
 }
 
 @media (max-width: 375px) {
+  .appearance-card,
   .variant-card,
   .size-card,
   .placement-card,
@@ -405,6 +442,7 @@
     padding: var(--spacing-xs) var(--spacing-sm);
   }
 
+  .appearance-preview,
   .variant-preview,
   .size-preview,
   .placement-preview,
