@@ -168,6 +168,11 @@ interface MenuItem<T = string> {
 - `disabled`: Élément désactivé
 - `active`: Élément actif
 
+### Comportement en mode collapsed (vertical)
+- Les items parents et enfants affichent automatiquement un tooltip contextuel au survol (position `right`) pour révéler le libellé.
+- Les sous-menus restent repliables : un clic sur l'item parent bascule l'affichage des enfants.
+- Les tooltips natifs du navigateur sont supprimés au profit du `psh-tooltip` intégré, garantissant un rendu cohérent avec le design system.
+
 ## Accessibilité
 
 ### Attributs ARIA
