@@ -546,7 +546,7 @@ Helix provides **28 production-ready components** organized by category:
 
 ### Navigation Components (4)
 
-- **PshMenuComponent** - Dropdown menu with nested items
+- **PshMenuComponent** - Dropdown menu with nested items, vertical/horizontal modes and collapsible mode; when collapsed, automatic tooltips appear on icons for both root items and sub-items (right position, 300ms delay) with `aria-describedby` linkage
 - **PshPaginationComponent** - Pagination controls with page numbers
 - **PshStepperComponent** + **PshStepComponent** - Step-by-step wizard navigation with validation
 - **PshDropdownComponent** - Dropdown trigger and content container

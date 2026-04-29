@@ -181,6 +181,7 @@ interface MenuItem<T = string> {
 - `role="menuitem"`: Pour les éléments
 - `aria-expanded`: État d'expansion
 - `aria-disabled`: État désactivé
+- `aria-describedby`: Liaison automatique avec le tooltip en mode replié
 
 ### Navigation Clavier (WCAG 2.1 AA)
 
