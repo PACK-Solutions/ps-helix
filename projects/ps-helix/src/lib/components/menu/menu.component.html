@@ -162,6 +162,7 @@
                           [class.active]="child.active"
                           [attr.aria-disabled]="child.disabled"
                           [attr.aria-label]="getAriaLabel(child)"
+                          title=""
                           (click)="toggleItem(child, $event)"
                           (keydown.enter)="toggleItem(child, $event)"
                           (keydown.space)="toggleItem(child, $event)"
@@ -173,6 +174,7 @@
                           } @else {
                             <span class="menu-child-dot" aria-hidden="true"></span>
                           }
+                          <span class="menu-label">{{ child.content }}</span>
                           @if (child.badge) {
                             <span class="menu-badge" role="status">{{ child.badge }}</span>
                           }
@@ -211,6 +213,7 @@
                           [class.active]="child.active"
                           [attr.aria-disabled]="child.disabled"
                           [attr.aria-label]="getAriaLabel(child)"
+                          title=""
                           (click)="toggleItem(child, $event)"
                           (keydown.enter)="toggleItem(child, $event)"
                           (keydown.space)="toggleItem(child, $event)"
@@ -223,6 +226,7 @@
                           } @else {
                             <span class="menu-child-dot" aria-hidden="true"></span>
                           }
+                          <span class="menu-label">{{ child.content }}</span>
                           @if (child.badge) {
                             <span class="menu-badge" role="status">{{ child.badge }}</span>
                           }

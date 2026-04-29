@@ -187,6 +187,7 @@
   width: 44px;
   padding: var(--spacing-xs) 0;
   position: relative;
+  overflow: visible;
 }
 
 .menu.collapsed .submenu::before {
@@ -236,7 +237,16 @@
 }
 
 .menu.collapsed .submenu .menu-label {
-  display: none;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+  opacity: 0;
 }
 
 .menu.collapsed .submenu .menu-badge {
@@ -256,6 +266,12 @@
 .menu.collapsed .submenu psh-tooltip {
   display: block;
   width: 100%;
+  position: relative;
+  z-index: 10;
+}
+
+.menu.collapsed psh-tooltip .tooltip {
+  z-index: 1000;
 }
 
 .menu-child-dot {
