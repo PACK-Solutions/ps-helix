@@ -168,6 +168,17 @@ interface MenuItem<T = string> {
 - `disabled`: Élément désactivé
 - `active`: Élément actif
 
+## Tooltips Automatiques en Mode Réduit
+
+Lorsque le menu est en mode vertical et replié (`collapsed="true"`), le composant instancie automatiquement un `psh-tooltip` autour de chaque item visible, parent **et** sous-item.
+
+- **Source du texte** : propriété `content` de chaque `MenuItem`.
+- **Position** : `right` (visibilité latérale en mode compact).
+- **Délai d'apparition** : `showDelay = 300ms`.
+- **Lazy rendering** : les tooltips ne sont présents dans le DOM que lorsque `collapsed` est actif (aucun tooltip en mode étendu).
+- **Isolation** : le clic ou le survol d'un sous-item ne déclenche pas le tooltip de son parent (propagation stoppée sur les enfants).
+- **A11y** : le tooltip lie l'élément via `aria-describedby`, tandis que `aria-label` reste aligné sur `content` (augmenté pour les états "Disabled" / "Submenu").
+
 ## Accessibilité
 
 ### Attributs ARIA
@@ -176,6 +187,7 @@ interface MenuItem<T = string> {
 - `role="menuitem"`: Pour les éléments
 - `aria-expanded`: État d'expansion
 - `aria-disabled`: État désactivé
+- `aria-describedby`: Liaison automatique avec le tooltip en mode replié
 
 ### Navigation Clavier (WCAG 2.1 AA)
 

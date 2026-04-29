@@ -417,7 +417,7 @@ Composant de carte à disposition horizontale.
 ### Composants de navigation (4)
 
 #### PshMenuComponent
-Menu déroulant avec éléments imbriqués.
+Menu déroulant avec éléments imbriqués, modes vertical et horizontal, et mode pliable (`collapsible`). En mode replié, des tooltips sont générés automatiquement sur les icônes des items racines **et** des sous-items (position `right`, délai 300 ms), avec liaison ARIA `aria-describedby` pour une a11y clavier et lecteur d'écran.
 
 #### PshPaginationComponent
 Contrôles de pagination avec numéros de page.

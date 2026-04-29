@@ -99,7 +99,7 @@
               <li><strong>État replié</strong> : Affiche uniquement les icônes pour économiser l'espace horizontal</li>
               <li><strong>État déplié</strong> : Affiche les icônes avec labels pour une navigation complète</li>
               <li><strong>Contrôle bidirectionnel</strong> : Utilisez <code>[(collapsed)]</code> pour contrôler l'état depuis le parent</li>
-              <li><strong>Tooltips automatiques</strong> : Les labels apparaissent en tooltip en mode replié</li>
+              <li><strong>Tooltips automatiques</strong> : Les labels apparaissent en tooltip sur les items racines <em>et</em> les sous-items en mode replié (position droite, délai 300 ms, liaison ARIA <code>aria-describedby</code>)</li>
               <li><strong>Transition fluide</strong> : Animation smooth lors du pliage/dépliage</li>
             </ul>
             <ds-code-snippet [code]="collapsibleCode" />
