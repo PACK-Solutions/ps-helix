@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, effect, input, model, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, model, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuItem, MenuMode, MenuVariant } from './menu.types';
 import { PshTooltipComponent } from '../tooltip/tooltip.component';
@@ -36,13 +36,7 @@ export class PshMenuComponent<T = string> {
 
   showTooltip = computed(() => this.collapsed() && this.mode() === 'vertical');
 
-  constructor() {
-    effect(() => {
-      if (this.collapsed()) {
-        this.expandedItemIds.set([]);
-      }
-    });
-  }
+  constructor() {}
 
   private getState(): string {
     if (this.collapsed()) return 'collapsed';
@@ -77,11 +71,10 @@ export class PshMenuComponent<T = string> {
   }
 
   isExpanded(item: MenuItem<T>): boolean {
-    return !this.collapsed() && this.expandedItemsSet().has(item.id);
+    return this.expandedItemsSet().has(item.id);
   }
 
   expandItem(itemId: string): void {
-    if (this.collapsed()) return;
     const current = this.expandedItemIds();
     if (!current.includes(itemId)) {
       this.expandedItemIds.set([...current, itemId]);
@@ -96,7 +89,6 @@ export class PshMenuComponent<T = string> {
   }
 
   toggleItemExpansion(itemId: string): void {
-    if (this.collapsed()) return;
     const current = this.expandedItemIds();
     if (current.includes(itemId)) {
       this.expandedItemIds.set(current.filter(id => id !== itemId));
@@ -106,7 +98,6 @@ export class PshMenuComponent<T = string> {
   }
 
   expandAll(): void {
-    if (this.collapsed()) return;
     const allIds = this.collectItemIdsWithChildren(this.items());
     this.expandedItemIds.set(allIds);
   }

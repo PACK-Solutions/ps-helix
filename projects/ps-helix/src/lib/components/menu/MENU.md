@@ -168,16 +168,10 @@ interface MenuItem<T = string> {
 - `disabled`: Élément désactivé
 - `active`: Élément actif
 
-## Tooltips Automatiques en Mode Réduit
-
-Lorsque le menu est en mode vertical et replié (`collapsed="true"`), le composant instancie automatiquement un `psh-tooltip` autour de chaque item visible, parent **et** sous-item.
-
-- **Source du texte** : propriété `content` de chaque `MenuItem`.
-- **Position** : `right` (visibilité latérale en mode compact).
-- **Délai d'apparition** : `showDelay = 300ms`.
-- **Lazy rendering** : les tooltips ne sont présents dans le DOM que lorsque `collapsed` est actif (aucun tooltip en mode étendu).
-- **Isolation** : le clic ou le survol d'un sous-item ne déclenche pas le tooltip de son parent (propagation stoppée sur les enfants).
-- **A11y** : le tooltip lie l'élément via `aria-describedby`, tandis que `aria-label` reste aligné sur `content` (augmenté pour les états "Disabled" / "Submenu").
+### Comportement en mode collapsed (vertical)
+- Les items parents et enfants affichent automatiquement un tooltip contextuel au survol (position `right`) pour révéler le libellé.
+- Les sous-menus restent repliables : un clic sur l'item parent bascule l'affichage des enfants.
+- Les tooltips natifs du navigateur sont supprimés au profit du `psh-tooltip` intégré, garantissant un rendu cohérent avec le design system.
 
 ## Accessibilité
 

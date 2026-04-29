@@ -444,7 +444,7 @@ describe('PshMenuComponent', () => {
       expect(fixture.componentInstance.collapsed()).toBe(false);
     });
 
-    it('should close all submenus when menu is collapsed', () => {
+    it('should preserve submenu expansion state when menu is collapsed', () => {
       fixture.componentRef.setInput('items', mockItemsWithChildren);
       fixture.componentRef.setInput('collapsible', true);
       fixture.detectChanges();
@@ -458,7 +458,7 @@ describe('PshMenuComponent', () => {
       getCollapseButton().click();
       fixture.detectChanges();
 
-      expect(fixture.componentInstance.isExpanded(mockItemsWithChildren[1]!)).toBe(false);
+      expect(fixture.componentInstance.isExpanded(mockItemsWithChildren[1]!)).toBe(true);
     });
 
     it('should apply collapsed class to menu when collapsed', () => {
@@ -645,7 +645,7 @@ describe('PshMenuComponent', () => {
       expect(fixture.componentInstance.isExpanded(itemsWithMultipleSubmenus[1]!)).toBe(true);
     });
 
-    it('should not expand submenu when menu is collapsed', () => {
+    it('should expand submenu when menu is collapsed', () => {
       fixture.componentRef.setInput('collapsible', true);
       fixture.componentRef.setInput('collapsed', true);
       fixture.detectChanges();
@@ -653,10 +653,10 @@ describe('PshMenuComponent', () => {
       getMenuItemById('settings')!.click();
       fixture.detectChanges();
 
-      expect(fixture.componentInstance.isExpanded(mockItemsWithChildren[1]!)).toBe(false);
+      expect(fixture.componentInstance.isExpanded(mockItemsWithChildren[1]!)).toBe(true);
     });
 
-    it('should NOT emit submenuToggle when clicking item with children while menu is collapsed', () => {
+    it('should emit submenuToggle when clicking item with children while menu is collapsed', () => {
       fixture.componentRef.setInput('collapsible', true);
       fixture.componentRef.setInput('collapsed', true);
       fixture.detectChanges();
@@ -667,7 +667,9 @@ describe('PshMenuComponent', () => {
       getMenuItemById('settings')!.click();
       fixture.detectChanges();
 
-      expect(toggleSpy).not.toHaveBeenCalled();
+      expect(toggleSpy).toHaveBeenCalledWith(
+        expect.objectContaining({ expanded: true })
+      );
     });
   });
 
@@ -1139,7 +1141,7 @@ describe('PshMenuComponent', () => {
       expect(fixture.componentInstance.isExpanded(mockItemsWithChildren[1]!)).toBe(true);
     });
 
-    it('should close submenus when mode changes and menu is collapsed', () => {
+    it('should keep submenus open when mode changes and menu is collapsed', () => {
       fixture.componentRef.setInput('items', mockItemsWithChildren);
       fixture.componentRef.setInput('collapsible', true);
       fixture.detectChanges();
@@ -1151,7 +1153,7 @@ describe('PshMenuComponent', () => {
       fixture.componentRef.setInput('collapsed', true);
       fixture.detectChanges();
 
-      expect(fixture.componentInstance.isExpanded(mockItemsWithChildren[1]!)).toBe(false);
+      expect(fixture.componentInstance.isExpanded(mockItemsWithChildren[1]!)).toBe(true);
     });
   });
 });

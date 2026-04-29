@@ -181,7 +181,125 @@
 }
 
 .menu.collapsed .submenu {
+  margin: 0 auto;
+  background: transparent;
+  border-radius: var(--border-radius);
+  width: 44px;
+  padding: 0;
+  position: relative;
+  overflow: visible;
+  max-height: 0;
   display: none;
+}
+
+.menu.collapsed .menu-item.expanded > .submenu {
+  display: block;
+  max-height: none;
+  margin: var(--spacing-xs) auto;
+  padding: var(--spacing-xs) 0;
+}
+
+.menu.collapsed .submenu::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--surface-border);
+  transform: translateX(-50%);
+  opacity: 0.6;
+}
+
+.menu.collapsed .submenu .menu-item {
+  position: relative;
+  z-index: 1;
+}
+
+.menu.collapsed .submenu .menu-link {
+  padding: 0;
+  justify-content: center;
+  min-height: 32px;
+  width: 32px;
+  height: 32px;
+  margin: 2px auto;
+  background: var(--surface-card);
+  border: 1px solid var(--surface-border);
+}
+
+.menu.collapsed .submenu .menu-link:hover:not([aria-disabled="true"]) {
+  background: var(--surface-hover);
+  border-color: var(--primary-color);
+  transform: none;
+}
+
+.menu.collapsed .submenu .menu-link.active {
+  background: var(--primary-color);
+  color: var(--primary-color-text);
+  border-color: var(--primary-color);
+}
+
+.menu.collapsed .submenu .menu-link i {
+  font-size: 0.95rem;
+  width: auto;
+  height: auto;
+}
+
+.menu.collapsed .submenu .menu-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+  opacity: 0;
+}
+
+.menu.collapsed .submenu .menu-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  margin: 0;
+  padding: 0 4px;
+  font-size: 9px;
+  line-height: 14px;
+  min-width: 14px;
+  height: 14px;
+  text-align: center;
+  border-radius: 7px;
+}
+
+.menu.collapsed .submenu psh-tooltip {
+  display: block;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+}
+
+.menu.collapsed psh-tooltip .tooltip {
+  z-index: 1000;
+}
+
+.menu-child-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-color-secondary);
+  display: inline-block;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+.menu.collapsed .menu-item.expanded > psh-tooltip .menu-link,
+.menu.collapsed .menu-item.expanded > .menu-link {
+  background: var(--surface-hover);
+}
+
+.menu.collapsed .menu-link:hover:not([aria-disabled="true"]) {
+  transform: none;
 }
 
 .submenu .menu-link {

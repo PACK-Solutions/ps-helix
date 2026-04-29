@@ -35,9 +35,9 @@ export class MenuDemoComponent {
       content: 'Utilisateurs',
       icon: 'users',
       children: [
-        { id: 'all-users', content: 'Tous les utilisateurs' },
-        { id: 'add-user', content: 'Ajouter un utilisateur' },
-        { id: 'user-groups', content: 'Groupes' }
+        { id: 'all-users', content: 'Tous les utilisateurs', icon: 'user-list' },
+        { id: 'add-user', content: 'Ajouter un utilisateur', icon: 'user-plus' },
+        { id: 'user-groups', content: 'Groupes', icon: 'users-three' }
       ]
     },
     {
@@ -45,8 +45,8 @@ export class MenuDemoComponent {
       content: 'Contenu',
       icon: 'file-text',
       children: [
-        { id: 'posts', content: 'Articles' },
-        { id: 'media', content: 'Médias' }
+        { id: 'posts', content: 'Articles', icon: 'article' },
+        { id: 'media', content: 'Médias', icon: 'image' }
       ]
     },
     { id: 'divider1', divider: true, content: 'Divider' },
@@ -102,8 +102,8 @@ export class MenuDemoComponent {
       content: 'Espace de travail',
       icon: 'folders',
       children: [
-        { id: 'my-work', content: 'Mon travail' },
-        { id: 'shared', content: 'Partagé' }
+        { id: 'my-work', content: 'Mon travail', icon: 'briefcase' },
+        { id: 'shared', content: 'Partagé', icon: 'share-network' }
       ]
     },
     { id: 'calendar', content: 'Calendrier', icon: 'calendar' },
