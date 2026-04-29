@@ -227,7 +227,13 @@
   width: 0;
 }
 
-.menu.collapsed psh-tooltip {
+.menu.collapsed psh-tooltip,
+.menu psh-tooltip.menu-tooltip-wrapper {
+  display: block;
+  width: 100%;
+}
+
+.submenu psh-tooltip.menu-tooltip-wrapper {
   display: block;
   width: 100%;
 }

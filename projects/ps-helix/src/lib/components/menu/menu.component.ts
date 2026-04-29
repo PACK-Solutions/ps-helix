@@ -50,6 +50,13 @@ export class PshMenuComponent<T = string> {
     return this.mode();
   }
 
+  handleItemClick(item: MenuItem<T>, event: Event, isChild: boolean): void {
+    if (isChild) {
+      event.stopPropagation();
+    }
+    this.toggleItem(item, event);
+  }
+
   toggleItem(item: MenuItem<T>, event?: Event): void {
     if (item.disabled) return;
 

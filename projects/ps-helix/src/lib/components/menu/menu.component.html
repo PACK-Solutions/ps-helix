@@ -1,4 +1,4 @@
-<nav 
+<nav
   class="menu"
   [class.vertical]="mode() === 'vertical'"
   [class.horizontal]="mode() === 'horizontal'"
@@ -10,7 +10,7 @@
   [attr.data-state]="state()"
 >
   @if (collapsible()) {
-    <button 
+    <button
       class="menu-collapse-button"
       (click)="toggleCollapse()"
       [attr.aria-expanded]="!collapsed()"
@@ -32,117 +32,9 @@
           [class.disabled]="item.disabled"
           role="none"
         >
-          @if (item.path) {
-            @if (showTooltip()) {
-              <psh-tooltip [content]="item.content" position="right" [showDelay]="100" [hideDelay]="0">
-                <a
-                  class="menu-link"
-                  [attr.href]="item.path"
-                  [attr.data-menu-item-id]="item.id"
-                  [class.active]="item.active"
-                  [attr.aria-disabled]="item.disabled"
-                  [attr.aria-expanded]="item.children?.length ? isExpanded(item) : null"
-                  [attr.aria-label]="getAriaLabel(item)"
-                  (click)="toggleItem(item, $event)"
-                  (keydown)="handleKeyDown($event, item, i)"
-                  role="menuitem"
-                  [attr.tabindex]="item.disabled ? -1 : 0"
-                >
-                  @if (item.icon) {
-                    <i class="ph ph-{{ item.icon }}" aria-hidden="true"></i>
-                  }
-                  @if (item.badge) {
-                    <span class="menu-badge" role="status">{{ item.badge }}</span>
-                  }
-                </a>
-              </psh-tooltip>
-            } @else {
-              <a
-                class="menu-link"
-                [attr.href]="item.path"
-                [attr.data-menu-item-id]="item.id"
-                [class.active]="item.active"
-                [attr.aria-disabled]="item.disabled"
-                [attr.aria-expanded]="item.children?.length ? isExpanded(item) : null"
-                [attr.aria-label]="getAriaLabel(item)"
-                (click)="toggleItem(item, $event)"
-                (keydown)="handleKeyDown($event, item, i)"
-                role="menuitem"
-                [attr.tabindex]="item.disabled ? -1 : 0"
-              >
-                @if (item.icon) {
-                  <i class="ph ph-{{ item.icon }}" aria-hidden="true"></i>
-                }
-                <span class="menu-label">{{ item.content }}</span>
-                @if (item.badge) {
-                  <span class="menu-badge" role="status">{{ item.badge }}</span>
-                }
-                @if (item.children?.length) {
-                  <i
-                    class="ph ph-caret-down menu-arrow"
-                    [class.expanded]="isExpanded(item)"
-                    aria-hidden="true"
-                  ></i>
-                }
-              </a>
-            }
-          } @else {
-            @if (showTooltip()) {
-              <psh-tooltip [content]="item.content" position="right" [showDelay]="100" [hideDelay]="0">
-                <button
-                  type="button"
-                  class="menu-link"
-                  [attr.data-menu-item-id]="item.id"
-                  [class.active]="item.active"
-                  [attr.aria-disabled]="item.disabled"
-                  [attr.aria-expanded]="item.children?.length ? isExpanded(item) : null"
-                  [attr.aria-label]="getAriaLabel(item)"
-                  (click)="toggleItem(item, $event)"
-                  (keydown)="handleKeyDown($event, item, i)"
-                  role="menuitem"
-                  [attr.tabindex]="item.disabled ? -1 : 0"
-                  [disabled]="item.disabled"
-                >
-                  @if (item.icon) {
-                    <i class="ph ph-{{ item.icon }}" aria-hidden="true"></i>
-                  }
-                  @if (item.badge) {
-                    <span class="menu-badge" role="status">{{ item.badge }}</span>
-                  }
-                </button>
-              </psh-tooltip>
-            } @else {
-              <button
-                type="button"
-                class="menu-link"
-                [attr.data-menu-item-id]="item.id"
-                [class.active]="item.active"
-                [attr.aria-disabled]="item.disabled"
-                [attr.aria-expanded]="item.children?.length ? isExpanded(item) : null"
-                [attr.aria-label]="getAriaLabel(item)"
-                (click)="toggleItem(item, $event)"
-                (keydown)="handleKeyDown($event, item, i)"
-                role="menuitem"
-                [attr.tabindex]="item.disabled ? -1 : 0"
-                [disabled]="item.disabled"
-              >
-                @if (item.icon) {
-                  <i class="ph ph-{{ item.icon }}" aria-hidden="true"></i>
-                }
-                <span class="menu-label">{{ item.content }}</span>
-                @if (item.badge) {
-                  <span class="menu-badge" role="status">{{ item.badge }}</span>
-                }
-                @if (item.children?.length) {
-                  <i
-                    class="ph ph-caret-down menu-arrow"
-                    [class.expanded]="isExpanded(item)"
-                    aria-hidden="true"
-                  ></i>
-                }
-              </button>
-            }
-          }
+          <ng-container
+            *ngTemplateOutlet="itemTpl; context: { $implicit: item, index: i, isChild: false }"
+          ></ng-container>
 
           @if (item.children?.length) {
             <ul
@@ -151,53 +43,10 @@
               [attr.aria-label]="item.content + ' submenu'"
             >
               @for (child of item.children; track child.id) {
-                <li class="menu-item" role="none">
-                  @if (child.path) {
-                    <a
-                      class="menu-link"
-                      [attr.href]="child.path"
-                      [attr.data-menu-item-id]="child.id"
-                      [class.active]="child.active"
-                      [attr.aria-disabled]="child.disabled"
-                      [attr.aria-label]="getAriaLabel(child)"
-                      (click)="toggleItem(child, $event)"
-                      (keydown.enter)="toggleItem(child, $event)"
-                      (keydown.space)="toggleItem(child, $event)"
-                      role="menuitem"
-                      [attr.tabindex]="child.disabled ? -1 : 0"
-                    >
-                      @if (child.icon) {
-                        <i class="ph ph-{{ child.icon }}" aria-hidden="true"></i>
-                      }
-                      <span class="menu-label">{{ child.content }}</span>
-                      @if (child.badge) {
-                        <span class="menu-badge" role="status">{{ child.badge }}</span>
-                      }
-                    </a>
-                  } @else {
-                    <button
-                      type="button"
-                      class="menu-link"
-                      [attr.data-menu-item-id]="child.id"
-                      [class.active]="child.active"
-                      [attr.aria-disabled]="child.disabled"
-                      [attr.aria-label]="getAriaLabel(child)"
-                      (click)="toggleItem(child, $event)"
-                      (keydown.enter)="toggleItem(child, $event)"
-                      (keydown.space)="toggleItem(child, $event)"
-                      role="menuitem"
-                      [attr.tabindex]="child.disabled ? -1 : 0"
-                      [disabled]="child.disabled"
-                    >
-                      @if (child.icon) {
-                        <i class="ph ph-{{ child.icon }}" aria-hidden="true"></i>
-                      }
-                      <span class="menu-label">{{ child.content }}</span>
-                      @if (child.badge) {
-                        <span class="menu-badge" role="status">{{ child.badge }}</span>
-                      }
-                    </button>
-                  }
+                <li class="menu-item" [class.disabled]="child.disabled" role="none">
+                  <ng-container
+                    *ngTemplateOutlet="itemTpl; context: { $implicit: child, index: -1, isChild: true }"
+                  ></ng-container>
                 </li>
               }
             </ul>
@@ -207,3 +56,90 @@
     }
   </ul>
 </nav>
+
+<ng-template #itemTpl let-item let-index="index" let-isChild="isChild">
+  @if (showTooltip()) {
+    <psh-tooltip
+      class="menu-tooltip-wrapper"
+      [content]="item.content"
+      position="right"
+      [showDelay]="300"
+      [hideDelay]="0"
+    >
+      <ng-container
+        *ngTemplateOutlet="itemContentTpl; context: { $implicit: item, index: index, isChild: isChild, withLabel: false }"
+      ></ng-container>
+    </psh-tooltip>
+  } @else {
+    <ng-container
+      *ngTemplateOutlet="itemContentTpl; context: { $implicit: item, index: index, isChild: isChild, withLabel: true }"
+    ></ng-container>
+  }
+</ng-template>
+
+<ng-template #itemContentTpl let-item let-index="index" let-isChild="isChild" let-withLabel="withLabel">
+  @if (item.path) {
+    <a
+      class="menu-link"
+      [attr.href]="item.path"
+      [attr.data-menu-item-id]="item.id"
+      [class.active]="item.active"
+      [attr.aria-disabled]="item.disabled"
+      [attr.aria-expanded]="item.children?.length ? isExpanded(item) : null"
+      [attr.aria-label]="getAriaLabel(item)"
+      (click)="handleItemClick(item, $event, isChild)"
+      (keydown)="handleKeyDown($event, item, index)"
+      role="menuitem"
+      [attr.tabindex]="item.disabled ? -1 : 0"
+    >
+      @if (item.icon) {
+        <i class="ph ph-{{ item.icon }}" aria-hidden="true"></i>
+      }
+      @if (withLabel) {
+        <span class="menu-label">{{ item.content }}</span>
+      }
+      @if (item.badge) {
+        <span class="menu-badge" role="status">{{ item.badge }}</span>
+      }
+      @if (withLabel && item.children?.length) {
+        <i
+          class="ph ph-caret-down menu-arrow"
+          [class.expanded]="isExpanded(item)"
+          aria-hidden="true"
+        ></i>
+      }
+    </a>
+  } @else {
+    <button
+      type="button"
+      class="menu-link"
+      [attr.data-menu-item-id]="item.id"
+      [class.active]="item.active"
+      [attr.aria-disabled]="item.disabled"
+      [attr.aria-expanded]="item.children?.length ? isExpanded(item) : null"
+      [attr.aria-label]="getAriaLabel(item)"
+      (click)="handleItemClick(item, $event, isChild)"
+      (keydown)="handleKeyDown($event, item, index)"
+      role="menuitem"
+      [attr.tabindex]="item.disabled ? -1 : 0"
+      [disabled]="item.disabled"
+    >
+      @if (item.icon) {
+        <i class="ph ph-{{ item.icon }}" aria-hidden="true"></i>
+      }
+      @if (withLabel) {
+        <span class="menu-label">{{ item.content }}</span>
+      }
+      @if (item.badge) {
+        <span class="menu-badge" role="status">{{ item.badge }}</span>
+      }
+      @if (withLabel && item.children?.length) {
+        <i
+          class="ph ph-caret-down menu-arrow"
+          [class.expanded]="isExpanded(item)"
+          aria-hidden="true"
+        ></i>
+      }
+    </button>
+  }
+</ng-template>
