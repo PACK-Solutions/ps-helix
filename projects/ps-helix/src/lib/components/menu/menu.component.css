@@ -181,13 +181,22 @@
 }
 
 .menu.collapsed .submenu {
-  margin: var(--spacing-xs) auto;
+  margin: 0 auto;
   background: transparent;
   border-radius: var(--border-radius);
   width: 44px;
-  padding: var(--spacing-xs) 0;
+  padding: 0;
   position: relative;
   overflow: visible;
+  max-height: 0;
+  display: none;
+}
+
+.menu.collapsed .menu-item.expanded > .submenu {
+  display: block;
+  max-height: none;
+  margin: var(--spacing-xs) auto;
+  padding: var(--spacing-xs) 0;
 }
 
 .menu.collapsed .submenu::before {
