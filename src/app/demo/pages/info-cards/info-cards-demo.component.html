@@ -303,6 +303,54 @@
       </div>
     </section>
 
+    <!-- Copie par Ligne -->
+    <section class="info-card-copy-section">
+      <h3 class="section-title">Copie par Ligne</h3>
+      <div class="copy-container">
+        <div class="copy-intro">
+          <p>Ajoutez un bouton de copie a cote de chaque valeur pour permettre aux utilisateurs de copier facilement les informations dans le presse-papier. Le bouton apparait au survol et reste toujours accessible au clavier.</p>
+        </div>
+        <div class="copy-grid">
+          <div class="copy-card">
+            <h4>Copie globale (toutes les lignes)</h4>
+            <psh-info-card
+              title="Informations de Contact"
+              [data]="copyableData"
+              [copyable]="true"
+              variant="outlined"
+              icon="clipboard-text"
+              (copied)="handleCopied($event)"
+              (copyFailed)="handleCopyFailed($event)"
+            ></psh-info-card>
+            @if (lastCopiedLabel) {
+              <p class="copy-feedback-demo">
+                Dernier champ copie : <strong>{{ lastCopiedLabel }}</strong>
+              </p>
+            }
+            <p class="copy-description">
+              Activez <code>[copyable]="true"</code> pour afficher un bouton copier sur toutes les lignes avec une valeur non vide. Le bouton est masque sur les valeurs nulles.
+            </p>
+            <ds-code-snippet [code]="copyableCode" />
+          </div>
+
+          <div class="copy-card">
+            <h4>Copie selective (par ligne)</h4>
+            <psh-info-card
+              title="Suivi de Commande"
+              [data]="perRowCopyData"
+              variant="outlined"
+              icon="package"
+              (copied)="handleCopied($event)"
+            ></psh-info-card>
+            <p class="copy-description">
+              Activez la copie sur des lignes specifiques via <code>copyable: true</code> dans l'objet <code>InfoCardData</code>. Utilisez <code>copyValue</code> pour copier une valeur brute differente de l'affichage.
+            </p>
+            <ds-code-snippet [code]="perRowCopyCode" />
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Personnalisation -->
     <section class="info-card-customization-section">
       <h3 class="section-title">Options de Personnalisation</h3>
@@ -507,6 +555,24 @@
                 <td><code>true</code></td>
                 <td>Boutons pleine largeur sur mobile</td>
               </tr>
+              <tr>
+                <td><code>copyable</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Affiche un bouton copier sur chaque ligne avec une valeur non vide</td>
+              </tr>
+              <tr>
+                <td><code>copyButtonLabel</code></td>
+                <td><code>string</code></td>
+                <td><code>'Copier'</code></td>
+                <td>Prefixe du aria-label du bouton copier (ex: "Copier Email")</td>
+              </tr>
+              <tr>
+                <td><code>copyFeedbackText</code></td>
+                <td><code>string</code></td>
+                <td><code>'Copié'</code></td>
+                <td>Texte de feedback affiche apres une copie reussie</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -526,6 +592,16 @@
                 <td><code>clicked</code></td>
                 <td><code>MouseEvent | KeyboardEvent</code></td>
                 <td>Émis lors du clic ou activation clavier (si <code>interactive=true</code>)</td>
+              </tr>
+              <tr>
+                <td><code>copied</code></td>
+                <td><code>InfoCardData</code></td>
+                <td>Émis apres une copie reussie dans le presse-papier (contient la ligne concernee)</td>
+              </tr>
+              <tr>
+                <td><code>copyFailed</code></td>
+                <td><code>InfoCardData</code></td>
+                <td>Émis si la copie echoue (contexte non securise, permission refusee)</td>
               </tr>
             </tbody>
           </table>
@@ -572,6 +648,18 @@
                 <td><code>string</code></td>
                 <td>Non</td>
                 <td>Classe CSS personnalisée pour la ligne</td>
+              </tr>
+              <tr>
+                <td><code>copyable</code></td>
+                <td><code>boolean</code></td>
+                <td>Non</td>
+                <td>Active la copie sur cette ligne (surcharge le input global)</td>
+              </tr>
+              <tr>
+                <td><code>copyValue</code></td>
+                <td><code>string</code></td>
+                <td>Non</td>
+                <td>Valeur brute a copier si differente de la valeur affichee</td>
               </tr>
             </tbody>
           </table>

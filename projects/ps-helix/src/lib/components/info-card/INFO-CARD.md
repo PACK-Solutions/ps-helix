@@ -82,6 +82,9 @@ userData: InfoCardData[] = [
 | `loading` | `boolean` | `false` | Etat de chargement - affiche un skeleton anime |
 | `disabled` | `boolean` | `false` | Etat desactive - reduit l'opacite et bloque les interactions |
 | `autoFullWidthOnMobile` | `boolean` | `true` | Active automatiquement les boutons pleine largeur sur mobile |
+| `copyable` | `boolean` | `false` | Affiche un bouton copier sur chaque ligne avec valeur non vide |
+| `copyButtonLabel` | `string` | `'Copier'` | Prefixe du aria-label du bouton copier (ex: "Copier Email") |
+| `copyFeedbackText` | `string` | `'Copié'` | Texte de feedback affiche apres une copie reussie (1,8 s) |
 
 ### Options par Defaut
 
@@ -99,6 +102,8 @@ const defaultOptions: InfoCardOptions = {
 | Nom | Type | Description |
 |-----|------|-------------|
 | `clicked` | `EventEmitter<MouseEvent \| KeyboardEvent>` | Emis lors du clic souris ou de l'activation clavier (Enter/Space) sur la carte (si `interactive=true` et non desactivee) |
+| `copied` | `EventEmitter<InfoCardData>` | Emis apres une copie reussie dans le presse-papier. Contient la ligne copiee. |
+| `copyFailed` | `EventEmitter<InfoCardData>` | Emis si la copie echoue (contexte non securise, permission refusee). |
 
 ### Signals Publics
 
@@ -127,6 +132,8 @@ interface InfoCardData {
   labelWidth?: string;
   valueWidth?: string;
   customClass?: string;
+  copyable?: boolean;   // Active la copie sur cette ligne (surcharge le input global)
+  copyValue?: string;   // Valeur brute a copier si differente de la valeur affichee
 }
 
 interface InfoCardOptions {
@@ -332,6 +339,48 @@ Le composant s'adapte automatiquement aux differentes tailles d'ecran.
   </div>
 </psh-info-card>
 ```
+
+## Copie par Ligne
+
+Fonctionnalite opt-in qui ajoute un bouton copier a cote de chaque valeur non vide.
+
+### Activation Globale
+
+```html
+<psh-info-card
+  title="Contact"
+  [data]="contactData"
+  [copyable]="true"
+  (copied)="onCopied($event)"
+  (copyFailed)="onCopyFailed($event)"
+></psh-info-card>
+```
+
+### Activation par Ligne
+
+```typescript
+const data: InfoCardData[] = [
+  { label: 'Email', value: 'user@example.com', copyable: true },
+  { label: 'Statut', value: 'Actif' },  // pas de bouton copier
+  { label: 'IBAN', value: 'FR76 •••• 4521', copyable: true, copyValue: 'FR7630006000011234567890189' }
+];
+```
+
+### Comportement
+
+- **Bouton revelé** : au `:hover` et `:focus-within` sur les devices pointer ; toujours visible sur tactile
+- **Feedback** : icone `check` + texte "Copie" en couleur success pendant 1,8 secondes
+- **copyValue** : si defini, c'est cette valeur brute qui est copiee (utile pour les IBAN masques, telephones formates, etc.)
+- **Valeurs vides** : aucun bouton n'apparait si la valeur est `null`, `undefined` ou chaine vide
+- **Securite** : la copie echoue gracieusement (emit `copyFailed`) si le contexte n'est pas securise
+
+### Accessibilite
+
+- Vrai `<button type="button">` focusable, avec `aria-label` contextualise ("Copier Email")
+- Live region `role="status"` pour annoncer le succes aux lecteurs d'ecran
+- Le feedback visuel est `aria-hidden` pour eviter une double annonce
+- Cible minimum de 24px
+- Focus visible conserve (`focus-visible`)
 
 ## Exemples Pratiques
 
@@ -602,6 +651,6 @@ Le composant utilise `ChangeDetectionStrategy.OnPush` et Signals :
 
 ---
 
-**Version :** 1.2
-**Derniere mise a jour :** Janvier 2026
+**Version :** 1.3
+**Derniere mise a jour :** Juin 2026
 **Compatibilite :** Angular 21+

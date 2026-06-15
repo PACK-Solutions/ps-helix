@@ -2,6 +2,7 @@
 .info-card-header-actions-section,
 .info-card-usage-section,
 .info-card-states-section,
+.info-card-copy-section,
 .info-card-customization-section,
 .info-card-grid-section,
 .api-section {
@@ -21,6 +22,7 @@
 .header-actions-intro,
 .usage-intro,
 .states-intro,
+.copy-intro,
 .customization-intro,
 .grid-intro,
 .api-intro {
@@ -33,6 +35,7 @@
 .variants-grid,
 .header-actions-grid,
 .usage-grid,
+.copy-grid,
 .customization-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
@@ -42,6 +45,7 @@
 .variant-card,
 .header-actions-card,
 .usage-card,
+.copy-card,
 .customization-card {
   display: flex;
   flex-direction: column;
@@ -53,6 +57,30 @@
   color: var(--text-color-secondary);
   line-height: var(--line-height-normal);
   margin-bottom: var(--size-2);
+}
+
+.copy-description {
+  font-size: var(--font-size-sm);
+  color: var(--text-color-secondary);
+  line-height: var(--line-height-normal);
+  margin-bottom: var(--size-2);
+}
+
+.copy-description code {
+  background: var(--surface-ground);
+  padding: var(--size-0-5) var(--size-1-5);
+  border-radius: var(--radius-base);
+  font-size: 0.9em;
+  color: var(--primary-color);
+}
+
+.copy-feedback-demo {
+  font-size: var(--font-size-sm);
+  color: var(--success-color);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: var(--surface-ground);
+  border-radius: var(--radius-base);
+  border-left: 3px solid var(--success-color);
 }
 
 .variant-preview {
@@ -317,6 +345,7 @@
   .variants-grid,
   .header-actions-grid,
   .usage-grid,
+  .copy-grid,
   .customization-grid {
     grid-template-columns: 1fr;
   }
@@ -377,6 +406,7 @@
   .info-card-header-actions-section,
   .info-card-usage-section,
   .info-card-states-section,
+  .info-card-copy-section,
   .info-card-customization-section,
   .info-card-grid-section,
   .api-section {

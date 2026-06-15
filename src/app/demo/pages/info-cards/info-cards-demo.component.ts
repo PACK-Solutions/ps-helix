@@ -148,4 +148,51 @@ export class InfoCardsDemoComponent {
   handleCardClick(event: MouseEvent | KeyboardEvent): void {
     alert('Carte cliquée !');
   }
+
+  // Copy feature demo data
+  copyableData: InfoCardData[] = [
+    { label: 'Email', value: 'marie.dubois@example.com' },
+    { label: 'Téléphone', value: '+33 6 12 34 56 78', copyValue: '0612345678' },
+    { label: 'IBAN', value: 'FR76 •••• •••• 4521', copyValue: 'FR7630006000011234567890189' },
+    { label: 'Adresse', value: '12 rue de la Paix, 75002 Paris' },
+    { label: 'Notes', value: null }
+  ];
+
+  perRowCopyData: InfoCardData[] = [
+    { label: 'Référence', value: 'REF-2025-0042', copyable: true },
+    { label: 'Statut', value: 'En cours' },
+    { label: 'Code suivi', value: 'TRK-9876543210', copyable: true },
+    { label: 'Date', value: '15 Juin 2026' }
+  ];
+
+  lastCopiedLabel = '';
+
+  copyableCode = `<psh-info-card
+  title="Informations Copiables"
+  [data]="copyableData"
+  [copyable]="true"
+  icon="clipboard-text"
+  variant="outlined"
+  (copied)="onCopied($event)"
+  (copyFailed)="onCopyFailed($event)"
+></psh-info-card>`;
+
+  perRowCopyCode = `// Activation par ligne via le champ copyable
+const data: InfoCardData[] = [
+  { label: 'Référence', value: 'REF-2025-0042', copyable: true },
+  { label: 'Statut', value: 'En cours' },
+  { label: 'Code suivi', value: 'TRK-9876543210', copyable: true }
+];
+
+// Le champ copyValue permet de copier une valeur brute
+// différente de ce qui est affiché
+{ label: 'IBAN', value: 'FR76 •••• 4521', copyValue: 'FR7630006...' }`;
+
+  handleCopied(item: InfoCardData): void {
+    this.lastCopiedLabel = item.label;
+  }
+
+  handleCopyFailed(item: InfoCardData): void {
+    alert(`Échec de la copie pour : ${item.label}`);
+  }
 }
