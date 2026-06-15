@@ -574,6 +574,234 @@ describe('PshInfoCardComponent', () => {
   });
 });
 
+describe('PshInfoCardComponent - Copy Feature', () => {
+  let fixture: ComponentFixture<PshInfoCardComponent>;
+
+  const getCopyButtons = () =>
+    fixture.nativeElement.querySelectorAll('.info-card-copy-btn') as NodeListOf<HTMLButtonElement>;
+
+  const getLiveRegion = () =>
+    fixture.nativeElement.querySelector('[role="status"][aria-live="polite"].info-card-sr-only') as HTMLElement;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [PshInfoCardComponent]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(PshInfoCardComponent);
+    fixture.detectChanges();
+  });
+
+  describe('Backward compatibility', () => {
+    it('should not render copy buttons when copyable is false (default)', () => {
+      fixture.componentRef.setInput('data', [
+        { label: 'Name', value: 'John Doe' },
+        { label: 'Email', value: 'john@example.com' }
+      ]);
+      fixture.detectChanges();
+
+      expect(getCopyButtons().length).toBe(0);
+    });
+  });
+
+  describe('Global opt-in', () => {
+    it('should render copy buttons on all non-empty rows when copyable is true', () => {
+      fixture.componentRef.setInput('copyable', true);
+      fixture.componentRef.setInput('data', [
+        { label: 'Name', value: 'John Doe' },
+        { label: 'Email', value: 'john@example.com' }
+      ]);
+      fixture.detectChanges();
+
+      expect(getCopyButtons().length).toBe(2);
+    });
+  });
+
+  describe('Per-row override', () => {
+    it('should render copy button only on rows with copyable: true', () => {
+      fixture.componentRef.setInput('copyable', false);
+      fixture.componentRef.setInput('data', [
+        { label: 'Name', value: 'John Doe', copyable: true },
+        { label: 'Email', value: 'john@example.com' }
+      ]);
+      fixture.detectChanges();
+
+      expect(getCopyButtons().length).toBe(1);
+    });
+  });
+
+  describe('Hidden on empty value', () => {
+    it('should not render copy button when value is null', () => {
+      fixture.componentRef.setInput('copyable', true);
+      fixture.componentRef.setInput('data', [
+        { label: 'Phone', value: null }
+      ]);
+      fixture.detectChanges();
+
+      expect(getCopyButtons().length).toBe(0);
+    });
+
+    it('should not render copy button when value is empty string', () => {
+      fixture.componentRef.setInput('copyable', true);
+      fixture.componentRef.setInput('data', [
+        { label: 'Phone', value: '' }
+      ]);
+      fixture.detectChanges();
+
+      expect(getCopyButtons().length).toBe(0);
+    });
+  });
+
+  describe('Accessibility', () => {
+    it('should have contextual aria-label on copy button', () => {
+      fixture.componentRef.setInput('copyable', true);
+      fixture.componentRef.setInput('data', [
+        { label: 'Email', value: 'john@example.com' }
+      ]);
+      fixture.detectChanges();
+
+      const btn = getCopyButtons()[0];
+      expect(btn.getAttribute('aria-label')).toBe('Copier Email');
+    });
+
+    it('should use custom copyButtonLabel in aria-label', () => {
+      fixture.componentRef.setInput('copyable', true);
+      fixture.componentRef.setInput('copyButtonLabel', 'Copy');
+      fixture.componentRef.setInput('data', [
+        { label: 'Name', value: 'John' }
+      ]);
+      fixture.detectChanges();
+
+      const btn = getCopyButtons()[0];
+      expect(btn.getAttribute('aria-label')).toBe('Copy Name');
+    });
+
+    it('should have a live region for screen reader announcements', () => {
+      fixture.componentRef.setInput('copyable', true);
+      fixture.componentRef.setInput('data', [
+        { label: 'Name', value: 'John' }
+      ]);
+      fixture.detectChanges();
+
+      expect(getLiveRegion()).toBeTruthy();
+    });
+  });
+
+  describe('Copy success', () => {
+    let writeTextSpy: jest.SpyInstance;
+
+    beforeEach(() => {
+      Object.defineProperty(window, 'isSecureContext', { value: true, writable: true });
+      writeTextSpy = jest.fn().mockResolvedValue(undefined);
+      Object.defineProperty(navigator, 'clipboard', {
+        value: { writeText: writeTextSpy },
+        writable: true,
+        configurable: true
+      });
+    });
+
+    it('should emit copied output on successful copy', async () => {
+      const copiedSpy = jest.fn();
+      fixture.componentInstance.copied.subscribe(copiedSpy);
+
+      fixture.componentRef.setInput('copyable', true);
+      const data: InfoCardData[] = [{ label: 'Email', value: 'john@example.com' }];
+      fixture.componentRef.setInput('data', data);
+      fixture.detectChanges();
+
+      getCopyButtons()[0].click();
+      await fixture.whenStable();
+
+      expect(copiedSpy).toHaveBeenCalledWith(data[0]);
+    });
+
+    it('should use copyValue over value when provided', async () => {
+      fixture.componentRef.setInput('copyable', true);
+      fixture.componentRef.setInput('data', [
+        { label: 'Phone', value: '+33 6 12 34 56 78', copyValue: '0612345678' }
+      ]);
+      fixture.detectChanges();
+
+      getCopyButtons()[0].click();
+      await fixture.whenStable();
+
+      expect(writeTextSpy).toHaveBeenCalledWith('0612345678');
+    });
+
+    it('should show success feedback icon after copy', async () => {
+      fixture.componentRef.setInput('copyable', true);
+      fixture.componentRef.setInput('data', [{ label: 'Name', value: 'John' }]);
+      fixture.detectChanges();
+
+      getCopyButtons()[0].click();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const btn = getCopyButtons()[0];
+      expect(btn.querySelector('.ph-check')).toBeTruthy();
+      expect(btn.classList.contains('copied')).toBe(true);
+    });
+  });
+
+  describe('Copy failure', () => {
+    beforeEach(() => {
+      Object.defineProperty(window, 'isSecureContext', { value: true, writable: true });
+      Object.defineProperty(navigator, 'clipboard', {
+        value: { writeText: jest.fn().mockRejectedValue(new Error('Permission denied')) },
+        writable: true,
+        configurable: true
+      });
+    });
+
+    it('should emit copyFailed output on failure', async () => {
+      const failedSpy = jest.fn();
+      fixture.componentInstance.copyFailed.subscribe(failedSpy);
+
+      fixture.componentRef.setInput('copyable', true);
+      const data: InfoCardData[] = [{ label: 'Email', value: 'john@example.com' }];
+      fixture.componentRef.setInput('data', data);
+      fixture.detectChanges();
+
+      getCopyButtons()[0].click();
+      await fixture.whenStable();
+
+      expect(failedSpy).toHaveBeenCalledWith(data[0]);
+    });
+
+    it('should not show success feedback on failure', async () => {
+      fixture.componentRef.setInput('copyable', true);
+      fixture.componentRef.setInput('data', [{ label: 'Name', value: 'John' }]);
+      fixture.detectChanges();
+
+      getCopyButtons()[0].click();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const btn = getCopyButtons()[0];
+      expect(btn.querySelector('.ph-check')).toBeFalsy();
+      expect(btn.classList.contains('copied')).toBe(false);
+    });
+  });
+
+  describe('Non-secure context', () => {
+    it('should emit copyFailed when not in secure context', () => {
+      Object.defineProperty(window, 'isSecureContext', { value: false, writable: true });
+
+      const failedSpy = jest.fn();
+      fixture.componentInstance.copyFailed.subscribe(failedSpy);
+
+      fixture.componentRef.setInput('copyable', true);
+      const data: InfoCardData[] = [{ label: 'Email', value: 'john@example.com' }];
+      fixture.componentRef.setInput('data', data);
+      fixture.detectChanges();
+
+      getCopyButtons()[0].click();
+
+      expect(failedSpy).toHaveBeenCalledWith(data[0]);
+    });
+  });
+});
+
 describe('PshInfoCardComponent - Content Projection', () => {
   let fixture: ComponentFixture<TestHostComponent>;
   let hostComponent: TestHostComponent;

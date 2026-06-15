@@ -12,6 +12,10 @@ export interface InfoCardData {
   valueWidth?: string;
   /** Optional custom CSS class for styling */
   customClass?: string;
+  /** Whether this row's value can be copied (overrides component-level copyable) */
+  copyable?: boolean;
+  /** Raw value to copy if different from the displayed value */
+  copyValue?: string;
 }
 
 /**

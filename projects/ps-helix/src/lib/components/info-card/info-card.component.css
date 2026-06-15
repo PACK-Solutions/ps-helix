@@ -250,6 +250,75 @@
   }
 }
 
+/* Copy Button */
+.info-card-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs);
+  margin-left: var(--spacing-xs);
+  border: none;
+  background: transparent;
+  color: var(--text-color-secondary);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  min-width: 24px;
+  min-height: 24px;
+  flex-shrink: 0;
+  transition: opacity var(--animation-duration-fast) var(--animation-easing-default),
+              color var(--animation-duration-fast) var(--animation-easing-default);
+}
+
+@media (hover: hover) {
+  .info-card-copy-btn {
+    opacity: 0;
+  }
+
+  .info-card-row:hover .info-card-copy-btn,
+  .info-card-row:focus-within .info-card-copy-btn {
+    opacity: 1;
+  }
+}
+
+.info-card-copy-btn:hover {
+  color: var(--primary-color);
+}
+
+.info-card-copy-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--primary-color);
+  opacity: 1;
+}
+
+.info-card-copy-btn.copied {
+  color: var(--success-color);
+  opacity: 1;
+}
+
+.info-card-copy-btn i {
+  font-size: var(--icon-size-sm);
+}
+
+.info-card-copy-feedback {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--success-color);
+  white-space: nowrap;
+}
+
+/* Screen-reader only utility */
+.info-card-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 @media (max-width: 768px) {
   .info-card-title {
     font-size: var(--font-size-sm);

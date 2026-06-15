@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, computed, input, signal, PLATFORM_ID, inject, output, ViewEncapsulation, ElementRef, AfterContentInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, computed, input, signal, PLATFORM_ID, inject, output, ViewEncapsulation, ElementRef, AfterContentInit, OnDestroy } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { InfoCardData, InfoCardOptions, InfoCardVariant } from './info-card.types';
 
@@ -36,7 +36,7 @@ import { InfoCardData, InfoCardOptions, InfoCardVariant } from './info-card.type
     style: 'display: block; height: 100%;'
   }
 })
-export class PshInfoCardComponent implements AfterContentInit {
+export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
 
   hasHeaderActions = signal<boolean>(false);
 
@@ -84,6 +84,24 @@ export class PshInfoCardComponent implements AfterContentInit {
   /** Emitted when card is clicked */
   clicked = output<MouseEvent | KeyboardEvent>();
 
+  /** Whether to show copy buttons on rows (opt-in) */
+  copyable = input<boolean>(false);
+
+  /** Label prefix for the copy button aria-label */
+  copyButtonLabel = input<string>('Copier');
+
+  /** Text shown as feedback after successful copy */
+  copyFeedbackText = input<string>('Copié');
+
+  /** Emitted when a row value is successfully copied */
+  copied = output<InfoCardData>();
+
+  /** Emitted when a copy attempt fails */
+  copyFailed = output<InfoCardData>();
+
+  /** Tracks the row index currently showing success feedback */
+  copiedRowIndex = signal<number | null>(null);
+
   /** Whether to auto-enable full width buttons on mobile (default: true) */
   autoFullWidthOnMobile = input<boolean>(true);
 
@@ -92,6 +110,7 @@ export class PshInfoCardComponent implements AfterContentInit {
 
   private platformId = inject(PLATFORM_ID);
   private resizeObserver?: ResizeObserver;
+  private feedbackTimeout?: ReturnType<typeof setTimeout>;
 
   /** Determines if the empty state should be shown */
   shouldShowEmptyState = computed(() => {
@@ -176,6 +195,9 @@ export class PshInfoCardComponent implements AfterContentInit {
     if (this.resizeObserver) {
       this.resizeObserver.disconnect();
     }
+    if (this.feedbackTimeout) {
+      clearTimeout(this.feedbackTimeout);
+    }
   }
 
   private checkMobileViewport(): void {
@@ -203,5 +225,45 @@ export class PshInfoCardComponent implements AfterContentInit {
         this.clicked.emit(event);
       }
     }
+  }
+
+  isRowCopyable(item: InfoCardData): boolean {
+    return item.copyable ?? this.copyable();
+  }
+
+  hasNonEmptyValue(item: InfoCardData): boolean {
+    const val = item.value;
+    if (val == null) return false;
+    return val.toString().trim().length > 0;
+  }
+
+  copyRowValue(item: InfoCardData, index: number): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      this.copyFailed.emit(item);
+      return;
+    }
+
+    if (!window.isSecureContext || !navigator.clipboard) {
+      this.copyFailed.emit(item);
+      return;
+    }
+
+    const text = item.copyValue ?? item.value?.toString() ?? '';
+
+    navigator.clipboard.writeText(text).then(
+      () => {
+        if (this.feedbackTimeout) {
+          clearTimeout(this.feedbackTimeout);
+        }
+        this.copiedRowIndex.set(index);
+        this.copied.emit(item);
+        this.feedbackTimeout = setTimeout(() => {
+          this.copiedRowIndex.set(null);
+        }, 1800);
+      },
+      () => {
+        this.copyFailed.emit(item);
+      }
+    );
   }
 }
