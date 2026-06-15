@@ -472,8 +472,8 @@ describe('PshInfoCardComponent', () => {
       fixture.componentRef.setInput('data', testData);
       fixture.detectChanges();
 
-      const value = fixture.nativeElement.querySelector('.info-card-value') as HTMLElement;
-      expect(value.style.width).toBe('300px');
+      const valueGroup = fixture.nativeElement.querySelector('.info-card-value-group') as HTMLElement;
+      expect(valueGroup.style.width).toBe('300px');
     });
 
     it('should use per-item labelWidth over options.labelWidth', () => {
@@ -496,8 +496,8 @@ describe('PshInfoCardComponent', () => {
       fixture.componentRef.setInput('options', { valueWidth: '200px' });
       fixture.detectChanges();
 
-      const value = fixture.nativeElement.querySelector('.info-card-value') as HTMLElement;
-      expect(value.style.width).toBe('250px');
+      const valueGroup = fixture.nativeElement.querySelector('.info-card-value-group') as HTMLElement;
+      expect(valueGroup.style.width).toBe('250px');
     });
 
     it('should fall back to options.labelWidth when per-item labelWidth is not set', () => {
@@ -520,8 +520,8 @@ describe('PshInfoCardComponent', () => {
       fixture.componentRef.setInput('options', { valueWidth: '180px' });
       fixture.detectChanges();
 
-      const value = fixture.nativeElement.querySelector('.info-card-value') as HTMLElement;
-      expect(value.style.width).toBe('180px');
+      const valueGroup = fixture.nativeElement.querySelector('.info-card-value-group') as HTMLElement;
+      expect(valueGroup.style.width).toBe('180px');
     });
   });
 

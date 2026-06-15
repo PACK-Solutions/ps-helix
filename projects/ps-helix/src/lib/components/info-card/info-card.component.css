@@ -149,14 +149,22 @@
   background-color: var(--surface-border);
 }
 
+.info-card-value-group {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding-left: var(--size-2);
+  min-width: 0;
+  flex: 2;
+}
+
 .info-card-value {
   font-weight: var(--font-weight-medium);
   color: var(--text-color);
   font-size: var(--font-size-sm);
-  padding-left: var(--size-2);
   text-align: left;
   min-width: 0;
-  flex: 2;
+  flex-shrink: 1;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -256,7 +264,6 @@
   align-items: center;
   gap: var(--spacing-xs);
   padding: var(--spacing-xs);
-  margin-left: var(--spacing-xs);
   border: none;
   background: transparent;
   color: var(--text-color-secondary);
@@ -275,7 +282,9 @@
   }
 
   .info-card-row:hover .info-card-copy-btn,
-  .info-card-row:focus-within .info-card-copy-btn {
+  .info-card-row:focus-within .info-card-copy-btn,
+  .info-card-value-group:hover .info-card-copy-btn,
+  .info-card-value-group:focus-within .info-card-copy-btn {
     opacity: 1;
   }
 }
@@ -410,11 +419,16 @@
     display: none;
   }
 
-  .info-card-value {
+  .info-card-value-group {
     width: 100%;
     padding-left: 0;
-    text-align: left;
     flex: none;
+  }
+
+  .info-card-value {
+    padding-left: 0;
+    text-align: left;
+    flex-shrink: 1;
     font-weight: var(--font-weight-normal);
     white-space: normal;
   }
