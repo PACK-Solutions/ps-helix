@@ -427,6 +427,8 @@ Permettez aux utilisateurs de changer le nombre d'éléments affichés :
 ></psh-pagination>
 ```
 
+> **Note** : La valeur de `itemsPerPage` doit correspondre à l'une des valeurs présentes dans `itemsPerPageOptions` pour que le sélecteur affiche correctement l'option active au rendu initial.
+
 ### Labels Personnalisés (i18n)
 
 Personnalisez tous les labels pour l'internationalisation :

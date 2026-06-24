@@ -16,12 +16,11 @@
       </label>
       <select
         [attr.id]="navigationId() + '-items-select'"
-        [value]="itemsPerPage()"
         (change)="onItemsPerPageChange($event)"
         [attr.aria-label]="itemsPerPageLabel()"
       >
         @for (option of itemsPerPageOptions(); track option) {
-          <option [value]="option">
+          <option [value]="option" [selected]="option === itemsPerPage()">
             {{ option }} {{ itemsLabel() }}
           </option>
         }

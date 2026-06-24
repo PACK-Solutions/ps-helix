@@ -76,7 +76,7 @@ export class PaginationDemoComponent {
 
   itemsPerPageCurrent = 1;
   itemsPerPageTotal = 20;
-  itemsPerPage = 10;
+  itemsPerPage = 25;
   itemsPerPageOptions = [5, 10, 25, 50];
 
   customNavCurrent = 1;

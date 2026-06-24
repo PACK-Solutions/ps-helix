@@ -521,6 +521,35 @@ describe('PshPaginationComponent', () => {
       const label = getItemsPerPageLabel();
       expect(label.textContent).toContain('Rows per page');
     });
+
+    it('should reflect itemsPerPage value when it is not the first option', () => {
+      fixture.componentRef.setInput('showItemsPerPage', true);
+      fixture.componentRef.setInput('itemsPerPageOptions', [5, 10, 25, 50]);
+      fixture.componentRef.setInput('itemsPerPage', 25);
+      fixture.detectChanges();
+
+      const select = getItemsPerPageSelect();
+      expect(select.value).toBe('25');
+
+      const options = Array.from(select.querySelectorAll('option')) as HTMLOptionElement[];
+      const selectedOption = options.find(o => o.selected);
+      expect(selectedOption).toBeTruthy();
+      expect(selectedOption!.value).toBe('25');
+    });
+
+    it('should update selected option when itemsPerPage changes programmatically', () => {
+      fixture.componentRef.setInput('showItemsPerPage', true);
+      fixture.componentRef.setInput('itemsPerPageOptions', [5, 10, 25, 50]);
+      fixture.componentRef.setInput('itemsPerPage', 25);
+      fixture.detectChanges();
+
+      expect(getItemsPerPageSelect().value).toBe('25');
+
+      fixture.componentRef.setInput('itemsPerPage', 10);
+      fixture.detectChanges();
+
+      expect(getItemsPerPageSelect().value).toBe('10');
+    });
   });
 
   describe('data-state attribute', () => {
