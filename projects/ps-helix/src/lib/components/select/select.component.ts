@@ -8,9 +8,10 @@ import {
   model,
   output,
   signal,
-  DestroyRef
+  DestroyRef,
+  PLATFORM_ID
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
 import { SelectOption, SelectOptionGroup, SelectSize, SelectVariant, SearchConfig } from './select.types';
@@ -50,6 +51,8 @@ interface FlatOption<T> {
 export class PshSelectComponent<T = unknown> implements ControlValueAccessor, FormValueControl<T | T[] | null> {
   private readonly elementRef = inject(ElementRef);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly document = inject(DOCUMENT);
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   protected readonly selectId = `psh-sel-${Math.random().toString(36).substring(2, 11)}`;
 
@@ -175,13 +178,14 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
   });
 
   constructor() {
+    if (!this.isBrowser) return;
     const clickHandler = (event: MouseEvent) => {
       if (this.isOpen() && !this.elementRef.nativeElement.contains(event.target)) {
         this.close();
       }
     };
-    document.addEventListener('click', clickHandler);
-    this.destroyRef.onDestroy(() => document.removeEventListener('click', clickHandler));
+    this.document.addEventListener('click', clickHandler);
+    this.destroyRef.onDestroy(() => this.document.removeEventListener('click', clickHandler));
   }
 
   private onChange = (_: unknown) => {};

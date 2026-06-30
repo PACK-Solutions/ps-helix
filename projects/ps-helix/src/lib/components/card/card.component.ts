@@ -11,7 +11,7 @@ import {
   signal,
   ViewEncapsulation
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { CardVariant, CardColorVariant, CardDensity, CardActionsAlignment } from './card.types';
 
 /**
@@ -52,6 +52,7 @@ import { CardVariant, CardColorVariant, CardDensity, CardActionsAlignment } from
 })
 export class PshCardComponent implements OnDestroy {
   private platformId = inject(PLATFORM_ID);
+  private readonly document = inject(DOCUMENT);
   private resizeObserver?: ResizeObserver;
 
   isMobile = signal<boolean>(false);
@@ -153,11 +154,11 @@ export class PshCardComponent implements OnDestroy {
     if (isPlatformBrowser(this.platformId)) {
       this.checkMobileViewport();
 
-      if (typeof window !== 'undefined') {
+      if (this.document.defaultView) {
         this.resizeObserver = new ResizeObserver(() => {
           this.checkMobileViewport();
         });
-        this.resizeObserver.observe(document.documentElement);
+        this.resizeObserver.observe(this.document.documentElement);
       }
     }
   }
@@ -169,8 +170,9 @@ export class PshCardComponent implements OnDestroy {
   }
 
   private checkMobileViewport(): void {
-    if (typeof window !== 'undefined') {
-      this.isMobile.set(window.innerWidth <= 640);
+    const view = this.document.defaultView;
+    if (view) {
+      this.isMobile.set(view.innerWidth <= 640);
     }
   }
 

@@ -98,7 +98,7 @@ export class PshToastComponent implements OnDestroy {
 
   private scheduleRemoval(id: string, duration: number): void {
     this.clearTimeout(id);
-    const timeoutId = window.setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       this.toastService.remove(id);
       this.timeoutMap.delete(id);
     }, duration);
@@ -108,14 +108,14 @@ export class PshToastComponent implements OnDestroy {
   private clearTimeout(id: string): void {
     const timeoutId = this.timeoutMap.get(id);
     if (timeoutId) {
-      window.clearTimeout(timeoutId);
+      clearTimeout(timeoutId);
       this.timeoutMap.delete(id);
     }
   }
 
   ngOnDestroy(): void {
     this.timeoutMap.forEach(timeoutId => {
-      window.clearTimeout(timeoutId);
+      clearTimeout(timeoutId);
     });
     this.timeoutMap.clear();
     this.scheduledToastIds.clear();

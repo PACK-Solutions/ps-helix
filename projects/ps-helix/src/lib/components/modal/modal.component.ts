@@ -362,8 +362,9 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
    * Checks if the current screen size is mobile
    */
   private checkScreenSize(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      this.isMobileSignal.set(window.innerWidth < this.mobileBreakpoint);
+    const view = this.document.defaultView;
+    if (view) {
+      this.isMobileSignal.set(view.innerWidth < this.mobileBreakpoint);
     }
   }
 
@@ -371,9 +372,10 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
    * Sets up resize listener to detect screen size changes
    */
   private setupResizeListener(): void {
-    if (isPlatformBrowser(this.platformId)) {
+    const view = this.document.defaultView;
+    if (view) {
       this.resizeListener = () => this.checkScreenSize();
-      window.addEventListener('resize', this.resizeListener);
+      view.addEventListener('resize', this.resizeListener);
     }
   }
 
@@ -381,8 +383,8 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
    * Removes resize listener
    */
   private removeResizeListener(): void {
-    if (isPlatformBrowser(this.platformId) && this.resizeListener) {
-      window.removeEventListener('resize', this.resizeListener);
+    if (this.resizeListener) {
+      this.document.defaultView?.removeEventListener('resize', this.resizeListener);
     }
   }
 

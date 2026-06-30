@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, computed, input, signal, PLATFORM_ID, inject, output, ViewEncapsulation, ElementRef, AfterContentInit, OnDestroy } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { InfoCardData, InfoCardOptions, InfoCardVariant } from './info-card.types';
 
 /**
@@ -109,6 +109,7 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
   isMobile = signal<boolean>(false);
 
   private platformId = inject(PLATFORM_ID);
+  private readonly document = inject(DOCUMENT);
   private resizeObserver?: ResizeObserver;
   private feedbackTimeout?: ReturnType<typeof setTimeout>;
 
@@ -171,11 +172,11 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
     if (isPlatformBrowser(this.platformId)) {
       this.checkMobileViewport();
 
-      if (typeof window !== 'undefined') {
+      if (this.document.defaultView) {
         this.resizeObserver = new ResizeObserver(() => {
           this.checkMobileViewport();
         });
-        this.resizeObserver.observe(document.documentElement);
+        this.resizeObserver.observe(this.document.documentElement);
       }
     }
   }
@@ -201,8 +202,9 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
   }
 
   private checkMobileViewport(): void {
-    if (typeof window !== 'undefined') {
-      this.isMobile.set(window.innerWidth <= 640);
+    const view = this.document.defaultView;
+    if (view) {
+      this.isMobile.set(view.innerWidth <= 640);
     }
   }
 
@@ -243,14 +245,15 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
       return;
     }
 
-    if (!window.isSecureContext || !navigator.clipboard) {
+    const view = this.document.defaultView;
+    if (!view?.isSecureContext || !view.navigator.clipboard) {
       this.copyFailed.emit(item);
       return;
     }
 
     const text = item.copyValue ?? item.value?.toString() ?? '';
 
-    navigator.clipboard.writeText(text).then(
+    view.navigator.clipboard.writeText(text).then(
       () => {
         if (this.feedbackTimeout) {
           clearTimeout(this.feedbackTimeout);

@@ -8,9 +8,10 @@ import {
   model,
   output,
   signal,
-  OnDestroy
+  OnDestroy,
+  PLATFORM_ID
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { DropdownAppearance, DropdownItem, DropdownPlacement, DropdownSize, DropdownVariant } from './dropdown.types';
 
 @Component({
@@ -22,6 +23,8 @@ import { DropdownAppearance, DropdownItem, DropdownPlacement, DropdownSize, Drop
 })
 export class PshDropdownComponent<T = string> implements OnDestroy {
   private elementRef = inject(ElementRef);
+  private readonly document = inject(DOCUMENT);
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private clickOutsideHandler: ((event: MouseEvent) => void) | null = null;
 
   // Regular inputs
@@ -75,6 +78,7 @@ export class PshDropdownComponent<T = string> implements OnDestroy {
   }
 
   private setupClickOutsideListener(): void {
+    if (!this.isBrowser) return;
     this.clickOutsideHandler = (event: MouseEvent) => {
       if (this.isOpen()) {
         const target = event.target as HTMLElement;
@@ -83,7 +87,7 @@ export class PshDropdownComponent<T = string> implements OnDestroy {
         }
       }
     };
-    document.addEventListener('click', this.clickOutsideHandler);
+    this.document.addEventListener('click', this.clickOutsideHandler);
   }
 
   toggleDropdown(): void {
@@ -275,7 +279,7 @@ export class PshDropdownComponent<T = string> implements OnDestroy {
 
   ngOnDestroy(): void {
     if (this.clickOutsideHandler) {
-      document.removeEventListener('click', this.clickOutsideHandler);
+      this.document.removeEventListener('click', this.clickOutsideHandler);
     }
   }
 }

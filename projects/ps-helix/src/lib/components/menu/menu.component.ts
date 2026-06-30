@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, computed, input, model, output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, inject, input, model, output } from '@angular/core';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { MenuItem, MenuMode, MenuVariant } from './menu.types';
 import { PshTooltipComponent } from '../tooltip/tooltip.component';
 
@@ -11,6 +11,7 @@ import { PshTooltipComponent } from '../tooltip/tooltip.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PshMenuComponent<T = string> {
+  private readonly document = inject(DOCUMENT);
 
   mode = input<MenuMode>('vertical');
   variant = input<MenuVariant>('default');
@@ -212,7 +213,7 @@ export class PshMenuComponent<T = string> {
     const item = items[index];
     if (item && !item.divider && !item.disabled) {
       setTimeout(() => {
-        const link = document.querySelector(`[data-menu-item-id="${item.id}"]`) as HTMLElement;
+        const link = this.document.querySelector(`[data-menu-item-id="${item.id}"]`) as HTMLElement;
         link?.focus();
       });
     } else {

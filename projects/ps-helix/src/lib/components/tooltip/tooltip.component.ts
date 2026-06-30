@@ -12,6 +12,7 @@ import {
   AfterViewInit,
   OnDestroy
 } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { TooltipPosition, TooltipConfig, TooltipVariant } from './tooltip.types';
 
 export const TOOLTIP_CONFIG = new InjectionToken<Partial<TooltipConfig>>('TOOLTIP_CONFIG', {
@@ -44,6 +45,7 @@ export const TOOLTIP_CONFIG = new InjectionToken<Partial<TooltipConfig>>('TOOLTI
 export class PshTooltipComponent implements AfterViewInit, OnDestroy {
   private config = inject(TOOLTIP_CONFIG) as Required<TooltipConfig>;
   private elementRef = inject(ElementRef);
+  private readonly document = inject(DOCUMENT);
 
   variant = input<TooltipVariant>(this.config.variant ?? 'dark');
   position = input<TooltipPosition>(this.config.position ?? 'top');
@@ -154,12 +156,15 @@ export class PshTooltipComponent implements AfterViewInit, OnDestroy {
   }
 
   private updatePosition(): void {
+    const view = this.document.defaultView;
+    if (!view) return;
+
     const preferredPosition = this.position();
     const element = this.elementRef.nativeElement as HTMLElement;
     const rect = element.getBoundingClientRect();
 
-    const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight;
+    const viewportWidth = view.innerWidth;
+    const viewportHeight = view.innerHeight;
 
     const tooltipEstimatedHeight = 40;
     const tooltipEstimatedWidth = Math.min(this.maxWidth(), 200);

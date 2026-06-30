@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, effect, inject, input, signal, InjectionToken } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { SpinLoaderVariant, SpinLoaderSize, SpinLoaderColor, SpinLoaderConfig } from './spinloader.types';
 
 export const SPINLOADER_CONFIG = new InjectionToken<Partial<SpinLoaderConfig>>('SPINLOADER_CONFIG', {
@@ -28,6 +29,7 @@ export const SPINLOADER_CONFIG = new InjectionToken<Partial<SpinLoaderConfig>>('
 })
 export class PshSpinLoaderComponent {
   private config = inject(SPINLOADER_CONFIG);
+  private readonly document = inject(DOCUMENT);
 
   variant = input<SpinLoaderVariant>(this.config.variant ?? 'circle');
   size = input<SpinLoaderSize>(this.config.size ?? 'medium');
@@ -40,8 +42,9 @@ export class PshSpinLoaderComponent {
 
   constructor() {
     effect(() => {
-      if (typeof window !== 'undefined') {
-        const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const view = this.document.defaultView;
+      if (view) {
+        const mediaQuery = view.matchMedia('(prefers-reduced-motion: reduce)');
         this.reduceMotion.set(mediaQuery.matches);
 
         const handler = (e: MediaQueryListEvent) => this.reduceMotion.set(e.matches);

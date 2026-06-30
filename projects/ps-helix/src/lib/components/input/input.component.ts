@@ -122,8 +122,8 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
 
   constructor() {
     this.destroyRef.onDestroy(() => {
-      if (this.blurTimeoutId) window.clearTimeout(this.blurTimeoutId);
-      if (this.debounceTimeoutId) window.clearTimeout(this.debounceTimeoutId);
+      if (this.blurTimeoutId) clearTimeout(this.blurTimeoutId);
+      if (this.debounceTimeoutId) clearTimeout(this.debounceTimeoutId);
     });
   }
 
@@ -169,8 +169,8 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
     this.onTouched();
     this.touched.set(true);
 
-    if (this.blurTimeoutId) window.clearTimeout(this.blurTimeoutId);
-    this.blurTimeoutId = window.setTimeout(() => {
+    if (this.blurTimeoutId) clearTimeout(this.blurTimeoutId);
+    this.blurTimeoutId = setTimeout(() => {
       this.suggestionsVisible.set(false);
       this.focusedSuggestionIndex.set(-1);
       this.blurTimeoutId = null;
@@ -235,8 +235,8 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
   }
 
   private debouncedUpdateSuggestions(value: string): void {
-    if (this.debounceTimeoutId) window.clearTimeout(this.debounceTimeoutId);
-    this.debounceTimeoutId = window.setTimeout(() => {
+    if (this.debounceTimeoutId) clearTimeout(this.debounceTimeoutId);
+    this.debounceTimeoutId = setTimeout(() => {
       this.updateSuggestions(value);
       this.debounceTimeoutId = null;
     }, this.autocompleteConfig().debounceTime);
