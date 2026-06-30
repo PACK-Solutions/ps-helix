@@ -1,6 +1,10 @@
 import 'jest-preset-angular/setup-env/zone';
 import { getTestBed, ComponentFixture } from '@angular/core/testing';
 import { BrowserDynamicTestingModule, platformBrowserDynamicTesting } from '@angular/platform-browser-dynamic/testing';
+import { toHaveNoViolations } from 'jest-axe';
+
+// Enable the jest-axe accessibility matcher across all specs.
+expect.extend(toHaveNoViolations);
 
 getTestBed().initTestEnvironment(
   BrowserDynamicTestingModule,
