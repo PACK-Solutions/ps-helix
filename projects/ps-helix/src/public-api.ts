@@ -78,3 +78,4 @@ export * from './lib/services/scroll.service';
 // Headless a11y / overlay primitives
 export * from './lib/a11y/focus-trap.directive';
 export * from './lib/a11y/live-announcer.service';
+export * from './lib/a11y/overlay-position.service';
