@@ -20,6 +20,7 @@ import {
 } from '@angular/core';
 import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { PshButtonComponent } from '../button/button.component';
+import { PshFocusTrapDirective } from '../../a11y/focus-trap.directive';
 import { ModalSize, ModalConfig } from './modal.types';
 
 /**
@@ -155,7 +156,7 @@ export class ModalService {
  */
 @Component({
   selector: 'psh-modal',
-  imports: [CommonModule, PshButtonComponent],
+  imports: [CommonModule, PshButtonComponent, PshFocusTrapDirective],
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -168,7 +169,6 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
   private readonly document = inject(DOCUMENT);
   private readonly isBrowser = isPlatformBrowser(this.platformId);
   private readonly modalId = this.modalService.generateId();
-  private previousActiveElement: HTMLElement | null = null;
   private modalElement?: ElementRef<HTMLElement>;
   private isAttachedToBody = false;
   private resizeListener?: () => void;
@@ -283,15 +283,6 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
   };
 
   /**
-   * Keyboard event handler for focus trap
-   */
-  private readonly focusTrapHandler = (event: KeyboardEvent) => {
-    if (event.key === 'Tab' && this.open() && this.modalService.isTopmost(this.modalId)) {
-      this.handleFocusTrap(event);
-    }
-  };
-
-  /**
    * Computed signal indicating if a custom footer is projected
    */
   hasCustomFooter = computed(() => !!this.customFooter());
@@ -341,10 +332,10 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
   private onModalOpen(): void {
     this.modalService.register(this.modalId);
     if (!this.isBrowser) return;
-    this.previousActiveElement = this.document.activeElement as HTMLElement;
     this.setupScrollLock();
     this.addEventListeners();
-    this.focusFirstElement();
+    // Initial focus + focus trapping + focus restoration are handled by
+    // the [pshFocusTrap] directive on the modal container.
   }
 
   /**
@@ -355,7 +346,6 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
     if (!this.isBrowser) return;
     this.removeScrollLock();
     this.removeEventListeners();
-    this.restoreFocus();
   }
 
   /**
@@ -393,7 +383,6 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
    */
   private addEventListeners(): void {
     this.document.addEventListener('keydown', this.escapeHandler);
-    this.document.addEventListener('keydown', this.focusTrapHandler);
   }
 
   /**
@@ -401,80 +390,6 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
    */
   private removeEventListeners(): void {
     this.document.removeEventListener('keydown', this.escapeHandler);
-    this.document.removeEventListener('keydown', this.focusTrapHandler);
-  }
-
-  /**
-   * Focuses the first focusable element in the modal
-   */
-  private focusFirstElement(): void {
-    setTimeout(() => {
-      const modalElement = this.document.getElementById(this.modalDialogId());
-      if (!modalElement) return;
-
-      const focusableElements = this.getFocusableElements(modalElement);
-      const firstElement = focusableElements[0];
-      if (firstElement) {
-        firstElement.focus();
-      }
-    }, 100);
-  }
-
-  /**
-   * Restores focus to the element that opened the modal
-   */
-  private restoreFocus(): void {
-    if (this.previousActiveElement && typeof this.previousActiveElement.focus === 'function') {
-      setTimeout(() => {
-        this.previousActiveElement?.focus();
-      }, 100);
-    }
-  }
-
-  /**
-   * Handles focus trap to keep focus within the modal
-   */
-  private handleFocusTrap(event: KeyboardEvent): void {
-    const modalElement = this.document.getElementById(this.modalDialogId());
-    if (!modalElement) return;
-
-    const focusableElements = this.getFocusableElements(modalElement);
-    if (focusableElements.length === 0) return;
-
-    const firstElement = focusableElements[0];
-    const lastElement = focusableElements[focusableElements.length - 1];
-    if (!firstElement || !lastElement) return;
-
-    const activeElement = this.document.activeElement;
-
-    if (event.shiftKey) {
-      if (activeElement === firstElement) {
-        event.preventDefault();
-        lastElement.focus();
-      }
-    } else {
-      if (activeElement === lastElement) {
-        event.preventDefault();
-        firstElement.focus();
-      }
-    }
-  }
-
-  /**
-   * Gets all focusable elements within a container
-   */
-  private getFocusableElements(container: HTMLElement): HTMLElement[] {
-    const selector = [
-      'button:not([disabled])',
-      '[href]',
-      'input:not([disabled])',
-      'select:not([disabled])',
-      'textarea:not([disabled])',
-      '[tabindex]:not([tabindex="-1"])',
-    ].join(', ');
-
-    return Array.from(container.querySelectorAll<HTMLElement>(selector))
-      .filter(el => el.offsetParent !== null);
   }
 
   /**
