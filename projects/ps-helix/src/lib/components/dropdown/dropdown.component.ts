@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  DestroyRef,
   effect,
   ElementRef,
   inject,
@@ -11,11 +12,11 @@ import {
   model,
   output,
   signal,
-  OnDestroy,
   PLATFORM_ID
 } from '@angular/core';
-import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { PshOverlayPositionService } from '../../a11y/overlay-position.service';
+import { PshClickOutsideDirective } from '../../a11y/click-outside.directive';
 import { DropdownAppearance, DropdownItem, DropdownPlacement, DropdownSize, DropdownVariant } from './dropdown.types';
 
 @Component({
@@ -23,15 +24,14 @@ import { DropdownAppearance, DropdownItem, DropdownPlacement, DropdownSize, Drop
   imports: [CommonModule],
   templateUrl: './dropdown.component.html',
   styleUrls: ['./dropdown.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  hostDirectives: [PshClickOutsideDirective]
 })
-export class PshDropdownComponent<T = string> implements OnDestroy {
+export class PshDropdownComponent<T = string> {
   private elementRef = inject(ElementRef);
-  private readonly document = inject(DOCUMENT);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly overlayPosition = inject(PshOverlayPositionService);
   private readonly injector = inject(Injector);
-  private clickOutsideHandler: ((event: MouseEvent) => void) | null = null;
 
   // Regular inputs
   appearance = input<DropdownAppearance>('filled');
@@ -84,7 +84,10 @@ export class PshDropdownComponent<T = string> implements OnDestroy {
   }
 
   constructor() {
-    this.setupClickOutsideListener();
+    // Close on outside click via the shared click-outside primitive.
+    const clickOutside = inject(PshClickOutsideDirective);
+    const sub = clickOutside.pshClickOutside.subscribe(() => this.close());
+    inject(DestroyRef).onDestroy(() => sub.unsubscribe());
 
     // Keep resolvedPlacement mirroring the input while closed; flip against the
     // viewport (after the menu has rendered) when opened.
@@ -110,19 +113,6 @@ export class PshDropdownComponent<T = string> implements OnDestroy {
         overlayWidth: menu?.offsetWidth ?? 0,
       }) as DropdownPlacement,
     );
-  }
-
-  private setupClickOutsideListener(): void {
-    if (!this.isBrowser) return;
-    this.clickOutsideHandler = (event: MouseEvent) => {
-      if (this.isOpen()) {
-        const target = event.target as HTMLElement;
-        if (!this.elementRef.nativeElement.contains(target)) {
-          this.close();
-        }
-      }
-    };
-    this.document.addEventListener('click', this.clickOutsideHandler);
   }
 
   toggleDropdown(): void {
@@ -312,9 +302,4 @@ export class PshDropdownComponent<T = string> implements OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    if (this.clickOutsideHandler) {
-      this.document.removeEventListener('click', this.clickOutsideHandler);
-    }
-  }
 }

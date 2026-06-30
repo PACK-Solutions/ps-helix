@@ -8,12 +8,12 @@ import {
   model,
   output,
   signal,
-  DestroyRef,
-  PLATFORM_ID
+  DestroyRef
 } from '@angular/core';
-import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
+import { PshClickOutsideDirective } from '../../a11y/click-outside.directive';
 import { SelectOption, SelectOptionGroup, SelectSize, SelectVariant, SearchConfig } from './select.types';
 
 interface FlatOption<T> {
@@ -34,6 +34,7 @@ interface FlatOption<T> {
     }
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  hostDirectives: [PshClickOutsideDirective],
   host: {
     '[class.full-width]': 'fullWidth()',
     '[class.small]': 'size() === "small"',
@@ -51,8 +52,6 @@ interface FlatOption<T> {
 export class PshSelectComponent<T = unknown> implements ControlValueAccessor, FormValueControl<T | T[] | null> {
   private readonly elementRef = inject(ElementRef);
   private readonly destroyRef = inject(DestroyRef);
-  private readonly document = inject(DOCUMENT);
-  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   protected readonly selectId = `psh-sel-${Math.random().toString(36).substring(2, 11)}`;
 
@@ -178,14 +177,12 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
   });
 
   constructor() {
-    if (!this.isBrowser) return;
-    const clickHandler = (event: MouseEvent) => {
-      if (this.isOpen() && !this.elementRef.nativeElement.contains(event.target)) {
-        this.close();
-      }
-    };
-    this.document.addEventListener('click', clickHandler);
-    this.destroyRef.onDestroy(() => this.document.removeEventListener('click', clickHandler));
+    // Close on outside click via the shared click-outside primitive.
+    const clickOutside = inject(PshClickOutsideDirective);
+    const sub = clickOutside.pshClickOutside.subscribe(() => {
+      if (this.isOpen()) this.close();
+    });
+    this.destroyRef.onDestroy(() => sub.unsubscribe());
   }
 
   private onChange: (value: T | T[] | null) => void = () => {};
