@@ -256,7 +256,11 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
       this.filteredSuggestionsSignal.set(results);
       this.suggestionsVisible.set(results.length > 0);
     } catch (error) {
+      // Fail gracefully (hide stale suggestions) but surface the error so a
+      // failing provider is not silently swallowed during development.
       this.filteredSuggestionsSignal.set([]);
+      this.suggestionsVisible.set(false);
+      console.error('[psh-input] Suggestion provider failed:', error);
     }
   }
 }

@@ -107,12 +107,9 @@ export class PshRadioComponent {
     this.success() ? `${this.uniqueId}-success` : undefined
   );
 
-  ariaDescribedBy = computed(() => {
-    const ids: string[] = [];
-    if (this.errorMessageId()) ids.push(this.errorMessageId()!);
-    if (this.successMessageId()) ids.push(this.successMessageId()!);
-    return ids.length > 0 ? ids.join(' ') : undefined;
-  });
+  // error and success are mutually exclusive in the template (@if/@else if),
+  // so aria-describedby references whichever message is actually rendered.
+  ariaDescribedBy = computed(() => this.errorMessageId() ?? this.successMessageId());
 
   constructor() {
     effect(() => {

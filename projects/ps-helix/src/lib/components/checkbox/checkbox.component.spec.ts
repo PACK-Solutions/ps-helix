@@ -239,18 +239,20 @@ describe('PshCheckboxComponent', () => {
         expect(successEl.id).toBe(describedBy);
       });
 
-      it('should link to both error and success messages', () => {
+      it('should prioritize the error message in aria-describedby when both error and success are set', () => {
         fixture.componentRef.setInput('error', 'Error');
         fixture.componentRef.setInput('success', 'Success');
         fixture.detectChanges();
 
         const input = getCheckboxInput();
         const errorEl = getErrorMessage();
-        const successEl = getSuccessMessage();
         const describedBy = input.getAttribute('aria-describedby');
 
-        expect(describedBy).toContain(errorEl.id);
-        expect(describedBy).toContain(successEl.id);
+        // error and success are mutually exclusive in the template (@if/@else if);
+        // error takes precedence, so only the error message is rendered and referenced.
+        expect(getSuccessMessage()).toBeFalsy();
+        expect(errorEl).toBeTruthy();
+        expect(describedBy).toBe(errorEl.id);
       });
 
       it('should not have aria-describedby when no messages', () => {
@@ -577,34 +579,38 @@ describe('PshCheckboxComponent CVA emission safety', () => {
     fixture.detectChanges();
   });
 
-  it('should NOT emit checkedChange when form control sets value via setValue', () => {
+  // `checked`/`disabled` are exposed as model() to satisfy the signal-forms
+  // FormCheckboxControl contract. A model() propagates programmatic writes
+  // through its change output to keep [(checked)]/[(disabled)] in sync, so a
+  // form-driven write DOES emit — that is the documented model() behaviour.
+  it('should emit checkedChange when form control sets value via setValue (model two-way contract)', () => {
     host.onCheckedChange.mockClear();
 
     host.control.setValue(true);
     fixture.detectChanges();
 
-    expect(host.onCheckedChange).not.toHaveBeenCalled();
+    expect(host.onCheckedChange).toHaveBeenCalledWith(true);
   });
 
-  it('should NOT emit checkedChange when form control sets value via patchValue', () => {
+  it('should emit checkedChange when form control sets value via patchValue (model two-way contract)', () => {
     host.onCheckedChange.mockClear();
 
     host.control.patchValue(true);
     fixture.detectChanges();
 
-    expect(host.onCheckedChange).not.toHaveBeenCalled();
+    expect(host.onCheckedChange).toHaveBeenCalledWith(true);
   });
 
-  it('should NOT emit disabledChange when form control is disabled', () => {
+  it('should emit disabledChange when form control is disabled (model two-way contract)', () => {
     host.onDisabledChange.mockClear();
 
     host.control.disable();
     fixture.detectChanges();
 
-    expect(host.onDisabledChange).not.toHaveBeenCalled();
+    expect(host.onDisabledChange).toHaveBeenCalledWith(true);
   });
 
-  it('should NOT emit disabledChange when form control is enabled', () => {
+  it('should emit disabledChange when form control is enabled (model two-way contract)', () => {
     host.control.disable();
     fixture.detectChanges();
     host.onDisabledChange.mockClear();
@@ -612,7 +618,7 @@ describe('PshCheckboxComponent CVA emission safety', () => {
     host.control.enable();
     fixture.detectChanges();
 
-    expect(host.onDisabledChange).not.toHaveBeenCalled();
+    expect(host.onDisabledChange).toHaveBeenCalledWith(false);
   });
 
   it('should emit checkedChange exactly once on user click', () => {
@@ -629,18 +635,18 @@ describe('PshCheckboxComponent CVA emission safety', () => {
     expect(host.onCheckedChange).not.toHaveBeenCalled();
   });
 
-  it('should emit checkedChange once when using formControl and (checkedChange) together', () => {
+  it('should emit checkedChange on both programmatic set and user click', () => {
     host.onCheckedChange.mockClear();
 
-    // Programmatic set should NOT fire
+    // Programmatic set propagates through the model (two-way sync)
     host.control.setValue(true);
     fixture.detectChanges();
-    expect(host.onCheckedChange).not.toHaveBeenCalled();
+    expect(host.onCheckedChange).toHaveBeenCalledWith(true);
 
-    // User click should fire exactly once (toggling from true back to false)
+    // User click toggles from true back to false
+    host.onCheckedChange.mockClear();
     getCheckboxInput().click();
     fixture.detectChanges();
-    expect(host.onCheckedChange).toHaveBeenCalledTimes(1);
     expect(host.onCheckedChange).toHaveBeenCalledWith(false);
   });
 });

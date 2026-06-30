@@ -288,18 +288,20 @@ describe('PshRadioComponent', () => {
         expect(successEl.id).toBe(describedBy);
       });
 
-      it('should link to both error and success messages', () => {
+      it('should prioritize the error message in aria-describedby when both error and success are set', () => {
         fixture.componentRef.setInput('error', 'Error');
         fixture.componentRef.setInput('success', 'Success');
         fixture.detectChanges();
 
         const input = getRadioInput();
         const errorEl = getErrorMessage();
-        const successEl = getSuccessMessage();
         const describedBy = input.getAttribute('aria-describedby');
 
-        expect(describedBy).toContain(errorEl.id);
-        expect(describedBy).toContain(successEl.id);
+        // error and success are mutually exclusive in the template (@if/@else if);
+        // error takes precedence, so only the error message is rendered and referenced.
+        expect(getSuccessMessage()).toBeFalsy();
+        expect(errorEl).toBeTruthy();
+        expect(describedBy).toBe(errorEl.id);
       });
 
       it('should not have aria-describedby when no messages', () => {

@@ -705,11 +705,11 @@ describe('PshDropdownComponent', () => {
   });
 
   describe('Variants', () => {
-    it.each<['primary' | 'secondary' | 'outline' | 'text']>([
+    // 'primary'/'secondary' are DropdownVariant values (color intent),
+    // applied via [class.primary]/[class.secondary] on the trigger.
+    it.each<['primary' | 'secondary']>([
       ['primary'],
-      ['secondary'],
-      ['outline'],
-      ['text']
+      ['secondary']
     ])('should apply %s variant class to trigger', (variant) => {
       fixture.componentRef.setInput('variant', variant);
       fixture.detectChanges();
@@ -719,6 +719,19 @@ describe('PshDropdownComponent', () => {
 
     it('should have primary variant by default', () => {
       expect(getTrigger().classList.contains('primary')).toBe(true);
+    });
+
+    // 'filled'/'outline'/'text' are DropdownAppearance values (visual style),
+    // applied via [class]="appearance()" on the trigger.
+    it.each<['filled' | 'outline' | 'text']>([
+      ['filled'],
+      ['outline'],
+      ['text']
+    ])('should apply %s appearance class to trigger', (appearance) => {
+      fixture.componentRef.setInput('appearance', appearance);
+      fixture.detectChanges();
+
+      expect(getTrigger().classList.contains(appearance)).toBe(true);
     });
   });
 

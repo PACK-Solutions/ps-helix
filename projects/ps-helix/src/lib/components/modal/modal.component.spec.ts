@@ -816,3 +816,79 @@ describe('PshModalComponent with custom title', () => {
     expect(title?.textContent).not.toContain('Default Title');
   });
 });
+
+@Component({
+  template: `
+    <psh-modal [(open)]="firstOpen" (closed)="onFirstClosed()">
+      <p>First modal</p>
+    </psh-modal>
+    <psh-modal [(open)]="secondOpen" (closed)="onSecondClosed()">
+      <p>Second modal</p>
+    </psh-modal>
+  `,
+  imports: [PshModalComponent]
+})
+class StackedModalsHostComponent {
+  firstOpen = false;
+  secondOpen = false;
+  onFirstClosed = jest.fn();
+  onSecondClosed = jest.fn();
+}
+
+describe('PshModalComponent stacked modals', () => {
+  let fixture: ComponentFixture<StackedModalsHostComponent>;
+  let hostComponent: StackedModalsHostComponent;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [StackedModalsHostComponent]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(StackedModalsHostComponent);
+    hostComponent = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    document.body
+      .querySelectorAll('[role="dialog"]')
+      .forEach(dialog => dialog.remove());
+    document.body.classList.remove('modal-open');
+  });
+
+  it('should close only the topmost modal when Escape is pressed', () => {
+    // Open the first modal, then the second on top of it
+    hostComponent.firstOpen = true;
+    fixture.detectChanges();
+    hostComponent.secondOpen = true;
+    fixture.detectChanges();
+
+    dispatchKeyboardEvent('Escape');
+    fixture.detectChanges();
+
+    // Only the topmost (second) modal closes
+    expect(hostComponent.onSecondClosed).toHaveBeenCalledTimes(1);
+    expect(hostComponent.onFirstClosed).not.toHaveBeenCalled();
+    expect(hostComponent.secondOpen).toBe(false);
+    expect(hostComponent.firstOpen).toBe(true);
+  });
+
+  it('should close modals from top to bottom on successive Escape presses', () => {
+    hostComponent.firstOpen = true;
+    fixture.detectChanges();
+    hostComponent.secondOpen = true;
+    fixture.detectChanges();
+
+    // First Escape closes the second (topmost) modal
+    dispatchKeyboardEvent('Escape');
+    fixture.detectChanges();
+    expect(hostComponent.secondOpen).toBe(false);
+    expect(hostComponent.firstOpen).toBe(true);
+
+    // Second Escape now closes the first modal (new topmost)
+    dispatchKeyboardEvent('Escape');
+    fixture.detectChanges();
+    expect(hostComponent.firstOpen).toBe(false);
+    expect(hostComponent.onFirstClosed).toHaveBeenCalledTimes(1);
+  });
+});
