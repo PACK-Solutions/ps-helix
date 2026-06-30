@@ -45,9 +45,9 @@
   </button>
 
   @if (isOpen()) {
-    <div 
+    <div
       class="dropdown-menu"
-      [class]="placement()"
+      [class]="resolvedPlacement()"
       role="menu"
       (click)="$event.stopPropagation()"
     >

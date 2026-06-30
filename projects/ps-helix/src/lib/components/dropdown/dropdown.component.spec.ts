@@ -753,6 +753,33 @@ describe('PshDropdownComponent', () => {
       openDropdown();
       expect(getMenu().classList.contains('bottom-start')).toBe(true);
     });
+
+    it('flips the menu to the top when there is no room below (anti-overflow)', async () => {
+      Object.defineProperty(window, 'innerHeight', { value: 768, configurable: true });
+      fixture.componentRef.setInput('placement', 'bottom-start');
+      fixture.detectChanges();
+
+      // Anchor the trigger near the bottom edge: there is no room below it.
+      getTrigger().getBoundingClientRect = () =>
+        ({
+          top: 745,
+          bottom: 765,
+          left: 50,
+          right: 150,
+          width: 100,
+          height: 20,
+          x: 50,
+          y: 745,
+          toJSON: () => ({}),
+        }) as DOMRect;
+
+      openDropdown();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      expect(getMenu().classList.contains('top-start')).toBe(true);
+      expect(getMenu().classList.contains('bottom-start')).toBe(false);
+    });
   });
 
   describe('Size', () => {

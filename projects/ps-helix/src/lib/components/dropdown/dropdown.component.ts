@@ -1,9 +1,12 @@
 import {
+  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   ElementRef,
   inject,
+  Injector,
   input,
   model,
   output,
@@ -12,6 +15,7 @@ import {
   PLATFORM_ID
 } from '@angular/core';
 import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { PshOverlayPositionService } from '../../a11y/overlay-position.service';
 import { DropdownAppearance, DropdownItem, DropdownPlacement, DropdownSize, DropdownVariant } from './dropdown.types';
 
 @Component({
@@ -25,6 +29,8 @@ export class PshDropdownComponent<T = string> implements OnDestroy {
   private elementRef = inject(ElementRef);
   private readonly document = inject(DOCUMENT);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+  private readonly overlayPosition = inject(PshOverlayPositionService);
+  private readonly injector = inject(Injector);
   private clickOutsideHandler: ((event: MouseEvent) => void) | null = null;
 
   // Regular inputs
@@ -46,6 +52,10 @@ export class PshDropdownComponent<T = string> implements OnDestroy {
   private isOpenSignal = signal(false);
   private selectedItemSignal = signal<DropdownItem<T> | null>(null);
   private focusedItemIndex = signal(-1);
+
+  // Placement actually rendered, after viewport collision/flip. Mirrors the
+  // `placement` input while closed; recomputed against the viewport on open.
+  protected readonly resolvedPlacement = signal<DropdownPlacement>('bottom-start');
 
   // Outputs
   selected = output<DropdownItem<T>>();
@@ -75,6 +85,31 @@ export class PshDropdownComponent<T = string> implements OnDestroy {
 
   constructor() {
     this.setupClickOutsideListener();
+
+    // Keep resolvedPlacement mirroring the input while closed; flip against the
+    // viewport (after the menu has rendered) when opened.
+    effect(() => {
+      if (this.isOpen()) {
+        afterNextRender(() => this.reposition(), { injector: this.injector });
+      } else {
+        this.resolvedPlacement.set(this.placement());
+      }
+    });
+  }
+
+  private reposition(): void {
+    if (!this.isBrowser || !this.isOpen()) return;
+    const host = this.elementRef.nativeElement as HTMLElement;
+    const trigger = host.querySelector('.dropdown-trigger') as HTMLElement | null;
+    const menu = host.querySelector('.dropdown-menu') as HTMLElement | null;
+    if (!trigger) return;
+
+    this.resolvedPlacement.set(
+      this.overlayPosition.flipPlacement(trigger, this.placement(), {
+        overlayHeight: menu?.offsetHeight ?? 0,
+        overlayWidth: menu?.offsetWidth ?? 0,
+      }) as DropdownPlacement,
+    );
   }
 
   private setupClickOutsideListener(): void {

@@ -2,19 +2,22 @@ import { TestBed } from '@angular/core/testing';
 import { PshOverlayPositionService } from './overlay-position.service';
 
 function anchorAt(rect: Partial<DOMRect>): HTMLElement {
+  const top = rect.top ?? 0;
+  const bottom = rect.bottom ?? 0;
+  const left = rect.left ?? 0;
+  const right = rect.right ?? 0;
   const el = document.createElement('div');
   el.getBoundingClientRect = () =>
     ({
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: 0,
-      width: 0,
-      height: 0,
-      x: 0,
-      y: 0,
+      top,
+      bottom,
+      left,
+      right,
+      width: rect.width ?? right - left,
+      height: rect.height ?? bottom - top,
+      x: left,
+      y: top,
       toJSON: () => ({}),
-      ...rect,
     }) as DOMRect;
   return el;
 }
@@ -69,5 +72,11 @@ describe('PshOverlayPositionService', () => {
   it('returns unknown placements unchanged', () => {
     const anchor = anchorAt({ top: 400, bottom: 420 });
     expect(service.flipPlacement(anchor, 'weird-thing')).toBe('weird-thing');
+  });
+
+  it('does not flip against an unrendered (zero-size) anchor', () => {
+    const anchor = anchorAt({}); // all-zero rect (e.g. not laid out / SSR / jsdom)
+    expect(service.flipSide(anchor, 'top', { overlayHeight: 240 })).toBe('top');
+    expect(service.flipPlacement(anchor, 'top-start', { overlayHeight: 240 })).toBe('top-start');
   });
 });

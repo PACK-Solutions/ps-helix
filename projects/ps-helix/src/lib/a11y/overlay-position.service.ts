@@ -43,6 +43,10 @@ export class PshOverlayPositionService {
     if (!view) return preferred;
 
     const rect = anchor.getBoundingClientRect();
+    // A zero-size anchor is not laid out (or not in the browser): we cannot make
+    // a meaningful collision decision, so keep the preferred side.
+    if (rect.width === 0 && rect.height === 0) return preferred;
+
     const offset = options.offset ?? 8;
     const estH = options.overlayHeight ?? 0;
     const estW = options.overlayWidth ?? 0;
