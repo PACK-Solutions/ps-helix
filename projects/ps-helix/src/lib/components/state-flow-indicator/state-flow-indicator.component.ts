@@ -244,13 +244,14 @@ export class PshStateFlowIndicatorComponent {
           this.goToStep(0);
         }
         break;
-      case 'End':
+      case 'End': {
         event.preventDefault();
         const lastIndex = this.steps().length - 1;
         if (this.canActivateStep(lastIndex)) {
           this.goToStep(lastIndex);
         }
         break;
+      }
     }
   }
 }

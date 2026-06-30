@@ -182,7 +182,7 @@ export class PshDropdownComponent<T = string> {
     }
   }
 
-  handleItemKeyDown(event: KeyboardEvent, item: DropdownItem<T>, index: number): void {
+  handleItemKeyDown(event: KeyboardEvent, item: DropdownItem<T>, _index: number): void {
     switch (event.key) {
       case 'Enter':
       case ' ':

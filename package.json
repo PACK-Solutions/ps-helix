@@ -21,7 +21,11 @@
     "watch:lib": "ng build ps-helix --watch",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "lint": "eslint projects/ps-helix/src",
+    "format": "prettier --write \"projects/ps-helix/src/**/*.{ts,html,css,json}\"",
+    "format:check": "prettier --check \"projects/ps-helix/src/**/*.{ts,html,css,json}\"",
+    "size": "size-limit"
   },
   "dependencies": {
     "@angular/animations": "21.2.9",
@@ -43,13 +47,20 @@
     "@angular-devkit/build-angular": "21.2.7",
     "@angular/cli": "21.2.7",
     "@angular/compiler-cli": "21.2.9",
+    "@eslint/js": "^9.39.4",
+    "@size-limit/file": "^12.1.0",
     "@types/jest": "^30.0.0",
     "@types/jest-axe": "^3.5.9",
+    "angular-eslint": "^21.4.0",
+    "eslint": "^9.39.4",
     "jest": "^30.2.0",
     "jest-axe": "^10.0.0",
     "jest-environment-jsdom": "^30.2.0",
     "jest-preset-angular": "^16.0.0",
     "ng-packagr": "21.2.0",
-    "typescript": "~5.9.0"
+    "prettier": "^3.9.4",
+    "size-limit": "^12.1.0",
+    "typescript": "~5.9.0",
+    "typescript-eslint": "^8.62.1"
   }
 }

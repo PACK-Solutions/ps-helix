@@ -7,10 +7,11 @@ import { filter } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ScrollService {
+  private readonly router = inject(Router);
   private readonly document = inject(DOCUMENT);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
-  constructor(private router: Router) {
+  constructor() {
     // Subscribe to router events
     this.router.events.pipe(
       // Filter only NavigationEnd events

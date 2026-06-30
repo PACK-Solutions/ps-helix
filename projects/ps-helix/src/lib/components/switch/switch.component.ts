@@ -46,7 +46,7 @@ export class PshSwitchComponent implements ControlValueAccessor, FormCheckboxCon
 
   private switchInput = viewChild<ElementRef<HTMLInputElement>>('switchInput');
 
-  private onChange = (value: boolean) => {};
+  private onChange = (_value: boolean) => {};
   private onTouched = () => {};
 
   readonly checked = model(this.config.checked ?? false);
