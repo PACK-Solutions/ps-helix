@@ -305,45 +305,45 @@ describe('PshStateFlowIndicatorComponent', () => {
   });
 
   describe('beforeStepChange', () => {
-    it('should block navigation when returning false', fakeAsync(() => {
+    // goToStep awaits a native Promise. zone.js fakeAsync cannot flush native
+    // async/await microtasks (ES2022 target is not zone-patched), so these use
+    // a real async test and await the returned promise directly.
+    it('should block navigation when returning false', async () => {
       hostComponent.beforeStepChange = () => false;
       hostComponent.linear = false;
       fixture.detectChanges();
 
       const indicator = getIndicator();
-      indicator.goToStep(1);
-      tick();
+      await indicator.goToStep(1);
       fixture.detectChanges();
 
       expect(hostComponent.stepChangeEvents.length).toBe(0);
       expect(hostComponent.navigationErrors.length).toBe(1);
-    }));
+    });
 
-    it('should allow navigation when returning true', fakeAsync(() => {
+    it('should allow navigation when returning true', async () => {
       hostComponent.beforeStepChange = () => true;
       hostComponent.linear = false;
       fixture.detectChanges();
 
       const indicator = getIndicator();
-      indicator.goToStep(1);
-      tick();
+      await indicator.goToStep(1);
       fixture.detectChanges();
 
       expect(hostComponent.stepChangeEvents).toContain(1);
-    }));
+    });
 
-    it('should support async validation', fakeAsync(() => {
+    it('should support async validation', async () => {
       hostComponent.beforeStepChange = () => Promise.resolve(true);
       hostComponent.linear = false;
       fixture.detectChanges();
 
       const indicator = getIndicator();
-      indicator.goToStep(1);
-      tick();
+      await indicator.goToStep(1);
       fixture.detectChanges();
 
       expect(hostComponent.stepChangeEvents).toContain(1);
-    }));
+    });
   });
 
   describe('Keyboard navigation', () => {
@@ -509,8 +509,10 @@ describe('PshStateFlowIndicatorComponent', () => {
 
   describe('Custom config', () => {
     it('should use injected config', async () => {
+      // Create the component directly (no host) so the `linear` input is NOT
+      // bound and falls back to its default, which is derived from the config.
       await TestBed.resetTestingModule().configureTestingModule({
-        imports: [TestHostComponent],
+        imports: [PshStateFlowIndicatorComponent],
         providers: [
           {
             provide: STATE_FLOW_INDICATOR_CONFIG,
@@ -519,11 +521,10 @@ describe('PshStateFlowIndicatorComponent', () => {
         ]
       }).compileComponents();
 
-      const customFixture = TestBed.createComponent(TestHostComponent);
+      const customFixture = TestBed.createComponent(PshStateFlowIndicatorComponent);
       customFixture.detectChanges();
 
-      const indicator = customFixture.debugElement.children[0]!.componentInstance as PshStateFlowIndicatorComponent;
-      expect(indicator.linear()).toBe(false);
+      expect(customFixture.componentInstance.linear()).toBe(false);
     });
   });
 });

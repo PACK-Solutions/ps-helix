@@ -1,4 +1,13 @@
-import { Injectable, InjectionToken, computed, inject, signal } from '@angular/core';
+import {
+  Injectable,
+  InjectionToken,
+  PLATFORM_ID,
+  afterNextRender,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Theme } from './types/theme.types';
 import {
   Rgb,
@@ -57,6 +66,8 @@ const DARK_BACKGROUND: Rgb = { r: 20, g: 20, b: 25 };
 export class ThemeService {
   private customerContext = inject(CUSTOMER_CONTEXT_SERVICE, { optional: true });
   private options = inject(PSH_THEME_OPTIONS, { optional: true });
+  private readonly document = inject(DOCUMENT);
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   private isDarkThemeSignal = signal<boolean>(false);
   private themeNameSignal = signal<Theme>('light');
@@ -73,11 +84,13 @@ export class ThemeService {
 
   constructor() {
     this.initializeTheme();
-    setTimeout(() => this.applyCustomerTheme(), 0);
+    afterNextRender(() => this.applyCustomerTheme());
   }
 
   setDarkTheme(isDark: boolean): void {
-    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    if (this.isBrowser) {
+      this.document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    }
     this.isDarkThemeSignal.set(isDark);
     this.themeNameSignal.set(isDark ? 'dark' : 'light');
     this.lastChangeSignal.set(new Date());
@@ -105,7 +118,7 @@ export class ThemeService {
    * for purely decorative use (logos, marketing surfaces).
    */
   applyCustomerTheme(): void {
-    if (!this.customerContext) {
+    if (!this.isBrowser || !this.customerContext) {
       return;
     }
 
@@ -122,7 +135,7 @@ export class ThemeService {
     if (!source) return;
 
     const palette = this.derivePalette(source);
-    const root = document.documentElement.style;
+    const root = this.document.documentElement.style;
     const prefix = `--customer-${kind}-color`;
 
     root.setProperty(prefix, palette.base);
@@ -193,18 +206,21 @@ export class ThemeService {
 
   private initializeTheme(): void {
     let savedTheme: Theme | null = null;
-    try {
-      savedTheme = localStorage.getItem(THEME_STORAGE_KEY) as Theme;
-    } catch {
-      savedTheme = null;
+    if (this.isBrowser) {
+      try {
+        savedTheme = this.document.defaultView?.localStorage.getItem(THEME_STORAGE_KEY) as Theme;
+      } catch {
+        savedTheme = null;
+      }
     }
     const isValid = savedTheme === 'light' || savedTheme === 'dark';
     this.setDarkTheme((isValid ? savedTheme : 'light') === 'dark');
   }
 
   private saveThemePreference(theme: Theme): void {
+    if (!this.isBrowser) return;
     try {
-      localStorage.setItem(THEME_STORAGE_KEY, theme);
+      this.document.defaultView?.localStorage.setItem(THEME_STORAGE_KEY, theme);
     } catch {
       /* storage unavailable, preference not persisted */
     }

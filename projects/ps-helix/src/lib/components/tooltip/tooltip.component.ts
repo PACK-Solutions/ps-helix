@@ -12,6 +12,7 @@ import {
   AfterViewInit,
   OnDestroy
 } from '@angular/core';
+import { PshOverlayPositionService } from '../../a11y/overlay-position.service';
 import { TooltipPosition, TooltipConfig, TooltipVariant } from './tooltip.types';
 
 export const TOOLTIP_CONFIG = new InjectionToken<Partial<TooltipConfig>>('TOOLTIP_CONFIG', {
@@ -44,6 +45,7 @@ export const TOOLTIP_CONFIG = new InjectionToken<Partial<TooltipConfig>>('TOOLTI
 export class PshTooltipComponent implements AfterViewInit, OnDestroy {
   private config = inject(TOOLTIP_CONFIG) as Required<TooltipConfig>;
   private elementRef = inject(ElementRef);
+  private readonly overlayPosition = inject(PshOverlayPositionService);
 
   variant = input<TooltipVariant>(this.config.variant ?? 'dark');
   position = input<TooltipPosition>(this.config.position ?? 'top');
@@ -154,48 +156,15 @@ export class PshTooltipComponent implements AfterViewInit, OnDestroy {
   }
 
   private updatePosition(): void {
-    const preferredPosition = this.position();
-    const element = this.elementRef.nativeElement as HTMLElement;
-    const rect = element.getBoundingClientRect();
-
-    const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight;
-
-    const tooltipEstimatedHeight = 40;
-    const tooltipEstimatedWidth = Math.min(this.maxWidth(), 200);
-    const offset = 12;
-
-    const spaceTop = rect.top;
-    const spaceBottom = viewportHeight - rect.bottom;
-    const spaceLeft = rect.left;
-    const spaceRight = viewportWidth - rect.right;
-
-    let finalPosition = preferredPosition;
-
-    switch (preferredPosition) {
-      case 'top':
-        if (spaceTop < tooltipEstimatedHeight + offset && spaceBottom > spaceTop) {
-          finalPosition = 'bottom';
-        }
-        break;
-      case 'bottom':
-        if (spaceBottom < tooltipEstimatedHeight + offset && spaceTop > spaceBottom) {
-          finalPosition = 'top';
-        }
-        break;
-      case 'left':
-        if (spaceLeft < tooltipEstimatedWidth + offset && spaceRight > spaceLeft) {
-          finalPosition = 'right';
-        }
-        break;
-      case 'right':
-        if (spaceRight < tooltipEstimatedWidth + offset && spaceLeft > spaceRight) {
-          finalPosition = 'left';
-        }
-        break;
-    }
-
-    this.computedPosition.set(finalPosition);
+    // Collision detection / flip is delegated to the shared overlay-position
+    // primitive (same logic, now reused by other popovers).
+    this.computedPosition.set(
+      this.overlayPosition.flipSide(this.elementRef.nativeElement, this.position(), {
+        overlayHeight: 40,
+        overlayWidth: Math.min(this.maxWidth(), 200),
+        offset: 12,
+      }),
+    );
   }
 
   private generateUniqueId(): string {

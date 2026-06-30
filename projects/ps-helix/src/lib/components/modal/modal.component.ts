@@ -18,9 +18,9 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { PshButtonComponent } from '../button/button.component';
+import { PshFocusTrapDirective } from '../../a11y/focus-trap.directive';
 import { ModalSize, ModalConfig } from './modal.types';
 
 /**
@@ -65,12 +65,24 @@ export const MODAL_CONFIG = new InjectionToken<Partial<ModalConfig>>('MODAL_CONF
 })
 export class ModalService {
   private config = inject(MODAL_CONFIG);
-  private modalsSignal = signal<Set<string>>(new Set());
+  /**
+   * Ordered stack of open modal ids (insertion order = visual stacking order).
+   * The last entry is the topmost (most recently opened) modal.
+   */
+  private modalsSignal = signal<readonly string[]>([]);
 
   /**
    * Computed signal exposing the number of active modals
    */
-  readonly activeModalsCount = computed(() => this.modalsSignal().size);
+  readonly activeModalsCount = computed(() => this.modalsSignal().length);
+
+  /**
+   * Computed signal exposing the id of the topmost modal, or null if none are open
+   */
+  readonly topmostModalId = computed(() => {
+    const modals = this.modalsSignal();
+    return modals.length > 0 ? modals[modals.length - 1] : null;
+  });
 
   /**
    * Returns the global modal configuration
@@ -87,27 +99,21 @@ export class ModalService {
   }
 
   /**
-   * Registers a modal instance when it opens
+   * Registers a modal instance when it opens, pushing it onto the stack
    * @param id - Unique modal identifier
    */
   register(id: string): void {
-    this.modalsSignal.update(modals => {
-      const newSet = new Set(modals);
-      newSet.add(id);
-      return newSet;
-    });
+    this.modalsSignal.update(modals =>
+      modals.includes(id) ? modals : [...modals, id]
+    );
   }
 
   /**
-   * Unregisters a modal instance when it closes
+   * Unregisters a modal instance when it closes, removing it from the stack
    * @param id - Unique modal identifier
    */
   unregister(id: string): void {
-    this.modalsSignal.update(modals => {
-      const newSet = new Set(modals);
-      newSet.delete(id);
-      return newSet;
-    });
+    this.modalsSignal.update(modals => modals.filter(modalId => modalId !== id));
   }
 
   /**
@@ -115,7 +121,16 @@ export class ModalService {
    * @param id - Unique modal identifier
    */
   isRegistered(id: string): boolean {
-    return this.modalsSignal().has(id);
+    return this.modalsSignal().includes(id);
+  }
+
+  /**
+   * Checks if a modal is the topmost (most recently opened) open modal.
+   * Used to ensure Escape / backdrop only dismiss the modal on top of the stack.
+   * @param id - Unique modal identifier
+   */
+  isTopmost(id: string): boolean {
+    return this.topmostModalId() === id;
   }
 }
 
@@ -141,7 +156,7 @@ export class ModalService {
  */
 @Component({
   selector: 'psh-modal',
-  imports: [CommonModule, PshButtonComponent],
+  imports: [CommonModule, PshButtonComponent, PshFocusTrapDirective],
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -151,8 +166,9 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
   private readonly modalService = inject(ModalService);
   private readonly renderer = inject(Renderer2);
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly document = inject(DOCUMENT);
+  private readonly isBrowser = isPlatformBrowser(this.platformId);
   private readonly modalId = this.modalService.generateId();
-  private previousActiveElement: HTMLElement | null = null;
   private modalElement?: ElementRef<HTMLElement>;
   private isAttachedToBody = false;
   private resizeListener?: () => void;
@@ -260,17 +276,9 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
    * Keyboard event handler for Escape key
    */
   private readonly escapeHandler = (event: KeyboardEvent) => {
-    if (this.closeOnEscape() && this.open() && event.key === 'Escape') {
+    if (event.key !== 'Escape') return;
+    if (this.closeOnEscape() && this.open() && this.modalService.isTopmost(this.modalId)) {
       this.handleClose();
-    }
-  };
-
-  /**
-   * Keyboard event handler for focus trap
-   */
-  private readonly focusTrapHandler = (event: KeyboardEvent) => {
-    if (event.key === 'Tab' && this.open()) {
-      this.handleFocusTrap(event);
     }
   };
 
@@ -322,11 +330,12 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
    * Handles all setup when modal opens
    */
   private onModalOpen(): void {
-    this.previousActiveElement = document.activeElement as HTMLElement;
     this.modalService.register(this.modalId);
+    if (!this.isBrowser) return;
     this.setupScrollLock();
     this.addEventListeners();
-    this.focusFirstElement();
+    // Initial focus + focus trapping + focus restoration are handled by
+    // the [pshFocusTrap] directive on the modal container.
   }
 
   /**
@@ -334,17 +343,18 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
    */
   private onModalClose(): void {
     this.modalService.unregister(this.modalId);
+    if (!this.isBrowser) return;
     this.removeScrollLock();
     this.removeEventListeners();
-    this.restoreFocus();
   }
 
   /**
    * Checks if the current screen size is mobile
    */
   private checkScreenSize(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      this.isMobileSignal.set(window.innerWidth < this.mobileBreakpoint);
+    const view = this.document.defaultView;
+    if (view) {
+      this.isMobileSignal.set(view.innerWidth < this.mobileBreakpoint);
     }
   }
 
@@ -352,9 +362,10 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
    * Sets up resize listener to detect screen size changes
    */
   private setupResizeListener(): void {
-    if (isPlatformBrowser(this.platformId)) {
+    const view = this.document.defaultView;
+    if (view) {
       this.resizeListener = () => this.checkScreenSize();
-      window.addEventListener('resize', this.resizeListener);
+      view.addEventListener('resize', this.resizeListener);
     }
   }
 
@@ -362,8 +373,8 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
    * Removes resize listener
    */
   private removeResizeListener(): void {
-    if (isPlatformBrowser(this.platformId) && this.resizeListener) {
-      window.removeEventListener('resize', this.resizeListener);
+    if (this.resizeListener) {
+      this.document.defaultView?.removeEventListener('resize', this.resizeListener);
     }
   }
 
@@ -371,89 +382,14 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
    * Adds keyboard event listeners
    */
   private addEventListeners(): void {
-    document.addEventListener('keydown', this.escapeHandler);
-    document.addEventListener('keydown', this.focusTrapHandler);
+    this.document.addEventListener('keydown', this.escapeHandler);
   }
 
   /**
    * Removes keyboard event listeners
    */
   private removeEventListeners(): void {
-    document.removeEventListener('keydown', this.escapeHandler);
-    document.removeEventListener('keydown', this.focusTrapHandler);
-  }
-
-  /**
-   * Focuses the first focusable element in the modal
-   */
-  private focusFirstElement(): void {
-    setTimeout(() => {
-      const modalElement = document.getElementById(this.modalDialogId());
-      if (!modalElement) return;
-
-      const focusableElements = this.getFocusableElements(modalElement);
-      const firstElement = focusableElements[0];
-      if (firstElement) {
-        firstElement.focus();
-      }
-    }, 100);
-  }
-
-  /**
-   * Restores focus to the element that opened the modal
-   */
-  private restoreFocus(): void {
-    if (this.previousActiveElement && typeof this.previousActiveElement.focus === 'function') {
-      setTimeout(() => {
-        this.previousActiveElement?.focus();
-      }, 100);
-    }
-  }
-
-  /**
-   * Handles focus trap to keep focus within the modal
-   */
-  private handleFocusTrap(event: KeyboardEvent): void {
-    const modalElement = document.getElementById(this.modalDialogId());
-    if (!modalElement) return;
-
-    const focusableElements = this.getFocusableElements(modalElement);
-    if (focusableElements.length === 0) return;
-
-    const firstElement = focusableElements[0];
-    const lastElement = focusableElements[focusableElements.length - 1];
-    if (!firstElement || !lastElement) return;
-
-    const activeElement = document.activeElement;
-
-    if (event.shiftKey) {
-      if (activeElement === firstElement) {
-        event.preventDefault();
-        lastElement.focus();
-      }
-    } else {
-      if (activeElement === lastElement) {
-        event.preventDefault();
-        firstElement.focus();
-      }
-    }
-  }
-
-  /**
-   * Gets all focusable elements within a container
-   */
-  private getFocusableElements(container: HTMLElement): HTMLElement[] {
-    const selector = [
-      'button:not([disabled])',
-      '[href]',
-      'input:not([disabled])',
-      'select:not([disabled])',
-      'textarea:not([disabled])',
-      '[tabindex]:not([tabindex="-1"])',
-    ].join(', ');
-
-    return Array.from(container.querySelectorAll<HTMLElement>(selector))
-      .filter(el => el.offsetParent !== null);
+    this.document.removeEventListener('keydown', this.escapeHandler);
   }
 
   /**
@@ -477,7 +413,11 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
    * Closes the modal if closeOnBackdrop is true and click is on backdrop itself
    */
   handleBackdropClick(event: MouseEvent): void {
-    if (this.closeOnBackdrop() && event.target === event.currentTarget) {
+    if (
+      this.closeOnBackdrop() &&
+      this.modalService.isTopmost(this.modalId) &&
+      event.target === event.currentTarget
+    ) {
       this.handleClose();
     }
   }
@@ -487,24 +427,23 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
    * Calculates scrollbar width to prevent layout shift
    */
   private setupScrollLock(): void {
-    if (!this.preventScroll() || typeof window === 'undefined') return;
+    if (!this.preventScroll() || !this.isBrowser) return;
 
-    if (!document.documentElement.style.getPropertyValue('--scrollbar-width')) {
-      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-      document.documentElement.style.setProperty(
-        '--scrollbar-width',
-        `${scrollbarWidth}px`
-      );
+    const root = this.document.documentElement;
+    const view = this.document.defaultView;
+    if (view && !root.style.getPropertyValue('--scrollbar-width')) {
+      const scrollbarWidth = view.innerWidth - root.clientWidth;
+      root.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`);
     }
-    document.body.classList.add('modal-open');
+    this.document.body.classList.add('modal-open');
   }
 
   /**
    * Removes scroll lock when modal closes
    */
   private removeScrollLock(): void {
-    if (!this.preventScroll() || typeof window === 'undefined') return;
-    document.body.classList.remove('modal-open');
+    if (!this.preventScroll() || !this.isBrowser) return;
+    this.document.body.classList.remove('modal-open');
   }
 
   /**
@@ -514,7 +453,7 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
     const backdrop = this.modalBackdrop();
     if (backdrop && backdrop.nativeElement && !this.isAttachedToBody) {
       this.modalElement = backdrop;
-      this.renderer.appendChild(document.body, backdrop.nativeElement);
+      this.renderer.appendChild(this.document.body, backdrop.nativeElement);
       this.isAttachedToBody = true;
     }
   }
@@ -524,7 +463,7 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
    */
   private detachModalFromBody(): void {
     if (this.modalElement && this.modalElement.nativeElement && this.isAttachedToBody) {
-      this.renderer.removeChild(document.body, this.modalElement.nativeElement);
+      this.renderer.removeChild(this.document.body, this.modalElement.nativeElement);
       this.isAttachedToBody = false;
     }
   }

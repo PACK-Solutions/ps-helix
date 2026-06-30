@@ -115,7 +115,7 @@ export class PshPaginationComponent {
     const pages: number[] = [];
     const halfVisible = Math.floor(this.maxVisiblePages() / 2);
     let start = Math.max(1, this.currentPage() - halfVisible);
-    let end = Math.min(this.totalPages(), start + this.maxVisiblePages() - 1);
+    const end = Math.min(this.totalPages(), start + this.maxVisiblePages() - 1);
 
     if (end - start + 1 < this.maxVisiblePages()) {
       start = Math.max(1, end - this.maxVisiblePages() + 1);

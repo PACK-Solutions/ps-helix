@@ -13,6 +13,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
+import { PshClickOutsideDirective } from '../../a11y/click-outside.directive';
 import { SelectOption, SelectOptionGroup, SelectSize, SelectVariant, SearchConfig } from './select.types';
 
 interface FlatOption<T> {
@@ -33,6 +34,7 @@ interface FlatOption<T> {
     }
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  hostDirectives: [PshClickOutsideDirective],
   host: {
     '[class.full-width]': 'fullWidth()',
     '[class.small]': 'size() === "small"',
@@ -175,24 +177,23 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
   });
 
   constructor() {
-    const clickHandler = (event: MouseEvent) => {
-      if (this.isOpen() && !this.elementRef.nativeElement.contains(event.target)) {
-        this.close();
-      }
-    };
-    document.addEventListener('click', clickHandler);
-    this.destroyRef.onDestroy(() => document.removeEventListener('click', clickHandler));
+    // Close on outside click via the shared click-outside primitive.
+    const clickOutside = inject(PshClickOutsideDirective);
+    const sub = clickOutside.pshClickOutside.subscribe(() => {
+      if (this.isOpen()) this.close();
+    });
+    this.destroyRef.onDestroy(() => sub.unsubscribe());
   }
 
-  private onChange = (_: unknown) => {};
-  private onTouched = () => {};
+  private onChange: (value: T | T[] | null) => void = () => {};
+  private onTouched: () => void = () => {};
 
   writeValue(value: unknown): void {
     this.value.set(value as T | T[] | null);
   }
 
-  registerOnChange(fn: any): void { this.onChange = fn; }
-  registerOnTouched(fn: any): void { this.onTouched = fn; }
+  registerOnChange(fn: (value: T | T[] | null) => void): void { this.onChange = fn; }
+  registerOnTouched(fn: () => void): void { this.onTouched = fn; }
   setDisabledState(isDisabled: boolean): void { this.disabled.set(isDisabled); }
 
   toggle(): void {

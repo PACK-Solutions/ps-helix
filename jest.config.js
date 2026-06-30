@@ -15,6 +15,14 @@ module.exports = {
     '!projects/ps-helix/src/public-api.ts'
   ],
   coverageDirectory: 'coverage/ps-helix',
+  coverageThreshold: {
+    global: {
+      statements: 85,
+      branches: 75,
+      functions: 85,
+      lines: 85
+    }
+  },
   transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$)'],
   transform: {
     '^.+\\.(ts|js|mjs|html|svg)$': [

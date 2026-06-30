@@ -13,7 +13,7 @@ import {
   InjectionToken,
   PLATFORM_ID
 } from '@angular/core';
-import { isPlatformBrowser, CommonModule } from '@angular/common';
+import { isPlatformBrowser, CommonModule, DOCUMENT } from '@angular/common';
 import { SidebarMode, SidebarPosition, SidebarConfig } from './sidebar.types';
 
 export const SIDEBAR_CONFIG = new InjectionToken<Partial<SidebarConfig>>('SIDEBAR_CONFIG', {
@@ -48,6 +48,7 @@ export class PshSidebarComponent implements OnDestroy {
   private readonly config = inject(SIDEBAR_CONFIG);
   private readonly elementRef = inject(ElementRef);
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly document = inject(DOCUMENT);
   private focusedElementBeforeOpen: HTMLElement | null = null;
   private mediaQueryList: MediaQueryList | null = null;
   private mediaQueryHandler: ((e: MediaQueryListEvent) => void) | null = null;
@@ -118,7 +119,10 @@ export class PshSidebarComponent implements OnDestroy {
 
     this.cleanupMediaQuery();
 
-    this.mediaQueryList = window.matchMedia(`(max-width: ${breakpoint})`);
+    const view = this.document.defaultView;
+    if (!view) return;
+
+    this.mediaQueryList = view.matchMedia(`(max-width: ${breakpoint})`);
     this.mobileSignal.set(this.mediaQueryList.matches);
 
     this.mediaQueryHandler = (e: MediaQueryListEvent) => {
@@ -139,7 +143,7 @@ export class PshSidebarComponent implements OnDestroy {
   private onSidebarOpen(): void {
     if (!isPlatformBrowser(this.platformId)) return;
 
-    this.focusedElementBeforeOpen = document.activeElement as HTMLElement;
+    this.focusedElementBeforeOpen = this.document.activeElement as HTMLElement;
     this.addEventListeners();
 
     if (this.autoFocus()) {
@@ -174,14 +178,14 @@ export class PshSidebarComponent implements OnDestroy {
 
   private addEventListeners(): void {
     if (!isPlatformBrowser(this.platformId)) return;
-    document.addEventListener('keydown', this.escapeHandler);
-    document.addEventListener('keydown', this.focusTrapHandler);
+    this.document.addEventListener('keydown', this.escapeHandler);
+    this.document.addEventListener('keydown', this.focusTrapHandler);
   }
 
   private removeEventListeners(): void {
     if (!isPlatformBrowser(this.platformId)) return;
-    document.removeEventListener('keydown', this.escapeHandler);
-    document.removeEventListener('keydown', this.focusTrapHandler);
+    this.document.removeEventListener('keydown', this.escapeHandler);
+    this.document.removeEventListener('keydown', this.focusTrapHandler);
   }
 
   toggleSidebar(): void {
@@ -220,12 +224,12 @@ export class PshSidebarComponent implements OnDestroy {
     if (!isPlatformBrowser(this.platformId)) return;
 
     if (event.shiftKey) {
-      if (document.activeElement === firstFocusable) {
+      if (this.document.activeElement === firstFocusable) {
         event.preventDefault();
         lastFocusable.focus();
       }
     } else {
-      if (document.activeElement === lastFocusable) {
+      if (this.document.activeElement === lastFocusable) {
         event.preventDefault();
         firstFocusable.focus();
       }

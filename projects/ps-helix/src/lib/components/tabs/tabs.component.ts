@@ -93,7 +93,7 @@ export class PshTabsComponent {
     });
   }
 
-  handleKeyDown(event: KeyboardEvent, index: number): void {
+  handleKeyDown(event: KeyboardEvent, _index: number): void {
     switch (event.key) {
       case 'ArrowLeft':
         event.preventDefault();

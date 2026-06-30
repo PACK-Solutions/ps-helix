@@ -18,7 +18,7 @@ export interface RadioConfig {
   /** Nom du groupe */
   name: string;
   /** Valeur associée */
-  value: any;
+  value: unknown;
   /** Taille du radio */
   size: RadioSize;
   /** Position du label */

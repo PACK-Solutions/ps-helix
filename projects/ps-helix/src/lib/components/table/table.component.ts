@@ -113,13 +113,21 @@ export class PshTableComponent {
       // Sinon, utiliser le tri par défaut avec le chemin
       const aValue = this.getNestedValue(a, column?.path || sort.key);
       const bValue = this.getNestedValue(b, column?.path || sort.key);
-      
-      if (sort.direction === 'asc') {
-        return aValue > bValue ? 1 : -1;
-      } else {
-        return aValue < bValue ? 1 : -1;
-      }
+
+      return sort.direction === 'asc'
+        ? this.compareValues(aValue, bValue)
+        : this.compareValues(bValue, aValue);
     });
+  }
+
+  /**
+   * Compare deux valeurs inconnues (numérique si possible, sinon lexicographique).
+   */
+  private compareValues(a: unknown, b: unknown): number {
+    if (typeof a === 'number' && typeof b === 'number') {
+      return a > b ? 1 : -1;
+    }
+    return String(a ?? '') > String(b ?? '') ? 1 : -1;
   }
 
   /**
@@ -132,7 +140,7 @@ export class PshTableComponent {
     return data.filter(row => {
       return this.columns().some(column => {
         const value = this.getNestedValue(row, column.path || column.key);
-        return value?.toString().toLowerCase().includes(term);
+        return value != null && String(value).toLowerCase().includes(term);
       });
     });
   }
@@ -140,8 +148,14 @@ export class PshTableComponent {
   /**
    * Récupère la valeur d'un objet imbriqué en utilisant un chemin
    */
-  private getNestedValue(obj: any, path: string): any {
-    return path.split('.').reduce((acc, part) => acc?.[part], obj);
+  private getNestedValue(obj: unknown, path: string): unknown {
+    return path.split('.').reduce<unknown>(
+      (acc, part) =>
+        acc != null && typeof acc === 'object'
+          ? (acc as Record<string, unknown>)[part]
+          : undefined,
+      obj
+    );
   }
 
   handleSort(column: TableColumn): void {
@@ -166,7 +180,7 @@ export class PshTableComponent {
     this.rowClick.emit({ id: row.id, row });
   }
 
-  protected getCellValue(row: TableRow, column: TableColumn): any {
+  protected getCellValue(row: TableRow, column: TableColumn): unknown {
     return this.getNestedValue(row, column.path || column.key);
   }
 

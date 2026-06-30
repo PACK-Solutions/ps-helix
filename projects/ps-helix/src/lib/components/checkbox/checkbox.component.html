@@ -9,6 +9,8 @@
       [required]="required()"
       [attr.aria-label]="computedAriaLabel()"
       [attr.aria-checked]="ariaChecked()"
+      [attr.aria-required]="required() || null"
+      [attr.aria-invalid]="error() ? 'true' : null"
       [attr.aria-describedby]="ariaDescribedBy()"
       (change)="toggle()"
       (keydown)="handleKeydown($event)"

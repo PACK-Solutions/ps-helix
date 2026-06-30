@@ -1,0 +1,7 @@
+[
+  {
+    "name": "ps-helix (fesm2022, gzip)",
+    "path": "dist/ps-helix/fesm2022/ps-helix.mjs",
+    "limit": "110 kB"
+  }
+]

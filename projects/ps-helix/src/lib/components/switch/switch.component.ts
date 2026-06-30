@@ -46,7 +46,7 @@ export class PshSwitchComponent implements ControlValueAccessor, FormCheckboxCon
 
   private switchInput = viewChild<ElementRef<HTMLInputElement>>('switchInput');
 
-  private onChange = (value: boolean) => {};
+  private onChange = (_value: boolean) => {};
   private onTouched = () => {};
 
   readonly checked = model(this.config.checked ?? false);
@@ -75,10 +75,9 @@ export class PshSwitchComponent implements ControlValueAccessor, FormCheckboxCon
   });
   errorId = computed(() => this.error() ? `${this.id()}-error` : null);
   successId = computed(() => this.success() ? `${this.id()}-success` : null);
-  describedBy = computed(() => {
-    const ids = [this.errorId(), this.successId()].filter(Boolean);
-    return ids.length > 0 ? ids.join(' ') : null;
-  });
+  // error and success are mutually exclusive in the template (@if/@else if),
+  // so aria-describedby references whichever message is actually rendered.
+  describedBy = computed(() => this.errorId() ?? this.successId());
 
   toggle(): void {
     if (!this.disabled()) {

@@ -75,13 +75,14 @@ export class PshCheckboxComponent implements ControlValueAccessor, FormCheckboxC
   labelPosition = input<CheckboxLabelPosition>(this.config.labelPosition ?? 'right');
 
   ariaChecked = computed(() => this.indeterminate() ? 'mixed' : (this.checked() ? 'true' : 'false'));
-  computedAriaLabel = computed(() => this.ariaLabel() || this.label() || undefined);
-  
+  computedAriaLabel = computed(() => this.ariaLabel() || undefined);
+
+  // Error and success are mutually exclusive in the template (@if/@else if),
+  // so aria-describedby references whichever message is actually rendered.
   ariaDescribedBy = computed(() => {
-    const ids = [];
-    if (this.error()) ids.push(`${this.uniqueId}-error`);
-    if (this.success()) ids.push(`${this.uniqueId}-success`);
-    return ids.length > 0 ? ids.join(' ') : undefined;
+    if (this.error()) return `${this.uniqueId}-error`;
+    if (this.success()) return `${this.uniqueId}-success`;
+    return undefined;
   });
 
   state = computed(() => {
@@ -125,4 +126,5 @@ export class PshCheckboxComponent implements ControlValueAccessor, FormCheckboxC
   setDisabledState(isDisabled: boolean): void { this.disabled.set(isDisabled); }
 
   focus(): void { this.checkboxInput()?.nativeElement.focus(); }
+  blur(): void { this.checkboxInput()?.nativeElement.blur(); }
 }

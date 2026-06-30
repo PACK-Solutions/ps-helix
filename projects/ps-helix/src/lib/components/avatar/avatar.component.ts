@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input, model, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, model } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AvatarSize, AvatarShape, AvatarStatus } from './avatar.types';
 

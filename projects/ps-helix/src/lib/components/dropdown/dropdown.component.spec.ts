@@ -705,11 +705,11 @@ describe('PshDropdownComponent', () => {
   });
 
   describe('Variants', () => {
-    it.each<['primary' | 'secondary' | 'outline' | 'text']>([
+    // 'primary'/'secondary' are DropdownVariant values (color intent),
+    // applied via [class.primary]/[class.secondary] on the trigger.
+    it.each<['primary' | 'secondary']>([
       ['primary'],
-      ['secondary'],
-      ['outline'],
-      ['text']
+      ['secondary']
     ])('should apply %s variant class to trigger', (variant) => {
       fixture.componentRef.setInput('variant', variant);
       fixture.detectChanges();
@@ -719,6 +719,19 @@ describe('PshDropdownComponent', () => {
 
     it('should have primary variant by default', () => {
       expect(getTrigger().classList.contains('primary')).toBe(true);
+    });
+
+    // 'filled'/'outline'/'text' are DropdownAppearance values (visual style),
+    // applied via [class]="appearance()" on the trigger.
+    it.each<['filled' | 'outline' | 'text']>([
+      ['filled'],
+      ['outline'],
+      ['text']
+    ])('should apply %s appearance class to trigger', (appearance) => {
+      fixture.componentRef.setInput('appearance', appearance);
+      fixture.detectChanges();
+
+      expect(getTrigger().classList.contains(appearance)).toBe(true);
     });
   });
 
@@ -739,6 +752,33 @@ describe('PshDropdownComponent', () => {
     it('should have bottom-start placement by default', () => {
       openDropdown();
       expect(getMenu().classList.contains('bottom-start')).toBe(true);
+    });
+
+    it('flips the menu to the top when there is no room below (anti-overflow)', async () => {
+      Object.defineProperty(window, 'innerHeight', { value: 768, configurable: true });
+      fixture.componentRef.setInput('placement', 'bottom-start');
+      fixture.detectChanges();
+
+      // Anchor the trigger near the bottom edge: there is no room below it.
+      getTrigger().getBoundingClientRect = () =>
+        ({
+          top: 745,
+          bottom: 765,
+          left: 50,
+          right: 150,
+          width: 100,
+          height: 20,
+          x: 50,
+          y: 745,
+          toJSON: () => ({}),
+        }) as DOMRect;
+
+      openDropdown();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      expect(getMenu().classList.contains('top-start')).toBe(true);
+      expect(getMenu().classList.contains('bottom-start')).toBe(false);
     });
   });
 

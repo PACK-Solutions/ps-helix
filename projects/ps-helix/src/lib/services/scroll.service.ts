@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, PLATFORM_ID, inject } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
@@ -6,14 +7,20 @@ import { filter } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ScrollService {
-  constructor(private router: Router) {
+  private readonly router = inject(Router);
+  private readonly document = inject(DOCUMENT);
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
+
+  constructor() {
     // Subscribe to router events
     this.router.events.pipe(
       // Filter only NavigationEnd events
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
-      // Reset scroll position
-      window.scrollTo(0, 0);
+      // Reset scroll position (browser only)
+      if (this.isBrowser) {
+        this.document.defaultView?.scrollTo(0, 0);
+      }
     });
   }
 }
