@@ -14,7 +14,9 @@ Versioning policy:
 
 ## [Unreleased]
 
-Target: **5.2.0** (minor — no breaking changes to the public API).
+## [5.2.0] - 2026-06-30
+
+Minor release — no breaking changes to the public API.
 
 ### Added
 
