@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 export interface TranslationProvider {
-  translate(key: string, params?: Record<string, any>): string;
-  translateAsync(key: string, params?: Record<string, any>): Observable<string>;
+  translate(key: string, params?: Record<string, unknown>): string;
+  translateAsync(key: string, params?: Record<string, unknown>): Observable<string>;
   setLanguage(lang: string): void;
   getCurrentLanguage(): string;
   onLangChange(): Observable<string>;
@@ -15,12 +15,12 @@ export interface TranslationProvider {
 export class NgxTranslateProvider implements TranslationProvider {
   private translateService = inject(TranslateService);
 
-  translate(key: string, params?: Record<string, any>): string {
+  translate(key: string, params?: Record<string, unknown>): string {
     if (!key) return '';
     return this.translateService.instant(key, params);
   }
 
-  translateAsync(key: string, params?: Record<string, any>): Observable<string> {
+  translateAsync(key: string, params?: Record<string, unknown>): Observable<string> {
     if (!key) return new Observable(subscriber => subscriber.next(''));
     return this.translateService.stream(key, params);
   }

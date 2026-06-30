@@ -188,15 +188,15 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
     this.destroyRef.onDestroy(() => this.document.removeEventListener('click', clickHandler));
   }
 
-  private onChange = (_: unknown) => {};
-  private onTouched = () => {};
+  private onChange: (value: T | T[] | null) => void = () => {};
+  private onTouched: () => void = () => {};
 
   writeValue(value: unknown): void {
     this.value.set(value as T | T[] | null);
   }
 
-  registerOnChange(fn: any): void { this.onChange = fn; }
-  registerOnTouched(fn: any): void { this.onTouched = fn; }
+  registerOnChange(fn: (value: T | T[] | null) => void): void { this.onChange = fn; }
+  registerOnTouched(fn: () => void): void { this.onTouched = fn; }
   setDisabledState(isDisabled: boolean): void { this.disabled.set(isDisabled); }
 
   toggle(): void {

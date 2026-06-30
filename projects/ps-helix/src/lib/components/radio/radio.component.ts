@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  contentChild,
   effect,
   EventEmitter,
   inject,
@@ -70,19 +69,18 @@ export class PshRadioComponent {
   error = input('');
   success = input('');
   name = input('');
-  value = input<any>();
+  value = input<unknown>();
   ariaLabel = input<string>();
   size = input<RadioSize>(this.config.size ?? 'medium');
   labelPosition = input<'left' | 'right'>(this.config.labelPosition ?? 'right');
 
   // Content projection tracking
-  private radioText = contentChild<any>('.radio-text');
   protected hasProjectedContent = signal(false);
 
   // Outputs — checkedChange/disabledChange use EventEmitter to decouple from signal writes.
   @Output() checkedChange = new EventEmitter<boolean>();
   @Output() disabledChange = new EventEmitter<boolean>();
-  valueChange = output<any>();
+  valueChange = output<unknown>();
 
   // Computed values
   customStyles = computed(() => Object.assign({}, ...this.styles));

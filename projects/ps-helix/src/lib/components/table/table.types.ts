@@ -27,7 +27,7 @@ export interface TableColumn {
   /** Template personnalisé */
   template?: TemplateRef<TableCellContext>;
   /** Fonction de tri personnalisée */
-  sortFn?: (a: any, b: any) => number;
+  sortFn?: (a: TableRow, b: TableRow) => number;
 }
 
 /**
@@ -38,8 +38,8 @@ export interface TableRow {
   id: string | number;
   /** Lignes enfants (un seul niveau) */
   children?: TableRow[];
-  /** Données de la ligne */
-  [key: string]: any;
+  /** Données de la ligne (valeurs arbitraires — l'appelant restreint le type) */
+  [key: string]: unknown;
 }
 
 export interface TableRowExpandEvent {
