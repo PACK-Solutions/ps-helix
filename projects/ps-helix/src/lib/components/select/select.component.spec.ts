@@ -138,6 +138,34 @@ describe('PshSelectComponent', () => {
     fixture.detectChanges();
   });
 
+  describe('Panel positioning', () => {
+    it('flips the panel above the trigger when there is no room below (anti-overflow)', async () => {
+      Object.defineProperty(window, 'innerHeight', { value: 768, configurable: true });
+
+      const trigger = fixture.nativeElement.querySelector('.select-trigger') as HTMLElement;
+      // Anchor the trigger near the bottom edge: no room for the panel below.
+      trigger.getBoundingClientRect = () =>
+        ({
+          top: 745,
+          bottom: 765,
+          left: 50,
+          right: 250,
+          width: 200,
+          height: 20,
+          x: 50,
+          y: 745,
+          toJSON: () => ({}),
+        }) as DOMRect;
+
+      openSelect();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const panel = fixture.nativeElement.querySelector('.select-dropdown') as HTMLElement;
+      expect(panel.classList.contains('open-top')).toBe(true);
+    });
+  });
+
   describe('Content rendering', () => {
     it('should render a combobox trigger', () => {
       expect(getCombobox()).toBeTruthy();

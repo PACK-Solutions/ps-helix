@@ -101,6 +101,11 @@
   transform: rotate(180deg);
 }
 
+.select-dropdown.open-top {
+  top: auto;
+  bottom: calc(100% + 0.25rem);
+}
+
 .select-dropdown {
   position: absolute;
   top: calc(100% + 0.25rem);

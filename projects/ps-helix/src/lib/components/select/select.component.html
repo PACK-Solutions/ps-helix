@@ -45,7 +45,7 @@
   </div>
 
   @if (isOpen()) {
-    <div class="select-dropdown">
+    <div class="select-dropdown" [class.open-top]="resolvedSide() === 'top'">
       @if (searchable()) {
         <div class="select-search">
           <i class="ph ph-magnifying-glass select-search-icon"></i>
