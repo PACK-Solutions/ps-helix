@@ -26,7 +26,7 @@ module.exports = tseslint.config(
       // - aliased inputs back a plain signal (CVA decoupling, see radio),
       // - the `toggle` output is part of the public sidebar API (cannot rename).
       '@angular-eslint/no-input-rename': 'off',
-      '@angular-eslint/no-output-native': 'warn',
+      '@angular-eslint/no-output-native': 'error',
       '@angular-eslint/prefer-inject': 'warn',
       '@angular-eslint/directive-selector': [
         'error',

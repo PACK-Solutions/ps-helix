@@ -1,9 +1,12 @@
 import {
+  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   ElementRef,
   inject,
+  Injector,
   input,
   model,
   output,
@@ -14,6 +17,7 @@ import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
 import { PshClickOutsideDirective } from '../../a11y/click-outside.directive';
+import { PshOverlayPositionService } from '../../a11y/overlay-position.service';
 import { SelectOption, SelectOptionGroup, SelectSize, SelectVariant, SearchConfig } from './select.types';
 
 interface FlatOption<T> {
@@ -52,6 +56,11 @@ interface FlatOption<T> {
 export class PshSelectComponent<T = unknown> implements ControlValueAccessor, FormValueControl<T | T[] | null> {
   private readonly elementRef = inject(ElementRef);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly overlayPosition = inject(PshOverlayPositionService);
+  private readonly injector = inject(Injector);
+
+  // Side the panel actually opens on, after viewport collision/flip.
+  protected readonly resolvedSide = signal<'top' | 'bottom'>('bottom');
 
   protected readonly selectId = `psh-sel-${Math.random().toString(36).substring(2, 11)}`;
 
@@ -183,6 +192,28 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
       if (this.isOpen()) this.close();
     });
     this.destroyRef.onDestroy(() => sub.unsubscribe());
+
+    // Flip the options panel against the viewport on open; reset while closed.
+    effect(() => {
+      if (this.isOpen()) {
+        afterNextRender(() => this.reposition(), { injector: this.injector });
+      } else {
+        this.resolvedSide.set('bottom');
+      }
+    });
+  }
+
+  private reposition(): void {
+    if (!this.isOpen()) return;
+    const host = this.elementRef.nativeElement as HTMLElement;
+    const trigger = host.querySelector('.select-trigger') as HTMLElement | null;
+    const panel = host.querySelector('.select-dropdown') as HTMLElement | null;
+    if (!trigger) return;
+    this.resolvedSide.set(
+      this.overlayPosition.flipSide(trigger, 'bottom', {
+        overlayHeight: panel?.offsetHeight ?? 0,
+      }) as 'top' | 'bottom',
+    );
   }
 
   private onChange: (value: T | T[] | null) => void = () => {};

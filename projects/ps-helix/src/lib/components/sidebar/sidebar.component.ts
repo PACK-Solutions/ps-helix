@@ -63,6 +63,9 @@ export class PshSidebarComponent implements OnDestroy {
   closeOnBackdrop = input<boolean>(this.config.closeOnBackdrop ?? true);
   closeOnEscape = input<boolean>(this.config.closeOnEscape ?? true);
 
+  // `toggle` is part of the public sidebar API and cannot be renamed (semver);
+  // the native-event-name clash is intentional and acknowledged here.
+  // eslint-disable-next-line @angular-eslint/no-output-native
   toggle = output<boolean>();
   opened = output<void>();
   closed = output<void>();

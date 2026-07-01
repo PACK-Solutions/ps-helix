@@ -45,6 +45,8 @@
   </button>
 
   @if (isOpen()) {
+    <!-- stopPropagation only (keeps clicks inside the menu from closing it); not a user interaction. -->
+    <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
     <div
       class="dropdown-menu"
       [class]="resolvedPlacement()"
