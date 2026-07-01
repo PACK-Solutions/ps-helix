@@ -1,10 +1,13 @@
 <div
   class="tabs-container"
   [class.animated]="animated()"
-  role="tablist"
-  [attr.aria-orientation]="ariaOrientation()"
 >
-  <div class="tabs-header" [class]="variant()">
+  <div
+    class="tabs-header"
+    [class]="variant()"
+    role="tablist"
+    [attr.aria-orientation]="ariaOrientation()"
+  >
     @for (tab of tabsToDisplay(); track $index; let i = $index) {
       <button
         class="tab-button"

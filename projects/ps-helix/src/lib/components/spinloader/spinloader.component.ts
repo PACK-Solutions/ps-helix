@@ -43,7 +43,7 @@ export class PshSpinLoaderComponent {
   constructor() {
     effect(() => {
       const view = this.document.defaultView;
-      if (view) {
+      if (view && typeof view.matchMedia === 'function') {
         const mediaQuery = view.matchMedia('(prefers-reduced-motion: reduce)');
         this.reduceMotion.set(mediaQuery.matches);
 
