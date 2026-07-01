@@ -22,6 +22,7 @@ import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { PshButtonComponent } from '../button/button.component';
 import { PshFocusTrapDirective } from '../../a11y/focus-trap.directive';
 import { ModalSize, ModalConfig } from './modal.types';
+import { PshOverlayService, OverlayHandle } from '../../a11y/overlay.service';
 
 /**
  * Injection token for global modal configuration
@@ -164,11 +165,15 @@ export class ModalService {
 export class PshModalComponent implements AfterViewInit, OnDestroy {
   private readonly config = inject(MODAL_CONFIG);
   private readonly modalService = inject(ModalService);
+  private readonly overlay = inject(PshOverlayService);
   private readonly renderer = inject(Renderer2);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly document = inject(DOCUMENT);
   private readonly isBrowser = isPlatformBrowser(this.platformId);
   private readonly modalId = this.modalService.generateId();
+  private overlayHandle: OverlayHandle | null = null;
+  /** z-index assigned by the overlay stack while open (keeps stacked modals layered). */
+  protected readonly zIndex = signal<number | null>(null);
   private modalElement?: ElementRef<HTMLElement>;
   private isAttachedToBody = false;
   private resizeListener?: () => void;
@@ -331,6 +336,8 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
    */
   private onModalOpen(): void {
     this.modalService.register(this.modalId);
+    this.overlayHandle = this.overlay.push();
+    this.zIndex.set(this.overlayHandle.zIndex);
     if (!this.isBrowser) return;
     this.setupScrollLock();
     this.addEventListeners();
@@ -343,9 +350,19 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
    */
   private onModalClose(): void {
     this.modalService.unregister(this.modalId);
+    this.releaseOverlay();
     if (!this.isBrowser) return;
     this.removeScrollLock();
     this.removeEventListeners();
+  }
+
+  /** Releases this modal's overlay layer and clears its z-index. */
+  private releaseOverlay(): void {
+    if (this.overlayHandle) {
+      this.overlay.remove(this.overlayHandle.id);
+      this.overlayHandle = null;
+    }
+    this.zIndex.set(null);
   }
 
   /**
@@ -476,6 +493,7 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
     this.removeEventListeners();
     this.removeResizeListener();
     this.modalService.unregister(this.modalId);
+    this.releaseOverlay();
     this.detachModalFromBody();
   }
 }

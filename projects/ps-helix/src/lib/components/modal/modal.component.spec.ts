@@ -891,4 +891,21 @@ describe('PshModalComponent stacked modals', () => {
     expect(hostComponent.firstOpen).toBe(false);
     expect(hostComponent.onFirstClosed).toHaveBeenCalledTimes(1);
   });
+
+  it('assigns a higher z-index to the topmost stacked modal', () => {
+    hostComponent.firstOpen = true;
+    fixture.detectChanges();
+    hostComponent.secondOpen = true;
+    fixture.detectChanges();
+
+    const dialogs = Array.from(
+      document.body.querySelectorAll('[role="dialog"]'),
+    ) as HTMLElement[];
+    expect(dialogs.length).toBe(2);
+
+    const z0 = parseInt(dialogs[0].style.zIndex, 10);
+    const z1 = parseInt(dialogs[1].style.zIndex, 10);
+    // The second (topmost) modal must stack above the first.
+    expect(z1).toBeGreaterThan(z0);
+  });
 });

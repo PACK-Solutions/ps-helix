@@ -7,6 +7,7 @@
   (click)="handleBackdropClick($event)"
   role="dialog"
   aria-modal="true"
+  [style.z-index]="zIndex()"
   [attr.aria-hidden]="!open()"
   [attr.aria-labelledby]="modalDialogId() + '-title'"
   [attr.aria-describedby]="modalDescriptionId()"
