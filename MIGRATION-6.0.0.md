@@ -2,8 +2,9 @@
 
 ## TL;DR
 
-`6.0.0` renames **only the global CSS utility classes**. Every utility helper is
-now prefixed with `psh-`:
+`6.0.0` has two breaking changes: it **requires Angular 22** (see below), and it
+**renames the global CSS utility classes** — every utility helper is now prefixed
+with `psh-`:
 
 ```
 .p-md          →  .psh-p-md
@@ -18,7 +19,20 @@ The **TypeScript/component API is unchanged** — component selectors
 directives and exports are identical to `5.x`. If your app does **not** use the
 utility CSS classes in its own templates, upgrading is a no-op.
 
-## Who is affected
+## Angular 22 required
+
+`6.0.0` is built against **Angular 22** and **TypeScript 6** — its
+`peerDependencies` are `@angular/* ^22.0.0`. Upgrade your app first:
+
+```bash
+ng update @angular/core@22 @angular/cli@22
+```
+
+Requirements: **Node ≥ 22.22.3** (or ≥ 24.15) and **TypeScript 6.0**. There are no
+ps-helix API changes tied to this — once your app is on Angular 22, the only
+migration work is the CSS class rename below.
+
+## Who is affected (CSS utilities)
 
 You are affected **only** if your own markup uses ps-helix utility classes, e.g.:
 

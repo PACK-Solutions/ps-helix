@@ -8,7 +8,7 @@ Reference documentation for the Helix Design System Angular component library. T
 
 - **Library**: `ps-helix`
 - **Version**: 6.0.0
-- **Framework**: Angular 21+
+- **Framework**: Angular 22+
 - **Prefix**: `psh-` (all components)
 - **Import**: `import { ComponentName } from 'ps-helix';`
 
@@ -1111,7 +1111,7 @@ Examples: `'house'`, `'user'`, `'gear'`, `'check'`, `'x'`, `'warning'`, `'info'`
 
 ## Signal Forms Integration
 
-Form components support **Angular 21 Signal Forms** natively alongside Reactive Forms:
+Form components support **Angular 22 Signal Forms** natively alongside Reactive Forms:
 
 | Component | Signal Forms Interface | Binding |
 |-----------|----------------------|---------|
