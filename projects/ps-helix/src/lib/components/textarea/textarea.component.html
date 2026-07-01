@@ -1,5 +1,7 @@
 <div class="textarea-container">
   @if (showLabel()) {
+    <!-- label[for] delegates focus to its control natively; the click handler is a convenience. -->
+    <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
     <label
       class="textarea-label"
       [for]="textareaId"

@@ -1,9 +1,11 @@
 <div class="input-container">
   @if (showLabel()) {
-    <label 
-      class="input-label" 
-      [for]="inputId" 
-      (click)="focusSelect()" 
+    <!-- label[for] delegates focus to its control natively; the click handler is a convenience. -->
+    <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
+    <label
+      class="input-label"
+      [for]="inputId"
+      (click)="focusSelect()"
       [class.required]="required()"
     >
       <ng-content select="[input-label]"></ng-content>
@@ -65,7 +67,9 @@
     @if (showSuggestions()) {
       <div class="suggestions-list" role="listbox">
         @for (suggestion of filteredSuggestions(); track suggestion; let i = $index) {
-          <div 
+          <!-- option in a listbox: keyboard is handled by the input (arrow keys + focusedSuggestionIndex). -->
+          <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
+          <div
             class="suggestion-item"
             [class.focused]="i === focusedSuggestionIndex()"
             role="option"

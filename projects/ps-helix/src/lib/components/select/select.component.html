@@ -1,5 +1,7 @@
 <div class="select-container">
   @if (label()) {
+    <!-- label[for] delegates focus to its control natively; the click handler is a convenience. -->
+    <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
     <label class="select-label" [attr.for]="selectId" (click)="focusSelect()" [class.required]="required()">
       {{ label() }}
       @if (required()) { <span class="required-mark">*</span> }
@@ -64,6 +66,8 @@
             <div class="select-group" role="group" [attr.aria-label]="item.label">
               <div class="select-group-label">{{ item.label }}</div>
               @for (opt of item.options; track opt.label) {
+                <!-- option in a listbox: keyboard is handled at the widget level (arrows + aria-activedescendant). -->
+                <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events -->
                 <div class="select-option"
                      role="option"
                      [id]="selectId + '-' + opt.value"
@@ -83,6 +87,8 @@
               }
             </div>
           } @else {
+            <!-- option in a listbox: keyboard is handled at the widget level (arrows + aria-activedescendant). -->
+            <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events -->
             <div class="select-option"
                  role="option"
                  [id]="selectId + '-' + item.value"

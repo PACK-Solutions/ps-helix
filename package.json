@@ -22,7 +22,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "lint": "eslint projects/ps-helix/src",
+    "lint": "eslint projects/ps-helix/src --max-warnings 0",
     "format": "prettier --write \"projects/ps-helix/src/**/*.{ts,html,css,json}\"",
     "format:check": "prettier --check \"projects/ps-helix/src/**/*.{ts,html,css,json}\"",
     "size": "size-limit"
