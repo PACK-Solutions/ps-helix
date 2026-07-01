@@ -7,7 +7,7 @@ Reference documentation for the Helix Design System Angular component library. T
 ## Overview
 
 - **Library**: `ps-helix`
-- **Version**: 5.1.3
+- **Version**: 6.0.0
 - **Framework**: Angular 21+
 - **Prefix**: `psh-` (all components)
 - **Import**: `import { ComponentName } from 'ps-helix';`
@@ -141,57 +141,61 @@ Reference documentation for the Helix Design System Angular component library. T
 
 ## Utility Classes
 
+> **v6.0.0** — every utility class is namespaced with the `psh-` prefix
+> (e.g. `.psh-flex`, `.psh-p-md`, `.psh-text-center`). For responsive variants the
+> prefix precedes the variant: `.psh-md:grid-cols-2`, `.psh-mobile:flex-col`.
+
 ### Spacing
 
-**Margin**: `.m-{0|xs|sm|md|lg|xl|2xl}`, `.mt-*`, `.mr-*`, `.mb-*`, `.ml-*`, `.mx-*`, `.my-*`, `.mx-auto`, `.ml-auto`, `.mr-auto`
+**Margin**: `.psh-m-{0|xs|sm|md|lg|xl|2xl}`, `.psh-mt-*`, `.psh-mr-*`, `.psh-mb-*`, `.psh-ml-*`, `.psh-mx-*`, `.psh-my-*`, `.psh-mx-auto`, `.psh-ml-auto`, `.psh-mr-auto`
 
-**Padding**: `.p-{0|xs|sm|md|lg|xl|2xl}`, `.pt-*`, `.pr-*`, `.pb-*`, `.pl-*`, `.px-*`, `.py-*`
+**Padding**: `.psh-p-{0|xs|sm|md|lg|xl|2xl}`, `.psh-pt-*`, `.psh-pr-*`, `.psh-pb-*`, `.psh-pl-*`, `.psh-px-*`, `.psh-py-*`
 
-**Gap**: `.gap-{0|xs|sm|md|lg|xl|2xl}`, `.gap-x-*`, `.gap-y-*`
+**Gap**: `.psh-gap-{0|xs|sm|md|lg|xl|2xl}`, `.psh-gap-x-*`, `.psh-gap-y-*`
 
 ### Typography
 
-**Size**: `.text-{xs|sm|base|lg|xl|2xl|3xl|4xl}`
+**Size**: `.psh-text-{xs|sm|base|lg|xl|2xl|3xl|4xl}`
 
-**Weight**: `.font-{normal|medium|semibold|bold}`
+**Weight**: `.psh-font-{normal|medium|semibold|bold}`
 
-**Line Height**: `.leading-{tight|normal|relaxed}`
+**Line Height**: `.psh-leading-{tight|normal|relaxed}`
 
-**Letter Spacing**: `.tracking-{tight|normal|wide|wider|widest}`
+**Letter Spacing**: `.psh-tracking-{tight|normal|wide|wider|widest}`
 
-**Color**: `.text-primary`, `.text-secondary`, `.text-success`, `.text-warning`, `.text-danger`, `.text-color`, `.text-color-secondary`
+**Color**: `.psh-text-primary`, `.psh-text-secondary`, `.psh-text-success`, `.psh-text-warning`, `.psh-text-danger`, `.psh-text-color`, `.psh-text-color-secondary`
 
-**Alignment**: `.text-left`, `.text-center`, `.text-right`, `.text-justify`
+**Alignment**: `.psh-text-left`, `.psh-text-center`, `.psh-text-right`, `.psh-text-justify`
 
 ### Layout
 
-**Display**: `.hidden`, `.block`, `.inline`, `.inline-block`, `.flex`, `.inline-flex`, `.grid`, `.inline-grid`
+**Display**: `.psh-hidden`, `.psh-block`, `.psh-inline`, `.psh-inline-block`, `.psh-flex`, `.psh-inline-flex`, `.psh-grid`, `.psh-inline-grid`
 
 **Flexbox**:
-- Direction: `.flex-row`, `.flex-row-reverse`, `.flex-col`, `.flex-col-reverse`
-- Wrap: `.flex-wrap`, `.flex-wrap-reverse`, `.flex-nowrap`
-- Align: `.items-start`, `.items-end`, `.items-center`, `.items-baseline`, `.items-stretch`
-- Justify: `.justify-start`, `.justify-end`, `.justify-center`, `.justify-between`, `.justify-around`, `.justify-evenly`
-- Flex: `.flex-none`, `.flex-auto`, `.flex-initial`, `.flex-1`, `.flex-2`, `.flex-3`
-- Shrink/Grow: `.shrink`, `.shrink-0`, `.grow`, `.grow-0`
+- Direction: `.psh-flex-row`, `.psh-flex-row-reverse`, `.psh-flex-col`, `.psh-flex-col-reverse`
+- Wrap: `.psh-flex-wrap`, `.psh-flex-wrap-reverse`, `.psh-flex-nowrap`
+- Align: `.psh-items-start`, `.psh-items-end`, `.psh-items-center`, `.psh-items-baseline`, `.psh-items-stretch`
+- Justify: `.psh-justify-start`, `.psh-justify-end`, `.psh-justify-center`, `.psh-justify-between`, `.psh-justify-around`, `.psh-justify-evenly`
+- Flex: `.psh-flex-none`, `.psh-flex-auto`, `.psh-flex-initial`, `.psh-flex-1`, `.psh-flex-2`, `.psh-flex-3`
+- Shrink/Grow: `.psh-shrink`, `.psh-shrink-0`, `.psh-grow`, `.psh-grow-0`
 
 **Grid**:
-- Columns: `.grid-cols-{1|2|3|4|6|12}`
-- Span: `.col-span-{1|2|3|4|6|12|full}`, `.row-span-{1|2|3|full}`
+- Columns: `.psh-grid-cols-{1|2|3|4|6|12}`
+- Span: `.psh-col-span-{1|2|3|4|6|12|full}`, `.psh-row-span-{1|2|3|full}`
 
-**Position**: `.static`, `.fixed`, `.absolute`, `.relative`, `.sticky`
+**Position**: `.psh-static`, `.psh-fixed`, `.psh-absolute`, `.psh-relative`, `.psh-sticky`
 
-**Width**: `.w-full`, `.w-auto`, `.w-fit`, `.w-min`, `.w-max`, `.min-w-*`, `.max-w-{none|xs|sm|md|lg|xl|2xl|...|7xl|full}`
+**Width**: `.psh-w-full`, `.psh-w-auto`, `.psh-w-fit`, `.psh-w-min`, `.psh-w-max`, `.psh-min-w-*`, `.psh-max-w-{none|xs|sm|md|lg|xl|2xl|...|7xl|full}`
 
-**Height**: `.h-full`, `.h-screen`, `.h-auto`, `.h-fit`, `.min-h-*`
+**Height**: `.psh-h-full`, `.psh-h-screen`, `.psh-h-auto`, `.psh-h-fit`, `.psh-min-h-*`
 
-**Overflow**: `.overflow-{auto|hidden|visible|scroll}`, `.overflow-x-*`, `.overflow-y-*`
+**Overflow**: `.psh-overflow-{auto|hidden|visible|scroll}`, `.psh-overflow-x-*`, `.psh-overflow-y-*`
 
 ### Colors
 
-**Background**: `.bg-primary`, `.bg-secondary`, `.bg-success`, `.bg-warning`, `.bg-danger`, `.bg-surface-card`, `.bg-surface-ground`
+**Background**: `.psh-bg-primary`, `.psh-bg-secondary`, `.psh-bg-success`, `.psh-bg-warning`, `.psh-bg-danger`, `.psh-bg-surface-card`, `.psh-bg-surface-ground`
 
-**Border**: `.border-primary`, `.border-secondary`, `.border-success`, `.border-warning`, `.border-danger`
+**Border**: `.psh-border-primary`, `.psh-border-secondary`, `.psh-border-success`, `.psh-border-warning`, `.psh-border-danger`
 
 ### Responsive Prefixes
 
@@ -200,21 +204,21 @@ Reference documentation for the Helix Design System Angular component library. T
 - `lg:` - min-width: 64em (1024px)
 - `mobile:` - max-width: 48em (768px)
 
-Examples: `.sm:flex`, `.md:grid-cols-2`, `.lg:hidden`, `.mobile:flex-col`
+Examples: `.psh-sm:flex`, `.psh-md:grid-cols-2`, `.psh-lg:hidden`, `.psh-mobile:flex-col`
 
 ### Animations
 
-`.animate-fade-in`, `.animate-fade-in-up`, `.animate-slide-in`, `.animate-slide-in-down`, `.animate-slide-in-left`, `.animate-slide-in-right`, `.animate-scale-in`, `.animate-spin`, `.animate-bounce`, `.animate-pulse`
+`.psh-animate-fade-in`, `.psh-animate-fade-in-up`, `.psh-animate-slide-in`, `.psh-animate-slide-in-down`, `.psh-animate-slide-in-left`, `.psh-animate-slide-in-right`, `.psh-animate-scale-in`, `.psh-animate-spin`, `.psh-animate-bounce`, `.psh-animate-pulse`
 
-Control: `.animate-fast`, `.animate-slow`, `.animate-smooth`
+Control: `.psh-animate-fast`, `.psh-animate-slow`, `.psh-animate-smooth`
 
 ### Focus
 
-`.focus-ring`, `.focus-ring-primary`, `.focus-ring-error`, `.focus-ring-success`, `.focus-ring-warning`, `.focus-visible-only`, `.skip-link`
+`.psh-focus-ring`, `.psh-focus-ring-primary`, `.psh-focus-ring-error`, `.psh-focus-ring-success`, `.psh-focus-ring-warning`, `.psh-focus-visible-only`, `.psh-skip-link`
 
 ### Visibility & Interaction
 
-`.visible`, `.invisible`, `.opacity-{0|25|50|75|100}`, `.cursor-{auto|default|pointer|wait|text|move|help|not-allowed}`, `.select-{none|text|all|auto}`, `.pointer-events-{none|auto}`, `.mobile-only`, `.desktop-only`
+`.psh-visible`, `.psh-invisible`, `.psh-opacity-{0|25|50|75|100}`, `.psh-cursor-{auto|default|pointer|wait|text|move|help|not-allowed}`, `.psh-select-{none|text|all|auto}`, `.psh-pointer-events-{none|auto}`, `.psh-mobile-only`, `.psh-desktop-only`
 
 ---
 

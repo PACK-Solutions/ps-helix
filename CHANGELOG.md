@@ -14,6 +14,45 @@ Versioning policy:
 
 ## [Unreleased]
 
+## [6.0.0] - 2026-07-01
+
+Major release — **breaking change to the global CSS utility classes only**. The
+component / service / directive TypeScript API (selectors, `input`/`output`/`model`
+signatures, exports) is **unchanged**; no code changes are required, only class
+names in consumer templates that use the utility helpers.
+
+### Breaking
+
+- **Utility classes are now namespaced with the `psh-` prefix.** Every global
+  helper shipped via `ps-helix/styles.css` was renamed so it can no longer collide
+  with a consumer's own classes or another framework (Tailwind, Bootstrap):
+  - Spacing / layout / typography / color / animation / focus / responsive:
+    `.p-md` → `.psh-p-md`, `.flex` → `.psh-flex`, `.text-center` → `.psh-text-center`,
+    `.grid-cols-2` → `.psh-grid-cols-2`, `.animate-spin` → `.psh-animate-spin`,
+    `.focus-ring` → `.psh-focus-ring`, `.skip-link` → `.psh-skip-link`, …
+  - Responsive variants keep the variant after the prefix:
+    `.sm:hidden` → `.psh-sm:hidden`, `.md:grid-cols-2` → `.psh-md:grid-cols-2`,
+    `.mobile:flex-col` → `.psh-mobile:flex-col`.
+  - The modal scroll-lock body class `body.modal-open` → `body.psh-modal-open`.
+- Removed the obsolete `.js-focus-visible` polyfill rule from `focus.utils.css`
+  (native `:focus-visible` is now used throughout).
+
+  See **[MIGRATION-6.0.0.md](./MIGRATION-6.0.0.md)** for the full rename map and a
+  one-line codemod.
+
+### Changed (CSS quality pass)
+
+- **Reduced motion**: a single global `@media (prefers-reduced-motion: reduce)`
+  guard neutralises animations / transitions / smooth-scroll library-wide
+  (WCAG 2.3.3 / 2.2.2).
+- **Dark mode**: `ThemeService` honours the OS `prefers-color-scheme` when no theme
+  has been saved.
+- **Focus**: button focus rings (`menu`, `table`, `tabs`) moved from `:focus` to
+  `:focus-visible` (no ring on mouse click); form-field focus is unchanged.
+- **Tokens**: component box-shadows now reference the `--shadow-*` scale; overlay
+  `z-index` literals now use the `--z-index-*` tokens; breakpoints are centralised in
+  a new `tokens/breakpoints.tokens.css` as the single source of truth.
+
 ## [5.2.0] - 2026-06-30
 
 Minor release — no breaking changes to the public API.
