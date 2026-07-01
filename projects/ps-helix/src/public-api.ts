@@ -80,3 +80,4 @@ export * from './lib/a11y/focus-trap.directive';
 export * from './lib/a11y/click-outside.directive';
 export * from './lib/a11y/live-announcer.service';
 export * from './lib/a11y/overlay-position.service';
+export * from './lib/a11y/overlay.service';
