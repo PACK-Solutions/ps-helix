@@ -22,13 +22,12 @@
     "experimentalDecorators": true,
     "moduleResolution": "bundler",
     "importHelpers": true,
-    "baseUrl": "./",
     "paths": {
-      "@app/*": ["src/app/*"],
-      "@lib/*": ["projects/ps-helix/src/lib/*"],
-      "@demo/*": ["src/app/demo/*"],
+      "@app/*": ["./src/app/*"],
+      "@lib/*": ["./projects/ps-helix/src/lib/*"],
+      "@demo/*": ["./src/app/demo/*"],
       "ps-helix": [
-        "projects/ps-helix/src/public-api.ts"
+        "./projects/ps-helix/src/public-api.ts"
       ]
     },
     "lib": ["ES2022", "dom"]
