@@ -47,6 +47,10 @@ module.exports = tseslint.config(
       // Test host components use plain selectors.
       '@angular-eslint/component-selector': 'off',
       '@angular-eslint/directive-selector': 'off',
+      // Inline test-host components opt into eager change detection so that
+      // mutating a plain host field + detectChanges() propagates to the
+      // component under test (Angular 22 defaults components to OnPush).
+      '@angular-eslint/prefer-on-push-component-change-detection': 'off',
     },
   },
   {

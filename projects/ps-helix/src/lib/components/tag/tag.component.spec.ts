@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { PshTagComponent, TAG_CONFIG } from './tag.component';
 import { TagVariant, TagSize, TagConfig } from './tag.types';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'test-host',
   imports: [PshTagComponent],
   template: `<psh-tag [ariaLabel]="ariaLabel">{{ projectedContent }}</psh-tag>`
@@ -14,6 +15,7 @@ class TestHostComponent {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'test-host-interactive',
   imports: [PshTagComponent],
   template: `<psh-tag [interactive]="true" [closable]="true">Interactive Tag</psh-tag>`

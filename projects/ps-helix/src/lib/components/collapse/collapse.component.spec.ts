@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { PshCollapseComponent } from './collapse.component';
 import { CollapseVariant, CollapseSize } from './collapse.types';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <psh-collapse>
       <span collapse-header>Custom Header</span>
@@ -15,6 +16,7 @@ import { CollapseVariant, CollapseSize } from './collapse.types';
 class TestHostComponent {}
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <psh-collapse [id]="'custom-collapse'">
       <span collapse-header>With ID</span>

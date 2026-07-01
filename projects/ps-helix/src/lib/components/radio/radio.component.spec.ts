@@ -1,15 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { PshRadioComponent, RADIO_CONFIG, RADIO_STYLES } from './radio.component';
 import { RadioSize } from './radio.types';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<psh-radio>Projected label</psh-radio>`,
   imports: [PshRadioComponent]
 })
 class TestHostComponent {}
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <psh-radio
       name="test-group"
@@ -642,6 +644,7 @@ describe('PshRadioComponent with custom configuration', () => {
 // ── Emission safety tests ────────────────────────────────────────────
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <psh-radio
       name="test-group"

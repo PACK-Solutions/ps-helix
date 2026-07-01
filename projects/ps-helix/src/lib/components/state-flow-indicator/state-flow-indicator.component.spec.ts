@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { PshStateFlowIndicatorComponent, STATE_FLOW_INDICATOR_CONFIG } from './state-flow-indicator.component';
 import { PshFlowStepComponent } from './flow-step.component';
 import { StateFlowIndicatorSize } from './state-flow-indicator.types';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'psh-test-host',
   imports: [PshStateFlowIndicatorComponent, PshFlowStepComponent],
   template: `

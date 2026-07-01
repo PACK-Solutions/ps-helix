@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { PshButtonComponent } from './button.component';
 import { ButtonAppearance, ButtonVariant, ButtonSize, ButtonIconPosition } from './button.types';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'test-host',
   imports: [PshButtonComponent],
   template: `<psh-button [loading]="loading">{{ buttonText }}</psh-button>`
@@ -14,6 +15,7 @@ class TestHostComponent {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'test-host-icon-only',
   imports: [PshButtonComponent],
   template: `<psh-button [icon]="'heart'" [iconPosition]="'only'" [iconOnlyText]="'Like'">Hidden text</psh-button>`
@@ -21,6 +23,7 @@ class TestHostComponent {
 class TestHostIconOnlyComponent {}
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'test-host-explicit-label',
   imports: [PshButtonComponent],
   template: `<psh-button [ariaLabel]="explicitLabel">{{ buttonText }}</psh-button>`

@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { PshBadgeComponent } from './badge.component';
 import { BadgeVariant, BadgeSize, BadgeDisplayType, BadgePosition } from './badge.types';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'test-host',
   imports: [PshBadgeComponent],
   template: `<psh-badge [displayType]="'text'">{{ textContent }}</psh-badge>`
@@ -329,6 +330,7 @@ describe('PshBadgeComponent with ng-content', () => {
 });
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'test-host-with-content-input',
   imports: [PshBadgeComponent],
   template: `<psh-badge [displayType]="'text'" [content]="contentInput">Projected</psh-badge>`

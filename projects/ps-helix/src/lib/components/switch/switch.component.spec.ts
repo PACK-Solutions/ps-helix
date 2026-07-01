@@ -1,16 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { PshSwitchComponent, SWITCH_CONFIG } from './switch.component';
 import { SwitchSize } from './switch.types';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<psh-switch>Projected label</psh-switch>`,
   imports: [PshSwitchComponent]
 })
 class TestHostComponent {}
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<psh-switch [formControl]="control"></psh-switch>`,
   imports: [PshSwitchComponent, ReactiveFormsModule]
 })
@@ -574,6 +576,7 @@ describe('PshSwitchComponent with custom SWITCH_CONFIG', () => {
 // ── CVA emission safety tests ────────────────────────────────────────
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <psh-switch
       [formControl]="control"

@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component, signal } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
 import { PshFocusTrapDirective } from './focus-trap.directive';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <button id="outside">Outside</button>
     <div [pshFocusTrap]="trapped()" [pshFocusTrapAutoFocus]="autoFocus()">

@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { PshClickOutsideDirective } from './click-outside.directive';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <button id="outside">Outside</button>
     <div id="host" pshClickOutside (pshClickOutside)="outsideClicks = outsideClicks + 1">
@@ -16,6 +17,7 @@ class TestHostComponent {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<span id="hd-host">x</span>`,
   hostDirectives: [PshClickOutsideDirective],
 })

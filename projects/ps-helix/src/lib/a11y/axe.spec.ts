@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { axe } from 'jest-axe';
 
 import { PshCheckboxComponent } from '../components/checkbox/checkbox.component';
@@ -44,6 +44,7 @@ async function expectNoViolations(fixture: ComponentFixture<unknown>): Promise<v
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<psh-checkbox [label]="label" [error]="error" [disabled]="disabled"></psh-checkbox>`,
   imports: [PshCheckboxComponent],
 })
@@ -54,6 +55,7 @@ class CheckboxHost {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<psh-switch [label]="label" [error]="error"></psh-switch>`,
   imports: [PshSwitchComponent],
 })
@@ -63,6 +65,7 @@ class SwitchHost {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<psh-radio [label]="label" name="group" [value]="1"></psh-radio>`,
   imports: [PshRadioComponent],
 })
@@ -71,6 +74,7 @@ class RadioHost {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<psh-input [label]="label" [error]="error"></psh-input>`,
   imports: [PshInputComponent],
 })
@@ -80,72 +84,84 @@ class InputHost {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<psh-badge [value]="5" ariaLabel="5 unread messages"></psh-badge>`,
   imports: [PshBadgeComponent],
 })
 class BadgeHost {}
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<psh-button>Save changes</psh-button>`,
   imports: [PshButtonComponent],
 })
 class ButtonHost {}
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<psh-tag content="Beta"></psh-tag>`,
   imports: [PshTagComponent],
 })
 class TagHost {}
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<psh-alert type="info">Your changes were saved.</psh-alert>`,
   imports: [PshAlertComponent],
 })
 class AlertHost {}
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<psh-avatar initials="JD" ariaLabel="John Doe"></psh-avatar>`,
   imports: [PshAvatarComponent],
 })
 class AvatarHost {}
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<psh-progressbar [value]="60" ariaLabel="Upload progress"></psh-progressbar>`,
   imports: [PshProgressbarComponent],
 })
 class ProgressbarHost {}
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<psh-spinloader></psh-spinloader>`,
   imports: [PshSpinLoaderComponent],
 })
 class SpinloaderHost {}
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<psh-textarea label="Your comments"></psh-textarea>`,
   imports: [PshTextareaComponent],
 })
 class TextareaHost {}
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<psh-card title="Card title" description="A short description">Body content</psh-card>`,
   imports: [PshCardComponent],
 })
 class CardHost {}
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<psh-pagination [totalPages]="10" [currentPage]="3"></psh-pagination>`,
   imports: [PshPaginationComponent],
 })
 class PaginationHost {}
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<psh-tooltip content="More information"><button type="button">Info</button></psh-tooltip>`,
   imports: [PshTooltipComponent],
 })
 class TooltipHost {}
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <psh-tabs>
       <psh-tab header="First">Content A</psh-tab>
@@ -157,6 +173,7 @@ class TooltipHost {}
 class TabsHost {}
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<psh-select label="Fruit" [options]="options"></psh-select>`,
   imports: [PshSelectComponent],
 })
@@ -168,6 +185,7 @@ class SelectHost {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<psh-dropdown label="Actions" [items]="items"></psh-dropdown>`,
   imports: [PshDropdownComponent],
 })
@@ -179,6 +197,7 @@ class DropdownHost {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<psh-menu [items]="items"></psh-menu>`,
   imports: [PshMenuComponent],
 })
@@ -190,6 +209,7 @@ class MenuHost {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<psh-tab-bar [items]="items"></psh-tab-bar>`,
   imports: [PshTabBarComponent],
 })

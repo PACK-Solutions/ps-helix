@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PshTextareaComponent } from './textarea.component';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<psh-textarea [formControl]="control"></psh-textarea>`,
   imports: [PshTextareaComponent, ReactiveFormsModule],
 })
@@ -12,6 +13,7 @@ class TestHostFormComponent {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <psh-textarea [formControl]="control" [required]="true"></psh-textarea>
   `,

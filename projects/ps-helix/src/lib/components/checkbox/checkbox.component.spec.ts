@@ -1,16 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { PshCheckboxComponent } from './checkbox.component';
 import { CheckboxSize } from './checkbox.types';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<psh-checkbox>Projected label</psh-checkbox>`,
   imports: [PshCheckboxComponent]
 })
 class TestHostComponent {}
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<psh-checkbox [formControl]="control" label="Form checkbox"></psh-checkbox>`,
   imports: [PshCheckboxComponent, ReactiveFormsModule]
 })
@@ -546,6 +548,7 @@ describe('PshCheckboxComponent', () => {
 // ── CVA emission safety tests ────────────────────────────────────────
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <psh-checkbox
       [formControl]="control"

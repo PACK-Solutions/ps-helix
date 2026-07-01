@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, fakeAsync, tick, flush } from '@angular/core/testing';
-import { Component, viewChild } from '@angular/core';
+import { Component, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { PshMenuComponent } from './menu.component';
 import { MenuItem, MenuMode, MenuVariant } from './menu.types';
 
@@ -1222,6 +1222,7 @@ describe('PshMenuComponent with generic type', () => {
 });
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <psh-menu
       [items]="items"

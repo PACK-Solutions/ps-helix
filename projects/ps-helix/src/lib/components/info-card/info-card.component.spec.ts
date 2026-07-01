@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PshInfoCardComponent } from './info-card.component';
 import { InfoCardData, InfoCardVariant } from './info-card.types';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <psh-info-card [title]="title" [data]="data" [autoFullWidthOnMobile]="autoFullWidthOnMobile">
       <button card-actions>Action Button</button>
