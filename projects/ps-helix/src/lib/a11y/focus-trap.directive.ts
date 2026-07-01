@@ -45,6 +45,12 @@ export class PshFocusTrapDirective {
   /** Whether to restore focus to the previously focused element on deactivation. */
   readonly pshFocusTrapRestore = input<boolean>(true);
 
+  /**
+   * Whether to move focus into the container when the trap activates.
+   * Set to false to trap + restore focus without stealing initial focus.
+   */
+  readonly pshFocusTrapAutoFocus = input<boolean>(true);
+
   private previouslyFocused: HTMLElement | null = null;
   private active = false;
 
@@ -95,6 +101,8 @@ export class PshFocusTrapDirective {
     if (this.active) return;
     this.active = true;
     this.previouslyFocused = this.document.activeElement as HTMLElement | null;
+
+    if (!this.pshFocusTrapAutoFocus()) return;
 
     // Deterministic post-render focus (replaces setTimeout-based focusing).
     afterNextRender(

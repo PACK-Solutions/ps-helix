@@ -5,7 +5,7 @@ import { PshFocusTrapDirective } from './focus-trap.directive';
 @Component({
   template: `
     <button id="outside">Outside</button>
-    <div [pshFocusTrap]="trapped()">
+    <div [pshFocusTrap]="trapped()" [pshFocusTrapAutoFocus]="autoFocus()">
       <button id="first">First</button>
       <button id="mid">Mid</button>
       <button id="last">Last</button>
@@ -15,6 +15,7 @@ import { PshFocusTrapDirective } from './focus-trap.directive';
 })
 class TestHostComponent {
   trapped = signal(false);
+  autoFocus = signal(true);
 }
 
 const byId = (id: string) => document.getElementById(id) as HTMLButtonElement;
@@ -99,6 +100,23 @@ describe('PshFocusTrapDirective', () => {
     await fixture.whenStable();
 
     expect(host.trapped()).toBe(true);
+    expect(document.activeElement).toBe(byId('first'));
+  });
+
+  it('does not steal initial focus when autoFocus is false, but still traps', async () => {
+    byId('outside').focus();
+    host.autoFocus.set(false);
+    host.trapped.set(true);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    // Focus stays outside (not moved into the container)...
+    expect(document.activeElement).toBe(byId('outside'));
+
+    // ...but Tab from the last element still wraps inside.
+    byId('last').focus();
+    const event = dispatchTab(byId('last'));
+    expect(event.defaultPrevented).toBe(true);
     expect(document.activeElement).toBe(byId('first'));
   });
 
