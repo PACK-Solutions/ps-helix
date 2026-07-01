@@ -6,30 +6,34 @@ import {
   inject,
   input,
   model,
-  output
+  output,
+  linkedSignal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PaginationSize, PaginationVariant, PaginationConfig } from './pagination.types';
 import { InjectionToken } from '@angular/core';
 
-export const PAGINATION_CONFIG = new InjectionToken<Partial<PaginationConfig>>('PAGINATION_CONFIG', {
-  factory: () => ({
-    size: 'medium',
-    variant: 'default',
-    showFirstLast: true,
-    showPrevNext: true,
-    maxVisiblePages: 5,
-    showItemsPerPage: false,
-    itemsPerPageOptions: [5, 10, 25, 50]
-  })
-});
+export const PAGINATION_CONFIG = new InjectionToken<Partial<PaginationConfig>>(
+  'PAGINATION_CONFIG',
+  {
+    factory: () => ({
+      size: 'medium',
+      variant: 'default',
+      showFirstLast: true,
+      showPrevNext: true,
+      maxVisiblePages: 5,
+      showItemsPerPage: false,
+      itemsPerPageOptions: [5, 10, 25, 50],
+    }),
+  },
+);
 
 @Component({
   selector: 'psh-pagination',
   imports: [CommonModule],
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PshPaginationComponent {
   private config = inject(PAGINATION_CONFIG);
@@ -38,7 +42,8 @@ export class PshPaginationComponent {
 
   currentPage = model(1);
   totalPages = model(1);
-  itemsPerPage = model(10);
+  itemsPerPageInput = input(10, { alias: 'itemsPerPage' });
+  itemsPerPage = linkedSignal(this.itemsPerPageInput);
 
   constructor() {
     effect(() => {
@@ -56,7 +61,9 @@ export class PshPaginationComponent {
         console.warn(`[psh-pagination] Invalid currentPage "${current}", setting to 1`);
         this.currentPage.set(1);
       } else if (current > total && total >= 1) {
-        console.warn(`[psh-pagination] currentPage "${current}" exceeds totalPages "${total}", setting to ${total}`);
+        console.warn(
+          `[psh-pagination] currentPage "${current}" exceeds totalPages "${total}", setting to ${total}`,
+        );
         this.currentPage.set(total);
       }
     });
@@ -69,23 +76,23 @@ export class PshPaginationComponent {
     });
   }
 
-  readonly size = input(this.config.size ?? 'medium' as PaginationSize, {
+  readonly size = input(this.config.size ?? ('medium' as PaginationSize), {
     transform: (value: PaginationSize): PaginationSize => {
       if (!['small', 'medium', 'large'].includes(value)) {
         console.warn(`[psh-pagination] Invalid size "${value}", falling back to "medium"`);
         return 'medium';
       }
       return value;
-    }
+    },
   });
-  readonly variant = input(this.config.variant ?? 'default' as PaginationVariant, {
+  readonly variant = input(this.config.variant ?? ('default' as PaginationVariant), {
     transform: (value: PaginationVariant): PaginationVariant => {
       if (!['default', 'outline'].includes(value)) {
         console.warn(`[psh-pagination] Invalid variant "${value}", falling back to "default"`);
         return 'default';
       }
       return value;
-    }
+    },
   });
   readonly showFirstLast = input(this.config.showFirstLast ?? true);
   readonly showPrevNext = input(this.config.showPrevNext ?? true);
@@ -152,7 +159,7 @@ export class PshPaginationComponent {
     } else if (page < 1 || page > this.totalPages()) {
       this.navigationError.emit({
         action: 'goToPage',
-        reason: `Page ${page} is out of bounds (1-${this.totalPages()})`
+        reason: `Page ${page} is out of bounds (1-${this.totalPages()})`,
       });
     }
   }

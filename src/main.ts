@@ -1,6 +1,6 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideHttpClient, withNoXsrfProtection } from '@angular/common/http';
+import { provideHttpClient, withNoXsrfProtection, withXhr } from '@angular/common/http';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { Observable, from } from 'rxjs';
@@ -22,16 +22,19 @@ class CustomTranslateLoader implements TranslateLoader {
 bootstrapApplication(AppComponent, {
   providers: [
     provideAnimationsAsync(),
-    provideHttpClient(withNoXsrfProtection()),
+    provideHttpClient(withXhr(), withNoXsrfProtection()),
     provideZonelessChangeDetection(),
-    provideRouter(routes, withNavigationErrorHandler(() => null)),
-    ...TranslateModule.forRoot({
+    provideRouter(
+      routes,
+      withNavigationErrorHandler(() => null),
+    ),
+    ...(TranslateModule.forRoot({
       defaultLanguage: 'fr',
       loader: {
         provide: TranslateLoader,
-        useClass: CustomTranslateLoader
+        useClass: CustomTranslateLoader,
       },
       useDefaultLang: true,
-    }).providers || []
-  ]
+    }).providers || []),
+  ],
 }).catch((err: Error) => console.error(err));

@@ -1,16 +1,18 @@
 import { ComponentFixture, TestBed, fakeAsync, tick, flush } from '@angular/core/testing';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule, FormControl } from '@angular/forms';
 import { PshInputComponent } from './input.component';
 import { InputType, InputVariant, InputSize, INPUT_LABELS } from './input.types';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<psh-input><span input-label>Custom Label</span></psh-input>`,
   imports: [PshInputComponent]
 })
 class TestHostLabelComponent {}
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<psh-input [formControl]="control"></psh-input>`,
   imports: [PshInputComponent, ReactiveFormsModule]
 })
@@ -983,6 +985,7 @@ describe('PshInputComponent with Reactive Forms', () => {
 // ── CVA emission safety tests ────────────────────────────────────────
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <psh-input
       [formControl]="control"

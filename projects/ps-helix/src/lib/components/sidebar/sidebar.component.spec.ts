@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { PshSidebarComponent, SIDEBAR_CONFIG } from './sidebar.component';
 import { SidebarMode, SidebarPosition } from './sidebar.types';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <psh-sidebar
       [(open)]="isOpen"
@@ -44,6 +45,7 @@ class TestHostComponent {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <psh-sidebar [(open)]="isOpen" [mode]="'overlay'">
       <p>Overlay content</p>

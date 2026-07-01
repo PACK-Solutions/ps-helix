@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PshTabsComponent, TABS_CONFIG } from './tabs.component';
 import { PshTabComponent } from './tab.component';
 import { Tab, TabsVariant, TabsSize, TabChangeEvent } from './tabs.types';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'psh-test-host',
   imports: [PshTabsComponent, PshTabComponent],
   template: `
@@ -69,6 +70,7 @@ class TestHostComponent {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'psh-data-driven-host',
   imports: [PshTabsComponent],
   template: `
@@ -984,6 +986,7 @@ describe('PshTabsComponent with data-driven tabs', () => {
 });
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'psh-config-test-host',
   imports: [PshTabsComponent, PshTabComponent],
   template: `
@@ -1040,6 +1043,7 @@ describe('PshTabsComponent with custom config', () => {
 });
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'psh-override-test-host',
   imports: [PshTabsComponent, PshTabComponent],
   template: `
@@ -1084,6 +1088,7 @@ describe('PshTabsComponent input overrides config', () => {
 });
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'psh-empty-test-host',
   imports: [PshTabsComponent],
   template: `<psh-tabs></psh-tabs>`

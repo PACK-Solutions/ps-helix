@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { PshModalComponent } from './modal.component';
 import { ModalSize } from './modal.types';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <psh-modal
       [open]="isOpen"
@@ -38,6 +39,7 @@ class TestHostComponent {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <psh-modal [open]="isOpen" [showFooter]="true">
       <p>Content</p>
@@ -351,6 +353,7 @@ describe('PshModalComponent', () => {
 });
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <psh-modal [(open)]="isOpen" [styleClass]="styleClass">
       <p>Content</p>
@@ -438,6 +441,7 @@ describe('PshModalComponent with custom footer', () => {
 });
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <button id="trigger-button" (click)="isOpen = true">Open Modal</button>
     <psh-modal
@@ -691,6 +695,7 @@ describe('PshModalComponent scroll lock', () => {
 });
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <psh-modal [(open)]="isOpen">
       <p>Content</p>
@@ -776,6 +781,7 @@ describe('PshModalComponent responsive behavior', () => {
 });
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <psh-modal [open]="isOpen" [title]="defaultTitle">
       <h2 modal-title>Custom Projected Title</h2>
@@ -818,6 +824,7 @@ describe('PshModalComponent with custom title', () => {
 });
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <psh-modal [(open)]="firstOpen" (closed)="onFirstClosed()">
       <p>First modal</p>

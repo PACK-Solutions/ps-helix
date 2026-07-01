@@ -16,13 +16,20 @@ Versioning policy:
 
 ## [6.0.0] - 2026-07-01
 
-Major release — **breaking change to the global CSS utility classes only**. The
-component / service / directive TypeScript API (selectors, `input`/`output`/`model`
-signatures, exports) is **unchanged**; no code changes are required, only class
-names in consumer templates that use the utility helpers.
+Major release with two breaking changes: the library now **requires Angular 22**
+(and TypeScript 6), and it **namespaces the global CSS utility classes** with the
+`psh-` prefix. The component / service / directive **public API is otherwise
+unchanged** (selectors, `input`/`output`/`model` signatures, exports).
 
 ### Breaking
 
+- **Requires Angular 22.** `peerDependencies` are now `@angular/* ^22.0.0`; the
+  package is built with Angular 22.0.4 and TypeScript 6.0. Consumers must upgrade
+  their app (`ng update @angular/core@22 @angular/cli@22`, Node ≥ 22.22.3).
+  - Internal: the `pagination` (`itemsPerPage`) and `tabs` (`activeIndex`)
+    two-way bindings moved from `model()` to `input()` + `linkedSignal` + their
+    explicit `…Change` output (fixing a latent double-emit). `[(itemsPerPage)]`
+    and `[(activeIndex)]` continue to work unchanged.
 - **Utility classes are now namespaced with the `psh-` prefix.** Every global
   helper shipped via `ps-helix/styles.css` was renamed so it can no longer collide
   with a consumer's own classes or another framework (Tailwind, Bootstrap):

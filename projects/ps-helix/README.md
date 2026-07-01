@@ -1,11 +1,11 @@
 # Helix Design System
 
-A comprehensive Angular component library built with Angular 21+ featuring modern design patterns, accessibility-first development, and optimal developer experience.
+A comprehensive Angular component library built with Angular 22+ featuring modern design patterns, accessibility-first development, and optimal developer experience.
 
 [![npm version](https://img.shields.io/badge/npm-6.0.0-blue.svg)](https://www.npmjs.com/package/ps-helix)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Angular](https://img.shields.io/badge/Angular-21.0.3-red.svg)](https://angular.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.9.0-blue.svg)](https://www.typescriptlang.org/)
+[![Angular](https://img.shields.io/badge/Angular-22.0.0-red.svg)](https://angular.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-6.0.0-blue.svg)](https://www.typescriptlang.org/)
 
 ## Table of Contents
 
@@ -45,7 +45,7 @@ A comprehensive Angular component library built with Angular 21+ featuring moder
 Helix is a production-ready design system that provides:
 
 - **28 Standalone Components** - All components are standalone, no NgModules required
-- **Signal-Based Reactivity** - Built with Angular 21 signals for optimal performance
+- **Signal-Based Reactivity** - Built with Angular 22 signals for optimal performance
 - **Accessibility First** - WCAG 2.1 AA compliant out of the box
 - **TypeScript Strict Mode** - Full type safety and IntelliSense support
 - **Complete Type Exports** - All component types and enums exported for type-safe development
@@ -53,7 +53,7 @@ Helix is a production-ready design system that provides:
 - **Phosphor Icons** - 6000+ icons with multiple weight variants
 - **i18n Support** - Built-in internationalization with ngx-translate
 - **Responsive Design** - Mobile-first approach with comprehensive breakpoint system
-- **Modern Architecture** - Built with Angular 21 standalone components and signals
+- **Modern Architecture** - Built with Angular 22 standalone components and signals
 
 ## Prerequisites
 
@@ -61,17 +61,17 @@ Before installing Helix, ensure your development environment meets these require
 
 - **Node.js**: 18.x or higher
 - **npm**: 9.x or higher
-- **Angular**: 21.0.3 or higher
-- **Angular CLI**: 21.0.3 or higher
+- **Angular**: 22.0.0 or higher
+- **Angular CLI**: 22.0.0 or higher
 - **TypeScript**: 5.9.0 or higher
 
 ### Required Peer Dependencies
 
 ```json
 {
-  "@angular/common": "^21.0.3",
-  "@angular/core": "^21.0.3",
-  "@angular/forms": "^21.0.3",
+  "@angular/common": "^22.0.0",
+  "@angular/core": "^22.0.0",
+  "@angular/forms": "^22.0.0",
   "@ngx-translate/core": "^15.0.0",
   "rxjs": "^7.8.0"
 }
@@ -96,7 +96,7 @@ npm install ps-helix
 All peer dependencies should be automatically installed. If not, install them manually:
 
 ```bash
-npm install @angular/common@^21.0.3 @angular/core@^21.0.3 @angular/forms@^21.0.3 @ngx-translate/core@^15.0.0 rxjs@^7.8.0
+npm install @angular/common@^22.0.0 @angular/core@^22.0.0 @angular/forms@^22.0.0 @ngx-translate/core@^15.0.0 rxjs@^7.8.0
 ```
 
 ### Verify Installation
@@ -447,7 +447,7 @@ export class ExampleComponent {
 
 ### Signal Forms Support
 
-Form components natively implement Angular 21 Signal Forms interfaces (`FormValueControl`, `FormCheckboxControl`) while maintaining backward compatibility with Reactive Forms via `ControlValueAccessor`:
+Form components natively implement Angular 22 Signal Forms interfaces (`FormValueControl`, `FormCheckboxControl`) while maintaining backward compatibility with Reactive Forms via `ControlValueAccessor`:
 
 | Component | Signal Forms Interface | Reactive Forms |
 |-----------|----------------------|----------------|
@@ -951,7 +951,7 @@ export class MyComponent {
 Form components (`psh-input`, `psh-checkbox`, `psh-select`, `psh-switch`) support three integration modes:
 
 ```typescript
-// ✅ Recommended: Signal Forms (Angular 21+)
+// ✅ Recommended: Signal Forms (Angular 22+)
 import { signal } from '@angular/core';
 import { form, FormField, required, email } from '@angular/forms/signals';
 
@@ -1085,7 +1085,7 @@ See [THEME.md](./THEME.md) for complete theming documentation.
 **Problem**: TypeScript compilation errors with component imports.
 
 **Solution**:
-1. Verify Angular version is 21.0.3 or higher
+1. Verify Angular version is 22.0.0 or higher
 2. Check `tsconfig.json` has `"strict": true`
 3. Ensure all peer dependencies are installed
 4. Clear node_modules and reinstall: `rm -rf node_modules && npm install`
@@ -1183,6 +1183,6 @@ Copyright (c) 2025 PACK Solutions
 ---
 
 **Version**: 6.0.0
-**Built with**: Angular 21.0.3, TypeScript 5.9.0, Phosphor Icons 2.0.3
+**Built with**: Angular 22.0.0, TypeScript 6.0.0, Phosphor Icons 2.0.3
 **Author**: Fabrice PEREZ | Product Designer at PACK Solutions
 **Last Updated**: January 2026

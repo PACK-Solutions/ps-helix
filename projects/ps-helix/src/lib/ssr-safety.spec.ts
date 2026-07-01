@@ -1,4 +1,4 @@
-import { Component, PLATFORM_ID } from '@angular/core';
+import { Component, PLATFORM_ID, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ThemeService } from './services/theme/theme.service';
 import { PshModalComponent } from './components/modal/modal.component';
@@ -14,6 +14,7 @@ import { PshModalComponent } from './components/modal/modal.component';
  * there is no unguarded global browser access.
  */
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<psh-modal [open]="true" title="SSR modal"><p>content</p></psh-modal>`,
   imports: [PshModalComponent],
 })

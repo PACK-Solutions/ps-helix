@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { PshStepperComponent, STEPPER_CONFIG } from './stepper.component';
 import { PshStepComponent } from './step.component';
 import { StepperVariant } from './stepper.types';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'psh-test-host',
   standalone: true,
   imports: [PshStepperComponent, PshStepComponent],
@@ -1135,6 +1136,7 @@ describe('PshStepperComponent', () => {
 });
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'psh-config-test-host',
   standalone: true,
   imports: [PshStepperComponent, PshStepComponent],
@@ -1230,6 +1232,7 @@ describe('PshStepperComponent input overrides config', () => {
 });
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'psh-test-host',
   standalone: true,
   imports: [PshStepperComponent, PshStepComponent],
@@ -1281,6 +1284,7 @@ describe('PshStepperComponent with single step', () => {
 });
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'psh-empty-test-host',
   standalone: true,
   imports: [PshStepperComponent],

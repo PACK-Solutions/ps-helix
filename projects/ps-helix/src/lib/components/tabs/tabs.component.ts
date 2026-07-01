@@ -6,9 +6,9 @@ import {
   effect,
   inject,
   input,
-  model,
   output,
-  InjectionToken
+  InjectionToken,
+  linkedSignal,
 } from '@angular/core';
 import { TabsVariant, TabsSize, Tab, TabsConfig, TabChangeEvent } from './tabs.types';
 import { PshTabComponent } from './tab.component';
@@ -18,8 +18,8 @@ export const TABS_CONFIG = new InjectionToken<Partial<TabsConfig>>('TABS_CONFIG'
     variant: 'default',
     size: 'medium',
     activeIndex: 0,
-    animated: true
-  })
+    animated: true,
+  }),
 });
 
 @Component({
@@ -29,9 +29,9 @@ export const TABS_CONFIG = new InjectionToken<Partial<TabsConfig>>('TABS_CONFIG'
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class]': 'hostClasses()',
-    'role': 'region',
-    '[attr.aria-label]': 'ariaLabel() || "Navigation par onglets"'
-  }
+    role: 'region',
+    '[attr.aria-label]': 'ariaLabel() || "Navigation par onglets"',
+  },
 })
 export class PshTabsComponent {
   private config = inject(TABS_CONFIG);
@@ -43,7 +43,8 @@ export class PshTabsComponent {
   ariaLabel = input<string>();
   ariaOrientation = input<'horizontal' | 'vertical'>('horizontal');
 
-  activeIndex = model(this.config.activeIndex ?? 0);
+  activeIndexInput = input(this.config.activeIndex ?? 0, { alias: 'activeIndex' });
+  activeIndex = linkedSignal(this.activeIndexInput);
 
   tabComponents = contentChildren(PshTabComponent);
 

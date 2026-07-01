@@ -1,4 +1,4 @@
-import { Component, TemplateRef, viewChild } from '@angular/core';
+import { Component, TemplateRef, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PshTableComponent } from './table.component';
 import { TableColumn, TableRow } from './table.types';
@@ -910,6 +910,7 @@ describe('PshTableComponent', () => {
 });
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [PshTableComponent],
   template: `
     <psh-table
