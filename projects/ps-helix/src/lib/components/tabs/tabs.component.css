@@ -52,19 +52,10 @@
   flex-shrink: 0;
 }
 
-.tab-button:focus {
-  outline: none;
-  box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
-}
-
 .tab-button:focus-visible {
   outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color);
   outline-offset: var(--focus-outline-offset);
-}
-
-.tab-button:focus:not(:focus-visible) {
-  box-shadow: none;
-  outline: none;
+  box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
 }
 
 .tab-button:disabled,

@@ -90,5 +90,5 @@
   /* Scrollbar width compensation */
   --scrollbar-width: 0;
 
-  /* Breakpoints - See utilities/responsive.utils.css for breakpoint system */
+  /* Breakpoints - See tokens/breakpoints.tokens.css for the responsive scale */
 }

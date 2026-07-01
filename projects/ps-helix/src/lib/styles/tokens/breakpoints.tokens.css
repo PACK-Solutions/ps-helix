@@ -1,0 +1,20 @@
+/*
+ * Breakpoint tokens — single source of truth for the responsive scale.
+ *
+ * Values are em-based for accessibility (they scale with the user's root
+ * font-size). The px equivalents below assume the default 16px root and are
+ * provided only as a reference for authoring `@media` queries.
+ *
+ * NOTE: CSS `@media` conditions cannot read custom properties, so media
+ * queries must inline the literal value. Always use the canonical value from
+ * this scale (prefer the em form) rather than an ad-hoc breakpoint, so the
+ * library stays consistent across components and utilities.
+ */
+:root {
+  --breakpoint-xs: 30em; /* 480px */
+  --breakpoint-sm: 40em; /* 640px */
+  --breakpoint-md: 48em; /* 768px */
+  --breakpoint-lg: 64em; /* 1024px */
+  --breakpoint-xl: 80em; /* 1280px */
+  --breakpoint-2xl: 96em; /* 1536px */
+}
