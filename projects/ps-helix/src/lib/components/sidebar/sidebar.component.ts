@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  ElementRef,
   inject,
   input,
   model,
@@ -14,6 +13,7 @@ import {
   PLATFORM_ID
 } from '@angular/core';
 import { isPlatformBrowser, CommonModule, DOCUMENT } from '@angular/common';
+import { PshFocusTrapDirective } from '../../a11y/focus-trap.directive';
 import { SidebarMode, SidebarPosition, SidebarConfig } from './sidebar.types';
 
 export const SIDEBAR_CONFIG = new InjectionToken<Partial<SidebarConfig>>('SIDEBAR_CONFIG', {
@@ -31,7 +31,7 @@ export const SIDEBAR_CONFIG = new InjectionToken<Partial<SidebarConfig>>('SIDEBA
 
 @Component({
   selector: 'psh-sidebar',
-  imports: [CommonModule],
+  imports: [CommonModule, PshFocusTrapDirective],
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -46,10 +46,8 @@ export const SIDEBAR_CONFIG = new InjectionToken<Partial<SidebarConfig>>('SIDEBA
 })
 export class PshSidebarComponent implements OnDestroy {
   private readonly config = inject(SIDEBAR_CONFIG);
-  private readonly elementRef = inject(ElementRef);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly document = inject(DOCUMENT);
-  private focusedElementBeforeOpen: HTMLElement | null = null;
   private mediaQueryList: MediaQueryList | null = null;
   private mediaQueryHandler: ((e: MediaQueryListEvent) => void) | null = null;
 
@@ -81,12 +79,6 @@ export class PshSidebarComponent implements OnDestroy {
   private readonly escapeHandler = (event: KeyboardEvent) => {
     if (event.key === 'Escape' && this.closeOnEscape() && this.effectiveMode() === 'overlay') {
       this.closeSidebar();
-    }
-  };
-
-  private readonly focusTrapHandler = (event: KeyboardEvent) => {
-    if (event.key === 'Tab') {
-      this.trapFocus(event);
     }
   };
 
@@ -145,20 +137,9 @@ export class PshSidebarComponent implements OnDestroy {
 
   private onSidebarOpen(): void {
     if (!isPlatformBrowser(this.platformId)) return;
-
-    this.focusedElementBeforeOpen = this.document.activeElement as HTMLElement;
+    // Focus trap + initial focus + focus restoration are handled by
+    // PshFocusTrapDirective on the .sidebar element (see the template).
     this.addEventListeners();
-
-    if (this.autoFocus()) {
-      requestAnimationFrame(() => {
-        const firstFocusable = this.elementRef.nativeElement.querySelector(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-        ) as HTMLElement;
-        if (firstFocusable) {
-          firstFocusable.focus();
-        }
-      });
-    }
 
     requestAnimationFrame(() => {
       this.opened.emit();
@@ -167,12 +148,7 @@ export class PshSidebarComponent implements OnDestroy {
 
   private onSidebarClose(): void {
     if (!isPlatformBrowser(this.platformId)) return;
-
     this.removeEventListeners();
-
-    if (this.focusedElementBeforeOpen) {
-      this.focusedElementBeforeOpen.focus();
-    }
 
     requestAnimationFrame(() => {
       this.closed.emit();
@@ -182,13 +158,11 @@ export class PshSidebarComponent implements OnDestroy {
   private addEventListeners(): void {
     if (!isPlatformBrowser(this.platformId)) return;
     this.document.addEventListener('keydown', this.escapeHandler);
-    this.document.addEventListener('keydown', this.focusTrapHandler);
   }
 
   private removeEventListeners(): void {
     if (!isPlatformBrowser(this.platformId)) return;
     this.document.removeEventListener('keydown', this.escapeHandler);
-    this.document.removeEventListener('keydown', this.focusTrapHandler);
   }
 
   toggleSidebar(): void {
@@ -212,36 +186,8 @@ export class PshSidebarComponent implements OnDestroy {
     }
   }
 
-  private trapFocus(event: KeyboardEvent): void {
-    const focusableElements = this.elementRef.nativeElement.querySelectorAll(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-    );
-
-    if (focusableElements.length === 0) return;
-
-    const firstFocusable = focusableElements[0] as HTMLElement;
-    const lastFocusable = focusableElements[focusableElements.length - 1] as HTMLElement;
-
-    if (!firstFocusable || !lastFocusable) return;
-
-    if (!isPlatformBrowser(this.platformId)) return;
-
-    if (event.shiftKey) {
-      if (this.document.activeElement === firstFocusable) {
-        event.preventDefault();
-        lastFocusable.focus();
-      }
-    } else {
-      if (this.document.activeElement === lastFocusable) {
-        event.preventDefault();
-        firstFocusable.focus();
-      }
-    }
-  }
-
   ngOnDestroy(): void {
     this.cleanupMediaQuery();
     this.removeEventListeners();
-    this.focusedElementBeforeOpen = null;
   }
 }
