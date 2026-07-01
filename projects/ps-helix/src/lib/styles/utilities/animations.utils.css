@@ -103,55 +103,55 @@
 }
 
 /* Animation utility classes */
-.animate-fade-in {
+.psh-animate-fade-in {
   animation: fadeIn var(--animation-duration-default) var(--animation-easing-default);
 }
 
-.animate-fade-in-up {
+.psh-animate-fade-in-up {
   animation: fadeInUp var(--animation-duration-default) var(--animation-easing-default);
 }
 
-.animate-slide-in {
+.psh-animate-slide-in {
   animation: slideIn var(--animation-duration-default) var(--animation-easing-default);
 }
 
-.animate-slide-in-down {
+.psh-animate-slide-in-down {
   animation: slideInDown var(--animation-duration-default) var(--animation-easing-default);
 }
 
-.animate-slide-in-left {
+.psh-animate-slide-in-left {
   animation: slideInLeft var(--animation-duration-default) var(--animation-easing-default);
 }
 
-.animate-slide-in-right {
+.psh-animate-slide-in-right {
   animation: slideInRight var(--animation-duration-default) var(--animation-easing-default);
 }
 
-.animate-scale-in {
+.psh-animate-scale-in {
   animation: scaleIn var(--animation-duration-fast) var(--animation-easing-smooth);
 }
 
-.animate-spin {
+.psh-animate-spin {
   animation: spin 1s linear infinite;
 }
 
-.animate-bounce {
+.psh-animate-bounce {
   animation: bounce var(--animation-duration-slow) var(--animation-easing-default) infinite;
 }
 
-.animate-pulse {
+.psh-animate-pulse {
   animation: pulse var(--animation-duration-slow) var(--animation-easing-default) infinite;
 }
 
 /* Animation control utilities */
-.animate-fast {
+.psh-animate-fast {
   animation-duration: var(--animation-duration-fast) !important;
 }
 
-.animate-slow {
+.psh-animate-slow {
   animation-duration: var(--animation-duration-slow) !important;
 }
 
-.animate-smooth {
+.psh-animate-smooth {
   animation-timing-function: var(--animation-easing-smooth) !important;
 }

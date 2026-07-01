@@ -280,7 +280,7 @@
 }
 
 .menu.collapsed psh-tooltip .tooltip {
-  z-index: 1000;
+  z-index: var(--z-index-tooltip);
 }
 
 .menu-child-dot {
@@ -394,7 +394,7 @@
   box-shadow: var(--shadow-md);
 }
 
-.menu-collapse-button:focus {
+.menu-collapse-button:focus-visible {
   outline: none;
   box-shadow: 0 0 0 2px rgba(var(--primary-color-rgb), 0.2);
 }

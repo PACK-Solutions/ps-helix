@@ -111,7 +111,7 @@
   top: calc(100% + 0.25rem);
   left: 0;
   right: 0;
-  z-index: 1000;
+  z-index: var(--z-index-dropdown);
   background: var(--surface-0);
   border: 0.125rem solid var(--surface-border);
   border-radius: var(--border-radius);

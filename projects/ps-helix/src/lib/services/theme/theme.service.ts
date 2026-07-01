@@ -214,7 +214,15 @@ export class ThemeService {
       }
     }
     const isValid = savedTheme === 'light' || savedTheme === 'dark';
-    this.setDarkTheme((isValid ? savedTheme : 'light') === 'dark');
+    // No stored preference → honour the OS "prefers-color-scheme" setting.
+    const initial: Theme = isValid ? (savedTheme as Theme) : this.prefersDarkScheme() ? 'dark' : 'light';
+    this.setDarkTheme(initial === 'dark');
+  }
+
+  /** True when the OS/browser requests a dark colour scheme. */
+  private prefersDarkScheme(): boolean {
+    const view = this.document.defaultView;
+    return this.isBrowser && !!view?.matchMedia?.('(prefers-color-scheme: dark)').matches;
   }
 
   private saveThemePreference(theme: Theme): void {

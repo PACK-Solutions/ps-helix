@@ -452,7 +452,7 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
       const scrollbarWidth = view.innerWidth - root.clientWidth;
       root.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`);
     }
-    this.document.body.classList.add('modal-open');
+    this.document.body.classList.add('psh-modal-open');
   }
 
   /**
@@ -460,7 +460,7 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
    */
   private removeScrollLock(): void {
     if (!this.preventScroll() || !this.isBrowser) return;
-    this.document.body.classList.remove('modal-open');
+    this.document.body.classList.remove('psh-modal-open');
   }
 
   /**

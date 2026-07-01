@@ -487,7 +487,7 @@ describe('PshModalComponent keyboard interactions', () => {
 
   afterEach(() => {
     cleanupDialog();
-    document.body.classList.remove('modal-open');
+    document.body.classList.remove('psh-modal-open');
   });
 
   describe('Escape key behavior', () => {
@@ -598,7 +598,7 @@ describe('PshModalComponent focus management', () => {
 
   afterEach(() => {
     cleanupDialog();
-    document.body.classList.remove('modal-open');
+    document.body.classList.remove('psh-modal-open');
   });
 
   it('should have focusable elements available when modal opens', (done) => {
@@ -621,7 +621,7 @@ describe('PshModalComponent focus management', () => {
     hostComponent.isOpen = true;
     fixture.detectChanges();
 
-    expect(document.body.classList.contains('modal-open')).toBe(true);
+    expect(document.body.classList.contains('psh-modal-open')).toBe(true);
   });
 
   it('should restore focus to trigger element when modal closes', (done) => {
@@ -659,18 +659,18 @@ describe('PshModalComponent scroll lock', () => {
 
   afterEach(() => {
     cleanupDialog();
-    document.body.classList.remove('modal-open');
+    document.body.classList.remove('psh-modal-open');
   });
 
-  it('should add modal-open class to body when modal opens and preventScroll is true', () => {
+  it('should add psh-modal-open class to body when modal opens and preventScroll is true', () => {
     hostComponent.preventScroll = true;
     hostComponent.isOpen = true;
     fixture.detectChanges();
 
-    expect(document.body.classList.contains('modal-open')).toBe(true);
+    expect(document.body.classList.contains('psh-modal-open')).toBe(true);
   });
 
-  it('should remove modal-open class from body when modal closes', () => {
+  it('should remove psh-modal-open class from body when modal closes', () => {
     hostComponent.preventScroll = true;
     hostComponent.isOpen = true;
     fixture.detectChanges();
@@ -678,15 +678,15 @@ describe('PshModalComponent scroll lock', () => {
     hostComponent.isOpen = false;
     fixture.detectChanges();
 
-    expect(document.body.classList.contains('modal-open')).toBe(false);
+    expect(document.body.classList.contains('psh-modal-open')).toBe(false);
   });
 
-  it('should not add modal-open class when preventScroll is false', () => {
+  it('should not add psh-modal-open class when preventScroll is false', () => {
     hostComponent.preventScroll = false;
     hostComponent.isOpen = true;
     fixture.detectChanges();
 
-    expect(document.body.classList.contains('modal-open')).toBe(false);
+    expect(document.body.classList.contains('psh-modal-open')).toBe(false);
   });
 });
 
@@ -853,7 +853,7 @@ describe('PshModalComponent stacked modals', () => {
     document.body
       .querySelectorAll('[role="dialog"]')
       .forEach(dialog => dialog.remove());
-    document.body.classList.remove('modal-open');
+    document.body.classList.remove('psh-modal-open');
   });
 
   it('should close only the topmost modal when Escape is pressed', () => {
