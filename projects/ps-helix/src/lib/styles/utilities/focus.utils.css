@@ -1,50 +1,44 @@
 /* Focus system utilities - Variables defined in tokens/effects.tokens.css */
 
 /* Focus utilities */
-.focus-ring {
+.psh-focus-ring {
   outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color);
   outline-offset: var(--focus-outline-offset);
 }
 
-.focus-ring-primary:focus {
+.psh-focus-ring-primary:focus {
   outline: none;
   box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
 }
 
-.focus-ring-error:focus {
+.psh-focus-ring-error:focus {
   outline: none;
   box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-error);
 }
 
-.focus-ring-success:focus {
+.psh-focus-ring-success:focus {
   outline: none;
   box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-success);
 }
 
-.focus-ring-warning:focus {
+.psh-focus-ring-warning:focus {
   outline: none;
   box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-warning);
 }
 
 /* Focus visible only (pour éviter les focus au clic) */
-.focus-visible-only:focus:not(:focus-visible) {
+.psh-focus-visible-only:focus:not(:focus-visible) {
   outline: none;
   box-shadow: none;
 }
 
 /* Focus states for common elements */
-.focus-within-ring:focus-within {
+.psh-focus-within-ring:focus-within {
   box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
 }
 
-/* Removes focus styles when not using keyboard navigation */
-.js-focus-visible button:focus:not(.focus-visible) {
-  outline: none;
-  box-shadow: none;
-}
-
 /* Skip link utility for accessibility */
-.skip-link {
+.psh-skip-link {
   position: absolute;
   top: -40px;
   left: 6px;
@@ -57,6 +51,6 @@
   transition: top var(--animation-duration-fast) var(--animation-easing-default);
 }
 
-.skip-link:focus {
+.psh-skip-link:focus {
   top: 6px;
 }
