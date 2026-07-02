@@ -14,6 +14,31 @@ Versioning policy:
 
 ## [Unreleased]
 
+## [6.0.1] - 2026-07-02
+
+Patch release.
+
+### Fixed
+
+- **`psh-select`** — the options list is now rendered in a body-level overlay
+  (teleported out of the DOM) instead of inline under the trigger. It therefore
+  escapes any ancestor `overflow` / stacking context (a modal body, a scrollable
+  card, a `transform` container) rather than being clipped or hidden behind the
+  modal. The panel is positioned `fixed` from the trigger's viewport rect, keeps
+  the existing viewport-collision flip (opens above when there is no room below),
+  and layers above modals via the new `--z-index-overlay` token. The public API
+  (inputs/outputs, keyboard, ARIA, `[(value)]`) is unchanged.
+
+### Added
+
+- `--z-index-overlay` token (1100) — for body-teleported popovers that must
+  layer above modals.
+- `PshPortalService` (`a11y/`) — a lightweight, CDK-free "manual portal" that
+  teleports a `TemplateRef` into a shared body-level overlay layer. `psh-select`
+  consumes it; `psh-dropdown` and the `psh-input` autocomplete can adopt it next.
+  (Named `PshPortalService`, distinct from the existing `PshOverlayService`,
+  which is the z-index stacking authority.)
+
 ## [6.0.0] - 2026-07-01
 
 Major release with two breaking changes: the library now **requires Angular 22**

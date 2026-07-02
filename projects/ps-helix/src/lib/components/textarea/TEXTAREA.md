@@ -13,7 +13,7 @@ import { PshTextareaComponent } from 'ps-helix';
 export class MyComponent {}
 ```
 
-### Signal Forms (Angular 21+)
+### Signal Forms (Angular 22+)
 
 ```typescript
 import { signal } from '@angular/core';

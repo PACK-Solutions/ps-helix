@@ -653,4 +653,4 @@ Le composant utilise `ChangeDetectionStrategy.OnPush` et Signals :
 
 **Version :** 1.3
 **Derniere mise a jour :** Juin 2026
-**Compatibilite :** Angular 21+
+**Compatibilite :** Angular 22+

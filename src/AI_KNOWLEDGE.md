@@ -7,7 +7,7 @@ Reference documentation for the Helix Design System Angular component library. T
 ## Overview
 
 - **Library**: `ps-helix`
-- **Version**: 6.0.0
+- **Version**: 6.0.1
 - **Framework**: Angular 22+
 - **Prefix**: `psh-` (all components)
 - **Import**: `import { ComponentName } from 'ps-helix';`
@@ -96,6 +96,7 @@ Reference documentation for the Helix Design System Angular component library. T
 | `--z-index-tooltip` | 200 |
 | `--z-index-modal-backdrop` | 999 |
 | `--z-index-modal` | 1000 |
+| `--z-index-overlay` | 1100 |
 | `--z-index-toast` | 9999 |
 
 ### Animation

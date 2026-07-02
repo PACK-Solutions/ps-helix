@@ -17,6 +17,7 @@
   --z-index-tooltip: 200;
   --z-index-modal-backdrop: 999;
   --z-index-modal: 1000;
+  --z-index-overlay: 1100; /* body-teleported popovers (select/dropdown/menu) above modals */
   --z-index-toast: 9999;
 
   /* Focus System */
