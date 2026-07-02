@@ -85,11 +85,13 @@ describe('PshSelectComponent', () => {
   const getCombobox = () =>
     fixture.nativeElement.querySelector('[role="combobox"]') as HTMLElement;
 
+  // The options panel is teleported to document.body (overlay layer), so panel
+  // content is queried on `document`, not the component host.
   const getListbox = () =>
-    fixture.nativeElement.querySelector('[role="listbox"]') as HTMLElement;
+    document.querySelector('[role="listbox"]') as HTMLElement;
 
   const getOptions = () =>
-    Array.from(fixture.nativeElement.querySelectorAll('[role="option"]')) as HTMLElement[];
+    Array.from(document.querySelectorAll('[role="option"]')) as HTMLElement[];
 
   const getOption = (index: number) =>
     getOptions()[index] as HTMLElement;
@@ -110,13 +112,13 @@ describe('PshSelectComponent', () => {
     fixture.nativeElement.querySelector('.select-clear') as HTMLButtonElement;
 
   const getSearchInput = () =>
-    fixture.nativeElement.querySelector('.select-search input') as HTMLInputElement;
+    document.querySelector('.select-search input') as HTMLInputElement;
 
   const getNoResultsMessage = () =>
-    fixture.nativeElement.querySelector('.select-no-results') as HTMLElement;
+    document.querySelector('.select-no-results') as HTMLElement;
 
   const getGroupLabels = () =>
-    Array.from(fixture.nativeElement.querySelectorAll('.select-group-label')) as HTMLElement[];
+    Array.from(document.querySelectorAll('.select-group-label')) as HTMLElement[];
 
   const openSelect = () => {
     getCombobox().click();
@@ -162,8 +164,34 @@ describe('PshSelectComponent', () => {
       await fixture.whenStable();
       fixture.detectChanges();
 
-      const panel = fixture.nativeElement.querySelector('.select-dropdown') as HTMLElement;
+      const panel = document.querySelector('.select-dropdown') as HTMLElement;
       expect(panel.classList.contains('open-top')).toBe(true);
+    });
+  });
+
+  describe('Overlay teleport', () => {
+    it('teleports the options panel to a body-level layer when opened', () => {
+      openSelect();
+
+      const layer = document.querySelector('.psh-overlay-layer');
+      expect(layer).toBeTruthy();
+      expect(layer!.parentElement).toBe(document.body);
+
+      const panel = document.querySelector('.select-dropdown') as HTMLElement;
+      expect(panel).toBeTruthy();
+      expect(layer!.contains(panel)).toBe(true);
+      // The panel lives outside the component host, escaping any ancestor overflow.
+      expect(fixture.nativeElement.contains(panel)).toBe(false);
+    });
+
+    it('removes the teleported panel and layer from the body when closed', () => {
+      openSelect();
+      expect(document.querySelector('.select-dropdown')).toBeTruthy();
+
+      pressKey('Escape');
+
+      expect(document.querySelector('.select-dropdown')).toBeFalsy();
+      expect(document.querySelector('.psh-overlay-layer')).toBeFalsy();
     });
   });
 
@@ -1029,7 +1057,7 @@ describe('PshSelectComponent', () => {
       fixture.detectChanges();
       openSelect();
 
-      const icons = fixture.nativeElement.querySelectorAll('.select-option i.ph');
+      const icons = document.querySelectorAll('.select-option i.ph');
       expect(icons.length).toBe(2);
       expect(icons[0].classList.contains('ph-house')).toBe(true);
       expect(icons[1].classList.contains('ph-gear')).toBe(true);
@@ -1156,7 +1184,7 @@ describe('PshSelectComponent with ControlValueAccessor', () => {
     fixture.nativeElement.querySelector('[role="combobox"]') as HTMLElement;
 
   const getOptions = () =>
-    Array.from(fixture.nativeElement.querySelectorAll('[role="option"]')) as HTMLElement[];
+    Array.from(document.querySelectorAll('[role="option"]')) as HTMLElement[];
 
   const openSelect = () => {
     getCombobox().click();
@@ -1236,7 +1264,7 @@ describe('PshSelectComponent CVA emission with model()', () => {
     fixture.nativeElement.querySelector('[role="combobox"]') as HTMLElement;
 
   const getOptions = () =>
-    Array.from(fixture.nativeElement.querySelectorAll('[role="option"]')) as HTMLElement[];
+    Array.from(document.querySelectorAll('[role="option"]')) as HTMLElement[];
 
   const openSelect = () => {
     getCombobox().click();

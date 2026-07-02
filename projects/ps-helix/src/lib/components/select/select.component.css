@@ -101,17 +101,19 @@
   transform: rotate(180deg);
 }
 
-.select-dropdown.open-top {
-  top: auto;
-  bottom: calc(100% + 0.25rem);
-}
-
+/*
+ * The panel is teleported into the body-level overlay layer (PshPortalService)
+ * and positioned as `fixed` from JS, so it escapes any ancestor overflow /
+ * stacking context (e.g. a modal body). It re-enables pointer events (the layer
+ * is click-through) and lays out as a flex column so the options area scrolls
+ * inside the JS-bounded max-height. `.open-top` is kept as a hook (no positional
+ * CSS needed — the service sets `top` for both sides).
+ */
 .select-dropdown {
-  position: absolute;
-  top: calc(100% + 0.25rem);
-  left: 0;
-  right: 0;
-  z-index: var(--z-index-dropdown);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  pointer-events: auto;
   background: var(--surface-0);
   border: 0.125rem solid var(--surface-border);
   border-radius: var(--border-radius);
@@ -120,6 +122,7 @@
 
 .select-search {
   position: relative;
+  flex-shrink: 0;
   padding: 0.5rem;
   border-bottom: 0.0625rem solid var(--surface-border);
 }
@@ -150,7 +153,7 @@
 
 .select-search input::placeholder { color: var(--text-color-secondary); }
 .select-search input:focus { border-color: var(--primary-color); }
-.select-options { max-height: 15rem; overflow-y: auto; }
+.select-options { flex: 0 1 auto; max-height: 15rem; overflow-y: auto; }
 
 .select-group-label {
   padding: 0.5rem 1rem;

@@ -1,23 +1,24 @@
 import {
-  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   computed,
-  effect,
   ElementRef,
   inject,
-  Injector,
   input,
   model,
   output,
   signal,
-  DestroyRef
+  DestroyRef,
+  TemplateRef,
+  ViewContainerRef,
+  viewChild
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
 import { PshClickOutsideDirective } from '../../a11y/click-outside.directive';
 import { PshOverlayPositionService } from '../../a11y/overlay-position.service';
+import { PshPortalService, PshPortalRef } from '../../a11y/portal.service';
 import { SelectOption, SelectOptionGroup, SelectSize, SelectVariant, SearchConfig } from './select.types';
 
 interface FlatOption<T> {
@@ -57,7 +58,14 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
   private readonly elementRef = inject(ElementRef);
   private readonly destroyRef = inject(DestroyRef);
   private readonly overlayPosition = inject(PshOverlayPositionService);
-  private readonly injector = inject(Injector);
+  private readonly portal = inject(PshPortalService);
+  private readonly viewContainer = inject(ViewContainerRef);
+
+  // The options panel, teleported to a body-level overlay layer on open so it
+  // escapes any ancestor overflow / stacking context (e.g. a modal body).
+  private readonly panelTpl = viewChild<TemplateRef<unknown>>('panelTpl');
+  private portalRef: PshPortalRef | null = null;
+  private readonly repositionHandler = (): void => this.reposition();
 
   // Side the panel actually opens on, after viewport collision/flip.
   protected readonly resolvedSide = signal<'top' | 'bottom'>('bottom');
@@ -186,34 +194,55 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
   });
 
   constructor() {
-    // Close on outside click via the shared click-outside primitive.
+    // Close on outside click via the shared click-outside primitive. The options
+    // panel is teleported to the body (outside the host), so a click inside it
+    // must NOT count as "outside" — otherwise selecting an option would close the
+    // panel before select() runs.
     const clickOutside = inject(PshClickOutsideDirective);
-    const sub = clickOutside.pshClickOutside.subscribe(() => {
-      if (this.isOpen()) this.close();
+    const sub = clickOutside.pshClickOutside.subscribe(event => {
+      if (!this.isOpen()) return;
+      const target = event.target as Node | null;
+      if (target && this.portalRef?.panel.contains(target)) return;
+      this.close();
     });
-    this.destroyRef.onDestroy(() => sub.unsubscribe());
-
-    // Flip the options panel against the viewport on open; reset while closed.
-    effect(() => {
-      if (this.isOpen()) {
-        afterNextRender(() => this.reposition(), { injector: this.injector });
-      } else {
-        this.resolvedSide.set('bottom');
-      }
+    this.destroyRef.onDestroy(() => {
+      sub.unsubscribe();
+      this.closePanel();
     });
   }
 
+  /** Teleports the options panel to the body-level overlay layer and positions it. */
+  private openPanel(): void {
+    if (this.portalRef) return;
+    const tpl = this.panelTpl();
+    if (!tpl) return;
+    this.portalRef = this.portal.attach(tpl, this.viewContainer);
+    this.reposition();
+    const view = (this.elementRef.nativeElement as HTMLElement).ownerDocument.defaultView;
+    // Capture phase so inner (e.g. modal body) scrolls keep the panel aligned.
+    view?.addEventListener('scroll', this.repositionHandler, true);
+    view?.addEventListener('resize', this.repositionHandler);
+  }
+
+  private closePanel(): void {
+    const view = (this.elementRef.nativeElement as HTMLElement).ownerDocument.defaultView;
+    view?.removeEventListener('scroll', this.repositionHandler, true);
+    view?.removeEventListener('resize', this.repositionHandler);
+    this.portalRef?.detach();
+    this.portalRef = null;
+    this.resolvedSide.set('bottom');
+  }
+
   private reposition(): void {
-    if (!this.isOpen()) return;
+    if (!this.portalRef) return;
     const host = this.elementRef.nativeElement as HTMLElement;
     const trigger = host.querySelector('.select-trigger') as HTMLElement | null;
-    const panel = host.querySelector('.select-dropdown') as HTMLElement | null;
     if (!trigger) return;
-    this.resolvedSide.set(
-      this.overlayPosition.flipSide(trigger, 'bottom', {
-        overlayHeight: panel?.offsetHeight ?? 0,
-      }) as 'top' | 'bottom',
-    );
+    const side = this.overlayPosition.flipSide(trigger, 'bottom', {
+      overlayHeight: this.portalRef.panel.offsetHeight,
+    }) as 'top' | 'bottom';
+    this.resolvedSide.set(side);
+    this.portalRef.position(trigger, side, 8);
   }
 
   private onChange: (value: T | T[] | null) => void = () => {};
@@ -234,6 +263,7 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
     } else {
       this.isOpenSignal.set(true);
       this.opened.emit();
+      this.openPanel();
     }
   }
 
@@ -242,6 +272,7 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
     this.isOpenSignal.set(false);
     this.searchTermSignal.set('');
     this.focusedIndex.set(-1);
+    this.closePanel();
     this.closed.emit();
   }
 
