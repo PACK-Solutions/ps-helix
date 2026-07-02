@@ -131,7 +131,7 @@ export class TablesDemoComponent {
   ];
 
   expandDetailData: TableRow[] = [
-    { id: 1, name: 'Refonte UI', status: 'En cours', progress: '65%', detail: 'Migration vers Angular 21 avec le nouveau design system. Inclut la refonte complète de l\'interface utilisateur et l\'optimisation des performances.' },
+    { id: 1, name: 'Refonte UI', status: 'En cours', progress: '65%', detail: 'Migration vers Angular 22 avec le nouveau design system. Inclut la refonte complète de l\'interface utilisateur et l\'optimisation des performances.' },
     { id: 2, name: 'API v3', status: 'Planifié', progress: '10%', detail: 'Nouvelle version de l\'API REST avec support GraphQL. Amélioration de la documentation et ajout de webhooks.' },
     { id: 3, name: 'App Mobile', status: 'Terminé', progress: '100%', detail: 'Application mobile cross-platform déployée sur iOS et Android. Synchronisation temps réel des données.' }
   ];

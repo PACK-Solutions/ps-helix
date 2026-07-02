@@ -13,12 +13,12 @@ import { CodeSnippetComponent } from '../../shared/code-snippet.component';
 })
 export class IntroductionDemoComponent {
   npmUrl = 'https://www.npmjs.com/package/ps-helix';
-  npmVersion = '6.0.0';
+  npmVersion = '6.0.1';
   keyFeatures = [
     {
       icon: 'lightning',
       title: 'Performance Optimale',
-      description: 'Composants légers et réactifs basés sur les signals Angular 21, optimisés pour maximiser l\'efficacité et la productivité.'
+      description: 'Composants légers et réactifs basés sur les signals Angular 22, optimisés pour maximiser l\'efficacité et la productivité.'
     },
     {
       icon: 'heart',
@@ -44,7 +44,7 @@ export class IntroductionDemoComponent {
       description: 'Installez ps-helix via npm dans votre projet Angular.',
       codeLabel: 'Terminal',
       codeSnippet: `npm install ps-helix`,
-      note: 'Assurez-vous d\'utiliser Angular 21 ou superieur.'
+      note: 'Assurez-vous d\'utiliser Angular 22 ou superieur.'
     },
     {
       number: 2,
