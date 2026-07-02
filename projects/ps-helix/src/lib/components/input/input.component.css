@@ -205,19 +205,19 @@ input:focus {
 }
 
 /* --- Suggestions & Messages --- */
+/*
+ * Teleported into the body-level overlay layer (PshPortalService) and positioned
+ * `fixed` from JS, so the suggestions escape any ancestor overflow / stacking
+ * context. Re-enables pointer events (the layer is click-through); the JS sets a
+ * viewport-bounded max-height, this keeps the internal scroll.
+ */
 .suggestions-list {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
+  pointer-events: auto;
   background: var(--surface-0);
   border: 0.0625rem solid var(--surface-border);
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-lg);
-  z-index: var(--z-index-dropdown);
-  max-height: 12.5rem; /* 200px */
   overflow-y: auto;
-  margin-top: 0.25rem;
 }
 
 .suggestion-item {

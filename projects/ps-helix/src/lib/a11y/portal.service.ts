@@ -11,6 +11,12 @@ export interface PshPortalRef {
    * viewport space so the panel never overflows the screen.
    */
   position(anchor: HTMLElement, side: 'top' | 'bottom', gap: number): void;
+  /**
+   * Positions the panel as `fixed` from `anchor`'s viewport rect for a
+   * `<side>-<align>` placement (e.g. `bottom-start`, `top-end`). The panel keeps
+   * its content width; the aligned edge (start/end) is anchored to the trigger.
+   */
+  positionByPlacement(anchor: HTMLElement, placement: string, gap: number): void;
   /** Destroys the embedded view and removes the panel from the overlay layer. */
   detach(): void;
 }
@@ -49,6 +55,8 @@ export class PshPortalService {
     return {
       panel,
       position: (anchor, side, gap) => this.position(panel, anchor, side, gap),
+      positionByPlacement: (anchor, placement, gap) =>
+        this.positionByPlacement(panel, anchor, placement, gap),
       detach: () => this.detach(viewRef),
     };
   }
@@ -75,6 +83,37 @@ export class PshPortalService {
     } else {
       style.top = `${rect.bottom + gap}px`;
       style.maxHeight = `${Math.max(0, view.innerHeight - rect.bottom - gap * 2)}px`;
+    }
+  }
+
+  private positionByPlacement(
+    panel: HTMLElement,
+    anchor: HTMLElement,
+    placement: string,
+    gap: number,
+  ): void {
+    const view = this.document.defaultView;
+    if (!view) return;
+
+    const rect = anchor.getBoundingClientRect();
+    const [side, align] = placement.split('-');
+    const style = panel.style;
+    style.position = 'fixed';
+
+    if (side === 'top') {
+      const height = panel.offsetHeight;
+      style.top = `${Math.max(gap, rect.top - height - gap)}px`;
+      style.maxHeight = `${Math.max(0, rect.top - gap * 2)}px`;
+    } else {
+      style.top = `${rect.bottom + gap}px`;
+      style.maxHeight = `${Math.max(0, view.innerHeight - rect.bottom - gap * 2)}px`;
+    }
+
+    // Content-sized menu: anchor the start/end edge to the trigger.
+    if (align === 'end') {
+      style.left = `${Math.max(0, rect.right - panel.offsetWidth)}px`;
+    } else {
+      style.left = `${rect.left}px`;
     }
   }
 

@@ -200,16 +200,19 @@
   margin: 0;
 }
 
-/* Menu */
+/*
+ * Menu — teleported into the body-level overlay layer (PshPortalService) and
+ * positioned `fixed` from JS by placement, so it escapes any ancestor overflow /
+ * stacking context. Re-enables pointer events (the layer is click-through).
+ * Placement classes stay for semantics; positioning is inline (no positional CSS).
+ */
 .dropdown-menu {
-  position: absolute;
   min-width: 12.5rem;
   background: var(--surface-card);
   border: var(--border-width-1) solid var(--surface-border);
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-lg);
-  z-index: var(--z-index-dropdown);
-  margin-top: var(--spacing-xs);
+  pointer-events: auto;
   animation: fadeIn var(--animation-duration-fast) var(--animation-easing-smooth);
   overflow: hidden;
 }
@@ -254,27 +257,6 @@
 .dropdown-menu ::ng-deep .dropdown-item i {
   font-size: var(--icon-size-md);
   color: inherit;
-}
-
-/* Placements */
-.dropdown-menu.bottom-start {
-  top: 100%;
-  left: 0;
-}
-
-.dropdown-menu.bottom-end {
-  top: 100%;
-  right: 0;
-}
-
-.dropdown-menu.top-start {
-  bottom: 100%;
-  left: 0;
-}
-
-.dropdown-menu.top-end {
-  bottom: 100%;
-  right: 0;
 }
 
 /* Items */
