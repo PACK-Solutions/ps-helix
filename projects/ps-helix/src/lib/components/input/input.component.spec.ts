@@ -41,11 +41,12 @@ describe('PshInputComponent', () => {
   const getPasswordToggle = () =>
     fixture.nativeElement.querySelector('button.password-toggle') as HTMLButtonElement;
 
+  // Suggestions are teleported to a body-level overlay layer → query `document`.
   const getSuggestionsList = () =>
-    fixture.nativeElement.querySelector('[role="listbox"]') as HTMLElement;
+    document.querySelector('[role="listbox"]') as HTMLElement;
 
   const getSuggestionOptions = () =>
-    fixture.nativeElement.querySelectorAll('[role="option"]') as NodeListOf<HTMLElement>;
+    document.querySelectorAll('[role="option"]') as NodeListOf<HTMLElement>;
 
   const getLoader = () =>
     fixture.nativeElement.querySelector('.input-loader') as HTMLElement;
@@ -757,6 +758,24 @@ describe('PshInputComponent', () => {
 
       const options = getSuggestionOptions();
       expect(options[0]?.getAttribute('aria-selected')).toBe('true');
+    }));
+
+    it('teleports the suggestions into a body-level overlay layer', fakeAsync(() => {
+      const input = getInput();
+      input.value = 'a';
+      input.dispatchEvent(new Event('input'));
+      input.dispatchEvent(new FocusEvent('focus'));
+      tick(0);
+      fixture.detectChanges();
+
+      const layer = document.querySelector('.psh-overlay-layer');
+      expect(layer).toBeTruthy();
+      expect(layer!.parentElement).toBe(document.body);
+      const list = getSuggestionsList();
+      expect(list).toBeTruthy();
+      expect(layer!.contains(list)).toBe(true);
+      // Escapes the component host (and thus any ancestor overflow).
+      expect(fixture.nativeElement.contains(list)).toBe(false);
     }));
   });
 

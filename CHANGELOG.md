@@ -14,6 +14,27 @@ Versioning policy:
 
 ## [Unreleased]
 
+## [6.0.2] - 2026-07-02
+
+Patch release.
+
+### Fixed
+
+- **`psh-dropdown`** and **`psh-input`** (autocomplete suggestions) — like
+  `psh-select` in 6.0.1, their popover panels are now rendered in a body-level
+  overlay (teleported out of the DOM), so they escape any ancestor `overflow` /
+  stacking context (a modal body, a scrollable card, a `transform` container)
+  instead of being clipped or hidden behind the modal. Panels are positioned
+  `fixed` from the trigger with viewport-collision flip and layer above modals
+  via `--z-index-overlay`. Public APIs (inputs/outputs, keyboard, ARIA,
+  projected `[dropdown-menu]` content) are unchanged.
+
+### Added
+
+- `PshPortalService.positionByPlacement()` — placement-aware (`<side>-<align>`,
+  e.g. `bottom-end`, `top-start`) fixed positioning for teleported panels
+  (used by `psh-dropdown`).
+
 ## [6.0.1] - 2026-07-02
 
 Patch release.

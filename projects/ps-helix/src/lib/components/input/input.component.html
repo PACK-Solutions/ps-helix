@@ -64,7 +64,7 @@
       </div>
     }
 
-    @if (showSuggestions()) {
+    <ng-template #suggestionsTpl>
       <div class="suggestions-list" role="listbox">
         @for (suggestion of filteredSuggestions(); track suggestion; let i = $index) {
           <!-- option in a listbox: keyboard is handled by the input (arrow keys + focusedSuggestionIndex). -->
@@ -81,7 +81,7 @@
           </div>
         }
       </div>
-    }
+    </ng-template>
   </div>
 
   @if (error()) {

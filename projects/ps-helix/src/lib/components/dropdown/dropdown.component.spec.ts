@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { PshDropdownComponent } from './dropdown.component';
 import { DropdownItem, DropdownPlacement, DropdownSize } from './dropdown.types';
 
@@ -17,11 +18,12 @@ describe('PshDropdownComponent', () => {
   const getTrigger = () =>
     fixture.nativeElement.querySelector('.dropdown-trigger') as HTMLButtonElement;
 
+  // The menu is teleported to a body-level overlay layer → query `document`.
   const getMenu = () =>
-    fixture.nativeElement.querySelector('.dropdown-menu') as HTMLElement;
+    document.querySelector('.dropdown-menu') as HTMLElement;
 
   const getItems = () =>
-    Array.from(fixture.nativeElement.querySelectorAll('.dropdown-item')) as HTMLButtonElement[];
+    Array.from(document.querySelectorAll('.dropdown-item')) as HTMLButtonElement[];
 
   const getItem = (index: number) =>
     getItems()[index] as HTMLButtonElement;
@@ -948,5 +950,74 @@ describe('PshDropdownComponent', () => {
         fixture.detectChanges();
       }).not.toThrow();
     }));
+  });
+});
+
+@Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
+  template: `
+    <psh-dropdown label="Menu">
+      <div dropdown-menu>
+        <button class="custom-item">Projected Item</button>
+      </div>
+    </psh-dropdown>
+  `,
+  imports: [PshDropdownComponent]
+})
+class ProjectedMenuHost {}
+
+describe('PshDropdownComponent — teleport & projected content', () => {
+  let fixture: ComponentFixture<ProjectedMenuHost>;
+
+  const getTrigger = () =>
+    fixture.nativeElement.querySelector('.dropdown-trigger') as HTMLButtonElement;
+  const getProjected = () =>
+    document.querySelector('.custom-item') as HTMLElement | null;
+  const open = () => {
+    getTrigger().click();
+    fixture.detectChanges();
+  };
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ imports: [ProjectedMenuHost] }).compileComponents();
+    fixture = TestBed.createComponent(ProjectedMenuHost);
+    fixture.detectChanges();
+  });
+
+  afterEach(() => fixture.destroy());
+
+  it('teleports the menu into a body-level overlay layer', () => {
+    open();
+
+    const layer = document.querySelector('.psh-overlay-layer');
+    const menu = document.querySelector('.dropdown-menu') as HTMLElement;
+    expect(layer).toBeTruthy();
+    expect(layer!.parentElement).toBe(document.body);
+    expect(menu).toBeTruthy();
+    expect(layer!.contains(menu)).toBe(true);
+    expect(fixture.nativeElement.contains(menu)).toBe(false);
+  });
+
+  it('removes the menu and layer from the body when closed', () => {
+    open();
+    expect(document.querySelector('.dropdown-menu')).toBeTruthy();
+
+    getTrigger().click(); // close
+    fixture.detectChanges();
+
+    expect(document.querySelector('.dropdown-menu')).toBeFalsy();
+    expect(document.querySelector('.psh-overlay-layer')).toBeFalsy();
+  });
+
+  it('projects [dropdown-menu] content and re-projects it after re-open', () => {
+    open();
+    expect(getProjected()?.textContent).toContain('Projected Item');
+
+    getTrigger().click(); // close
+    fixture.detectChanges();
+    expect(getProjected()).toBeFalsy();
+
+    open(); // re-open must re-project the content, not lose it
+    expect(getProjected()?.textContent).toContain('Projected Item');
   });
 });

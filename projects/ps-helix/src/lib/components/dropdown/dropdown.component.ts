@@ -1,22 +1,23 @@
 import {
-  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   computed,
   DestroyRef,
-  effect,
   ElementRef,
   inject,
-  Injector,
   input,
   model,
   output,
   signal,
-  PLATFORM_ID
+  PLATFORM_ID,
+  TemplateRef,
+  ViewContainerRef,
+  viewChild
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { PshOverlayPositionService } from '../../a11y/overlay-position.service';
 import { PshClickOutsideDirective } from '../../a11y/click-outside.directive';
+import { PshPortalService, PshPortalRef } from '../../a11y/portal.service';
 import { DropdownAppearance, DropdownItem, DropdownPlacement, DropdownSize, DropdownVariant } from './dropdown.types';
 
 @Component({
@@ -31,7 +32,14 @@ export class PshDropdownComponent<T = string> {
   private elementRef = inject(ElementRef);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly overlayPosition = inject(PshOverlayPositionService);
-  private readonly injector = inject(Injector);
+  private readonly portal = inject(PshPortalService);
+  private readonly viewContainer = inject(ViewContainerRef);
+
+  // The menu is teleported to a body-level overlay layer on open so it escapes
+  // any ancestor overflow / stacking context (a modal body, a scrollable card…).
+  private readonly menuTpl = viewChild<TemplateRef<unknown>>('menuTpl');
+  private portalRef: PshPortalRef | null = null;
+  private readonly repositionHandler = (): void => this.reposition();
 
   // Regular inputs
   appearance = input<DropdownAppearance>('filled');
@@ -84,35 +92,53 @@ export class PshDropdownComponent<T = string> {
   }
 
   constructor() {
-    // Close on outside click via the shared click-outside primitive.
+    // Close on outside click. Clicks inside the menu are stopped at the menu
+    // (stopPropagation); as a safety net for the teleported panel we also ignore
+    // clicks whose target is inside it here.
     const clickOutside = inject(PshClickOutsideDirective);
-    const sub = clickOutside.pshClickOutside.subscribe(() => this.close());
-    inject(DestroyRef).onDestroy(() => sub.unsubscribe());
-
-    // Keep resolvedPlacement mirroring the input while closed; flip against the
-    // viewport (after the menu has rendered) when opened.
-    effect(() => {
-      if (this.isOpen()) {
-        afterNextRender(() => this.reposition(), { injector: this.injector });
-      } else {
-        this.resolvedPlacement.set(this.placement());
-      }
+    const sub = clickOutside.pshClickOutside.subscribe(event => {
+      const target = event.target as Node | null;
+      if (target && this.portalRef?.panel.contains(target)) return;
+      this.close();
+    });
+    inject(DestroyRef).onDestroy(() => {
+      sub.unsubscribe();
+      this.closePanel();
     });
   }
 
+  private openPanel(): void {
+    if (!this.isBrowser || this.portalRef) return;
+    const tpl = this.menuTpl();
+    if (!tpl) return;
+    this.portalRef = this.portal.attach(tpl, this.viewContainer);
+    this.reposition();
+    const view = (this.elementRef.nativeElement as HTMLElement).ownerDocument.defaultView;
+    view?.addEventListener('scroll', this.repositionHandler, true);
+    view?.addEventListener('resize', this.repositionHandler);
+  }
+
+  private closePanel(): void {
+    const view = (this.elementRef.nativeElement as HTMLElement).ownerDocument.defaultView;
+    view?.removeEventListener('scroll', this.repositionHandler, true);
+    view?.removeEventListener('resize', this.repositionHandler);
+    this.portalRef?.detach();
+    this.portalRef = null;
+    this.resolvedPlacement.set(this.placement());
+  }
+
   private reposition(): void {
-    if (!this.isBrowser || !this.isOpen()) return;
+    if (!this.portalRef) return;
     const host = this.elementRef.nativeElement as HTMLElement;
     const trigger = host.querySelector('.dropdown-trigger') as HTMLElement | null;
-    const menu = host.querySelector('.dropdown-menu') as HTMLElement | null;
     if (!trigger) return;
 
-    this.resolvedPlacement.set(
-      this.overlayPosition.flipPlacement(trigger, this.placement(), {
-        overlayHeight: menu?.offsetHeight ?? 0,
-        overlayWidth: menu?.offsetWidth ?? 0,
-      }) as DropdownPlacement,
-    );
+    const placement = this.overlayPosition.flipPlacement(trigger, this.placement(), {
+      overlayHeight: this.portalRef.panel.offsetHeight,
+      overlayWidth: this.portalRef.panel.offsetWidth,
+    }) as DropdownPlacement;
+    this.resolvedPlacement.set(placement);
+    this.portalRef.positionByPlacement(trigger, placement, 4);
   }
 
   toggleDropdown(): void {
@@ -122,8 +148,10 @@ export class PshDropdownComponent<T = string> {
       if (this.isOpen()) {
         this.focusedItemIndex.set(0);
         this.opened.emit();
+        this.openPanel();
       } else {
         this.focusedItemIndex.set(-1);
+        this.closePanel();
         this.closed.emit();
       }
     }
@@ -141,6 +169,7 @@ export class PshDropdownComponent<T = string> {
     if (this.isOpen()) {
       this.isOpenSignal.set(false);
       this.focusedItemIndex.set(-1);
+      this.closePanel();
       this.closed.emit();
     }
   }
@@ -295,9 +324,9 @@ export class PshDropdownComponent<T = string> {
 
   private focusItemAtIndex(index: number): void {
     setTimeout(() => {
-      const item = this.elementRef.nativeElement.querySelector(
-        `[data-dropdown-item-index="${index}"]`
-      ) as HTMLElement;
+      const item = this.portalRef?.panel.querySelector(
+        `[data-dropdown-item-index="${index}"]`,
+      ) as HTMLElement | undefined;
       item?.focus();
     });
   }

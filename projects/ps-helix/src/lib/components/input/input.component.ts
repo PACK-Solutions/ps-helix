@@ -9,11 +9,16 @@ import {
   model,
   output,
   signal,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  TemplateRef,
+  ViewContainerRef,
+  viewChild
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
+import { PshPortalService, PshPortalRef } from '../../a11y/portal.service';
+import { PshOverlayPositionService } from '../../a11y/overlay-position.service';
 import { InputType, InputVariant, InputSize, AutocompleteConfig, INPUT_LABELS } from './input.types';
 
 @Component({
@@ -49,6 +54,16 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
   private readonly elementRef = inject(ElementRef);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly portal = inject(PshPortalService);
+  private readonly viewContainer = inject(ViewContainerRef);
+  private readonly overlayPosition = inject(PshOverlayPositionService);
+
+  // The autocomplete suggestions are teleported to a body-level overlay layer so
+  // they escape any ancestor overflow / stacking context (a modal body, a
+  // scrollable card…) instead of being clipped.
+  private readonly suggestionsTpl = viewChild<TemplateRef<unknown>>('suggestionsTpl');
+  private portalRef: PshPortalRef | null = null;
+  private readonly repositionHandler = (): void => this.reposition();
 
   private static nextId = 0;
   readonly inputId = `psh-input-${PshInputComponent.nextId++}`;
@@ -124,7 +139,49 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
     this.destroyRef.onDestroy(() => {
       if (this.blurTimeoutId) clearTimeout(this.blurTimeoutId);
       if (this.debounceTimeoutId) clearTimeout(this.debounceTimeoutId);
+      this.closePanel();
     });
+  }
+
+  /** Attaches / detaches / repositions the teleported suggestions panel to match visibility. */
+  private syncPanel(): void {
+    if (this.showSuggestions()) {
+      if (this.portalRef) this.reposition();
+      else this.openPanel();
+    } else if (this.portalRef) {
+      this.closePanel();
+    }
+  }
+
+  private openPanel(): void {
+    const tpl = this.suggestionsTpl();
+    if (!tpl || this.portalRef) return;
+    this.portalRef = this.portal.attach(tpl, this.viewContainer);
+    this.reposition();
+    const view = (this.elementRef.nativeElement as HTMLElement).ownerDocument.defaultView;
+    // Capture phase so inner (e.g. modal body) scrolls keep the panel aligned.
+    view?.addEventListener('scroll', this.repositionHandler, true);
+    view?.addEventListener('resize', this.repositionHandler);
+  }
+
+  private closePanel(): void {
+    const view = (this.elementRef.nativeElement as HTMLElement).ownerDocument.defaultView;
+    view?.removeEventListener('scroll', this.repositionHandler, true);
+    view?.removeEventListener('resize', this.repositionHandler);
+    this.portalRef?.detach();
+    this.portalRef = null;
+  }
+
+  private reposition(): void {
+    if (!this.portalRef) return;
+    const anchor = (this.elementRef.nativeElement as HTMLElement).querySelector(
+      '.input-wrapper',
+    ) as HTMLElement | null;
+    if (!anchor) return;
+    const side = this.overlayPosition.flipSide(anchor, 'bottom', {
+      overlayHeight: this.portalRef.panel.offsetHeight,
+    }) as 'top' | 'bottom';
+    this.portalRef.position(anchor, side, 4);
   }
 
   private onChange = (_: string) => {};
@@ -173,6 +230,7 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
     this.blurTimeoutId = setTimeout(() => {
       this.suggestionsVisible.set(false);
       this.focusedSuggestionIndex.set(-1);
+      this.syncPanel();
       this.blurTimeoutId = null;
     }, 200);
   }
@@ -205,6 +263,7 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
         event.preventDefault();
         this.suggestionsVisible.set(false);
         this.focusedSuggestionIndex.set(-1);
+        this.syncPanel();
         break;
     }
   }
@@ -215,6 +274,7 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
     this.suggestionSelect.emit(suggestion);
     this.suggestionsVisible.set(false);
     this.focusedSuggestionIndex.set(-1);
+    this.syncPanel();
   }
 
   togglePasswordVisibility(): void {
@@ -255,11 +315,13 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
       
       this.filteredSuggestionsSignal.set(results);
       this.suggestionsVisible.set(results.length > 0);
+      this.syncPanel();
     } catch (error) {
       // Fail gracefully (hide stale suggestions) but surface the error so a
       // failing provider is not silently swallowed during development.
       this.filteredSuggestionsSignal.set([]);
       this.suggestionsVisible.set(false);
+      this.syncPanel();
       console.error('[psh-input] Suggestion provider failed:', error);
     }
   }
