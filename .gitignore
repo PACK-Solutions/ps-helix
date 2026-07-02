@@ -40,3 +40,6 @@ testem.log
 .DS_Store
 Thumbs.db
 .env
+
+# npm auth (token supplied via the NPM_TOKEN env var — never commit this)
+.npmrc
