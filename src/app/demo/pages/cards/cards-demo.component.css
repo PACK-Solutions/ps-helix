@@ -200,6 +200,28 @@
   font-size: var(--font-size-sm);
 }
 
+/*
+  Démo « Header personnalisé » : le style du titre est défini ici, dans la portée
+  du composant consommateur (encapsulation émulée) — sans ::ng-deep ni override du DS.
+*/
+.premium-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.premium-header i {
+  font-size: 1.25rem;
+  color: var(--primary-color);
+}
+
+.premium-header h3 {
+  margin: 0;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-color-secondary);
+}
+
 .states-content {
   display: grid;
   grid-template-columns: 1fr 1fr;

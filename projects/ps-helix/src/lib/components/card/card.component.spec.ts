@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PshCardComponent } from './card.component';
-import { DebugElement } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { CardVariant, CardColorVariant, CardDensity, CardActionsAlignment } from './card.types';
 
@@ -251,13 +251,17 @@ describe('PshCardComponent', () => {
   });
 
   describe('Title and Description', () => {
-    it('should not show header when title and description are empty', () => {
+    it('should render an empty header (hidden via CSS) when title, description and header slots are all empty', () => {
+      // Le .card-header est désormais rendu inconditionnellement puis masqué en CSS
+      // via `.card-header:not(:has(*))`. En unit test (jsdom n'applique pas le CSS),
+      // on vérifie le critère réel de masquage : le header ne contient aucun élément.
       fixture.componentRef.setInput('title', '');
       fixture.componentRef.setInput('description', '');
       fixture.detectChanges();
 
       const header = fixture.debugElement.query(By.css('.card-header'));
-      expect(header).toBeNull();
+      expect(header).toBeTruthy();
+      expect(header.nativeElement.children.length).toBe(0);
     });
 
     it('should show header when title is provided', () => {
@@ -771,19 +775,21 @@ describe('PshCardComponent', () => {
       expect(actions).toBeTruthy();
     });
 
-    it('should render header only when title or description is provided', () => {
+    it('should render an empty header when nothing is provided, and populate it when title is set', () => {
       fixture.componentRef.setInput('title', '');
       fixture.componentRef.setInput('description', '');
       fixture.detectChanges();
 
       let header = fixture.debugElement.query(By.css('.card-header'));
-      expect(header).toBeNull();
+      expect(header).toBeTruthy();
+      expect(header.nativeElement.children.length).toBe(0);
 
       fixture.componentRef.setInput('title', 'Title');
       fixture.detectChanges();
 
       header = fixture.debugElement.query(By.css('.card-header'));
       expect(header).toBeTruthy();
+      expect(header.nativeElement.children.length).toBeGreaterThan(0);
     });
   });
 
@@ -827,5 +833,100 @@ describe('PshCardComponent', () => {
 
       expect(clickSpy).not.toHaveBeenCalled();
     });
+  });
+});
+
+/**
+ * Header projeté sans [title]/[description].
+ *
+ * On instancie <psh-card> via des composants hôtes de test afin de projeter du contenu
+ * dans les slots de header. Le header doit se rendre dès qu'un slot est utilisé, même
+ * sans title/description.
+ */
+@Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
+  selector: 'test-host-header-content',
+  imports: [PshCardComponent],
+  template: `
+    <psh-card>
+      <div card-header-content>
+        <h3>Titre projeté</h3>
+      </div>
+    </psh-card>
+  `,
+})
+class HeaderContentHostComponent {}
+
+@Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
+  selector: 'test-host-header-icon',
+  imports: [PshCardComponent],
+  template: `
+    <psh-card>
+      <i card-header-icon class="ph ph-star" aria-hidden="true"></i>
+    </psh-card>
+  `,
+})
+class HeaderIconHostComponent {}
+
+@Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
+  selector: 'test-host-header-extra',
+  imports: [PshCardComponent],
+  template: `
+    <psh-card>
+      <span card-header-extra>badge</span>
+    </psh-card>
+  `,
+})
+class HeaderExtraHostComponent {}
+
+@Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
+  selector: 'test-host-no-header',
+  imports: [PshCardComponent],
+  template: ` <psh-card>Corps sans header</psh-card> `,
+})
+class NoHeaderHostComponent {}
+
+describe('PshCardComponent - projected header slots', () => {
+  it('should render the header when only [card-header-content] is projected (no title)', () => {
+    const fixture = TestBed.createComponent(HeaderContentHostComponent);
+    fixture.detectChanges();
+
+    const header = fixture.debugElement.query(By.css('.card-header'));
+    expect(header).toBeTruthy();
+    expect(header.nativeElement.children.length).toBeGreaterThan(0);
+    // Aucun titre par défaut : le markup vient uniquement du contenu projeté.
+    expect(fixture.debugElement.query(By.css('.card-title'))).toBeNull();
+    expect(header.nativeElement.querySelector('[card-header-content]')).toBeTruthy();
+  });
+
+  it('should render the header when only [card-header-icon] is projected (no title)', () => {
+    const fixture = TestBed.createComponent(HeaderIconHostComponent);
+    fixture.detectChanges();
+
+    const header = fixture.debugElement.query(By.css('.card-header'));
+    expect(header).toBeTruthy();
+    expect(header.nativeElement.querySelector('[card-header-icon]')).toBeTruthy();
+  });
+
+  it('should render the header when only [card-header-extra] is projected (no title)', () => {
+    const fixture = TestBed.createComponent(HeaderExtraHostComponent);
+    fixture.detectChanges();
+
+    const header = fixture.debugElement.query(By.css('.card-header'));
+    expect(header).toBeTruthy();
+    expect(header.nativeElement.querySelector('[card-header-extra]')).toBeTruthy();
+  });
+
+  it('should keep the header empty (childless) when no title/description nor header slot is provided', () => {
+    const fixture = TestBed.createComponent(NoHeaderHostComponent);
+    fixture.detectChanges();
+
+    const header = fixture.debugElement.query(By.css('.card-header'));
+    expect(header).toBeTruthy();
+    // Header vide → masqué en CSS via `.card-header:not(:has(*))`.
+    expect(header.nativeElement.children.length).toBe(0);
   });
 });

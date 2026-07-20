@@ -108,7 +108,7 @@ Propriétés en lecture seule
 |-----|------|-------------|
 | `computedClasses` | `Signal<string>` | Classes CSS calculees selon les proprietes (variant, color, density, etats) |
 | `computedStyles` | `Signal<Record<string, string>>` | Styles inline fusionnes avec `customStyle` |
-| `hasHeader` | `Signal<boolean>` | Indique si le header doit etre affiche (title ou description present) |
+| `hasHeader` | `Signal<boolean>` | `true` si `title` ou `description` est renseigné. N'est plus utilisé pour conditionner l'affichage du header (celui-ci se rend aussi via les slots projetés) ; conservé pour rétrocompatibilité |
 | `actionsAlignmentClass` | `Signal<string>` | Classe d'alignement pour la zone d'actions |
 | `actionsClasses` | `Signal<string>` | Classes CSS pour la zone d'actions incluant `mobile-full-width-buttons` sur mobile |
 
@@ -195,6 +195,12 @@ Le composant utilise `ng-content` avec des sélecteurs pour organiser le contenu
 | **Footer** | `[card-footer]` | Métadonnées, dates, informations complémentaires | Avant actions |
 | **Actions** | `[card-actions]` | Boutons d'action principaux | Pied de carte |
 
+> **Le header s'affiche dès qu'un slot de header est utilisé.** Il n'est plus nécessaire de
+> renseigner `[title]` ou `[description]` : projeter du contenu dans `[card-header-icon]`,
+> `[card-header-content]` ou `[card-header-extra]` suffit à faire apparaître le header. Si
+> aucun de ces slots n'est utilisé et que `title`/`description` sont vides, le header n'est
+> pas affiché (ni bordure ni espace résiduel).
+
 ### Exemple Complet avec Tous les Slots
 
 ```html
@@ -235,6 +241,49 @@ Le composant utilise `ng-content` avec des sélecteurs pour organiser le contenu
   </div>
 </psh-card>
 ```
+
+### Header Entièrement Personnalisé (sans `title`)
+
+Quand le rendu par défaut du titre ne convient pas (couleur, taille, alignement, mise en page
+titre + valeur à droite…), composez votre propre header via les slots, **sans passer par
+`[title]`**. Le header se rend dès qu'un slot est projeté ; le style se définit dans la portée
+CSS de votre composant consommateur, **sans `::ng-deep`**.
+
+```html
+<psh-card variant="outlined" density="compact">
+  <!-- Titre + icône, à gauche -->
+  <div card-header-content class="premium-title">
+    <i class="ph ph-currency-eur" aria-hidden="true"></i>
+    <h3>Versement initial</h3>
+  </div>
+
+  <!-- Montant / tag, aligné à droite -->
+  <span card-header-extra>
+    <psh-tag>{{ montant }}</psh-tag>
+  </span>
+
+  <!-- Corps de la carte -->
+  <p>Détail du versement…</p>
+</psh-card>
+```
+
+```css
+/* Dans le CSS du composant consommateur — pas d'override global du DS */
+.premium-title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+.premium-title h3 {
+  font-size: var(--font-size-md);
+  color: var(--text-color-secondary);
+  margin: 0;
+}
+```
+
+> **Accessibilité** : le markup projeté dans le header doit contenir un élément de titre
+> (`<h3>` ou le niveau adapté à la hiérarchie de la page) afin de préserver la structure des
+> titres pour les lecteurs d'écran — exactement comme le fait le `.card-title` par défaut.
 
 ## Variantes Visuelles
 

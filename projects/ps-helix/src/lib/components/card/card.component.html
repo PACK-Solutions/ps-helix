@@ -8,31 +8,34 @@
   [attr.aria-disabled]="disabled() ? 'true' : null"
   [attr.aria-busy]="loading() ? 'true' : null"
 >
-  <!-- Header avec titre et description intégrés -->
-  @if (hasHeader()) {
-    <div class="card-header" [class.has-divider]="showHeaderDivider()">
-      <!-- Slot pour icône/avatar avant le titre -->
-      <ng-content select="[card-header-icon]"></ng-content>
+  <!--
+    Header : rendu inconditionnel, masqué en CSS s'il est vide
+    (voir .card-header:not(:has(*)) dans card.component.css).
+    Se rend dès que title/description est renseigné OU qu'un slot de header
+    ([card-header-icon] / [card-header-content] / [card-header-extra]) est projeté.
+  -->
+  <div class="card-header" [class.has-divider]="showHeaderDivider()">
+    <!-- Slot pour icône/avatar avant le titre -->
+    <ng-content select="[card-header-icon]"></ng-content>
 
-      <!-- Zone de titre et description -->
-      @if (title() || description()) {
-        <div class="card-header-content">
-          @if (title()) {
-            <h3 class="card-title">{{ title() }}</h3>
-          }
-          @if (description()) {
-            <p class="card-description">{{ description() }}</p>
-          }
-        </div>
-      }
+    <!-- Zone de titre et description -->
+    @if (title() || description()) {
+      <div class="card-header-content">
+        @if (title()) {
+          <h3 class="card-title">{{ title() }}</h3>
+        }
+        @if (description()) {
+          <p class="card-description">{{ description() }}</p>
+        }
+      </div>
+    }
 
-      <!-- Slot pour contenu personnalisé du header -->
-      <ng-content select="[card-header-content]"></ng-content>
+    <!-- Slot pour contenu personnalisé du header -->
+    <ng-content select="[card-header-content]"></ng-content>
 
-      <!-- Slot pour badge/tag ou actions secondaires -->
-      <ng-content select="[card-header-extra]"></ng-content>
-    </div>
-  }
+    <!-- Slot pour badge/tag ou actions secondaires -->
+    <ng-content select="[card-header-extra]"></ng-content>
+  </div>
 
   <!-- Body avec contenu principal -->
   <div class="card-body" [class.no-padding]="!bodyPadding()">

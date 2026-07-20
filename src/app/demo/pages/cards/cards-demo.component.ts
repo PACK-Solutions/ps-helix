@@ -109,6 +109,24 @@ export class CardsDemoComponent {
   </div>
 </psh-card>`;
 
+  // Header entièrement personnalisé, SANS [title] : le header se rend dès qu'un
+  // slot de header est projeté. Le style du titre est défini dans la portée CSS
+  // du composant consommateur (pas de ::ng-deep).
+  customHeaderSlotCode = `<psh-card variant="outlined" density="compact">
+  <!-- Titre + icône composés par le consommateur -->
+  <div card-header-content class="premium-header">
+    <i class="ph ph-currency-eur" aria-hidden="true"></i>
+    <h3>Versement initial</h3>
+  </div>
+
+  <!-- Valeur alignée à droite -->
+  <span card-header-extra>
+    <psh-tag variant="success">1 500 €</psh-tag>
+  </span>
+
+  Le style du titre est défini dans la portée du composant consommateur.
+</psh-card>`;
+
   handleCardClick(event: MouseEvent | KeyboardEvent): void {
     console.log('Card clicked:', event);
   }

@@ -97,6 +97,16 @@
   border-bottom: 1px solid var(--surface-border);
 }
 
+/*
+  Masque le header s'il ne contient aucun élément — ni bloc titre par défaut,
+  ni contenu projeté ([card-header-icon] / [card-header-content] / [card-header-extra]).
+  :not(:has(*)) ignore les nœuds commentaires/anchors laissés par @if et <ng-content>,
+  et neutralise aussi le border-bottom (has-divider) et le padding sur un header vide.
+*/
+.card-header:not(:has(*)) {
+  display: none;
+}
+
 .card-header-content {
   flex: 1;
   min-width: 0;
