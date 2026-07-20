@@ -14,6 +14,23 @@ Versioning policy:
 
 ## [Unreleased]
 
+## [6.1.0] - 2026-07-20
+
+Minor release.
+
+### Added
+
+- **`psh-card`** — the card header now renders as soon as a header slot is
+  projected (`[card-header-icon]`, `[card-header-content]` or
+  `[card-header-extra]`), even without `title`/`description`. Consumers can now
+  compose a fully custom header (title + status tag + right-aligned value) and
+  style it in their own component scope — no `::ng-deep`, no theme override. When
+  no slot and no `title`/`description` are provided, the header is not displayed
+  (no border, no residual padding), via a `.card-header:not(:has(*))` CSS rule.
+  The existing `[title]`/`[description]` path and the default `.card-title` style
+  are unchanged. The `hasHeader` computed is kept for backwards compatibility but
+  no longer gates the header.
+
 ## [6.0.2] - 2026-07-02
 
 Patch release.
