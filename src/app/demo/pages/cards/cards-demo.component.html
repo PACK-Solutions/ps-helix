@@ -243,7 +243,7 @@
       <h3 class="section-title">Slots et Personnalisation</h3>
       <div class="slots-container">
         <div class="slots-intro">
-          <p>Les cartes offrent plusieurs slots pour personnaliser le header, le body, le footer et les actions selon vos besoins.</p>
+          <p>Les cartes offrent plusieurs slots pour personnaliser le header, le body, le footer et les actions selon vos besoins. Le header s'affiche dès qu'un slot de header est utilisé — même sans <code>title</code> ni <code>description</code> — ce qui permet de composer entièrement son propre header.</p>
         </div>
         <div class="slots-grid">
           <div class="slot-card">
@@ -316,6 +316,28 @@
               <code class="slot-code">card-actions</code>
               <p class="slot-usage">Slot pour afficher les boutons d'action au bas de la carte. Sur mobile (&lt; 640px), les boutons passent automatiquement en colonne et prennent toute la largeur disponible.</p>
               <ds-code-snippet [code]="cardActionsSlotCode" />
+            </div>
+          </div>
+
+          <div class="slot-card">
+            <div class="slot-preview">
+              <psh-card variant="outlined" density="compact">
+                <div card-header-content class="premium-header">
+                  <i class="ph ph-currency-eur" aria-hidden="true"></i>
+                  <h3>Versement initial</h3>
+                </div>
+                <span card-header-extra>
+                  <psh-tag variant="success">1 500 €</psh-tag>
+                </span>
+                <p>Header entièrement composé par le consommateur, sans propriété <code>title</code>.</p>
+              </psh-card>
+            </div>
+            <div class="slot-info">
+              <h4>Header Personnalisé (sans <code>title</code>)</h4>
+              <code class="slot-code">card-header-content</code>
+              <code class="slot-code">card-header-extra</code>
+              <p class="slot-usage">Le header se rend dès qu'un slot est projeté, sans <code>title</code>/<code>description</code>. Composez librement titre, icône et valeur alignée à droite ; le style du titre est défini dans la portée CSS de votre composant, <strong>sans <code>::ng-deep</code></strong>. Pensez à inclure un élément de titre (<code>&lt;h3&gt;</code>) pour l'accessibilité.</p>
+              <ds-code-snippet [code]="customHeaderSlotCode" />
             </div>
           </div>
         </div>
@@ -599,7 +621,7 @@
               </tr>
               <tr>
                 <td><code>card-header-content</code></td>
-                <td>Contenu personnalisé pour remplacer le header par défaut</td>
+                <td>Header entièrement personnalisé. Suffit à afficher le header sans <code>title</code>/<code>description</code></td>
               </tr>
               <tr>
                 <td><code>card-header-extra</code></td>
@@ -678,7 +700,8 @@ export class MyComponent &#123;
         <div class="api-best-practices">
           <h4>Bonnes Pratiques</h4>
           <ul class="best-practices-list">
-            <li><strong>Titre et description</strong> : Utilisez toujours <code>title</code> et <code>description</code> pour un rendu cohérent et accessible</li>
+            <li><strong>Titre et description</strong> : Privilégiez <code>title</code> et <code>description</code> pour un rendu cohérent et accessible dans les cas standard</li>
+            <li><strong>Header personnalisé</strong> : Quand le rendu par défaut du titre ne convient pas, composez votre header via les slots (sans <code>title</code>) et stylez-le dans la portée de votre composant, <code>sans ::ng-deep</code>. Conservez un élément de titre (<code>&lt;h3&gt;</code>) pour préserver la hiérarchie a11y</li>
             <li><strong>Densité par défaut</strong> : Privilégiez <code>density="normal"</code> pour la plupart des cas d'usage</li>
             <li><strong>Variantes de couleur</strong> : Réservez les colorVariant (info, success, warning, danger) pour les messages d'état importants</li>
             <li><strong>Interactivité</strong> : Ajoutez <code>[interactive]="true"</code> uniquement si la carte doit être cliquable dans son ensemble</li>
