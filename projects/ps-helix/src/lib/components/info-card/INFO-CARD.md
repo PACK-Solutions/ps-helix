@@ -11,6 +11,7 @@ Composant carte d'information - affiche des donnees structurees sous forme de pa
 - [Variantes Visuelles](#variantes-visuelles)
 - [Etats](#etats)
 - [Comportement Responsive](#comportement-responsive)
+- [Mise en forme des lignes](#mise-en-forme-des-lignes-emphasis)
 - [Exemples Pratiques](#exemples-pratiques)
 - [Accessibilite](#accessibilite)
 - [Comportement de Layout](#comportement-de-layout)
@@ -134,6 +135,7 @@ interface InfoCardData {
   customClass?: string;
   copyable?: boolean;   // Active la copie sur cette ligne (surcharge le input global)
   copyValue?: string;   // Valeur brute a copier si differente de la valeur affichee
+  emphasis?: InfoCardEmphasis;   // Mise en forme optionnelle de la valeur (cumulable)
 }
 
 interface InfoCardOptions {
@@ -141,6 +143,16 @@ interface InfoCardOptions {
   emptyStateMessage?: string;
   labelWidth?: string;
   valueWidth?: string;
+  mutedEmptyValues?: boolean;   // Auto-« muted » des valeurs nullish (defaut: true)
+}
+
+type InfoCardTone = 'muted' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+
+interface InfoCardEmphasis {
+  italic?: boolean;
+  bold?: boolean;
+  strikethrough?: boolean;
+  tone?: InfoCardTone;
 }
 
 type InfoCardVariant = 'default' | 'elevated' | 'outlined';
@@ -381,6 +393,77 @@ const data: InfoCardData[] = [
 - Le feedback visuel est `aria-hidden` pour eviter une double annonce
 - Cible minimum de 24px
 - Focus visible conserve (`focus-visible`)
+
+## Mise en forme des lignes (emphasis)
+
+Chaque ligne peut recevoir une mise en forme **optionnelle, bornee et cumulable** de sa valeur via le champ `emphasis`. Le vocabulaire est volontairement ferme (pas de CSS ni de couleur arbitraire) : le design system possede le rendu, ce qui garantit la coherence. Pour du contenu riche, utiliser plutot `psh-table`.
+
+### Options d'`emphasis` (cumulables)
+
+| Option | Type | Effet |
+|--------|------|-------|
+| `italic` | `boolean` | Met la valeur en italique |
+| `bold` | `boolean` | Renforce le poids (token `--font-weight-semibold`) |
+| `strikethrough` | `boolean` | Barre la valeur (`line-through`) |
+| `tone` | `InfoCardTone` | Applique une couleur semantique (voir ci-dessous) |
+
+Les quatre options sont independantes : elles se combinent librement (ex. `{ strikethrough: true, tone: 'danger' }`).
+
+### Tons semantiques (`tone`)
+
+Jeu ferme, mappe sur les tokens du theme (fonctionne en clair **et** en sombre) :
+
+| `tone` | Token | Usage |
+|--------|-------|-------|
+| `muted` | `--text-color-secondary` + poids normal | Valeur attenuee / non renseignee |
+| `primary` | `--primary-color` | Mise en avant neutre |
+| `success` | `--success-color` | Valeur valide / positive |
+| `warning` | `--warning-color` | Valeur a surveiller |
+| `danger` | `--danger-color` | Valeur invalide / obsolete |
+| `info` | `--alert-info-text-color` | Information |
+
+> `muted` combine couleur secondaire **et** poids normal (intention « valeur attenuee »). Les autres tons ne modifient **que** la couleur, pour rester cumulables proprement avec `bold`.
+>
+> En theme clair, `info` reprend le token d'alerte info qui vaut la couleur primary : il y est donc peu distinct du `primary`.
+
+### Auto-« muted » des valeurs vides
+
+Quand une valeur est **nullish** (`null` / `undefined`), le composant ecrit lui-meme le placeholder « Non renseigne » et lui applique automatiquement le rendu `muted` (italique + couleur secondaire), sans configuration.
+
+- Desactivable via `options.mutedEmptyValues: false` (defaut : `true`).
+- Un `emphasis` explicite sur la ligne **prime** sur l'auto-muted.
+- L'auto-muted ne se declenche **que** pour une valeur nullish : si vous passez la chaine litterale `'Non renseigne'`, appliquez `emphasis: { tone: 'muted', italic: true }`.
+
+### Exemple
+
+```typescript
+const rows: InfoCardData[] = [
+  // Valeur attenuee « non renseignee » (explicite)
+  { label: 'Adresse e-mail', value: 'Non renseigne', emphasis: { tone: 'muted', italic: true } },
+
+  // ... ou en laissant le composant gerer le placeholder + l'auto-muted
+  { label: 'Adresse e-mail', value: null },
+
+  // Valeur mise en avant
+  { label: 'Statut', value: 'Actif', emphasis: { bold: true, tone: 'success' } },
+
+  // Valeur obsolete — cumul barre + danger
+  { label: 'Ancien IBAN', value: 'FR76...', emphasis: { strikethrough: true, tone: 'danger' } },
+
+  // Valeur normale (inchangee)
+  { label: 'Nom', value: 'Dupont' },
+];
+```
+
+```html
+<psh-info-card title="Coordonnees" [data]="rows" [options]="{ mutedEmptyValues: true }" />
+```
+
+### Accessibilite
+
+La mise en forme est **purement visuelle**. Conformement au WCAG (1.4.1 Utilisation de la couleur, 1.3.3 Caracteristiques sensorielles), la couleur ou le barre ne doivent **jamais** etre le seul porteur de sens : le sens doit aussi passer par le texte (libelle ou valeur). Par exemple, ne pas se reposer uniquement sur `tone: 'danger'` pour signaler une erreur — l'indiquer aussi dans le libelle ou la valeur.
+
+> `customClass` (sur la ligne) reste disponible comme escape hatch documente ; `emphasis` ne le remplace pas.
 
 ## Exemples Pratiques
 

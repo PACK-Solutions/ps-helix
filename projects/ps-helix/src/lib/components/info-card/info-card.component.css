@@ -171,6 +171,52 @@
   line-height: var(--line-height-normal);
 }
 
+/* ---------------------------------------------------------------------------
+   Mise en forme des valeurs (emphasis) — jeu fermé, cumulable, tokenisé.
+   Fonctionne en thème clair et sombre via les tokens sémantiques du DS.
+   Les modificateurs qui touchent au poids utilisent un sélecteur composé
+   (spécificité 0,0,2,0) afin de rester prioritaires sur la surcharge
+   `.info-card-value { font-weight: normal }` du media query mobile (≤480px).
+   --------------------------------------------------------------------------- */
+.info-card-value--italic {
+  font-style: italic;
+}
+
+.info-card-value--strikethrough {
+  text-decoration: line-through;
+}
+
+.info-card-value.info-card-value--bold {
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Couleurs sémantiques — mappées sur les tokens existants du thème */
+.info-card-value--tone-primary {
+  color: var(--primary-color);
+}
+
+.info-card-value--tone-success {
+  color: var(--success-color);
+}
+
+.info-card-value--tone-warning {
+  color: var(--warning-color);
+}
+
+.info-card-value--tone-danger {
+  color: var(--danger-color);
+}
+
+.info-card-value--tone-info {
+  color: var(--alert-info-text-color);
+}
+
+/* muted = couleur secondaire + poids normal (intention « valeur atténuée ») */
+.info-card-value.info-card-value--tone-muted {
+  color: var(--text-color-secondary);
+  font-weight: var(--font-weight-normal);
+}
+
 .info-card-empty-state {
   flex: 1;
   display: flex;

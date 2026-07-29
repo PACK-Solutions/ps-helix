@@ -239,6 +239,29 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
     return val.toString().trim().length > 0;
   }
 
+  /**
+   * Calcule les classes CSS de la valeur d'une ligne à partir de son emphasis.
+   * Fonction pure (compatible OnPush) : aucun effet de bord.
+   * Un emphasis explicite prime sur l'auto-muted des valeurs nullish.
+   */
+  getValueClasses(item: InfoCardData): string {
+    const classes = ['info-card-value'];
+    const emphasis = item.emphasis;
+    const isEmpty = item.value == null;
+    const autoMuted = isEmpty && this.options().mutedEmptyValues !== false && !emphasis;
+
+    if (autoMuted) {
+      classes.push('info-card-value--italic', 'info-card-value--tone-muted');
+    } else if (emphasis) {
+      if (emphasis.italic) classes.push('info-card-value--italic');
+      if (emphasis.bold) classes.push('info-card-value--bold');
+      if (emphasis.strikethrough) classes.push('info-card-value--strikethrough');
+      if (emphasis.tone) classes.push(`info-card-value--tone-${emphasis.tone}`);
+    }
+
+    return classes.join(' ');
+  }
+
   copyRowValue(item: InfoCardData, index: number): void {
     if (!isPlatformBrowser(this.platformId)) {
       this.copyFailed.emit(item);
