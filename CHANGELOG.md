@@ -14,6 +14,23 @@ Versioning policy:
 
 ## [Unreleased]
 
+## [6.2.0] - 2026-07-29
+
+Minor release.
+
+### Added
+- **`psh-info-card`** — row-level value formatting via the new optional
+  `emphasis` field on `InfoCardData`: `italic`, `bold`, `strikethrough`, and a
+  closed, tokenized `tone` palette (`muted`, `primary`, `success`, `warning`,
+  `danger`, `info`). Options are independent and combinable, and adapt to both
+  light and dark themes. Nullish values are now rendered "muted" automatically
+  (italic + secondary color on the `Non renseigné` placeholder); this is
+  configurable through the new `InfoCardOptions.mutedEmptyValues` option
+  (default `true`), and an explicit `emphasis` always takes precedence. The new
+  public types `InfoCardTone` and `InfoCardEmphasis` are exported. Fully
+  backwards compatible — rows without `emphasis` render exactly as before, and
+  `customClass` remains available as an escape hatch.
+
 ## [6.1.0] - 2026-07-20
 
 Minor release.
