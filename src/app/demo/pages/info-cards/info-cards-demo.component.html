@@ -351,6 +351,32 @@
       </div>
     </section>
 
+    <!-- Mise en forme des lignes (emphasis) -->
+    <section class="info-card-customization-section">
+      <h3 class="section-title">Mise en forme des lignes (emphasis)</h3>
+      <div class="customization-container">
+        <div class="customization-intro">
+          <p>Mettez en forme la <strong>valeur</strong> d'une ligne via un jeu ferme, tokenise et <strong>cumulable</strong> : <code>italic</code>, <code>bold</code>, <code>strikethrough</code> et une couleur semantique <code>tone</code> (muted, primary, success, warning, danger, info). Les valeurs vides (<code>null</code>) sont automatiquement attenuees. Pour du contenu riche, utilisez plutot <code>psh-table</code>.</p>
+        </div>
+        <div class="customization-grid">
+          <div class="customization-card">
+            <h4>Tons semantiques &amp; cumul</h4>
+            <psh-info-card
+              title="Dossier Client"
+              [data]="emphasisData"
+              variant="outlined"
+              icon="palette"
+              [options]="{ mutedEmptyValues: true }"
+            ></psh-info-card>
+            <p class="customization-description">
+              Chaque ligne combine librement les options (ex. barre + danger). La ligne <em>Telephone</em> (valeur <code>null</code>) recoit automatiquement le rendu <em>muted</em>, sans configuration.
+            </p>
+            <ds-code-snippet [code]="emphasisCode" />
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Personnalisation -->
     <section class="info-card-customization-section">
       <h3 class="section-title">Options de Personnalisation</h3>
@@ -661,6 +687,12 @@
                 <td>Non</td>
                 <td>Valeur brute a copier si differente de la valeur affichee</td>
               </tr>
+              <tr>
+                <td><code>emphasis</code></td>
+                <td><code>InfoCardEmphasis</code></td>
+                <td>Non</td>
+                <td>Mise en forme cumulable de la valeur : italic, bold, strikethrough, tone</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -700,6 +732,12 @@
                 <td><code>string</code></td>
                 <td><code>undefined</code></td>
                 <td>Largeur par défaut pour toutes les valeurs</td>
+              </tr>
+              <tr>
+                <td><code>mutedEmptyValues</code></td>
+                <td><code>boolean</code></td>
+                <td><code>true</code></td>
+                <td>Attenue automatiquement (muted) les valeurs nullish (« Non renseigné »)</td>
               </tr>
             </tbody>
           </table>

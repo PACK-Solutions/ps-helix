@@ -861,3 +861,113 @@ describe('PshInfoCardComponent - Content Projection', () => {
     expect(getActionsContainer().className).not.toContain('mobile-full-width-buttons');
   });
 });
+
+describe('PshInfoCardComponent - Row emphasis / formatting', () => {
+  let fixture: ComponentFixture<PshInfoCardComponent>;
+
+  const getValue = () =>
+    fixture.nativeElement.querySelector('.info-card-value') as HTMLElement;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [PshInfoCardComponent]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(PshInfoCardComponent);
+    fixture.detectChanges();
+  });
+
+  it('applies the italic class when emphasis.italic is set', () => {
+    fixture.componentRef.setInput('data', [{ label: 'L', value: 'V', emphasis: { italic: true } }]);
+    fixture.detectChanges();
+    expect(getValue().className).toContain('info-card-value--italic');
+  });
+
+  it('applies the bold class when emphasis.bold is set', () => {
+    fixture.componentRef.setInput('data', [{ label: 'L', value: 'V', emphasis: { bold: true } }]);
+    fixture.detectChanges();
+    expect(getValue().className).toContain('info-card-value--bold');
+  });
+
+  it('applies the strikethrough class when emphasis.strikethrough is set', () => {
+    fixture.componentRef.setInput('data', [{ label: 'L', value: 'V', emphasis: { strikethrough: true } }]);
+    fixture.detectChanges();
+    expect(getValue().className).toContain('info-card-value--strikethrough');
+  });
+
+  it('applies the matching tone class for each semantic tone', () => {
+    const tones = ['muted', 'primary', 'success', 'warning', 'danger', 'info'] as const;
+    tones.forEach((tone) => {
+      fixture.componentRef.setInput('data', [{ label: 'L', value: 'V', emphasis: { tone } }]);
+      fixture.detectChanges();
+      expect(getValue().className).toContain(`info-card-value--tone-${tone}`);
+    });
+  });
+
+  it('accumulates multiple emphasis options on the same value', () => {
+    fixture.componentRef.setInput('data', [
+      { label: 'L', value: 'V', emphasis: { italic: true, strikethrough: true, tone: 'danger' } }
+    ]);
+    fixture.detectChanges();
+    const cls = getValue().className;
+    expect(cls).toContain('info-card-value--italic');
+    expect(cls).toContain('info-card-value--strikethrough');
+    expect(cls).toContain('info-card-value--tone-danger');
+  });
+
+  it('auto-mutes nullish values by default (null)', () => {
+    fixture.componentRef.setInput('data', [{ label: 'L', value: null }]);
+    fixture.detectChanges();
+    const cls = getValue().className;
+    expect(cls).toContain('info-card-value--italic');
+    expect(cls).toContain('info-card-value--tone-muted');
+    expect(getValue().textContent?.trim()).toBe('Non renseigné');
+  });
+
+  it('auto-mutes undefined values by default', () => {
+    fixture.componentRef.setInput('data', [{ label: 'L', value: undefined }]);
+    fixture.detectChanges();
+    expect(getValue().className).toContain('info-card-value--tone-muted');
+  });
+
+  it('does not auto-mute when options.mutedEmptyValues is false', () => {
+    fixture.componentRef.setInput('data', [{ label: 'L', value: null }]);
+    fixture.componentRef.setInput('options', { mutedEmptyValues: false });
+    fixture.detectChanges();
+    const cls = getValue().className;
+    expect(cls).not.toContain('info-card-value--tone-muted');
+    expect(cls).not.toContain('info-card-value--italic');
+  });
+
+  it('gives explicit emphasis priority over auto-muted on nullish values', () => {
+    fixture.componentRef.setInput('data', [{ label: 'L', value: null, emphasis: { tone: 'success' } }]);
+    fixture.detectChanges();
+    const cls = getValue().className;
+    expect(cls).toContain('info-card-value--tone-success');
+    expect(cls).not.toContain('info-card-value--tone-muted');
+  });
+
+  it('does not auto-mute the literal "Non renseigné" string (value not nullish)', () => {
+    fixture.componentRef.setInput('data', [{ label: 'L', value: 'Non renseigné' }]);
+    fixture.detectChanges();
+    const cls = getValue().className;
+    expect(cls).not.toContain('info-card-value--tone-muted');
+    expect(cls).not.toContain('info-card-value--italic');
+  });
+
+  it('renders exactly "info-card-value" without emphasis (non-regression)', () => {
+    fixture.componentRef.setInput('data', [{ label: 'L', value: 'Dupont' }]);
+    fixture.detectChanges();
+    expect(getValue().className).toBe('info-card-value');
+  });
+
+  it('keeps customClass on the row alongside value emphasis', () => {
+    fixture.componentRef.setInput('data', [
+      { label: 'L', value: 'V', customClass: 'my-row', emphasis: { bold: true } }
+    ]);
+    fixture.detectChanges();
+    const row = fixture.nativeElement.querySelector('.info-card-row') as HTMLElement;
+    expect(row.className).toContain('my-row');
+    expect(getValue().className).toContain('info-card-value--bold');
+  });
+});

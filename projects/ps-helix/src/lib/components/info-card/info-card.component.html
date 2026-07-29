@@ -70,7 +70,7 @@
                 [style.width]="item.valueWidth || options().valueWidth"
               >
                 <span
-                  class="info-card-value"
+                  [class]="getValueClasses(item)"
                   [attr.data-value]="item.value"
                   [title]="item.value?.toString() || ''"
                 >{{ item.value ?? 'Non renseigné' }}</span>

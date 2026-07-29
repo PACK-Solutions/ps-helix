@@ -68,6 +68,26 @@ export class InfoCardsDemoComponent {
 
   emptyData: InfoCardData[] = [];
 
+  emphasisData: InfoCardData[] = [
+    { label: 'Nom', value: 'Dupont' },
+    { label: 'Statut', value: 'Actif', emphasis: { bold: true, tone: 'success' } },
+    { label: 'Priorité', value: 'Haute', emphasis: { tone: 'warning' } },
+    { label: 'Ancien IBAN', value: 'FR76 •••• •••• 4521', emphasis: { strikethrough: true, tone: 'danger' } },
+    { label: 'Référence interne', value: 'REF-2025-0042', emphasis: { italic: true, tone: 'info' } },
+    { label: 'Adresse e-mail', value: 'Non renseigné', emphasis: { tone: 'muted', italic: true } },
+    { label: 'Téléphone', value: null }
+  ];
+
+  emphasisCode = `// Mise en forme bornee & cumulable de la valeur via 'emphasis'
+const rows: InfoCardData[] = [
+  { label: 'Nom', value: 'Dupont' },
+  { label: 'Statut', value: 'Actif', emphasis: { bold: true, tone: 'success' } },
+  { label: 'Ancien IBAN', value: 'FR76…', emphasis: { strikethrough: true, tone: 'danger' } },
+
+  // Valeur nullish -> auto-« muted » (italique + couleur secondaire)
+  { label: 'Téléphone', value: null }
+];`;
+
   elevatedVariantCode = `<psh-info-card
   title="Profil Utilisateur"
   [data]="userData"
