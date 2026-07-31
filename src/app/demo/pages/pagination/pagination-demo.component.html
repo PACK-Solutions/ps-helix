@@ -835,7 +835,13 @@
                 <td><code>totalPages</code></td>
                 <td><code>number</code></td>
                 <td><code>1</code></td>
-                <td>Nombre total de pages disponibles (utilisez [(totalPages)])</td>
+                <td>
+                  Nombre total de pages disponibles. <code>0</code> est un état vide
+                  accepté (liste vide ou pagination serveur pas encore chargée) : rendu
+                  sur une page, sans avertissement console. Le composant ne réécrit
+                  jamais cette valeur — un binding one-way [totalPages] suffit,
+                  [(totalPages)] reste supporté.
+                </td>
               </tr>
               <tr>
                 <td><code>itemsPerPage</code></td>
