@@ -71,7 +71,7 @@ export class ExampleComponent {
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
 | required | boolean | false | État requis |
-| label | string | '' | Label du radio |
+| label | string | '' | Label du radio. À défaut, projetez-le : `<psh-radio>Mon libellé</psh-radio>`. Sans l'un des deux (ni `ariaLabel`), le radio n'a **aucun nom accessible** et un avertissement est émis en mode dev |
 | error | string | '' | Message d'erreur |
 | success | string | '' | Message de succès |
 | name | string | '' | Nom du groupe (OBLIGATOIRE pour le groupement) |

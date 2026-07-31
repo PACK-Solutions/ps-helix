@@ -23,11 +23,11 @@
     >
       <span class="radio-dot"></span>
     </span>
-    <span class="radio-text">
+    <span class="radio-text" #labelSlot>
       @if (label()) {
         {{ label() }}
       } @else {
-        <ng-content>Radio</ng-content>
+        <ng-content></ng-content>
       }
     </span>
   </label>

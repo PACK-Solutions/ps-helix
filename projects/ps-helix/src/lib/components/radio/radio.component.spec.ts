@@ -559,13 +559,13 @@ describe('PshRadioComponent', () => {
       expect((fixture.componentInstance as any).computedAriaLabel()).toBeUndefined();
     });
 
-    it('should return "Radio" fallback when no label, ariaLabel, or projected content', () => {
+    it('should return undefined when nothing is provided (no hard-coded fallback)', () => {
       fixture.componentRef.setInput('label', '');
       fixture.componentRef.setInput('ariaLabel', undefined);
       fixture.componentInstance.updateProjectedContent(false);
       fixture.detectChanges();
 
-      expect((fixture.componentInstance as any).computedAriaLabel()).toBe('Radio');
+      expect((fixture.componentInstance as any).computedAriaLabel()).toBeUndefined();
     });
   });
 });
@@ -756,12 +756,47 @@ describe('PshRadioComponent accessible-label warning', () => {
     expect(pshWarnings(warnSpy)).toHaveLength(0);
   });
 
-  it('should not warn when projected content is declared', () => {
+  it('should not warn when projected content is declared explicitly', () => {
     const fixture = TestBed.createComponent(PshRadioComponent);
     fixture.componentInstance.updateProjectedContent(true);
     fixture.detectChanges();
 
     expect(pshWarnings(warnSpy)).toHaveLength(0);
+  });
+
+  it('should not warn when the label is projected', () => {
+    const hostFixture = TestBed.createComponent(TestHostComponent);
+    hostFixture.detectChanges();
+
+    expect(hostFixture.nativeElement.querySelector('.radio-text').textContent).toContain(
+      'Projected label'
+    );
+    expect(pshWarnings(warnSpy)).toHaveLength(0);
+  });
+
+  it('should let a projected label be the accessible name (no aria-label override)', () => {
+    const hostFixture = TestBed.createComponent(TestHostComponent);
+    hostFixture.detectChanges();
+
+    const input = hostFixture.nativeElement.querySelector(
+      'input[type="radio"]'
+    ) as HTMLInputElement;
+    // No aria-label: the wrapping <label> names the input from the projected text,
+    // instead of the old hard-coded "Radio" shadowing it (WCAG 2.5.3).
+    expect(input.getAttribute('aria-label')).toBeNull();
+    expect(
+      (input.closest('label') as HTMLLabelElement).textContent?.trim()
+    ).toBe('Projected label');
+  });
+
+  it('should not render a "Radio" placeholder when no label is provided', () => {
+    const fixture = TestBed.createComponent(PshRadioComponent);
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.radio-text').textContent.trim()).toBe('');
+    expect(
+      fixture.nativeElement.querySelector('input[type="radio"]').getAttribute('aria-label')
+    ).toBeNull();
   });
 
   it('should warn in dev mode when no accessible label is provided', () => {
