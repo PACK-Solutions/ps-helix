@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, computed, input, model, output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+  isDevMode,
+  model,
+  output
+} from '@angular/core';
 import { CollapseVariant, CollapseSize } from './collapse.types';
 
 @Component({
@@ -16,7 +24,9 @@ export class PshCollapseComponent {
   variant = input('default' as CollapseVariant, {
     transform: (value: CollapseVariant) => {
       if (!['default', 'outline'].includes(value)) {
-        console.warn(`[psh-collapse] Invalid variant "${value}", falling back to "default"`);
+        if (isDevMode()) {
+          console.warn(`[psh-collapse] Invalid variant "${value}", falling back to "default"`);
+        }
         return 'default';
       }
       return value;
@@ -25,7 +35,9 @@ export class PshCollapseComponent {
   size = input('medium' as CollapseSize, {
     transform: (value: CollapseSize) => {
       if (!['small', 'medium', 'large'].includes(value)) {
-        console.warn(`[psh-collapse] Invalid size "${value}", falling back to "medium"`);
+        if (isDevMode()) {
+          console.warn(`[psh-collapse] Invalid size "${value}", falling back to "medium"`);
+        }
         return 'medium';
       }
       return value;
