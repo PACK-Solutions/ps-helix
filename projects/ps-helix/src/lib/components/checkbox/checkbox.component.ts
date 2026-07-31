@@ -1,12 +1,13 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   computed,
-  effect,
   ElementRef,
   inject,
   InjectionToken,
   input,
+  isDevMode,
   model,
   viewChild
 } from '@angular/core';
@@ -52,9 +53,13 @@ let checkboxIdCounter = 0;
     '[attr.aria-checked]': 'ariaChecked()'
   }
 })
-export class PshCheckboxComponent implements ControlValueAccessor, FormCheckboxControl {
+export class PshCheckboxComponent
+  implements ControlValueAccessor, FormCheckboxControl, AfterViewInit
+{
   private readonly config = inject(CHECKBOX_CONFIG);
   private readonly checkboxInput = viewChild<ElementRef<HTMLInputElement>>('checkboxInput');
+  /** Holds the `label` input or the projected content — whichever provides the visible label. */
+  private readonly labelSlot = viewChild<ElementRef<HTMLElement>>('labelSlot');
 
   protected readonly uniqueId = `psh-cb-${++checkboxIdCounter}`;
 
@@ -93,12 +98,18 @@ export class PshCheckboxComponent implements ControlValueAccessor, FormCheckboxC
     return this.checked() ? 'checked' : 'unchecked';
   });
 
-  constructor() {
-    effect(() => {
-      if (!this.label() && !this.ariaLabel()) {
-        console.warn('[psh-checkbox] Label manquant pour l\'accessibilité.');
-      }
-    });
+  ngAfterViewInit(): void {
+    if (!isDevMode()) return;
+
+    // Read the rendered label slot rather than the `label` input alone: a projected
+    // label (`<psh-checkbox>Accept terms</psh-checkbox>`) is just as accessible, and
+    // `contentChild` cannot see a bare text node. Checked once, after the first render.
+    const hasVisibleLabel = !!this.labelSlot()?.nativeElement.textContent?.trim();
+    if (!hasVisibleLabel && !this.ariaLabel()) {
+      console.warn(
+        '[psh-checkbox] No accessible label provided. Please use label input, ariaLabel input, or projected content.'
+      );
+    }
   }
 
   protected toggle(): void {
