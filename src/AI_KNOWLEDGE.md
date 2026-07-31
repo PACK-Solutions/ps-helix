@@ -721,23 +721,62 @@ interface Tab {
 
 **Selector**: `psh-pagination`
 
+The component paginates **page numbers**, not items: compute the page count yourself
+(`Math.ceil(totalItems / itemsPerPage)`, or take it from the server response).
+
+**Two-way bindable inputs** (with `[()]`):
+
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
-| `currentPage` | `number` | `1` | Current page (two-way) |
-| `totalItems` | `number` | `0` | Total items |
-| `itemsPerPage` | `number` | `10` | Items per page (two-way) |
+| `currentPage` | `number` | `1` | Current page (model, clamped to the page count by the component) |
+| `totalPages` | `number` | `1` | Total number of pages (model). `0` is an accepted empty state — empty list, or a server page count not loaded yet — rendered as one page, without any warning. The component never writes this input, so a one-way `[totalPages]` binding is enough |
+| `itemsPerPage` | `number` | `10` | Items per page (input + `itemsPerPageChange` output) |
+
+**Regular inputs**:
+
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
 | `size` | `'small' \| 'medium' \| 'large'` | `'medium'` | Pagination size |
 | `variant` | `'default' \| 'outline'` | `'default'` | Pagination variant |
 | `showFirstLast` | `boolean` | `true` | Show first/last buttons |
 | `showPrevNext` | `boolean` | `true` | Show prev/next buttons |
 | `maxVisiblePages` | `number` | `5` | Max visible page buttons |
 | `showItemsPerPage` | `boolean` | `false` | Show items per page selector |
-| `itemsPerPageOptions` | `number[]` | `[10, 25, 50, 100]` | Options for items per page |
+| `itemsPerPageOptions` | `number[]` | `[5, 10, 25, 50]` | Options for items per page |
+| `firstLabel` | `string` | `'First'` | First button label (i18n) |
+| `previousLabel` | `string` | `'Previous'` | Previous button label (i18n) |
+| `nextLabel` | `string` | `'Next'` | Next button label (i18n) |
+| `lastLabel` | `string` | `'Last'` | Last button label (i18n) |
+| `pageLabel` | `string` | `'Page'` | Page button label prefix (i18n) |
+| `itemsLabel` | `string` | `'items'` | Items label in the selector (i18n) |
+| `itemsPerPageLabel` | `string` | `'Items per page'` | Items-per-page selector label (i18n) |
+| `id` | `string` | auto-generated | Id of the `<nav>` element |
+| `ariaLabel` | `string` | `'Pagination navigation'` | ARIA label of the `<nav>` |
+
+**Outputs**:
 
 | Output | Type | Description |
 |--------|------|-------------|
 | `pageChange` | `number` | Page changed |
 | `itemsPerPageChange` | `number` | Items per page changed |
+| `navigationError` | `{ action: string; reason: string }` | Out-of-bounds navigation attempt |
+
+**Public methods**: `goToPage(page)`, `goToFirstPage()`, `goToLastPage()`,
+`goToNextPage()`, `goToPreviousPage()`.
+
+```html
+<!-- Server-side pagination: the page count is only known after the response -->
+<psh-pagination
+  [currentPage]="currentPage()"
+  [totalPages]="totalPages()"
+  [showItemsPerPage]="true"
+  (pageChange)="load($event)"
+  (itemsPerPageChange)="setPageSize($event)"
+/>
+```
+
+The component never hides itself when there is nothing to paginate — showing or
+hiding the pager on an empty list is the consumer's decision.
 
 ---
 
