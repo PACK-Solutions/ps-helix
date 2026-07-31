@@ -14,6 +14,32 @@ Versioning policy:
 
 ## [Unreleased]
 
+## [6.2.1] - 2026-07-31
+
+Patch release.
+
+### Fixed
+
+- **`psh-pagination`** — `totalPages = 0` is now treated as the legitimate empty
+  state it is (an empty list, or a server-side page count not loaded yet) instead
+  of an invalid value: no more `[psh-pagination] Invalid totalPages "0", setting to
+  1` console warning. Rendering is unchanged (still one page, announced "Page 1 sur
+  1"), and genuinely invalid values (negative, non-finite, fractional) are still
+  reported.
+- **`psh-pagination`** — the `totalPages` clamp no longer writes back into the
+  input. It is now derived through a private `effectiveTotalPages` computed, so a
+  one-way `[totalPages]` binding can no longer silently desynchronise from the
+  parent (internal `1` vs. parent `0`), and a two-way `[(totalPages)]` binding is no
+  longer overwritten by the component. `currentPage` keeps its intended write-back
+  correction — now clamped on the derived page count.
+- **`psh-pagination`** — all six `console.warn` calls (`size`, `variant`,
+  `totalPages`, `currentPage` ×2, `maxVisiblePages`) are now guarded by
+  `isDevMode()`, so they no longer reach end users' consoles in production builds.
+
+No API change: input/output names, defaults, labels and rendering are identical.
+`totalPages` remains a `model()` for `[(totalPages)]` consumers; a future major
+could reduce it to a plain `input()` now that the component never writes it.
+
 ## [6.2.0] - 2026-07-29
 
 Minor release.

@@ -66,7 +66,7 @@ Propriétés avec two-way binding
 | Nom | Type | Défaut | Validation | Description |
 |-----|------|---------|------------|-------------|
 | `currentPage` | `number` | `1` | >= 1, <= totalPages | Page actuellement affichée (two-way binding avec `[(currentPage)]`) |
-| `totalPages` | `number` | `1` | >= 1 | Nombre total de pages disponibles (two-way binding avec `[(totalPages)]`) |
+| `totalPages` | `number` | `1` | `0` accepté (état vide), sinon entier >= 1 | Nombre total de pages disponibles. Donnée dérivée possédée par l'appelant : le composant ne la réécrit **jamais**. Un binding one-way `[totalPages]` est le mode d'emploi recommandé ; `[(totalPages)]` reste supporté |
 | `itemsPerPage` | `number` | `10` | >= 1 | Nombre d'éléments affichés par page (two-way binding avec `[(itemsPerPage)]`) |
 
 ### Regular Inputs (@input)
@@ -134,16 +134,38 @@ Le composant Pagination intègre un système robuste de validation automatique p
 ### Validation Automatique
 
 #### totalPages
-Le composant valide et normalise automatiquement le nombre total de pages :
+
+`0` est un **état vide légitime**, pas une erreur : c'est le résultat de
+`Math.ceil(0 / pageSize)` pour une liste vide, et l'état « pas encore chargé » de
+toute pagination serveur. Il est accepté **silencieusement** et rendu comme une page
+unique (mêmes boutons, annonce « Page 1 sur 1 ») :
 
 ```typescript
-// Valeurs invalides normalisées automatiquement à 1
-<psh-pagination [totalPages]="0"></psh-pagination>      // → totalPages = 1
-<psh-pagination [totalPages]="-5"></psh-pagination>     // → totalPages = 1
-<psh-pagination [totalPages]="NaN"></psh-pagination>    // → totalPages = 1
+// État vide : aucun avertissement, rendu = 1 page
+readonly totalPages = signal(0);            // pas encore chargé
+// …plus tard : this.totalPages.set(result.page.total_pages);
 
-// Message console : "[psh-pagination] Invalid totalPages "0", setting to 1"
+<psh-pagination [currentPage]="currentPage()" [totalPages]="totalPages()" />
 ```
+
+Les valeurs qui trahissent un bug de l'appelant (négatif, non fini, non entier) sont
+repliées sur 1 page pour le rendu, avec un avertissement **en mode dev uniquement** :
+
+```typescript
+<psh-pagination [totalPages]="-5"></psh-pagination>     // → rendu sur 1 page
+<psh-pagination [totalPages]="NaN"></psh-pagination>    // → rendu sur 1 page
+<psh-pagination [totalPages]="2.5"></psh-pagination>    // → rendu sur 1 page
+
+// Console (dev seulement) : "[psh-pagination] Invalid totalPages "-5", using 1 page"
+```
+
+Dans tous les cas, **l'entrée n'est jamais réécrite** : la valeur du parent reste la
+sienne (pas de désynchronisation en one-way, pas d'écrasement en two-way). Le clamp
+vit dans un `computed` interne.
+
+Afficher ou non le pager quand la liste est vide reste une décision du consommateur
+(`@if (totalPages() > 0) { … }`) : le composant ne s'auto-masque pas, pour ne pas
+casser les conteneurs, marges et bordures existants.
 
 #### currentPage
 La page courante est validée par rapport aux limites :
@@ -220,11 +242,12 @@ export class MyComponent {
 
 ### Messages de Validation
 
-Tous les messages de validation sont en **anglais** (standard industrie) :
+Tous les messages de validation sont en **anglais** (standard industrie) et émis
+**uniquement en mode dev** (`isDevMode()`) : aucun bruit console en production.
 
 | Scénario | Message Console |
 |----------|----------------|
-| totalPages invalide | `[psh-pagination] Invalid totalPages "{value}", setting to 1` |
+| totalPages invalide (hors `0`) | `[psh-pagination] Invalid totalPages "{value}", using 1 page` |
 | currentPage < 1 | `[psh-pagination] Invalid currentPage "{value}", setting to 1` |
 | currentPage > totalPages | `[psh-pagination] currentPage "{current}" exceeds totalPages "{total}", setting to {total}` |
 | maxVisiblePages invalide | `[psh-pagination] Invalid maxVisiblePages "{value}", must be >= 1` |
@@ -236,7 +259,8 @@ Tous les messages de validation sont en **anglais** (standard industrie) :
 Le composant est conçu pour **ne jamais crasher** :
 
 - ✅ Les valeurs invalides sont normalisées automatiquement
-- ✅ Les avertissements console aident au débogage
+- ✅ `totalPages = 0` est un état vide accepté, sans avertissement
+- ✅ Les avertissements console aident au débogage, en mode dev uniquement
 - ✅ L'interface reste fonctionnelle en toutes circonstances
 - ✅ Les états impossibles sont prévenus
 - ✅ La navigation reste cohérente
@@ -887,39 +911,58 @@ Le composant utilise plusieurs computed signals pour optimiser les performances 
 - **`isFirstPage`**: Vérifie si on est sur la première page
 - **`isLastPage`**: Vérifie si on est sur la dernière page
 - **`currentPageAnnouncement`**: Génère l'annonce vocale pour les lecteurs d'écran
+- **`effectiveTotalPages`** (privé): Nombre de pages utilisé pour le rendu et la
+  navigation — jamais < 1, sans jamais réécrire l'entrée `totalPages`. Tout ce qui
+  dépend du nombre de pages (`pages`, `canGoNext`, `isLastPage`,
+  `currentPageAnnouncement`, `state`, `goToPage`) le consomme.
 
 ### Effects de Validation
 
 Le composant utilise des Angular effects pour valider et normaliser automatiquement les valeurs :
 
+Deux règles : les avertissements sont **dev-only**, et seul `currentPage` (que le
+composant pilote réellement) est corrigé par écriture en retour.
+
 ```typescript
-// Validation de totalPages
-effect(() => {
+// Clamp de totalPages : dérivé, jamais écrit
+private readonly effectiveTotalPages = computed(() => {
   const total = this.totalPages();
-  if (total < 1 || !Number.isFinite(total)) {
-    console.warn(`[psh-pagination] Invalid totalPages "${total}", setting to 1`);
-    this.totalPages.set(1);
-  }
+  return Number.isInteger(total) && total >= 1 ? total : 1;
 });
 
-// Validation de currentPage
+if (isDevMode()) {
+  // `0` est un état légitime (liste vide, pagination serveur pas encore chargée)
+  effect(() => {
+    const total = this.totalPages();
+    if (total !== 0 && (!Number.isInteger(total) || total < 1)) {
+      console.warn(`[psh-pagination] Invalid totalPages "${total}", using 1 page`);
+    }
+  });
+
+  // Validation de maxVisiblePages
+  effect(() => {
+    const maxVisible = this.maxVisiblePages();
+    if (maxVisible < 1 || !Number.isFinite(maxVisible)) {
+      console.warn(`[psh-pagination] Invalid maxVisiblePages "${maxVisible}", must be >= 1`);
+    }
+  });
+}
+
+// Validation de currentPage : model() assumé, correction avec écriture en retour,
+// bornée sur la valeur dérivée
 effect(() => {
   const current = this.currentPage();
-  const total = this.totalPages();
+  const total = this.effectiveTotalPages();
   if (current < 1 || !Number.isFinite(current)) {
-    console.warn(`[psh-pagination] Invalid currentPage "${current}", setting to 1`);
+    if (isDevMode()) {
+      console.warn(`[psh-pagination] Invalid currentPage "${current}", setting to 1`);
+    }
     this.currentPage.set(1);
-  } else if (current > total && total >= 1) {
-    console.warn(`[psh-pagination] currentPage "${current}" exceeds totalPages "${total}", setting to ${total}`);
+  } else if (current > total) {
+    if (isDevMode()) {
+      console.warn(`[psh-pagination] currentPage "${current}" exceeds totalPages "${total}", setting to ${total}`);
+    }
     this.currentPage.set(total);
-  }
-});
-
-// Validation de maxVisiblePages
-effect(() => {
-  const maxVisible = this.maxVisiblePages();
-  if (maxVisible < 1 || !Number.isFinite(maxVisible)) {
-    console.warn(`[psh-pagination] Invalid maxVisiblePages "${maxVisible}", must be >= 1`);
   }
 });
 ```
@@ -944,7 +987,7 @@ Cela garantit que plusieurs instances peuvent coexister sans conflit d'ID.
 
 1. **Performance**: OnPush + Signals = recalculs minimaux et optimisés
 2. **Réactivité**: Mises à jour automatiques via model signals
-3. **Robustesse**: Validation automatique des valeurs invalides
+3. **Robustesse**: Validation automatique des valeurs invalides, sans écrire dans les entrées du parent
 4. **Maintenabilité**: Code organisé et logique décomposée
 5. **Accessibilité**: Support ARIA complet et automatique
 6. **Flexibilité**: Configuration globale + personnalisation par instance

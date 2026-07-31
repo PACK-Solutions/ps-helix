@@ -1,6 +1,50 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { By } from '@angular/platform-browser';
 import { PshPaginationComponent } from './pagination.component';
 import { PaginationSize, PaginationVariant } from './pagination.types';
+
+/** Consumer shape of a server-side paginated list: one-way, page count unknown at first. */
+@Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
+  template: `<psh-pagination [currentPage]="currentPage" [totalPages]="totalPages" />`,
+  imports: [PshPaginationComponent]
+})
+class OneWayHostComponent {
+  currentPage = 1;
+  totalPages = 0;
+}
+
+/** Legacy consumer shape kept working by `totalPages` still being a `model()`. */
+@Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
+  template: `<psh-pagination [(currentPage)]="currentPage" [(totalPages)]="totalPages" />`,
+  imports: [PshPaginationComponent]
+})
+class TwoWayHostComponent {
+  currentPage = 1;
+  totalPages = 0;
+}
+
+/**
+ * `isDevMode()` reads the `ngDevMode` global, so flipping it to `false` is the
+ * supported way to observe the production behaviour (this is what
+ * `enableProdMode()` does). Restored afterwards.
+ */
+const withProdMode = (run: () => void): void => {
+  const globalWithDevMode = globalThis as typeof globalThis & { ngDevMode?: unknown };
+  const original = globalWithDevMode.ngDevMode;
+  globalWithDevMode.ngDevMode = false;
+  try {
+    run();
+  } finally {
+    globalWithDevMode.ngDevMode = original;
+  }
+};
+
+/** Only the component's own warnings, so unrelated framework logs cannot skew a count. */
+const pshWarnings = (spy: jest.SpyInstance): unknown[][] =>
+  spy.mock.calls.filter((args) => String(args[0]).includes('[psh-pagination]'));
 
 describe('PshPaginationComponent', () => {
   let fixture: ComponentFixture<PshPaginationComponent>;
@@ -752,27 +796,24 @@ describe('PshPaginationComponent', () => {
   });
 
   describe('Edge cases - totalPages', () => {
-    it('should normalize totalPages = 0 to 1', () => {
-      const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
-      fixture.componentInstance.totalPages.set(0);
+    it('should render 1 page for totalPages = 0 without rewriting the input', () => {
+      fixture.componentRef.setInput('totalPages', 0);
       fixture.detectChanges();
 
-      expect(consoleSpy).toHaveBeenCalledWith(
-        expect.stringContaining('Invalid totalPages')
-      );
-      expect(fixture.componentInstance.totalPages()).toBe(1);
-      consoleSpy.mockRestore();
+      expect(getPageButtons().length).toBe(1);
+      expect(fixture.componentInstance.totalPages()).toBe(0);
     });
 
-    it('should normalize negative totalPages to 1', () => {
+    it('should warn and fall back to 1 page for negative totalPages', () => {
       const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
-      fixture.componentInstance.totalPages.set(-5);
+      fixture.componentRef.setInput('totalPages', -5);
       fixture.detectChanges();
 
       expect(consoleSpy).toHaveBeenCalledWith(
         expect.stringContaining('Invalid totalPages')
       );
-      expect(fixture.componentInstance.totalPages()).toBe(1);
+      expect(getPageButtons().length).toBe(1);
+      expect(fixture.componentInstance.totalPages()).toBe(-5);
       consoleSpy.mockRestore();
     });
 
@@ -822,6 +863,199 @@ describe('PshPaginationComponent', () => {
       );
       expect(fixture.componentInstance.currentPage()).toBe(1);
       consoleSpy.mockRestore();
+    });
+  });
+
+  describe('Empty state - totalPages = 0', () => {
+    it('should not warn at all', () => {
+      const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
+      fixture.componentRef.setInput('totalPages', 0);
+      fixture.detectChanges();
+
+      expect(pshWarnings(consoleSpy)).toHaveLength(0);
+      consoleSpy.mockRestore();
+    });
+
+    it('should render exactly like totalPages = 1', () => {
+      fixture.componentRef.setInput('totalPages', 1);
+      fixture.detectChanges();
+
+      const referencePages = getPageButtons().map((btn) => btn.getAttribute('aria-label'));
+      const referenceAnnouncement = getLiveRegion().textContent?.trim();
+      const referenceState = getNavigation().getAttribute('data-state');
+      const referenceDisabled = [
+        getFirstButton().disabled,
+        getPreviousButton().disabled,
+        getNextButton().disabled,
+        getLastButton().disabled,
+      ];
+
+      fixture.componentRef.setInput('totalPages', 0);
+      fixture.detectChanges();
+
+      expect(getPageButtons().map((btn) => btn.getAttribute('aria-label'))).toEqual(
+        referencePages
+      );
+      expect(getLiveRegion().textContent?.trim()).toBe(referenceAnnouncement);
+      expect(getLiveRegion().textContent).toContain('Page 1 sur 1');
+      expect(getNavigation().getAttribute('data-state')).toBe(referenceState);
+      expect([
+        getFirstButton().disabled,
+        getPreviousButton().disabled,
+        getNextButton().disabled,
+        getLastButton().disabled,
+      ]).toEqual(referenceDisabled);
+    });
+
+    it('should keep goToPage bounded and still emit navigationError', () => {
+      fixture.componentRef.setInput('totalPages', 0);
+      fixture.detectChanges();
+
+      const errorSpy = jest.fn();
+      fixture.componentInstance.navigationError.subscribe(errorSpy);
+
+      fixture.componentInstance.goToPage(2);
+
+      expect(errorSpy).toHaveBeenCalledWith({
+        action: 'goToPage',
+        reason: 'Page 2 is out of bounds (1-1)',
+      });
+      expect(fixture.componentInstance.currentPage()).toBe(1);
+    });
+  });
+
+  describe('Dev-mode-only warnings', () => {
+    const invalidTotalPages: [string, number][] = [
+      ['negative', -3],
+      ['NaN', NaN],
+      ['Infinity', Infinity],
+      ['fractional', 2.5],
+    ];
+
+    it.each(invalidTotalPages)(
+      'should warn in dev mode and use 1 page for %s totalPages',
+      (_label, value) => {
+        const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
+        fixture.componentRef.setInput('totalPages', value);
+        fixture.detectChanges();
+
+        expect(consoleSpy).toHaveBeenCalledWith(
+          expect.stringContaining('Invalid totalPages')
+        );
+        expect(getPageButtons().length).toBe(1);
+        expect(getLiveRegion().textContent).toContain('Page 1 sur 1');
+        consoleSpy.mockRestore();
+      }
+    );
+
+    it.each(invalidTotalPages)(
+      'should stay silent outside dev mode for %s totalPages',
+      (_label, value) => {
+        const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+        withProdMode(() => {
+          const prodFixture = TestBed.createComponent(PshPaginationComponent);
+          prodFixture.componentRef.setInput('totalPages', value);
+          prodFixture.detectChanges();
+
+          const pageButtons = prodFixture.nativeElement.querySelectorAll(
+            'button[aria-label^="Page"]'
+          );
+          expect(pageButtons.length).toBe(1);
+        });
+
+        expect(pshWarnings(consoleSpy)).toHaveLength(0);
+        consoleSpy.mockRestore();
+      }
+    );
+
+    it('should stay silent outside dev mode for invalid size, variant and maxVisiblePages', () => {
+      const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+      withProdMode(() => {
+        const prodFixture = TestBed.createComponent(PshPaginationComponent);
+        prodFixture.componentRef.setInput('size', 'huge' as PaginationSize);
+        prodFixture.componentRef.setInput('variant', 'fancy' as PaginationVariant);
+        prodFixture.componentRef.setInput('maxVisiblePages', 0);
+        prodFixture.detectChanges();
+
+        const nav = prodFixture.nativeElement.querySelector(
+          '[role="navigation"]'
+        ) as HTMLElement;
+        expect(nav.classList.contains('small')).toBe(false);
+        expect(nav.classList.contains('large')).toBe(false);
+        expect(nav.classList.contains('outline')).toBe(false);
+      });
+
+      expect(pshWarnings(consoleSpy)).toHaveLength(0);
+      consoleSpy.mockRestore();
+    });
+
+    it('should still clamp currentPage outside dev mode, silently', () => {
+      const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+      withProdMode(() => {
+        const prodFixture = TestBed.createComponent(PshPaginationComponent);
+        prodFixture.componentRef.setInput('totalPages', 5);
+        prodFixture.componentRef.setInput('currentPage', 10);
+        prodFixture.detectChanges();
+
+        expect(prodFixture.componentInstance.currentPage()).toBe(5);
+      });
+
+      expect(pshWarnings(consoleSpy)).toHaveLength(0);
+      consoleSpy.mockRestore();
+    });
+  });
+
+  describe('totalPages ownership (no write-back to the caller)', () => {
+    const getPagination = (hostFixture: ComponentFixture<unknown>) =>
+      hostFixture.debugElement.query(By.directive(PshPaginationComponent))
+        .componentInstance as PshPaginationComponent;
+
+    it('should not desynchronise a one-way [totalPages] binding', () => {
+      const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
+      const hostFixture = TestBed.createComponent(OneWayHostComponent);
+      hostFixture.detectChanges();
+
+      const pagination = getPagination(hostFixture);
+
+      expect(hostFixture.componentInstance.totalPages).toBe(0);
+      expect(pagination.totalPages()).toBe(0);
+      expect(pshWarnings(consoleSpy)).toHaveLength(0);
+
+      // The parent can still push the loaded page count afterwards.
+      hostFixture.componentInstance.totalPages = 3;
+      hostFixture.detectChanges();
+
+      expect(pagination.totalPages()).toBe(3);
+      expect(
+        hostFixture.nativeElement.querySelectorAll('button[aria-label^="Page"]').length
+      ).toBe(3);
+      consoleSpy.mockRestore();
+    });
+
+    it('should not overwrite the parent value through a two-way [(totalPages)] binding', () => {
+      const hostFixture = TestBed.createComponent(TwoWayHostComponent);
+      hostFixture.detectChanges();
+
+      expect(hostFixture.componentInstance.totalPages).toBe(0);
+      expect(getPagination(hostFixture).totalPages()).toBe(0);
+    });
+
+    it('should keep writing back currentPage through a two-way binding', () => {
+      const hostFixture = TestBed.createComponent(TwoWayHostComponent);
+      hostFixture.componentInstance.totalPages = 3;
+      hostFixture.detectChanges();
+
+      const nextButton = hostFixture.nativeElement.querySelector(
+        'button[aria-label="Next"]'
+      ) as HTMLButtonElement;
+      nextButton.click();
+      hostFixture.detectChanges();
+
+      expect(hostFixture.componentInstance.currentPage).toBe(2);
+      expect(hostFixture.componentInstance.totalPages).toBe(3);
     });
   });
 
