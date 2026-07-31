@@ -14,6 +14,36 @@ Versioning policy:
 
 ## [Unreleased]
 
+## [6.2.3] - 2026-07-31
+
+Patch release — the `psh-radio` follow-up left open by 6.2.2.
+
+### Fixed
+
+- **`psh-radio`** — a **projected** label (`<psh-radio>Mon libellé</psh-radio>`) is now
+  detected automatically, from the rendered label slot. Two bugs disappear with it:
+  - the accessible name was hard-coded to `aria-label="Radio"`, which **overrode the
+    visible label** for screen readers (WCAG 2.5.3 "Label in Name") — every radio in
+    the demo app was affected;
+  - the dev-only accessibility warning fired on this perfectly valid usage.
+
+  `updateProjectedContent()` is no longer needed (nothing ever called it, so the guard
+  it fed was inert). It is kept and still works, for backwards compatibility.
+
+### Behaviour change
+
+Confined to a radio with **no** label at all (no `label`, no `ariaLabel`, no projected
+content) — a case that now warns in dev:
+
+- `<ng-content>` no longer falls back to the literal text `Radio`, so that placeholder
+  is no longer rendered on screen;
+- `computedAriaLabel()` returns `undefined` instead of `'Radio'`, so no `aria-label` is
+  emitted. Such a radio therefore has no accessible name — which is the actual bug the
+  warning asks you to fix, rather than one masked by a meaningless label.
+
+Radios with a `label` input, an `ariaLabel`, or a projected label render exactly as
+before.
+
 ## [6.2.2] - 2026-07-31
 
 Patch release — finishes the console-noise cleanup started in 6.2.1.
