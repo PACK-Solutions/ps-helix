@@ -5,6 +5,7 @@ import {
   effect,
   inject,
   input,
+  isDevMode,
   model,
   output,
   linkedSignal,
@@ -45,33 +46,53 @@ export class PshPaginationComponent {
   itemsPerPageInput = input(10, { alias: 'itemsPerPage' });
   itemsPerPage = linkedSignal(this.itemsPerPageInput);
 
-  constructor() {
-    effect(() => {
-      const total = this.totalPages();
-      if (total < 1 || !Number.isFinite(total)) {
-        console.warn(`[psh-pagination] Invalid totalPages "${total}", setting to 1`);
-        this.totalPages.set(1);
-      }
-    });
+  /**
+   * Number of pages used for rendering and navigation: never below 1, and never
+   * written back to the `totalPages` input. `totalPages` is derived data owned by
+   * the caller (`Math.ceil(total / pageSize)`, or a server-side page count), so the
+   * component reads it and clamps its own view of it instead of correcting it.
+   */
+  private readonly effectiveTotalPages = computed(() => {
+    const total = this.totalPages();
+    return Number.isInteger(total) && total >= 1 ? total : 1;
+  });
 
+  constructor() {
+    if (isDevMode()) {
+      effect(() => {
+        // `0` is a legitimate state (empty list, or a server-side page count that is
+        // not loaded yet): stay silent. Only report what betrays a caller bug.
+        const total = this.totalPages();
+        if (total !== 0 && (!Number.isInteger(total) || total < 1)) {
+          console.warn(`[psh-pagination] Invalid totalPages "${total}", using 1 page`);
+        }
+      });
+
+      effect(() => {
+        const maxVisible = this.maxVisiblePages();
+        if (maxVisible < 1 || !Number.isFinite(maxVisible)) {
+          console.warn(`[psh-pagination] Invalid maxVisiblePages "${maxVisible}", must be >= 1`);
+        }
+      });
+    }
+
+    // `currentPage` IS owned by the component (it navigates), so correcting it with
+    // a write-back is the intended behaviour — clamped on the derived page count.
     effect(() => {
       const current = this.currentPage();
-      const total = this.totalPages();
+      const total = this.effectiveTotalPages();
       if (current < 1 || !Number.isFinite(current)) {
-        console.warn(`[psh-pagination] Invalid currentPage "${current}", setting to 1`);
+        if (isDevMode()) {
+          console.warn(`[psh-pagination] Invalid currentPage "${current}", setting to 1`);
+        }
         this.currentPage.set(1);
-      } else if (current > total && total >= 1) {
-        console.warn(
-          `[psh-pagination] currentPage "${current}" exceeds totalPages "${total}", setting to ${total}`,
-        );
+      } else if (current > total) {
+        if (isDevMode()) {
+          console.warn(
+            `[psh-pagination] currentPage "${current}" exceeds totalPages "${total}", setting to ${total}`,
+          );
+        }
         this.currentPage.set(total);
-      }
-    });
-
-    effect(() => {
-      const maxVisible = this.maxVisiblePages();
-      if (maxVisible < 1 || !Number.isFinite(maxVisible)) {
-        console.warn(`[psh-pagination] Invalid maxVisiblePages "${maxVisible}", must be >= 1`);
       }
     });
   }
@@ -79,7 +100,9 @@ export class PshPaginationComponent {
   readonly size = input(this.config.size ?? ('medium' as PaginationSize), {
     transform: (value: PaginationSize): PaginationSize => {
       if (!['small', 'medium', 'large'].includes(value)) {
-        console.warn(`[psh-pagination] Invalid size "${value}", falling back to "medium"`);
+        if (isDevMode()) {
+          console.warn(`[psh-pagination] Invalid size "${value}", falling back to "medium"`);
+        }
         return 'medium';
       }
       return value;
@@ -88,7 +111,9 @@ export class PshPaginationComponent {
   readonly variant = input(this.config.variant ?? ('default' as PaginationVariant), {
     transform: (value: PaginationVariant): PaginationVariant => {
       if (!['default', 'outline'].includes(value)) {
-        console.warn(`[psh-pagination] Invalid variant "${value}", falling back to "default"`);
+        if (isDevMode()) {
+          console.warn(`[psh-pagination] Invalid variant "${value}", falling back to "default"`);
+        }
         return 'default';
       }
       return value;
@@ -122,7 +147,7 @@ export class PshPaginationComponent {
     const pages: number[] = [];
     const halfVisible = Math.floor(this.maxVisiblePages() / 2);
     let start = Math.max(1, this.currentPage() - halfVisible);
-    const end = Math.min(this.totalPages(), start + this.maxVisiblePages() - 1);
+    const end = Math.min(this.effectiveTotalPages(), start + this.maxVisiblePages() - 1);
 
     if (end - start + 1 < this.maxVisiblePages()) {
       start = Math.max(1, end - this.maxVisiblePages() + 1);
@@ -137,29 +162,32 @@ export class PshPaginationComponent {
 
   protected readonly state = computed(() => this.getState());
 
-  protected readonly canGoNext = computed(() => this.currentPage() < this.totalPages());
+  protected readonly canGoNext = computed(() => this.currentPage() < this.effectiveTotalPages());
   protected readonly canGoPrevious = computed(() => this.currentPage() > 1);
   protected readonly isFirstPage = computed(() => this.currentPage() === 1);
-  protected readonly isLastPage = computed(() => this.currentPage() === this.totalPages());
+  protected readonly isLastPage = computed(
+    () => this.currentPage() === this.effectiveTotalPages(),
+  );
 
   protected readonly currentPageAnnouncement = computed(() => {
-    return `Page ${this.currentPage()} sur ${this.totalPages()}`;
+    return `Page ${this.currentPage()} sur ${this.effectiveTotalPages()}`;
   });
 
   private getState(): string {
     if (this.currentPage() === 1) return 'first';
-    if (this.currentPage() === this.totalPages()) return 'last';
+    if (this.currentPage() === this.effectiveTotalPages()) return 'last';
     return 'default';
   }
 
   goToPage(page: number): void {
-    if (page !== this.currentPage() && page >= 1 && page <= this.totalPages()) {
+    const total = this.effectiveTotalPages();
+    if (page !== this.currentPage() && page >= 1 && page <= total) {
       this.currentPage.set(page);
       this.pageChange.emit(page);
-    } else if (page < 1 || page > this.totalPages()) {
+    } else if (page < 1 || page > total) {
       this.navigationError.emit({
         action: 'goToPage',
-        reason: `Page ${page} is out of bounds (1-${this.totalPages()})`,
+        reason: `Page ${page} is out of bounds (1-${total})`,
       });
     }
   }
@@ -169,7 +197,7 @@ export class PshPaginationComponent {
   }
 
   goToLastPage(): void {
-    this.goToPage(this.totalPages());
+    this.goToPage(this.effectiveTotalPages());
   }
 
   goToNextPage(): void {
