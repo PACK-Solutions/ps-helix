@@ -27,6 +27,24 @@ class TestHostComponent {}
 })
 class TestHostWithIdComponent {}
 
+/**
+ * `isDevMode()` reads the `ngDevMode` global, so flipping it to `false` is the
+ * supported way to observe the production behaviour. Restored afterwards.
+ */
+const withProdMode = (run: () => void): void => {
+  const globalWithDevMode = globalThis as typeof globalThis & { ngDevMode?: unknown };
+  const original = globalWithDevMode.ngDevMode;
+  globalWithDevMode.ngDevMode = false;
+  try {
+    run();
+  } finally {
+    globalWithDevMode.ngDevMode = original;
+  }
+};
+
+const pshWarnings = (spy: jest.SpyInstance): unknown[][] =>
+  spy.mock.calls.filter((args) => String(args[0]).includes('[psh-collapse]'));
+
 describe('PshCollapseComponent', () => {
   let fixture: ComponentFixture<PshCollapseComponent>;
 
@@ -560,6 +578,41 @@ describe('PshCollapseComponent', () => {
       expect(getCollapseContainer().classList.contains('small')).toBe(false);
       expect(getCollapseContainer().classList.contains('large')).toBe(false);
 
+      warnSpy.mockRestore();
+    });
+  });
+
+  describe('Dev-mode-only warnings', () => {
+    it('should not warn outside dev mode for an invalid variant', () => {
+      const warnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+      withProdMode(() => {
+        const prodFixture = TestBed.createComponent(PshCollapseComponent);
+        prodFixture.componentRef.setInput('variant', 'invalid' as CollapseVariant);
+        prodFixture.detectChanges();
+
+        const container = prodFixture.nativeElement.querySelector('.collapse') as HTMLElement;
+        expect(container.classList.contains('outline')).toBe(false);
+      });
+
+      expect(pshWarnings(warnSpy)).toHaveLength(0);
+      warnSpy.mockRestore();
+    });
+
+    it('should not warn outside dev mode for an invalid size', () => {
+      const warnSpy = jest.spyOn(console, 'warn').mockImplementation();
+
+      withProdMode(() => {
+        const prodFixture = TestBed.createComponent(PshCollapseComponent);
+        prodFixture.componentRef.setInput('size', 'invalid' as CollapseSize);
+        prodFixture.detectChanges();
+
+        const container = prodFixture.nativeElement.querySelector('.collapse') as HTMLElement;
+        expect(container.classList.contains('small')).toBe(false);
+        expect(container.classList.contains('large')).toBe(false);
+      });
+
+      expect(pshWarnings(warnSpy)).toHaveLength(0);
       warnSpy.mockRestore();
     });
   });

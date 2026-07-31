@@ -2,7 +2,7 @@
 
 A comprehensive Angular component library built with Angular 22+ featuring modern design patterns, accessibility-first development, and optimal developer experience.
 
-[![npm version](https://img.shields.io/badge/npm-6.2.1-blue.svg)](https://www.npmjs.com/package/ps-helix)
+[![npm version](https://img.shields.io/badge/npm-6.2.2-blue.svg)](https://www.npmjs.com/package/ps-helix)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Angular](https://img.shields.io/badge/Angular-22.0.0-red.svg)](https://angular.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-6.0.0-blue.svg)](https://www.typescriptlang.org/)
@@ -106,7 +106,7 @@ After installation, verify that ps-helix is in your `package.json`:
 ```json
 {
   "dependencies": {
-    "ps-helix": "^6.2.1"
+    "ps-helix": "^6.2.2"
   }
 }
 ```
@@ -1182,7 +1182,7 @@ Copyright (c) 2025 PACK Solutions
 
 ---
 
-**Version**: 6.2.1
+**Version**: 6.2.2
 **Built with**: Angular 22.0.0, TypeScript 6.0.0, Phosphor Icons 2.0.3
 **Author**: Fabrice PEREZ | Design Engineer at PACK Solutions
 **Last Updated**: January 2026

@@ -7,6 +7,7 @@ import {
   inject,
   Input,
   input,
+  isDevMode,
   Output,
   output,
   signal
@@ -110,13 +111,15 @@ export class PshRadioComponent {
   ariaDescribedBy = computed(() => this.errorMessageId() ?? this.successMessageId());
 
   constructor() {
-    effect(() => {
-      if (!this.label() && !this.ariaLabel() && !this.hasProjectedContent()) {
-        console.warn(
-          '[psh-radio] No accessible label provided. Please use label input, ariaLabel input, or projected content.'
-        );
-      }
-    }, { allowSignalWrites: false });
+    if (isDevMode()) {
+      effect(() => {
+        if (!this.label() && !this.ariaLabel() && !this.hasProjectedContent()) {
+          console.warn(
+            '[psh-radio] No accessible label provided. Please use label input, ariaLabel input, or projected content.'
+          );
+        }
+      });
+    }
   }
 
   private getState(): string {
@@ -126,6 +129,11 @@ export class PshRadioComponent {
     return this.checked() ? 'checked' : 'unchecked';
   }
 
+  /**
+   * Declares whether a label is projected (`<psh-radio>Label</psh-radio>`). Not detected
+   * automatically yet: until a consumer calls this, a projected label still triggers the
+   * dev-only accessibility warning and `aria-label="Radio"` overrides the visible text.
+   */
   updateProjectedContent(hasContent: boolean): void {
     this.hasProjectedContent.set(hasContent);
   }

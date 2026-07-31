@@ -715,3 +715,72 @@ describe('PshRadioComponent emission safety', () => {
     expect(host.onCheckedChange).not.toHaveBeenCalled();
   });
 });
+
+// ── Accessible-label warning (dev-only, projected-label aware) ────────
+
+/**
+ * `isDevMode()` reads the `ngDevMode` global, so flipping it to `false` is the
+ * supported way to observe the production behaviour. Restored afterwards.
+ */
+const withProdMode = (run: () => void): void => {
+  const globalWithDevMode = globalThis as typeof globalThis & { ngDevMode?: unknown };
+  const original = globalWithDevMode.ngDevMode;
+  globalWithDevMode.ngDevMode = false;
+  try {
+    run();
+  } finally {
+    globalWithDevMode.ngDevMode = original;
+  }
+};
+
+const pshWarnings = (spy: jest.SpyInstance): unknown[][] =>
+  spy.mock.calls.filter((args) => String(args[0]).includes('[psh-radio]'));
+
+describe('PshRadioComponent accessible-label warning', () => {
+  let warnSpy: jest.SpyInstance;
+
+  beforeEach(async () => {
+    warnSpy = jest.spyOn(console, 'warn').mockImplementation();
+    await TestBed.configureTestingModule({
+      imports: [PshRadioComponent]
+    }).compileComponents();
+  });
+
+  afterEach(() => warnSpy.mockRestore());
+
+  it('should not warn when the label input is set', () => {
+    const fixture = TestBed.createComponent(PshRadioComponent);
+    fixture.componentRef.setInput('label', 'Accept terms');
+    fixture.detectChanges();
+
+    expect(pshWarnings(warnSpy)).toHaveLength(0);
+  });
+
+  it('should not warn when projected content is declared', () => {
+    const fixture = TestBed.createComponent(PshRadioComponent);
+    fixture.componentInstance.updateProjectedContent(true);
+    fixture.detectChanges();
+
+    expect(pshWarnings(warnSpy)).toHaveLength(0);
+  });
+
+  it('should warn in dev mode when no accessible label is provided', () => {
+    const fixture = TestBed.createComponent(PshRadioComponent);
+    fixture.detectChanges();
+
+    expect(warnSpy).toHaveBeenCalledWith(
+      expect.stringContaining('No accessible label provided')
+    );
+  });
+
+  it('should not warn outside dev mode when no accessible label is provided', () => {
+    withProdMode(() => {
+      const fixture = TestBed.createComponent(PshRadioComponent);
+      fixture.detectChanges();
+
+      expect(fixture.nativeElement.querySelector('input[type="radio"]')).toBeTruthy();
+    });
+
+    expect(pshWarnings(warnSpy)).toHaveLength(0);
+  });
+});
