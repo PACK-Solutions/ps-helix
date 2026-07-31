@@ -1,8 +1,9 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   computed,
-  effect,
+  ElementRef,
   EventEmitter,
   inject,
   Input,
@@ -10,7 +11,8 @@ import {
   isDevMode,
   Output,
   output,
-  signal
+  signal,
+  viewChild
 } from '@angular/core';
 import { RadioSize, RadioConfig } from './radio.types';
 import { InjectionToken } from '@angular/core';
@@ -49,10 +51,12 @@ let radioIdCounter = 0;
     '[attr.data-state]': 'state()'
   }
 })
-export class PshRadioComponent {
+export class PshRadioComponent implements AfterViewInit {
   private config = inject(RADIO_CONFIG);
   private styles = inject(RADIO_STYLES, { optional: true }) ?? [];
   private uniqueId = `radio-${++radioIdCounter}`;
+  /** Holds the `label` input or the projected content — whichever provides the visible label. */
+  private labelSlot = viewChild<ElementRef<HTMLElement>>('labelSlot');
 
   // Plain signals + manual @Input/@Output to prevent auto-emission
   // when parent sets [checked] or [disabled] via template binding.
@@ -95,7 +99,10 @@ export class PshRadioComponent {
     const labelText = this.label();
     if (labelText) return labelText;
 
-    return this.hasProjectedContent() ? undefined : 'Radio';
+    // No `aria-label` at all when nothing is declared: the `<label>` wrapping the input
+    // already names it from a projected label. A hard-coded fallback would override that
+    // visible text for screen readers (WCAG 2.5.3 "Label in Name").
+    return undefined;
   });
 
   errorMessageId = computed(() =>
@@ -110,15 +117,17 @@ export class PshRadioComponent {
   // so aria-describedby references whichever message is actually rendered.
   ariaDescribedBy = computed(() => this.errorMessageId() ?? this.successMessageId());
 
-  constructor() {
-    if (isDevMode()) {
-      effect(() => {
-        if (!this.label() && !this.ariaLabel() && !this.hasProjectedContent()) {
-          console.warn(
-            '[psh-radio] No accessible label provided. Please use label input, ariaLabel input, or projected content.'
-          );
-        }
-      });
+  ngAfterViewInit(): void {
+    if (!isDevMode()) return;
+
+    // Read the rendered label slot rather than the `label` input alone: a projected
+    // label (`<psh-radio>Accept terms</psh-radio>`) is just as accessible, and
+    // `contentChild` cannot see a bare text node. Checked once, after the first render.
+    const hasVisibleLabel = !!this.labelSlot()?.nativeElement.textContent?.trim();
+    if (!hasVisibleLabel && !this.ariaLabel() && !this.hasProjectedContent()) {
+      console.warn(
+        '[psh-radio] No accessible label provided. Please use label input, ariaLabel input, or projected content.'
+      );
     }
   }
 
@@ -130,9 +139,9 @@ export class PshRadioComponent {
   }
 
   /**
-   * Declares whether a label is projected (`<psh-radio>Label</psh-radio>`). Not detected
-   * automatically yet: until a consumer calls this, a projected label still triggers the
-   * dev-only accessibility warning and `aria-label="Radio"` overrides the visible text.
+   * Declares whether a label is projected. No longer required — projected content is now
+   * detected from the rendered label slot. Kept for backwards compatibility: calling it
+   * with `true` still suppresses the dev-only accessibility warning.
    */
   updateProjectedContent(hasContent: boolean): void {
     this.hasProjectedContent.set(hasContent);
