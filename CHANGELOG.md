@@ -14,6 +14,32 @@ Versioning policy:
 
 ## [Unreleased]
 
+## [6.2.2] - 2026-07-31
+
+Patch release — finishes the console-noise cleanup started in 6.2.1.
+
+### Fixed
+
+- **`psh-checkbox`** — the accessibility warning no longer fires on a **projected**
+  label (`<psh-checkbox>Accept terms</psh-checkbox>`), a documented and fully
+  accessible usage that warned on every instance, production included. The check now
+  reads the rendered label slot (`label` input *or* projected content) once after the
+  first render, and only in dev mode. Its message moved from French to English, in
+  line with `psh-radio` and the repo convention.
+- **`psh-collapse`** — the two `console.warn` (invalid `variant`, invalid `size`) are
+  now guarded by `isDevMode()`, like `psh-pagination` in 6.2.1.
+- **`psh-radio`** — the accessibility warning is now dev-only, and the deprecated
+  `allowSignalWrites: false` option was removed from its effect: Angular 22 logged
+  "The 'allowSignalWrites' flag is deprecated and no longer impacts effect()" for
+  every radio instance.
+
+No API change. `psh-input`'s `console.error` on a failing suggestion provider is
+intentionally left unguarded — it reports a real runtime failure, not a misuse of the
+API. Still open: `psh-radio` does not detect a projected label by itself
+(`updateProjectedContent()` must be called), so such a radio still warns in dev and
+gets `aria-label="Radio"` over its visible text — fixing that requires a template
+change and is tracked separately.
+
 ## [6.2.1] - 2026-07-31
 
 Patch release.
