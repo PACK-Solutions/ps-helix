@@ -14,6 +14,31 @@ Versioning policy:
 
 ## [Unreleased]
 
+## [6.2.4] - 2026-09-08
+
+Patch release.
+
+### Fixed
+
+- **`psh-toast`** — removed an import cycle that made the whole library fail to
+  load in any environment that evaluates the ESM bundle (Vitest, SSR, a plain
+  `import`). The deprecated `ToastComponent` alias lived in a `toast.compat.ts`
+  that imported `toast.component.ts`, which re-exported it back; flattening into
+  the FESM bundle placed the alias before the class declaration, so importing
+  `ps-helix` threw `ReferenceError: Cannot access 'PshToastComponent' before
+  initialization`. The alias now sits in `toast.component.ts` next to the class it
+  aliases, mirroring `ToastService`. Consumers using Angular's bundler never saw
+  this — tree-shaking dropped the unused alias — but consumers running unit tests
+  against the library could not load it at all.
+  **No API change**: `ToastComponent` is still exported and still deprecated.
+
+### Added
+
+- **build** — `npm run verify:bundle` loads the built FESM bundle and fails on an
+  import cycle or any public export resolving to `undefined`, now part of CI.
+  Jest resolves each module in isolation and cannot observe this class of defect:
+  the full suite stayed green while the published bundle was unloadable.
+
 ## [6.2.3] - 2026-07-31
 
 Patch release — the `psh-radio` follow-up left open by 6.2.2.
