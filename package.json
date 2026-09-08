@@ -1,7 +1,7 @@
 {
   "name": "Ps-helix-design-system",
   "private": true,
-  "version": "6.2.3",
+  "version": "6.2.4",
   "description": "Helix Design System",
   "author": "Fabrice PEREZ",
   "license": "MIT",
@@ -17,6 +17,7 @@
     "build": "rm -rf dist && ng build",
     "dev": "npm run start",
     "build:lib": "ng build ps-helix",
+    "verify:bundle": "node scripts/verify-bundle.mjs",
     "publish:lib": "npm publish ./dist/ps-helix --access public",
     "watch:lib": "ng build ps-helix --watch",
     "test": "jest",
