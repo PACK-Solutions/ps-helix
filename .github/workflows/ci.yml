@@ -31,5 +31,8 @@ jobs:
       - name: Build library
         run: npm run build:lib
 
+      - name: Bundle smoke test (import-cycle guard)
+        run: npm run verify:bundle
+
       - name: Bundle size budget
         run: npm run size
