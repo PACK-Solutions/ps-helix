@@ -122,4 +122,5 @@ export class PshToastComponent implements OnDestroy {
   }
 }
 
-export { ToastComponent } from './toast.compat';
+/** @deprecated Use PshToastComponent instead */
+export const ToastComponent = PshToastComponent;
