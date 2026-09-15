@@ -1,3 +1,7 @@
+// The vocabulary every component shares. Import PshColor rather than a per-component
+// alias: the aliases are deprecated and exist only to ease the 7.0.0 migration.
+export * from './lib/types/semantic.types';
+
 export * from './lib/components/alert/alert.component';
 export * from './lib/components/alert/alert.types';
 export * from './lib/components/avatar/avatar.component';

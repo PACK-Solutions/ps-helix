@@ -28,7 +28,7 @@ export class StatCardsDemoComponent {
   value="8,430€"
   description="Revenu des 30 derniers jours"
   icon="coins"
-  tagVariant="success"
+  tagColor="success"
   tagLabel="+12.6%"
   [interactive]="true"
   [hoverable]="true"
@@ -46,7 +46,7 @@ export class StatCardsDemoComponent {
   value="12.5k"
   description="Abonnés"
   icon="user-plus"
-  tagVariant="success"
+  tagColor="success"
   tagLabel="+24.6%"
   iconBackground="linear-gradient(135deg, #EC4899, #BE185D)"
 ></psh-stat-card>`;

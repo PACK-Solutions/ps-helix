@@ -53,7 +53,7 @@ import { PshModalComponent, PshButtonComponent } from 'ps-helix';
     </psh-button>
     <psh-button
       appearance="filled"
-      variant="success"
+      color="success"
       [fullWidth]="modal.isMobileScreen()"
       (clicked)="handleSave()"
     >

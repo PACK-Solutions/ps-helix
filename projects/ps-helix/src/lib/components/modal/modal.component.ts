@@ -150,7 +150,7 @@ export class ModalService {
  *   <p>Are you sure?</p>
  *   <div modal-footer #modalFooter>
  *     <psh-button (clicked)="isOpen = false">Cancel</psh-button>
- *     <psh-button variant="primary" (clicked)="handleConfirm()">Confirm</psh-button>
+ *     <psh-button color="primary" (clicked)="handleConfirm()">Confirm</psh-button>
  *   </div>
  * </psh-modal>
  * ```

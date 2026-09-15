@@ -16,7 +16,7 @@
             value="8,430€"
             description="Revenu des 30 derniers jours"
             icon="coins"
-            tagVariant="success"
+            tagColor="success"
             tagLabel="+12.6%"
             [interactive]="true"
             [hoverable]="true"
@@ -27,7 +27,7 @@
             value="211"
             description="Ventes des 30 derniers jours"
             icon="shopping-cart"
-            tagVariant="danger"
+            tagColor="danger"
             tagLabel="-8.1%"
             [interactive]="true"
             [hoverable]="true"
@@ -38,7 +38,7 @@
             value="140"
             description="Nouveaux clients"
             icon="users"
-            tagVariant="success"
+            tagColor="success"
             tagLabel="+28.4%"
             [interactive]="true"
             [hoverable]="true"
@@ -61,7 +61,7 @@
             [value]="2847"
             description="Utilisateurs actifs"
             icon="users-three"
-            tagVariant="success"
+            tagColor="success"
             tagLabel="+18.2%"
           ></psh-stat-card>
 
@@ -69,7 +69,7 @@
             [value]="156"
             description="Tickets ouverts"
             icon="ticket"
-            tagVariant="danger"
+            tagColor="danger"
             tagLabel="-5.4%"
           ></psh-stat-card>
 
@@ -77,7 +77,7 @@
             [value]="42"
             description="Tâches en attente"
             icon="clock"
-            tagVariant="warning"
+            tagColor="warning"
             tagLabel="+3.1%"
           ></psh-stat-card>
 
@@ -85,7 +85,7 @@
             [value]="98.5"
             description="Satisfaction client (%)"
             icon="smiley"
-            tagVariant="primary"
+            tagColor="primary"
             tagLabel="+2.3%"
           ></psh-stat-card>
         </div>
@@ -149,7 +149,7 @@
                 value="3,456"
                 description="Téléchargements"
                 icon="download-simple"
-                tagVariant="success"
+                tagColor="success"
                 tagLabel="+45.2%"
                 variant="elevated"
               ></psh-stat-card>
@@ -164,7 +164,7 @@
                 value="892"
                 description="Commentaires"
                 icon="chat-circle"
-                tagVariant="primary"
+                tagColor="primary"
                 tagLabel="+12.8%"
                 variant="outlined"
               ></psh-stat-card>
@@ -179,7 +179,7 @@
                 value="67"
                 description="En traitement"
                 icon="hourglass"
-                tagVariant="warning"
+                tagColor="warning"
                 tagLabel="+5.1%"
                 variant="default"
               ></psh-stat-card>
@@ -202,7 +202,7 @@
             value="12.5k"
             description="Abonnés"
             icon="user-plus"
-            tagVariant="success"
+            tagColor="success"
             tagLabel="+24.6%"
             iconBackground="linear-gradient(135deg, #EC4899, #BE185D)"
           ></psh-stat-card>
@@ -211,7 +211,7 @@
             value="4.8"
             description="Note moyenne"
             icon="star"
-            tagVariant="success"
+            tagColor="success"
             tagLabel="+0.3"
             iconBackground="linear-gradient(135deg, #FBBF24, #F59E0B)"
           ></psh-stat-card>
@@ -220,7 +220,7 @@
             value="89%"
             description="Taux de conversion"
             icon="chart-line-up"
-            tagVariant="success"
+            tagColor="success"
             tagLabel="+7.2%"
             iconBackground="linear-gradient(135deg, #10B981, #047857)"
           ></psh-stat-card>
@@ -244,7 +244,7 @@
                 value="1,847"
                 description="Pages vues"
                 icon="eye"
-                tagVariant="primary"
+                tagColor="primary"
                 tagLabel="+15.3%"
                 [interactive]="true"
                 [hoverable]="true"
@@ -262,7 +262,7 @@
                 value="--"
                 description="Chargement des données..."
                 icon="spinner"
-                tagVariant="primary"
+                tagColor="primary"
                 tagLabel="..."
                 [loading]="isLoading"
               ></psh-stat-card>
@@ -279,7 +279,7 @@
                 value="N/A"
                 description="Données indisponibles"
                 icon="warning"
-                tagVariant="warning"
+                tagColor="warning"
                 tagLabel="--"
                 [disabled]="true"
               ></psh-stat-card>
@@ -295,7 +295,7 @@
                 value="456"
                 description="En attente"
                 icon="clock-countdown"
-                tagVariant="warning"
+                tagColor="warning"
                 tagLabel="+2.1%"
               ></psh-stat-card>
             </div>
@@ -320,7 +320,7 @@
                 value="2,847"
                 description="Utilisateurs actifs"
                 icon="users-three"
-                tagVariant="success"
+                tagColor="success"
                 tagLabel="+18.2%"
                 layout="horizontal"
               ></psh-stat-card>
@@ -328,7 +328,7 @@
                 value="156"
                 description="Tickets ouverts"
                 icon="ticket"
-                tagVariant="danger"
+                tagColor="danger"
                 tagLabel="-5.4%"
                 layout="horizontal"
               ></psh-stat-card>
@@ -344,7 +344,7 @@
                 value="8,430€"
                 description="Revenu des 30 derniers jours"
                 icon="coins"
-                tagVariant="success"
+                tagColor="success"
                 tagLabel="+12.6%"
                 layout="vertical"
               ></psh-stat-card>
@@ -352,7 +352,7 @@
                 value="98.5"
                 description="Satisfaction client (%)"
                 icon="smiley"
-                tagVariant="primary"
+                tagColor="primary"
                 tagLabel="+2.3%"
                 layout="vertical"
               ></psh-stat-card>
@@ -368,7 +368,7 @@
                 value="4,321"
                 description="Commandes en cours"
                 icon="shopping-bag"
-                tagVariant="primary"
+                tagColor="primary"
                 tagLabel="+9.8%"
                 [rowDirection]="true"
               ></psh-stat-card>
@@ -376,7 +376,7 @@
                 value="673"
                 description="Messages non lus"
                 icon="envelope"
-                tagVariant="warning"
+                tagColor="warning"
                 tagLabel="+15.2%"
                 [rowDirection]="true"
               ></psh-stat-card>

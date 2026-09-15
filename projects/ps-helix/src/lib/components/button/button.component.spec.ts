@@ -492,7 +492,7 @@ describe('PshButtonComponent', () => {
       ['warning'],
       ['danger']
     ])('should apply "%s" variant class', (variant) => {
-      fixture.componentRef.setInput('variant', variant);
+      fixture.componentRef.setInput('color', variant);
       fixture.detectChanges();
 
       expect(getButton().classList.contains(variant)).toBe(true);
@@ -503,11 +503,11 @@ describe('PshButtonComponent', () => {
     });
 
     it('should switch between variants', () => {
-      fixture.componentRef.setInput('variant', 'primary');
+      fixture.componentRef.setInput('color', 'primary');
       fixture.detectChanges();
       expect(getButton().classList.contains('primary')).toBe(true);
 
-      fixture.componentRef.setInput('variant', 'danger');
+      fixture.componentRef.setInput('color', 'danger');
       fixture.detectChanges();
       expect(getButton().classList.contains('danger')).toBe(true);
       expect(getButton().classList.contains('primary')).toBe(false);
@@ -520,7 +520,7 @@ describe('PshButtonComponent', () => {
       ['warning'],
       ['danger']
     ])('should only have "%s" variant class and no other variant classes', (variant) => {
-      fixture.componentRef.setInput('variant', variant);
+      fixture.componentRef.setInput('color', variant);
       fixture.detectChanges();
 
       const otherVariants = ALL_VARIANTS.filter(v => v !== variant);

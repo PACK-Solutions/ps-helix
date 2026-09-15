@@ -38,7 +38,7 @@
           <h3>Filters</h3>
           <psh-button
             appearance="text"
-            variant="primary"
+            color="primary"
             icon="x"
             size="small"
             iconPosition="only"
@@ -132,7 +132,7 @@
                 <div class="button-group">
                   <psh-button
                     appearance="outline"
-                    variant="primary"
+                    color="primary"
                     size="small"
                     [appearance]="fixedPosition === 'left' ? 'filled' : 'outline'"
                     (clicked)="fixedPosition = 'left'"
@@ -141,7 +141,7 @@
                   </psh-button>
                   <psh-button
                     appearance="outline"
-                    variant="primary"
+                    color="primary"
                     size="small"
                     [appearance]="fixedPosition === 'right' ? 'filled' : 'outline'"
                     (clicked)="fixedPosition = 'right'"
@@ -153,7 +153,7 @@
               <div class="control-group">
                 <psh-button
                   appearance="filled"
-                  variant="secondary"
+                  color="secondary"
                   size="small"
                   (clicked)="toggleFixed()"
                 >
@@ -200,7 +200,7 @@
                 <div class="button-group">
                   <psh-button
                     appearance="outline"
-                    variant="primary"
+                    color="primary"
                     size="small"
                     [appearance]="overlayPosition === 'left' ? 'filled' : 'outline'"
                     (clicked)="setOverlayPosition('left')"
@@ -209,7 +209,7 @@
                   </psh-button>
                   <psh-button
                     appearance="outline"
-                    variant="primary"
+                    color="primary"
                     size="small"
                     [appearance]="overlayPosition === 'right' ? 'filled' : 'outline'"
                     (clicked)="setOverlayPosition('right')"
@@ -221,7 +221,7 @@
               <div class="control-group">
                 <psh-button
                   appearance="filled"
-                  variant="secondary"
+                  color="secondary"
                   size="small"
                   (clicked)="isOverlayOpen = true"
                 >

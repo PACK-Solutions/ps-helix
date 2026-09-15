@@ -17,13 +17,13 @@ import { PshAlertComponent } from 'ps-helix';
 
 ```typescript
 // Alerte basique
-<psh-alert type="info">
+<psh-alert color="info">
   Message d'information
 </psh-alert>
 
 // Alerte avec icône personnalisée
 <psh-alert 
-  type="success"
+  color="success"
   icon="bell"
   iconPosition="right"
   [closable]="true"

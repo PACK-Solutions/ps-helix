@@ -179,7 +179,7 @@ Le composant utilise `ng-content` avec des selecteurs pour organiser le contenu.
     <psh-button appearance="text" size="small">
       <i class="ph ph-pencil"></i>
     </psh-button>
-    <psh-button appearance="text" size="small" variant="danger">
+    <psh-button appearance="text" size="small" color="danger">
       <i class="ph ph-trash"></i>
     </psh-button>
   </div>
@@ -196,7 +196,7 @@ Le composant utilise `ng-content` avec des selecteurs pour organiser le contenu.
 >
   <div card-actions>
     <psh-button appearance="outline">Modifier</psh-button>
-    <psh-button variant="primary">Enregistrer</psh-button>
+    <psh-button color="primary">Enregistrer</psh-button>
   </div>
 </psh-info-card>
 ```
@@ -210,11 +210,11 @@ Le composant utilise `ng-content` avec des selecteurs pour organiser le contenu.
   icon="folder"
 >
   <div card-header-actions>
-    <psh-badge variant="success">Actif</psh-badge>
+    <psh-badge color="success">Actif</psh-badge>
   </div>
   <div card-actions>
     <psh-button appearance="outline">Annuler</psh-button>
-    <psh-button variant="primary">Sauvegarder</psh-button>
+    <psh-button color="primary">Sauvegarder</psh-button>
   </div>
 </psh-info-card>
 ```
@@ -347,7 +347,7 @@ Le composant s'adapte automatiquement aux differentes tailles d'ecran.
 >
   <div card-actions>
     <!-- Ces boutons seront pleine largeur sur mobile -->
-    <psh-button variant="primary">Action</psh-button>
+    <psh-button color="primary">Action</psh-button>
   </div>
 </psh-info-card>
 ```
@@ -488,7 +488,7 @@ userProfile: InfoCardData[] = [
 >
   <div card-actions>
     <psh-button appearance="outline">Modifier</psh-button>
-    <psh-button variant="primary">Contacter</psh-button>
+    <psh-button color="primary">Contacter</psh-button>
   </div>
 </psh-info-card>
 ```

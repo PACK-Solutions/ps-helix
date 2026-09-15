@@ -255,20 +255,33 @@ describe('PshBadgeComponent', () => {
       ['warning'],
       ['danger'],
       ['info'],
-      ['disabled']
-    ])('should apply "%s" variant class', (variant) => {
-      fixture.componentRef.setInput('variant', variant);
+      ['neutral']
+    ])('should apply "%s" color class', (color) => {
+      fixture.componentRef.setInput('color', color);
       fixture.detectChanges();
 
-      expect(getBadgeElement().classList.contains(variant)).toBe(true);
+      expect(getBadgeElement().classList.contains(color)).toBe(true);
+    });
+
+    // `disabled` used to be the seventh value of the colour union, which meant a badge
+    // could not be both disabled and, say, danger. It is a boolean now, like everywhere
+    // else in the library, so the two are independent.
+    it('should apply the disabled class independently of the colour', () => {
+      fixture.componentRef.setInput('color', 'danger');
+      fixture.componentRef.setInput('disabled', true);
+      fixture.detectChanges();
+
+      const classes = getBadgeElement().classList;
+      expect(classes.contains('danger')).toBe(true);
+      expect(classes.contains('disabled')).toBe(true);
     });
 
     it('should switch between variants', () => {
-      fixture.componentRef.setInput('variant', 'primary');
+      fixture.componentRef.setInput('color', 'primary');
       fixture.detectChanges();
       expect(getBadgeElement().classList.contains('primary')).toBe(true);
 
-      fixture.componentRef.setInput('variant', 'danger');
+      fixture.componentRef.setInput('color', 'danger');
       fixture.detectChanges();
       expect(getBadgeElement().classList.contains('danger')).toBe(true);
       expect(getBadgeElement().classList.contains('primary')).toBe(false);

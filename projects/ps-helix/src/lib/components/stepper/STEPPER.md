@@ -484,7 +484,7 @@ import { PshStepperComponent, PshStepComponent, PshButtonComponent, PshAlertComp
           <input formControlName="email" placeholder="Email" />
         </form>
         <div class="actions">
-          <psh-button variant="primary" (clicked)="nextStep()">
+          <psh-button color="primary" (clicked)="nextStep()">
             Suivant
           </psh-button>
         </div>
@@ -502,7 +502,7 @@ import { PshStepperComponent, PshStepComponent, PshButtonComponent, PshAlertComp
         </form>
         <div class="actions">
           <psh-button appearance="text" (clicked)="previousStep()">Retour</psh-button>
-          <psh-button variant="primary" (clicked)="nextStep()">Suivant</psh-button>
+          <psh-button color="primary" (clicked)="nextStep()">Suivant</psh-button>
         </div>
       </psh-step>
 
@@ -514,7 +514,7 @@ import { PshStepperComponent, PshStepComponent, PshButtonComponent, PshAlertComp
         <p>Vérifiez vos informations</p>
         <div class="actions">
           <psh-button appearance="text" (clicked)="previousStep()">Retour</psh-button>
-          <psh-button variant="success" (clicked)="submit()">Soumettre</psh-button>
+          <psh-button color="success" (clicked)="submit()">Soumettre</psh-button>
           <psh-button appearance="outline" (clicked)="resetStepper()">Recommencer</psh-button>
         </div>
       </psh-step>

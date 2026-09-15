@@ -81,6 +81,17 @@
   color: var(--psh-text-on-danger);
 }
 
+/* info and neutral complete the shared colour union introduced in 7.0.0. */
+.tag.info {
+  background: var(--psh-info-color);
+  color: var(--psh-text-on-info);
+}
+
+.tag.neutral {
+  background: var(--psh-neutral-color);
+  color: var(--psh-text-on-neutral);
+}
+
 .tag.small {
   --psh-tag-padding-y: calc(var(--psh-spacing-xs) * 0.5);
   --psh-tag-padding-x: var(--psh-spacing-xs);

@@ -148,7 +148,7 @@ describe('PshProgressbarComponent', () => {
       ['warning'],
       ['danger']
     ])('should apply variant class "%s" to progress track', (variant) => {
-      fixture.componentRef.setInput('variant', variant);
+      fixture.componentRef.setInput('color', variant);
       fixture.detectChanges();
 
       const track = getProgressTrack();

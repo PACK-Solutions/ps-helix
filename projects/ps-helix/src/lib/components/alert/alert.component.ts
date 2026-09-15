@@ -39,7 +39,7 @@ const DEFAULT_CONFIG = {
 export class PshAlertComponent {
 
   // Inputs
-  type = input<AlertType>(DEFAULT_CONFIG.type);
+  color = input<AlertType>(DEFAULT_CONFIG.type);
   iconPosition = input<IconPosition>(DEFAULT_CONFIG.iconPosition);
   closable = input(DEFAULT_CONFIG.closable);
   size = input<AlertSize>(DEFAULT_CONFIG.size);
@@ -55,20 +55,20 @@ export class PshAlertComponent {
   closed = output<void>();
 
   // Computed values
-  defaultIcon = computed(() => DEFAULT_ICONS[this.type()] || 'info');
+  defaultIcon = computed(() => DEFAULT_ICONS[this.color()] || 'info');
   getIcon = computed(() => this.icon() || this.defaultIcon());
 
   computedAriaLive = computed(() => 
-    this.ariaLive() || (['warning', 'danger'].includes(this.type()) ? 'assertive' : 'polite')
+    this.ariaLive() || (['warning', 'danger'].includes(this.color()) ? 'assertive' : 'polite')
   );
 
   computedRole = computed(() => 
-    this.role() || (['warning', 'danger'].includes(this.type()) ? 'alert' : 'status')
+    this.role() || (['warning', 'danger'].includes(this.color()) ? 'alert' : 'status')
   );
 
   state = computed(() => {
     if (this.closable()) return 'closable';
-    return this.type();
+    return this.color();
   });
 
   handleClose(): void {

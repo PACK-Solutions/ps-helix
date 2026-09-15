@@ -23,7 +23,7 @@ export class PshTagComponent implements AfterContentChecked {
   private readonly elementRef = inject(ElementRef);
   private readonly projectedText = signal('');
 
-  readonly variant = input<TagVariant>(this.config.variant ?? 'primary');
+  readonly color = input<TagVariant>(this.config.color ?? 'primary');
   readonly size = input<TagSize>(this.config.size ?? 'medium');
   readonly closable = input(this.config.closable ?? false);
   readonly disabled = input(this.config.disabled ?? false);

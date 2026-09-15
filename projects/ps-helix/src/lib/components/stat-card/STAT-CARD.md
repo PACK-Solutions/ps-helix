@@ -50,7 +50,7 @@ export class MyComponent {}
   value="12,847"
   description="Revenus mensuels"
   icon="currency-eur"
-  tagVariant="success"
+  tagColor="success"
   tagLabel="+12.6%"
 >
 </psh-stat-card>
@@ -253,7 +253,7 @@ Le tag affiche un indicateur d'evolution avec une couleur semantique. La couleur
   value="45,230"
   description="Chiffre d'affaires"
   icon="chart-line-up"
-  tagVariant="success"
+  tagColor="success"
   tagLabel="+23.5%"
 >
 </psh-stat-card>
@@ -263,7 +263,7 @@ Le tag affiche un indicateur d'evolution avec une couleur semantique. La couleur
   value="127"
   description="Tickets ouverts"
   icon="ticket"
-  tagVariant="danger"
+  tagColor="danger"
   tagLabel="+15"
 >
 </psh-stat-card>
@@ -273,7 +273,7 @@ Le tag affiche un indicateur d'evolution avec une couleur semantique. La couleur
   value="3"
   description="Jours restants"
   icon="calendar"
-  tagVariant="warning"
+  tagColor="warning"
   tagLabel="Urgent"
 >
 </psh-stat-card>
@@ -289,7 +289,7 @@ Vous pouvez surcharger le gradient automatique avec une couleur personnalisee.
   description="Progression"
   icon="trophy"
   iconBackground="linear-gradient(135deg, #FFD700, #FFA500)"
-  tagVariant="success"
+  tagColor="success"
   tagLabel="Complete"
 >
 </psh-stat-card>
@@ -358,7 +358,7 @@ Desactive la carte avec opacite reduite et interactions bloquees.
     value="12,847"
     description="Revenus"
     icon="currency-eur"
-    tagVariant="success"
+    tagColor="success"
     tagLabel="+12.6%"
     [hoverable]="true"
   >
@@ -368,7 +368,7 @@ Desactive la carte avec opacite reduite et interactions bloquees.
     value="1,234"
     description="Utilisateurs"
     icon="users"
-    tagVariant="success"
+    tagColor="success"
     tagLabel="+8.2%"
     [hoverable]="true"
   >
@@ -378,7 +378,7 @@ Desactive la carte avec opacite reduite et interactions bloquees.
     value="89%"
     description="Satisfaction"
     icon="smiley"
-    tagVariant="primary"
+    tagColor="primary"
     tagLabel="Stable"
     [hoverable]="true"
   >
@@ -388,7 +388,7 @@ Desactive la carte avec opacite reduite et interactions bloquees.
     value="156"
     description="Commandes"
     icon="shopping-cart"
-    tagVariant="warning"
+    tagColor="warning"
     tagLabel="-3.1%"
     [hoverable]="true"
   >
@@ -413,7 +413,7 @@ Desactive la carte avec opacite reduite et interactions bloquees.
       value="24"
       description="Messages non lus"
       icon="envelope"
-      tagVariant="danger"
+      tagColor="danger"
       tagLabel="Nouveau"
       [interactive]="true"
       [hoverable]="true"
@@ -441,7 +441,7 @@ export class InboxComponent {
       [value]="stats()?.revenue"
       description="Revenus du mois"
       icon="chart-bar"
-      [tagVariant]="stats()?.trend > 0 ? 'success' : 'danger'"
+      [tagColor]="stats()?.trend > 0 ? 'success' : 'danger'"
       [tagLabel]="formatTrend(stats()?.trend)"
     >
     </psh-stat-card>
@@ -467,7 +467,7 @@ export class RevenueCardComponent {
     value="99.9%"
     description="Uptime"
     icon="check-circle"
-    tagVariant="success"
+    tagColor="success"
     tagLabel="Excellent"
     variant="outlined"
   >
@@ -484,7 +484,7 @@ export class RevenueCardComponent {
       [value]="stat.value"
       [description]="stat.label"
       [icon]="stat.icon"
-      [tagVariant]="stat.variant"
+      [tagColor]="stat.variant"
       [tagLabel]="stat.change"
       [rowDirection]="true"
       variant="outlined"

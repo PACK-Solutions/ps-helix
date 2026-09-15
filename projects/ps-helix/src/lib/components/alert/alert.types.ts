@@ -1,7 +1,12 @@
+import { PshColor } from '../../types/semantic.types';
 /**
  * Types d'alertes disponibles
  */
-export type AlertType = 'info' | 'success' | 'warning' | 'danger';
+/**
+ * @deprecated since 7.0.0 — use {@link PshColor}. Every component now shares one
+ * semantic colour union, so this alias exists only to ease the migration.
+ */
+export type AlertType = PshColor;
 
 /**
  * Positions possibles de l'icône
@@ -29,7 +34,7 @@ export interface AlertLabels {
  */
 export interface AlertConfig {
   /** Type de l'alerte */
-  type: AlertType;
+  color: AlertType;
   /** Position de l'icône */
   iconPosition: IconPosition;
   /** Indique si l'alerte peut être fermée */

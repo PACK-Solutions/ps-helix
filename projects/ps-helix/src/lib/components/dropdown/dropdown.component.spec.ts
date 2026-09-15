@@ -713,7 +713,7 @@ describe('PshDropdownComponent', () => {
       ['primary'],
       ['secondary']
     ])('should apply %s variant class to trigger', (variant) => {
-      fixture.componentRef.setInput('variant', variant);
+      fixture.componentRef.setInput('color', variant);
       fixture.detectChanges();
 
       expect(getTrigger().classList.contains(variant)).toBe(true);

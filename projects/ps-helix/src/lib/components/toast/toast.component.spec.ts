@@ -51,7 +51,7 @@ describe('PshToastComponent', () => {
 
   describe('Content rendering', () => {
     it('should render toast message when service.show() is called', () => {
-      toastService.show({ message: 'Test notification', type: 'info' });
+      toastService.show({ message: 'Test notification', color: 'info' });
       fixture.detectChanges();
 
       const toasts = getToastItems();
@@ -60,7 +60,7 @@ describe('PshToastComponent', () => {
     });
 
     it('should display decorative icon by default', () => {
-      toastService.show({ message: 'Test message', type: 'info' });
+      toastService.show({ message: 'Test message', color: 'info' });
       fixture.detectChanges();
 
       const toast = getToastItems()[0]!;
@@ -75,7 +75,7 @@ describe('PshToastComponent', () => {
       toastService = TestBed.inject(PshToastService);
       fixture.detectChanges();
 
-      toastService.show({ message: 'Test message', type: 'info' });
+      toastService.show({ message: 'Test message', color: 'info' });
       fixture.detectChanges();
 
       const toast = getToastItems()[0]!;
@@ -86,7 +86,7 @@ describe('PshToastComponent', () => {
     });
 
     it('should show close button by default', () => {
-      toastService.show({ message: 'Test message', type: 'info' });
+      toastService.show({ message: 'Test message', color: 'info' });
       fixture.detectChanges();
 
       const toast = getToastItems()[0]!;
@@ -100,7 +100,7 @@ describe('PshToastComponent', () => {
       toastService = TestBed.inject(PshToastService);
       fixture.detectChanges();
 
-      toastService.show({ message: 'Test message', type: 'info' });
+      toastService.show({ message: 'Test message', color: 'info' });
       fixture.detectChanges();
 
       const toast = getToastItems()[0]!;
@@ -108,7 +108,7 @@ describe('PshToastComponent', () => {
     });
 
     it('should hide close button when toast.showCloseButton is false', () => {
-      toastService.show({ message: 'Test message', type: 'info', showCloseButton: false });
+      toastService.show({ message: 'Test message', color: 'info', showCloseButton: false });
       fixture.detectChanges();
 
       const toast = getToastItems()[0]!;
@@ -142,7 +142,7 @@ describe('PshToastComponent', () => {
     });
 
     it('should have toast items with role="alert"', () => {
-      toastService.show({ message: 'Test', type: 'info' });
+      toastService.show({ message: 'Test', color: 'info' });
       fixture.detectChanges();
 
       const toast = getToastItems()[0]!;
@@ -150,7 +150,7 @@ describe('PshToastComponent', () => {
     });
 
     it('should have toast items with aria-live="polite"', () => {
-      toastService.show({ message: 'Test', type: 'info' });
+      toastService.show({ message: 'Test', color: 'info' });
       fixture.detectChanges();
 
       const toast = getToastItems()[0]!;
@@ -158,7 +158,7 @@ describe('PshToastComponent', () => {
     });
 
     it('should have toast items with aria-atomic="true"', () => {
-      toastService.show({ message: 'Test', type: 'info' });
+      toastService.show({ message: 'Test', color: 'info' });
       fixture.detectChanges();
 
       const toast = getToastItems()[0]!;
@@ -166,7 +166,7 @@ describe('PshToastComponent', () => {
     });
 
     it('should have close button with accessible aria-label', () => {
-      toastService.show({ message: 'Test', type: 'info' });
+      toastService.show({ message: 'Test', color: 'info' });
       fixture.detectChanges();
 
       const toast = getToastItems()[0]!;
@@ -175,7 +175,7 @@ describe('PshToastComponent', () => {
     });
 
     it('should support custom closeButtonAriaLabel from toast', () => {
-      toastService.show({ message: 'Test', type: 'info', closeButtonAriaLabel: 'Fermer' });
+      toastService.show({ message: 'Test', color: 'info', closeButtonAriaLabel: 'Fermer' });
       fixture.detectChanges();
 
       const toast = getToastItems()[0]!;
@@ -190,7 +190,7 @@ describe('PshToastComponent', () => {
       toastService = TestBed.inject(PshToastService);
       fixture.detectChanges();
 
-      toastService.show({ message: 'Test', type: 'info' });
+      toastService.show({ message: 'Test', color: 'info' });
       fixture.detectChanges();
 
       const toast = getToastItems()[0]!;
@@ -199,7 +199,7 @@ describe('PshToastComponent', () => {
     });
 
     it('should have close button with type="button"', () => {
-      toastService.show({ message: 'Test', type: 'info' });
+      toastService.show({ message: 'Test', color: 'info' });
       fixture.detectChanges();
 
       const toast = getToastItems()[0]!;
@@ -208,7 +208,7 @@ describe('PshToastComponent', () => {
     });
 
     it('should have icon with aria-hidden="true"', () => {
-      toastService.show({ message: 'Test', type: 'info' });
+      toastService.show({ message: 'Test', color: 'info' });
       fixture.detectChanges();
 
       const toast = getToastItems()[0]!;
@@ -219,7 +219,7 @@ describe('PshToastComponent', () => {
 
   describe('Dismiss behavior', () => {
     it('should remove toast when close button is clicked', () => {
-      toastService.show({ message: 'Test', type: 'info' });
+      toastService.show({ message: 'Test', color: 'info' });
       fixture.detectChanges();
 
       expect(getToastItems().length).toBe(1);
@@ -232,8 +232,8 @@ describe('PshToastComponent', () => {
     });
 
     it('should dismiss most recent toast on Escape key', () => {
-      toastService.show({ message: 'First', type: 'info' });
-      toastService.show({ message: 'Second', type: 'success' });
+      toastService.show({ message: 'First', color: 'info' });
+      toastService.show({ message: 'Second', color: 'success' });
       fixture.detectChanges();
 
       expect(getToastItems().length).toBe(2);
@@ -260,7 +260,7 @@ describe('PshToastComponent', () => {
     it('should auto-dismiss toast after duration', () => {
       jest.useFakeTimers();
 
-      toastService.show({ message: 'Test', type: 'info', duration: 3000 });
+      toastService.show({ message: 'Test', color: 'info', duration: 3000 });
       fixture.detectChanges();
 
       expect(getToastItems().length).toBe(1);
@@ -276,7 +276,7 @@ describe('PshToastComponent', () => {
     it('should not auto-dismiss toast when duration is 0', () => {
       jest.useFakeTimers();
 
-      toastService.show({ message: 'Test', type: 'info', duration: 0 });
+      toastService.show({ message: 'Test', color: 'info', duration: 0 });
       fixture.detectChanges();
 
       expect(getToastItems().length).toBe(1);
@@ -294,7 +294,7 @@ describe('PshToastComponent', () => {
     it('should pause auto-dismiss on mouseenter', () => {
       jest.useFakeTimers();
 
-      toastService.show({ message: 'Test', type: 'info', duration: 3000 });
+      toastService.show({ message: 'Test', color: 'info', duration: 3000 });
       fixture.detectChanges();
 
       const toast = getToastItems()[0]!;
@@ -312,7 +312,7 @@ describe('PshToastComponent', () => {
     it('should resume auto-dismiss on mouseleave', () => {
       jest.useFakeTimers();
 
-      toastService.show({ message: 'Test', type: 'info', duration: 3000 });
+      toastService.show({ message: 'Test', color: 'info', duration: 3000 });
       fixture.detectChanges();
 
       const toast = getToastItems()[0]!;
@@ -341,7 +341,7 @@ describe('PshToastComponent', () => {
       toastService = TestBed.inject(PshToastService);
       fixture.detectChanges();
 
-      toastService.show({ message: 'Test', type: 'info', duration: 3000 });
+      toastService.show({ message: 'Test', color: 'info', duration: 3000 });
       fixture.detectChanges();
 
       const toast = getToastItems()[0]!;
@@ -374,7 +374,7 @@ describe('PshToastComponent', () => {
 
   describe('Service integration', () => {
     it('should display toast from show()', () => {
-      toastService.show({ message: 'Show test', type: 'info' });
+      toastService.show({ message: 'Show test', color: 'info' });
       fixture.detectChanges();
 
       expect(getToastItems().length).toBe(1);
@@ -382,7 +382,7 @@ describe('PshToastComponent', () => {
     });
 
     it('should remove toast from remove()', () => {
-      const id = toastService.show({ message: 'Test', type: 'info' });
+      const id = toastService.show({ message: 'Test', color: 'info' });
       fixture.detectChanges();
 
       expect(getToastItems().length).toBe(1);
@@ -448,17 +448,17 @@ describe('PshToastComponent', () => {
 
   describe('Multiple toasts', () => {
     it('should render multiple toasts simultaneously', () => {
-      toastService.show({ message: 'First', type: 'info' });
-      toastService.show({ message: 'Second', type: 'success' });
-      toastService.show({ message: 'Third', type: 'warning' });
+      toastService.show({ message: 'First', color: 'info' });
+      toastService.show({ message: 'Second', color: 'success' });
+      toastService.show({ message: 'Third', color: 'warning' });
       fixture.detectChanges();
 
       expect(getToastItems().length).toBe(3);
     });
 
     it('should render each toast with unique content', () => {
-      toastService.show({ message: 'First', type: 'info' });
-      toastService.show({ message: 'Second', type: 'success' });
+      toastService.show({ message: 'First', color: 'info' });
+      toastService.show({ message: 'Second', color: 'success' });
       fixture.detectChanges();
 
       const toasts = getToastItems();
@@ -468,9 +468,9 @@ describe('PshToastComponent', () => {
     });
 
     it('should dismiss toasts independently', () => {
-      toastService.show({ message: 'First', type: 'info' });
-      const secondId = toastService.show({ message: 'Second', type: 'success' });
-      toastService.show({ message: 'Third', type: 'warning' });
+      toastService.show({ message: 'First', color: 'info' });
+      const secondId = toastService.show({ message: 'Second', color: 'success' });
+      toastService.show({ message: 'Third', color: 'warning' });
       fixture.detectChanges();
 
       toastService.remove(secondId);

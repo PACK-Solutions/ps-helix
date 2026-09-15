@@ -58,7 +58,7 @@
               <div horizontal-header>
                 <div class="product-header">
                   <h4 class="product-title">{{ product.name }}</h4>
-                  <psh-tag [variant]="product.stock === 'En stock' ? 'success' : 'warning'" [size]="'small'">
+                  <psh-tag [color]="product.stock === 'En stock' ? 'success' : 'warning'" [size]="'small'">
                     {{ product.stock }}
                   </psh-tag>
                 </div>
@@ -69,8 +69,8 @@
                 <span class="product-price">{{ product.price }}</span>
               </div>
               <div horizontal-actions>
-                <psh-button [variant]="'primary'">Acheter</psh-button>
-                <psh-button [appearance]="'outline'" [variant]="'secondary'">Détails</psh-button>
+                <psh-button [color]="'primary'">Acheter</psh-button>
+                <psh-button [appearance]="'outline'" [color]="'secondary'">Détails</psh-button>
               </div>
             </psh-horizontal-card>
           }
@@ -109,7 +109,7 @@
               <div horizontal-header>
                 <div class="user-header">
                   <h4 class="user-name">{{ user.name }}</h4>
-                  <psh-tag [variant]="user.status === 'Actif' ? 'success' : 'secondary'" [size]="'small'">
+                  <psh-tag [color]="user.status === 'Actif' ? 'success' : 'secondary'" [size]="'small'">
                     {{ user.status }}
                   </psh-tag>
                 </div>
@@ -130,8 +130,8 @@
                 </div>
               </div>
               <div horizontal-actions>
-                <psh-button [variant]="'primary'">Contacter</psh-button>
-                <psh-button [appearance]="'text'" [variant]="'secondary'">Voir profil</psh-button>
+                <psh-button [color]="'primary'">Contacter</psh-button>
+                <psh-button [appearance]="'text'" [color]="'secondary'">Voir profil</psh-button>
               </div>
             </psh-horizontal-card>
           }
@@ -164,7 +164,7 @@
               </div>
               <div horizontal-header>
                 <div class="article-header">
-                  <psh-tag [variant]="'primary'" [size]="'small'">{{ article.category }}</psh-tag>
+                  <psh-tag [color]="'primary'" [size]="'small'">{{ article.category }}</psh-tag>
                 </div>
               </div>
               <h4 class="article-title">{{ article.title }}</h4>
@@ -180,8 +180,8 @@
                 </span>
               </div>
               <div horizontal-actions>
-                <psh-button [variant]="'primary'">Lire l'article</psh-button>
-                <psh-button [appearance]="'text'" [variant]="'secondary'">Partager</psh-button>
+                <psh-button [color]="'primary'">Lire l'article</psh-button>
+                <psh-button [appearance]="'text'" [color]="'secondary'">Partager</psh-button>
               </div>
             </psh-horizontal-card>
           }
@@ -277,7 +277,7 @@
               </div>
               <p>Cette carte est désactivée et ne peut pas être cliquée.</p>
               <div horizontal-actions>
-                <psh-button [variant]="'primary'" [disabled]="true">Action</psh-button>
+                <psh-button [color]="'primary'" [disabled]="true">Action</psh-button>
               </div>
             </psh-horizontal-card>
           </div>

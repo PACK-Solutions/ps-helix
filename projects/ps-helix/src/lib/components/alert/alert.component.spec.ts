@@ -86,14 +86,14 @@ describe('PshAlertComponent', () => {
         ['warning', 'alert'],
         ['danger', 'alert']
       ])('type "%s" should have role="%s"', (type, expectedRole) => {
-        fixture.componentRef.setInput('type', type);
+        fixture.componentRef.setInput('color', type);
         fixture.detectChanges();
 
         expect(getAlertRegion().getAttribute('role')).toBe(expectedRole);
       });
 
       it('should allow overriding role', () => {
-        fixture.componentRef.setInput('type', 'info');
+        fixture.componentRef.setInput('color', 'info');
         fixture.componentRef.setInput('role', 'alert');
         fixture.detectChanges();
 
@@ -108,14 +108,14 @@ describe('PshAlertComponent', () => {
         ['warning', 'assertive'],
         ['danger', 'assertive']
       ])('type "%s" should have aria-live="%s"', (type, expectedLive) => {
-        fixture.componentRef.setInput('type', type);
+        fixture.componentRef.setInput('color', type);
         fixture.detectChanges();
 
         expect(getAlertRegion().getAttribute('aria-live')).toBe(expectedLive);
       });
 
       it('should allow overriding aria-live', () => {
-        fixture.componentRef.setInput('type', 'info');
+        fixture.componentRef.setInput('color', 'info');
         fixture.componentRef.setInput('ariaLive', 'assertive');
         fixture.detectChanges();
 
@@ -141,7 +141,7 @@ describe('PshAlertComponent', () => {
     it.each<[AlertType]>([['info'], ['success'], ['warning'], ['danger']])(
       'should have data-state="%s" for type "%s" when not closable',
       (type) => {
-        fixture.componentRef.setInput('type', type);
+        fixture.componentRef.setInput('color', type);
         fixture.detectChanges();
 
         expect(getAlertRegion().getAttribute('data-state')).toBe(type);

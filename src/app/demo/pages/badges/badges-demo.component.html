@@ -14,7 +14,7 @@
         <div class="variants-grid">
           <div class="variant-card">
             <div class="variant-preview">
-              <psh-badge variant="primary" displayType="text">
+              <psh-badge color="primary" displayType="text">
                 {{ 'BADGE.STATUS.IN_PROGRESS' | translate }}
               </psh-badge>
             </div>
@@ -27,7 +27,7 @@
 
           <div class="variant-card">
             <div class="variant-preview">
-              <psh-badge variant="success" displayType="text">
+              <psh-badge color="success" displayType="text">
                 {{ 'BADGE.STATUS.ACTIVE' | translate }}
               </psh-badge>
             </div>
@@ -40,7 +40,7 @@
 
           <div class="variant-card">
             <div class="variant-preview">
-              <psh-badge variant="warning" displayType="text">
+              <psh-badge color="warning" displayType="text">
                 {{ 'BADGE.STATUS.PENDING' | translate }}
               </psh-badge>
             </div>
@@ -53,7 +53,7 @@
 
           <div class="variant-card">
             <div class="variant-preview">
-              <psh-badge variant="danger" displayType="text">
+              <psh-badge color="danger" displayType="text">
                 {{ 'BADGE.STATUS.INACTIVE' | translate }}
               </psh-badge>
             </div>
@@ -66,7 +66,7 @@
 
           <div class="variant-card">
             <div class="variant-preview">
-              <psh-badge variant="disabled" displayType="text">
+              <psh-badge color="neutral" [disabled]="true" displayType="text">
                 {{ 'BADGE.STATUS.DISABLED' | translate }}
               </psh-badge>
             </div>
@@ -91,7 +91,7 @@
           <div class="type-card">
             <div class="type-preview">
               <psh-badge
-                variant="primary"
+                color="primary"
                 displayType="dot"
                 ariaLabel="Statut actif"
               ></psh-badge>
@@ -108,7 +108,7 @@
           <div class="type-card">
             <div class="type-preview">
               <psh-badge
-                variant="primary"
+                color="primary"
                 displayType="counter"
                 [value]="demoValues.notifications"
                 ariaLabel="5 notifications"
@@ -126,7 +126,7 @@
           <div class="type-card">
             <div class="type-preview">
               <psh-badge
-                variant="success"
+                color="success"
                 displayType="text"
               >Nouveau</psh-badge>
             </div>
@@ -153,7 +153,7 @@
           <div class="size-card">
             <div class="size-preview">
               <psh-badge
-                variant="primary"
+                color="primary"
                 displayType="text"
                 size="small"
               >Small</psh-badge>
@@ -170,7 +170,7 @@
           <div class="size-card">
             <div class="size-preview">
               <psh-badge
-                variant="primary"
+                color="primary"
                 displayType="text"
                 size="medium"
               >Medium</psh-badge>
@@ -187,7 +187,7 @@
           <div class="size-card">
             <div class="size-preview">
               <psh-badge
-                variant="primary"
+                color="primary"
                 displayType="text"
                 size="large"
               >Large</psh-badge>
@@ -215,7 +215,7 @@
           <div class="format-card">
             <div class="format-preview">
               <psh-badge
-                variant="primary"
+                color="primary"
                 displayType="counter"
                 [value]="demoValues.price"
                 [formatter]="priceFormatter"
@@ -232,7 +232,7 @@
           <div class="format-card">
             <div class="format-preview">
               <psh-badge
-                variant="primary"
+                color="primary"
                 displayType="counter"
                 [value]="demoValues.messages"
                 [formatter]="numberFormatter"
@@ -249,7 +249,7 @@
           <div class="format-card">
             <div class="format-preview">
               <psh-badge
-                variant="success"
+                color="success"
                 displayType="counter"
                 [value]="demoValues.progress"
                 [formatter]="percentageFormatter"
@@ -280,7 +280,7 @@
                 <div class="icon-wrapper">
                   <i class="ph ph-bell"></i>
                   <psh-badge
-                    variant="danger"
+                    color="danger"
                     displayType="counter"
                     [value]="3"
                     [overlap]="true"
@@ -295,7 +295,7 @@
                 <div class="icon-wrapper">
                   <i class="ph ph-envelope"></i>
                   <psh-badge
-                    variant="primary"
+                    color="primary"
                     displayType="counter"
                     [value]="demoValues.messages"
                     [overlap]="true"
@@ -311,7 +311,7 @@
                 <div class="icon-wrapper">
                   <i class="ph ph-user"></i>
                   <psh-badge
-                    variant="success"
+                    color="success"
                     displayType="dot"
                     [overlap]="true"
                     position="bottom-right"
@@ -325,7 +325,7 @@
                 <div class="icon-wrapper">
                   <i class="ph ph-shopping-cart"></i>
                   <psh-badge
-                    variant="primary"
+                    color="primary"
                     displayType="counter"
                     [value]="7"
                     [overlap]="true"

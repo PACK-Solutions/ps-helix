@@ -51,6 +51,15 @@
   background: var(--psh-danger-color);
 }
 
+/* info and neutral complete the shared colour union introduced in 7.0.0. */
+.progress-track.info {
+  background: var(--psh-info-color);
+}
+
+.progress-track.neutral {
+  background: var(--psh-neutral-color);
+}
+
 /* Sizes */
 :host.small .progressbar {
   height: var(--psh-progressbar-height-sm, var(--psh-size-1));

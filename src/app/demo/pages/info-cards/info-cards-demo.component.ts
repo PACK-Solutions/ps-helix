@@ -140,7 +140,7 @@ const rows: InfoCardData[] = [
   icon="folder"
 >
   <div card-header-actions>
-    <psh-badge variant="success">Actif</psh-badge>
+    <psh-badge color="success">Actif</psh-badge>
   </div>
 </psh-info-card>`;
 
@@ -151,10 +151,10 @@ const rows: InfoCardData[] = [
   icon="package"
 >
   <div card-header-actions>
-    <psh-badge variant="warning">En cours</psh-badge>
+    <psh-badge color="warning">En cours</psh-badge>
   </div>
   <div card-actions>
-    <psh-button variant="primary">Suivre</psh-button>
+    <psh-button color="primary">Suivre</psh-button>
   </div>
 </psh-info-card>`;
 

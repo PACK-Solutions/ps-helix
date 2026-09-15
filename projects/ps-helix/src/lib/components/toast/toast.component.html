@@ -7,7 +7,7 @@
   @for (toast of toasts(); track toast.id) {
     <div
       class="toast-item"
-      [class]="toast.type"
+      [class]="toast.color"
       role="alert"
       aria-live="polite"
       aria-atomic="true"
@@ -17,7 +17,7 @@
     >
       @if (config.showIcon !== false) {
         <i
-          class="ph ph-{{ toast.icon || getDefaultIcon(toast.type) }} toast-icon"
+          class="ph ph-{{ toast.icon || getDefaultIcon(toast.color) }} toast-icon"
           aria-hidden="true"
         ></i>
       }

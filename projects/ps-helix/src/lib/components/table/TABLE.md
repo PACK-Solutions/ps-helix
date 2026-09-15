@@ -71,7 +71,7 @@ const data: TableRow[] = [
 
   <!-- Template pour la colonne status -->
   <ng-template #statusTemplate let-row>
-    <psh-tag [variant]="row.statusVariant">
+    <psh-tag [color]="row.statusVariant">
       {{ row.status }}
     </psh-tag>
   </ng-template>
@@ -321,7 +321,7 @@ Le composant table permet de personnaliser le rendu de chaque colonne via des te
 2. **Création du Template**
    ```html
    <ng-template #statusTemplate let-row>
-     <psh-tag [variant]="row.statusVariant">
+     <psh-tag [color]="row.statusVariant">
        {{ row.status }}
      </psh-tag>
    </ng-template>
@@ -369,7 +369,7 @@ Le composant table permet de personnaliser le rendu de chaque colonne via des te
        <psh-button icon="edit" (click)="editUser(row)">
          Modifier
        </psh-button>
-       <psh-button icon="trash" variant="danger">
+       <psh-button icon="trash" color="danger">
          Supprimer
        </psh-button>
      </div>
@@ -377,7 +377,7 @@ Le composant table permet de personnaliser le rendu de chaque colonne via des te
 
    // Status avec tag
    <ng-template #statusTemplate let-row>
-     <psh-tag [variant]="getStatusVariant(row.status)">
+     <psh-tag [color]="getStatusVariant(row.status)">
        {{ row.status }}
      </psh-tag>
    </ng-template>

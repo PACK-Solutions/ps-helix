@@ -23,7 +23,7 @@ import { PshProgressbarComponent } from 'ps-helix';
 ```html
 <psh-progressbar
   [value]="75"
-  variant="success"
+  color="success"
 ></psh-progressbar>
 ```
 
@@ -121,7 +121,7 @@ import { PshProgressbarComponent } from 'ps-helix';
     <psh-progressbar
       [value]="progress()"
       [max]="100"
-      variant="primary"
+      color="primary"
       size="medium"
       [showLabel]="true"
       mode="animated"

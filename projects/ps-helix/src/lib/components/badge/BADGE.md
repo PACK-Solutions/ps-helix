@@ -17,7 +17,7 @@ export class MyComponent {}
 ```typescript
 // Badge numérique
 <psh-badge
-  variant="primary"
+  color="primary"
   [value]="5"
   displayType="counter"
   ariaLabel="5 notifications non lues"
@@ -25,7 +25,7 @@ export class MyComponent {}
 
 // Badge avec formatter personnalisé
 <psh-badge
-  variant="primary"
+  color="primary"
   [value]="price"
   [formatter]="priceFormatter"
   ariaLabel="Prix: 42.99€"
@@ -33,7 +33,7 @@ export class MyComponent {}
 
 // Badge point de statut
 <psh-badge
-  variant="success"
+  color="success"
   displayType="dot"
   ariaLabel="Statut: actif"
 ></psh-badge>
@@ -42,7 +42,7 @@ export class MyComponent {}
 <div style="position: relative">
   <i class="ph ph-bell"></i>
   <psh-badge
-    variant="danger"
+    color="danger"
     [value]="3"
     [overlap]="true"
     position="top-right"
@@ -52,7 +52,7 @@ export class MyComponent {}
 
 // Badge cliquable
 <psh-badge
-  variant="primary"
+  color="primary"
   [value]="10"
   (badgeClick)="handleBadgeClick()"
   ariaLabel="10 nouveaux éléments"
@@ -122,7 +122,7 @@ Badge numérique pour afficher des compteurs.
 
 ```typescript
 <psh-badge
-  variant="danger"
+  color="danger"
   displayType="counter"
   [value]="notificationCount"
   [max]="99"
@@ -141,7 +141,7 @@ Badge en forme de point pour indiquer un statut.
 
 ```typescript
 <psh-badge
-  variant="success"
+  color="success"
   displayType="dot"
   ariaLabel="Utilisateur en ligne"
 ></psh-badge>
@@ -157,7 +157,7 @@ Badge textuel pour afficher des labels.
 - Indicateurs textuels
 
 ```typescript
-<psh-badge variant="warning" displayType="text">
+<psh-badge color="warning" displayType="text">
   Beta
 </psh-badge>
 ```
@@ -180,14 +180,14 @@ export class MyComponent {
 
 ```html
 <psh-badge
-  variant="primary"
+  color="primary"
   displayType="counter"
   [value]="price"
   [formatter]="priceFormatter"
 ></psh-badge>
 
 <psh-badge
-  variant="primary"
+  color="primary"
   displayType="counter"
   [value]="1250"
   [formatter]="numberFormatter"
@@ -210,7 +210,7 @@ export class MyComponent {
 
 ```html
 <psh-badge
-  variant="primary"
+  color="primary"
   [value]="count"
   (badgeClick)="handleBadgeClick()"
   (valueChange)="handleValueChange($event)"
@@ -271,15 +271,15 @@ Le composant gère automatiquement les attributs ARIA :
 
 ```typescript
 // ✅ Bon usage
-<psh-badge variant="danger" [value]="urgentCount" />
-<psh-badge variant="warning" [value]="pendingCount" />
+<psh-badge color="danger" [value]="urgentCount" />
+<psh-badge color="warning" [value]="pendingCount" />
 
 // ❌ Mauvais usage - trop de badges
 <div>
-  <psh-badge variant="primary" [value]="1" />
-  <psh-badge variant="success" [value]="2" />
-  <psh-badge variant="warning" [value]="3" />
-  <psh-badge variant="danger" [value]="4" />
+  <psh-badge color="primary" [value]="1" />
+  <psh-badge color="success" [value]="2" />
+  <psh-badge color="warning" [value]="3" />
+  <psh-badge color="danger" [value]="4" />
 </div>
 ```
 
@@ -338,10 +338,10 @@ Si vous utilisez l'ancienne version avec `model()`:
 
 ```typescript
 // ❌ Ancienne version (model)
-<psh-badge [(variant)]="myVariant" />
+<psh-badge [(color)]="myVariant" />
 
 // ✅ Nouvelle version (input)
-<psh-badge [variant]="myVariant" />
+<psh-badge [color]="myVariant" />
 ```
 
 Le two-way binding avec `model()` a été supprimé car non nécessaire pour un composant de présentation. Utilisez les outputs si vous avez besoin de réagir aux interactions.

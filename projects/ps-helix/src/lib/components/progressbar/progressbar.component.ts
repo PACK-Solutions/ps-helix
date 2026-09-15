@@ -37,7 +37,7 @@ export class PshProgressbarComponent {
   max = model(this.config.max ?? 100);
 
   // Regular inputs
-  variant = input<ProgressbarVariant>(this.config.variant ?? 'primary');
+  color = input<ProgressbarVariant>(this.config.color ?? 'primary');
   size = input<ProgressbarSize>(this.config.size ?? 'medium');
   showLabel = input(this.config.showLabel ?? true);
   mode = input<ProgressbarMode>(this.config.mode ?? 'default');

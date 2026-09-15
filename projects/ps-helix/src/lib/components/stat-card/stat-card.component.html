@@ -31,7 +31,7 @@
           <p class="stat-description">{{ displayDescription }}</p>
 
           @if (hasTag()) {
-            <psh-tag [variant]="displayTagVariant!">
+            <psh-tag [color]="displayTagVariant!">
               {{ displayTagLabel }}
             </psh-tag>
           }
@@ -49,7 +49,7 @@
         <p class="stat-description">{{ displayDescription }}</p>
 
         @if (hasTag()) {
-          <psh-tag [variant]="displayTagVariant!">
+          <psh-tag [color]="displayTagVariant!">
             {{ displayTagLabel }}
           </psh-tag>
         }

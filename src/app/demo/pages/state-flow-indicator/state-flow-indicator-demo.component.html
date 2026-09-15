@@ -34,7 +34,7 @@
           <div class="demo-controls">
             <psh-button
               appearance="text"
-              variant="primary"
+              color="primary"
               [disabled]="basicActiveStep() === 0"
               (clicked)="goToPreviousBasic()"
             >
@@ -42,7 +42,7 @@
             </psh-button>
             <psh-button
               appearance="filled"
-              variant="primary"
+              color="primary"
               [disabled]="basicActiveStep() >= 3"
               (clicked)="completeCurrentAndNext()"
             >
@@ -50,7 +50,7 @@
             </psh-button>
             <psh-button
               appearance="outline"
-              variant="secondary"
+              color="secondary"
               (clicked)="resetBasic()"
             >
               Recommencer
@@ -88,21 +88,21 @@
           <div class="demo-controls">
             <psh-button
               appearance="outline"
-              [variant]="statesStep2Warning() ? 'warning' : 'secondary'"
+              [color]="statesStep2Warning() ? 'warning' : 'secondary'"
               (clicked)="toggleWarning()"
             >
               {{ statesStep2Warning() ? 'Retirer warning' : 'Ajouter warning' }}
             </psh-button>
             <psh-button
               appearance="outline"
-              [variant]="statesStep3Error() ? 'danger' : 'secondary'"
+              [color]="statesStep3Error() ? 'danger' : 'secondary'"
               (clicked)="toggleError()"
             >
               {{ statesStep3Error() ? 'Retirer erreur' : 'Ajouter erreur' }}
             </psh-button>
             <psh-button
               appearance="outline"
-              variant="primary"
+              color="primary"
               [disabled]="statesStep4Loading()"
               (clicked)="simulateLoading()"
             >

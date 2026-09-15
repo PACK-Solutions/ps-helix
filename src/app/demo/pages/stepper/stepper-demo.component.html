@@ -25,7 +25,7 @@
                   <h4>Informations Personnelles</h4>
                   <p>Collectez les informations de base de l'utilisateur. Cette première étape établit le contexte du processus.</p>
                   <div class="step-actions">
-                    <psh-button appearance="filled" variant="primary" (clicked)="nextStep()">
+                    <psh-button appearance="filled" color="primary" (clicked)="nextStep()">
                       Suivant
                     </psh-button>
                   </div>
@@ -37,10 +37,10 @@
                   <h4>Configuration du Compte</h4>
                   <p>Configurez les paramètres essentiels. Les utilisateurs peuvent personnaliser leur expérience.</p>
                   <div class="step-actions">
-                    <psh-button appearance="text" variant="primary" (clicked)="previousStep()">
+                    <psh-button appearance="text" color="primary" (clicked)="previousStep()">
                       Retour
                     </psh-button>
-                    <psh-button appearance="filled" variant="primary" (clicked)="nextStep()">
+                    <psh-button appearance="filled" color="primary" (clicked)="nextStep()">
                       Suivant
                     </psh-button>
                   </div>
@@ -52,13 +52,13 @@
                   <h4>Confirmation</h4>
                   <p>Vérifiez et confirmez les informations saisies avant de finaliser le processus.</p>
                   <div class="step-actions">
-                    <psh-button appearance="text" variant="primary" (clicked)="previousStep()">
+                    <psh-button appearance="text" color="primary" (clicked)="previousStep()">
                       Retour
                     </psh-button>
-                    <psh-button appearance="filled" variant="success" (clicked)="completeProcess()">
+                    <psh-button appearance="filled" color="success" (clicked)="completeProcess()">
                       Terminer
                     </psh-button>
-                    <psh-button appearance="outline" variant="secondary" (clicked)="resetBasicStepper()">
+                    <psh-button appearance="outline" color="secondary" (clicked)="resetBasicStepper()">
                       Recommencer
                     </psh-button>
                   </div>
@@ -117,7 +117,7 @@
                   <div class="step-actions">
                     <psh-button
                       appearance="filled"
-                      variant="primary"
+                      color="primary"
                       [disabled]="!step1Form.valid"
                       (clicked)="step1Form.markAllAsTouched(); formNextStep()"
                     >
@@ -147,12 +147,12 @@
                     <input id="country" type="text" formControlName="country">
                   </div>
                   <div class="step-actions">
-                    <psh-button appearance="text" variant="primary" (clicked)="formPreviousStep()">
+                    <psh-button appearance="text" color="primary" (clicked)="formPreviousStep()">
                       Retour
                     </psh-button>
                     <psh-button
                       appearance="filled"
-                      variant="success"
+                      color="success"
                       [disabled]="!step2Form.valid"
                       (clicked)="step2Form.markAllAsTouched(); submitForms()"
                     >
@@ -249,7 +249,7 @@
                       <p>Indicateur de progression visuel pour processus asynchrones.</p>
                       <psh-button
                         appearance="filled"
-                        variant="primary"
+                        color="primary"
                         size="small"
                         [disabled]="isProgressLoading()"
                         (clicked)="simulateProgressLoading()"
@@ -272,7 +272,7 @@
                       <p>Animation de progression pendant les opérations longues.</p>
                       <psh-button
                         appearance="filled"
-                        variant="primary"
+                        color="primary"
                         size="small"
                         [disabled]="isProgressLoading()"
                         (clicked)="simulateProgressLoading()"
@@ -334,12 +334,12 @@
                   <div class="step-actions">
                     <psh-button
                       appearance="filled"
-                      [variant]="progressBarStep1Completed() ? 'secondary' : 'success'"
+                      [color]="progressBarStep1Completed() ? 'secondary' : 'success'"
                       (clicked)="toggleProgressStep1()"
                     >
                       {{ progressBarStep1Completed() ? 'Marquer incomplète' : 'Marquer complétée' }}
                     </psh-button>
-                    <psh-button appearance="filled" variant="primary" (clicked)="progressBarNextStep()">
+                    <psh-button appearance="filled" color="primary" (clicked)="progressBarNextStep()">
                       Suivant
                     </psh-button>
                   </div>
@@ -350,17 +350,17 @@
                   <h4>Deuxième Étape</h4>
                   <p>La barre de progression se met à jour automatiquement grâce aux propriétés calculées.</p>
                   <div class="step-actions">
-                    <psh-button appearance="text" variant="primary" (clicked)="progressBarPreviousStep()">
+                    <psh-button appearance="text" color="primary" (clicked)="progressBarPreviousStep()">
                       Retour
                     </psh-button>
                     <psh-button
                       appearance="filled"
-                      [variant]="progressBarStep2Completed() ? 'secondary' : 'success'"
+                      [color]="progressBarStep2Completed() ? 'secondary' : 'success'"
                       (clicked)="toggleProgressStep2()"
                     >
                       {{ progressBarStep2Completed() ? 'Marquer incomplète' : 'Marquer complétée' }}
                     </psh-button>
-                    <psh-button appearance="filled" variant="primary" (clicked)="progressBarNextStep()">
+                    <psh-button appearance="filled" color="primary" (clicked)="progressBarNextStep()">
                       Suivant
                     </psh-button>
                   </div>
@@ -371,17 +371,17 @@
                   <h4>Dernière Étape</h4>
                   <p>Complétez toutes les étapes pour atteindre 100% de progression.</p>
                   <div class="step-actions">
-                    <psh-button appearance="text" variant="primary" (clicked)="progressBarPreviousStep()">
+                    <psh-button appearance="text" color="primary" (clicked)="progressBarPreviousStep()">
                       Retour
                     </psh-button>
                     <psh-button
                       appearance="filled"
-                      [variant]="progressBarStep3Completed() ? 'secondary' : 'success'"
+                      [color]="progressBarStep3Completed() ? 'secondary' : 'success'"
                       (clicked)="toggleProgressStep3()"
                     >
                       {{ progressBarStep3Completed() ? 'Marquer incomplète' : 'Marquer complétée' }}
                     </psh-button>
-                    <psh-button appearance="outline" variant="secondary" (clicked)="resetProgressBar()">
+                    <psh-button appearance="outline" color="secondary" (clicked)="resetProgressBar()">
                       Recommencer
                     </psh-button>
                   </div>
@@ -449,7 +449,7 @@
                   <div class="step-actions">
                     <psh-button
                       appearance="filled"
-                      variant="primary"
+                      color="primary"
                       (clicked)="errorStepTouched.set(true); errorNextStep()"
                     >
                       Suivant (déclenche erreur si non validé)
@@ -462,10 +462,10 @@
                   <h4>Navigation Réussie</h4>
                   <p>Vous avez correctement validé l'étape précédente et navigué vers cette étape.</p>
                   <div class="step-actions">
-                    <psh-button appearance="text" variant="primary" (clicked)="errorPreviousStep()">
+                    <psh-button appearance="text" color="primary" (clicked)="errorPreviousStep()">
                       Retour
                     </psh-button>
-                    <psh-button appearance="outline" variant="secondary" (clicked)="resetErrorStepper()">
+                    <psh-button appearance="outline" color="secondary" (clicked)="resetErrorStepper()">
                       Recommencer
                     </psh-button>
                   </div>

@@ -48,7 +48,7 @@ export class ExampleComponent {}
 <psh-tag
   icon="star"
   [closable]="true"
-  variant="success"
+  color="success"
   (closed)="onRemove()"
 >
   Favoris
@@ -100,11 +100,11 @@ interface TagConfig {
 ### Variantes de Style
 
 ```html
-<psh-tag variant="primary">Primary</psh-tag>
-<psh-tag variant="secondary">Secondary</psh-tag>
-<psh-tag variant="success">Success</psh-tag>
-<psh-tag variant="warning">Warning</psh-tag>
-<psh-tag variant="danger">Danger</psh-tag>
+<psh-tag color="primary">Primary</psh-tag>
+<psh-tag color="secondary">Secondary</psh-tag>
+<psh-tag color="success">Success</psh-tag>
+<psh-tag color="warning">Warning</psh-tag>
+<psh-tag color="danger">Danger</psh-tag>
 ```
 
 ### Tailles
@@ -122,7 +122,7 @@ interface TagConfig {
   template: `
     <psh-tag
       [interactive]="true"
-      variant="secondary"
+      color="secondary"
       icon="filter"
       (clicked)="applyFilter()"
     >
@@ -145,7 +145,7 @@ export class FilterComponent {
     @for (tag of tags(); track tag.id) {
       <psh-tag
         [closable]="true"
-        variant="primary"
+        color="primary"
         icon="tag"
         (closed)="removeTag(tag.id)"
       >
