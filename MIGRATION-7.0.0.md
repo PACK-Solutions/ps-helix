@@ -7,12 +7,15 @@ Most of it is automated. Run the two codemods, then read the short list of thing
 cannot decide for you.
 
 ```bash
-# 1. Component inputs in templates and TypeScript
+# 1. Component inputs in templates and TypeScript, and CSS classes inside ::ng-deep
 node node_modules/ps-helix/scripts/codemod-7.0.0.mjs src
 
 # 2. CSS custom properties — or skip it and import the compatibility layer instead
 @import 'ps-helix/src/lib/styles/compat.css';
 ```
+
+The codemod prints a `!` line for everything it deliberately left alone. Read those before
+anything else: they are the cases where only you know the answer.
 
 ---
 
@@ -142,8 +145,10 @@ is neither colour nor surface: `psh-tabs` (`underline | pills`), `psh-stepper`
 
 ### If you targeted the classes
 
-The values change, so the classes derived from them change too: `.filled` → `.solid`,
-`.text` → `.ghost`, `.outlined` → `.outline`, `.variant-*` → `.appearance-*`.
+The values change, so the classes derived from them change too — `filled` → `solid`,
+`text` → `ghost`, `outlined` → `outline`, `variant-*` → `appearance-*` — and then §5
+namespaces the result. End to end: `.filled` → `.psh-solid`, `.variant-default` →
+`.psh-appearance-flat`.
 
 ### What the codemod cannot do
 
@@ -151,7 +156,50 @@ The values change, so the classes derived from them change too: `.filled` → `.
 such as `[appearance]="isActive ? 'filled' : 'outline'"` is not: the codemod reports each
 one by file so you can go through them.
 
-## 5. Styling a component from outside
+## 5. Every component class is now `psh-`
+
+The 350 classes the components render are namespaced: `.card-body` → `.psh-card-body`,
+`.stat-value` → `.psh-stat-value`, `.hoverable` → `.psh-hoverable`.
+
+This is not cosmetic. Four components — `psh-card`, `psh-horizontal-card`, `psh-info-card`,
+`psh-stat-card` — render with `ViewEncapsulation.None`, which they need in order to style
+projected content (`.psh-card-body img`, `.psh-card-actions > *`): projected content carries
+the *parent's* encapsulation attribute, so an emulated component cannot reach it. The cost
+was that every class they declared was global, and five of them — `.card`, `.card-header`,
+`.card-body`, `.card-footer`, `.card-title` — are Bootstrap's, verbatim. Any application
+with its own `.card-body` was being restyled by a card it never rendered.
+
+This repository had the bug. The pagination demo page has its own `.stat-card` /
+`.stat-value` markup, and the library's stat-card was styling it.
+
+### What the codemod does, and where it stops
+
+**Inside `::ng-deep`, it rewrites.** `::ng-deep .card-body` exists to pierce into a child
+component, so the class is unambiguously the library's.
+
+```css
+/* before */  :host ::ng-deep .card-body img { border-radius: 0; }
+/* after  */  :host ::ng-deep .psh-card-body img { border-radius: 0; }
+```
+
+**Outside `::ng-deep`, it reports and leaves the rule alone.** A bare `.card-body` is the
+collision itself: it may be the library's class or your own, and nothing in the file says
+which. The codemod prints one line per name and lets you decide — rewriting it would be a
+script guessing about your markup.
+
+```
+!  src/app/stats.component.css: .stat-card is also a ps-helix class now named
+   .psh-stat-card — left as is: only you know whether this rule targets the design
+   system or your own markup
+```
+
+In most cases the answer is *your own markup*, and the correct action is to change nothing:
+the rename is what stops the library from interfering with it.
+
+There is no compatibility layer for classes. An alias would reintroduce the global names
+that are the entire problem.
+
+## 6. Styling a component from outside
 
 Component custom properties used to be declared on the element that consumed them, so
 setting one on the host did nothing:
@@ -174,7 +222,7 @@ The 82 available properties are listed per component in
 If you were reaching in with `::ng-deep` to work around the old behaviour, check whether a
 property now covers your case.
 
-## 6. Smaller changes
+## 7. Smaller changes
 
 - **Dependencies.** `date-fns` is gone (it had zero usages). `@ngx-translate/core` is an
   optional peer with a `>=15` range — if you were held to `^15` by ps-helix, you no longer
