@@ -275,7 +275,7 @@ CSS de votre composant consommateur, **sans `::ng-deep`**.
   gap: var(--spacing-sm);
 }
 .premium-title h3 {
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-base);
   color: var(--text-color-secondary);
   margin: 0;
 }
@@ -507,7 +507,7 @@ Désactive la carte avec opacité réduite et interactions bloquées.
   actionsAlignment="space-between"
 >
   <div card-header-icon>
-    <i class="ph ph-bell" style="font-size: 1.5rem; color: var(--info-color);"></i>
+    <i class="ph ph-bell" style="font-size: 1.5rem; color: var(--blue-500);"></i>
   </div>
 
   <div card-header-extra>

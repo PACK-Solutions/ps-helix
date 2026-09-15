@@ -167,7 +167,7 @@
   }
 
   .alert.small {
-    padding: var(--spacing-2xs) var(--spacing-xs);
+    padding: var(--spacing-xxs) var(--spacing-xs);
   }
 
   .alert.medium {
@@ -183,6 +183,6 @@
   }
 
   .alert-dismiss {
-    padding: var(--spacing-2xs);
+    padding: var(--spacing-xxs);
   }
 }

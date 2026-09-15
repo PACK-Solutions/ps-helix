@@ -207,7 +207,7 @@ tbody tr[tabindex]:focus-visible {
   padding: 0;
   background: transparent;
   border: none;
-  border-radius: var(--border-radius-sm);
+  border-radius: var(--radius-sm);
   cursor: pointer;
   color: var(--text-color-secondary);
   font-size: var(--font-size-base);

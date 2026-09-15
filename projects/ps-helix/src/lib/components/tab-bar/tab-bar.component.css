@@ -112,7 +112,7 @@
 /* Responsive */
 @media (max-width: 640px) {
   .tab-label {
-    font-size: var(--font-size-xxs);
+    font-size: var(--font-size-xs);
   }
 }
 

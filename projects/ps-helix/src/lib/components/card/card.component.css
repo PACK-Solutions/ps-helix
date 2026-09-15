@@ -29,8 +29,11 @@
   border-left: 4px solid var(--blue-500);
 }
 
+/* color-mix on the palette token the border-left already uses, rather than an -rgb
+   triplet that was never defined: the fallback was a literal blue, so these four tints
+   ignored the theme entirely. */
 .card.color-info .card-header {
-  background: rgba(var(--blue-500-rgb, 59, 130, 246), 0.05);
+  background: color-mix(in srgb, var(--blue-500) 5%, transparent);
 }
 
 .card.color-success {
@@ -38,7 +41,7 @@
 }
 
 .card.color-success .card-header {
-  background: rgba(var(--green-500-rgb, 34, 197, 94), 0.05);
+  background: color-mix(in srgb, var(--green-500) 5%, transparent);
 }
 
 .card.color-warning {
@@ -46,7 +49,7 @@
 }
 
 .card.color-warning .card-header {
-  background: rgba(var(--orange-500-rgb, 249, 115, 22), 0.05);
+  background: color-mix(in srgb, var(--orange-500) 5%, transparent);
 }
 
 .card.color-danger {
@@ -54,7 +57,7 @@
 }
 
 .card.color-danger .card-header {
-  background: rgba(var(--red-500-rgb, 239, 68, 68), 0.05);
+  background: color-mix(in srgb, var(--red-500) 5%, transparent);
 }
 
 .card.density-compact {
@@ -279,7 +282,7 @@
 
 .card.interactive:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(var(--primary-500-rgb, 59, 130, 246), 0.2);
+  box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
 }
 
 .card.interactive:focus:not(:focus-visible) {
