@@ -123,6 +123,17 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
   computedAriaLabel = computed(() => this.ariaLabel() || this.label() || this.placeholder());
   passwordToggleLabel = computed(() => this.passwordVisible() ? INPUT_LABELS.hidePassword : INPUT_LABELS.showPassword);
 
+  // Derived from the per-instance inputId: the message ids used to be the constants
+  // 'error-message' / 'success-message' / 'hint-message', so two inputs in error on the
+  // same page produced duplicate ids and a screen reader read the first one's message
+  // for both. Same shape as textarea's describedBy.
+  describedBy = computed(() => {
+    if (this.error()) return `${this.inputId}-error`;
+    if (this.success()) return `${this.inputId}-success`;
+    if (this.hint()) return `${this.inputId}-hint`;
+    return null;
+  });
+
   state = computed(() => this.getState());
 
   private getState(): string {

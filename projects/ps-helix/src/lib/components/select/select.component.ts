@@ -93,6 +93,8 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
   success = input<string | null | undefined>(null);
   hint = input<string | null | undefined>(null);
   ariaLabel = input<string | null>(null);
+  /** Accessible name of the clear button, which renders as a bare icon. */
+  clearLabel = input<string>('Effacer la sélection');
   maxSelections = input<number | undefined>(undefined);
   minSelections = input<number | undefined>(undefined);
   compareWith = input<(a: T, b: T) => boolean>((a, b) => a === b);
