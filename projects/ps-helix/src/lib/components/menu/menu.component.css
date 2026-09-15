@@ -24,14 +24,14 @@
 }
 
 .menu.collapsed {
-  width: 64px;
-  min-width: 64px;
+  width: var(--psh-size-16);
+  min-width: var(--psh-size-16);
 }
 
 /* Variantes */
 .menu.compact .menu-link {
   padding: var(--psh-spacing-xs) var(--psh-spacing-sm);
-  min-height: 36px;
+  min-height: var(--psh-size-9);
   gap: var(--psh-spacing-xs);
 }
 
@@ -40,7 +40,7 @@
 }
 
 .menu.compact .menu-list {
-  gap: 2px;
+  gap: var(--psh-spacing-xxs);
 }
 
 .menu.compact .submenu .menu-link {
@@ -106,7 +106,7 @@
   transition: all var(--psh-animation-duration-normal) var(--psh-animation-easing-default);
   cursor: pointer;
   border-radius: var(--psh-radius-lg);
-  min-height: 44px;
+  min-height: var(--psh-size-11);
   position: relative;
   width: 100%;
   min-width: 0;
@@ -184,7 +184,7 @@
   margin: 0 auto;
   background: transparent;
   border-radius: var(--psh-radius-lg);
-  width: 44px;
+  width: var(--psh-size-11);
   padding: 0;
   position: relative;
   overflow: visible;
@@ -205,7 +205,7 @@
   left: 50%;
   top: 0;
   bottom: 0;
-  width: 2px;
+  width: var(--psh-border-width-2);
   background: var(--psh-surface-border);
   transform: translateX(-50%);
   opacity: 0.6;
@@ -219,12 +219,12 @@
 .menu.collapsed .submenu .menu-link {
   padding: 0;
   justify-content: center;
-  min-height: 32px;
-  width: 32px;
-  height: 32px;
-  margin: 2px auto;
+  min-height: var(--psh-size-8);
+  width: var(--psh-size-8);
+  height: var(--psh-size-8);
+  margin: var(--psh-spacing-xxs) auto;
   background: var(--psh-surface-card);
-  border: 1px solid var(--psh-surface-border);
+  border: var(--psh-border-width-1) solid var(--psh-surface-border);
 }
 
 .menu.collapsed .submenu .menu-link:hover:not([aria-disabled="true"]) {
@@ -260,16 +260,16 @@
 
 .menu.collapsed .submenu .menu-badge {
   position: absolute;
-  top: -4px;
-  right: -4px;
+  top: calc(-1 * var(--psh-size-1));
+  right: calc(-1 * var(--psh-size-1));
   margin: 0;
-  padding: 0 4px;
-  font-size: 9px;
+  padding: 0 var(--psh-size-1);
+  font-size: var(--psh-font-size-xs);
   line-height: 14px;
   min-width: 14px;
   height: 14px;
   text-align: center;
-  border-radius: 7px;
+  border-radius: var(--psh-radius-full);
 }
 
 .menu.collapsed .submenu psh-tooltip {
@@ -284,8 +284,8 @@
 }
 
 .menu-child-dot {
-  width: 8px;
-  height: 8px;
+  width: var(--psh-size-2);
+  height: var(--psh-size-2);
   border-radius: 50%;
   background: var(--psh-text-color-secondary);
   display: inline-block;
@@ -308,14 +308,14 @@
 }
 
 .submenu .menu-link:hover {
-  transform: translateX(4px);
+  transform: translateX(var(--psh-size-1));
 }
 
 /* Menu Badge */
 .menu-badge {
   background: var(--psh-primary-color);
   color: var(--psh-primary-color-text);
-  padding: 2px var(--psh-spacing-xs);
+  padding: var(--psh-spacing-xxs) var(--psh-spacing-xs);
   border-radius: var(--psh-radius-lg);
   font-size: var(--psh-font-size-xs);
   margin-left: auto;
@@ -324,7 +324,7 @@
 
 /* Menu Divider */
 .menu-divider {
-  height: 1px;
+  height: var(--psh-border-width-1);
   background: var(--psh-surface-border);
   margin: var(--psh-spacing-sm) var(--psh-spacing-md);
   opacity: 0.5;
@@ -372,10 +372,10 @@
   position: absolute;
   top: var(--psh-spacing-sm);
   right: calc(-1 * var(--psh-spacing-lg));
-  width: 28px;
-  height: 28px;
+  width: var(--psh-size-7);
+  height: var(--psh-size-7);
   background: var(--psh-surface-card);
-  border: 1px solid var(--psh-surface-border);
+  border: var(--psh-border-width-1) solid var(--psh-surface-border);
   border-radius: var(--psh-radius-lg);
   display: flex;
   align-items: center;
@@ -396,7 +396,7 @@
 
 .menu-collapse-button:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(var(--psh-primary-color-rgb), 0.2);
+  box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-color);
 }
 
 .menu-collapse-button i {
