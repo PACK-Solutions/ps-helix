@@ -38,7 +38,7 @@ import { PshCollapseComponent } from 'ps-helix';
 ### Variante outline
 
 ```html
-<psh-collapse variant="outline">
+<psh-collapse appearance="outline">
   <div collapse-header>Section avec bordure</div>
   Contenu de la section
 </psh-collapse>

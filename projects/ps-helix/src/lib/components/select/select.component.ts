@@ -1,3 +1,4 @@
+import { PshFieldAppearance } from '../../types/semantic.types';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -19,7 +20,7 @@ import type { FormValueControl } from '@angular/forms/signals';
 import { PshClickOutsideDirective } from '../../a11y/click-outside.directive';
 import { PshOverlayPositionService } from '../../a11y/overlay-position.service';
 import { PshPortalService, PshPortalRef } from '../../a11y/portal.service';
-import { SelectOption, SelectOptionGroup, SelectSize, SelectVariant, SearchConfig } from './select.types';
+import { SelectOption, SelectOptionGroup, SelectSize, SearchConfig } from './select.types';
 
 interface FlatOption<T> {
   option: SelectOption<T>;
@@ -44,8 +45,8 @@ interface FlatOption<T> {
     '[class.full-width]': 'fullWidth()',
     '[class.small]': 'size() === "small"',
     '[class.large]': 'size() === "large"',
-    '[class.outlined]': 'variant() === "outlined"',
-    '[class.filled]': 'variant() === "filled"',
+    '[class.outline]': 'appearance() === "outline"',
+    '[class.solid]': 'appearance() === "solid"',
     '[class.error]': '!!error()',
     '[class.success]': '!!success()',
     '[class.disabled]': 'disabled()',
@@ -77,7 +78,7 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
   readonly touched = model<boolean>(false);
 
   size = input<SelectSize>('medium');
-  variant = input<SelectVariant>('outlined');
+  appearance = input<PshFieldAppearance>('outline');
   searchable = input(false);
   multiple = input(false);
   clearable = input(false);

@@ -1,3 +1,4 @@
+import { PshSurfaceAppearance } from '../../types/semantic.types';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
@@ -151,8 +152,8 @@ describe('PshPaginationComponent', () => {
   });
 
   describe('Visual variants', () => {
-    it('should not apply outline class for variant="default"', () => {
-      fixture.componentRef.setInput('variant', 'default');
+    it('should not apply outline class for variant="flat"', () => {
+      fixture.componentRef.setInput('appearance', 'flat');
       fixture.detectChanges();
 
       const nav = getNavigation();
@@ -160,7 +161,7 @@ describe('PshPaginationComponent', () => {
     });
 
     it('should apply outline class for variant="outline"', () => {
-      fixture.componentRef.setInput('variant', 'outline');
+      fixture.componentRef.setInput('appearance', 'outline');
       fixture.detectChanges();
 
       const nav = getNavigation();
@@ -183,9 +184,9 @@ describe('PshPaginationComponent', () => {
       consoleSpy.mockRestore();
     });
 
-    it('should warn and fallback to "default" for invalid variant', () => {
+    it('should warn and fallback to "flat" for invalid variant', () => {
       const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
-      fixture.componentRef.setInput('variant', 'invalid' as any);
+      fixture.componentRef.setInput('appearance', 'invalid' as any);
       fixture.detectChanges();
 
       expect(consoleSpy).toHaveBeenCalledWith(
@@ -613,12 +614,12 @@ describe('PshPaginationComponent', () => {
       expect(getNavigation().getAttribute('data-state')).toBe('last');
     });
 
-    it('should have data-state="default" on middle pages', () => {
+    it('should have data-state="flat" on middle pages', () => {
       fixture.componentRef.setInput('totalPages', 5);
       fixture.componentRef.setInput('currentPage', 3);
       fixture.detectChanges();
 
-      expect(getNavigation().getAttribute('data-state')).toBe('default');
+      expect(getNavigation().getAttribute('data-state')).toBe('flat');
     });
   });
 
@@ -975,7 +976,7 @@ describe('PshPaginationComponent', () => {
       withProdMode(() => {
         const prodFixture = TestBed.createComponent(PshPaginationComponent);
         prodFixture.componentRef.setInput('size', 'huge' as PaginationSize);
-        prodFixture.componentRef.setInput('variant', 'fancy' as PaginationVariant);
+        prodFixture.componentRef.setInput('appearance', 'fancy' as PshSurfaceAppearance);
         prodFixture.componentRef.setInput('maxVisiblePages', 0);
         prodFixture.detectChanges();
 

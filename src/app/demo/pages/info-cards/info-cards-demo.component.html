@@ -17,7 +17,7 @@
               <psh-info-card
                 title="Profil Utilisateur"
                 [data]="userProfileData"
-                variant="elevated"
+                appearance="elevated"
                 icon="user-circle"
               ></psh-info-card>
             </div>
@@ -33,7 +33,7 @@
               <psh-info-card
                 title="Détails de Commande"
                 [data]="orderDetailsData"
-                variant="outlined"
+                appearance="outline"
                 icon="shopping-cart"
               ></psh-info-card>
             </div>
@@ -49,7 +49,7 @@
               <psh-info-card
                 title="Informations Système"
                 [data]="systemInfoData"
-                variant="default"
+                appearance="flat"
                 icon="gear"
               ></psh-info-card>
             </div>
@@ -76,14 +76,14 @@
             <psh-info-card
               title="Informations Personnelles"
               [data]="userProfileData"
-              variant="elevated"
+              appearance="elevated"
               icon="user-circle"
             >
               <div card-header-actions>
-                <psh-button appearance="text" size="small" ariaLabel="Modifier">
+                <psh-button appearance="ghost" size="small" ariaLabel="Modifier">
                   <i class="ph ph-pencil"></i>
                 </psh-button>
-                <psh-button appearance="text" size="small" color="danger" ariaLabel="Supprimer">
+                <psh-button appearance="ghost" size="small" color="danger" ariaLabel="Supprimer">
                   <i class="ph ph-trash"></i>
                 </psh-button>
               </div>
@@ -97,7 +97,7 @@
             <psh-info-card
               title="Projet Alpha"
               [data]="compactData"
-              variant="outlined"
+              appearance="outline"
               icon="folder"
             >
               <div card-header-actions>
@@ -113,7 +113,7 @@
             <psh-info-card
               title="Ma Commande"
               [data]="orderDetailsData"
-              variant="elevated"
+              appearance="elevated"
               icon="package"
             >
               <div card-header-actions>
@@ -121,7 +121,7 @@
               </div>
               <div card-actions>
                 <psh-button color="primary">Suivre</psh-button>
-                <psh-button color="secondary" appearance="text">Annuler</psh-button>
+                <psh-button color="secondary" appearance="ghost">Annuler</psh-button>
               </div>
             </psh-info-card>
             <p class="header-actions-description">Combinaison des deux slots pour une carte complete.</p>
@@ -144,12 +144,12 @@
             <psh-info-card
               title="Informations Personnelles"
               [data]="userProfileData"
-              variant="elevated"
+              appearance="elevated"
               icon="identification-card"
               [hoverable]="true"
             >
               <div card-header-actions>
-                <psh-button appearance="text" size="small" ariaLabel="Modifier">
+                <psh-button appearance="ghost" size="small" ariaLabel="Modifier">
                   <i class="ph ph-pencil"></i>
                 </psh-button>
               </div>
@@ -167,7 +167,7 @@
             <psh-info-card
               title="Ma Commande"
               [data]="orderDetailsData"
-              variant="outlined"
+              appearance="outline"
               icon="package"
               [hoverable]="true"
             >
@@ -176,7 +176,7 @@
               </div>
               <div card-actions>
                 <psh-button color="primary">Suivre</psh-button>
-                <psh-button color="secondary" appearance="text">Détails</psh-button>
+                <psh-button color="secondary" appearance="ghost">Détails</psh-button>
               </div>
             </psh-info-card>
             <p class="usage-description">
@@ -189,7 +189,7 @@
             <psh-info-card
               title="État du Système"
               [data]="systemInfoData"
-              variant="elevated"
+              appearance="elevated"
               icon="monitor"
             >
               <div card-header-actions>
@@ -219,7 +219,7 @@
                 <psh-info-card
                   title="Données en Chargement"
                   [data]="userProfileData"
-                  variant="outlined"
+                  appearance="outline"
                   icon="circle-notch"
                   [loading]="isLoading"
                 ></psh-info-card>
@@ -243,7 +243,7 @@
                 <psh-info-card
                   title="Aucune Donnée"
                   [data]="emptyData"
-                  variant="outlined"
+                  appearance="outline"
                   icon="x-circle"
                   [options]="{ showEmptyState: true, emptyStateMessage: 'Aucune information disponible pour le moment' }"
                 ></psh-info-card>
@@ -259,7 +259,7 @@
                 <psh-info-card
                   title="Cliquez-moi"
                   [data]="compactData"
-                  variant="elevated"
+                  appearance="elevated"
                   icon="hand-pointing"
                   [interactive]="true"
                   [hoverable]="true"
@@ -277,7 +277,7 @@
                 <psh-info-card
                   title="Carte Inactive"
                   [data]="compactData"
-                  variant="outlined"
+                  appearance="outline"
                   icon="prohibit"
                   [disabled]="true"
                 ></psh-info-card>
@@ -317,7 +317,7 @@
               title="Informations de Contact"
               [data]="copyableData"
               [copyable]="true"
-              variant="outlined"
+              appearance="outline"
               icon="clipboard-text"
               (copied)="handleCopied($event)"
               (copyFailed)="handleCopyFailed($event)"
@@ -338,7 +338,7 @@
             <psh-info-card
               title="Suivi de Commande"
               [data]="perRowCopyData"
-              variant="outlined"
+              appearance="outline"
               icon="package"
               (copied)="handleCopied($event)"
             ></psh-info-card>
@@ -364,7 +364,7 @@
             <psh-info-card
               title="Dossier Client"
               [data]="emphasisData"
-              variant="outlined"
+              appearance="outline"
               icon="palette"
               [options]="{ mutedEmptyValues: true }"
             ></psh-info-card>
@@ -390,7 +390,7 @@
             <psh-info-card
               title="Largeurs Custom"
               [data]="customWidthData"
-              variant="outlined"
+              appearance="outline"
               icon="arrows-horizontal"
             ></psh-info-card>
             <div class="code-example">
@@ -410,7 +410,7 @@
             <psh-info-card
               title="Données Compactes"
               [data]="compactData"
-              variant="outlined"
+              appearance="outline"
               icon="list-bullets"
             ></psh-info-card>
             <p class="customization-description">
@@ -423,13 +423,13 @@
             <psh-info-card
               title="Actions Multiples"
               [data]="compactData"
-              variant="elevated"
+              appearance="elevated"
               icon="check-circle"
             >
               <div card-actions>
                 <psh-button color="primary">Valider</psh-button>
                 <psh-button color="secondary" appearance="outline">Annuler</psh-button>
-                <psh-button color="secondary" appearance="text">Aide</psh-button>
+                <psh-button color="secondary" appearance="ghost">Aide</psh-button>
               </div>
             </psh-info-card>
             <p class="customization-description">
@@ -451,7 +451,7 @@
           <psh-info-card
             title="Profil"
             [data]="compactData"
-            variant="elevated"
+            appearance="elevated"
             icon="user"
             [hoverable]="true"
           ></psh-info-card>
@@ -459,7 +459,7 @@
           <psh-info-card
             title="Statistiques"
             [data]="compactData"
-            variant="elevated"
+            appearance="elevated"
             icon="chart-bar"
             [hoverable]="true"
           ></psh-info-card>
@@ -467,7 +467,7 @@
           <psh-info-card
             title="Notifications"
             [data]="compactData"
-            variant="elevated"
+            appearance="elevated"
             icon="bell"
             [hoverable]="true"
           ></psh-info-card>
@@ -475,7 +475,7 @@
           <psh-info-card
             title="Paramètres"
             [data]="compactData"
-            variant="elevated"
+            appearance="elevated"
             icon="gear"
             [hoverable]="true"
           ></psh-info-card>

@@ -35,7 +35,53 @@ export const COLOR_AXIS = {
   'psh-stat-card': { tagVariant: 'tagColor' },
 };
 
-const RENAMES = { ...COLOR_AXIS };
+/**
+ * The surface-treatment axis. `variant` carried three incompatible notions — elevation,
+ * colour, display form — so it is retired as a catch-all: colour moved to `color`, surface
+ * treatment to `appearance`, and `variant` survives only where the notion is genuinely
+ * component-specific (tabs, stepper, menu, spinloader, tooltip), which is why those
+ * selectors are absent here.
+ *
+ * Unlike the colour axis, the VALUES change too, so the CSS classes derived from them move.
+ */
+export const APPEARANCE_AXIS = {
+  'psh-button': { appearance: 'appearance' },
+  'psh-dropdown': { appearance: 'appearance' },
+  'psh-input': { variant: 'appearance' },
+  'psh-select': { variant: 'appearance' },
+  'psh-textarea': { variant: 'appearance' },
+  'psh-card': { variant: 'appearance' },
+  'psh-horizontal-card': { variant: 'appearance' },
+  'psh-info-card': { variant: 'appearance' },
+  'psh-stat-card': { variant: 'appearance' },
+  'psh-collapse': { variant: 'appearance' },
+  'psh-pagination': { variant: 'appearance' },
+  'psh-table': { variant: 'appearance' },
+};
+
+/** Value migrations, applied to the `appearance` attribute of each selector. */
+const APPEARANCE_VALUES = {
+  'psh-button': { filled: 'solid', text: 'ghost' },
+  'psh-dropdown': { filled: 'solid', text: 'ghost' },
+  'psh-input': { outlined: 'outline', filled: 'solid' },
+  'psh-select': { outlined: 'outline', filled: 'solid' },
+  'psh-textarea': { outlined: 'outline', filled: 'solid' },
+  'psh-card': { default: 'flat', outlined: 'outline' },
+  'psh-horizontal-card': { default: 'flat', outlined: 'outline' },
+  'psh-info-card': { default: 'flat', outlined: 'outline' },
+  'psh-stat-card': { default: 'flat', outlined: 'outline' },
+  'psh-collapse': { default: 'flat' },
+  'psh-pagination': { default: 'flat' },
+  'psh-table': { default: 'flat' },
+};
+
+const RENAMES = {};
+for (const [selector, attrs] of Object.entries({ ...COLOR_AXIS })) {
+  RENAMES[selector] = { ...attrs };
+}
+for (const [selector, attrs] of Object.entries(APPEARANCE_AXIS)) {
+  RENAMES[selector] = { ...(RENAMES[selector] ?? {}), ...attrs };
+}
 
 /* ---------------------------------------------------------------------- rewrite */
 
@@ -87,7 +133,17 @@ function migrateToastOptions(source) {
         .replace(/(^|[\s,{])type\s*:/g, '$1color:')
         // Shorthand: `show({ message, type, icon })`. The local name is kept, only the
         // property it fills is renamed.
-        .replace(/(^|[\s,{])type(\s*[,}])/g, '$1color: type$2'),
+        //
+        // Two guards, both load-bearing, both found by running this against real code:
+        //
+        //   (?<!\$)  without it, `${type}` inside a template literal matched — `{` before,
+        //            `}` after — and became `${color: type}`, a syntax error.
+        //
+        //   [{,]     anchoring on a property position rather than any whitespace is what
+        //            makes this idempotent. Matching plain whitespace re-fired on the
+        //            already-migrated `color: type`, turning a second run into
+        //            `color: color: type`. A codemod gets run twice.
+        .replace(/((?<!\$)[{,]\s*)type(\s*[,}])/g, '$1color: type$2'),
   );
 }
 
@@ -100,6 +156,27 @@ export function migrate(source) {
     out = out.replace(openingTag(selector), tag => {
       let next = tag;
       for (const [from, to] of Object.entries(attrs)) next = renameInTag(next, from, to);
+
+      // Values are migrated after the attribute is in its final name, and only for a
+      // string literal: a bound [appearance]="expr" is reported instead.
+      const values = APPEARANCE_VALUES[selector];
+      if (values) {
+        for (const [from, to] of Object.entries(values)) {
+          // Plain attribute: appearance="outlined"
+          next = next.replace(new RegExp(`(?<=\\sappearance=")${from}(?=")`, 'g'), to);
+          // Bound, but still a literal: [appearance]="'outlined'". Safe to rewrite — only
+          // a computed expression genuinely cannot be resolved here.
+          next = next.replace(
+            new RegExp(`(?<=\\s\\[appearance\\]=")(')${from}(')(?=")`, 'g'),
+            `$1${to}$2`,
+          );
+        }
+        // Report only what is left: an expression whose value we cannot see.
+        if (/\s\[appearance\]="[^"]*[^'"\s][^"]*"/.test(next) && !/\[appearance\]="'[a-z-]+'"/.test(next)) {
+          warnings.push(`${selector} has a computed [appearance]: values changed (${Object.entries(values).map(([a, b]) => `${a}→${b}`).join(', ')})`);
+        }
+      }
+
       if (next !== tag) count++;
       return next;
     });

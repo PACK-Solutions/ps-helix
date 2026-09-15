@@ -1,3 +1,4 @@
+import { PshControlAppearance } from '../../types/semantic.types';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -18,7 +19,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { PshOverlayPositionService } from '../../a11y/overlay-position.service';
 import { PshClickOutsideDirective } from '../../a11y/click-outside.directive';
 import { PshPortalService, PshPortalRef } from '../../a11y/portal.service';
-import { DropdownAppearance, DropdownColor, DropdownItem, DropdownPlacement, DropdownSize } from './dropdown.types';
+import { DropdownColor, DropdownItem, DropdownPlacement, DropdownSize } from './dropdown.types';
 
 @Component({
   selector: 'psh-dropdown',
@@ -43,7 +44,7 @@ export class PshDropdownComponent<T = string> {
   private readonly repositionHandler = (): void => this.reposition();
 
   // Regular inputs
-  appearance = input<DropdownAppearance>('filled');
+  appearance = input<PshControlAppearance>('solid');
   color = input<DropdownColor>('primary');
   size = input<DropdownSize>('medium');
   placement = input<DropdownPlacement>('bottom-start');

@@ -123,7 +123,7 @@ describe('PshToastComponent', () => {
       ['warning'],
       ['danger']
     ])('should render toast with type "%s"', (type) => {
-      toastService.show({ message: `${type} message`, type });
+      toastService.show({ message: `${type} message`, color: type });
       fixture.detectChanges();
 
       const toasts = getToastItems();
@@ -435,7 +435,7 @@ describe('PshToastComponent', () => {
 
     it('should respect maxToasts limit', () => {
       for (let i = 1; i <= 7; i++) {
-        toastService.show({ message: `Toast ${i}`, type: 'info' });
+        toastService.show({ message: `Toast ${i}`, color: 'info' });
       }
       fixture.detectChanges();
 

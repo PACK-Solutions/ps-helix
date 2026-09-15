@@ -126,16 +126,16 @@ describe('PshStatCardComponent', () => {
 
   describe('Variants', () => {
     it('should have elevated as default variant', () => {
-      expect(getContainer().className).toContain('variant-elevated');
+      expect(getContainer().className).toContain('appearance-elevated');
     });
 
-    it.each<[StatCardVariant]>([['default'], ['elevated'], ['outlined']])(
-      'should apply variant-%s class for variant "%s"',
+    it.each<[StatCardVariant]>([['flat'], ['elevated'], ['outline']])(
+      'should apply appearance-%s class for variant "%s"',
       (variant) => {
-        fixture.componentRef.setInput('variant', variant);
+        fixture.componentRef.setInput('appearance', variant);
         fixture.detectChanges();
 
-        expect(getContainer().className).toContain(`variant-${variant}`);
+        expect(getContainer().className).toContain(`appearance-${variant}`);
       }
     );
   });

@@ -73,20 +73,20 @@ textarea:focus-visible {
 }
 
 /* --- Variantes --- */
-:host.outlined textarea {
+:host.outline textarea {
   background: transparent;
 }
 
-:host.filled textarea {
+:host.solid textarea {
   background: var(--psh-surface-ground);
   border: 0.125rem solid var(--psh-surface-border);
 }
 
-:host.filled textarea:hover:not(:disabled):not(:focus):not([readonly]) {
+:host.solid textarea:hover:not(:disabled):not(:focus):not([readonly]) {
   background: var(--psh-surface-hover);
 }
 
-:host.filled textarea:focus-visible {
+:host.solid textarea:focus-visible {
   background: var(--psh-surface-0);
 }
 

@@ -37,7 +37,7 @@
         <div class="sidebar-header">
           <h3>Filters</h3>
           <psh-button
-            appearance="text"
+            appearance="ghost"
             color="primary"
             icon="x"
             size="small"
@@ -134,7 +134,7 @@
                     appearance="outline"
                     color="primary"
                     size="small"
-                    [appearance]="fixedPosition === 'left' ? 'filled' : 'outline'"
+                    [appearance]="fixedPosition === 'left' ? 'solid' : 'outline'"
                     (clicked)="fixedPosition = 'left'"
                   >
                     Left
@@ -143,7 +143,7 @@
                     appearance="outline"
                     color="primary"
                     size="small"
-                    [appearance]="fixedPosition === 'right' ? 'filled' : 'outline'"
+                    [appearance]="fixedPosition === 'right' ? 'solid' : 'outline'"
                     (clicked)="fixedPosition = 'right'"
                   >
                     Right
@@ -152,7 +152,7 @@
               </div>
               <div class="control-group">
                 <psh-button
-                  appearance="filled"
+                  appearance="solid"
                   color="secondary"
                   size="small"
                   (clicked)="toggleFixed()"
@@ -202,7 +202,7 @@
                     appearance="outline"
                     color="primary"
                     size="small"
-                    [appearance]="overlayPosition === 'left' ? 'filled' : 'outline'"
+                    [appearance]="overlayPosition === 'left' ? 'solid' : 'outline'"
                     (clicked)="setOverlayPosition('left')"
                   >
                     Left
@@ -211,7 +211,7 @@
                     appearance="outline"
                     color="primary"
                     size="small"
-                    [appearance]="overlayPosition === 'right' ? 'filled' : 'outline'"
+                    [appearance]="overlayPosition === 'right' ? 'solid' : 'outline'"
                     (clicked)="setOverlayPosition('right')"
                   >
                     Right
@@ -220,7 +220,7 @@
               </div>
               <div class="control-group">
                 <psh-button
-                  appearance="filled"
+                  appearance="solid"
                   color="secondary"
                   size="small"
                   (clicked)="isOverlayOpen = true"

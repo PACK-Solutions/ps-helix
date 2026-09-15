@@ -31,7 +31,7 @@ describe('PshCardComponent', () => {
     });
 
     it('should have default values for all inputs', () => {
-      expect(component.variant()).toBe('default');
+      expect(component.appearance()).toBe('flat');
       expect(component.hoverable()).toBe(false);
       expect(component.interactive()).toBe(false);
       expect(component.title()).toBe('');
@@ -48,32 +48,32 @@ describe('PshCardComponent', () => {
   });
 
   describe('Card Variants', () => {
-    const variants: CardVariant[] = ['default', 'elevated', 'outlined'];
+    const variants: CardVariant[] = ['flat', 'elevated', 'outline'];
 
     variants.forEach((variant) => {
       it(`should apply ${variant} variant class`, () => {
-        component.variant.set(variant);
+        fixture.componentRef.setInput('appearance', variant);
         fixture.detectChanges();
 
         const classes = cardElement.nativeElement.className;
-        expect(classes).toContain(`variant-${variant}`);
+        expect(classes).toContain(`appearance-${variant}`);
       });
     });
 
     it('should update variant class when variant changes', () => {
-      component.variant.set('default');
+      fixture.componentRef.setInput('appearance', 'flat');
       fixture.detectChanges();
-      expect(cardElement.nativeElement.className).toContain('variant-default');
+      expect(cardElement.nativeElement.className).toContain('appearance-flat');
 
-      component.variant.set('elevated');
+      fixture.componentRef.setInput('appearance', 'elevated');
       fixture.detectChanges();
-      expect(cardElement.nativeElement.className).toContain('variant-elevated');
-      expect(cardElement.nativeElement.className).not.toContain('variant-default');
+      expect(cardElement.nativeElement.className).toContain('appearance-elevated');
+      expect(cardElement.nativeElement.className).not.toContain('appearance-flat');
     });
   });
 
   describe('Color Variants', () => {
-    const colorVariants: CardColorVariant[] = ['default', 'info', 'success', 'warning', 'danger'];
+    const colorVariants: CardColorVariant[] = ['flat', 'info', 'success', 'warning', 'danger'];
 
     colorVariants.forEach((colorVariant) => {
       it(`should apply ${colorVariant} color variant class`, () => {
@@ -612,7 +612,7 @@ describe('PshCardComponent', () => {
 
   describe('Computed Properties', () => {
     it('should compute classes correctly', () => {
-      component.variant.set('elevated');
+      fixture.componentRef.setInput('appearance', 'elevated');
       fixture.componentRef.setInput('color', 'success');
       fixture.componentRef.setInput('density', 'compact');
       component.hoverable.set(true);
@@ -621,7 +621,7 @@ describe('PshCardComponent', () => {
 
       const classes = component.computedClasses();
       expect(classes).toContain('card');
-      expect(classes).toContain('variant-elevated');
+      expect(classes).toContain('appearance-elevated');
       expect(classes).toContain('color-success');
       expect(classes).toContain('density-compact');
       expect(classes).toContain('hoverable');

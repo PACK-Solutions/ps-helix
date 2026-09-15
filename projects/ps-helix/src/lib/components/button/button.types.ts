@@ -1,8 +1,12 @@
-import { PshColor } from '../../types/semantic.types';
+import { PshColor, PshControlAppearance } from '../../types/semantic.types';
 /**
  * Apparences disponibles pour le bouton
  */
-export type ButtonAppearance = 'filled' | 'outline' | 'text';
+/**
+ * @deprecated since 7.0.0 — use {@link PshControlAppearance}. Surface treatment now shares one
+ * vocabulary across the library.
+ */
+export type ButtonAppearance = PshControlAppearance;
 
 /**
  * Variantes disponibles pour le bouton

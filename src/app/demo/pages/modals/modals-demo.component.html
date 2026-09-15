@@ -14,7 +14,7 @@
         <div class="types-grid">
           <div class="type-card">
             <div class="type-preview">
-              <psh-button appearance="filled" color="primary" (clicked)="basicModalOpen = true">
+              <psh-button appearance="solid" color="primary" (clicked)="basicModalOpen = true">
                 Modale Basique
               </psh-button>
               <psh-modal
@@ -42,7 +42,7 @@
 
           <div class="type-card">
             <div class="type-preview">
-              <psh-button appearance="filled" color="primary" (clicked)="confirmationModalOpen = true">
+              <psh-button appearance="solid" color="primary" (clicked)="confirmationModalOpen = true">
                 Modale de Confirmation
               </psh-button>
               <psh-modal
@@ -65,19 +65,19 @@
 
           <div class="type-card">
             <div class="type-preview">
-              <psh-button appearance="filled" color="primary" (clicked)="customModalOpen = true">
+              <psh-button appearance="solid" color="primary" (clicked)="customModalOpen = true">
                 Footer Personnalisé
               </psh-button>
               <psh-modal #customModal [(open)]="customModalOpen" title="{{ 'MODAL.CUSTOM_FOOTER_TITLE' | translate }}">
                 <p>{{ 'MODAL.CUSTOM_FOOTER_CONTENT' | translate }}</p>
                 <div modal-footer #modalFooter>
-                  <psh-button appearance="text" [fullWidth]="customModal.isMobileScreen()" (clicked)="customModalOpen = false">
+                  <psh-button appearance="ghost" [fullWidth]="customModal.isMobileScreen()" (clicked)="customModalOpen = false">
                     {{ 'MODAL.CANCEL' | translate }}
                   </psh-button>
-                  <psh-button appearance="filled" color="success" [fullWidth]="customModal.isMobileScreen()" (clicked)="handleCustomConfirm()">
+                  <psh-button appearance="solid" color="success" [fullWidth]="customModal.isMobileScreen()" (clicked)="handleCustomConfirm()">
                     {{ 'MODAL.SAVE' | translate }}
                   </psh-button>
-                  <psh-button appearance="filled" color="primary" [fullWidth]="customModal.isMobileScreen()" (clicked)="handleCustomConfirm()">
+                  <psh-button appearance="solid" color="primary" [fullWidth]="customModal.isMobileScreen()" (clicked)="handleCustomConfirm()">
                     {{ 'MODAL.PUBLISH' | translate }}
                   </psh-button>
                 </div>
@@ -92,7 +92,7 @@
 
           <div class="type-card">
             <div class="type-preview">
-              <psh-button appearance="filled" color="primary" (clicked)="noFooterModalOpen = true">
+              <psh-button appearance="solid" color="primary" (clicked)="noFooterModalOpen = true">
                 Sans Footer
               </psh-button>
               <psh-modal
@@ -113,7 +113,7 @@
 
           <div class="type-card">
             <div class="type-preview">
-              <psh-button appearance="filled" color="primary" (clicked)="customTitleModalOpen = true">
+              <psh-button appearance="solid" color="primary" (clicked)="customTitleModalOpen = true">
                 Titre Personnalise
               </psh-button>
               <psh-modal [(open)]="customTitleModalOpen">
@@ -145,7 +145,7 @@
         <div class="sizes-grid">
           <div class="size-card">
             <div class="size-preview">
-              <psh-button appearance="filled" color="primary" (clicked)="smallModalOpen = true">
+              <psh-button appearance="solid" color="primary" (clicked)="smallModalOpen = true">
                 {{ 'MODAL.SMALL_MODAL' | translate }}
               </psh-button>
               <psh-modal [(open)]="smallModalOpen" title="{{ 'MODAL.SMALL_MODAL_TITLE' | translate }}" size="small">
@@ -164,7 +164,7 @@
 
           <div class="size-card">
             <div class="size-preview">
-              <psh-button appearance="filled" color="primary" (clicked)="mediumModalOpen = true">
+              <psh-button appearance="solid" color="primary" (clicked)="mediumModalOpen = true">
                 Modale Medium
               </psh-button>
               <psh-modal [(open)]="mediumModalOpen" title="Modale Medium" size="medium">
@@ -184,7 +184,7 @@
 
           <div class="size-card">
             <div class="size-preview">
-              <psh-button appearance="filled" color="primary" (clicked)="largeModalOpen = true">
+              <psh-button appearance="solid" color="primary" (clicked)="largeModalOpen = true">
                 {{ 'MODAL.LARGE_MODAL' | translate }}
               </psh-button>
               <psh-modal [(open)]="largeModalOpen" title="{{ 'MODAL.LARGE_MODAL_TITLE' | translate }}" size="large">
@@ -221,7 +221,7 @@
             <div class="option-group">
               <h4>Fermeture sur l'Arrière-plan</h4>
               <p class="option-description">Contrôle si la modale se ferme en cliquant sur l'arrière-plan sombre.</p>
-              <psh-button appearance="filled" color="primary" (clicked)="noBackdropModalOpen = true">
+              <psh-button appearance="solid" color="primary" (clicked)="noBackdropModalOpen = true">
                 Modale sans fermeture backdrop
               </psh-button>
               <psh-modal

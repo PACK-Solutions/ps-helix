@@ -65,52 +65,52 @@
 }
 
 /* Appearance: Filled */
-.dropdown-trigger.filled {
+.dropdown-trigger.solid {
   background-color: currentColor;
 }
 
-.dropdown-trigger.filled.primary {
+.dropdown-trigger.solid.primary {
   background: var(--psh-primary-gradient);
   color: var(--psh-text-on-primary);
 }
 
-.dropdown-trigger.filled.primary .trigger-content {
+.dropdown-trigger.solid.primary .trigger-content {
   color: var(--psh-text-on-primary);
 }
 
-.dropdown-trigger.filled.secondary .trigger-content {
+.dropdown-trigger.solid.secondary .trigger-content {
   color: var(--psh-text-on-secondary);
 }
 
-.dropdown-trigger.filled.success .trigger-content {
+.dropdown-trigger.solid.success .trigger-content {
   color: var(--psh-text-on-success);
 }
 
-.dropdown-trigger.filled.warning .trigger-content {
+.dropdown-trigger.solid.warning .trigger-content {
   color: var(--psh-text-on-warning);
 }
 
-.dropdown-trigger.filled.danger .trigger-content {
+.dropdown-trigger.solid.danger .trigger-content {
   color: var(--psh-text-on-danger);
 }
 
-.dropdown-trigger.filled.primary:hover:not(.disabled) {
+.dropdown-trigger.solid.primary:hover:not(.disabled) {
   background: var(--psh-primary-gradient-hover);
 }
 
-.dropdown-trigger.filled.secondary:hover:not(.disabled) {
+.dropdown-trigger.solid.secondary:hover:not(.disabled) {
   background-color: var(--psh-secondary-color-light);
 }
 
-.dropdown-trigger.filled.success:hover:not(.disabled) {
+.dropdown-trigger.solid.success:hover:not(.disabled) {
   background-color: var(--psh-green-400);
 }
 
-.dropdown-trigger.filled.warning:hover:not(.disabled) {
+.dropdown-trigger.solid.warning:hover:not(.disabled) {
   background-color: var(--psh-orange-400);
 }
 
-.dropdown-trigger.filled.danger:hover:not(.disabled) {
+.dropdown-trigger.solid.danger:hover:not(.disabled) {
   background-color: var(--psh-red-400);
 }
 
@@ -149,11 +149,11 @@
 }
 
 /* Appearance: Text */
-.dropdown-trigger.text {
+.dropdown-trigger.ghost {
   background: transparent;
 }
 
-.dropdown-trigger.text:hover:not(.disabled) {
+.dropdown-trigger.ghost:hover:not(.disabled) {
   background: var(--psh-surface-hover);
 }
 

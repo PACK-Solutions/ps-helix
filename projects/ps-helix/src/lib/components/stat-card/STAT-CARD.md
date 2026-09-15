@@ -152,7 +152,7 @@ Style avec ombre portee pour creer de la profondeur.
 
 ```html
 <psh-stat-card
-  variant="elevated"
+  appearance="elevated"
   value="2,456"
   description="Visiteurs"
   icon="eye"
@@ -166,7 +166,7 @@ Style avec bordure pour delimiter clairement la carte.
 
 ```html
 <psh-stat-card
-  variant="outlined"
+  appearance="outline"
   value="89%"
   description="Taux de satisfaction"
   icon="smiley"
@@ -180,7 +180,7 @@ Style de base sans bordure ni ombre - fond neutre.
 
 ```html
 <psh-stat-card
-  variant="default"
+  appearance="flat"
   value="42"
   description="Projets actifs"
   icon="folder-open"
@@ -469,7 +469,7 @@ export class RevenueCardComponent {
     icon="check-circle"
     tagColor="success"
     tagLabel="Excellent"
-    variant="outlined"
+    appearance="outline"
   >
   </psh-stat-card>
 </div>
@@ -487,7 +487,7 @@ export class RevenueCardComponent {
       [tagColor]="stat.variant"
       [tagLabel]="stat.change"
       [rowDirection]="true"
-      variant="outlined"
+      appearance="outline"
     >
     </psh-stat-card>
   }

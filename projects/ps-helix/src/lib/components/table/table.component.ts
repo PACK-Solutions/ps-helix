@@ -5,7 +5,7 @@ import { TableColumn, TableRow, TableSort, TableConfig, TableRowClickEvent, Tabl
 
 export const TABLE_CONFIG = new InjectionToken<Partial<TableConfig>>('TABLE_CONFIG', {
   factory: () => ({
-    variant: 'default',
+    variant: 'flat',
     size: 'medium',
     striped: false,
     hoverable: false,
@@ -37,7 +37,7 @@ export const TABLE_CONFIG = new InjectionToken<Partial<TableConfig>>('TABLE_CONF
 export class PshTableComponent {
   private config = inject(TABLE_CONFIG);
 
-  variant = input<'default' | 'outline'>(this.config.variant ?? 'default');
+  appearance = input<'flat' | 'outline'>(this.config.appearance ?? 'flat');
   size = input<'small' | 'medium' | 'large'>(this.config.size ?? 'medium');
   striped = input(this.config.striped ?? false);
   hoverable = input(this.config.hoverable ?? false);
@@ -78,7 +78,7 @@ export class PshTableComponent {
   state = computed(() => {
     if (this.loading()) return 'loading';
     if (this.filteredData().length === 0) return 'empty';
-    return 'default';
+    return 'flat';
   });
 
   filteredData = computed(() => {

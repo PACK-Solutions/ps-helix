@@ -132,7 +132,7 @@ export class AppComponent implements OnInit {
       code: `<psh-button
   color="primary"
   size="medium"
-  appearance="filled"
+  appearance="solid"
   (clicked)="handleClick()">
   Soumettre
 </psh-button>`

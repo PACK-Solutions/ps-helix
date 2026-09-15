@@ -1,4 +1,4 @@
-import { PshColor } from '../../types/semantic.types';
+import { PshColor, PshControlAppearance } from '../../types/semantic.types';
 /**
  * Interface pour un élément du dropdown
  */
@@ -18,7 +18,11 @@ export interface DropdownItem<T = string> {
 /**
  * Apparences disponibles pour le dropdown
  */
-export type DropdownAppearance = 'filled' | 'outline' | 'text';
+/**
+ * @deprecated since 7.0.0 — use {@link PshControlAppearance}. Surface treatment now shares one
+ * vocabulary across the library.
+ */
+export type DropdownAppearance = PshControlAppearance;
 
 /**
  * Variantes disponibles pour le dropdown

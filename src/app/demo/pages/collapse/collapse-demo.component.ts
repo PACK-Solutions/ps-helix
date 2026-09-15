@@ -18,14 +18,14 @@ export class CollapseDemoComponent {
 
   controlledExpanded = signal(false);
 
-  defaultVariantCode = `<psh-collapse variant="default">
+  defaultVariantCode = `<psh-collapse appearance="flat">
   <div collapse-header>
     Titre de la section
   </div>
   Contenu de la section
 </psh-collapse>`;
 
-  outlineVariantCode = `<psh-collapse variant="outline">
+  outlineVariantCode = `<psh-collapse appearance="outline">
   <div collapse-header>
     Titre de la section
   </div>

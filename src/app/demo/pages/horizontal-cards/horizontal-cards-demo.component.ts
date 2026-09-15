@@ -107,7 +107,7 @@ export class HorizontalCardsDemoComponent {
   ];
 
   productCardCode = `<psh-horizontal-card
-  [variant]="'elevated'"
+  [appearance]="'elevated'"
   [interactive]="true"
   [hoverable]="true"
   [sideWidth]="'var(--psh-size-40)'"
@@ -126,7 +126,7 @@ export class HorizontalCardsDemoComponent {
 </psh-horizontal-card>`;
 
   userCardCode = `<psh-horizontal-card
-  [variant]="'outlined'"
+  [appearance]="'outline'"
   [interactive]="true"
   [sideWidth]="'var(--psh-size-32)'"
 >
@@ -144,7 +144,7 @@ export class HorizontalCardsDemoComponent {
 </psh-horizontal-card>`;
 
   articleCardCode = `<psh-horizontal-card
-  [variant]="'elevated'"
+  [appearance]="'elevated'"
   [interactive]="true"
   [sideWidth]="'var(--psh-size-48)'"
 >

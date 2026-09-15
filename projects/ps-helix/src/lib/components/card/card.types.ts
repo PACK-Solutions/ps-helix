@@ -1,8 +1,12 @@
-import { PshColor } from '../../types/semantic.types';
+import { PshColor, PshSurfaceAppearance } from '../../types/semantic.types';
 /**
  * Variantes visuelles disponibles pour la carte
  */
-export type CardVariant = 'default' | 'elevated' | 'outlined';
+/**
+ * @deprecated since 7.0.0 — use {@link PshSurfaceAppearance}. Surface treatment now shares one
+ * vocabulary across the library.
+ */
+export type CardVariant = PshSurfaceAppearance;
 
 /**
  * Variantes de couleur pour les cartes spéciales

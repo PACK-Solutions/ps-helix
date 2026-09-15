@@ -47,7 +47,7 @@ userData: InfoCardData[] = [
   title="Informations Utilisateur"
   [data]="userData"
   icon="user"
-  variant="outlined"
+  appearance="outline"
 ></psh-info-card>
 ```
 
@@ -176,10 +176,10 @@ Le composant utilise `ng-content` avec des selecteurs pour organiser le contenu.
   icon="user-circle"
 >
   <div card-header-actions>
-    <psh-button appearance="text" size="small">
+    <psh-button appearance="ghost" size="small">
       <i class="ph ph-pencil"></i>
     </psh-button>
-    <psh-button appearance="text" size="small" color="danger">
+    <psh-button appearance="ghost" size="small" color="danger">
       <i class="ph ph-trash"></i>
     </psh-button>
   </div>
@@ -231,7 +231,7 @@ Style avec bordure pour delimiter clairement la carte. Ideal pour les interfaces
 <psh-info-card
   title="Information"
   [data]="data"
-  variant="outlined"
+  appearance="outline"
 >
 </psh-info-card>
 ```
@@ -244,7 +244,7 @@ Style avec ombre portee pour creer de la profondeur. Recommande pour les contenu
 <psh-info-card
   title="Information"
   [data]="data"
-  variant="elevated"
+  appearance="elevated"
 >
 </psh-info-card>
 ```
@@ -257,7 +257,7 @@ Style minimaliste sans bordure ni ombre. Utilise pour les contenus integres.
 <psh-info-card
   title="Information"
   [data]="data"
-  variant="default"
+  appearance="flat"
 >
 </psh-info-card>
 ```
@@ -484,7 +484,7 @@ userProfile: InfoCardData[] = [
   title="Profil Employe"
   [data]="userProfile"
   icon="identification-card"
-  variant="elevated"
+  appearance="elevated"
 >
   <div card-actions>
     <psh-button appearance="outline">Modifier</psh-button>
@@ -510,7 +510,7 @@ orderDetails: InfoCardData[] = [
   title="Details de la Commande"
   [data]="orderDetails"
   icon="package"
-  variant="outlined"
+  appearance="outline"
   [interactive]="true"
   [hoverable]="true"
   (clicked)="viewOrderDetails()"
@@ -534,7 +534,7 @@ technicalSpecs: InfoCardData[] = [
   title="Specifications Techniques"
   [data]="technicalSpecs"
   icon="cpu"
-  variant="elevated"
+  appearance="elevated"
 >
 </psh-info-card>
 ```
@@ -555,7 +555,7 @@ statusData: InfoCardData[] = [
   title="Etat des Services"
   [data]="statusData"
   icon="activity"
-  variant="outlined"
+  appearance="outline"
 >
 </psh-info-card>
 ```
@@ -578,7 +578,7 @@ statusData: InfoCardData[] = [
       [title]="item.title"
       [data]="item.details"
       [icon]="item.icon"
-      variant="elevated"
+      appearance="elevated"
       [interactive]="true"
       [hoverable]="true"
       (clicked)="selectItem(item)"

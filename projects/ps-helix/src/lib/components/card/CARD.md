@@ -37,7 +37,7 @@ export class MyComponent {}
 <psh-card
   title="Bienvenue sur la plateforme"
   description="Commencez votre parcours dès maintenant"
-  variant="elevated"
+  appearance="elevated"
 >
   <p>Cette carte utilise les propriétés title et description pour un rendu cohérent.</p>
   <div card-actions>
@@ -207,7 +207,7 @@ Le composant utilise `ng-content` avec des sélecteurs pour organiser le contenu
 <psh-card
   title="Projet Design System"
   description="Version 2.0 en cours"
-  variant="elevated"
+  appearance="elevated"
   [hoverable]="true"
 >
   <!-- Icône dans le header -->
@@ -250,7 +250,7 @@ titre + valeur à droite…), composez votre propre header via les slots, **sans
 CSS de votre composant consommateur, **sans `::ng-deep`**.
 
 ```html
-<psh-card variant="outlined" density="compact">
+<psh-card appearance="outline" density="compact">
   <!-- Titre + icône, à gauche -->
   <div card-header-content class="premium-title">
     <i class="ph ph-currency-eur" aria-hidden="true"></i>
@@ -292,7 +292,7 @@ CSS de votre composant consommateur, **sans `::ng-deep`**.
 Style de base sans bordure ni ombre - fond blanc/gris selon le thème.
 
 ```html
-<psh-card variant="default" title="Carte Default">
+<psh-card appearance="flat" title="Carte Default">
   <p>Style minimaliste sans effets visuels</p>
 </psh-card>
 ```
@@ -302,7 +302,7 @@ Style de base sans bordure ni ombre - fond blanc/gris selon le thème.
 Style avec ombre portée pour créer de la profondeur (recommandé pour les cartes importantes).
 
 ```html
-<psh-card variant="elevated" title="Carte Elevated">
+<psh-card appearance="elevated" title="Carte Elevated">
   <p>Ombre douce pour mise en avant</p>
 </psh-card>
 ```
@@ -312,7 +312,7 @@ Style avec ombre portée pour créer de la profondeur (recommandé pour les cart
 Style avec bordure pour délimiter clairement la carte.
 
 ```html
-<psh-card variant="outlined" title="Carte Outlined">
+<psh-card appearance="outline" title="Carte Outlined">
   <p>Bordure subtile pour définition claire</p>
 </psh-card>
 ```
@@ -329,7 +329,7 @@ Pour messages informatifs et notifications.
 <psh-card
   title="Information"
   description="Message informatif"
-  variant="outlined"
+  appearance="outline"
   color="info"
 >
   <p>Votre compte a été mis à jour avec succès.</p>
@@ -344,7 +344,7 @@ Pour confirmations et succès d'opérations.
 <psh-card
   title="Succès"
   description="Opération réussie"
-  variant="outlined"
+  appearance="outline"
   color="success"
 >
   <p>Votre paiement a été traité avec succès.</p>
@@ -359,7 +359,7 @@ Pour avertissements et actions requises.
 <psh-card
   title="Attention"
   description="Action requise"
-  variant="outlined"
+  appearance="outline"
   color="warning"
 >
   <p>Votre abonnement expire dans 7 jours.</p>
@@ -377,7 +377,7 @@ Pour erreurs et messages critiques.
 <psh-card
   title="Erreur"
   description="Une erreur est survenue"
-  variant="outlined"
+  appearance="outline"
   color="danger"
 >
   <p>Impossible de se connecter au serveur.</p>
@@ -399,7 +399,7 @@ Pour tableaux de bord denses avec beaucoup de cartes.
 <psh-card
   title="Densité Compacte"
   density="compact"
-  variant="outlined"
+  appearance="outline"
 >
   <p>Padding réduit pour afficher plus d'informations.</p>
 </psh-card>
@@ -413,7 +413,7 @@ Spacing standard recommandé pour la plupart des cas.
 <psh-card
   title="Densité Normale"
   density="normal"
-  variant="outlined"
+  appearance="outline"
 >
   <p>Padding standard équilibré.</p>
 </psh-card>
@@ -427,7 +427,7 @@ Pour designs aérés et premium avec peu de cartes.
 <psh-card
   title="Densité Spacieuse"
   density="spacious"
-  variant="outlined"
+  appearance="outline"
 >
   <p>Padding généreux pour un rendu premium.</p>
 </psh-card>
@@ -502,7 +502,7 @@ Désactive la carte avec opacité réduite et interactions bloquées.
 <psh-card
   title="Notifications"
   description="3 nouvelles notifications"
-  variant="outlined"
+  appearance="outline"
   color="info"
   actionsAlignment="space-between"
 >
@@ -534,7 +534,7 @@ Désactive la carte avec opacité réduite et interactions bloquées.
   title="Visiteurs aujourd'hui"
   description="+12% vs hier"
   density="compact"
-  variant="elevated"
+  appearance="elevated"
 >
   <div card-header-icon>
     <i class="ph ph-users"></i>
@@ -550,7 +550,7 @@ Désactive la carte avec opacité réduite et interactions bloquées.
 <psh-card
   title="Créer un nouveau projet"
   description="Remplissez les informations de base"
-  variant="outlined"
+  appearance="outline"
   density="spacious"
 >
   <form>
@@ -577,7 +577,7 @@ Désactive la carte avec opacité réduite et interactions bloquées.
   <psh-card
     [title]="item.title"
     [description]="item.description"
-    variant="outlined"
+    appearance="outline"
     [interactive]="true"
     [hoverable]="true"
     (clicked)="openItem(item)"
@@ -602,7 +602,7 @@ Désactive la carte avec opacité réduite et interactions bloquées.
 <psh-card
   title="Erreur de Connexion"
   description="Impossible de se connecter au serveur"
-  variant="outlined"
+  appearance="outline"
   color="danger"
 >
   <div card-header-icon>
@@ -725,7 +725,7 @@ Pour des besoins spécifiques, créer des composants dédiés qui utilisent `psh
     <psh-card
       [title]="project.name"
       [description]="project.status"
-      variant="outlined"
+      appearance="outline"
       [hoverable]="true"
     >
       <!-- Contenu spécifique projet -->

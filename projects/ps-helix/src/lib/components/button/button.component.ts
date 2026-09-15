@@ -1,3 +1,4 @@
+import { PshControlAppearance } from '../../types/semantic.types';
 import {
   AfterContentChecked,
   ChangeDetectionStrategy,
@@ -10,7 +11,7 @@ import {
   output,
   signal,
 } from '@angular/core';
-import { ButtonAppearance, ButtonColor, ButtonSize, ButtonIconPosition } from './button.types';
+import { ButtonColor, ButtonSize, ButtonIconPosition } from './button.types';
 
 @Component({
   selector: 'psh-button',
@@ -27,7 +28,7 @@ export class PshButtonComponent implements AfterContentChecked {
   private elementRef = inject(ElementRef);
   private projectedText = signal<string | undefined>(undefined);
 
-  appearance = input<ButtonAppearance>('filled');
+  appearance = input<PshControlAppearance>('solid');
   color = input<ButtonColor>('primary');
   size = input<ButtonSize>('medium');
   disabled = input(false);

@@ -39,13 +39,13 @@ export class TextareasDemoComponent {
   });
 
   readonly outlinedCode = `<psh-textarea
-  variant="outlined"
+  appearance="outline"
   label="Commentaire"
   placeholder="Votre message..."
 ></psh-textarea>`;
 
   readonly filledCode = `<psh-textarea
-  variant="filled"
+  appearance="solid"
   label="Commentaire"
   placeholder="Votre message..."
 ></psh-textarea>`;

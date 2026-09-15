@@ -17,7 +17,7 @@ export class ButtonsDemoComponent {
   isMobile = false;
 
   filledAppearanceCode = `<psh-button
-  appearance="filled"
+  appearance="solid"
   color="primary"
 >
   Action principale
@@ -31,7 +31,7 @@ export class ButtonsDemoComponent {
 </psh-button>`;
 
   textAppearanceCode = `<psh-button
-  appearance="text"
+  appearance="ghost"
   color="primary"
 >
   Action tertiaire
@@ -58,7 +58,7 @@ export class ButtonsDemoComponent {
 />`;
 
   statesCode = `<psh-button
-  appearance="filled"
+  appearance="solid"
   color="primary"
   [disabled]="isFormInvalid"
   [loading]="isSubmitting"

@@ -91,28 +91,28 @@ const rows: InfoCardData[] = [
   elevatedVariantCode = `<psh-info-card
   title="Profil Utilisateur"
   [data]="userData"
-  variant="elevated"
+  appearance="elevated"
   icon="user-circle"
 ></psh-info-card>`;
 
   outlinedVariantCode = `<psh-info-card
   title="Détails de Commande"
   [data]="orderData"
-  variant="outlined"
+  appearance="outline"
   icon="shopping-cart"
 ></psh-info-card>`;
 
   defaultVariantCode = `<psh-info-card
   title="Informations Système"
   [data]="systemData"
-  variant="default"
+  appearance="flat"
   icon="gear"
 ></psh-info-card>`;
 
   statesCode = `<psh-info-card
   title="État Dynamique"
   [data]="data"
-  variant="outlined"
+  appearance="outline"
   [loading]="isLoading"
   [interactive]="true"
   [hoverable]="true"
@@ -123,11 +123,11 @@ const rows: InfoCardData[] = [
   headerActionsCode = `<psh-info-card
   title="Profil Utilisateur"
   [data]="userData"
-  variant="elevated"
+  appearance="elevated"
   icon="user-circle"
 >
   <div card-header-actions>
-    <psh-button appearance="text" size="small">
+    <psh-button appearance="ghost" size="small">
       <i class="ph ph-pencil"></i>
     </psh-button>
   </div>
@@ -136,7 +136,7 @@ const rows: InfoCardData[] = [
   headerActionsWithBadgeCode = `<psh-info-card
   title="Détails du Projet"
   [data]="projectData"
-  variant="outlined"
+  appearance="outline"
   icon="folder"
 >
   <div card-header-actions>
@@ -147,7 +147,7 @@ const rows: InfoCardData[] = [
   bothSlotsCode = `<psh-info-card
   title="Commande"
   [data]="orderData"
-  variant="elevated"
+  appearance="elevated"
   icon="package"
 >
   <div card-header-actions>
@@ -192,7 +192,7 @@ const rows: InfoCardData[] = [
   [data]="copyableData"
   [copyable]="true"
   icon="clipboard-text"
-  variant="outlined"
+  appearance="outline"
   (copied)="onCopied($event)"
   (copyFailed)="onCopyFailed($event)"
 ></psh-info-card>`;

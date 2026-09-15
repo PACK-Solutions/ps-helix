@@ -1,6 +1,7 @@
+import { PshSurfaceAppearance } from '../../types/semantic.types';
 import { Component, ChangeDetectionStrategy, computed, input, signal, PLATFORM_ID, inject, output, ViewEncapsulation, ElementRef, AfterContentInit, OnDestroy } from '@angular/core';
 import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { InfoCardData, InfoCardOptions, InfoCardVariant } from './info-card.types';
+import { InfoCardData, InfoCardOptions } from './info-card.types';
 
 /**
  * Info Card Component - Autonomous
@@ -21,7 +22,7 @@ import { InfoCardData, InfoCardOptions, InfoCardVariant } from './info-card.type
  *   title="User Information"
  *   [data]="userData"
  *   icon="user"
- *   variant="elevated"
+ *   appearance="elevated"
  * ></psh-info-card>
  * ```
  */
@@ -55,7 +56,7 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
   });
 
   /** Base card variant style */
-  variant = input<InfoCardVariant>('outlined');
+  appearance = input<PshSurfaceAppearance>('outline');
 
   /** Icon to display in the header (Phosphor icon name without 'ph-' prefix) */
   icon = input<string>('circle-dashed');
@@ -141,7 +142,7 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
   /** Computed CSS classes */
   computedClasses = computed(() => {
     const classes = ['info-card'];
-    classes.push(`variant-${this.variant()}`);
+    classes.push(`appearance-${this.appearance()}`);
 
     if (this.hoverable()) classes.push('hoverable');
     if (this.interactive()) classes.push('interactive');

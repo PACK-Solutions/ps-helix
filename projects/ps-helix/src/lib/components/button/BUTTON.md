@@ -32,13 +32,13 @@ import { PshButtonComponent } from 'ps-helix';
 <psh-button>Mon bouton</psh-button>
 
 // Button avec apparence et variante
-<psh-button appearance="filled" color="primary">
+<psh-button appearance="solid" color="primary">
   Bouton Principal
 </psh-button>
 
 // Button avec icône
 <psh-button
-  appearance="filled"
+  appearance="solid"
   color="primary"
   icon="arrow-right"
   iconPosition="right"
@@ -94,11 +94,11 @@ type ButtonType = 'button' | 'submit' | 'reset';
 
 **Exemple**:
 ```html
-<psh-button appearance="filled" color="primary">Enregistrer</psh-button>
-<psh-button appearance="filled" color="secondary">Annuler</psh-button>
-<psh-button appearance="filled" color="success">Valider</psh-button>
-<psh-button appearance="filled" color="warning">Attention</psh-button>
-<psh-button appearance="filled" color="danger">Supprimer</psh-button>
+<psh-button appearance="solid" color="primary">Enregistrer</psh-button>
+<psh-button appearance="solid" color="secondary">Annuler</psh-button>
+<psh-button appearance="solid" color="success">Valider</psh-button>
+<psh-button appearance="solid" color="warning">Attention</psh-button>
+<psh-button appearance="solid" color="danger">Supprimer</psh-button>
 ```
 
 ### Outline
@@ -127,9 +127,9 @@ type ButtonType = 'button' | 'submit' | 'reset';
 
 **Exemple**:
 ```html
-<psh-button appearance="text" color="primary">En savoir plus</psh-button>
-<psh-button appearance="text" color="secondary">Fermer</psh-button>
-<psh-button appearance="text" color="danger">Supprimer</psh-button>
+<psh-button appearance="ghost" color="primary">En savoir plus</psh-button>
+<psh-button appearance="ghost" color="secondary">Fermer</psh-button>
+<psh-button appearance="ghost" color="danger">Supprimer</psh-button>
 ```
 
 ## Tailles
@@ -141,7 +141,7 @@ Utilisé pour les interfaces denses ou les actions secondaires.
 ```html
 <psh-button size="small" color="primary">Petit</psh-button>
 <psh-button size="small" appearance="outline" color="secondary">Annuler</psh-button>
-<psh-button size="small" appearance="text" color="primary">Lien</psh-button>
+<psh-button size="small" appearance="ghost" color="primary">Lien</psh-button>
 ```
 
 ### Medium (40px) - Par défaut
@@ -151,7 +151,7 @@ Taille standard pour la majorité des cas d'utilisation.
 ```html
 <psh-button size="medium" color="primary">Moyen</psh-button>
 <psh-button size="medium" appearance="outline" color="secondary">Annuler</psh-button>
-<psh-button size="medium" appearance="text" color="primary">Action</psh-button>
+<psh-button size="medium" appearance="ghost" color="primary">Action</psh-button>
 ```
 
 ### Large (48px)
@@ -161,7 +161,7 @@ Utilisé pour les actions importantes ou les interfaces tactiles.
 ```html
 <psh-button size="large" color="primary">Grand</psh-button>
 <psh-button size="large" appearance="outline" color="success">Valider</psh-button>
-<psh-button size="large" appearance="filled" color="primary">Confirmer</psh-button>
+<psh-button size="large" appearance="solid" color="primary">Confirmer</psh-button>
 ```
 
 ## Variantes de Couleur
@@ -170,45 +170,45 @@ Utilisé pour les actions importantes ou les interfaces tactiles.
 Couleur principale de l'application. Utilisé pour les actions primaires.
 
 ```html
-<psh-button color="primary" appearance="filled">Primary Filled</psh-button>
+<psh-button color="primary" appearance="solid">Primary Filled</psh-button>
 <psh-button color="primary" appearance="outline">Primary Outline</psh-button>
-<psh-button color="primary" appearance="text">Primary Text</psh-button>
+<psh-button color="primary" appearance="ghost">Primary Text</psh-button>
 ```
 
 ### Secondary
 Couleur secondaire. Utilisé pour les actions moins importantes.
 
 ```html
-<psh-button color="secondary" appearance="filled">Secondary Filled</psh-button>
+<psh-button color="secondary" appearance="solid">Secondary Filled</psh-button>
 <psh-button color="secondary" appearance="outline">Secondary Outline</psh-button>
-<psh-button color="secondary" appearance="text">Secondary Text</psh-button>
+<psh-button color="secondary" appearance="ghost">Secondary Text</psh-button>
 ```
 
 ### Success
 Couleur de succès (vert). Utilisé pour les actions positives.
 
 ```html
-<psh-button color="success" appearance="filled">Valider</psh-button>
+<psh-button color="success" appearance="solid">Valider</psh-button>
 <psh-button color="success" appearance="outline">Approuver</psh-button>
-<psh-button color="success" appearance="text">Confirmer</psh-button>
+<psh-button color="success" appearance="ghost">Confirmer</psh-button>
 ```
 
 ### Warning
 Couleur d'avertissement (orange). Utilisé pour les actions nécessitant attention.
 
 ```html
-<psh-button color="warning" appearance="filled">Attention</psh-button>
+<psh-button color="warning" appearance="solid">Attention</psh-button>
 <psh-button color="warning" appearance="outline">Modifier</psh-button>
-<psh-button color="warning" appearance="text">Avertir</psh-button>
+<psh-button color="warning" appearance="ghost">Avertir</psh-button>
 ```
 
 ### Danger
 Couleur de danger (rouge). Utilisé pour les actions destructives.
 
 ```html
-<psh-button color="danger" appearance="filled">Supprimer</psh-button>
+<psh-button color="danger" appearance="solid">Supprimer</psh-button>
 <psh-button color="danger" appearance="outline">Retirer</psh-button>
-<psh-button color="danger" appearance="text">Annuler</psh-button>
+<psh-button color="danger" appearance="ghost">Annuler</psh-button>
 ```
 
 ## États
@@ -282,7 +282,7 @@ Occupe toute la largeur du conteneur parent.
 
 <!-- Actions secondaires en outline ou text -->
 <psh-button appearance="outline" color="secondary">Action Secondaire</psh-button>
-<psh-button appearance="text" color="secondary">Action Tertiaire</psh-button>
+<psh-button appearance="ghost" color="secondary">Action Tertiaire</psh-button>
 ```
 
 ### Groupes de Boutons
@@ -448,7 +448,7 @@ Le design system garantit:
   iconPosition="only"
   iconOnlyText="Ajouter un élément"
   color="primary"
-  appearance="filled"
+  appearance="solid"
 ></psh-button>
 ```
 
@@ -501,7 +501,7 @@ Utilisez n'importe quelle icône de [Phosphor Icons](https://phosphoricons.com/)
 ```html
 <psh-button
   size="small"
-  appearance="text"
+  appearance="ghost"
   color="primary"
   icon="pencil-simple"
   (clicked)="onEdit(row)"
@@ -510,7 +510,7 @@ Utilisez n'importe quelle icône de [Phosphor Icons](https://phosphoricons.com/)
 </psh-button>
 <psh-button
   size="small"
-  appearance="text"
+  appearance="ghost"
   color="danger"
   icon="trash"
   (clicked)="onDelete(row)"
@@ -522,7 +522,7 @@ Utilisez n'importe quelle icône de [Phosphor Icons](https://phosphoricons.com/)
 ### Boutons de navigation
 ```html
 <psh-button
-  appearance="text"
+  appearance="ghost"
   color="primary"
   icon="arrow-left"
   iconPosition="left"
@@ -531,7 +531,7 @@ Utilisez n'importe quelle icône de [Phosphor Icons](https://phosphoricons.com/)
   Retour
 </psh-button>
 <psh-button
-  appearance="filled"
+  appearance="solid"
   color="primary"
   icon="arrow-right"
   iconPosition="right"
@@ -552,7 +552,7 @@ import { PshButtonComponent } from 'ps-helix';
   imports: [PshButtonComponent],
   template: `
     <psh-button
-      appearance="filled"
+      appearance="solid"
       color="primary"
       size="medium"
       icon="arrow-right"

@@ -17,7 +17,7 @@
               <psh-card
                 title="Carte Elevated"
                 description="Avec ombre portée"
-                variant="elevated"
+                appearance="elevated"
               >
                 <p>Cette carte utilise une ombre pour créer une élévation visuelle et se détacher du fond.</p>
                 <div card-actions>
@@ -37,7 +37,7 @@
               <psh-card
                 title="Carte Outlined"
                 description="Avec bordure"
-                variant="outlined"
+                appearance="outline"
               >
                 <p>Cette carte utilise une bordure simple pour un design plus léger et discret.</p>
                 <div card-actions>
@@ -57,11 +57,11 @@
               <psh-card
                 title="Carte Default"
                 description="Style par défaut"
-                variant="default"
+                appearance="flat"
               >
                 <p>Cette carte utilise le style par défaut, sans ombre ni bordure prononcée.</p>
                 <div card-actions>
-                  <psh-button appearance="text" color="primary">Action</psh-button>
+                  <psh-button appearance="ghost" color="primary">Action</psh-button>
                 </div>
               </psh-card>
             </div>
@@ -88,7 +88,7 @@
               <psh-card
                 title="Information"
                 description="Message informatif"
-                variant="outlined"
+                appearance="outline"
                 color="info"
               >
                 <p>Votre compte a été mis à jour avec succès. Les modifications prendront effet immédiatement.</p>
@@ -106,7 +106,7 @@
               <psh-card
                 title="Succès"
                 description="Opération réussie"
-                variant="outlined"
+                appearance="outline"
                 color="success"
               >
                 <p>Votre paiement a été traité avec succès. Un reçu vous a été envoyé par email.</p>
@@ -124,7 +124,7 @@
               <psh-card
                 title="Attention"
                 description="Action requise"
-                variant="outlined"
+                appearance="outline"
                 color="warning"
               >
                 <p>Votre abonnement expire dans 7 jours. Renouvelez-le pour continuer à profiter de tous les avantages.</p>
@@ -145,7 +145,7 @@
               <psh-card
                 title="Erreur"
                 description="Une erreur est survenue"
-                variant="outlined"
+                appearance="outline"
                 color="danger"
               >
                 <p>Impossible de se connecter au serveur. Vérifiez votre connexion internet et réessayez.</p>
@@ -177,7 +177,7 @@
               <psh-card
                 title="Densité Compacte"
                 description="Spacing réduit"
-                variant="outlined"
+                appearance="outline"
                 density="compact"
               >
                 <p>Cette carte utilise un padding compact (16px) pour afficher plus d'informations dans moins d'espace.</p>
@@ -198,7 +198,7 @@
               <psh-card
                 title="Densité Normale"
                 description="Spacing standard"
-                variant="outlined"
+                appearance="outline"
                 density="normal"
               >
                 <p>Cette carte utilise le padding standard (24px) recommandé pour la plupart des cas d'usage.</p>
@@ -219,7 +219,7 @@
               <psh-card
                 title="Densité Spacieuse"
                 description="Spacing généreux"
-                variant="outlined"
+                appearance="outline"
                 density="spacious"
               >
                 <p>Cette carte utilise un padding généreux (32px) pour un design aéré et premium.</p>
@@ -251,7 +251,7 @@
               <psh-card
                 title="Notifications"
                 description="3 nouvelles notifications"
-                variant="elevated"
+                appearance="elevated"
               >
                 <div card-header-icon>
                   <i class="ph ph-bell" style="font-size: 1.5rem; color: var(--psh-primary-color);"></i>
@@ -275,7 +275,7 @@
               <psh-card
                 title="Projet en cours"
                 description="Design System v2.0"
-                variant="elevated"
+                appearance="elevated"
                 [hoverable]="true"
               >
                 <div card-header-extra>
@@ -302,7 +302,7 @@
               <psh-card
                 title="Bienvenue"
                 description="Commencez votre parcours"
-                variant="elevated"
+                appearance="elevated"
               >
                 <p>Cette carte utilise les propriétés title et description pour un rendu cohérent et bien espacé.</p>
                 <div card-actions>
@@ -321,7 +321,7 @@
 
           <div class="slot-card">
             <div class="slot-preview">
-              <psh-card variant="outlined" density="compact">
+              <psh-card appearance="outline" density="compact">
                 <div card-header-content class="premium-header">
                   <i class="ph ph-currency-eur" aria-hidden="true"></i>
                   <h3>Versement initial</h3>
@@ -359,7 +359,7 @@
                 <psh-card
                   title="Carte Interactive"
                   description="Cliquez pour interagir"
-                  variant="elevated"
+                  appearance="elevated"
                   [interactive]="true"
                   [hoverable]="true"
                   (clicked)="handleCardClick($event)"
@@ -376,7 +376,7 @@
                 <psh-card
                   title="Chargement"
                   description="État de chargement"
-                  variant="outlined"
+                  appearance="outline"
                   [loading]="true"
                 >
                   <p>Ce contenu ne sera pas visible pendant le chargement</p>
@@ -391,7 +391,7 @@
                 <psh-card
                   title="Carte Désactivée"
                   description="État désactivé"
-                  variant="outlined"
+                  appearance="outline"
                   [disabled]="true"
                 >
                   <p>Cette carte est désactivée avec opacité réduite et interactions bloquées.</p>
@@ -437,7 +437,7 @@
           <p>Le design system propose des composants de cartes spécialisés pour des cas d'usage spécifiques.</p>
         </div>
         <div class="specialized-content">
-          <psh-card class="specialized-card" variant="outlined">
+          <psh-card class="specialized-card" appearance="outline">
             <div class="specialized-card-header">
               <i class="ph ph-chart-line" style="font-size: 2rem; color: var(--psh-primary-color);"></i>
               <div>
@@ -452,7 +452,7 @@
             </div>
           </psh-card>
 
-          <psh-card class="specialized-card" variant="outlined">
+          <psh-card class="specialized-card" appearance="outline">
             <div class="specialized-card-header">
               <i class="ph ph-info" style="font-size: 2rem; color: var(--psh-primary-color);"></i>
               <div>
@@ -467,7 +467,7 @@
             </div>
           </psh-card>
 
-          <psh-card class="specialized-card" variant="outlined">
+          <psh-card class="specialized-card" appearance="outline">
             <div class="specialized-card-header">
               <i class="ph ph-layout" style="font-size: 2rem; color: var(--psh-primary-color);"></i>
               <div>

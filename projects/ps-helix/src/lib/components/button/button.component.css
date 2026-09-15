@@ -148,57 +148,57 @@ button.icon-only.large {
 
 /* Appearances */
 /* Filled */
-button.filled {
+button.solid {
   background-color: currentColor;
 }
 
-button.filled.primary {
+button.solid.primary {
   background: var(--psh-primary-gradient);
   color: var(--psh-text-on-primary);
 }
 
-button.filled.primary .button-content {
+button.solid.primary .button-content {
   color: var(--psh-text-on-primary);
 }
 
-button.filled.secondary .button-content {
+button.solid.secondary .button-content {
   color: var(--psh-text-on-secondary);
 }
 
-button.filled.success .button-content {
+button.solid.success .button-content {
   color: var(--psh-text-on-success);
 }
 
-button.filled.warning .button-content {
+button.solid.warning .button-content {
   color: var(--psh-text-on-warning);
 }
 
-button.filled.danger .button-content {
+button.solid.danger .button-content {
   color: var(--psh-text-on-danger);
 }
 
-button.filled:not(.primary):not(.secondary):not(.success):not(.warning):not(.danger) .button-content {
+button.solid:not(.primary):not(.secondary):not(.success):not(.warning):not(.danger) .button-content {
   color: var(--psh-text-on-surface);
 }
 
 /* Filled hover states for each variant */
-button.filled.primary:hover:not(.disabled):not(.loading) {
+button.solid.primary:hover:not(.disabled):not(.loading) {
   background: var(--psh-primary-gradient-hover);
 }
 
-button.filled.secondary:hover:not(.disabled):not(.loading) {
+button.solid.secondary:hover:not(.disabled):not(.loading) {
   background-color: var(--psh-secondary-color-light);
 }
 
-button.filled.success:hover:not(.disabled):not(.loading) {
+button.solid.success:hover:not(.disabled):not(.loading) {
   background-color: var(--psh-green-400);
 }
 
-button.filled.warning:hover:not(.disabled):not(.loading) {
+button.solid.warning:hover:not(.disabled):not(.loading) {
   background-color: var(--psh-orange-400);
 }
 
-button.filled.danger:hover:not(.disabled):not(.loading) {
+button.solid.danger:hover:not(.disabled):not(.loading) {
   background-color: var(--psh-red-400);
 }
 
@@ -242,33 +242,33 @@ button.outline:not(.primary):not(.secondary):not(.success):not(.warning):not(.da
 }
 
 /* Text */
-button.text {
+button.ghost {
   background: transparent;
   padding: 0 var(--psh-spacing-lg);
   color: currentColor;
   border-radius: var(--psh-radius-lg);
 }
 
-button.text .button-content {
+button.ghost .button-content {
   color: inherit;
 }
 
-button.text:hover:not(.disabled):not(.loading) {
+button.ghost:hover:not(.disabled):not(.loading) {
   background: var(--psh-surface-hover);
 }
 
 /* Text icon only */
-button.text.icon-only {
+button.ghost.icon-only {
   min-width: unset;
   width: var(--psh-control-height-md);
   padding: 0;
 }
 
-button.text.icon-only.small {
+button.ghost.icon-only.small {
   width: var(--psh-control-height-sm);
 }
 
-button.text.icon-only.large {
+button.ghost.icon-only.large {
   width: var(--psh-control-height-lg);
 }
 

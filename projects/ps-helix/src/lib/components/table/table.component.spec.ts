@@ -466,9 +466,9 @@ describe('PshTableComponent', () => {
   });
 
   describe('Visual variants', () => {
-    it('should not apply outline class for variant="default"', () => {
+    it('should not apply outline class for variant="flat"', () => {
       fixture.componentRef.setInput('columns', mockColumns);
-      fixture.componentRef.setInput('variant', 'default');
+      fixture.componentRef.setInput('appearance', 'flat');
       fixture.detectChanges();
 
       const wrapper = getTableWrapper();
@@ -477,7 +477,7 @@ describe('PshTableComponent', () => {
 
     it('should apply outline class for variant="outline"', () => {
       fixture.componentRef.setInput('columns', mockColumns);
-      fixture.componentRef.setInput('variant', 'outline');
+      fixture.componentRef.setInput('appearance', 'outline');
       fixture.detectChanges();
 
       const wrapper = getTableWrapper();
@@ -580,12 +580,12 @@ describe('PshTableComponent', () => {
   });
 
   describe('data-state attribute', () => {
-    it('should have data-state="default" when data is present', () => {
+    it('should have data-state="flat" when data is present', () => {
       fixture.componentRef.setInput('columns', mockColumns);
       fixture.componentRef.setInput('data', mockData);
       fixture.detectChanges();
 
-      expect(getTableWrapper().getAttribute('data-state')).toBe('default');
+      expect(getTableWrapper().getAttribute('data-state')).toBe('flat');
     });
 
     it('should have data-state="loading" when loading', () => {

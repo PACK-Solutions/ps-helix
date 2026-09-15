@@ -1,3 +1,4 @@
+import { PshSurfaceAppearance } from '../../types/semantic.types';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { PshCollapseComponent } from './collapse.component';
@@ -517,17 +518,17 @@ describe('PshCollapseComponent', () => {
     });
 
     it('should apply outline class when variant is outline', () => {
-      fixture.componentRef.setInput('variant', 'outline');
+      fixture.componentRef.setInput('appearance', 'outline');
       fixture.detectChanges();
 
       expect(getCollapseContainer().classList.contains('outline')).toBe(true);
     });
 
     it.each<[CollapseVariant, boolean]>([
-      ['default', false],
+      ['flat', false],
       ['outline', true]
     ])('should have outline class=%s when variant is %s', (variant, hasOutline) => {
-      fixture.componentRef.setInput('variant', variant);
+      fixture.componentRef.setInput('appearance', variant);
       fixture.detectChanges();
 
       expect(getCollapseContainer().classList.contains('outline')).toBe(hasOutline);
@@ -536,7 +537,7 @@ describe('PshCollapseComponent', () => {
     it('should warn and fallback to default for invalid variant', () => {
       const warnSpy = jest.spyOn(console, 'warn').mockImplementation();
 
-      fixture.componentRef.setInput('variant', 'invalid' as CollapseVariant);
+      fixture.componentRef.setInput('appearance', 'invalid' as PshSurfaceAppearance);
       fixture.detectChanges();
 
       expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('Invalid variant'));
@@ -588,7 +589,7 @@ describe('PshCollapseComponent', () => {
 
       withProdMode(() => {
         const prodFixture = TestBed.createComponent(PshCollapseComponent);
-        prodFixture.componentRef.setInput('variant', 'invalid' as CollapseVariant);
+        prodFixture.componentRef.setInput('appearance', 'invalid' as PshSurfaceAppearance);
         prodFixture.detectChanges();
 
         const container = prodFixture.nativeElement.querySelector('.collapse') as HTMLElement;

@@ -32,7 +32,7 @@ export class MyComponent {}
 ### Carte Produit Simple
 
 ```html
-<psh-horizontal-card variant="elevated" sideWidth="var(--psh-size-40)">
+<psh-horizontal-card appearance="elevated" sideWidth="var(--psh-size-40)">
   <div horizontal-side>
     <img src="product.jpg" alt="Product image">
   </div>
@@ -50,7 +50,7 @@ export class MyComponent {}
 
 ```html
 <psh-horizontal-card
-  variant="elevated"
+  appearance="elevated"
   [interactive]="true"
   [hoverable]="true"
   (clicked)="handleCardClick($event)"
@@ -126,7 +126,7 @@ Le composant utilise `ng-content` avec des selecteurs pour organiser le contenu.
 
 ```html
 <psh-horizontal-card
-  variant="elevated"
+  appearance="elevated"
   [hoverable]="true"
   sideWidth="var(--psh-size-40)"
   gap="var(--psh-spacing-lg)"
@@ -166,7 +166,7 @@ Le composant utilise `ng-content` avec des selecteurs pour organiser le contenu.
 Style avec ombre portee pour creer de la profondeur. Recommande pour les contenus importants.
 
 ```html
-<psh-horizontal-card variant="elevated">
+<psh-horizontal-card appearance="elevated">
   <div horizontal-side>
     <img src="image.jpg" alt="Image">
   </div>
@@ -182,7 +182,7 @@ Style avec ombre portee pour creer de la profondeur. Recommande pour les contenu
 Style avec bordure pour delimiter clairement la carte. Ideal pour les interfaces epurees.
 
 ```html
-<psh-horizontal-card variant="outlined">
+<psh-horizontal-card appearance="outline">
   <div horizontal-side>
     <img src="image.jpg" alt="Image">
   </div>
@@ -198,7 +198,7 @@ Style avec bordure pour delimiter clairement la carte. Ideal pour les interfaces
 Style minimaliste sans bordure ni ombre. Utilise pour les contenus integres.
 
 ```html
-<psh-horizontal-card variant="default">
+<psh-horizontal-card appearance="flat">
   <div horizontal-side>
     <img src="image.jpg" alt="Image">
   </div>
@@ -302,7 +302,7 @@ Le composant bascule automatiquement en layout vertical sur les petits ecrans.
 
 ```html
 <psh-horizontal-card
-  variant="elevated"
+  appearance="elevated"
   [interactive]="true"
   [hoverable]="true"
   sideWidth="var(--psh-size-40)"
@@ -335,7 +335,7 @@ Le composant bascule automatiquement en layout vertical sur les petits ecrans.
 
 ```html
 <psh-horizontal-card
-  variant="outlined"
+  appearance="outline"
   [interactive]="true"
   [hoverable]="true"
   sideWidth="var(--psh-size-32)"
@@ -368,7 +368,7 @@ Le composant bascule automatiquement en layout vertical sur les petits ecrans.
   </div>
   <div horizontal-actions>
     <psh-button color="primary">Contacter</psh-button>
-    <psh-button appearance="text">Voir profil</psh-button>
+    <psh-button appearance="ghost">Voir profil</psh-button>
   </div>
 </psh-horizontal-card>
 ```
@@ -377,7 +377,7 @@ Le composant bascule automatiquement en layout vertical sur les petits ecrans.
 
 ```html
 <psh-horizontal-card
-  variant="elevated"
+  appearance="elevated"
   [interactive]="true"
   [hoverable]="true"
   sideWidth="var(--psh-size-48)"
@@ -404,7 +404,7 @@ Le composant bascule automatiquement en layout vertical sur les petits ecrans.
   </div>
   <div horizontal-actions>
     <psh-button color="primary">Lire l'article</psh-button>
-    <psh-button appearance="text">Partager</psh-button>
+    <psh-button appearance="ghost">Partager</psh-button>
   </div>
 </psh-horizontal-card>
 ```
@@ -420,7 +420,7 @@ Le composant bascule automatiquement en layout vertical sur les petits ecrans.
 } @else {
   @for (item of items; track item.id) {
     <psh-horizontal-card
-      variant="elevated"
+      appearance="elevated"
       [interactive]="true"
       [hoverable]="true"
       sideWidth="var(--psh-size-40)"
@@ -522,7 +522,7 @@ Le composant utilise `ChangeDetectionStrategy.OnPush` :
 // Les inputs signals sont trackes automatiquement
 <psh-horizontal-card
   [loading]="isLoading()"
-  [variant]="cardVariant()"
+  [appearance]="cardVariant()"
 >
 ```
 

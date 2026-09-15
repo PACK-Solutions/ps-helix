@@ -322,13 +322,13 @@ export class PaginationDemoComponent {
   defaultVariantCode = `<psh-pagination
   [(currentPage)]="currentPage"
   [(totalPages)]="totalPages"
-  variant="default"
+  appearance="flat"
 ></psh-pagination>`;
 
   outlineVariantCode = `<psh-pagination
   [(currentPage)]="currentPage"
   [(totalPages)]="totalPages"
-  variant="outline"
+  appearance="outline"
 ></psh-pagination>`;
 
   smallSizeCode = `<psh-pagination

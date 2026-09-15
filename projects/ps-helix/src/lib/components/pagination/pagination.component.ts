@@ -1,3 +1,4 @@
+import { PshSurfaceAppearance } from '../../types/semantic.types';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -19,7 +20,7 @@ export const PAGINATION_CONFIG = new InjectionToken<Partial<PaginationConfig>>(
   {
     factory: () => ({
       size: 'medium',
-      variant: 'default',
+      variant: 'flat',
       showFirstLast: true,
       showPrevNext: true,
       maxVisiblePages: 5,
@@ -108,13 +109,13 @@ export class PshPaginationComponent {
       return value;
     },
   });
-  readonly variant = input(this.config.variant ?? ('default' as PaginationVariant), {
+  readonly appearance = input(this.config.appearance ?? ('flat' as PshSurfaceAppearance), {
     transform: (value: PaginationVariant): PaginationVariant => {
-      if (!['default', 'outline'].includes(value)) {
+      if (!['flat', 'outline'].includes(value)) {
         if (isDevMode()) {
-          console.warn(`[psh-pagination] Invalid variant "${value}", falling back to "default"`);
+          console.warn(`[psh-pagination] Invalid variant "${value}", falling back to "flat"`);
         }
-        return 'default';
+        return 'flat';
       }
       return value;
     },
@@ -176,7 +177,7 @@ export class PshPaginationComponent {
   private getState(): string {
     if (this.currentPage() === 1) return 'first';
     if (this.currentPage() === this.effectiveTotalPages()) return 'last';
-    return 'default';
+    return 'flat';
   }
 
   goToPage(page: number): void {
