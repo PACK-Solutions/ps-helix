@@ -24,17 +24,8 @@ body {
   }
 }
 
-/* Modal open state */
-body.psh-modal-open {
-  overflow: hidden;
-  padding-right: var(--psh-scrollbar-width);
-}
-
-/*
- * Respect the user's "reduce motion" OS setting across the whole library.
- * A single global guard neutralises animations, transitions and smooth
- * scrolling for every component and utility (WCAG 2.3.3 / 2.2.2).
- */
-/* The prefers-reduced-motion guard moved to base/a11y.css, which is always imported
-   even when this file is not. */
+/* Two rules that used to live here now ship unconditionally, because they are not
+   opinions an application can decline:
+     - the prefers-reduced-motion guard  -> base/a11y.css
+     - body.psh-modal-open (scroll lock) -> base/behavior.css */
 

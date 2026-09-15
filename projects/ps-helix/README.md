@@ -123,14 +123,21 @@ In your main `styles.css` file, import the Helix stylesheet:
 @import 'ps-helix/styles.css';
 ```
 
-This single import includes:
-- CSS Reset (normalize styles across browsers)
+This import includes:
 - Design Tokens (spacing, typography, colors, etc.)
 - Light and Dark theme variables
-- Utility classes (spacing, typography, layout, etc.)
-- Responsive breakpoints and grid system
-- Animation utilities
-- Focus management styles
+- Utility classes and the responsive system
+- Accessibility guarantees (forced-colors focus fallback, reduced-motion guard) and the
+  modal scroll lock — these always ship, whatever else you opt into
+
+**It does not include a CSS reset or page-level styling since 7.0.0.** Importing a
+component library used to also zero every margin and padding in your application, strip
+your list markers and paint a gradient on your `<body>`. If you want that — typically an
+application with no reset of its own — import the bundle instead:
+
+```css
+@import 'ps-helix/styles-full.css';   /* styles.css + reset.css + global.css */
+```
 
 ### Step 2: Configure Phosphor Icons
 

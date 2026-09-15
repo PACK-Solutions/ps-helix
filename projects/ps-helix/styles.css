@@ -2,13 +2,20 @@
    PS-HELIX DESIGN SYSTEM - LIBRARY STYLESHEET
    ============================================ */
 
-/* 1. BASE - CSS Reset and Global Styles */
-@import './src/lib/styles/base/reset.css';
-@import './src/lib/styles/base/global.css';
+/* ----------------------------------------------------------------------------
+   This stylesheet no longer ships a CSS reset or page-level styling.
 
-/* 2. ACCESSIBILITY - forced-colors focus fallback, reduced-motion guard.
-   Always imported: these are guarantees, not opinions. */
+   It used to import reset.css and global.css unconditionally, which meant importing
+   ps-helix also zeroed every margin and padding in the host application, stripped list
+   markers, and painted a gradient on its <body>. Those are opinions an application is
+   entitled to decline.
+
+   Want the previous behaviour? Import styles-full.css instead.
+   ---------------------------------------------------------------------------- */
+
+/* 1. NON-NEGOTIABLE - accessibility guarantees and component machinery */
 @import './src/lib/styles/base/a11y.css';
+@import './src/lib/styles/base/behavior.css';
 
 /* 2. DESIGN TOKENS - Primitive Values */
 @import './src/lib/styles/tokens/spacing.tokens.css';

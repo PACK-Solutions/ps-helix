@@ -8,7 +8,12 @@
 @import '@phosphor-icons/web/bold';
 @import '@phosphor-icons/web/light';
 
-/* 2. BASE - CSS Reset and Global Styles */
+/* 2a. NON-NEGOTIABLE - ships with styles.css whatever the consumer opts into */
+@import '../projects/ps-helix/src/lib/styles/base/a11y.css';
+@import '../projects/ps-helix/src/lib/styles/base/behavior.css';
+
+/* 2b. BASE - CSS Reset and Global Styles.
+   Opt-in since 7.0.0; the demo takes them, which is what styles-full.css bundles. */
 @import '../projects/ps-helix/src/lib/styles/base/reset.css';
 @import '../projects/ps-helix/src/lib/styles/base/global.css';
 

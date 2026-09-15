@@ -1,0 +1,15 @@
+/* ============================================================================
+   Component machinery — always shipped
+
+   Rules the components need in order to work, which they cannot express themselves
+   because they target <body>. Not opinions about how a page should look: that lives in
+   global.css, which is opt-in.
+   ========================================================================== */
+
+/* Applied by PshModalComponent while a modal is open. The padding compensates for the
+   scrollbar the lock removes, so the page does not shift sideways underneath the
+   overlay; --psh-scrollbar-width is measured and set by the component. */
+body.psh-modal-open {
+  overflow: hidden;
+  padding-right: var(--psh-scrollbar-width);
+}

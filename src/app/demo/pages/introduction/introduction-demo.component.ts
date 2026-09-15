@@ -52,7 +52,7 @@ export class IntroductionDemoComponent {
       description: 'Ajoutez l\'import des styles Helix dans votre fichier styles.css principal.',
       codeLabel: 'src/styles.css',
       codeSnippet: `@import 'ps-helix/styles.css';`,
-      note: 'Ceci inclut : reset CSS, thèmes, tokens de design, utilitaires et système responsive'
+      note: 'Ceci inclut : tokens de design, thèmes, utilitaires, système responsive et les garanties d\'accessibilité. Le reset CSS et les styles de page sont opt-in depuis la 7.0.0 — utilisez styles-full.css pour les inclure.'
     },
     {
       number: 3,
