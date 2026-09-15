@@ -61,37 +61,37 @@
 }
 
 .card.density-compact {
-  --psh-card-header-padding: var(--psh-size-3) var(--psh-size-4);
-  --psh-card-body-padding: var(--psh-size-4);
-  --psh-card-footer-padding: var(--psh-size-3) var(--psh-size-4);
-  --psh-card-actions-padding: var(--psh-size-3) var(--psh-size-4);
-  --psh-card-header-gap: var(--psh-spacing-sm);
-  --psh-card-body-gap: var(--psh-size-3);
+  --psh-card-density-header-padding: var(--psh-size-3) var(--psh-size-4);
+  --psh-card-density-body-padding: var(--psh-size-4);
+  --psh-card-density-footer-padding: var(--psh-size-3) var(--psh-size-4);
+  --psh-card-density-actions-padding: var(--psh-size-3) var(--psh-size-4);
+  --psh-card-density-header-gap: var(--psh-spacing-sm);
+  --psh-card-density-body-gap: var(--psh-size-3);
 }
 
 .card.density-normal {
-  --psh-card-header-padding: var(--psh-size-4) var(--psh-size-5);
-  --psh-card-body-padding: var(--psh-size-6);
-  --psh-card-footer-padding: var(--psh-size-4) var(--psh-size-5);
-  --psh-card-actions-padding: var(--psh-size-4) var(--psh-size-5);
-  --psh-card-header-gap: var(--psh-size-3);
-  --psh-card-body-gap: var(--psh-size-4);
+  --psh-card-density-header-padding: var(--psh-size-4) var(--psh-size-5);
+  --psh-card-density-body-padding: var(--psh-size-6);
+  --psh-card-density-footer-padding: var(--psh-size-4) var(--psh-size-5);
+  --psh-card-density-actions-padding: var(--psh-size-4) var(--psh-size-5);
+  --psh-card-density-header-gap: var(--psh-size-3);
+  --psh-card-density-body-gap: var(--psh-size-4);
 }
 
 .card.density-spacious {
-  --psh-card-header-padding: var(--psh-size-6) var(--psh-size-7);
-  --psh-card-body-padding: var(--psh-size-8);
-  --psh-card-footer-padding: var(--psh-size-5) var(--psh-size-7);
-  --psh-card-actions-padding: var(--psh-size-5) var(--psh-size-7);
-  --psh-card-header-gap: var(--psh-size-4);
-  --psh-card-body-gap: var(--psh-size-5);
+  --psh-card-density-header-padding: var(--psh-size-6) var(--psh-size-7);
+  --psh-card-density-body-padding: var(--psh-size-8);
+  --psh-card-density-footer-padding: var(--psh-size-5) var(--psh-size-7);
+  --psh-card-density-actions-padding: var(--psh-size-5) var(--psh-size-7);
+  --psh-card-density-header-gap: var(--psh-size-4);
+  --psh-card-density-body-gap: var(--psh-size-5);
 }
 
 .card-header {
-  padding: var(--psh-card-header-padding);
+  padding: var(--psh-card-header-padding, var(--psh-card-density-header-padding));
   display: flex;
   align-items: flex-start;
-  gap: var(--psh-card-header-gap);
+  gap: var(--psh-card-header-gap, var(--psh-card-density-header-gap));
   background: var(--psh-surface-ground);
   position: relative;
 }
@@ -155,11 +155,11 @@
 }
 
 .card-body {
-  padding: var(--psh-card-body-padding);
+  padding: var(--psh-card-body-padding, var(--psh-card-density-body-padding));
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: var(--psh-card-body-gap);
+  gap: var(--psh-card-body-gap, var(--psh-card-density-body-gap));
   color: var(--psh-text-color);
   line-height: 1.6;
   overflow: hidden;
@@ -202,7 +202,7 @@
 }
 
 .card-footer {
-  padding: var(--psh-card-footer-padding);
+  padding: var(--psh-card-footer-padding, var(--psh-card-density-footer-padding));
   background: var(--psh-surface-ground);
   display: flex;
   align-items: center;
@@ -221,7 +221,7 @@
 }
 
 .card-actions {
-  padding: var(--psh-card-actions-padding);
+  padding: var(--psh-card-actions-padding, var(--psh-card-density-actions-padding));
   background: var(--psh-surface-ground);
   display: flex;
   align-items: center;
@@ -280,13 +280,9 @@
   user-select: none;
 }
 
-.card.interactive:focus {
+.card.interactive:focus-visible {
   outline: none;
   box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-color);
-}
-
-.card.interactive:focus:not(:focus-visible) {
-  box-shadow: none;
 }
 
 .card.interactive:active {
@@ -334,33 +330,33 @@
 
 @media (max-width: 1024px) {
   .card.density-spacious {
-    --psh-card-header-padding: var(--psh-size-5) var(--psh-size-6);
-    --psh-card-body-padding: var(--psh-size-7);
-    --psh-card-footer-padding: var(--psh-size-4-5) var(--psh-size-6);
-    --psh-card-actions-padding: var(--psh-size-4-5) var(--psh-size-6);
+    --psh-card-density-header-padding: var(--psh-size-5) var(--psh-size-6);
+    --psh-card-density-body-padding: var(--psh-size-7);
+    --psh-card-density-footer-padding: var(--psh-size-4-5) var(--psh-size-6);
+    --psh-card-density-actions-padding: var(--psh-size-4-5) var(--psh-size-6);
   }
 }
 
 @media (max-width: 768px) {
   .card.density-compact {
-    --psh-card-header-padding: var(--psh-size-2-5) var(--psh-size-3);
-    --psh-card-body-padding: var(--psh-size-3);
-    --psh-card-footer-padding: var(--psh-size-2-5) var(--psh-size-3);
-    --psh-card-actions-padding: var(--psh-size-2-5) var(--psh-size-3);
+    --psh-card-density-header-padding: var(--psh-size-2-5) var(--psh-size-3);
+    --psh-card-density-body-padding: var(--psh-size-3);
+    --psh-card-density-footer-padding: var(--psh-size-2-5) var(--psh-size-3);
+    --psh-card-density-actions-padding: var(--psh-size-2-5) var(--psh-size-3);
   }
 
   .card.density-normal {
-    --psh-card-header-padding: var(--psh-size-3) var(--psh-size-4);
-    --psh-card-body-padding: var(--psh-size-4);
-    --psh-card-footer-padding: var(--psh-size-3) var(--psh-size-4);
-    --psh-card-actions-padding: var(--psh-size-3) var(--psh-size-4);
+    --psh-card-density-header-padding: var(--psh-size-3) var(--psh-size-4);
+    --psh-card-density-body-padding: var(--psh-size-4);
+    --psh-card-density-footer-padding: var(--psh-size-3) var(--psh-size-4);
+    --psh-card-density-actions-padding: var(--psh-size-3) var(--psh-size-4);
   }
 
   .card.density-spacious {
-    --psh-card-header-padding: var(--psh-size-4) var(--psh-size-5);
-    --psh-card-body-padding: var(--psh-size-5);
-    --psh-card-footer-padding: var(--psh-size-4) var(--psh-size-5);
-    --psh-card-actions-padding: var(--psh-size-4) var(--psh-size-5);
+    --psh-card-density-header-padding: var(--psh-size-4) var(--psh-size-5);
+    --psh-card-density-body-padding: var(--psh-size-5);
+    --psh-card-density-footer-padding: var(--psh-size-4) var(--psh-size-5);
+    --psh-card-density-actions-padding: var(--psh-size-4) var(--psh-size-5);
   }
 
   .card-title {
@@ -391,24 +387,24 @@
 
 @media (max-width: 480px) {
   .card.density-compact {
-    --psh-card-header-padding: var(--psh-spacing-sm) var(--psh-size-3);
-    --psh-card-body-padding: var(--psh-size-3);
-    --psh-card-footer-padding: var(--psh-spacing-sm) var(--psh-size-3);
-    --psh-card-actions-padding: var(--psh-spacing-sm) var(--psh-size-3);
+    --psh-card-density-header-padding: var(--psh-spacing-sm) var(--psh-size-3);
+    --psh-card-density-body-padding: var(--psh-size-3);
+    --psh-card-density-footer-padding: var(--psh-spacing-sm) var(--psh-size-3);
+    --psh-card-density-actions-padding: var(--psh-spacing-sm) var(--psh-size-3);
   }
 
   .card.density-normal {
-    --psh-card-header-padding: var(--psh-size-2-5) var(--psh-size-3);
-    --psh-card-body-padding: var(--psh-size-3);
-    --psh-card-footer-padding: var(--psh-size-2-5) var(--psh-size-3);
-    --psh-card-actions-padding: var(--psh-size-2-5) var(--psh-size-3);
+    --psh-card-density-header-padding: var(--psh-size-2-5) var(--psh-size-3);
+    --psh-card-density-body-padding: var(--psh-size-3);
+    --psh-card-density-footer-padding: var(--psh-size-2-5) var(--psh-size-3);
+    --psh-card-density-actions-padding: var(--psh-size-2-5) var(--psh-size-3);
   }
 
   .card.density-spacious {
-    --psh-card-header-padding: var(--psh-size-3) var(--psh-size-4);
-    --psh-card-body-padding: var(--psh-size-4);
-    --psh-card-footer-padding: var(--psh-size-3) var(--psh-size-4);
-    --psh-card-actions-padding: var(--psh-size-3) var(--psh-size-4);
+    --psh-card-density-header-padding: var(--psh-size-3) var(--psh-size-4);
+    --psh-card-density-body-padding: var(--psh-size-4);
+    --psh-card-density-footer-padding: var(--psh-size-3) var(--psh-size-4);
+    --psh-card-density-actions-padding: var(--psh-size-3) var(--psh-size-4);
   }
 
   .card-header {

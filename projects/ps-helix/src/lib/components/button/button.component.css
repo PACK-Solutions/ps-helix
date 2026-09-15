@@ -5,16 +5,6 @@ button {
      an input lined up was a coincidence of two identical literals rather than a shared
      contract. Redefining them here would reintroduce exactly that. */
 
-  /* Button min-widths */
-  --psh-btn-min-width-sm: 6rem;  /* 96px */
-  --psh-btn-min-width-md: 7.5rem; /* 120px */
-  --psh-btn-min-width-lg: 8.75rem; /* 140px */
-  --psh-btn-min-width-icon-only: 2.5rem; /* 40px */
-
-  /* Button behavior */
-  --psh-btn-font-weight: 500;
-  --psh-btn-transition: all var(--psh-animation-duration-normal) var(--psh-animation-easing-default);
-
   /* Base button styles */
   display: inline-flex;
   align-items: center;
@@ -22,11 +12,11 @@ button {
   height: var(--psh-control-height-md);
   padding: 0 var(--psh-spacing-lg);
   border: none;
-  font-weight: var(--psh-btn-font-weight);
+  font-weight: var(--psh-btn-font-weight, 500);
   font-family: inherit;
   cursor: pointer;
-  transition: var(--psh-btn-transition);
-  min-width: var(--psh-btn-min-width-md);
+  transition: var(--psh-btn-transition, all var(--psh-animation-duration-normal) var(--psh-animation-easing-default));
+  min-width: var(--psh-btn-min-width-md, 7.5rem);
   position: relative;
   overflow: hidden;
   white-space: nowrap;
@@ -79,26 +69,26 @@ button.small {
   height: var(--psh-control-height-sm);
   font-size: var(--psh-font-size-sm);
   padding: 0 var(--psh-spacing-md);
-  min-width: var(--psh-btn-min-width-sm);
+  min-width: var(--psh-btn-min-width-sm, 6rem);
 }
 
 button.medium {
   height: var(--psh-control-height-md);
   font-size: var(--psh-font-size-base);
   padding: 0 var(--psh-spacing-lg);
-  min-width: var(--psh-btn-min-width-md);
+  min-width: var(--psh-btn-min-width-md, 7.5rem);
 }
 
 button.large {
   height: var(--psh-control-height-lg);
   font-size: var(--psh-font-size-lg);
   padding: 0 var(--psh-spacing-xl);
-  min-width: var(--psh-btn-min-width-lg);
+  min-width: var(--psh-btn-min-width-lg, 8.75rem);
 }
 
 /* Icon only mode */
 button.icon-only {
-  width: var(--psh-btn-min-width-icon-only);
+  width: var(--psh-btn-min-width-icon-only, 2.5rem);
   padding: 0;
   min-width: unset;
   aspect-ratio: 1;
@@ -312,7 +302,7 @@ button.danger {
 /* Focus */
 button:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 0.1875rem rgba(var(--psh-primary-color-rgb), 0.2);
+  box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-color);
 }
 
 /* Active */

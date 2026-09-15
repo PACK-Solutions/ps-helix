@@ -40,6 +40,10 @@
       "style": "./styles.css",
       "default": "./styles.css"
     },
+    "./styles-full.css": {
+      "style": "./styles-full.css",
+      "default": "./styles-full.css"
+    },
     "./src/lib/styles/*": {
       "style": "./src/lib/styles/*",
       "default": "./src/lib/styles/*"

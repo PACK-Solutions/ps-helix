@@ -1,0 +1,25 @@
+/* ============================================================================
+   PS-HELIX DESIGN SYSTEM - FULL STYLESHEET
+
+   Everything in styles.css, plus the CSS reset and the page-level styling that used
+   to be bundled into it before 7.0.0.
+
+     @import 'ps-helix/styles-full.css';
+
+   Use this when the application has no reset of its own and wants ps-helix to own the
+   page chrome. Prefer styles.css otherwise: the two files below reach outside the
+   library and into the host document.
+
+     reset.css   zeroes every margin and padding, removes list markers, normalises
+                 form element typography.
+     global.css  sets the body font, colour, background gradient, min-height and
+                 scroll behaviour, and declares color-scheme: light dark.
+
+   The accessibility guarantees and the modal scroll lock are NOT here — they ship
+   with styles.css unconditionally, because losing them is never a valid trade.
+   ========================================================================== */
+
+@import './styles.css';
+
+@import './src/lib/styles/base/reset.css';
+@import './src/lib/styles/base/global.css';

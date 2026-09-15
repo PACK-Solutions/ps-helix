@@ -24,25 +24,8 @@ body {
   }
 }
 
-/* Modal open state */
-body.psh-modal-open {
-  overflow: hidden;
-  padding-right: var(--psh-scrollbar-width);
-}
-
-/*
- * Respect the user's "reduce motion" OS setting across the whole library.
- * A single global guard neutralises animations, transitions and smooth
- * scrolling for every component and utility (WCAG 2.3.3 / 2.2.2).
- */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
+/* Two rules that used to live here now ship unconditionally, because they are not
+   opinions an application can decline:
+     - the prefers-reduced-motion guard  -> base/a11y.css
+     - body.psh-modal-open (scroll lock) -> base/behavior.css */
 

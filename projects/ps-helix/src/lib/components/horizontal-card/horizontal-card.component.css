@@ -36,13 +36,9 @@
   user-select: none;
 }
 
-.horizontal-card.interactive:focus {
+.horizontal-card.interactive:focus-visible {
   outline: none;
   box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-color);
-}
-
-.horizontal-card.interactive:focus:not(:focus-visible) {
-  box-shadow: none;
 }
 
 .horizontal-card.interactive:active {

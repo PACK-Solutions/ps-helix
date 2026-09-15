@@ -1,6 +1,4 @@
 .collapse {
-  --psh-collapse-transition-duration: var(--psh-animation-duration-default);
-  --psh-collapse-transition-timing: var(--psh-animation-easing-smooth);
 
   width: 100%;
   border-radius: var(--psh-radius-lg);
@@ -45,8 +43,8 @@
 }
 
 .collapse-header:focus-visible {
-  outline: 2px solid var(--psh-primary-color);
-  outline-offset: -2px;
+  outline: none;
+  box-shadow: inset 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-color);
   z-index: 1;
 }
 
@@ -63,7 +61,7 @@
 .collapse-header i {
   color: var(--psh-primary-color);
   font-size: 1.2rem;
-  transition: transform var(--psh-collapse-transition-duration) var(--psh-collapse-transition-timing);
+  transition: transform var(--psh-collapse-transition-duration, var(--psh-animation-duration-default)) var(--psh-collapse-transition-timing, var(--psh-animation-easing-smooth));
 }
 
 .collapse-header i.expanded {
@@ -77,15 +75,15 @@
      region is aria-hidden. `visibility` takes them out of it in every browser; the
      zero-duration delay keeps the subtree visible for the length of the collapse. */
   visibility: hidden;
-  transition: max-height var(--psh-collapse-transition-duration) var(--psh-collapse-transition-timing),
-              visibility 0s var(--psh-animation-easing-linear) var(--psh-collapse-transition-duration);
+  transition: max-height var(--psh-collapse-transition-duration, var(--psh-animation-duration-default)) var(--psh-collapse-transition-timing, var(--psh-animation-easing-smooth)),
+              visibility 0s var(--psh-animation-easing-linear) var(--psh-collapse-transition-duration, var(--psh-animation-duration-default));
 }
 
 .collapse.expanded .collapse-content {
   max-height: var(--psh-collapse-max-height);
   overflow: visible;
   visibility: visible;
-  transition: max-height var(--psh-collapse-transition-duration) var(--psh-collapse-transition-timing),
+  transition: max-height var(--psh-collapse-transition-duration, var(--psh-animation-duration-default)) var(--psh-collapse-transition-timing, var(--psh-animation-easing-smooth)),
               visibility 0s var(--psh-animation-easing-linear) 0s;
 }
 
@@ -96,8 +94,8 @@
   text-align: left;
   transform: translateY(-10px);
   opacity: 0;
-  transition: transform var(--psh-collapse-transition-duration) var(--psh-collapse-transition-timing),
-              opacity var(--psh-collapse-transition-duration) var(--psh-collapse-transition-timing);
+  transition: transform var(--psh-collapse-transition-duration, var(--psh-animation-duration-default)) var(--psh-collapse-transition-timing, var(--psh-animation-easing-smooth)),
+              opacity var(--psh-collapse-transition-duration, var(--psh-animation-duration-default)) var(--psh-collapse-transition-timing, var(--psh-animation-easing-smooth));
 }
 
 .collapse.expanded .content-wrapper {

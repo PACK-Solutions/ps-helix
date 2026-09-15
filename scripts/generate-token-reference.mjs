@@ -18,6 +18,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const STYLES = join(ROOT, 'projects/ps-helix/src/lib/styles');
+const COMPONENTS = join(ROOT, 'projects/ps-helix/src/lib/components');
 const TARGET = join(ROOT, 'projects/ps-helix/TOKENS.md');
 const CHECK = process.argv.includes('--check');
 
@@ -96,6 +97,57 @@ for (const [file, rows] of byFile) {
 }
 
 const fileCount = [...byFile.keys()].filter(f => basename(f) !== 'dark.css').length;
+
+/* ---------------------------------------------------------- component CSS API */
+
+// A component's overridable properties are the ones it reads with a default:
+//   padding: var(--psh-card-body-padding, var(--psh-card-density-body-padding));
+// Declaring them instead would put them in a specificity fight with the consumer, so the
+// fallback *is* the default and this is the only place they are written down.
+const API_USE = /var\(\s*(--psh-[a-z0-9-]+)\s*,\s*([^;]+?)\)\s*[;,)]/g;
+const globalNames = new Set([...byFile.values()].flat().map(r => r.token));
+
+const componentApi = new Map(); // component -> Map(prop -> default)
+
+for (const file of walk(COMPONENTS)) {
+  const component = basename(file).replace('.component.css', '');
+  const src = readFileSync(file, 'utf8');
+  for (const m of src.matchAll(API_USE)) {
+    const [, prop, fallback] = m;
+    // Global tokens are always defined and documented above; internal density carriers
+    // are an implementation detail behind a public name.
+    if (globalNames.has(prop) || prop.includes('-density-')) continue;
+    if (!componentApi.has(component)) componentApi.set(component, new Map());
+    componentApi.get(component).set(prop, fallback.trim());
+  }
+}
+
+const apiCount = [...componentApi.values()].reduce((n, m) => n + m.size, 0);
+
+if (apiCount) {
+  sections.push(
+    '## Component CSS API',
+    '',
+    `${apiCount} properties across ${componentApi.size} components. Set any of them on the`,
+    'component element to restyle it without reaching inside:',
+    '',
+    '```css',
+    'psh-button { --psh-btn-min-width-md: 10rem; }',
+    '```',
+    '',
+    'They are read with their default as the `var()` fallback rather than declared on',
+    '`:host`. A declaration would outrank a plain `psh-button { … }` rule from a global',
+    'stylesheet and quietly beat the override; a fallback has no specificity to fight.',
+    '',
+  );
+  for (const [component, props] of [...componentApi].sort()) {
+    sections.push(`### \`psh-${component}\``, '', '| Property | Default |', '|---|---|');
+    for (const [prop, value] of [...props].sort()) {
+      sections.push(`| \`${prop}\` | \`${esc(value)}\` |`);
+    }
+    sections.push('');
+  }
+}
 
 const doc = [
   '# Token reference',

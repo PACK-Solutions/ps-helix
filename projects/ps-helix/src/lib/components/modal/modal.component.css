@@ -1,11 +1,4 @@
 :root {
-  --psh-modal-max-width-sm: 25rem;
-  --psh-modal-max-width-md: 37.5rem;
-  --psh-modal-max-width-lg: 50rem;
-  --psh-modal-backdrop-opacity: 0.6;
-  --psh-modal-backdrop-blur: 4px;
-  --psh-modal-animation-distance: 20px;
-  --psh-modal-animation-scale: 0.95;
 }
 
 .modal-backdrop {
@@ -14,8 +7,8 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(var(--psh-surface-900-rgb), var(--psh-modal-backdrop-opacity));
-  backdrop-filter: blur(var(--psh-modal-backdrop-blur));
+  background: rgba(var(--psh-surface-900-rgb), var(--psh-modal-backdrop-opacity, 0.6));
+  backdrop-filter: blur(var(--psh-modal-backdrop-blur, 4px));
   align-items: center;
   justify-content: center;
   z-index: var(--psh-z-index-modal-backdrop);
@@ -43,8 +36,8 @@
   border-radius: var(--psh-radius-xl);
   box-shadow: var(--psh-shadow-lg),
     0 0 0 1px rgba(var(--psh-primary-color-rgb), 0.05);
-  max-width: var(--psh-modal-max-width-md);
-  transform: translateY(var(--psh-modal-animation-distance)) scale(var(--psh-modal-animation-scale));
+  max-width: var(--psh-modal-max-width-md, 37.5rem);
+  transform: translateY(var(--psh-modal-animation-distance, 20px)) scale(var(--psh-modal-animation-scale, 0.95));
   transition: transform var(--psh-animation-duration-default) var(--psh-animation-easing-smooth),
               opacity var(--psh-animation-duration-default) var(--psh-animation-easing-smooth);
   border: 1px solid var(--psh-surface-border);
@@ -56,17 +49,17 @@
 
 .modal-container.small {
   width: 50%;
-  max-width: var(--psh-modal-max-width-sm);
+  max-width: var(--psh-modal-max-width-sm, 25rem);
 }
 
 .modal-container.medium {
   width: 70%;
-  max-width: var(--psh-modal-max-width-md);
+  max-width: var(--psh-modal-max-width-md, 37.5rem);
 }
 
 .modal-container.large {
   width: 90%;
-  max-width: var(--psh-modal-max-width-lg);
+  max-width: var(--psh-modal-max-width-lg, 50rem);
 }
 
 .modal-header {

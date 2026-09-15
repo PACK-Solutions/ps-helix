@@ -22,7 +22,7 @@
 .textarea-label {
   display: block;
   color: var(--psh-text-color);
-  font-size: 0.875rem;
+  font-size: var(--psh-font-size-sm);
   font-weight: 500;
   width: 100%;
   cursor: pointer;
@@ -44,9 +44,9 @@
 textarea {
   width: 100%;
   min-height: 5rem;
-  padding: 0.625rem 1rem;
+  padding: 0.625rem var(--psh-spacing-md);
   font-family: inherit;
-  font-size: 1rem;
+  font-size: var(--psh-font-size-base);
   line-height: 1.5;
   color: var(--psh-text-color);
   background: var(--psh-surface-0);
@@ -66,10 +66,10 @@ textarea::placeholder {
   opacity: 1;
 }
 
-textarea:focus {
+textarea:focus-visible {
   outline: none;
   border-color: var(--psh-primary-color);
-  box-shadow: 0 0 0 0.125rem var(--psh-focus-ring-color);
+  box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-color);
 }
 
 /* --- Variantes --- */
@@ -86,7 +86,7 @@ textarea:focus {
   background: var(--psh-surface-hover);
 }
 
-:host.filled textarea:focus {
+:host.filled textarea:focus-visible {
   background: var(--psh-surface-0);
 }
 
@@ -95,16 +95,16 @@ textarea:focus {
   border-color: var(--psh-danger-color);
 }
 
-:host.error textarea:focus {
-  box-shadow: 0 0 0 0.125rem var(--psh-focus-ring-error);
+:host.error textarea:focus-visible {
+  box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-error);
 }
 
 :host.success textarea {
   border-color: var(--psh-success-color);
 }
 
-:host.success textarea:focus {
-  box-shadow: 0 0 0 0.125rem var(--psh-focus-ring-success);
+:host.success textarea:focus-visible {
+  box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-success);
 }
 
 :host.disabled textarea {
@@ -120,13 +120,13 @@ textarea:focus {
 
 /* --- Tailles --- */
 :host.small textarea {
-  font-size: 0.875rem;
+  font-size: var(--psh-font-size-sm);
   padding: 0.5rem 0.75rem;
   min-height: 4rem;
 }
 
 :host.large textarea {
-  font-size: 1.125rem;
+  font-size: var(--psh-font-size-lg);
   padding: 0.75rem 1.125rem;
   min-height: 6rem;
 }
@@ -154,7 +154,7 @@ textarea:focus {
 .textarea-error,
 .textarea-success,
 .textarea-hint {
-  font-size: 0.875rem;
+  font-size: var(--psh-font-size-sm);
   line-height: 1.4;
 }
 
