@@ -447,3 +447,158 @@ used before 7.0.0 remain available through the opt-in `styles/compat.css`.
 | `--psh-letter-spacing-wide` | `0.025em` |  |
 | `--psh-letter-spacing-wider` | `0.05em` |  |
 | `--psh-letter-spacing-widest` | `0.1em` |  |
+
+## Component CSS API
+
+82 properties across 12 components. Set any of them on the
+component element to restyle it without reaching inside:
+
+```css
+psh-button { --psh-btn-min-width-md: 10rem; }
+```
+
+They are read with their default as the `var()` fallback rather than declared on
+`:host`. A declaration would outrank a plain `psh-button { … }` rule from a global
+stylesheet and quietly beat the override; a fallback has no specificity to fight.
+
+### `psh-alert`
+
+| Property | Default |
+|---|---|
+| `--psh-alert-animation-distance` | `var(--psh-animation-distance-sm` |
+| `--psh-alert-animation-duration` | `var(--psh-animation-duration-fast` |
+| `--psh-alert-dismiss-hover-bg` | `rgba(0, 0, 0, 0.1` |
+| `--psh-alert-icon-size` | `var(--psh-icon-size-md` |
+| `--psh-alert-icon-size-lg` | `var(--psh-icon-size-lg` |
+| `--psh-alert-icon-size-sm` | `var(--psh-icon-size-sm` |
+
+### `psh-avatar`
+
+| Property | Default |
+|---|---|
+| `--psh-avatar-icon-size-lg` | `var(--psh-icon-size-lg` |
+| `--psh-avatar-icon-size-sm` | `var(--psh-icon-size-sm` |
+| `--psh-avatar-icon-size-xl` | `var(--psh-icon-size-xl` |
+| `--psh-avatar-size-lg` | `var(--psh-size-12` |
+| `--psh-avatar-size-md` | `var(--psh-size-10` |
+| `--psh-avatar-size-sm` | `var(--psh-size-8` |
+| `--psh-avatar-size-xl` | `var(--psh-size-16` |
+| `--psh-avatar-status-border` | `var(--psh-border-width-2` |
+| `--psh-avatar-status-offset-md` | `calc(-1 * var(--psh-border-width-2` |
+| `--psh-avatar-status-offset-sm` | `calc(-1 * var(--psh-size-px` |
+| `--psh-avatar-status-offset-xl` | `calc(-1 * var(--psh-size-1` |
+| `--psh-avatar-status-size-lg` | `var(--psh-size-3-5` |
+| `--psh-avatar-status-size-md` | `var(--psh-size-3` |
+| `--psh-avatar-status-size-sm` | `var(--psh-size-2-5` |
+| `--psh-avatar-status-size-xl` | `var(--psh-size-4` |
+
+### `psh-badge`
+
+| Property | Default |
+|---|---|
+| `--psh-badge-dot-shadow` | `0 0 0 var(--psh-border-width-2` |
+| `--psh-badge-height` | `var(--psh-size-5` |
+| `--psh-badge-height-lg` | `var(--psh-size-6` |
+| `--psh-badge-height-sm` | `var(--psh-size-4` |
+| `--psh-badge-width` | `var(--psh-size-5` |
+| `--psh-badge-width-lg` | `var(--psh-size-6` |
+| `--psh-badge-width-sm` | `var(--psh-size-4` |
+
+### `psh-button`
+
+| Property | Default |
+|---|---|
+| `--psh-btn-font-weight` | `500` |
+| `--psh-btn-min-width-icon-only` | `2.5rem` |
+| `--psh-btn-min-width-lg` | `8.75rem` |
+| `--psh-btn-min-width-md` | `7.5rem` |
+| `--psh-btn-min-width-sm` | `6rem` |
+| `--psh-btn-transition` | `all var(--psh-animation-duration-normal) var(--psh-animation-easing-default` |
+
+### `psh-card`
+
+| Property | Default |
+|---|---|
+| `--psh-card-actions-padding` | `var(--psh-card-density-actions-padding` |
+| `--psh-card-body-gap` | `var(--psh-card-density-body-gap` |
+| `--psh-card-body-padding` | `var(--psh-card-density-body-padding` |
+| `--psh-card-footer-padding` | `var(--psh-card-density-footer-padding` |
+| `--psh-card-header-gap` | `var(--psh-card-density-header-gap` |
+| `--psh-card-header-padding` | `var(--psh-card-density-header-padding` |
+
+### `psh-collapse`
+
+| Property | Default |
+|---|---|
+| `--psh-collapse-transition-duration` | `var(--psh-animation-duration-default` |
+| `--psh-collapse-transition-timing` | `var(--psh-animation-easing-smooth` |
+
+### `psh-horizontal-card`
+
+| Property | Default |
+|---|---|
+| `--psh-horizontal-content-padding` | `var(--psh-spacing-md` |
+| `--psh-horizontal-gap` | `var(--psh-spacing-md` |
+| `--psh-horizontal-mobile-height` | `var(--psh-size-48` |
+| `--psh-horizontal-side-width` | `var(--psh-size-48` |
+
+### `psh-modal`
+
+| Property | Default |
+|---|---|
+| `--psh-modal-animation-distance` | `20px` |
+| `--psh-modal-animation-scale` | `0.95` |
+| `--psh-modal-backdrop-blur` | `4px` |
+| `--psh-modal-backdrop-opacity` | `0.6` |
+| `--psh-modal-max-width-lg` | `50rem` |
+| `--psh-modal-max-width-md` | `37.5rem` |
+| `--psh-modal-max-width-sm` | `25rem` |
+
+### `psh-progressbar`
+
+| Property | Default |
+|---|---|
+| `--psh-progressbar-height-lg` | `var(--psh-size-3` |
+| `--psh-progressbar-height-md` | `var(--psh-size-2` |
+| `--psh-progressbar-height-sm` | `var(--psh-size-1` |
+| `--psh-progressbar-stripe-opacity` | `0.15` |
+
+### `psh-spinloader`
+
+| Property | Default |
+|---|---|
+| `--psh-spinner-dot-size-lg` | `var(--psh-size-3` |
+| `--psh-spinner-dot-size-md` | `var(--psh-size-2` |
+| `--psh-spinner-dot-size-sm` | `var(--psh-size-1-5` |
+| `--psh-spinner-pulse-height-lg` | `var(--psh-size-12` |
+| `--psh-spinner-pulse-height-md` | `var(--psh-size-8` |
+| `--psh-spinner-pulse-height-sm` | `var(--psh-size-6` |
+| `--psh-spinner-pulse-width-lg` | `var(--psh-size-3` |
+| `--psh-spinner-pulse-width-md` | `var(--psh-size-2` |
+| `--psh-spinner-pulse-width-sm` | `var(--psh-size-1-5` |
+| `--psh-spinner-size-lg` | `var(--psh-size-12` |
+| `--psh-spinner-size-md` | `var(--psh-size-8` |
+| `--psh-spinner-size-sm` | `var(--psh-size-6` |
+
+### `psh-tag`
+
+| Property | Default |
+|---|---|
+| `--psh-tag-close-hover-bg` | `rgba(0, 0, 0, 0.1` |
+| `--psh-tag-close-opacity` | `0.7` |
+| `--psh-tag-close-opacity-hover` | `1` |
+| `--psh-tag-close-padding` | `var(--psh-spacing-xxs` |
+| `--psh-tag-font-size` | `var(--psh-font-size-sm` |
+| `--psh-tag-icon-size` | `var(--psh-icon-size-sm` |
+| `--psh-tag-padding-x` | `var(--psh-spacing-sm` |
+| `--psh-tag-padding-y` | `var(--psh-spacing-xs` |
+| `--psh-tag-transition` | `all var(--psh-animation-duration-normal) var(--psh-animation-easing-default` |
+
+### `psh-toast`
+
+| Property | Default |
+|---|---|
+| `--psh-toast-icon-size` | `1.5rem` |
+| `--psh-toast-max-width` | `31.25rem` |
+| `--psh-toast-min-width` | `18.75rem` |
+| `--psh-toast-progress-height` | `3px` |

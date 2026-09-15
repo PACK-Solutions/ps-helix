@@ -1,20 +1,11 @@
 /* Component-Specific Design Tokens */
 .badge {
-  /* Badge dimensions - using design system sizing tokens */
-  --psh-badge-width: var(--psh-size-5);        /* 20px */
-  --psh-badge-height: var(--psh-size-5);       /* 20px */
-  --psh-badge-width-sm: var(--psh-size-4);     /* 16px */
-  --psh-badge-height-sm: var(--psh-size-4);    /* 16px */
-  --psh-badge-width-lg: var(--psh-size-6);     /* 24px */
-  --psh-badge-height-lg: var(--psh-size-6);    /* 24px */
-  --psh-badge-dot-shadow: 0 0 0 var(--psh-border-width-2);
-
   /* Badge styles */
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: var(--psh-badge-width);
-  min-height: var(--psh-badge-height);
+  min-width: var(--psh-badge-width, var(--psh-size-5));
+  min-height: var(--psh-badge-height, var(--psh-size-5));
   padding: var(--psh-spacing-xs);
   border-radius: var(--psh-radius-base);
   font-size: var(--psh-font-size-xs);
@@ -67,22 +58,22 @@
 
 /* Sizes */
 .badge.medium {
-  min-width: var(--psh-badge-width);
-  min-height: var(--psh-badge-height);
+  min-width: var(--psh-badge-width, var(--psh-size-5));
+  min-height: var(--psh-badge-height, var(--psh-size-5));
   font-size: var(--psh-font-size-xs);
   padding: var(--psh-spacing-xs);
 }
 
 .badge.small {
-  min-width: var(--psh-badge-width-sm);
-  min-height: var(--psh-badge-height-sm);
+  min-width: var(--psh-badge-width-sm, var(--psh-size-4));
+  min-height: var(--psh-badge-height-sm, var(--psh-size-4));
   font-size: var(--psh-font-size-xs);
   padding: var(--psh-spacing-xxs);
 }
 
 .badge.large {
-  min-width: var(--psh-badge-width-lg);
-  min-height: var(--psh-badge-height-lg);
+  min-width: var(--psh-badge-width-lg, var(--psh-size-6));
+  min-height: var(--psh-badge-height-lg, var(--psh-size-6));
   font-size: var(--psh-font-size-sm);
   padding: var(--psh-spacing-sm);
 }
@@ -119,7 +110,7 @@
 /* Types */
 .badge.dot {
   border-radius: var(--psh-radius-full);
-  box-shadow: var(--psh-badge-dot-shadow) var(--psh-surface-card);
+  box-shadow: var(--psh-badge-dot-shadow, 0 0 0 var(--psh-border-width-2)) var(--psh-surface-card);
 }
 
 .badge.counter {

@@ -1,24 +1,15 @@
 .tag {
-  --psh-tag-padding-y: var(--psh-spacing-xs);
-  --psh-tag-padding-x: var(--psh-spacing-sm);
-  --psh-tag-font-size: var(--psh-font-size-sm);
-  --psh-tag-icon-size: var(--psh-icon-size-sm);
-  --psh-tag-close-padding: var(--psh-spacing-xxs);
-  --psh-tag-close-opacity: 0.7;
-  --psh-tag-close-opacity-hover: 1;
-  --psh-tag-close-hover-bg: rgba(0, 0, 0, 0.1);
-  --psh-tag-transition: all var(--psh-animation-duration-normal) var(--psh-animation-easing-default);
 
   display: inline-flex;
   align-items: center;
   gap: var(--psh-spacing-xs);
-  padding: var(--psh-tag-padding-y) var(--psh-tag-padding-x);
+  padding: var(--psh-tag-padding-y, var(--psh-spacing-xs)) var(--psh-tag-padding-x, var(--psh-spacing-sm));
   border-radius: var(--psh-radius-lg);
-  font-size: var(--psh-tag-font-size);
+  font-size: var(--psh-tag-font-size, var(--psh-font-size-sm));
   font-weight: var(--psh-font-weight-medium);
   line-height: var(--psh-line-height-tight);
   cursor: default;
-  transition: var(--psh-tag-transition);
+  transition: var(--psh-tag-transition, all var(--psh-animation-duration-normal) var(--psh-animation-easing-default));
   user-select: none;
 }
 
@@ -32,7 +23,7 @@
 }
 
 .tag i {
-  font-size: var(--psh-tag-icon-size);
+  font-size: var(--psh-tag-icon-size, var(--psh-icon-size-sm));
 }
 
 .tag-content {
@@ -44,20 +35,20 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: var(--psh-tag-close-padding);
+  padding: var(--psh-tag-close-padding, var(--psh-spacing-xxs));
   border: none;
   background: transparent;
   color: inherit;
   cursor: pointer;
-  opacity: var(--psh-tag-close-opacity);
+  opacity: var(--psh-tag-close-opacity, 0.7);
   transition: opacity var(--psh-animation-duration-normal) var(--psh-animation-easing-default);
   border-radius: var(--psh-radius-lg);
   margin-left: var(--psh-spacing-xs);
 }
 
 .tag-close:hover:not(:disabled) {
-  opacity: var(--psh-tag-close-opacity-hover);
-  background: var(--psh-tag-close-hover-bg);
+  opacity: var(--psh-tag-close-opacity-hover, 1);
+  background: var(--psh-tag-close-hover-bg, rgba(0, 0, 0, 0.1));
 }
 
 .tag-close:focus-visible {

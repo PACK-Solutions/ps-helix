@@ -1,18 +1,6 @@
 :host {
-  --psh-spinner-size-sm: var(--psh-size-6);
-  --psh-spinner-size-md: var(--psh-size-8);
-  --psh-spinner-size-lg: var(--psh-size-12);
 
-  --psh-spinner-dot-size-sm: var(--psh-size-1-5);
-  --psh-spinner-dot-size-md: var(--psh-size-2);
-  --psh-spinner-dot-size-lg: var(--psh-size-3);
 
-  --psh-spinner-pulse-width-sm: var(--psh-size-1-5);
-  --psh-spinner-pulse-width-md: var(--psh-size-2);
-  --psh-spinner-pulse-width-lg: var(--psh-size-3);
-  --psh-spinner-pulse-height-sm: var(--psh-size-6);
-  --psh-spinner-pulse-height-md: var(--psh-size-8);
-  --psh-spinner-pulse-height-lg: var(--psh-size-12);
 
   display: inline-flex;
   flex-direction: column;
@@ -21,8 +9,8 @@
 }
 
 .spinner-circle {
-  width: var(--psh-spinner-size-md);
-  height: var(--psh-spinner-size-md);
+  width: var(--psh-spinner-size-md, var(--psh-size-8));
+  height: var(--psh-spinner-size-md, var(--psh-size-8));
   border: var(--psh-border-width-2) solid var(--psh-surface-border);
   border-radius: var(--psh-radius-full);
   animation: spin var(--psh-animation-loop-normal) var(--psh-animation-easing-default) infinite;
@@ -54,8 +42,8 @@
 }
 
 .spinner-dots .dot {
-  width: var(--psh-spinner-dot-size-md);
-  height: var(--psh-spinner-dot-size-md);
+  width: var(--psh-spinner-dot-size-md, var(--psh-size-2));
+  height: var(--psh-spinner-dot-size-md, var(--psh-size-2));
   border-radius: var(--psh-radius-full);
   animation: bounce var(--psh-animation-duration-slow) var(--psh-animation-easing-in-out) infinite;
 }
@@ -94,8 +82,8 @@
 }
 
 .spinner-pulse .pulse {
-  width: var(--psh-spinner-pulse-width-md);
-  height: var(--psh-spinner-pulse-height-md);
+  width: var(--psh-spinner-pulse-width-md, var(--psh-size-2));
+  height: var(--psh-spinner-pulse-height-md, var(--psh-size-8));
   animation: pulse var(--psh-animation-loop-fast) var(--psh-animation-easing-in-out) infinite;
 }
 
@@ -128,35 +116,35 @@
 }
 
 :host.small .spinner-circle {
-  width: var(--psh-spinner-size-sm);
-  height: var(--psh-spinner-size-sm);
+  width: var(--psh-spinner-size-sm, var(--psh-size-6));
+  height: var(--psh-spinner-size-sm, var(--psh-size-6));
   border-width: var(--psh-border-width-1);
 }
 
 :host.small .spinner-dots .dot {
-  width: var(--psh-spinner-dot-size-sm);
-  height: var(--psh-spinner-dot-size-sm);
+  width: var(--psh-spinner-dot-size-sm, var(--psh-size-1-5));
+  height: var(--psh-spinner-dot-size-sm, var(--psh-size-1-5));
 }
 
 :host.small .spinner-pulse .pulse {
-  width: var(--psh-spinner-pulse-width-sm);
-  height: var(--psh-spinner-pulse-height-sm);
+  width: var(--psh-spinner-pulse-width-sm, var(--psh-size-1-5));
+  height: var(--psh-spinner-pulse-height-sm, var(--psh-size-6));
 }
 
 :host.large .spinner-circle {
-  width: var(--psh-spinner-size-lg);
-  height: var(--psh-spinner-size-lg);
+  width: var(--psh-spinner-size-lg, var(--psh-size-12));
+  height: var(--psh-spinner-size-lg, var(--psh-size-12));
   border-width: var(--psh-border-width-4);
 }
 
 :host.large .spinner-dots .dot {
-  width: var(--psh-spinner-dot-size-lg);
-  height: var(--psh-spinner-dot-size-lg);
+  width: var(--psh-spinner-dot-size-lg, var(--psh-size-3));
+  height: var(--psh-spinner-dot-size-lg, var(--psh-size-3));
 }
 
 :host.large .spinner-pulse .pulse {
-  width: var(--psh-spinner-pulse-width-lg);
-  height: var(--psh-spinner-pulse-height-lg);
+  width: var(--psh-spinner-pulse-width-lg, var(--psh-size-3));
+  height: var(--psh-spinner-pulse-height-lg, var(--psh-size-12));
 }
 
 .spinner-label {
