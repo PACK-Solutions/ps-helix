@@ -11,6 +11,7 @@
     "src/lib/styles",
     "styles.css",
     "README.md",
-    "THEME.md"
+    "THEME.md",
+    "TOKENS.md"
   ]
 }

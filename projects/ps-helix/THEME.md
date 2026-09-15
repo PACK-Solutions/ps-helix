@@ -230,6 +230,16 @@ Hue and chroma are preserved so the color palette stays perceptually consistent.
 
 ## Available CSS Variables
 
+> **Every token is namespaced `--psh-*` since 7.0.0.** The complete, always-current list —
+> 398 tokens with their light and dark values — lives in **[TOKENS.md](./TOKENS.md)**,
+> generated from the stylesheets so it cannot drift. This page covers only the theming
+> hooks; `TOKENS.md` covers the whole surface.
+>
+> Migrating from an earlier version? Import `ps-helix/src/lib/styles/compat.css` to keep
+> the old unprefixed names working while you move over, then drop it. The legacy
+> `--customer-*-color*` hooks keep working with no shim at all: both themes read the
+> namespaced name first and fall back to the old one.
+
 Once configured, `ThemeService` writes the following CSS variables on `:root`:
 
 ### Primary Color Variables
