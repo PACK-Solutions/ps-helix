@@ -287,7 +287,7 @@ export class GridDemoComponent {
         { name: 'mx-{size}', usage: 'Margin horizontal (left + right)' },
         { name: 'my-{size}', usage: 'Margin vertical (top + bottom)' }
       ],
-      example: '<div class="mb-lg mt-xl">Contenu avec marges</div>'
+      example: '<div class="psh-mb-lg psh-mt-xl">Contenu avec marges</div>'
     },
     {
       category: 'Classes Padding',
@@ -302,7 +302,7 @@ export class GridDemoComponent {
         { name: 'px-{size}', usage: 'Padding horizontal (left + right)' },
         { name: 'py-{size}', usage: 'Padding vertical (top + bottom)' }
       ],
-      example: '<div class="p-xl px-2xl">Contenu avec padding</div>'
+      example: '<div class="psh-p-xl psh-px-xl">Contenu avec padding</div>'
     },
     {
       category: 'Classes Gap',
@@ -313,7 +313,7 @@ export class GridDemoComponent {
         { name: 'gap-x-{size}', usage: 'Gap horizontal (column-gap)' },
         { name: 'gap-y-{size}', usage: 'Gap vertical (row-gap)' }
       ],
-      example: '<div class="gap-md">Enfants avec espacement</div>'
+      example: '<div class="psh-gap-md">Enfants avec espacement</div>'
     }
   ];
 }

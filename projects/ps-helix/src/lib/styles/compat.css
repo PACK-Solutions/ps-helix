@@ -5,7 +5,7 @@
    --psh-* replacement. Import it only while migrating:
 
      @import 'ps-helix/styles.css';
-     @import 'ps-helix/src/lib/styles/compat.css';   /* remove once migrated */
+     @import 'ps-helix/src/lib/styles/compat.css';   // remove once migrated
 
    It is not part of styles.css on purpose: the unprefixed names are exactly what
    collided with Bootstrap, PrimeNG and application tokens in the first place, so
