@@ -1,8 +1,8 @@
 .card {
-  background: var(--surface-card);
-  border-radius: var(--border-radius-lg, 0.75rem);
+  background: var(--psh-surface-card);
+  border-radius: var(--psh-radius-xl);
   overflow: hidden;
-  transition: all 0.2s ease;
+  transition: all var(--psh-animation-duration-normal) var(--psh-animation-easing-default);
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -10,94 +10,94 @@
 }
 
 .card.variant-elevated {
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--psh-shadow-sm);
 }
 
 .card.variant-elevated.hoverable:hover {
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--psh-shadow-md);
 }
 
 .card.variant-outlined {
-  border: 1px solid var(--surface-border);
+  border: 1px solid var(--psh-surface-border);
 }
 
 .card.variant-default {
-  background: var(--surface-section);
+  background: var(--psh-surface-section);
 }
 
 .card.color-info {
-  border-left: 4px solid var(--blue-500);
+  border-left: 4px solid var(--psh-blue-500);
 }
 
 /* color-mix on the palette token the border-left already uses, rather than an -rgb
    triplet that was never defined: the fallback was a literal blue, so these four tints
    ignored the theme entirely. */
 .card.color-info .card-header {
-  background: color-mix(in srgb, var(--blue-500) 5%, transparent);
+  background: color-mix(in srgb, var(--psh-blue-500) 5%, transparent);
 }
 
 .card.color-success {
-  border-left: 4px solid var(--green-500);
+  border-left: 4px solid var(--psh-green-500);
 }
 
 .card.color-success .card-header {
-  background: color-mix(in srgb, var(--green-500) 5%, transparent);
+  background: color-mix(in srgb, var(--psh-green-500) 5%, transparent);
 }
 
 .card.color-warning {
-  border-left: 4px solid var(--orange-500);
+  border-left: 4px solid var(--psh-orange-500);
 }
 
 .card.color-warning .card-header {
-  background: color-mix(in srgb, var(--orange-500) 5%, transparent);
+  background: color-mix(in srgb, var(--psh-orange-500) 5%, transparent);
 }
 
 .card.color-danger {
-  border-left: 4px solid var(--red-500);
+  border-left: 4px solid var(--psh-red-500);
 }
 
 .card.color-danger .card-header {
-  background: color-mix(in srgb, var(--red-500) 5%, transparent);
+  background: color-mix(in srgb, var(--psh-red-500) 5%, transparent);
 }
 
 .card.density-compact {
-  --card-header-padding: var(--size-3) var(--size-4);
-  --card-body-padding: var(--size-4);
-  --card-footer-padding: var(--size-3) var(--size-4);
-  --card-actions-padding: var(--size-3) var(--size-4);
-  --card-header-gap: var(--spacing-sm);
-  --card-body-gap: var(--size-3);
+  --psh-card-header-padding: var(--psh-size-3) var(--psh-size-4);
+  --psh-card-body-padding: var(--psh-size-4);
+  --psh-card-footer-padding: var(--psh-size-3) var(--psh-size-4);
+  --psh-card-actions-padding: var(--psh-size-3) var(--psh-size-4);
+  --psh-card-header-gap: var(--psh-spacing-sm);
+  --psh-card-body-gap: var(--psh-size-3);
 }
 
 .card.density-normal {
-  --card-header-padding: var(--size-4) var(--size-5);
-  --card-body-padding: var(--size-6);
-  --card-footer-padding: var(--size-4) var(--size-5);
-  --card-actions-padding: var(--size-4) var(--size-5);
-  --card-header-gap: var(--size-3);
-  --card-body-gap: var(--size-4);
+  --psh-card-header-padding: var(--psh-size-4) var(--psh-size-5);
+  --psh-card-body-padding: var(--psh-size-6);
+  --psh-card-footer-padding: var(--psh-size-4) var(--psh-size-5);
+  --psh-card-actions-padding: var(--psh-size-4) var(--psh-size-5);
+  --psh-card-header-gap: var(--psh-size-3);
+  --psh-card-body-gap: var(--psh-size-4);
 }
 
 .card.density-spacious {
-  --card-header-padding: var(--size-6) var(--size-7);
-  --card-body-padding: var(--size-8);
-  --card-footer-padding: var(--size-5) var(--size-7);
-  --card-actions-padding: var(--size-5) var(--size-7);
-  --card-header-gap: var(--size-4);
-  --card-body-gap: var(--size-5);
+  --psh-card-header-padding: var(--psh-size-6) var(--psh-size-7);
+  --psh-card-body-padding: var(--psh-size-8);
+  --psh-card-footer-padding: var(--psh-size-5) var(--psh-size-7);
+  --psh-card-actions-padding: var(--psh-size-5) var(--psh-size-7);
+  --psh-card-header-gap: var(--psh-size-4);
+  --psh-card-body-gap: var(--psh-size-5);
 }
 
 .card-header {
-  padding: var(--card-header-padding);
+  padding: var(--psh-card-header-padding);
   display: flex;
   align-items: flex-start;
-  gap: var(--card-header-gap);
-  background: var(--surface-ground);
+  gap: var(--psh-card-header-gap);
+  background: var(--psh-surface-ground);
   position: relative;
 }
 
 .card-header.has-divider {
-  border-bottom: 1px solid var(--surface-border);
+  border-bottom: 1px solid var(--psh-surface-border);
 }
 
 /*
@@ -115,23 +115,23 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-xs);
+  gap: var(--psh-spacing-xs);
 }
 
 .card-title {
-  font-size: var(--font-size-lg, 1.125rem);
+  font-size: var(--psh-font-size-lg);
   font-weight: 600;
   line-height: 1.4;
-  color: var(--text-color);
+  color: var(--psh-text-color);
   margin: 0;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .card-description {
-  font-size: var(--font-size-sm, 0.875rem);
+  font-size: var(--psh-font-size-sm);
   line-height: 1.5;
-  color: var(--text-color-secondary);
+  color: var(--psh-text-color-secondary);
   margin: 0;
 }
 
@@ -151,16 +151,16 @@
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
+  gap: var(--psh-spacing-sm);
 }
 
 .card-body {
-  padding: var(--card-body-padding);
+  padding: var(--psh-card-body-padding);
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: var(--card-body-gap);
-  color: var(--text-color);
+  gap: var(--psh-card-body-gap);
+  color: var(--psh-text-color);
   line-height: 1.6;
   overflow: hidden;
 }
@@ -176,7 +176,7 @@
 .card-body img {
   max-width: 100%;
   height: auto;
-  border-radius: var(--border-radius);
+  border-radius: var(--psh-radius-lg);
 }
 
 .card-body table {
@@ -189,10 +189,10 @@
 .card-body pre {
   max-width: 100%;
   overflow-x: auto;
-  padding: var(--spacing-sm);
-  background: var(--surface-ground);
-  border-radius: var(--border-radius);
-  font-size: var(--font-size-sm);
+  padding: var(--psh-spacing-sm);
+  background: var(--psh-surface-ground);
+  border-radius: var(--psh-radius-lg);
+  font-size: var(--psh-font-size-sm);
 }
 
 .card-body video,
@@ -202,14 +202,14 @@
 }
 
 .card-footer {
-  padding: var(--card-footer-padding);
-  background: var(--surface-ground);
+  padding: var(--psh-card-footer-padding);
+  background: var(--psh-surface-ground);
   display: flex;
   align-items: center;
-  gap: var(--size-4);
+  gap: var(--psh-size-4);
   flex-wrap: wrap;
-  font-size: var(--font-size-sm, 0.875rem);
-  color: var(--text-color-secondary);
+  font-size: var(--psh-font-size-sm);
+  color: var(--psh-text-color-secondary);
 }
 
 .card-footer:empty {
@@ -217,22 +217,22 @@
 }
 
 .card-footer.has-divider {
-  border-top: 1px solid var(--surface-border);
+  border-top: 1px solid var(--psh-surface-border);
 }
 
 .card-actions {
-  padding: var(--card-actions-padding);
-  background: var(--surface-ground);
+  padding: var(--psh-card-actions-padding);
+  background: var(--psh-surface-ground);
   display: flex;
   align-items: center;
-  gap: var(--spacing-md);
+  gap: var(--psh-spacing-md);
   justify-content: flex-end;
 }
 
 .card-actions > * {
   flex-shrink: 0;
   display: flex;
-  gap: var(--spacing-sm);
+  gap: var(--psh-spacing-sm);
 }
 
 .card-actions:empty {
@@ -240,7 +240,7 @@
 }
 
 .card-actions.has-divider {
-  border-top: 1px solid var(--surface-border);
+  border-top: 1px solid var(--psh-surface-border);
 }
 
 .card-actions.actions-align-left {
@@ -261,14 +261,14 @@
 
 .card-actions.mobile-full-width-buttons {
   flex-direction: column;
-  gap: var(--spacing-sm);
+  gap: var(--psh-spacing-sm);
 }
 
 .card-actions.mobile-full-width-buttons > * {
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: var(--spacing-sm);
+  gap: var(--psh-spacing-sm);
 }
 
 .card.hoverable:hover {
@@ -282,7 +282,7 @@
 
 .card.interactive:focus {
   outline: none;
-  box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
+  box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-color);
 }
 
 .card.interactive:focus:not(:focus-visible) {
@@ -306,16 +306,16 @@
 .card-loading {
   display: flex;
   flex-direction: column;
-  gap: var(--size-3);
-  animation: pulse 1.5s ease-in-out infinite;
+  gap: var(--psh-size-3);
+  animation: pulse var(--psh-animation-loop-slow) var(--psh-animation-easing-in-out) infinite;
 }
 
 .skeleton-line {
-  height: var(--size-4);
-  background: linear-gradient(90deg, var(--surface-border) 25%, var(--surface-hover) 50%, var(--surface-border) 75%);
+  height: var(--psh-size-4);
+  background: linear-gradient(90deg, var(--psh-surface-border) 25%, var(--psh-surface-hover) 50%, var(--psh-surface-border) 75%);
   background-size: 200% 100%;
-  animation: shimmer 1.5s ease-in-out infinite;
-  border-radius: var(--spacing-xs);
+  animation: shimmer var(--psh-animation-loop-slow) var(--psh-animation-easing-in-out) infinite;
+  border-radius: var(--psh-spacing-xs);
 }
 
 .skeleton-line.short {
@@ -334,33 +334,33 @@
 
 @media (max-width: 1024px) {
   .card.density-spacious {
-    --card-header-padding: var(--size-5) var(--size-6);
-    --card-body-padding: var(--size-7);
-    --card-footer-padding: var(--size-4-5) var(--size-6);
-    --card-actions-padding: var(--size-4-5) var(--size-6);
+    --psh-card-header-padding: var(--psh-size-5) var(--psh-size-6);
+    --psh-card-body-padding: var(--psh-size-7);
+    --psh-card-footer-padding: var(--psh-size-4-5) var(--psh-size-6);
+    --psh-card-actions-padding: var(--psh-size-4-5) var(--psh-size-6);
   }
 }
 
 @media (max-width: 768px) {
   .card.density-compact {
-    --card-header-padding: var(--size-2-5) var(--size-3);
-    --card-body-padding: var(--size-3);
-    --card-footer-padding: var(--size-2-5) var(--size-3);
-    --card-actions-padding: var(--size-2-5) var(--size-3);
+    --psh-card-header-padding: var(--psh-size-2-5) var(--psh-size-3);
+    --psh-card-body-padding: var(--psh-size-3);
+    --psh-card-footer-padding: var(--psh-size-2-5) var(--psh-size-3);
+    --psh-card-actions-padding: var(--psh-size-2-5) var(--psh-size-3);
   }
 
   .card.density-normal {
-    --card-header-padding: var(--size-3) var(--size-4);
-    --card-body-padding: var(--size-4);
-    --card-footer-padding: var(--size-3) var(--size-4);
-    --card-actions-padding: var(--size-3) var(--size-4);
+    --psh-card-header-padding: var(--psh-size-3) var(--psh-size-4);
+    --psh-card-body-padding: var(--psh-size-4);
+    --psh-card-footer-padding: var(--psh-size-3) var(--psh-size-4);
+    --psh-card-actions-padding: var(--psh-size-3) var(--psh-size-4);
   }
 
   .card.density-spacious {
-    --card-header-padding: var(--size-4) var(--size-5);
-    --card-body-padding: var(--size-5);
-    --card-footer-padding: var(--size-4) var(--size-5);
-    --card-actions-padding: var(--size-4) var(--size-5);
+    --psh-card-header-padding: var(--psh-size-4) var(--psh-size-5);
+    --psh-card-body-padding: var(--psh-size-5);
+    --psh-card-footer-padding: var(--psh-size-4) var(--psh-size-5);
+    --psh-card-actions-padding: var(--psh-size-4) var(--psh-size-5);
   }
 
   .card-title {
@@ -368,19 +368,19 @@
   }
 
   .card-description {
-    font-size: var(--font-size-xs);
+    font-size: var(--psh-font-size-xs);
   }
 
   .card-footer {
-    font-size: var(--font-size-xs);
-    gap: var(--size-3);
+    font-size: var(--psh-font-size-xs);
+    gap: var(--psh-size-3);
   }
 }
 
 @media (max-width: 640px) {
   .card-actions {
     flex-direction: column;
-    gap: var(--spacing-md);
+    gap: var(--psh-spacing-md);
   }
 
   .card-actions > * {
@@ -391,29 +391,29 @@
 
 @media (max-width: 480px) {
   .card.density-compact {
-    --card-header-padding: var(--spacing-sm) var(--size-3);
-    --card-body-padding: var(--size-3);
-    --card-footer-padding: var(--spacing-sm) var(--size-3);
-    --card-actions-padding: var(--spacing-sm) var(--size-3);
+    --psh-card-header-padding: var(--psh-spacing-sm) var(--psh-size-3);
+    --psh-card-body-padding: var(--psh-size-3);
+    --psh-card-footer-padding: var(--psh-spacing-sm) var(--psh-size-3);
+    --psh-card-actions-padding: var(--psh-spacing-sm) var(--psh-size-3);
   }
 
   .card.density-normal {
-    --card-header-padding: var(--size-2-5) var(--size-3);
-    --card-body-padding: var(--size-3);
-    --card-footer-padding: var(--size-2-5) var(--size-3);
-    --card-actions-padding: var(--size-2-5) var(--size-3);
+    --psh-card-header-padding: var(--psh-size-2-5) var(--psh-size-3);
+    --psh-card-body-padding: var(--psh-size-3);
+    --psh-card-footer-padding: var(--psh-size-2-5) var(--psh-size-3);
+    --psh-card-actions-padding: var(--psh-size-2-5) var(--psh-size-3);
   }
 
   .card.density-spacious {
-    --card-header-padding: var(--size-3) var(--size-4);
-    --card-body-padding: var(--size-4);
-    --card-footer-padding: var(--size-3) var(--size-4);
-    --card-actions-padding: var(--size-3) var(--size-4);
+    --psh-card-header-padding: var(--psh-size-3) var(--psh-size-4);
+    --psh-card-body-padding: var(--psh-size-4);
+    --psh-card-footer-padding: var(--psh-size-3) var(--psh-size-4);
+    --psh-card-actions-padding: var(--psh-size-3) var(--psh-size-4);
   }
 
   .card-header {
     flex-wrap: wrap;
-    gap: var(--spacing-xs);
+    gap: var(--psh-spacing-xs);
   }
 
   .card-title {
@@ -422,7 +422,7 @@
   }
 
   .card-description {
-    font-size: var(--font-size-xs);
+    font-size: var(--psh-font-size-xs);
     line-height: 1.4;
   }
 
@@ -439,11 +439,11 @@
   .card-footer {
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--spacing-sm);
+    gap: var(--psh-spacing-sm);
   }
 
   .card-actions {
     flex-direction: column;
-    gap: var(--spacing-sm);
+    gap: var(--psh-spacing-sm);
   }
 }

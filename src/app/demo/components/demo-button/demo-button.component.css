@@ -2,63 +2,63 @@ button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-sm) var(--spacing-md);
+  padding: var(--psh-spacing-sm) var(--psh-spacing-md);
   border: none;
-  border-radius: var(--border-radius);
+  border-radius: var(--psh-radius-lg);
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
   font-family: inherit;
-  font-size: var(--font-size-base);
+  font-size: var(--psh-font-size-base);
   min-width: 100px;
 }
 
 .button-content {
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
+  gap: var(--psh-spacing-sm);
 }
 
 /* Variants */
 .primary {
-  background: var(--primary-color);
-  color: var(--primary-color-text);
+  background: var(--psh-primary-color);
+  color: var(--psh-primary-color-text);
 }
 
 .primary:hover {
-  background: var(--primary-color-light);
+  background: var(--psh-primary-color-light);
 }
 
 .secondary {
-  background: var(--secondary-color);
-  color: var(--secondary-color-text);
+  background: var(--psh-secondary-color);
+  color: var(--psh-secondary-color-text);
 }
 
 .secondary:hover {
-  background: var(--secondary-color-light);
+  background: var(--psh-secondary-color-light);
 }
 
 .text {
   background: transparent;
-  color: var(--text-color);
-  padding: var(--spacing-xs);
+  color: var(--psh-text-color);
+  padding: var(--psh-spacing-xs);
   min-width: auto;
 }
 
 .text:hover {
-  background: var(--surface-hover);
+  background: var(--psh-surface-hover);
 }
 
 /* Sizes */
 .small {
-  padding: calc(var(--spacing-xs) * 1.5) var(--spacing-sm);
-  font-size: var(--font-size-sm);
+  padding: calc(var(--psh-spacing-xs) * 1.5) var(--psh-spacing-sm);
+  font-size: var(--psh-font-size-sm);
   min-width: 80px;
 }
 
 .large {
-  padding: var(--spacing-md) var(--spacing-lg);
-  font-size: var(--font-size-lg);
+  padding: var(--psh-spacing-md) var(--psh-spacing-lg);
+  font-size: var(--psh-font-size-lg);
   min-width: 120px;
 }
 
@@ -67,7 +67,7 @@ button {
   min-width: 36px;
   width: 36px;
   height: 36px;
-  padding: var(--spacing-xs);
+  padding: var(--psh-spacing-xs);
 }
 
 .icon-button.small {

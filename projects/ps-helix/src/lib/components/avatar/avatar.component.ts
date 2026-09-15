@@ -12,10 +12,10 @@ const DEFAULT_CONFIG = {
 
 // Default status colors
 const DEFAULT_STATUS_COLORS: Record<AvatarStatus, string> = {
-  online: 'var(--success-color)',
-  offline: 'var(--surface-400)',
-  away: 'var(--warning-color)',
-  busy: 'var(--danger-color)'
+  online: 'var(--psh-success-color)',
+  offline: 'var(--psh-surface-400)',
+  away: 'var(--psh-warning-color)',
+  busy: 'var(--psh-danger-color)'
 };
 
 @Component({

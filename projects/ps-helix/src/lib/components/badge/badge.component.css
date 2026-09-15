@@ -1,27 +1,27 @@
 /* Component-Specific Design Tokens */
 .badge {
   /* Badge dimensions - using design system sizing tokens */
-  --badge-width: var(--size-5);        /* 20px */
-  --badge-height: var(--size-5);       /* 20px */
-  --badge-width-sm: var(--size-4);     /* 16px */
-  --badge-height-sm: var(--size-4);    /* 16px */
-  --badge-width-lg: var(--size-6);     /* 24px */
-  --badge-height-lg: var(--size-6);    /* 24px */
-  --badge-dot-shadow: 0 0 0 var(--border-width-2);
+  --psh-badge-width: var(--psh-size-5);        /* 20px */
+  --psh-badge-height: var(--psh-size-5);       /* 20px */
+  --psh-badge-width-sm: var(--psh-size-4);     /* 16px */
+  --psh-badge-height-sm: var(--psh-size-4);    /* 16px */
+  --psh-badge-width-lg: var(--psh-size-6);     /* 24px */
+  --psh-badge-height-lg: var(--psh-size-6);    /* 24px */
+  --psh-badge-dot-shadow: 0 0 0 var(--psh-border-width-2);
 
   /* Badge styles */
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: var(--badge-width);
-  min-height: var(--badge-height);
-  padding: var(--spacing-xs);
-  border-radius: var(--radius-base);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
+  min-width: var(--psh-badge-width);
+  min-height: var(--psh-badge-height);
+  padding: var(--psh-spacing-xs);
+  border-radius: var(--psh-radius-base);
+  font-size: var(--psh-font-size-xs);
+  font-weight: var(--psh-font-weight-medium);
   line-height: 1;
   white-space: nowrap;
-  transition: all var(--animation-duration-fast) var(--animation-easing-default);
+  transition: all var(--psh-animation-duration-fast) var(--psh-animation-easing-default);
   min-width: max-content;
 }
 
@@ -29,62 +29,62 @@
 
 /* Variants */
 .badge.primary {
-  background: var(--primary-gradient);
-  color: var(--text-on-primary);
+  background: var(--psh-primary-gradient);
+  color: var(--psh-text-on-primary);
 }
 
 .badge.secondary {
-  background-color: var(--secondary-color);
-  color: var(--text-on-secondary);
+  background-color: var(--psh-secondary-color);
+  color: var(--psh-text-on-secondary);
 }
 
 .badge.success {
-  background-color: var(--success-color);
-  color: var(--text-on-success);
+  background-color: var(--psh-success-color);
+  color: var(--psh-text-on-success);
 }
 
 .badge.warning {
-  background-color: var(--warning-color);
-  color: var(--text-on-warning);
+  background-color: var(--psh-warning-color);
+  color: var(--psh-text-on-warning);
 }
 
 .badge.danger {
-  background-color: var(--danger-color);
-  color: var(--text-on-danger);
+  background-color: var(--psh-danger-color);
+  color: var(--psh-text-on-danger);
 }
 
 .badge.info {
-  background-color: var(--blue-500);
-  color: var(--text-on-primary);
+  background-color: var(--psh-blue-500);
+  color: var(--psh-text-on-primary);
 }
 
 .badge.disabled {
-  background-color: var(--surface-400);
-  color: var(--surface-0);
+  background-color: var(--psh-surface-400);
+  color: var(--psh-surface-0);
   cursor: not-allowed;
-  opacity: var(--opacity-disabled);
+  opacity: var(--psh-opacity-disabled);
 }
 
 /* Sizes */
 .badge.medium {
-  min-width: var(--badge-width);
-  min-height: var(--badge-height);
-  font-size: var(--font-size-xs);
-  padding: var(--spacing-xs);
+  min-width: var(--psh-badge-width);
+  min-height: var(--psh-badge-height);
+  font-size: var(--psh-font-size-xs);
+  padding: var(--psh-spacing-xs);
 }
 
 .badge.small {
-  min-width: var(--badge-width-sm);
-  min-height: var(--badge-height-sm);
-  font-size: var(--font-size-xs);
-  padding: var(--spacing-xxs);
+  min-width: var(--psh-badge-width-sm);
+  min-height: var(--psh-badge-height-sm);
+  font-size: var(--psh-font-size-xs);
+  padding: var(--psh-spacing-xxs);
 }
 
 .badge.large {
-  min-width: var(--badge-width-lg);
-  min-height: var(--badge-height-lg);
-  font-size: var(--font-size-sm);
-  padding: var(--spacing-sm);
+  min-width: var(--psh-badge-width-lg);
+  min-height: var(--psh-badge-height-lg);
+  font-size: var(--psh-font-size-sm);
+  padding: var(--psh-spacing-sm);
 }
 
 /* Positioning */
@@ -118,12 +118,12 @@
 
 /* Types */
 .badge.dot {
-  border-radius: var(--radius-full);
-  box-shadow: var(--badge-dot-shadow) var(--surface-card);
+  border-radius: var(--psh-radius-full);
+  box-shadow: var(--psh-badge-dot-shadow) var(--psh-surface-card);
 }
 
 .badge.counter {
-  min-width: var(--size-5);
-  min-height: var(--size-5);
-  padding: 0 var(--spacing-xs);
+  min-width: var(--psh-size-5);
+  min-height: var(--psh-size-5);
+  padding: 0 var(--psh-spacing-xs);
 }

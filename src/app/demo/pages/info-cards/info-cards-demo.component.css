@@ -6,16 +6,16 @@
 .info-card-customization-section,
 .info-card-grid-section,
 .api-section {
-  margin-bottom: var(--size-12);
+  margin-bottom: var(--psh-size-12);
 }
 
 .section-title {
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-bold);
-  color: var(--text-color);
-  margin-bottom: var(--size-6);
-  padding-bottom: var(--size-3);
-  border-bottom: var(--border-width-2) solid var(--primary-color);
+  font-size: var(--psh-font-size-2xl);
+  font-weight: var(--psh-font-weight-bold);
+  color: var(--psh-text-color);
+  margin-bottom: var(--psh-size-6);
+  padding-bottom: var(--psh-size-3);
+  border-bottom: var(--psh-border-width-2) solid var(--psh-primary-color);
 }
 
 .variants-intro,
@@ -26,10 +26,10 @@
 .customization-intro,
 .grid-intro,
 .api-intro {
-  margin-bottom: var(--size-6);
-  font-size: var(--font-size-base);
-  color: var(--text-color-secondary);
-  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--psh-size-6);
+  font-size: var(--psh-font-size-base);
+  color: var(--psh-text-color-secondary);
+  line-height: var(--psh-line-height-relaxed);
 }
 
 .variants-grid,
@@ -39,7 +39,7 @@
 .customization-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
-  gap: var(--size-6);
+  gap: var(--psh-size-6);
 }
 
 .variant-card,
@@ -49,38 +49,38 @@
 .customization-card {
   display: flex;
   flex-direction: column;
-  gap: var(--size-4);
+  gap: var(--psh-size-4);
 }
 
 .header-actions-description {
-  font-size: var(--font-size-sm);
-  color: var(--text-color-secondary);
-  line-height: var(--line-height-normal);
-  margin-bottom: var(--size-2);
+  font-size: var(--psh-font-size-sm);
+  color: var(--psh-text-color-secondary);
+  line-height: var(--psh-line-height-normal);
+  margin-bottom: var(--psh-size-2);
 }
 
 .copy-description {
-  font-size: var(--font-size-sm);
-  color: var(--text-color-secondary);
-  line-height: var(--line-height-normal);
-  margin-bottom: var(--size-2);
+  font-size: var(--psh-font-size-sm);
+  color: var(--psh-text-color-secondary);
+  line-height: var(--psh-line-height-normal);
+  margin-bottom: var(--psh-size-2);
 }
 
 .copy-description code {
-  background: var(--surface-ground);
-  padding: var(--size-0-5) var(--size-1-5);
-  border-radius: var(--radius-base);
+  background: var(--psh-surface-ground);
+  padding: var(--psh-size-0-5) var(--psh-size-1-5);
+  border-radius: var(--psh-radius-base);
   font-size: 0.9em;
-  color: var(--primary-color);
+  color: var(--psh-primary-color);
 }
 
 .copy-feedback-demo {
-  font-size: var(--font-size-sm);
-  color: var(--success-color);
-  padding: var(--spacing-xs) var(--spacing-sm);
-  background: var(--surface-ground);
-  border-radius: var(--radius-base);
-  border-left: 3px solid var(--success-color);
+  font-size: var(--psh-font-size-sm);
+  color: var(--psh-success-color);
+  padding: var(--psh-spacing-xs) var(--psh-spacing-sm);
+  background: var(--psh-surface-ground);
+  border-radius: var(--psh-radius-base);
+  border-left: 3px solid var(--psh-success-color);
 }
 
 .variant-preview {
@@ -96,93 +96,93 @@
 .variant-info h4,
 .usage-card h4,
 .customization-card h4 {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
-  color: var(--text-color);
-  margin-bottom: var(--size-2);
+  font-size: var(--psh-font-size-lg);
+  font-weight: var(--psh-font-weight-semibold);
+  color: var(--psh-text-color);
+  margin-bottom: var(--psh-size-2);
 }
 
 .variant-info p,
 .usage-description,
 .customization-description {
-  font-size: var(--font-size-sm);
-  color: var(--text-color-secondary);
-  line-height: var(--line-height-normal);
-  margin-bottom: var(--size-3);
+  font-size: var(--psh-font-size-sm);
+  color: var(--psh-text-color-secondary);
+  line-height: var(--psh-line-height-normal);
+  margin-bottom: var(--psh-size-3);
 }
 
 .code-example {
-  background: var(--surface-ground);
-  border: var(--border-width-1) solid var(--surface-border);
-  border-radius: var(--radius-lg);
-  padding: var(--size-3);
+  background: var(--psh-surface-ground);
+  border: var(--psh-border-width-1) solid var(--psh-surface-border);
+  border-radius: var(--psh-radius-lg);
+  padding: var(--psh-size-3);
   overflow-x: auto;
 }
 
 .code-example pre {
   margin: 0;
   font-family: 'Courier New', monospace;
-  font-size: var(--font-size-xs);
-  color: var(--text-color);
+  font-size: var(--psh-font-size-xs);
+  color: var(--psh-text-color);
   white-space: pre;
   overflow-x: auto;
 }
 
 .code-example code {
   display: block;
-  line-height: var(--line-height-relaxed);
+  line-height: var(--psh-line-height-relaxed);
 }
 
 .states-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--size-8);
+  gap: var(--psh-size-8);
 }
 
 .states-demo {
   display: flex;
   flex-direction: column;
-  gap: var(--size-6);
+  gap: var(--psh-size-6);
 }
 
 .state-group {
   display: flex;
   flex-direction: column;
-  gap: var(--size-3);
+  gap: var(--psh-size-3);
 }
 
 .state-group h4 {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
-  color: var(--text-color);
+  font-size: var(--psh-font-size-lg);
+  font-weight: var(--psh-font-weight-semibold);
+  color: var(--psh-text-color);
 }
 
 .state-examples {
   display: flex;
   flex-direction: column;
-  gap: var(--size-3);
+  gap: var(--psh-size-3);
 }
 
 .state-description {
-  font-size: var(--font-size-sm);
-  color: var(--text-color-secondary);
-  line-height: var(--line-height-normal);
+  font-size: var(--psh-font-size-sm);
+  color: var(--psh-text-color-secondary);
+  line-height: var(--psh-line-height-normal);
 }
 
 .states-doc {
-  background: var(--surface-card);
-  border: var(--border-width-1) solid var(--surface-border);
-  border-radius: var(--radius-lg);
-  padding: var(--size-6);
+  background: var(--psh-surface-card);
+  border: var(--psh-border-width-1) solid var(--psh-surface-border);
+  border-radius: var(--psh-radius-lg);
+  padding: var(--psh-size-6);
   height: fit-content;
 }
 
 .states-doc h4,
 .api-container h4 {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
-  color: var(--text-color);
-  margin-bottom: var(--size-4);
+  font-size: var(--psh-font-size-lg);
+  font-weight: var(--psh-font-weight-semibold);
+  color: var(--psh-text-color);
+  margin-bottom: var(--psh-size-4);
 }
 
 .feature-list {
@@ -191,31 +191,31 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--size-2);
+  gap: var(--psh-size-2);
 }
 
 .feature-list li {
-  padding-left: var(--size-6);
+  padding-left: var(--psh-size-6);
   position: relative;
-  font-size: var(--font-size-sm);
-  color: var(--text-color-secondary);
-  line-height: var(--line-height-normal);
+  font-size: var(--psh-font-size-sm);
+  color: var(--psh-text-color-secondary);
+  line-height: var(--psh-line-height-normal);
 }
 
 .feature-list li::before {
   content: '•';
   position: absolute;
-  left: var(--size-3);
-  color: var(--primary-color);
-  font-weight: var(--font-weight-bold);
+  left: var(--psh-size-3);
+  color: var(--psh-primary-color);
+  font-weight: var(--psh-font-weight-bold);
 }
 
 .feature-list code {
-  background: var(--surface-ground);
-  padding: var(--size-0-5) var(--size-1-5);
-  border-radius: var(--radius-base);
+  background: var(--psh-surface-ground);
+  padding: var(--psh-size-0-5) var(--psh-size-1-5);
+  border-radius: var(--psh-radius-base);
   font-size: 0.9em;
-  color: var(--primary-color);
+  color: var(--psh-primary-color);
 }
 
 .best-practices-list {
@@ -225,12 +225,12 @@
 }
 
 .best-practices-list li {
-  padding: var(--spacing-sm) var(--spacing-md);
-  margin-bottom: var(--spacing-sm);
-  background: var(--surface-ground);
-  border-left: 3px solid var(--primary-color);
+  padding: var(--psh-spacing-sm) var(--psh-spacing-md);
+  margin-bottom: var(--psh-spacing-sm);
+  background: var(--psh-surface-ground);
+  border-left: 3px solid var(--psh-primary-color);
   border-radius: var(--border-radius-sm);
-  color: var(--text-color-secondary);
+  color: var(--psh-text-color-secondary);
   line-height: 1.6;
 }
 
@@ -239,57 +239,57 @@
 }
 
 .best-practices-list li strong {
-  color: var(--text-color);
-  font-weight: var(--font-weight-semibold);
+  color: var(--psh-text-color);
+  font-weight: var(--psh-font-weight-semibold);
 }
 
 .best-practices-list code {
-  background: var(--surface-card);
+  background: var(--psh-surface-card);
   padding: 2px 6px;
   border-radius: var(--border-radius-sm);
   font-family: 'Courier New', monospace;
-  font-size: var(--font-size-sm);
-  color: var(--primary-color);
+  font-size: var(--psh-font-size-sm);
+  color: var(--psh-primary-color);
 }
 
 .info-cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
-  gap: var(--size-4);
+  gap: var(--psh-size-4);
 }
 
 .api-table-wrapper {
-  margin-bottom: var(--size-8);
+  margin-bottom: var(--psh-size-8);
   overflow-x: auto;
 }
 
 .api-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: var(--font-size-sm);
-  background: var(--surface-card);
-  border: var(--border-width-1) solid var(--surface-border);
-  border-radius: var(--radius-lg);
+  font-size: var(--psh-font-size-sm);
+  background: var(--psh-surface-card);
+  border: var(--psh-border-width-1) solid var(--psh-surface-border);
+  border-radius: var(--psh-radius-lg);
   overflow: hidden;
 }
 
 .api-table thead {
-  background: var(--surface-ground);
+  background: var(--psh-surface-ground);
 }
 
 .api-table th {
-  padding: var(--size-3) var(--size-4);
+  padding: var(--psh-size-3) var(--psh-size-4);
   text-align: left;
-  font-weight: var(--font-weight-semibold);
-  color: var(--text-color);
-  border-bottom: var(--border-width-1) solid var(--surface-border);
+  font-weight: var(--psh-font-weight-semibold);
+  color: var(--psh-text-color);
+  border-bottom: var(--psh-border-width-1) solid var(--psh-surface-border);
 }
 
 .api-table td {
-  padding: var(--size-3) var(--size-4);
-  color: var(--text-color-secondary);
-  border-bottom: var(--border-width-1) solid var(--surface-border);
-  line-height: var(--line-height-normal);
+  padding: var(--psh-size-3) var(--psh-size-4);
+  color: var(--psh-text-color-secondary);
+  border-bottom: var(--psh-border-width-1) solid var(--psh-surface-border);
+  line-height: var(--psh-line-height-normal);
 }
 
 .api-table tbody tr:last-child td {
@@ -297,42 +297,42 @@
 }
 
 .api-table tbody tr:hover {
-  background: var(--surface-hover);
+  background: var(--psh-surface-hover);
 }
 
 .api-table code {
-  background: var(--surface-ground);
-  padding: var(--size-0-5) var(--size-1-5);
-  border-radius: var(--radius-base);
+  background: var(--psh-surface-ground);
+  padding: var(--psh-size-0-5) var(--psh-size-1-5);
+  border-radius: var(--psh-radius-base);
   font-size: 0.9em;
-  color: var(--primary-color);
+  color: var(--psh-primary-color);
   white-space: nowrap;
 }
 
 .api-usage-example,
 .api-best-practices {
-  background: var(--surface-card);
-  border: var(--border-width-1) solid var(--surface-border);
-  border-radius: var(--radius-lg);
-  padding: var(--size-6);
-  margin-bottom: var(--size-6);
+  background: var(--psh-surface-card);
+  border: var(--psh-border-width-1) solid var(--psh-surface-border);
+  border-radius: var(--psh-radius-lg);
+  padding: var(--psh-size-6);
+  margin-bottom: var(--psh-size-6);
 }
 
 .code-block {
-  background: var(--surface-ground);
-  border: var(--border-width-1) solid var(--surface-border);
-  border-radius: var(--radius-lg);
-  padding: var(--size-4);
+  background: var(--psh-surface-ground);
+  border: var(--psh-border-width-1) solid var(--psh-surface-border);
+  border-radius: var(--psh-radius-lg);
+  padding: var(--psh-size-4);
   overflow-x: auto;
-  margin-top: var(--size-4);
+  margin-top: var(--psh-size-4);
 }
 
 .code-block pre {
   margin: 0;
   font-family: 'Courier New', monospace;
-  font-size: var(--font-size-xs);
-  color: var(--text-color);
-  line-height: var(--line-height-relaxed);
+  font-size: var(--psh-font-size-xs);
+  color: var(--psh-text-color);
+  line-height: var(--psh-line-height-relaxed);
   white-space: pre;
   overflow-x: auto;
 }
@@ -353,9 +353,9 @@
 
 @media (max-width: 768px) {
   .section-title {
-    font-size: var(--font-size-xl);
-    margin-bottom: var(--size-4);
-    padding-bottom: var(--size-2);
+    font-size: var(--psh-font-size-xl);
+    margin-bottom: var(--psh-size-4);
+    padding-bottom: var(--psh-size-2);
   }
 
   .variants-intro,
@@ -365,8 +365,8 @@
   .customization-intro,
   .grid-intro,
   .api-intro {
-    font-size: var(--font-size-sm);
-    margin-bottom: var(--size-4);
+    font-size: var(--psh-font-size-sm);
+    margin-bottom: var(--psh-size-4);
   }
 
   .info-cards-grid {
@@ -374,12 +374,12 @@
   }
 
   .api-table-wrapper {
-    font-size: var(--font-size-xs);
+    font-size: var(--psh-font-size-xs);
   }
 
   .code-example,
   .code-block {
-    padding: var(--size-2);
+    padding: var(--psh-size-2);
   }
 }
 
@@ -392,7 +392,7 @@
 
 @media (max-width: 768px) {
   psh-info-card [card-actions] {
-    gap: var(--size-2);
+    gap: var(--psh-size-2);
   }
 
   psh-info-card [card-actions] psh-button {
@@ -410,17 +410,17 @@
   .info-card-customization-section,
   .info-card-grid-section,
   .api-section {
-    margin-bottom: var(--size-8);
+    margin-bottom: var(--psh-size-8);
   }
 
   .section-title {
-    font-size: var(--font-size-lg);
+    font-size: var(--psh-font-size-lg);
   }
 
   .states-doc,
   .api-usage-example,
   .api-best-practices {
-    padding: var(--size-4);
+    padding: var(--psh-size-4);
   }
 
   psh-info-card [card-actions] psh-button {

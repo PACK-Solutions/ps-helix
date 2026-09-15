@@ -62,19 +62,19 @@ export class GridDemoComponent {
   smallSpacings = [
     {
       name: 'XXS',
-      variable: '--spacing-xxs',
+      variable: '--psh-spacing-xxs',
       pixels: 2,
       usage: 'Bordures fines, séparations subtiles'
     },
     {
       name: 'XS',
-      variable: '--spacing-xs',
+      variable: '--psh-spacing-xs',
       pixels: 4,
       usage: 'Espacement minimal entre éléments proches'
     },
     {
       name: 'SM',
-      variable: '--spacing-sm',
+      variable: '--psh-spacing-sm',
       pixels: 8,
       usage: 'Padding interne de composants compacts'
     }
@@ -83,19 +83,19 @@ export class GridDemoComponent {
   mediumSpacings = [
     {
       name: 'MD',
-      variable: '--spacing-md',
+      variable: '--psh-spacing-md',
       pixels: 16,
       usage: 'Espacement standard entre éléments'
     },
     {
       name: 'LG',
-      variable: '--spacing-lg',
+      variable: '--psh-spacing-lg',
       pixels: 24,
       usage: 'Séparation entre groupes d\'éléments'
     },
     {
       name: 'XL',
-      variable: '--spacing-xl',
+      variable: '--psh-spacing-xl',
       pixels: 32,
       usage: 'Espacement entre sections'
     }
@@ -104,19 +104,19 @@ export class GridDemoComponent {
   largeSpacings = [
     {
       name: '2XL',
-      variable: '--spacing-2xl',
+      variable: '--psh-spacing-2xl',
       pixels: 48,
       usage: 'Grandes marges entre sections principales'
     },
     {
       name: '3XL',
-      variable: '--spacing-3xl',
+      variable: '--psh-spacing-3xl',
       pixels: 64,
       usage: 'Séparation majeure de contenu'
     },
     {
       name: '4XL',
-      variable: '--spacing-4xl',
+      variable: '--psh-spacing-4xl',
       pixels: 80,
       usage: 'Espacement maximal pour layouts aérés'
     }
@@ -134,14 +134,14 @@ export class GridDemoComponent {
       title: 'Espacements Moyens',
       description: 'Pour les espacements standards entre éléments et groupes. La base du système pour créer une hiérarchie visuelle claire et équilibrée.',
       icon: 'rows',
-      color: 'var(--success-color)',
+      color: 'var(--psh-success-color)',
       spacings: this.mediumSpacings
     },
     {
       title: 'Grands Espacements',
       description: 'Pour séparer les sections majeures et créer des layouts aérés. Utilisés pour les marges importantes et la structuration globale des pages.',
       icon: 'arrows-out-simple',
-      color: 'var(--warning-color)',
+      color: 'var(--psh-warning-color)',
       spacings: this.largeSpacings
     }
   ];
@@ -160,9 +160,9 @@ export class GridDemoComponent {
         'Touch targets minimum 44x44px'
       ],
       example: {
-        container: 'padding: var(--spacing-sm)',
-        sections: 'gap: var(--spacing-md)',
-        cards: 'margin-bottom: var(--spacing-md)'
+        container: 'padding: var(--psh-spacing-sm)',
+        sections: 'gap: var(--psh-spacing-md)',
+        cards: 'margin-bottom: var(--psh-spacing-md)'
       }
     },
     {
@@ -177,9 +177,9 @@ export class GridDemoComponent {
         'Mix de navigation tactile et souris'
       ],
       example: {
-        container: 'padding: var(--spacing-md)',
-        sections: 'gap: var(--spacing-lg)',
-        cards: 'margin-bottom: var(--spacing-lg)'
+        container: 'padding: var(--psh-spacing-md)',
+        sections: 'gap: var(--psh-spacing-lg)',
+        cards: 'margin-bottom: var(--psh-spacing-lg)'
       }
     },
     {
@@ -194,9 +194,9 @@ export class GridDemoComponent {
         'Navigation souris optimisée'
       ],
       example: {
-        container: 'padding: var(--spacing-xl)',
-        sections: 'gap: var(--spacing-2xl)',
-        cards: 'margin-bottom: var(--spacing-xl)'
+        container: 'padding: var(--psh-spacing-xl)',
+        sections: 'gap: var(--psh-spacing-2xl)',
+        cards: 'margin-bottom: var(--psh-spacing-xl)'
       }
     },
     {
@@ -211,9 +211,9 @@ export class GridDemoComponent {
         'Centrage et marges automatiques'
       ],
       example: {
-        container: 'padding: var(--spacing-2xl); max-width: 1400px',
-        sections: 'gap: var(--spacing-3xl)',
-        cards: 'margin-bottom: var(--spacing-2xl)'
+        container: 'padding: var(--psh-spacing-2xl); max-width: 1400px',
+        sections: 'gap: var(--psh-spacing-3xl)',
+        cards: 'margin-bottom: var(--psh-spacing-2xl)'
       }
     }
   ];

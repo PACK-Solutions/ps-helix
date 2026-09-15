@@ -194,8 +194,8 @@ When `applyCustomerTheme()` runs, each brand color is evaluated against the curr
 
 - Contrast is computed using the true WCAG 2.1 relative luminance formula.
 - If the ratio is below the target (AA by default, AAA if configured), the color is adjusted in OKLCH: the luminance is shifted (darker on light backgrounds, lighter on dark backgrounds) while hue and chroma are preserved as much as possible.
-- The adjusted color is written into `--customer-primary-color` / `--customer-secondary-color` and consumed by every UI component.
-- The original, unmodified brand color is written into `--customer-primary-color-source` / `--customer-secondary-color-source`, available for decorative surfaces (logos, marketing images) where the contrast rule does not apply.
+- The adjusted color is written into `--psh-customer-primary-color` / `--psh-customer-secondary-color` and consumed by every UI component.
+- The original, unmodified brand color is written into `--psh-customer-primary-color-source` / `--psh-customer-secondary-color-source`, available for decorative surfaces (logos, marketing images) where the contrast rule does not apply.
 - The service never logs or warns: the adjustment is silent by design.
 
 ### Configuring the Target Ratio
@@ -230,29 +230,39 @@ Hue and chroma are preserved so the color palette stays perceptually consistent.
 
 ## Available CSS Variables
 
+> **Every token is namespaced `--psh-*` since 7.0.0.** The complete, always-current list —
+> 398 tokens with their light and dark values — lives in **[TOKENS.md](./TOKENS.md)**,
+> generated from the stylesheets so it cannot drift. This page covers only the theming
+> hooks; `TOKENS.md` covers the whole surface.
+>
+> Migrating from an earlier version? Import `ps-helix/src/lib/styles/compat.css` to keep
+> the old unprefixed names working while you move over, then drop it. The legacy
+> `--customer-*-color*` hooks keep working with no shim at all: both themes read the
+> namespaced name first and fall back to the old one.
+
 Once configured, `ThemeService` writes the following CSS variables on `:root`:
 
 ### Primary Color Variables
 
-- `--customer-primary-color` - Accessibility-adjusted primary color (used by components)
-- `--customer-primary-color-source` - Original brand color, unmodified (for decorative use only)
-- `--customer-primary-color-light` - OKLCH-derived lighter variant
-- `--customer-primary-color-lighter` - OKLCH-derived extra light variant
-- `--customer-primary-color-dark` - OKLCH-derived darker variant
-- `--customer-primary-color-darker` - OKLCH-derived extra dark variant
-- `--customer-primary-color-text` - Readable text color (black or white) picked via WCAG contrast against the adjusted primary
-- `--customer-primary-color-rgb` - `r, g, b` triplet of the adjusted primary for `rgba()` usage
+- `--psh-customer-primary-color` - Accessibility-adjusted primary color (used by components)
+- `--psh-customer-primary-color-source` - Original brand color, unmodified (for decorative use only)
+- `--psh-customer-primary-color-light` - OKLCH-derived lighter variant
+- `--psh-customer-primary-color-lighter` - OKLCH-derived extra light variant
+- `--psh-customer-primary-color-dark` - OKLCH-derived darker variant
+- `--psh-customer-primary-color-darker` - OKLCH-derived extra dark variant
+- `--psh-customer-primary-color-text` - Readable text color (black or white) picked via WCAG contrast against the adjusted primary
+- `--psh-customer-primary-color-rgb` - `r, g, b` triplet of the adjusted primary for `rgba()` usage
 
 ### Secondary Color Variables
 
-- `--customer-secondary-color`
-- `--customer-secondary-color-source`
-- `--customer-secondary-color-light`
-- `--customer-secondary-color-lighter`
-- `--customer-secondary-color-dark`
-- `--customer-secondary-color-darker`
-- `--customer-secondary-color-text`
-- `--customer-secondary-color-rgb`
+- `--psh-customer-secondary-color`
+- `--psh-customer-secondary-color-source`
+- `--psh-customer-secondary-color-light`
+- `--psh-customer-secondary-color-lighter`
+- `--psh-customer-secondary-color-dark`
+- `--psh-customer-secondary-color-darker`
+- `--psh-customer-secondary-color-text`
+- `--psh-customer-secondary-color-rgb`
 
 ### Component Usage
 
@@ -260,22 +270,22 @@ Design system components consume the stable abstract variables, which fall back 
 
 ```css
 /* From projects/ps-helix/src/lib/styles/themes/light.css */
---primary-color: var(--customer-primary-color, #0B0191);
---primary-color-light: var(--customer-primary-color-light, #0F02C4);
+--psh-primary-color: var(--psh-customer-primary-color, #0B0191);
+--psh-primary-color-light: var(--psh-customer-primary-color-light, #0F02C4);
 ```
 
 ### Using in Your Custom Styles
 
-Use the abstract variables (`--primary-color`, `--secondary-color`, ...) in your own components so you automatically inherit the accessibility-adjusted palette:
+Use the abstract variables (`--psh-primary-color`, `--psh-secondary-color`, ...) in your own components so you automatically inherit the accessibility-adjusted palette:
 
 ```css
 .my-custom-button {
-  background-color: var(--primary-color);
-  color: var(--primary-color-text);
+  background-color: var(--psh-primary-color);
+  color: var(--psh-primary-color-text);
 }
 
 .my-custom-button:hover {
-  background-color: var(--primary-color-light);
+  background-color: var(--psh-primary-color-light);
 }
 ```
 
@@ -283,7 +293,7 @@ For decorative brand elements that must match the literal brand color (e.g. a lo
 
 ```css
 .brand-logo-surface {
-  background-color: var(--customer-primary-color-source);
+  background-color: var(--psh-customer-primary-color-source);
 }
 ```
 
@@ -418,7 +428,7 @@ export class AppThemeContextService {
 
 1. Verify that your service is provided with the `CUSTOMER_CONTEXT_SERVICE` token in your app config.
 2. Confirm your service implements `primaryColor()` and `secondaryColor()` returning valid hex strings.
-3. `ThemeService` is silent by design; if a brand color looks different from the one you provided, it is because the WCAG safeguard adjusted it. Read the adjusted color via `getComputedStyle(document.documentElement).getPropertyValue('--customer-primary-color')` and the original via `--customer-primary-color-source`.
+3. `ThemeService` is silent by design; if a brand color looks different from the one you provided, it is because the WCAG safeguard adjusted it. Read the adjusted color via `getComputedStyle(document.documentElement).getPropertyValue('--psh-customer-primary-color')` and the original via `--psh-customer-primary-color-source`.
 
 ### Default colors showing instead of custom colors
 
@@ -436,7 +446,7 @@ export class AppThemeContextService {
 1. Use signals in your customer context service for reactivity.
 2. Provide valid hex colors (`#RRGGBB`).
 3. Trust the WCAG safeguard; do not hand-tune base colors for contrast.
-4. For decorative brand surfaces, use `--customer-*-color-source`. For every other UI use case, use the abstract variables (`--primary-color`, ...).
+4. For decorative brand surfaces, use `--customer-*-color-source`. For every other UI use case, use the abstract variables (`--psh-primary-color`, ...).
 5. Persist user preferences in `localStorage` when relevant.
 6. Document brand color choices alongside your app's style guide.
 

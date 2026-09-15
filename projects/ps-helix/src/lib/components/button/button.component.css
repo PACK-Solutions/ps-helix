@@ -1,45 +1,45 @@
 /* Component-Specific Design Tokens */
 button {
-  /* Button heights */
-  --btn-height-sm: 2rem;     /* 32px */
-  --btn-height-md: 2.5rem;   /* 40px */
-  --btn-height-lg: 3rem;     /* 48px */
+  /* Heights come from --psh-control-height-* in sizing.tokens.css. button used to
+     redefine them locally under the name --btn-height-*, so the fact that a button and
+     an input lined up was a coincidence of two identical literals rather than a shared
+     contract. Redefining them here would reintroduce exactly that. */
 
   /* Button min-widths */
-  --btn-min-width-sm: 6rem;  /* 96px */
-  --btn-min-width-md: 7.5rem; /* 120px */
-  --btn-min-width-lg: 8.75rem; /* 140px */
-  --btn-min-width-icon-only: 2.5rem; /* 40px */
+  --psh-btn-min-width-sm: 6rem;  /* 96px */
+  --psh-btn-min-width-md: 7.5rem; /* 120px */
+  --psh-btn-min-width-lg: 8.75rem; /* 140px */
+  --psh-btn-min-width-icon-only: 2.5rem; /* 40px */
 
   /* Button behavior */
-  --btn-font-weight: 500;
-  --btn-transition: all 0.2s ease;
+  --psh-btn-font-weight: 500;
+  --psh-btn-transition: all var(--psh-animation-duration-normal) var(--psh-animation-easing-default);
 
   /* Base button styles */
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: var(--btn-height-md);
-  padding: 0 var(--spacing-lg);
+  height: var(--psh-control-height-md);
+  padding: 0 var(--psh-spacing-lg);
   border: none;
-  font-weight: var(--btn-font-weight);
+  font-weight: var(--psh-btn-font-weight);
   font-family: inherit;
   cursor: pointer;
-  transition: var(--btn-transition);
-  min-width: var(--btn-min-width-md);
+  transition: var(--psh-btn-transition);
+  min-width: var(--psh-btn-min-width-md);
   position: relative;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  font-size: var(--font-size-base);
-  border-radius: var(--border-radius);
+  font-size: var(--psh-font-size-base);
+  border-radius: var(--psh-radius-lg);
 }
 
 /* Button content */
 .button-content {
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
+  gap: var(--psh-spacing-sm);
   position: relative;
   z-index: 1;
   line-height: 1;
@@ -59,7 +59,7 @@ button::before {
     rgba(255, 255, 255, 0.3),
     transparent
   );
-  transition: left 0.5s ease;
+  transition: left var(--psh-animation-duration-slow) var(--psh-animation-easing-default);
   pointer-events: none;
   z-index: 0;
 }
@@ -76,44 +76,44 @@ button:hover:not(.disabled):not(.loading)::before {
 
 /* Sizes */
 button.small {
-  height: var(--btn-height-sm);
-  font-size: var(--font-size-sm);
-  padding: 0 var(--spacing-md);
-  min-width: var(--btn-min-width-sm);
+  height: var(--psh-control-height-sm);
+  font-size: var(--psh-font-size-sm);
+  padding: 0 var(--psh-spacing-md);
+  min-width: var(--psh-btn-min-width-sm);
 }
 
 button.medium {
-  height: var(--btn-height-md);
-  font-size: var(--font-size-base);
-  padding: 0 var(--spacing-lg);
-  min-width: var(--btn-min-width-md);
+  height: var(--psh-control-height-md);
+  font-size: var(--psh-font-size-base);
+  padding: 0 var(--psh-spacing-lg);
+  min-width: var(--psh-btn-min-width-md);
 }
 
 button.large {
-  height: var(--btn-height-lg);
-  font-size: var(--font-size-lg);
-  padding: 0 var(--spacing-xl);
-  min-width: var(--btn-min-width-lg);
+  height: var(--psh-control-height-lg);
+  font-size: var(--psh-font-size-lg);
+  padding: 0 var(--psh-spacing-xl);
+  min-width: var(--psh-btn-min-width-lg);
 }
 
 /* Icon only mode */
 button.icon-only {
-  width: var(--btn-min-width-icon-only);
+  width: var(--psh-btn-min-width-icon-only);
   padding: 0;
   min-width: unset;
   aspect-ratio: 1;
 }
 
 button.icon-only.small {
-  width: var(--btn-height-sm);
+  width: var(--psh-control-height-sm);
 }
 
 button.icon-only.medium {
-  width: var(--btn-height-md);
+  width: var(--psh-control-height-md);
 }
 
 button.icon-only.large {
-  width: var(--btn-height-lg);
+  width: var(--psh-control-height-lg);
 }
 
 /* Host element base style */
@@ -163,59 +163,59 @@ button.filled {
 }
 
 button.filled.primary {
-  background: var(--primary-gradient);
-  color: var(--text-on-primary);
+  background: var(--psh-primary-gradient);
+  color: var(--psh-text-on-primary);
 }
 
 button.filled.primary .button-content {
-  color: var(--text-on-primary);
+  color: var(--psh-text-on-primary);
 }
 
 button.filled.secondary .button-content {
-  color: var(--text-on-secondary);
+  color: var(--psh-text-on-secondary);
 }
 
 button.filled.success .button-content {
-  color: var(--text-on-success);
+  color: var(--psh-text-on-success);
 }
 
 button.filled.warning .button-content {
-  color: var(--text-on-warning);
+  color: var(--psh-text-on-warning);
 }
 
 button.filled.danger .button-content {
-  color: var(--text-on-danger);
+  color: var(--psh-text-on-danger);
 }
 
 button.filled:not(.primary):not(.secondary):not(.success):not(.warning):not(.danger) .button-content {
-  color: var(--text-on-surface);
+  color: var(--psh-text-on-surface);
 }
 
 /* Filled hover states for each variant */
 button.filled.primary:hover:not(.disabled):not(.loading) {
-  background: var(--primary-gradient-hover);
+  background: var(--psh-primary-gradient-hover);
 }
 
 button.filled.secondary:hover:not(.disabled):not(.loading) {
-  background-color: var(--secondary-color-light);
+  background-color: var(--psh-secondary-color-light);
 }
 
 button.filled.success:hover:not(.disabled):not(.loading) {
-  background-color: var(--green-400);
+  background-color: var(--psh-green-400);
 }
 
 button.filled.warning:hover:not(.disabled):not(.loading) {
-  background-color: var(--orange-400);
+  background-color: var(--psh-orange-400);
 }
 
 button.filled.danger:hover:not(.disabled):not(.loading) {
-  background-color: var(--red-400);
+  background-color: var(--psh-red-400);
 }
 
 /* Outline */
 button.outline {
   background: transparent;
-  border: var(--border-width-2) solid currentColor;
+  border: var(--psh-border-width-2) solid currentColor;
   color: currentColor;
 }
 
@@ -228,35 +228,35 @@ button.outline:hover:not(.disabled):not(.loading) {
 }
 
 button.outline.primary:hover:not(.disabled):not(.loading) .button-content {
-  color: var(--text-on-primary);
+  color: var(--psh-text-on-primary);
 }
 
 button.outline.secondary:hover:not(.disabled):not(.loading) .button-content {
-  color: var(--text-on-secondary);
+  color: var(--psh-text-on-secondary);
 }
 
 button.outline.success:hover:not(.disabled):not(.loading) .button-content {
-  color: var(--text-on-success);
+  color: var(--psh-text-on-success);
 }
 
 button.outline.warning:hover:not(.disabled):not(.loading) .button-content {
-  color: var(--text-on-warning);
+  color: var(--psh-text-on-warning);
 }
 
 button.outline.danger:hover:not(.disabled):not(.loading) .button-content {
-  color: var(--text-on-danger);
+  color: var(--psh-text-on-danger);
 }
 
 button.outline:not(.primary):not(.secondary):not(.success):not(.warning):not(.danger):hover:not(.disabled):not(.loading) .button-content {
-  color: var(--text-on-surface);
+  color: var(--psh-text-on-surface);
 }
 
 /* Text */
 button.text {
   background: transparent;
-  padding: 0 var(--spacing-lg);
+  padding: 0 var(--psh-spacing-lg);
   color: currentColor;
-  border-radius: var(--border-radius);
+  border-radius: var(--psh-radius-lg);
 }
 
 button.text .button-content {
@@ -264,55 +264,55 @@ button.text .button-content {
 }
 
 button.text:hover:not(.disabled):not(.loading) {
-  background: var(--surface-hover);
+  background: var(--psh-surface-hover);
 }
 
 /* Text icon only */
 button.text.icon-only {
   min-width: unset;
-  width: var(--btn-height-md);
+  width: var(--psh-control-height-md);
   padding: 0;
 }
 
 button.text.icon-only.small {
-  width: var(--btn-height-sm);
+  width: var(--psh-control-height-sm);
 }
 
 button.text.icon-only.large {
-  width: var(--btn-height-lg);
+  width: var(--psh-control-height-lg);
 }
 
 /* Variants */
 /* Primary */
 button.primary {
-  color: var(--primary-color);
+  color: var(--psh-primary-color);
 }
 
 /* Secondary */
 button.secondary {
-  color: var(--secondary-color);
+  color: var(--psh-secondary-color);
 }
 
 /* Success */
 button.success {
-  color: var(--success-color);
+  color: var(--psh-success-color);
 }
 
 /* Warning */
 button.warning {
-  color: var(--warning-color);
+  color: var(--psh-warning-color);
 }
 
 /* Danger */
 button.danger {
-  color: var(--danger-color);
+  color: var(--psh-danger-color);
 }
 
 /* States */
 /* Focus */
 button:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 0.1875rem rgba(var(--primary-color-rgb), 0.2);
+  box-shadow: 0 0 0 0.1875rem rgba(var(--psh-primary-color-rgb), 0.2);
 }
 
 /* Active */
@@ -334,12 +334,12 @@ button.loading {
 }
 
 .loader {
-  width: var(--icon-size-sm);
-  height: var(--icon-size-sm);
-  border: var(--border-width-2) solid currentColor;
+  width: var(--psh-icon-size-sm);
+  height: var(--psh-icon-size-sm);
+  border: var(--psh-border-width-2) solid currentColor;
   border-bottom-color: transparent;
   border-radius: 50%;
-  animation: rotate 1s linear infinite;
+  animation: rotate var(--psh-animation-loop-normal) var(--psh-animation-easing-linear) infinite;
 }
 
 /* Icons */

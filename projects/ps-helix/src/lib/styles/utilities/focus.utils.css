@@ -2,28 +2,28 @@
 
 /* Focus utilities */
 .psh-focus-ring {
-  outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color);
-  outline-offset: var(--focus-outline-offset);
+  outline: var(--psh-focus-outline-width) var(--psh-focus-outline-style) var(--psh-focus-outline-color);
+  outline-offset: var(--psh-focus-outline-offset);
 }
 
 .psh-focus-ring-primary:focus {
   outline: none;
-  box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
+  box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-color);
 }
 
 .psh-focus-ring-error:focus {
   outline: none;
-  box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-error);
+  box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-error);
 }
 
 .psh-focus-ring-success:focus {
   outline: none;
-  box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-success);
+  box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-success);
 }
 
 .psh-focus-ring-warning:focus {
   outline: none;
-  box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-warning);
+  box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-warning);
 }
 
 /* Focus visible only (pour éviter les focus au clic) */
@@ -34,7 +34,7 @@
 
 /* Focus states for common elements */
 .psh-focus-within-ring:focus-within {
-  box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
+  box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-color);
 }
 
 /* Skip link utility for accessibility */
@@ -42,13 +42,13 @@
   position: absolute;
   top: -40px;
   left: 6px;
-  background: var(--primary-color);
-  color: var(--primary-color-text);
-  padding: var(--spacing-sm) var(--spacing-md);
-  border-radius: var(--border-radius);
+  background: var(--psh-primary-color);
+  color: var(--psh-primary-color-text);
+  padding: var(--psh-spacing-sm) var(--psh-spacing-md);
+  border-radius: var(--psh-radius-lg);
   text-decoration: none;
-  z-index: var(--z-index-modal);
-  transition: top var(--animation-duration-fast) var(--animation-easing-default);
+  z-index: var(--psh-z-index-modal);
+  transition: top var(--psh-animation-duration-fast) var(--psh-animation-easing-default);
 }
 
 .psh-skip-link:focus {

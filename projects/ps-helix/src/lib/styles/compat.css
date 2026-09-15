@@ -1,0 +1,580 @@
+/* ============================================================================
+   ps-helix — legacy token compatibility layer (OPT-IN)
+
+   Every custom property the library exposed before 7.0.0, redefined in terms of its
+   --psh-* replacement. Import it only while migrating:
+
+     @import 'ps-helix/styles.css';
+     @import 'ps-helix/src/lib/styles/compat.css';   /* remove once migrated */
+
+   It is not part of styles.css on purpose: the unprefixed names are exactly what
+   collided with Bootstrap, PrimeNG and application tokens in the first place, so
+   keeping them is a transitional cost a project should opt into, not inherit.
+
+   486 aliases, of which 9 point at a renamed or merged token.
+   Generated — do not edit by hand.
+   ========================================================================== */
+
+:root {
+
+  --alert-animation-distance: var(--psh-alert-animation-distance);
+  --alert-animation-duration: var(--psh-alert-animation-duration);
+  --alert-dismiss-hover-bg: var(--psh-alert-dismiss-hover-bg);
+  --alert-icon-size: var(--psh-alert-icon-size);
+  --alert-icon-size-lg: var(--psh-alert-icon-size-lg);
+  --alert-icon-size-sm: var(--psh-alert-icon-size-sm);
+  --alert-info-bg: var(--psh-alert-info-bg);
+  --alert-info-border-color: var(--psh-alert-info-border-color);
+  --alert-info-text-color: var(--psh-alert-info-text-color);
+
+  --amber-100: var(--psh-amber-100);
+  --amber-200: var(--psh-amber-200);
+  --amber-300: var(--psh-amber-300);
+  --amber-400: var(--psh-amber-400);
+  --amber-50: var(--psh-amber-50);
+  --amber-500: var(--psh-amber-500);
+  --amber-600: var(--psh-amber-600);
+  --amber-700: var(--psh-amber-700);
+  --amber-800: var(--psh-amber-800);
+  --amber-900: var(--psh-amber-900);
+
+  --animation-distance-lg: var(--psh-animation-distance-lg);
+  --animation-distance-md: var(--psh-animation-distance-md);
+  --animation-distance-sm: var(--psh-animation-distance-sm);
+  --animation-duration-default: var(--psh-animation-duration-default);
+  --animation-duration-fast: var(--psh-animation-duration-fast);
+  --animation-duration-normal: var(--psh-animation-duration-normal);
+  --animation-duration-slow: var(--psh-animation-duration-slow);
+  --animation-easing-default: var(--psh-animation-easing-default);
+  --animation-easing-in: var(--psh-animation-easing-in);
+  --animation-easing-in-out: var(--psh-animation-easing-in-out);
+  --animation-easing-out: var(--psh-animation-easing-out);
+  --animation-easing-smooth: var(--psh-animation-easing-smooth);
+
+  --avatar-icon-size-lg: var(--psh-avatar-icon-size-lg);
+  --avatar-icon-size-md: var(--psh-avatar-icon-size-md);
+  --avatar-icon-size-sm: var(--psh-avatar-icon-size-sm);
+  --avatar-icon-size-xl: var(--psh-avatar-icon-size-xl);
+  --avatar-size-lg: var(--psh-avatar-size-lg);
+  --avatar-size-md: var(--psh-avatar-size-md);
+  --avatar-size-sm: var(--psh-avatar-size-sm);
+  --avatar-size-xl: var(--psh-avatar-size-xl);
+  --avatar-status-border: var(--psh-avatar-status-border);
+  --avatar-status-offset-md: var(--psh-avatar-status-offset-md);
+  --avatar-status-offset-sm: var(--psh-avatar-status-offset-sm);
+  --avatar-status-offset-xl: var(--psh-avatar-status-offset-xl);
+  --avatar-status-size-lg: var(--psh-avatar-status-size-lg);
+  --avatar-status-size-md: var(--psh-avatar-status-size-md);
+  --avatar-status-size-sm: var(--psh-avatar-status-size-sm);
+  --avatar-status-size-xl: var(--psh-avatar-status-size-xl);
+
+  --background-opacity: var(--psh-background-opacity);
+
+  --badge-dot-shadow: var(--psh-badge-dot-shadow);
+  --badge-height: var(--psh-badge-height);
+  --badge-height-lg: var(--psh-badge-height-lg);
+  --badge-height-sm: var(--psh-badge-height-sm);
+  --badge-width: var(--psh-badge-width);
+  --badge-width-lg: var(--psh-badge-width-lg);
+  --badge-width-sm: var(--psh-badge-width-sm);
+
+  --blue-100: var(--psh-blue-100);
+  --blue-200: var(--psh-blue-200);
+  --blue-300: var(--psh-blue-300);
+  --blue-400: var(--psh-blue-400);
+  --blue-50: var(--psh-blue-50);
+  --blue-500: var(--psh-blue-500);
+  --blue-600: var(--psh-blue-600);
+  --blue-700: var(--psh-blue-700);
+  --blue-800: var(--psh-blue-800);
+  --blue-900: var(--psh-blue-900);
+
+  --body-gradient: var(--psh-body-gradient);
+
+  --border-radius: var(--psh-radius-lg);
+  --border-radius-full: var(--psh-radius-full);
+  --border-radius-lg: var(--psh-radius-xl);
+  --border-width-0: var(--psh-border-width-0);
+  --border-width-1: var(--psh-border-width-1);
+  --border-width-2: var(--psh-border-width-2);
+  --border-width-4: var(--psh-border-width-4);
+  --border-width-8: var(--psh-border-width-8);
+
+  --breakpoint-2xl: var(--psh-breakpoint-2xl);
+  --breakpoint-lg: var(--psh-breakpoint-lg);
+  --breakpoint-md: var(--psh-breakpoint-md);
+  --breakpoint-sm: var(--psh-breakpoint-sm);
+  --breakpoint-xl: var(--psh-breakpoint-xl);
+  --breakpoint-xs: var(--psh-breakpoint-xs);
+
+  --btn-font-weight: var(--psh-btn-font-weight);
+  --btn-height-lg: var(--psh-control-height-lg);
+  --btn-height-md: var(--psh-control-height-md);
+  --btn-height-sm: var(--psh-control-height-sm);
+  --btn-min-width-icon-only: var(--psh-btn-min-width-icon-only);
+  --btn-min-width-lg: var(--psh-btn-min-width-lg);
+  --btn-min-width-md: var(--psh-btn-min-width-md);
+  --btn-min-width-sm: var(--psh-btn-min-width-sm);
+  --btn-transition: var(--psh-btn-transition);
+
+  --card-actions-padding: var(--psh-card-actions-padding);
+  --card-body-gap: var(--psh-card-body-gap);
+  --card-body-padding: var(--psh-card-body-padding);
+  --card-footer-padding: var(--psh-card-footer-padding);
+  --card-header-gap: var(--psh-card-header-gap);
+  --card-header-padding: var(--psh-card-header-padding);
+
+  --chart-danger-color: var(--psh-chart-danger-color);
+  --chart-grid-color: var(--psh-chart-grid-color);
+  --chart-legend-text: var(--psh-chart-legend-text);
+  --chart-primary-color: var(--psh-chart-primary-color);
+  --chart-secondary-color: var(--psh-chart-secondary-color);
+  --chart-success-color: var(--psh-chart-success-color);
+  --chart-text-color: var(--psh-chart-text-color);
+  --chart-tooltip-background: var(--psh-chart-tooltip-background);
+  --chart-tooltip-text: var(--psh-chart-tooltip-text);
+  --chart-warning-color: var(--psh-chart-warning-color);
+
+  --collapse-max-height: var(--psh-collapse-max-height);
+  --collapse-transition-duration: var(--psh-collapse-transition-duration);
+  --collapse-transition-timing: var(--psh-collapse-transition-timing);
+
+  --container-2xl: var(--psh-container-2xl);
+  --container-3xl: var(--psh-container-3xl);
+  --container-4xl: var(--psh-container-4xl);
+  --container-5xl: var(--psh-container-5xl);
+  --container-6xl: var(--psh-container-6xl);
+  --container-7xl: var(--psh-container-7xl);
+  --container-lg: var(--psh-container-lg);
+  --container-max-width: var(--psh-container-max-width);
+  --container-md: var(--psh-container-md);
+  --container-padding-lg: var(--psh-container-padding-lg);
+  --container-padding-md: var(--psh-container-padding-md);
+  --container-padding-sm: var(--psh-container-padding-sm);
+  --container-sm: var(--psh-container-sm);
+  --container-xl: var(--psh-container-xl);
+  --container-xs: var(--psh-container-xs);
+
+  --cyan-100: var(--psh-cyan-100);
+  --cyan-200: var(--psh-cyan-200);
+  --cyan-300: var(--psh-cyan-300);
+  --cyan-400: var(--psh-cyan-400);
+  --cyan-50: var(--psh-cyan-50);
+  --cyan-500: var(--psh-cyan-500);
+  --cyan-600: var(--psh-cyan-600);
+  --cyan-700: var(--psh-cyan-700);
+  --cyan-800: var(--psh-cyan-800);
+  --cyan-900: var(--psh-cyan-900);
+
+  --danger-color: var(--psh-danger-color);
+  --danger-color-rgb: var(--psh-danger-color-rgb);
+  --danger-color-text: var(--psh-danger-color-text);
+
+  --dropdown-max-height: var(--psh-dropdown-max-height);
+
+  --emerald-100: var(--psh-emerald-100);
+  --emerald-200: var(--psh-emerald-200);
+  --emerald-300: var(--psh-emerald-300);
+  --emerald-400: var(--psh-emerald-400);
+  --emerald-50: var(--psh-emerald-50);
+  --emerald-500: var(--psh-emerald-500);
+  --emerald-600: var(--psh-emerald-600);
+  --emerald-700: var(--psh-emerald-700);
+  --emerald-800: var(--psh-emerald-800);
+  --emerald-900: var(--psh-emerald-900);
+
+  --flex-auto: var(--psh-flex-auto);
+  --flex-initial: var(--psh-flex-initial);
+  --flex-none: var(--psh-flex-none);
+
+  --focus-outline-color: var(--psh-focus-outline-color);
+  --focus-outline-offset: var(--psh-focus-outline-offset);
+  --focus-outline-style: var(--psh-focus-outline-style);
+  --focus-outline-width: var(--psh-focus-outline-width);
+  --focus-ring-color: var(--psh-focus-ring-color);
+  --focus-ring-error: var(--psh-focus-ring-error);
+  --focus-ring-success: var(--psh-focus-ring-success);
+  --focus-ring-warning: var(--psh-focus-ring-warning);
+  --focus-ring-width: var(--psh-focus-ring-width);
+
+  --font-family: var(--psh-font-family);
+  --font-size-2xl: var(--psh-font-size-2xl);
+  --font-size-3xl: var(--psh-font-size-3xl);
+  --font-size-4xl: var(--psh-font-size-4xl);
+  --font-size-base: var(--psh-font-size-base);
+  --font-size-lg: var(--psh-font-size-lg);
+  --font-size-sm: var(--psh-font-size-sm);
+  --font-size-xl: var(--psh-font-size-xl);
+  --font-size-xs: var(--psh-font-size-xs);
+  --font-weight-bold: var(--psh-font-weight-bold);
+  --font-weight-medium: var(--psh-font-weight-medium);
+  --font-weight-normal: var(--psh-font-weight-normal);
+  --font-weight-semibold: var(--psh-font-weight-semibold);
+
+  --form-field-gap: var(--psh-form-field-gap);
+  --form-label-gap: var(--psh-form-label-gap);
+
+  --fuchsia-100: var(--psh-fuchsia-100);
+  --fuchsia-200: var(--psh-fuchsia-200);
+  --fuchsia-300: var(--psh-fuchsia-300);
+  --fuchsia-400: var(--psh-fuchsia-400);
+  --fuchsia-50: var(--psh-fuchsia-50);
+  --fuchsia-500: var(--psh-fuchsia-500);
+  --fuchsia-600: var(--psh-fuchsia-600);
+  --fuchsia-700: var(--psh-fuchsia-700);
+  --fuchsia-800: var(--psh-fuchsia-800);
+  --fuchsia-900: var(--psh-fuchsia-900);
+
+  --green-100: var(--psh-green-100);
+  --green-200: var(--psh-green-200);
+  --green-300: var(--psh-green-300);
+  --green-400: var(--psh-green-400);
+  --green-50: var(--psh-green-50);
+  --green-500: var(--psh-green-500);
+  --green-600: var(--psh-green-600);
+  --green-700: var(--psh-green-700);
+  --green-800: var(--psh-green-800);
+  --green-900: var(--psh-green-900);
+
+  --grid-cols-1: var(--psh-grid-cols-1);
+  --grid-cols-12: var(--psh-grid-cols-12);
+  --grid-cols-2: var(--psh-grid-cols-2);
+  --grid-cols-3: var(--psh-grid-cols-3);
+  --grid-cols-4: var(--psh-grid-cols-4);
+  --grid-cols-6: var(--psh-grid-cols-6);
+  --grid-gap-lg: var(--psh-grid-gap-lg);
+  --grid-gap-md: var(--psh-grid-gap-md);
+  --grid-gap-sm: var(--psh-grid-gap-sm);
+
+  --height-input-lg: var(--psh-control-height-lg);
+  --height-input-md: var(--psh-control-height-md);
+  --height-input-sm: var(--psh-control-height-sm);
+
+  --horizontal-content-padding: var(--psh-horizontal-content-padding);
+  --horizontal-gap: var(--psh-horizontal-gap);
+  --horizontal-mobile-height: var(--psh-horizontal-mobile-height);
+  --horizontal-side-padding: var(--psh-horizontal-side-padding);
+  --horizontal-side-width: var(--psh-horizontal-side-width);
+
+  --icon-size-2xl: var(--psh-icon-size-2xl);
+  --icon-size-lg: var(--psh-icon-size-lg);
+  --icon-size-md: var(--psh-icon-size-md);
+  --icon-size-sm: var(--psh-icon-size-sm);
+  --icon-size-xl: var(--psh-icon-size-xl);
+  --icon-size-xs: var(--psh-icon-size-xs);
+
+  --indigo-100: var(--psh-indigo-100);
+  --indigo-200: var(--psh-indigo-200);
+  --indigo-300: var(--psh-indigo-300);
+  --indigo-400: var(--psh-indigo-400);
+  --indigo-50: var(--psh-indigo-50);
+  --indigo-500: var(--psh-indigo-500);
+  --indigo-600: var(--psh-indigo-600);
+  --indigo-700: var(--psh-indigo-700);
+  --indigo-800: var(--psh-indigo-800);
+  --indigo-900: var(--psh-indigo-900);
+
+  --letter-spacing-normal: var(--psh-letter-spacing-normal);
+  --letter-spacing-tight: var(--psh-letter-spacing-tight);
+  --letter-spacing-wide: var(--psh-letter-spacing-wide);
+  --letter-spacing-wider: var(--psh-letter-spacing-wider);
+  --letter-spacing-widest: var(--psh-letter-spacing-widest);
+
+  --line-height-normal: var(--psh-line-height-normal);
+  --line-height-relaxed: var(--psh-line-height-relaxed);
+  --line-height-tight: var(--psh-line-height-tight);
+
+  --modal-animation-distance: var(--psh-modal-animation-distance);
+  --modal-animation-scale: var(--psh-modal-animation-scale);
+  --modal-backdrop-blur: var(--psh-modal-backdrop-blur);
+  --modal-backdrop-opacity: var(--psh-modal-backdrop-opacity);
+  --modal-max-width-lg: var(--psh-modal-max-width-lg);
+  --modal-max-width-md: var(--psh-modal-max-width-md);
+  --modal-max-width-sm: var(--psh-modal-max-width-sm);
+
+  --negative-spacing-2xl: var(--psh-negative-spacing-2xl);
+  --negative-spacing-lg: var(--psh-negative-spacing-lg);
+  --negative-spacing-md: var(--psh-negative-spacing-md);
+  --negative-spacing-sm: var(--psh-negative-spacing-sm);
+  --negative-spacing-xl: var(--psh-negative-spacing-xl);
+  --negative-spacing-xs: var(--psh-negative-spacing-xs);
+  --negative-spacing-xxs: var(--psh-negative-spacing-xxs);
+
+  --opacity-disabled: var(--psh-opacity-disabled);
+  --opacity-loading: var(--psh-opacity-loading);
+
+  --orange-100: var(--psh-orange-100);
+  --orange-200: var(--psh-orange-200);
+  --orange-300: var(--psh-orange-300);
+  --orange-400: var(--psh-orange-400);
+  --orange-50: var(--psh-orange-50);
+  --orange-500: var(--psh-orange-500);
+  --orange-600: var(--psh-orange-600);
+  --orange-700: var(--psh-orange-700);
+  --orange-800: var(--psh-orange-800);
+  --orange-900: var(--psh-orange-900);
+
+  --pink-100: var(--psh-pink-100);
+  --pink-200: var(--psh-pink-200);
+  --pink-300: var(--psh-pink-300);
+  --pink-400: var(--psh-pink-400);
+  --pink-50: var(--psh-pink-50);
+  --pink-500: var(--psh-pink-500);
+  --pink-600: var(--psh-pink-600);
+  --pink-700: var(--psh-pink-700);
+  --pink-800: var(--psh-pink-800);
+  --pink-900: var(--psh-pink-900);
+
+  --primary-color: var(--psh-primary-color);
+  --primary-color-dark: var(--psh-primary-color-dark);
+  --primary-color-darker: var(--psh-primary-color-darker);
+  --primary-color-light: var(--psh-primary-color-light);
+  --primary-color-lighter: var(--psh-primary-color-lighter);
+  --primary-color-rgb: var(--psh-primary-color-rgb);
+  --primary-color-text: var(--psh-primary-color-text);
+  --primary-gradient: var(--psh-primary-gradient);
+  --primary-gradient-hover: var(--psh-primary-gradient-hover);
+  --primary-gradient-reversed: var(--psh-primary-gradient-reversed);
+
+  --progress-duration: var(--psh-progress-duration);
+
+  --progressbar-height-lg: var(--psh-progressbar-height-lg);
+  --progressbar-height-md: var(--psh-progressbar-height-md);
+  --progressbar-height-sm: var(--psh-progressbar-height-sm);
+  --progressbar-stripe-opacity: var(--psh-progressbar-stripe-opacity);
+
+  --purple-100: var(--psh-purple-100);
+  --purple-200: var(--psh-purple-200);
+  --purple-300: var(--psh-purple-300);
+  --purple-400: var(--psh-purple-400);
+  --purple-50: var(--psh-purple-50);
+  --purple-500: var(--psh-purple-500);
+  --purple-600: var(--psh-purple-600);
+  --purple-700: var(--psh-purple-700);
+  --purple-800: var(--psh-purple-800);
+  --purple-900: var(--psh-purple-900);
+
+  --radius-2xl: var(--psh-radius-2xl);
+  --radius-3xl: var(--psh-radius-3xl);
+  --radius-base: var(--psh-radius-base);
+  --radius-full: var(--psh-radius-full);
+  --radius-lg: var(--psh-radius-lg);
+  --radius-md: var(--psh-radius-md);
+  --radius-none: var(--psh-radius-none);
+  --radius-sm: var(--psh-radius-sm);
+  --radius-xl: var(--psh-radius-xl);
+
+  --red-100: var(--psh-red-100);
+  --red-200: var(--psh-red-200);
+  --red-300: var(--psh-red-300);
+  --red-400: var(--psh-red-400);
+  --red-50: var(--psh-red-50);
+  --red-500: var(--psh-red-500);
+  --red-600: var(--psh-red-600);
+  --red-700: var(--psh-red-700);
+  --red-800: var(--psh-red-800);
+  --red-900: var(--psh-red-900);
+
+  --rose-100: var(--psh-rose-100);
+  --rose-200: var(--psh-rose-200);
+  --rose-300: var(--psh-rose-300);
+  --rose-400: var(--psh-rose-400);
+  --rose-50: var(--psh-rose-50);
+  --rose-500: var(--psh-rose-500);
+  --rose-600: var(--psh-rose-600);
+  --rose-700: var(--psh-rose-700);
+  --rose-800: var(--psh-rose-800);
+  --rose-900: var(--psh-rose-900);
+
+  --scrollbar-width: var(--psh-scrollbar-width);
+
+  --secondary-color: var(--psh-secondary-color);
+  --secondary-color-dark: var(--psh-secondary-color-dark);
+  --secondary-color-darker: var(--psh-secondary-color-darker);
+  --secondary-color-light: var(--psh-secondary-color-light);
+  --secondary-color-lighter: var(--psh-secondary-color-lighter);
+  --secondary-color-rgb: var(--psh-secondary-color-rgb);
+  --secondary-color-text: var(--psh-secondary-color-text);
+
+  --select-checkbox-size: var(--psh-select-checkbox-size);
+  --select-max-width: var(--psh-select-max-width);
+
+  --shadow-lg: var(--psh-shadow-lg);
+  --shadow-md: var(--psh-shadow-md);
+  --shadow-sm: var(--psh-shadow-sm);
+
+  --sidebar-width: var(--psh-sidebar-width);
+
+  --size-0: var(--psh-size-0);
+  --size-0-5: var(--psh-size-0-5);
+  --size-1: var(--psh-size-1);
+  --size-1-5: var(--psh-size-1-5);
+  --size-10: var(--psh-size-10);
+  --size-11: var(--psh-size-11);
+  --size-12: var(--psh-size-12);
+  --size-14: var(--psh-size-14);
+  --size-16: var(--psh-size-16);
+  --size-18: var(--psh-size-18);
+  --size-2: var(--psh-size-2);
+  --size-2-5: var(--psh-size-2-5);
+  --size-20: var(--psh-size-20);
+  --size-24: var(--psh-size-24);
+  --size-28: var(--psh-size-28);
+  --size-3: var(--psh-size-3);
+  --size-3-5: var(--psh-size-3-5);
+  --size-32: var(--psh-size-32);
+  --size-36: var(--psh-size-36);
+  --size-4: var(--psh-size-4);
+  --size-4-5: var(--psh-size-4-5);
+  --size-40: var(--psh-size-40);
+  --size-44: var(--psh-size-44);
+  --size-48: var(--psh-size-48);
+  --size-5: var(--psh-size-5);
+  --size-5-5: var(--psh-size-5-5);
+  --size-52: var(--psh-size-52);
+  --size-56: var(--psh-size-56);
+  --size-6: var(--psh-size-6);
+  --size-6-5: var(--psh-size-6-5);
+  --size-60: var(--psh-size-60);
+  --size-64: var(--psh-size-64);
+  --size-7: var(--psh-size-7);
+  --size-72: var(--psh-size-72);
+  --size-8: var(--psh-size-8);
+  --size-8-5: var(--psh-size-8-5);
+  --size-80: var(--psh-size-80);
+  --size-9: var(--psh-size-9);
+  --size-96: var(--psh-size-96);
+  --size-px: var(--psh-size-px);
+
+  --spacing-2xl: var(--psh-spacing-2xl);
+  --spacing-3xl: var(--psh-spacing-3xl);
+  --spacing-4xl: var(--psh-spacing-4xl);
+  --spacing-lg: var(--psh-spacing-lg);
+  --spacing-md: var(--psh-spacing-md);
+  --spacing-sm: var(--psh-spacing-sm);
+  --spacing-xl: var(--psh-spacing-xl);
+  --spacing-xs: var(--psh-spacing-xs);
+  --spacing-xxs: var(--psh-spacing-xxs);
+
+  --spinner-dot-size-lg: var(--psh-spinner-dot-size-lg);
+  --spinner-dot-size-md: var(--psh-spinner-dot-size-md);
+  --spinner-dot-size-sm: var(--psh-spinner-dot-size-sm);
+  --spinner-pulse-height-lg: var(--psh-spinner-pulse-height-lg);
+  --spinner-pulse-height-md: var(--psh-spinner-pulse-height-md);
+  --spinner-pulse-height-sm: var(--psh-spinner-pulse-height-sm);
+  --spinner-pulse-width-lg: var(--psh-spinner-pulse-width-lg);
+  --spinner-pulse-width-md: var(--psh-spinner-pulse-width-md);
+  --spinner-pulse-width-sm: var(--psh-spinner-pulse-width-sm);
+  --spinner-size-lg: var(--psh-spinner-size-lg);
+  --spinner-size-md: var(--psh-spinner-size-md);
+  --spinner-size-sm: var(--psh-spinner-size-sm);
+
+  --success-color: var(--psh-success-color);
+  --success-color-rgb: var(--psh-success-color-rgb);
+  --success-color-text: var(--psh-success-color-text);
+
+  --surface-0: var(--psh-surface-0);
+  --surface-100: var(--psh-surface-100);
+  --surface-200: var(--psh-surface-200);
+  --surface-300: var(--psh-surface-300);
+  --surface-400: var(--psh-surface-400);
+  --surface-50: var(--psh-surface-50);
+  --surface-500: var(--psh-surface-500);
+  --surface-600: var(--psh-surface-600);
+  --surface-700: var(--psh-surface-700);
+  --surface-800: var(--psh-surface-800);
+  --surface-900: var(--psh-surface-900);
+  --surface-900-rgb: var(--psh-surface-900-rgb);
+  --surface-border: var(--psh-surface-border);
+  --surface-card: var(--psh-surface-card);
+  --surface-ground: var(--psh-surface-ground);
+  --surface-hover: var(--psh-surface-hover);
+  --surface-overlay: var(--psh-surface-overlay);
+  --surface-section: var(--psh-surface-section);
+
+  --tag-close-hover-bg: var(--psh-tag-close-hover-bg);
+  --tag-close-opacity: var(--psh-tag-close-opacity);
+  --tag-close-opacity-hover: var(--psh-tag-close-opacity-hover);
+  --tag-close-padding: var(--psh-tag-close-padding);
+  --tag-font-size: var(--psh-tag-font-size);
+  --tag-icon-size: var(--psh-tag-icon-size);
+  --tag-padding-x: var(--psh-tag-padding-x);
+  --tag-padding-y: var(--psh-tag-padding-y);
+  --tag-transition: var(--psh-tag-transition);
+
+  --teal-100: var(--psh-teal-100);
+  --teal-200: var(--psh-teal-200);
+  --teal-300: var(--psh-teal-300);
+  --teal-400: var(--psh-teal-400);
+  --teal-50: var(--psh-teal-50);
+  --teal-500: var(--psh-teal-500);
+  --teal-600: var(--psh-teal-600);
+  --teal-700: var(--psh-teal-700);
+  --teal-800: var(--psh-teal-800);
+  --teal-900: var(--psh-teal-900);
+
+  --text-color: var(--psh-text-color);
+  --text-color-disabled: var(--psh-text-color-disabled);
+  --text-color-secondary: var(--psh-text-color-secondary);
+  --text-color-tertiary: var(--psh-text-color-tertiary);
+  --text-on-danger: var(--psh-text-on-danger);
+  --text-on-dark: var(--psh-text-on-dark);
+  --text-on-light: var(--psh-text-on-light);
+  --text-on-primary: var(--psh-text-on-primary);
+  --text-on-secondary: var(--psh-text-on-secondary);
+  --text-on-success: var(--psh-text-on-success);
+  --text-on-surface: var(--psh-text-on-surface);
+  --text-on-warning: var(--psh-text-on-warning);
+
+  --toast-icon-size: var(--psh-toast-icon-size);
+  --toast-max-width: var(--psh-toast-max-width);
+  --toast-min-width: var(--psh-toast-min-width);
+  --toast-progress-height: var(--psh-toast-progress-height);
+
+  --violet-100: var(--psh-violet-100);
+  --violet-200: var(--psh-violet-200);
+  --violet-300: var(--psh-violet-300);
+  --violet-400: var(--psh-violet-400);
+  --violet-50: var(--psh-violet-50);
+  --violet-500: var(--psh-violet-500);
+  --violet-600: var(--psh-violet-600);
+  --violet-700: var(--psh-violet-700);
+  --violet-800: var(--psh-violet-800);
+  --violet-900: var(--psh-violet-900);
+
+  --warning-color: var(--psh-warning-color);
+  --warning-color-rgb: var(--psh-warning-color-rgb);
+  --warning-color-text: var(--psh-warning-color-text);
+
+  --yellow-100: var(--psh-yellow-100);
+  --yellow-200: var(--psh-yellow-200);
+  --yellow-300: var(--psh-yellow-300);
+  --yellow-400: var(--psh-yellow-400);
+  --yellow-50: var(--psh-yellow-50);
+  --yellow-500: var(--psh-yellow-500);
+  --yellow-600: var(--psh-yellow-600);
+  --yellow-700: var(--psh-yellow-700);
+  --yellow-800: var(--psh-yellow-800);
+  --yellow-900: var(--psh-yellow-900);
+
+  --z-index-dropdown: var(--psh-z-index-dropdown);
+  --z-index-modal: var(--psh-z-index-modal);
+  --z-index-modal-backdrop: var(--psh-z-index-modal-backdrop);
+  --z-index-navigation: var(--psh-z-index-navigation);
+  --z-index-overlay: var(--psh-z-index-overlay);
+  --z-index-toast: var(--psh-z-index-toast);
+  --z-index-tooltip: var(--psh-z-index-tooltip);
+}
+
+/* Merged scales — these legacy names resolved to a different token than their
+   name suggested, and now point at the step they actually rendered:
+     --border-radius → --psh-radius-lg
+     --border-radius-full → --psh-radius-full
+     --border-radius-lg → --psh-radius-xl
+     --btn-height-lg → --psh-control-height-lg
+     --btn-height-md → --psh-control-height-md
+     --btn-height-sm → --psh-control-height-sm
+     --height-input-lg → --psh-control-height-lg
+     --height-input-md → --psh-control-height-md
+     --height-input-sm → --psh-control-height-sm
+*/

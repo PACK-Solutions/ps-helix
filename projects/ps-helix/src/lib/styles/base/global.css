@@ -9,10 +9,10 @@ body {
   min-height: 100vh;
   scroll-behavior: smooth;
   text-rendering: optimizeSpeed;
-  line-height: var(--line-height-normal);
-  font-family: var(--font-family);
-  color: var(--text-color);
-  background: var(--body-gradient);
+  line-height: var(--psh-line-height-normal);
+  font-family: var(--psh-font-family);
+  color: var(--psh-text-color);
+  background: var(--psh-body-gradient);
   overflow-y: auto;
 }
 
@@ -27,7 +27,7 @@ body {
 /* Modal open state */
 body.psh-modal-open {
   overflow: hidden;
-  padding-right: var(--scrollbar-width);
+  padding-right: var(--psh-scrollbar-width);
 }
 
 /*

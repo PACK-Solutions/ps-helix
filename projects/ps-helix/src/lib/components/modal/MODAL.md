@@ -220,11 +220,11 @@ Pour gérer plusieurs modales superposées avec des z-index différents, utilise
 
 ```css
 .stacked-modal {
-  z-index: calc(var(--z-index-modal-backdrop) + 10);
+  z-index: calc(var(--psh-z-index-modal-backdrop) + 10);
 }
 
 .stacked-modal .modal-container {
-  z-index: calc(var(--z-index-modal-backdrop) + 11);
+  z-index: calc(var(--psh-z-index-modal-backdrop) + 11);
 }
 ```
 
@@ -232,8 +232,8 @@ Vous pouvez également personnaliser l'opacité ou le flou du backdrop :
 
 ```css
 .lighter-backdrop {
-  --modal-backdrop-opacity: 0.3;
-  --modal-backdrop-blur: 2px;
+  --psh-modal-backdrop-opacity: 0.3;
+  --psh-modal-backdrop-blur: 2px;
 }
 ```
 
@@ -334,13 +334,13 @@ Les modales utilisent des variables CSS personnalisables :
 
 ```css
 :root {
-  --modal-max-width-sm: 25rem;      /* 400px */
-  --modal-max-width-md: 37.5rem;    /* 600px */
-  --modal-max-width-lg: 50rem;      /* 800px */
-  --modal-backdrop-opacity: 0.6;
-  --modal-backdrop-blur: 4px;
-  --modal-animation-distance: 20px;
-  --modal-animation-scale: 0.95;
+  --psh-modal-max-width-sm: 25rem;      /* 400px */
+  --psh-modal-max-width-md: 37.5rem;    /* 600px */
+  --psh-modal-max-width-lg: 50rem;      /* 800px */
+  --psh-modal-backdrop-opacity: 0.6;
+  --psh-modal-backdrop-blur: 4px;
+  --psh-modal-animation-distance: 20px;
+  --psh-modal-animation-scale: 0.95;
 }
 ```
 
@@ -348,9 +348,9 @@ Les modales utilisent des variables CSS personnalisables :
 
 ```css
 :root {
-  --modal-backdrop-opacity: 0.8;
-  --modal-backdrop-blur: 8px;
-  --modal-max-width-lg: 60rem;
+  --psh-modal-backdrop-opacity: 0.8;
+  --psh-modal-backdrop-blur: 8px;
+  --psh-modal-max-width-lg: 60rem;
 }
 ```
 
@@ -358,14 +358,14 @@ Les modales utilisent des variables CSS personnalisables :
 
 Lorsqu'une modale est ouverte avec `preventScroll="true"`, le composant :
 1. Ajoute la classe `modal-open` au `<body>`
-2. Définit `--scrollbar-width` pour éviter les décalages de mise en page
+2. Définit `--psh-scrollbar-width` pour éviter les décalages de mise en page
 
 Assurez-vous que vos styles globaux incluent :
 
 ```css
 body.modal-open {
   overflow: hidden;
-  padding-right: var(--scrollbar-width);
+  padding-right: var(--psh-scrollbar-width);
 }
 ```
 

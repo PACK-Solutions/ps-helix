@@ -35,62 +35,62 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: var(--size-8);
-  height: var(--size-8);
+  width: var(--psh-size-8);
+  height: var(--psh-size-8);
   position: relative;
   z-index: 1;
-  border-radius: var(--radius-full);
-  background: var(--surface-card);
-  border: var(--border-width-2) solid var(--surface-border);
-  color: var(--text-color-secondary);
-  transition: all var(--animation-duration-normal) var(--animation-easing-smooth);
+  border-radius: var(--psh-radius-full);
+  background: var(--psh-surface-card);
+  border: var(--psh-border-width-2) solid var(--psh-surface-border);
+  color: var(--psh-text-color-secondary);
+  transition: all var(--psh-animation-duration-normal) var(--psh-animation-easing-smooth);
   cursor: pointer;
   flex-shrink: 0;
 }
 
 .step-indicator:focus-visible {
-  outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color);
-  outline-offset: var(--focus-outline-offset);
+  outline: var(--psh-focus-outline-width) var(--psh-focus-outline-style) var(--psh-focus-outline-color);
+  outline-offset: var(--psh-focus-outline-offset);
 }
 
 .step-header.active .step-indicator {
-  background: var(--primary-gradient);
-  border-color: var(--primary-color);
-  color: var(--primary-color-text);
+  background: var(--psh-primary-gradient);
+  border-color: var(--psh-primary-color);
+  color: var(--psh-primary-color-text);
 }
 
 .step-header.completed .step-indicator {
-  background: var(--success-color);
-  border-color: var(--success-color);
-  color: var(--success-color-text);
+  background: var(--psh-success-color);
+  border-color: var(--psh-success-color);
+  color: var(--psh-success-color-text);
 }
 
 .step-header.disabled .step-indicator {
   cursor: not-allowed;
-  opacity: var(--opacity-disabled);
+  opacity: var(--psh-opacity-disabled);
 }
 
 .step-header.error .step-indicator {
-  background: color-mix(in srgb, var(--danger-color) 10%, transparent);
-  border-color: var(--danger-color);
-  color: var(--danger-color);
+  background: color-mix(in srgb, var(--psh-danger-color) 10%, transparent);
+  border-color: var(--psh-danger-color);
+  color: var(--psh-danger-color);
 }
 
 .step-header.warning .step-indicator {
-  background: color-mix(in srgb, var(--warning-color) 10%, transparent);
-  border-color: var(--warning-color);
-  color: var(--warning-color);
+  background: color-mix(in srgb, var(--psh-warning-color) 10%, transparent);
+  border-color: var(--psh-warning-color);
+  color: var(--psh-warning-color);
 }
 
 .step-header.success:not(.completed):not(.active) .step-indicator {
-  background: var(--surface-card);
-  border-color: var(--success-color);
+  background: var(--psh-surface-card);
+  border-color: var(--psh-success-color);
   /* --border-width-3 never existed, so this declaration was dropped and the indicator
      rendered at the base width. The scale is 0/1/2/4/8; keeping 2 preserves what ships
      today rather than silently doubling the ring. */
-  border-width: var(--border-width-2);
-  color: var(--success-color);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--success-color) 15%, transparent);
+  border-width: var(--psh-border-width-2);
+  color: var(--psh-success-color);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--psh-success-color) 15%, transparent);
 }
 
 /* ============================================
@@ -100,42 +100,42 @@
 .step-label {
   display: flex;
   flex-direction: column;
-  margin: 0 var(--spacing-md);
+  margin: 0 var(--psh-spacing-md);
   min-width: 0;
 }
 
 .step-title {
-  color: var(--text-color);
-  font-weight: var(--font-weight-medium);
+  color: var(--psh-text-color);
+  font-weight: var(--psh-font-weight-medium);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .step-subtitle {
-  color: var(--text-color-secondary);
-  font-size: var(--font-size-sm);
+  color: var(--psh-text-color-secondary);
+  font-size: var(--psh-font-size-sm);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .step-success {
-  color: var(--success-color);
-  font-size: var(--font-size-sm);
-  margin-top: var(--spacing-xs);
+  color: var(--psh-success-color);
+  font-size: var(--psh-font-size-sm);
+  margin-top: var(--psh-spacing-xs);
 }
 
 .step-error {
-  color: var(--danger-color);
-  font-size: var(--font-size-sm);
-  margin-top: var(--spacing-xs);
+  color: var(--psh-danger-color);
+  font-size: var(--psh-font-size-sm);
+  margin-top: var(--psh-spacing-xs);
 }
 
 .step-warning {
-  color: var(--warning-color);
-  font-size: var(--font-size-sm);
-  margin-top: var(--spacing-xs);
+  color: var(--psh-warning-color);
+  font-size: var(--psh-font-size-sm);
+  margin-top: var(--psh-spacing-xs);
 }
 
 /* ============================================
@@ -144,20 +144,20 @@
 
 .step-connector {
   flex: 1;
-  padding: 0 var(--spacing-sm);
+  padding: 0 var(--psh-spacing-sm);
   display: flex;
   align-items: center;
 }
 
 .connector-line {
-  height: var(--border-width-2);
-  background: var(--surface-border);
+  height: var(--psh-border-width-2);
+  background: var(--psh-surface-border);
   width: 100%;
-  transition: background var(--animation-duration-normal) var(--animation-easing-smooth);
+  transition: background var(--psh-animation-duration-normal) var(--psh-animation-easing-smooth);
 }
 
 .step-header.completed .connector-line {
-  background: var(--success-color);
+  background: var(--psh-success-color);
 }
 
 /* ============================================
@@ -165,8 +165,8 @@
    ============================================ */
 
 .numbered .step-indicator {
-  font-weight: var(--font-weight-semibold);
-  font-size: var(--font-size-sm);
+  font-weight: var(--psh-font-weight-semibold);
+  font-size: var(--psh-font-size-sm);
 }
 
 /* ============================================
@@ -185,10 +185,10 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: var(--primary-color);
+  background: var(--psh-primary-color);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform var(--animation-duration-default) var(--animation-easing-smooth);
+  transition: transform var(--psh-animation-duration-default) var(--psh-animation-easing-smooth);
 }
 
 .progress .step-header.active .step-indicator::after {
@@ -209,12 +209,12 @@
 }
 
 .spinner {
-  animation: spin 1s linear infinite;
+  animation: spin var(--psh-animation-loop-normal) var(--psh-animation-easing-linear) infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .spinner {
-    animation: spin 2s linear infinite;
+    animation: spin var(--psh-animation-loop-slower) var(--psh-animation-easing-linear) infinite;
   }
 }
 
@@ -229,13 +229,13 @@
 
 psh-step {
   display: block;
-  animation: fadeIn var(--animation-duration-default) var(--animation-easing-smooth);
+  animation: fadeIn var(--psh-animation-duration-default) var(--psh-animation-easing-smooth);
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(var(--animation-distance-sm));
+    transform: translateY(var(--psh-animation-distance-sm));
   }
   to {
     opacity: 1;
@@ -249,11 +249,11 @@ psh-step {
 
 @container (max-width: 768px) {
   .stepper-header {
-    gap: var(--spacing-xs);
+    gap: var(--psh-spacing-xs);
   }
 
   .step-label {
-    margin: 0 var(--spacing-sm);
+    margin: 0 var(--psh-spacing-sm);
   }
 
   .step-title {
@@ -265,31 +265,31 @@ psh-step {
   .step-subtitle {
     white-space: normal;
     word-break: break-word;
-    font-size: var(--font-size-xs);
+    font-size: var(--psh-font-size-xs);
   }
 
   .step-connector {
-    padding: 0 var(--spacing-xs);
+    padding: 0 var(--psh-spacing-xs);
   }
 }
 
 @container (max-width: 640px) {
   .stepper-header {
     flex-wrap: wrap;
-    gap: var(--spacing-md);
+    gap: var(--psh-spacing-md);
   }
 
   .step-header {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: var(--spacing-xs);
+    gap: var(--psh-spacing-xs);
     flex: 0 0 auto;
     min-width: 80px;
   }
 
   .step-label {
-    margin: var(--spacing-xs) 0 0 0;
+    margin: var(--psh-spacing-xs) 0 0 0;
     align-items: center;
   }
 
@@ -297,7 +297,7 @@ psh-step {
   .step-subtitle {
     white-space: normal;
     text-align: center;
-    font-size: var(--font-size-sm);
+    font-size: var(--psh-font-size-sm);
     max-width: none;
   }
 
@@ -306,25 +306,25 @@ psh-step {
   }
 
   .step-indicator {
-    width: var(--size-10);
-    height: var(--size-10);
+    width: var(--psh-size-10);
+    height: var(--psh-size-10);
   }
 }
 
 @container (max-width: 480px) {
   .step-indicator {
-    width: var(--size-8);
-    height: var(--size-8);
-    font-size: var(--font-size-sm);
+    width: var(--psh-size-8);
+    height: var(--psh-size-8);
+    font-size: var(--psh-font-size-sm);
   }
 
   .step-title {
-    font-size: var(--font-size-sm);
+    font-size: var(--psh-font-size-sm);
     max-width: 100px;
   }
 
   .step-subtitle {
-    font-size: var(--font-size-xs);
+    font-size: var(--psh-font-size-xs);
     display: none;
   }
 }

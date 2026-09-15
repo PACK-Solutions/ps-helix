@@ -25,6 +25,12 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      # Fails if TOKENS.md drifted from the stylesheets, or if a token exists in one
+      # theme and not the other — the asymmetry that left seven palette families
+      # rendering their light values in dark mode.
+      - name: Token reference and theme parity
+        run: npm run verify:tokens
+
       - name: Unit tests (with coverage gate)
         run: npm run test:coverage
 

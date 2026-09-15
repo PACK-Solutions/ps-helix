@@ -65,10 +65,10 @@ export class ColorsDemoComponent {
       icon: 'star',
       accentColor: 'primary',
       colors: [
-        { name: 'Primary', variable: '--primary-color', usage: 'Actions principales, liens, éléments clés' },
-        { name: 'Primary Light', variable: '--primary-color-light', usage: 'États de survol, variations subtiles' },
-        { name: 'Primary Lighter', variable: '--primary-color-lighter', usage: 'Arrière-plans, indicateurs doux' },
-        { name: 'Primary Dark', variable: '--primary-color-dark', usage: 'Texte, accents forts' }
+        { name: 'Primary', variable: '--psh-primary-color', usage: 'Actions principales, liens, éléments clés' },
+        { name: 'Primary Light', variable: '--psh-primary-color-light', usage: 'États de survol, variations subtiles' },
+        { name: 'Primary Lighter', variable: '--psh-primary-color-lighter', usage: 'Arrière-plans, indicateurs doux' },
+        { name: 'Primary Dark', variable: '--psh-primary-color-dark', usage: 'Texte, accents forts' }
       ]
     },
     {
@@ -77,10 +77,10 @@ export class ColorsDemoComponent {
       icon: 'info',
       accentColor: 'secondary',
       colors: [
-        { name: 'Secondary', variable: '--secondary-color', usage: 'Actions secondaires, support' },
-        { name: 'Success', variable: '--success-color', usage: 'Validations, confirmations' },
-        { name: 'Warning', variable: '--warning-color', usage: 'Alertes, attention requise' },
-        { name: 'Danger', variable: '--danger-color', usage: 'Erreurs, actions destructives' }
+        { name: 'Secondary', variable: '--psh-secondary-color', usage: 'Actions secondaires, support' },
+        { name: 'Success', variable: '--psh-success-color', usage: 'Validations, confirmations' },
+        { name: 'Warning', variable: '--psh-warning-color', usage: 'Alertes, attention requise' },
+        { name: 'Danger', variable: '--psh-danger-color', usage: 'Erreurs, actions destructives' }
       ]
     },
     {
@@ -89,10 +89,10 @@ export class ColorsDemoComponent {
       icon: 'squares-four',
       accentColor: 'success',
       colors: [
-        { name: 'Surface Card', variable: '--surface-card', usage: 'Cartes, conteneurs élevés' },
-        { name: 'Surface Ground', variable: '--surface-ground', usage: 'Arrière-plan principal' },
-        { name: 'Surface Border', variable: '--surface-border', usage: 'Séparations, délimitations' },
-        { name: 'Surface Hover', variable: '--surface-hover', usage: 'États de survol' }
+        { name: 'Surface Card', variable: '--psh-surface-card', usage: 'Cartes, conteneurs élevés' },
+        { name: 'Surface Ground', variable: '--psh-surface-ground', usage: 'Arrière-plan principal' },
+        { name: 'Surface Border', variable: '--psh-surface-border', usage: 'Séparations, délimitations' },
+        { name: 'Surface Hover', variable: '--psh-surface-hover', usage: 'États de survol' }
       ]
     },
     {
@@ -101,8 +101,8 @@ export class ColorsDemoComponent {
       icon: 'text-aa',
       accentColor: 'warning',
       colors: [
-        { name: 'Text Color', variable: '--text-color', usage: 'Texte principal, contenu important' },
-        { name: 'Text Secondary', variable: '--text-color-secondary', usage: 'Descriptions, texte de support' }
+        { name: 'Text Color', variable: '--psh-text-color', usage: 'Texte principal, contenu important' },
+        { name: 'Text Secondary', variable: '--psh-text-color-secondary', usage: 'Descriptions, texte de support' }
       ]
     }
   ];
@@ -205,13 +205,13 @@ export class ColorsDemoComponent {
       description: 'Appliquer les couleurs via les variables CSS',
       icon: 'code',
       code: `.my-button {
-  background: var(--primary-color);
-  color: var(--primary-color-text);
-  border: 1px solid var(--surface-border);
+  background: var(--psh-primary-color);
+  color: var(--psh-primary-color-text);
+  border: 1px solid var(--psh-surface-border);
 }
 
 .my-button:hover {
-  background: var(--primary-color-dark);
+  background: var(--psh-primary-color-dark);
 }`,
       notes: [
         'Toujours utiliser les variables CSS',
@@ -224,9 +224,9 @@ export class ColorsDemoComponent {
       description: 'Le système bascule automatiquement selon le thème',
       icon: 'moon',
       code: `[data-theme="dark"] {
-  --primary-color: #4040FF;
-  --surface-card: #1e293b;
-  --text-color: rgba(255, 255, 255, 0.95);
+  --psh-primary-color: #4040FF;
+  --psh-surface-card: #1e293b;
+  --psh-text-color: rgba(255, 255, 255, 0.95);
 }`,
       notes: [
         'Basculement automatique via data-theme',

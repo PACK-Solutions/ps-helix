@@ -240,12 +240,12 @@ The design system provides a comprehensive set of CSS custom properties (CSS var
 ```css
 /* Using design tokens in your custom styles */
 .my-custom-component {
-  padding: var(--spacing-md);
-  margin-bottom: var(--spacing-lg);
-  background: var(--surface-card);
-  color: var(--text-color);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-md);
+  padding: var(--psh-spacing-md);
+  margin-bottom: var(--psh-spacing-lg);
+  background: var(--psh-surface-card);
+  color: var(--psh-text-color);
+  border-radius: var(--psh-radius-lg);
+  box-shadow: var(--psh-shadow-md);
 }
 ```
 
@@ -857,33 +857,33 @@ Customize to match your brand identity using the injection token pattern. See th
 Once configured, numerous CSS variables are available:
 
 **Primary Color:**
-- `--primary-color`
-- `--primary-color-light`
-- `--primary-color-lighter`
-- `--primary-color-dark`
-- `--primary-color-darker`
-- `--primary-color-text`
-- `--primary-color-rgb`
+- `--psh-primary-color`
+- `--psh-primary-color-light`
+- `--psh-primary-color-lighter`
+- `--psh-primary-color-dark`
+- `--psh-primary-color-darker`
+- `--psh-primary-color-text`
+- `--psh-primary-color-rgb`
 
 **Secondary Color:**
-- `--secondary-color`
-- `--secondary-color-light`
-- `--secondary-color-lighter`
-- `--secondary-color-dark`
-- `--secondary-color-darker`
-- `--secondary-color-text`
-- `--secondary-color-rgb`
+- `--psh-secondary-color`
+- `--psh-secondary-color-light`
+- `--psh-secondary-color-lighter`
+- `--psh-secondary-color-dark`
+- `--psh-secondary-color-darker`
+- `--psh-secondary-color-text`
+- `--psh-secondary-color-rgb`
 
 ### Using Custom Variables
 
 ```css
 .my-button {
-  background: var(--primary-color);
-  color: var(--primary-color-text);
+  background: var(--psh-primary-color);
+  color: var(--psh-primary-color-text);
 }
 
 .my-button:hover {
-  background: var(--primary-color-light);
+  background: var(--psh-primary-color-light);
 }
 ```
 

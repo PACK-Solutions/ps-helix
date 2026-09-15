@@ -20,123 +20,123 @@ Reference documentation for the Helix Design System Angular component library. T
 
 | Token | Value | Pixels |
 |-------|-------|--------|
-| `--spacing-xxs` | 0.125rem | 2px |
-| `--spacing-xs` | 0.25rem | 4px |
-| `--spacing-sm` | 0.5rem | 8px |
-| `--spacing-md` | 1rem | 16px |
-| `--spacing-lg` | 1.5rem | 24px |
-| `--spacing-xl` | 2rem | 32px |
-| `--spacing-2xl` | 3rem | 48px |
-| `--spacing-3xl` | 4rem | 64px |
+| `--psh-spacing-xxs` | 0.125rem | 2px |
+| `--psh-spacing-xs` | 0.25rem | 4px |
+| `--psh-spacing-sm` | 0.5rem | 8px |
+| `--psh-spacing-md` | 1rem | 16px |
+| `--psh-spacing-lg` | 1.5rem | 24px |
+| `--psh-spacing-xl` | 2rem | 32px |
+| `--psh-spacing-2xl` | 3rem | 48px |
+| `--psh-spacing-3xl` | 4rem | 64px |
 
 ### Typography
 
 | Token | Value |
 |-------|-------|
-| `--font-family` | 'Poppins', system-ui, sans-serif |
-| `--font-size-xs` | clamp(0.6875rem, ..., 0.75rem) |
-| `--font-size-sm` | clamp(0.8125rem, ..., 0.875rem) |
-| `--font-size-base` | clamp(0.9375rem, ..., 1rem) |
-| `--font-size-lg` | clamp(1.0625rem, ..., 1.125rem) |
-| `--font-size-xl` | clamp(1.125rem, ..., 1.25rem) |
-| `--font-size-2xl` | clamp(1.25rem, ..., 1.5rem) |
-| `--font-size-3xl` | clamp(1.5rem, ..., 1.875rem) |
-| `--font-size-4xl` | clamp(1.75rem, ..., 2.25rem) |
-| `--font-weight-normal` | 400 |
-| `--font-weight-medium` | 500 |
-| `--font-weight-semibold` | 600 |
-| `--font-weight-bold` | 700 |
-| `--line-height-tight` | 1.25 |
-| `--line-height-normal` | 1.5 |
-| `--line-height-relaxed` | 1.75 |
+| `--psh-font-family` | 'Poppins', system-ui, sans-serif |
+| `--psh-font-size-xs` | clamp(0.6875rem, ..., 0.75rem) |
+| `--psh-font-size-sm` | clamp(0.8125rem, ..., 0.875rem) |
+| `--psh-font-size-base` | clamp(0.9375rem, ..., 1rem) |
+| `--psh-font-size-lg` | clamp(1.0625rem, ..., 1.125rem) |
+| `--psh-font-size-xl` | clamp(1.125rem, ..., 1.25rem) |
+| `--psh-font-size-2xl` | clamp(1.25rem, ..., 1.5rem) |
+| `--psh-font-size-3xl` | clamp(1.5rem, ..., 1.875rem) |
+| `--psh-font-size-4xl` | clamp(1.75rem, ..., 2.25rem) |
+| `--psh-font-weight-normal` | 400 |
+| `--psh-font-weight-medium` | 500 |
+| `--psh-font-weight-semibold` | 600 |
+| `--psh-font-weight-bold` | 700 |
+| `--psh-line-height-tight` | 1.25 |
+| `--psh-line-height-normal` | 1.5 |
+| `--psh-line-height-relaxed` | 1.75 |
 
 ### Sizing
 
 | Token | Value | Pixels |
 |-------|-------|--------|
-| `--size-1` | 0.25rem | 4px |
-| `--size-2` | 0.5rem | 8px |
-| `--size-3` | 0.75rem | 12px |
-| `--size-4` | 1rem | 16px |
-| `--size-6` | 1.5rem | 24px |
-| `--size-8` | 2rem | 32px |
-| `--size-10` | 2.5rem | 40px |
-| `--size-12` | 3rem | 48px |
-| `--size-16` | 4rem | 64px |
-| `--size-20` | 5rem | 80px |
-| `--size-24` | 6rem | 96px |
+| `--psh-size-1` | 0.25rem | 4px |
+| `--psh-size-2` | 0.5rem | 8px |
+| `--psh-size-3` | 0.75rem | 12px |
+| `--psh-size-4` | 1rem | 16px |
+| `--psh-size-6` | 1.5rem | 24px |
+| `--psh-size-8` | 2rem | 32px |
+| `--psh-size-10` | 2.5rem | 40px |
+| `--psh-size-12` | 3rem | 48px |
+| `--psh-size-16` | 4rem | 64px |
+| `--psh-size-20` | 5rem | 80px |
+| `--psh-size-24` | 6rem | 96px |
 
 ### Border Radius
 
 | Token | Value |
 |-------|-------|
-| `--radius-none` | 0 |
-| `--radius-sm` | 0.125rem |
-| `--radius-base` | 0.25rem |
-| `--radius-md` | 0.375rem |
-| `--radius-lg` | 0.5rem |
-| `--radius-xl` | 0.75rem |
-| `--radius-2xl` | 1rem |
-| `--radius-full` | 9999px |
+| `--psh-radius-none` | 0 |
+| `--psh-radius-sm` | 0.125rem |
+| `--psh-radius-base` | 0.25rem |
+| `--psh-radius-md` | 0.375rem |
+| `--psh-radius-lg` | 0.5rem |
+| `--psh-radius-xl` | 0.75rem |
+| `--psh-radius-2xl` | 1rem |
+| `--psh-radius-full` | 9999px |
 
 ### Shadows
 
 | Token | Value |
 |-------|-------|
-| `--shadow-sm` | 0 1px 2px 0 rgba(0, 0, 0, 0.05) |
-| `--shadow-md` | 0 4px 6px -1px rgba(0, 0, 0, 0.1), ... |
-| `--shadow-lg` | 0 10px 15px -3px rgba(0, 0, 0, 0.1), ... |
+| `--psh-shadow-sm` | 0 1px 2px 0 rgba(0, 0, 0, 0.05) |
+| `--psh-shadow-md` | 0 4px 6px -1px rgba(0, 0, 0, 0.1), ... |
+| `--psh-shadow-lg` | 0 10px 15px -3px rgba(0, 0, 0, 0.1), ... |
 
 ### Z-Index
 
 | Token | Value |
 |-------|-------|
-| `--z-index-navigation` | 50 |
-| `--z-index-dropdown` | 100 |
-| `--z-index-tooltip` | 200 |
-| `--z-index-modal-backdrop` | 999 |
-| `--z-index-modal` | 1000 |
-| `--z-index-overlay` | 1100 |
-| `--z-index-toast` | 9999 |
+| `--psh-z-index-navigation` | 50 |
+| `--psh-z-index-dropdown` | 100 |
+| `--psh-z-index-tooltip` | 200 |
+| `--psh-z-index-modal-backdrop` | 999 |
+| `--psh-z-index-modal` | 1000 |
+| `--psh-z-index-overlay` | 1100 |
+| `--psh-z-index-toast` | 9999 |
 
 ### Animation
 
 | Token | Value |
 |-------|-------|
-| `--animation-duration-fast` | 0.15s |
-| `--animation-duration-normal` | 0.2s |
-| `--animation-duration-default` | 0.3s |
-| `--animation-duration-slow` | 0.5s |
-| `--animation-easing-default` | ease |
-| `--animation-easing-smooth` | cubic-bezier(0.4, 0, 0.2, 1) |
+| `--psh-animation-duration-fast` | 0.15s |
+| `--psh-animation-duration-normal` | 0.2s |
+| `--psh-animation-duration-default` | 0.3s |
+| `--psh-animation-duration-slow` | 0.5s |
+| `--psh-animation-easing-default` | ease |
+| `--psh-animation-easing-smooth` | cubic-bezier(0.4, 0, 0.2, 1) |
 
 ### Colors (Light Theme)
 
 | Token | Value |
 |-------|-------|
-| `--primary-color` | #0B0191 |
-| `--secondary-color` | #5E5E5E |
-| `--success-color` | #0F853A |
-| `--warning-color` | #b25310 |
-| `--danger-color` | #D92626 |
-| `--surface-0` | #ffffff |
-| `--surface-100` | #f1f5f9 |
-| `--surface-200` | #e2e8f0 |
-| `--surface-card` | var(--surface-0) |
-| `--surface-border` | var(--surface-200) |
-| `--text-color` | var(--surface-800) |
-| `--text-color-secondary` | var(--surface-600) |
+| `--psh-primary-color` | #0B0191 |
+| `--psh-secondary-color` | #5E5E5E |
+| `--psh-success-color` | #0F853A |
+| `--psh-warning-color` | #b25310 |
+| `--psh-danger-color` | #D92626 |
+| `--psh-surface-0` | #ffffff |
+| `--psh-surface-100` | #f1f5f9 |
+| `--psh-surface-200` | #e2e8f0 |
+| `--psh-surface-card` | var(--psh-surface-0) |
+| `--psh-surface-border` | var(--psh-surface-200) |
+| `--psh-text-color` | var(--psh-surface-800) |
+| `--psh-text-color-secondary` | var(--psh-surface-600) |
 
 ### Breakpoints
 
 | Token | Value | Pixels |
 |-------|-------|--------|
-| `--breakpoint-xs` | 30em | 480px |
-| `--breakpoint-sm` | 40em | 640px |
-| `--breakpoint-md` | 48em | 768px |
-| `--breakpoint-lg` | 64em | 1024px |
-| `--breakpoint-xl` | 80em | 1280px |
-| `--breakpoint-2xl` | 96em | 1536px |
+| `--psh-breakpoint-xs` | 30em | 480px |
+| `--psh-breakpoint-sm` | 40em | 640px |
+| `--psh-breakpoint-md` | 48em | 768px |
+| `--psh-breakpoint-lg` | 64em | 1024px |
+| `--psh-breakpoint-xl` | 80em | 1280px |
+| `--psh-breakpoint-2xl` | 96em | 1536px |
 
 ---
 
@@ -617,7 +617,7 @@ interface MenuItem<T = string> {
 ```
 ```css
 .stacked-modal {
-  z-index: calc(var(--z-index-modal-backdrop) + 10);
+  z-index: calc(var(--psh-z-index-modal-backdrop) + 10);
 }
 ```
 

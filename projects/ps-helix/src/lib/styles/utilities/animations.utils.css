@@ -13,7 +13,7 @@
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(var(--animation-distance-md));
+    transform: translateY(var(--psh-animation-distance-md));
   }
   to {
     opacity: 1;
@@ -35,7 +35,7 @@
 @keyframes slideInDown {
   from {
     opacity: 0;
-    transform: translateY(calc(-1 * var(--animation-distance-md)));
+    transform: translateY(calc(-1 * var(--psh-animation-distance-md)));
   }
   to {
     opacity: 1;
@@ -46,7 +46,7 @@
 @keyframes slideInLeft {
   from {
     opacity: 0;
-    transform: translateX(calc(-1 * var(--animation-distance-md)));
+    transform: translateX(calc(-1 * var(--psh-animation-distance-md)));
   }
   to {
     opacity: 1;
@@ -57,7 +57,7 @@
 @keyframes slideInRight {
   from {
     opacity: 0;
-    transform: translateX(var(--animation-distance-md));
+    transform: translateX(var(--psh-animation-distance-md));
   }
   to {
     opacity: 1;
@@ -87,7 +87,7 @@
     transform: translateY(0);
   }
   50% {
-    transform: translateY(calc(-1 * var(--animation-distance-sm)));
+    transform: translateY(calc(-1 * var(--psh-animation-distance-sm)));
   }
 }
 
@@ -104,54 +104,54 @@
 
 /* Animation utility classes */
 .psh-animate-fade-in {
-  animation: fadeIn var(--animation-duration-default) var(--animation-easing-default);
+  animation: fadeIn var(--psh-animation-duration-default) var(--psh-animation-easing-default);
 }
 
 .psh-animate-fade-in-up {
-  animation: fadeInUp var(--animation-duration-default) var(--animation-easing-default);
+  animation: fadeInUp var(--psh-animation-duration-default) var(--psh-animation-easing-default);
 }
 
 .psh-animate-slide-in {
-  animation: slideIn var(--animation-duration-default) var(--animation-easing-default);
+  animation: slideIn var(--psh-animation-duration-default) var(--psh-animation-easing-default);
 }
 
 .psh-animate-slide-in-down {
-  animation: slideInDown var(--animation-duration-default) var(--animation-easing-default);
+  animation: slideInDown var(--psh-animation-duration-default) var(--psh-animation-easing-default);
 }
 
 .psh-animate-slide-in-left {
-  animation: slideInLeft var(--animation-duration-default) var(--animation-easing-default);
+  animation: slideInLeft var(--psh-animation-duration-default) var(--psh-animation-easing-default);
 }
 
 .psh-animate-slide-in-right {
-  animation: slideInRight var(--animation-duration-default) var(--animation-easing-default);
+  animation: slideInRight var(--psh-animation-duration-default) var(--psh-animation-easing-default);
 }
 
 .psh-animate-scale-in {
-  animation: scaleIn var(--animation-duration-fast) var(--animation-easing-smooth);
+  animation: scaleIn var(--psh-animation-duration-fast) var(--psh-animation-easing-smooth);
 }
 
 .psh-animate-spin {
-  animation: spin 1s linear infinite;
+  animation: spin var(--psh-animation-loop-normal) var(--psh-animation-easing-linear) infinite;
 }
 
 .psh-animate-bounce {
-  animation: bounce var(--animation-duration-slow) var(--animation-easing-default) infinite;
+  animation: bounce var(--psh-animation-duration-slow) var(--psh-animation-easing-default) infinite;
 }
 
 .psh-animate-pulse {
-  animation: pulse var(--animation-duration-slow) var(--animation-easing-default) infinite;
+  animation: pulse var(--psh-animation-duration-slow) var(--psh-animation-easing-default) infinite;
 }
 
 /* Animation control utilities */
 .psh-animate-fast {
-  animation-duration: var(--animation-duration-fast) !important;
+  animation-duration: var(--psh-animation-duration-fast) !important;
 }
 
 .psh-animate-slow {
-  animation-duration: var(--animation-duration-slow) !important;
+  animation-duration: var(--psh-animation-duration-slow) !important;
 }
 
 .psh-animate-smooth {
-  animation-timing-function: var(--animation-easing-smooth) !important;
+  animation-timing-function: var(--psh-animation-easing-smooth) !important;
 }

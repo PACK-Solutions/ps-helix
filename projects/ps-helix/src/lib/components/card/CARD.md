@@ -212,7 +212,7 @@ Le composant utilise `ng-content` avec des sélecteurs pour organiser le contenu
 >
   <!-- Icône dans le header -->
   <div card-header-icon>
-    <i class="ph ph-folder-open" style="font-size: 1.5rem; color: var(--primary-color);"></i>
+    <i class="ph ph-folder-open" style="font-size: 1.5rem; color: var(--psh-primary-color);"></i>
   </div>
 
   <!-- Badge dans le header -->
@@ -272,11 +272,11 @@ CSS de votre composant consommateur, **sans `::ng-deep`**.
 .premium-title {
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
+  gap: var(--psh-spacing-sm);
 }
 .premium-title h3 {
-  font-size: var(--font-size-base);
-  color: var(--text-color-secondary);
+  font-size: var(--psh-font-size-base);
+  color: var(--psh-text-color-secondary);
   margin: 0;
 }
 ```
@@ -507,7 +507,7 @@ Désactive la carte avec opacité réduite et interactions bloquées.
   actionsAlignment="space-between"
 >
   <div card-header-icon>
-    <i class="ph ph-bell" style="font-size: 1.5rem; color: var(--blue-500);"></i>
+    <i class="ph ph-bell" style="font-size: 1.5rem; color: var(--psh-blue-500);"></i>
   </div>
 
   <div card-header-extra>
@@ -606,7 +606,7 @@ Désactive la carte avec opacité réduite et interactions bloquées.
   colorVariant="danger"
 >
   <div card-header-icon>
-    <i class="ph ph-warning-circle" style="font-size: 1.5rem; color: var(--danger-color);"></i>
+    <i class="ph ph-warning-circle" style="font-size: 1.5rem; color: var(--psh-danger-color);"></i>
   </div>
 
   <p><strong>Code d'erreur :</strong> CONNECTION_TIMEOUT</p>

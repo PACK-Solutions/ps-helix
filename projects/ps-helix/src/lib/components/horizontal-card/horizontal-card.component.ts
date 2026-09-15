@@ -23,7 +23,7 @@ import { HorizontalCardVariant } from './horizontal-card.types';
  * Le layout bascule automatiquement en vertical sur mobile.
  *
  * @example
- * <psh-horizontal-card variant="elevated" sideWidth="var(--size-48)">
+ * <psh-horizontal-card variant="elevated" sideWidth="var(--psh-size-48)">
  *   <div horizontal-side>
  *     <img src="image.jpg" alt="Product">
  *   </div>
@@ -65,20 +65,20 @@ export class PshHorizontalCardComponent {
   /** Styles inline personnalisés */
   customStyle = input<Record<string, string>>({});
 
-  /** Largeur du contenu latéral (utiliser les tokens de sizing comme var(--size-48)) */
-  sideWidth = input<string>('var(--size-48)');
+  /** Largeur du contenu latéral (utiliser les tokens de sizing comme var(--psh-size-48)) */
+  sideWidth = input<string>('var(--psh-size-48)');
 
   /** Gap entre le contenu latéral et principal */
-  gap = input<string>('var(--spacing-md)');
+  gap = input<string>('var(--psh-spacing-md)');
 
   /** Padding du contenu latéral */
   sidePadding = input<string>('0');
 
   /** Padding du contenu principal */
-  contentPadding = input<string>('var(--spacing-md)');
+  contentPadding = input<string>('var(--psh-spacing-md)');
 
   /** Hauteur du contenu latéral sur mobile (utiliser les tokens de sizing) */
-  mobileHeight = input<string>('var(--size-48)');
+  mobileHeight = input<string>('var(--psh-size-48)');
 
   /** Émis lors du clic sur la carte */
   clicked = output<MouseEvent | KeyboardEvent>();
@@ -100,11 +100,11 @@ export class PshHorizontalCardComponent {
   /** Styles calculés */
   computedStyles = computed(() => {
     return {
-      '--horizontal-side-width': this.sideWidth(),
-      '--horizontal-gap': this.gap(),
-      '--horizontal-side-padding': this.sidePadding(),
-      '--horizontal-content-padding': this.contentPadding(),
-      '--horizontal-mobile-height': this.mobileHeight(),
+      '--psh-horizontal-side-width': this.sideWidth(),
+      '--psh-horizontal-gap': this.gap(),
+      '--psh-horizontal-side-padding': this.sidePadding(),
+      '--psh-horizontal-content-padding': this.contentPadding(),
+      '--psh-horizontal-mobile-height': this.mobileHeight(),
       ...this.customStyle()
     };
   });

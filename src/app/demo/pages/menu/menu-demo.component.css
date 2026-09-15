@@ -2,8 +2,8 @@
   display: flex;
   background: var(--surface-color);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: var(--spacing-md);
+  border-radius: var(--psh-radius-md);
+  padding: var(--psh-spacing-md);
   min-height: 300px;
 }
 
@@ -15,7 +15,7 @@
 .menu-wrapper.horizontal {
   width: 100%;
   min-height: auto;
-  padding: var(--spacing-sm);
+  padding: var(--psh-spacing-sm);
 }
 
 .menu-wrapper.collapsible {
@@ -24,17 +24,17 @@
 
 .control-buttons {
   display: flex;
-  gap: var(--spacing-sm);
-  margin-top: var(--spacing-md);
+  gap: var(--psh-spacing-sm);
+  margin-top: var(--psh-spacing-md);
   flex-wrap: wrap;
 }
 
 .expanded-ids-display {
-  margin-top: var(--spacing-md);
-  padding: var(--spacing-sm) var(--spacing-md);
-  background: var(--surface-ground);
-  border-radius: var(--radius-sm);
-  font-size: var(--font-size-sm);
+  margin-top: var(--psh-spacing-md);
+  padding: var(--psh-spacing-sm) var(--psh-spacing-md);
+  background: var(--psh-surface-ground);
+  border-radius: var(--psh-radius-sm);
+  font-size: var(--psh-font-size-sm);
   color: var(--text-secondary);
   font-family: monospace;
 }
@@ -44,8 +44,8 @@
 .elements-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: var(--spacing-lg);
-  margin-top: var(--spacing-lg);
+  gap: var(--psh-spacing-lg);
+  margin-top: var(--psh-spacing-lg);
 }
 
 .mode-card,
@@ -53,7 +53,7 @@
 .element-card {
   background: var(--surface-color);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
+  border-radius: var(--psh-radius-lg);
   overflow: hidden;
   transition: all var(--transition-base);
   animation: fadeIn 0.3s ease-in-out;
@@ -63,14 +63,14 @@
 .variant-card:hover,
 .element-card:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-  border-color: var(--primary-color);
+  box-shadow: var(--psh-shadow-md);
+  border-color: var(--psh-primary-color);
 }
 
 .mode-preview,
 .variant-preview,
 .element-preview {
-  padding: var(--spacing-xl);
+  padding: var(--psh-spacing-xl);
   background: var(--background-color);
   border-bottom: 1px solid var(--border-color);
   display: flex;
@@ -82,78 +82,78 @@
 .mode-info,
 .variant-info,
 .element-info {
-  padding: var(--spacing-lg);
+  padding: var(--psh-spacing-lg);
 }
 
 .mode-info h4,
 .variant-info h4,
 .element-info h4 {
-  margin: 0 0 var(--spacing-sm) 0;
+  margin: 0 0 var(--psh-spacing-sm) 0;
   color: var(--text-primary);
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
+  font-size: var(--psh-font-size-lg);
+  font-weight: var(--psh-font-weight-semibold);
 }
 
 .mode-info p,
 .variant-info p,
 .element-info p {
-  margin: 0 0 var(--spacing-md) 0;
+  margin: 0 0 var(--psh-spacing-md) 0;
   color: var(--text-secondary);
-  line-height: var(--line-height-relaxed);
+  line-height: var(--psh-line-height-relaxed);
 }
 
 .collapsible-content,
 .states-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-xl);
-  margin-top: var(--spacing-lg);
+  gap: var(--psh-spacing-xl);
+  margin-top: var(--psh-spacing-lg);
 }
 
 .collapsible-demo,
 .states-demo {
   background: var(--surface-color);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-xl);
+  border-radius: var(--psh-radius-lg);
+  padding: var(--psh-spacing-xl);
 }
 
 .collapsible-doc,
 .states-doc {
   background: var(--surface-color);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-xl);
+  border-radius: var(--psh-radius-lg);
+  padding: var(--psh-spacing-xl);
 }
 
 .collapsible-doc h4,
 .states-doc h4 {
-  margin: 0 0 var(--spacing-md) 0;
+  margin: 0 0 var(--psh-spacing-md) 0;
   color: var(--text-primary);
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
+  font-size: var(--psh-font-size-lg);
+  font-weight: var(--psh-font-weight-semibold);
 }
 
 .feature-list {
   margin: 0;
-  padding-left: var(--spacing-lg);
+  padding-left: var(--psh-spacing-lg);
   color: var(--text-secondary);
 }
 
 .feature-list li {
-  margin-bottom: var(--spacing-sm);
-  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--psh-spacing-sm);
+  line-height: var(--psh-line-height-relaxed);
 }
 
 .feature-list strong {
   color: var(--text-primary);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--psh-font-weight-semibold);
 }
 
 .code-example {
-  background: var(--surface-ground);
-  border-radius: var(--border-radius);
-  padding: var(--spacing-md);
+  background: var(--psh-surface-ground);
+  border-radius: var(--psh-radius-lg);
+  padding: var(--psh-spacing-md);
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -166,8 +166,8 @@
 
 .code-example code {
   font-family: 'Courier New', monospace;
-  font-size: var(--font-size-sm);
-  color: var(--text-color);
+  font-size: var(--psh-font-size-sm);
+  color: var(--psh-text-color);
   word-wrap: normal;
   white-space: pre;
 }
@@ -188,7 +188,7 @@
   .variants-grid,
   .elements-grid {
     grid-template-columns: 1fr;
-    gap: var(--spacing-md);
+    gap: var(--psh-spacing-md);
   }
 
   .menu-wrapper.vertical {
@@ -200,43 +200,43 @@
   .variant-preview,
   .element-preview {
     min-height: 240px;
-    padding: var(--spacing-md);
+    padding: var(--psh-spacing-md);
   }
 
   .mode-card,
   .variant-card,
   .element-card {
-    border-radius: var(--radius-md);
+    border-radius: var(--psh-radius-md);
   }
 
   .mode-info,
   .variant-info,
   .element-info {
-    padding: var(--spacing-md);
+    padding: var(--psh-spacing-md);
   }
 
   .collapsible-content,
   .states-content {
     grid-template-columns: 1fr;
-    gap: var(--spacing-md);
+    gap: var(--psh-spacing-md);
   }
 
   .collapsible-demo,
   .collapsible-doc,
   .states-demo,
   .states-doc {
-    padding: var(--spacing-md);
+    padding: var(--psh-spacing-md);
   }
 
   .control-buttons {
     justify-content: center;
-    gap: var(--spacing-sm);
+    gap: var(--psh-spacing-sm);
   }
 
   .control-buttons psh-button {
     min-height: 44px;
     min-width: 44px;
-    padding: var(--spacing-sm) var(--spacing-md);
+    padding: var(--psh-spacing-sm) var(--psh-spacing-md);
   }
 
   .mode-card:hover,
@@ -246,12 +246,12 @@
   }
 
   .code-example {
-    padding: var(--spacing-sm);
-    border-radius: var(--radius-sm);
+    padding: var(--psh-spacing-sm);
+    border-radius: var(--psh-radius-sm);
   }
 
   .code-example code {
-    font-size: calc(var(--font-size-sm) * 0.95);
+    font-size: calc(var(--psh-font-size-sm) * 0.95);
   }
 }
 
@@ -260,43 +260,43 @@
   .variant-preview,
   .element-preview {
     min-height: 200px;
-    padding: var(--spacing-sm);
+    padding: var(--psh-spacing-sm);
   }
 
   .mode-info,
   .variant-info,
   .element-info {
-    padding: var(--spacing-sm);
+    padding: var(--psh-spacing-sm);
   }
 
   .mode-info h4,
   .variant-info h4,
   .element-info h4 {
-    font-size: var(--font-size-base);
-    margin-bottom: var(--spacing-xs);
+    font-size: var(--psh-font-size-base);
+    margin-bottom: var(--psh-spacing-xs);
   }
 
   .mode-info p,
   .variant-info p,
   .element-info p {
-    font-size: var(--font-size-sm);
-    margin-bottom: var(--spacing-sm);
+    font-size: var(--psh-font-size-sm);
+    margin-bottom: var(--psh-spacing-sm);
   }
 
   .collapsible-demo,
   .collapsible-doc,
   .states-demo,
   .states-doc {
-    padding: var(--spacing-sm);
+    padding: var(--psh-spacing-sm);
   }
 
   .collapsible-doc h4,
   .states-doc h4 {
-    font-size: var(--font-size-base);
+    font-size: var(--psh-font-size-base);
   }
 
   .menu-wrapper {
-    padding: var(--spacing-sm);
+    padding: var(--psh-spacing-sm);
     min-height: 200px;
   }
 
@@ -307,30 +307,30 @@
   .control-buttons {
     width: 100%;
     flex-direction: column;
-    gap: var(--spacing-xs);
+    gap: var(--psh-spacing-xs);
   }
 
   .control-buttons psh-button {
     width: 100%;
     min-height: 48px;
-    font-size: var(--font-size-base);
+    font-size: var(--psh-font-size-base);
   }
 
   .feature-list {
-    padding-left: var(--spacing-md);
-    font-size: var(--font-size-sm);
+    padding-left: var(--psh-spacing-md);
+    font-size: var(--psh-font-size-sm);
   }
 
   .feature-list li {
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: var(--psh-spacing-xs);
   }
 
   .code-example {
-    padding: var(--spacing-xs) var(--spacing-sm);
+    padding: var(--psh-spacing-xs) var(--psh-spacing-sm);
   }
 
   .code-example code {
-    font-size: calc(var(--font-size-sm) * 0.9);
+    font-size: calc(var(--psh-font-size-sm) * 0.9);
   }
 }
 
@@ -338,25 +338,25 @@
   .modes-grid,
   .variants-grid,
   .elements-grid {
-    gap: var(--spacing-sm);
+    gap: var(--psh-spacing-sm);
   }
 
   .collapsible-content,
   .states-content {
-    gap: var(--spacing-sm);
+    gap: var(--psh-spacing-sm);
   }
 
   .mode-preview,
   .variant-preview,
   .element-preview {
     min-height: 180px;
-    padding: var(--spacing-xs);
+    padding: var(--psh-spacing-xs);
   }
 
   .mode-card,
   .variant-card,
   .element-card {
-    border-radius: var(--radius-sm);
+    border-radius: var(--psh-radius-sm);
   }
 
   .mode-info,
@@ -366,11 +366,11 @@
   .collapsible-doc,
   .states-demo,
   .states-doc {
-    padding: var(--spacing-xs) var(--spacing-sm);
+    padding: var(--psh-spacing-xs) var(--psh-spacing-sm);
   }
 
   .menu-wrapper {
-    padding: var(--spacing-xs);
+    padding: var(--psh-spacing-xs);
     min-height: 180px;
   }
 
@@ -383,16 +383,16 @@
   .element-info h4,
   .collapsible-doc h4,
   .states-doc h4 {
-    font-size: var(--font-size-sm);
-    margin-bottom: calc(var(--spacing-xs) * 0.8);
+    font-size: var(--psh-font-size-sm);
+    margin-bottom: calc(var(--psh-spacing-xs) * 0.8);
   }
 
   .code-example {
-    padding: var(--spacing-xs);
+    padding: var(--psh-spacing-xs);
   }
 
   .code-example code {
-    font-size: calc(var(--font-size-sm) * 0.85);
+    font-size: calc(var(--psh-font-size-sm) * 0.85);
   }
 }
 
@@ -400,18 +400,18 @@
   .modes-grid,
   .variants-grid,
   .elements-grid {
-    gap: var(--spacing-xs);
+    gap: var(--psh-spacing-xs);
   }
 
   .mode-preview,
   .variant-preview,
   .element-preview {
     min-height: 160px;
-    padding: calc(var(--spacing-xs) * 0.8);
+    padding: calc(var(--psh-spacing-xs) * 0.8);
   }
 
   .menu-wrapper {
-    padding: calc(var(--spacing-xs) * 0.8);
+    padding: calc(var(--psh-spacing-xs) * 0.8);
     min-height: 160px;
   }
 
@@ -426,24 +426,24 @@
   .collapsible-doc,
   .states-demo,
   .states-doc {
-    padding: calc(var(--spacing-xs) * 0.8) var(--spacing-xs);
+    padding: calc(var(--psh-spacing-xs) * 0.8) var(--psh-spacing-xs);
   }
 
   .feature-list {
-    padding-left: var(--spacing-sm);
-    font-size: calc(var(--font-size-sm) * 0.9);
+    padding-left: var(--psh-spacing-sm);
+    font-size: calc(var(--psh-font-size-sm) * 0.9);
   }
 
   .feature-list li {
-    margin-bottom: calc(var(--spacing-xs) * 0.6);
+    margin-bottom: calc(var(--psh-spacing-xs) * 0.6);
   }
 
   .control-buttons {
-    gap: calc(var(--spacing-xs) * 0.8);
+    gap: calc(var(--psh-spacing-xs) * 0.8);
   }
 
   .code-example code {
-    font-size: calc(var(--font-size-sm) * 0.8);
+    font-size: calc(var(--psh-font-size-sm) * 0.8);
   }
 }
 

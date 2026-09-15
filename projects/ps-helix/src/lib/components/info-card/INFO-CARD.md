@@ -403,7 +403,7 @@ Chaque ligne peut recevoir une mise en forme **optionnelle, bornee et cumulable*
 | Option | Type | Effet |
 |--------|------|-------|
 | `italic` | `boolean` | Met la valeur en italique |
-| `bold` | `boolean` | Renforce le poids (token `--font-weight-semibold`) |
+| `bold` | `boolean` | Renforce le poids (token `--psh-font-weight-semibold`) |
 | `strikethrough` | `boolean` | Barre la valeur (`line-through`) |
 | `tone` | `InfoCardTone` | Applique une couleur semantique (voir ci-dessous) |
 
@@ -415,12 +415,12 @@ Jeu ferme, mappe sur les tokens du theme (fonctionne en clair **et** en sombre) 
 
 | `tone` | Token | Usage |
 |--------|-------|-------|
-| `muted` | `--text-color-secondary` + poids normal | Valeur attenuee / non renseignee |
-| `primary` | `--primary-color` | Mise en avant neutre |
-| `success` | `--success-color` | Valeur valide / positive |
-| `warning` | `--warning-color` | Valeur a surveiller |
-| `danger` | `--danger-color` | Valeur invalide / obsolete |
-| `info` | `--alert-info-text-color` | Information |
+| `muted` | `--psh-text-color-secondary` + poids normal | Valeur attenuee / non renseignee |
+| `primary` | `--psh-primary-color` | Mise en avant neutre |
+| `success` | `--psh-success-color` | Valeur valide / positive |
+| `warning` | `--psh-warning-color` | Valeur a surveiller |
+| `danger` | `--psh-danger-color` | Valeur invalide / obsolete |
+| `info` | `--psh-alert-info-text-color` | Information |
 
 > `muted` combine couleur secondaire **et** poids normal (intention « valeur attenuee »). Les autres tons ne modifient **que** la couleur, pour rester cumulables proprement avec `bold`.
 >
@@ -652,7 +652,7 @@ Grace a `height: 100%`, les cartes s'alignent automatiquement en hauteur dans un
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
-  gap: var(--size-4);
+  gap: var(--psh-size-4);
 }
 ```
 
@@ -674,7 +674,7 @@ Le composant utilise `ViewEncapsulation.None`, ce qui permet :
 **A privilegier :**
 ```html
 <psh-info-card
-  [options]="{ labelWidth: 'var(--size-40)' }"
+  [options]="{ labelWidth: 'var(--psh-size-40)' }"
 >
 </psh-info-card>
 ```

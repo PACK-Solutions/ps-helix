@@ -7,22 +7,22 @@
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  padding-left: var(--container-padding-sm);
-  padding-right: var(--container-padding-sm);
-  max-width: var(--container-max-width);
+  padding-left: var(--psh-container-padding-sm);
+  padding-right: var(--psh-container-padding-sm);
+  max-width: var(--psh-container-max-width);
 }
 
 @media (min-width: 40em) {
   .psh-container {
-    padding-left: var(--container-padding-md);
-    padding-right: var(--container-padding-md);
+    padding-left: var(--psh-container-padding-md);
+    padding-right: var(--psh-container-padding-md);
   }
 }
 
 @media (min-width: 64em) {
   .psh-container {
-    padding-left: var(--container-padding-lg);
-    padding-right: var(--container-padding-lg);
+    padding-left: var(--psh-container-padding-lg);
+    padding-right: var(--psh-container-padding-lg);
   }
 }
 
@@ -78,67 +78,67 @@
 
 /* Responsive grid utilities */
 @media (min-width: 40em) {
-  .psh-sm\:grid-cols-1 { grid-template-columns: var(--grid-cols-1); }
-  .psh-sm\:grid-cols-2 { grid-template-columns: var(--grid-cols-2); }
-  .psh-sm\:grid-cols-3 { grid-template-columns: var(--grid-cols-3); }
+  .psh-sm\:grid-cols-1 { grid-template-columns: var(--psh-grid-cols-1); }
+  .psh-sm\:grid-cols-2 { grid-template-columns: var(--psh-grid-cols-2); }
+  .psh-sm\:grid-cols-3 { grid-template-columns: var(--psh-grid-cols-3); }
 }
 
 @media (min-width: 48em) {
-  .psh-md\:grid-cols-1 { grid-template-columns: var(--grid-cols-1); }
-  .psh-md\:grid-cols-2 { grid-template-columns: var(--grid-cols-2); }
-  .psh-md\:grid-cols-3 { grid-template-columns: var(--grid-cols-3); }
-  .psh-md\:grid-cols-4 { grid-template-columns: var(--grid-cols-4); }
+  .psh-md\:grid-cols-1 { grid-template-columns: var(--psh-grid-cols-1); }
+  .psh-md\:grid-cols-2 { grid-template-columns: var(--psh-grid-cols-2); }
+  .psh-md\:grid-cols-3 { grid-template-columns: var(--psh-grid-cols-3); }
+  .psh-md\:grid-cols-4 { grid-template-columns: var(--psh-grid-cols-4); }
 }
 
 @media (min-width: 64em) {
-  .psh-lg\:grid-cols-1 { grid-template-columns: var(--grid-cols-1); }
-  .psh-lg\:grid-cols-2 { grid-template-columns: var(--grid-cols-2); }
-  .psh-lg\:grid-cols-3 { grid-template-columns: var(--grid-cols-3); }
-  .psh-lg\:grid-cols-4 { grid-template-columns: var(--grid-cols-4); }
-  .psh-lg\:grid-cols-6 { grid-template-columns: var(--grid-cols-6); }
+  .psh-lg\:grid-cols-1 { grid-template-columns: var(--psh-grid-cols-1); }
+  .psh-lg\:grid-cols-2 { grid-template-columns: var(--psh-grid-cols-2); }
+  .psh-lg\:grid-cols-3 { grid-template-columns: var(--psh-grid-cols-3); }
+  .psh-lg\:grid-cols-4 { grid-template-columns: var(--psh-grid-cols-4); }
+  .psh-lg\:grid-cols-6 { grid-template-columns: var(--psh-grid-cols-6); }
 }
 
 /* Responsive spacing utilities */
 @media (min-width: 40em) {
   .psh-sm\:p-0 { padding: 0; }
-  .psh-sm\:p-sm { padding: var(--spacing-sm); }
-  .psh-sm\:p-md { padding: var(--spacing-md); }
-  .psh-sm\:p-lg { padding: var(--spacing-lg); }
-  .psh-sm\:p-xl { padding: var(--spacing-xl); }
+  .psh-sm\:p-sm { padding: var(--psh-spacing-sm); }
+  .psh-sm\:p-md { padding: var(--psh-spacing-md); }
+  .psh-sm\:p-lg { padding: var(--psh-spacing-lg); }
+  .psh-sm\:p-xl { padding: var(--psh-spacing-xl); }
 
   .psh-sm\:m-0 { margin: 0; }
-  .psh-sm\:m-sm { margin: var(--spacing-sm); }
-  .psh-sm\:m-md { margin: var(--spacing-md); }
-  .psh-sm\:m-lg { margin: var(--spacing-lg); }
-  .psh-sm\:m-xl { margin: var(--spacing-xl); }
+  .psh-sm\:m-sm { margin: var(--psh-spacing-sm); }
+  .psh-sm\:m-md { margin: var(--psh-spacing-md); }
+  .psh-sm\:m-lg { margin: var(--psh-spacing-lg); }
+  .psh-sm\:m-xl { margin: var(--psh-spacing-xl); }
 }
 
 @media (min-width: 48em) {
   .psh-md\:p-0 { padding: 0; }
-  .psh-md\:p-sm { padding: var(--spacing-sm); }
-  .psh-md\:p-md { padding: var(--spacing-md); }
-  .psh-md\:p-lg { padding: var(--spacing-lg); }
-  .psh-md\:p-xl { padding: var(--spacing-xl); }
+  .psh-md\:p-sm { padding: var(--psh-spacing-sm); }
+  .psh-md\:p-md { padding: var(--psh-spacing-md); }
+  .psh-md\:p-lg { padding: var(--psh-spacing-lg); }
+  .psh-md\:p-xl { padding: var(--psh-spacing-xl); }
 
   .psh-md\:m-0 { margin: 0; }
-  .psh-md\:m-sm { margin: var(--spacing-sm); }
-  .psh-md\:m-md { margin: var(--spacing-md); }
-  .psh-md\:m-lg { margin: var(--spacing-lg); }
-  .psh-md\:m-xl { margin: var(--spacing-xl); }
+  .psh-md\:m-sm { margin: var(--psh-spacing-sm); }
+  .psh-md\:m-md { margin: var(--psh-spacing-md); }
+  .psh-md\:m-lg { margin: var(--psh-spacing-lg); }
+  .psh-md\:m-xl { margin: var(--psh-spacing-xl); }
 }
 
 @media (min-width: 64em) {
   .psh-lg\:p-0 { padding: 0; }
-  .psh-lg\:p-sm { padding: var(--spacing-sm); }
-  .psh-lg\:p-md { padding: var(--spacing-md); }
-  .psh-lg\:p-lg { padding: var(--spacing-lg); }
-  .psh-lg\:p-xl { padding: var(--spacing-xl); }
+  .psh-lg\:p-sm { padding: var(--psh-spacing-sm); }
+  .psh-lg\:p-md { padding: var(--psh-spacing-md); }
+  .psh-lg\:p-lg { padding: var(--psh-spacing-lg); }
+  .psh-lg\:p-xl { padding: var(--psh-spacing-xl); }
 
   .psh-lg\:m-0 { margin: 0; }
-  .psh-lg\:m-sm { margin: var(--spacing-sm); }
-  .psh-lg\:m-md { margin: var(--spacing-md); }
-  .psh-lg\:m-lg { margin: var(--spacing-lg); }
-  .psh-lg\:m-xl { margin: var(--spacing-xl); }
+  .psh-lg\:m-sm { margin: var(--psh-spacing-sm); }
+  .psh-lg\:m-md { margin: var(--psh-spacing-md); }
+  .psh-lg\:m-lg { margin: var(--psh-spacing-lg); }
+  .psh-lg\:m-xl { margin: var(--psh-spacing-xl); }
 }
 
 /* Text alignment utilities */
@@ -203,10 +203,10 @@
 /* Mobile-specific utilities */
 @media (max-width: 48em) {
   .psh-mobile\:flex-col { flex-direction: column; }
-  .psh-mobile\:gap-sm { gap: var(--spacing-sm); }
-  .psh-mobile\:gap-xs { gap: var(--spacing-xs); }
-  .psh-mobile\:p-sm { padding: var(--spacing-sm); }
-  .psh-mobile\:p-xs { padding: var(--spacing-xs); }
+  .psh-mobile\:gap-sm { gap: var(--psh-spacing-sm); }
+  .psh-mobile\:gap-xs { gap: var(--psh-spacing-xs); }
+  .psh-mobile\:p-sm { padding: var(--psh-spacing-sm); }
+  .psh-mobile\:p-xs { padding: var(--psh-spacing-xs); }
   .psh-mobile\:text-center { text-align: center; }
   .psh-mobile\:w-full { width: 100%; }
 }

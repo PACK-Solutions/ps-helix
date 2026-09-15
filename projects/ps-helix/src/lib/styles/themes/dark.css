@@ -1,290 +1,290 @@
 [data-theme="dark"] {
   /* Surface Colors */
-  --surface-0: #0a0d16;
-  --surface-50: #141a27;
-  --surface-100: #1e293b;
-  --surface-200: #334155;
-  --surface-300: #475569;
-  --surface-400: #64748b;
-  --surface-500: #94a3b8;
-  --surface-600: #cbd5e1;
-  --surface-700: #e2e8f0;
-  --surface-800: #f1f5f9;
-  --surface-900: #f8fafc;
-  --surface-900-rgb: 248, 250, 252;
+  --psh-surface-0: #0a0d16;
+  --psh-surface-50: #141a27;
+  --psh-surface-100: #1e293b;
+  --psh-surface-200: #334155;
+  --psh-surface-300: #475569;
+  --psh-surface-400: #64748b;
+  --psh-surface-500: #94a3b8;
+  --psh-surface-600: #cbd5e1;
+  --psh-surface-700: #e2e8f0;
+  --psh-surface-800: #f1f5f9;
+  --psh-surface-900: #f8fafc;
+  --psh-surface-900-rgb: 248, 250, 252;
 
   /* Teal Palette */
-  --teal-50: #134E4A;
-  --teal-100: #115E59;
-  --teal-200: #0F766E;
-  --teal-300: #0D9488;
-  --teal-400: #14B8A6;
-  --teal-500: #2DD4BF;
-  --teal-600: #5EEAD4;
-  --teal-700: #99F6E4;
-  --teal-800: #CCFBF1;
-  --teal-900: #F0FDFA;
+  --psh-teal-50: #134E4A;
+  --psh-teal-100: #115E59;
+  --psh-teal-200: #0F766E;
+  --psh-teal-300: #0D9488;
+  --psh-teal-400: #14B8A6;
+  --psh-teal-500: #2DD4BF;
+  --psh-teal-600: #5EEAD4;
+  --psh-teal-700: #99F6E4;
+  --psh-teal-800: #CCFBF1;
+  --psh-teal-900: #F0FDFA;
 
   /* Emerald Palette */
-  --emerald-50: #064E3B;
-  --emerald-100: #065F46;
-  --emerald-200: #047857;
-  --emerald-300: #059669;
-  --emerald-400: #10B981;
-  --emerald-500: #34D399;
-  --emerald-600: #6EE7B7;
-  --emerald-700: #A7F3D0;
-  --emerald-800: #D1FAE5;
-  --emerald-900: #ECFDF5;
+  --psh-emerald-50: #064E3B;
+  --psh-emerald-100: #065F46;
+  --psh-emerald-200: #047857;
+  --psh-emerald-300: #059669;
+  --psh-emerald-400: #10B981;
+  --psh-emerald-500: #34D399;
+  --psh-emerald-600: #6EE7B7;
+  --psh-emerald-700: #A7F3D0;
+  --psh-emerald-800: #D1FAE5;
+  --psh-emerald-900: #ECFDF5;
 
   /* Indigo Palette */
-  --indigo-50: #312E81;
-  --indigo-100: #3730A3;
-  --indigo-200: #4338CA;
-  --indigo-300: #4F46E5;
-  --indigo-400: #6366F1;
-  --indigo-500: #818CF8;
-  --indigo-600: #A5B4FC;
-  --indigo-700: #C7D2FE;
-  --indigo-800: #E0E7FF;
-  --indigo-900: #EEF2FF;
+  --psh-indigo-50: #312E81;
+  --psh-indigo-100: #3730A3;
+  --psh-indigo-200: #4338CA;
+  --psh-indigo-300: #4F46E5;
+  --psh-indigo-400: #6366F1;
+  --psh-indigo-500: #818CF8;
+  --psh-indigo-600: #A5B4FC;
+  --psh-indigo-700: #C7D2FE;
+  --psh-indigo-800: #E0E7FF;
+  --psh-indigo-900: #EEF2FF;
 
   /* Purple Palette */
-  --purple-50: #581C87;
-  --purple-100: #6B21A8;
-  --purple-200: #7C3AED;
-  --purple-300: #9333EA;
-  --purple-400: #A855F7;
-  --purple-500: #C084FC;
-  --purple-600: #D8B4FE;
-  --purple-700: #E9D5FF;
-  --purple-800: #F3E8FF;
-  --purple-900: #FAF5FF;
+  --psh-purple-50: #581C87;
+  --psh-purple-100: #6B21A8;
+  --psh-purple-200: #7C3AED;
+  --psh-purple-300: #9333EA;
+  --psh-purple-400: #A855F7;
+  --psh-purple-500: #C084FC;
+  --psh-purple-600: #D8B4FE;
+  --psh-purple-700: #E9D5FF;
+  --psh-purple-800: #F3E8FF;
+  --psh-purple-900: #FAF5FF;
 
   /* Fuchsia Palette */
-  --fuchsia-50: #701A75;
-  --fuchsia-100: #86198F;
-  --fuchsia-200: #A21CAF;
-  --fuchsia-300: #C026D3;
-  --fuchsia-400: #D946EF;
-  --fuchsia-500: #E879F9;
-  --fuchsia-600: #F0ABFC;
-  --fuchsia-700: #F5D0FE;
-  --fuchsia-800: #FAE8FF;
-  --fuchsia-900: #FDF4FF;
+  --psh-fuchsia-50: #701A75;
+  --psh-fuchsia-100: #86198F;
+  --psh-fuchsia-200: #A21CAF;
+  --psh-fuchsia-300: #C026D3;
+  --psh-fuchsia-400: #D946EF;
+  --psh-fuchsia-500: #E879F9;
+  --psh-fuchsia-600: #F0ABFC;
+  --psh-fuchsia-700: #F5D0FE;
+  --psh-fuchsia-800: #FAE8FF;
+  --psh-fuchsia-900: #FDF4FF;
 
   /* Rose Palette */
-  --rose-50: #881337;
-  --rose-100: #9F1239;
-  --rose-200: #BE123C;
-  --rose-300: #E11D48;
-  --rose-400: #F43F5E;
-  --rose-500: #FB7185;
-  --rose-600: #FDA4AF;
-  --rose-700: #FECDD3;
-  --rose-800: #FFE4E6;
-  --rose-900: #FFF1F2;
+  --psh-rose-50: #881337;
+  --psh-rose-100: #9F1239;
+  --psh-rose-200: #BE123C;
+  --psh-rose-300: #E11D48;
+  --psh-rose-400: #F43F5E;
+  --psh-rose-500: #FB7185;
+  --psh-rose-600: #FDA4AF;
+  --psh-rose-700: #FECDD3;
+  --psh-rose-800: #FFE4E6;
+  --psh-rose-900: #FFF1F2;
 
   /* Amber Palette */
-  --amber-50: #78350F;
-  --amber-100: #92400E;
-  --amber-200: #B45309;
-  --amber-300: #D97706;
-  --amber-400: #F59E0B;
-  --amber-500: #FBBF24;
-  --amber-600: #FCD34D;
-  --amber-700: #FDE68A;
-  --amber-800: #FEF3C7;
-  --amber-900: #FFFBEB;
+  --psh-amber-50: #78350F;
+  --psh-amber-100: #92400E;
+  --psh-amber-200: #B45309;
+  --psh-amber-300: #D97706;
+  --psh-amber-400: #F59E0B;
+  --psh-amber-500: #FBBF24;
+  --psh-amber-600: #FCD34D;
+  --psh-amber-700: #FDE68A;
+  --psh-amber-800: #FEF3C7;
+  --psh-amber-900: #FFFBEB;
 
   /* Pink Palette */
-  --pink-50: #831843;
-  --pink-100: #9D174D;
-  --pink-200: #BE185D;
-  --pink-300: #DB2777;
-  --pink-400: #EC4899;
-  --pink-500: #F472B6;
-  --pink-600: #F9A8D4;
-  --pink-700: #FBCFE8;
-  --pink-800: #FCE7F3;
-  --pink-900: #FDF2F8;
+  --psh-pink-50: #831843;
+  --psh-pink-100: #9D174D;
+  --psh-pink-200: #BE185D;
+  --psh-pink-300: #DB2777;
+  --psh-pink-400: #EC4899;
+  --psh-pink-500: #F472B6;
+  --psh-pink-600: #F9A8D4;
+  --psh-pink-700: #FBCFE8;
+  --psh-pink-800: #FCE7F3;
+  --psh-pink-900: #FDF2F8;
 
   /* ------------------------------------------------------------------------
      These seven families were defined in light.css but never inverted here, so
-     --blue-500, --red-500 and friends kept their light values in dark mode —
+     --psh-blue-500, --psh-red-500 and friends kept their light values in dark mode —
      breaking contrast for every consumer of the raw palette and of the
      .psh-bg-red-500 / .psh-text-blue-600 utilities. Inverted on the same rule as
      the eight families above: dark-50 = light-900 … dark-900 = light-50.
      ------------------------------------------------------------------------ */
 
   /* Blue Palette */
-  --blue-50: #312E81;
-  --blue-100: #3730A3;
-  --blue-200: #4338CA;
-  --blue-300: #4F46E5;
-  --blue-400: #6366F1;
-  --blue-500: #818CF8;
-  --blue-600: #A5B4FC;
-  --blue-700: #C7D2FE;
-  --blue-800: #E0E7FF;
-  --blue-900: #EEF2FF;
+  --psh-blue-50: #312E81;
+  --psh-blue-100: #3730A3;
+  --psh-blue-200: #4338CA;
+  --psh-blue-300: #4F46E5;
+  --psh-blue-400: #6366F1;
+  --psh-blue-500: #818CF8;
+  --psh-blue-600: #A5B4FC;
+  --psh-blue-700: #C7D2FE;
+  --psh-blue-800: #E0E7FF;
+  --psh-blue-900: #EEF2FF;
 
   /* Red Palette */
-  --red-50: #7F1D1D;
-  --red-100: #991B1B;
-  --red-200: #B91C1C;
-  --red-300: #DC2626;
-  --red-400: #EF4444;
-  --red-500: #F87171;
-  --red-600: #FCA5A5;
-  --red-700: #FECACA;
-  --red-800: #FEE2E2;
-  --red-900: #FEF2F2;
+  --psh-red-50: #7F1D1D;
+  --psh-red-100: #991B1B;
+  --psh-red-200: #B91C1C;
+  --psh-red-300: #DC2626;
+  --psh-red-400: #EF4444;
+  --psh-red-500: #F87171;
+  --psh-red-600: #FCA5A5;
+  --psh-red-700: #FECACA;
+  --psh-red-800: #FEE2E2;
+  --psh-red-900: #FEF2F2;
 
   /* Green Palette */
-  --green-50: #14532D;
-  --green-100: #166534;
-  --green-200: #15803D;
-  --green-300: #16A34A;
-  --green-400: #22C55E;
-  --green-500: #4ADE80;
-  --green-600: #86EFAC;
-  --green-700: #BBF7D0;
-  --green-800: #DCFCE7;
-  --green-900: #F0FDF4;
+  --psh-green-50: #14532D;
+  --psh-green-100: #166534;
+  --psh-green-200: #15803D;
+  --psh-green-300: #16A34A;
+  --psh-green-400: #22C55E;
+  --psh-green-500: #4ADE80;
+  --psh-green-600: #86EFAC;
+  --psh-green-700: #BBF7D0;
+  --psh-green-800: #DCFCE7;
+  --psh-green-900: #F0FDF4;
 
   /* Orange Palette */
-  --orange-50: #7C2D12;
-  --orange-100: #9A3412;
-  --orange-200: #C2410C;
-  --orange-300: #EA580C;
-  --orange-400: #F97316;
-  --orange-500: #FB923C;
-  --orange-600: #FDBA74;
-  --orange-700: #FED7AA;
-  --orange-800: #FFEDD5;
-  --orange-900: #FFF7ED;
+  --psh-orange-50: #7C2D12;
+  --psh-orange-100: #9A3412;
+  --psh-orange-200: #C2410C;
+  --psh-orange-300: #EA580C;
+  --psh-orange-400: #F97316;
+  --psh-orange-500: #FB923C;
+  --psh-orange-600: #FDBA74;
+  --psh-orange-700: #FED7AA;
+  --psh-orange-800: #FFEDD5;
+  --psh-orange-900: #FFF7ED;
 
   /* Yellow Palette */
-  --yellow-50: #713F12;
-  --yellow-100: #854D0E;
-  --yellow-200: #A16207;
-  --yellow-300: #CA8A04;
-  --yellow-400: #EAB308;
-  --yellow-500: #FACC15;
-  --yellow-600: #FDE047;
-  --yellow-700: #FEF08A;
-  --yellow-800: #FEF9C3;
-  --yellow-900: #FEFCE8;
+  --psh-yellow-50: #713F12;
+  --psh-yellow-100: #854D0E;
+  --psh-yellow-200: #A16207;
+  --psh-yellow-300: #CA8A04;
+  --psh-yellow-400: #EAB308;
+  --psh-yellow-500: #FACC15;
+  --psh-yellow-600: #FDE047;
+  --psh-yellow-700: #FEF08A;
+  --psh-yellow-800: #FEF9C3;
+  --psh-yellow-900: #FEFCE8;
 
   /* Violet Palette */
-  --violet-50: #4C1D95;
-  --violet-100: #5B21B6;
-  --violet-200: #6D28D9;
-  --violet-300: #7C3AED;
-  --violet-400: #8B5CF6;
-  --violet-500: #A78BFA;
-  --violet-600: #C4B5FD;
-  --violet-700: #DDD6FE;
-  --violet-800: #EDE9FE;
-  --violet-900: #F5F3FF;
+  --psh-violet-50: #4C1D95;
+  --psh-violet-100: #5B21B6;
+  --psh-violet-200: #6D28D9;
+  --psh-violet-300: #7C3AED;
+  --psh-violet-400: #8B5CF6;
+  --psh-violet-500: #A78BFA;
+  --psh-violet-600: #C4B5FD;
+  --psh-violet-700: #DDD6FE;
+  --psh-violet-800: #EDE9FE;
+  --psh-violet-900: #F5F3FF;
 
   /* Cyan Palette */
-  --cyan-50: #164E63;
-  --cyan-100: #155E75;
-  --cyan-200: #0E7490;
-  --cyan-300: #0891B2;
-  --cyan-400: #06B6D4;
-  --cyan-500: #22D3EE;
-  --cyan-600: #67E8F9;
-  --cyan-700: #A5F3FC;
-  --cyan-800: #CFFAFE;
-  --cyan-900: #ECFEFF;
+  --psh-cyan-50: #164E63;
+  --psh-cyan-100: #155E75;
+  --psh-cyan-200: #0E7490;
+  --psh-cyan-300: #0891B2;
+  --psh-cyan-400: #06B6D4;
+  --psh-cyan-500: #22D3EE;
+  --psh-cyan-600: #67E8F9;
+  --psh-cyan-700: #A5F3FC;
+  --psh-cyan-800: #CFFAFE;
+  --psh-cyan-900: #ECFEFF;
 
   /* Functional Colors */
-  --surface-ground: var(--surface-0);
-  --surface-section: var(--surface-50);
+  --psh-surface-ground: var(--psh-surface-0);
+  --psh-surface-section: var(--psh-surface-50);
   
   /* Alert Colors */
-  --alert-info-bg: rgba(107, 95, 227, 0.15);
-  --alert-info-border-color: #6B5FE3;
-  --alert-info-text-color: #A5B4FC;
+  --psh-alert-info-bg: rgba(107, 95, 227, 0.15);
+  --psh-alert-info-border-color: #6B5FE3;
+  --psh-alert-info-text-color: #A5B4FC;
   
-  --surface-card: var(--surface-50);
-  --surface-overlay: var(--surface-200);
-  --surface-border: var(--surface-300);
-  --surface-hover: rgba(255, 255, 255, 0.05);
+  --psh-surface-card: var(--psh-surface-50);
+  --psh-surface-overlay: var(--psh-surface-200);
+  --psh-surface-border: var(--psh-surface-300);
+  --psh-surface-hover: rgba(255, 255, 255, 0.05);
 
   /* Text Colors */
-  --text-color: rgba(255, 255, 255, 0.95);
-  --text-color-secondary: rgba(255, 255, 255, 0.75);
-  --text-color-tertiary: rgba(255, 255, 255, 0.6);
-  --text-color-disabled: rgba(255, 255, 255, 0.4);
+  --psh-text-color: rgba(255, 255, 255, 0.95);
+  --psh-text-color-secondary: rgba(255, 255, 255, 0.75);
+  --psh-text-color-tertiary: rgba(255, 255, 255, 0.6);
+  --psh-text-color-disabled: rgba(255, 255, 255, 0.4);
 
   /* Text on colored backgrounds */
-  --text-on-primary: #FFFFFF;
-  --text-on-secondary: #FFFFFF;
-  --text-on-success: #000000;
-  --text-on-warning: #000000;
-  --text-on-danger: #000000;
-  --text-on-surface: var(--text-color);
-  --text-on-dark: #FFFFFF;
-  --text-on-light: #0a0d16;
+  --psh-text-on-primary: #FFFFFF;
+  --psh-text-on-secondary: #FFFFFF;
+  --psh-text-on-success: #000000;
+  --psh-text-on-warning: #000000;
+  --psh-text-on-danger: #000000;
+  --psh-text-on-surface: var(--psh-text-color);
+  --psh-text-on-dark: #FFFFFF;
+  --psh-text-on-light: #0a0d16;
 
   /* Primary Colors - Use customer context with fallbacks (lighter shades for dark theme contrast) */
-  --primary-color: var(--customer-primary-color, #8178F7);
-  --primary-color-light: var(--customer-primary-color-light, #8A7FED);
-  --primary-color-lighter: var(--customer-primary-color-lighter, #A99FF7);
-  --primary-color-dark: var(--customer-primary-color-dark, #4A3FD9);
-  --primary-color-darker: var(--customer-primary-color-darker, #3730A3);
-  --primary-color-text: var(--customer-primary-color-text, #FFFFFF);
-  --primary-color-rgb: var(--customer-primary-color-rgb, 107, 95, 227);
+  --psh-primary-color: var(--psh-customer-primary-color, var(--customer-primary-color, #8178F7));
+  --psh-primary-color-light: var(--psh-customer-primary-color-light, var(--customer-primary-color-light, #8A7FED));
+  --psh-primary-color-lighter: var(--psh-customer-primary-color-lighter, var(--customer-primary-color-lighter, #A99FF7));
+  --psh-primary-color-dark: var(--psh-customer-primary-color-dark, var(--customer-primary-color-dark, #4A3FD9));
+  --psh-primary-color-darker: var(--psh-customer-primary-color-darker, var(--customer-primary-color-darker, #3730A3));
+  --psh-primary-color-text: var(--psh-customer-primary-color-text, var(--customer-primary-color-text, #FFFFFF));
+  --psh-primary-color-rgb: var(--psh-customer-primary-color-rgb, var(--customer-primary-color-rgb, 107, 95, 227));
 
   /* Primary Gradients - Automatically adapt to custom colors */
-  --primary-gradient: linear-gradient(to right, var(--primary-color), var(--primary-color-light));
-  --primary-gradient-hover: linear-gradient(to right, var(--primary-color), var(--primary-color-lighter));
-  --primary-gradient-reversed: linear-gradient(to left, var(--primary-color-dark), var(--primary-color-light));
+  --psh-primary-gradient: linear-gradient(to right, var(--psh-primary-color), var(--psh-primary-color-light));
+  --psh-primary-gradient-hover: linear-gradient(to right, var(--psh-primary-color), var(--psh-primary-color-lighter));
+  --psh-primary-gradient-reversed: linear-gradient(to left, var(--psh-primary-color-dark), var(--psh-primary-color-light));
 
   /* Secondary Colors - Use customer context with fallbacks (gray tones for dark theme) */
-  --secondary-color: var(--customer-secondary-color, #5B5A5A);
-  --secondary-color-light: var(--customer-secondary-color-light, #838181);
-  --secondary-color-lighter: var(--customer-secondary-color-lighter, #9E9D9D);
-  --secondary-color-dark: var(--customer-secondary-color-dark, #4E4D4D);
-  --secondary-color-darker: var(--customer-secondary-color-darker, #3D3838);
-  --secondary-color-text: var(--customer-secondary-color-text, #FFFFFF);
-  --secondary-color-rgb: var(--customer-secondary-color-rgb, 48, 48, 48);
+  --psh-secondary-color: var(--psh-customer-secondary-color, var(--customer-secondary-color, #5B5A5A));
+  --psh-secondary-color-light: var(--psh-customer-secondary-color-light, var(--customer-secondary-color-light, #838181));
+  --psh-secondary-color-lighter: var(--psh-customer-secondary-color-lighter, var(--customer-secondary-color-lighter, #9E9D9D));
+  --psh-secondary-color-dark: var(--psh-customer-secondary-color-dark, var(--customer-secondary-color-dark, #4E4D4D));
+  --psh-secondary-color-darker: var(--psh-customer-secondary-color-darker, var(--customer-secondary-color-darker, #3D3838));
+  --psh-secondary-color-text: var(--psh-customer-secondary-color-text, var(--customer-secondary-color-text, #FFFFFF));
+  --psh-secondary-color-rgb: var(--psh-customer-secondary-color-rgb, var(--customer-secondary-color-rgb, 48, 48, 48));
 
   /* Success Colors */
   /* No -light / -dark variants: light.css defines those only for primary and secondary,
      and these three had zero consumers. A token that exists in one theme only is a
      contract the other theme cannot honour. */
-  --success-color: #12B94F;
-  --success-color-rgb: 18, 185, 79;
-  --success-color-text: #000000;
+  --psh-success-color: #12B94F;
+  --psh-success-color-rgb: 18, 185, 79;
+  --psh-success-color-text: #000000;
 
   /* Warning Colors */
-  --warning-color: #E07518;
-  --warning-color-rgb: 224, 117, 24;
-  --warning-color-text: #000000;
+  --psh-warning-color: #E07518;
+  --psh-warning-color-rgb: 224, 117, 24;
+  --psh-warning-color-text: #000000;
 
   /* Danger Colors */
-  --danger-color: #FF4040;
-  --danger-color-rgb: 255, 64, 64;
-  --danger-color-text: #000000;
+  --psh-danger-color: #FF4040;
+  --psh-danger-color-rgb: 255, 64, 64;
+  --psh-danger-color-text: #000000;
 
   /* Chart Colors */
-  --chart-text-color: var(--text-color);
-  --chart-grid-color: var(--surface-border);
-  --chart-primary-color: var(--primary-color);
-  --chart-secondary-color: var(--secondary-color);
-  --chart-success-color: var(--success-color);
-  --chart-warning-color: var(--warning-color);
-  --chart-danger-color: var(--danger-color);
-  --chart-tooltip-background: var(--surface-card);
-  --chart-tooltip-text: var(--text-color);
-  --chart-legend-text: var(--text-color);
+  --psh-chart-text-color: var(--psh-text-color);
+  --psh-chart-grid-color: var(--psh-surface-border);
+  --psh-chart-primary-color: var(--psh-primary-color);
+  --psh-chart-secondary-color: var(--psh-secondary-color);
+  --psh-chart-success-color: var(--psh-success-color);
+  --psh-chart-warning-color: var(--psh-warning-color);
+  --psh-chart-danger-color: var(--psh-danger-color);
+  --psh-chart-tooltip-background: var(--psh-surface-card);
+  --psh-chart-tooltip-text: var(--psh-text-color);
+  --psh-chart-legend-text: var(--psh-text-color);
 
   /* Background */
-  --background-opacity: 0.3;
-  --body-gradient: radial-gradient(325.86% 141.42% at 100% 0%, #1A1F33 0%, #0A0D16 100%);
+  --psh-background-opacity: 0.3;
+  --psh-body-gradient: radial-gradient(325.86% 141.42% at 100% 0%, #1A1F33 0%, #0A0D16 100%);
 }

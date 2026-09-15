@@ -277,7 +277,7 @@
                 <psh-button appearance="filled" variant="primary" [disabled]="true" (disabledClick)="onDisabledAttempt()">Cliquez-moi (désactivé)</psh-button>
               </div>
               @if (disabledClickMessage) {
-                <p class="state-description" style="color: var(--warning-color); font-weight: 500;">{{ disabledClickMessage }}</p>
+                <p class="state-description" style="color: var(--psh-warning-color); font-weight: 500;">{{ disabledClickMessage }}</p>
               }
               <p class="state-description">Utilisez <code>(disabledClick)</code> pour intercepter les clics sur un bouton désactivé et fournir un feedback explicatif à l'utilisateur.</p>
               <ds-code-snippet [code]="disabledClickCode" />

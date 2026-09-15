@@ -1,28 +1,28 @@
 .container {
-  padding: var(--spacing-xl);
+  padding: var(--psh-spacing-xl);
 }
 
 h1 {
-  font-size: var(--font-size-2xl);
-  margin-bottom: var(--spacing-lg);
+  font-size: var(--psh-font-size-2xl);
+  margin-bottom: var(--psh-spacing-lg);
 }
 
 button {
   padding: var(--button-padding);
-  background: var(--primary-color);
-  color: var(--primary-color-text);
+  background: var(--psh-primary-color);
+  color: var(--psh-primary-color-text);
   border: none;
-  border-radius: var(--border-radius);
+  border-radius: var(--psh-radius-lg);
   font-weight: var(--button-font-weight);
   cursor: pointer;
   transition: var(--button-transition);
 }
 
 button:hover {
-  background: var(--primary-color-light);
+  background: var(--psh-primary-color-light);
 }
 
 p {
-  margin-top: var(--spacing-md);
-  color: var(--text-color-secondary);
+  margin-top: var(--psh-spacing-md);
+  color: var(--psh-text-color-secondary);
 }
