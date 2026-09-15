@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, effect, inject, input, signal, InjectionToken } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, input, signal, InjectionToken, PLATFORM_ID } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { SpinLoaderVariant, SpinLoaderSize, SpinLoaderColor, SpinLoaderConfig } from './spinloader.types';
 
 export const SPINLOADER_CONFIG = new InjectionToken<Partial<SpinLoaderConfig>>('SPINLOADER_CONFIG', {
@@ -30,6 +30,8 @@ export const SPINLOADER_CONFIG = new InjectionToken<Partial<SpinLoaderConfig>>('
 export class PshSpinLoaderComponent {
   private config = inject(SPINLOADER_CONFIG);
   private readonly document = inject(DOCUMENT);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   variant = input<SpinLoaderVariant>(this.config.variant ?? 'circle');
   size = input<SpinLoaderSize>(this.config.size ?? 'medium');
@@ -41,15 +43,19 @@ export class PshSpinLoaderComponent {
   reduceMotion = signal(false);
 
   constructor() {
-    effect(() => {
-      const view = this.document.defaultView;
-      if (view && typeof view.matchMedia === 'function') {
-        const mediaQuery = view.matchMedia('(prefers-reduced-motion: reduce)');
-        this.reduceMotion.set(mediaQuery.matches);
+    // Read the media query once at construction so the very first browser render is
+    // already correct, and keep the listener for later OS-level changes. Not an effect:
+    // there is no signal dependency to track, and the listener needs explicit teardown.
+    if (!this.isBrowser) return;
 
-        const handler = (e: MediaQueryListEvent) => this.reduceMotion.set(e.matches);
-        mediaQuery.addEventListener('change', handler);
-      }
-    });
+    const view = this.document.defaultView;
+    if (!view || typeof view.matchMedia !== 'function') return;
+
+    const mediaQuery = view.matchMedia('(prefers-reduced-motion: reduce)');
+    this.reduceMotion.set(mediaQuery.matches);
+
+    const handler = (e: MediaQueryListEvent) => this.reduceMotion.set(e.matches);
+    mediaQuery.addEventListener('change', handler);
+    this.destroyRef.onDestroy(() => mediaQuery.removeEventListener('change', handler));
   }
 }

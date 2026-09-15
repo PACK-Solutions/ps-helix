@@ -217,20 +217,36 @@ describe('PshSidebarComponent', () => {
       expect(host.getAttribute('aria-hidden')).toBe('false');
     });
 
-    it('should have aria-expanded="false" when closed', () => {
+    // aria-expanded is allowed on neither `complementary` nor `dialog`; it belongs on the
+    // trigger that opens the sidebar, which lives outside this component.
+    it('should not expose aria-expanded', () => {
       hostComponent.isOpen = false;
       fixture.detectChanges();
+      expect(getSidebarHost(fixture).getAttribute('aria-expanded')).toBeNull();
 
-      const host = getSidebarHost(fixture);
-      expect(host.getAttribute('aria-expanded')).toBe('false');
-    });
-
-    it('should have aria-expanded="true" when open', () => {
       hostComponent.isOpen = true;
       fixture.detectChanges();
+      expect(getSidebarHost(fixture).getAttribute('aria-expanded')).toBeNull();
+    });
 
-      const host = getSidebarHost(fixture);
-      expect(host.getAttribute('aria-expanded')).toBe('true');
+    it('should use role="dialog" in overlay mode and role="complementary" in fixed mode', () => {
+      hostComponent.mode = 'overlay';
+      fixture.detectChanges();
+      expect(getSidebarHost(fixture).getAttribute('role')).toBe('dialog');
+
+      hostComponent.mode = 'fixed';
+      fixture.detectChanges();
+      expect(getSidebarHost(fixture).getAttribute('role')).toBe('complementary');
+    });
+
+    it('should mark the panel inert while closed so its links leave the tab order', () => {
+      hostComponent.isOpen = false;
+      fixture.detectChanges();
+      expect(getSidebarHost(fixture).getAttribute('inert')).toBe('');
+
+      hostComponent.isOpen = true;
+      fixture.detectChanges();
+      expect(getSidebarHost(fixture).getAttribute('inert')).toBeNull();
     });
 
     it('should have aria-modal="true" when in overlay mode and open', () => {
@@ -242,13 +258,13 @@ describe('PshSidebarComponent', () => {
       expect(host.getAttribute('aria-modal')).toBe('true');
     });
 
-    it('should have aria-modal="false" when in fixed mode', () => {
+    it('should not expose aria-modal when in fixed mode', () => {
       hostComponent.mode = 'fixed';
       hostComponent.isOpen = true;
       fixture.detectChanges();
 
       const host = getSidebarHost(fixture);
-      expect(host.getAttribute('aria-modal')).toBe('false');
+      expect(host.getAttribute('aria-modal')).toBeNull();
     });
 
     it('should have role="presentation" on backdrop', () => {

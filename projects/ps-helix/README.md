@@ -82,8 +82,10 @@ Before installing Helix, ensure your development environment meets these require
 The following dependencies are bundled with ps-helix:
 
 - **@phosphor-icons/web**: 2.0.3 - Icon library
-- **date-fns**: ^3.3.1 - Date utility functions
 - **tslib**: ^2.6.0 - TypeScript runtime library
+
+`@ngx-translate/core` is an **optional** peer dependency: it is only needed if you
+use `TranslationService`. No component depends on it.
 
 ## Installation
 

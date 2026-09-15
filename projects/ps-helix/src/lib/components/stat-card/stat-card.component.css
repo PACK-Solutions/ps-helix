@@ -56,7 +56,7 @@
 
 .stat-card.interactive:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(var(--primary-500-rgb, 59, 130, 246), 0.2);
+  box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
 }
 
 .stat-card.interactive:focus:not(:focus-visible) {

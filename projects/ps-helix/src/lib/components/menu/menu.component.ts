@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, model, output } from '@angular/core';
-import { CommonModule, DOCUMENT } from '@angular/common';
+import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, computed, inject, input, model, output } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MenuItem, MenuMode, MenuVariant } from './menu.types';
 import { PshTooltipComponent } from '../tooltip/tooltip.component';
 
@@ -11,7 +11,8 @@ import { PshTooltipComponent } from '../tooltip/tooltip.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PshMenuComponent<T = string> {
-  private readonly document = inject(DOCUMENT);
+  private readonly elementRef = inject(ElementRef<HTMLElement>);
+  private focusTimeout: ReturnType<typeof setTimeout> | null = null;
 
   mode = input<MenuMode>('vertical');
   variant = input<MenuVariant>('default');
@@ -37,7 +38,11 @@ export class PshMenuComponent<T = string> {
 
   showTooltip = computed(() => this.collapsed() && this.mode() === 'vertical');
 
-  constructor() {}
+  constructor() {
+    inject(DestroyRef).onDestroy(() => {
+      if (this.focusTimeout !== null) clearTimeout(this.focusTimeout);
+    });
+  }
 
   private getState(): string {
     if (this.collapsed()) return 'collapsed';
@@ -212,8 +217,15 @@ export class PshMenuComponent<T = string> {
 
     const item = items[index];
     if (item && !item.divider && !item.disabled) {
-      setTimeout(() => {
-        const link = this.document.querySelector(`[data-menu-item-id="${item.id}"]`) as HTMLElement;
+      if (this.focusTimeout !== null) clearTimeout(this.focusTimeout);
+
+      // Handle kept so the callback cannot run against a detached DOM after the menu is
+      // destroyed. Scoped to this host too: a document-wide query matches the item with
+      // the same id in any other menu instance on the page.
+      this.focusTimeout = setTimeout(() => {
+        this.focusTimeout = null;
+        const host = this.elementRef.nativeElement as HTMLElement;
+        const link = host.querySelector(`[data-menu-item-id="${item.id}"]`) as HTMLElement | null;
         link?.focus();
       });
     } else {

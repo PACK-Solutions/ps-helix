@@ -757,4 +757,35 @@ describe('PshCollapseComponent', () => {
       expect(getCollapseContainer().classList.contains('no-animation')).toBe(false);
     });
   });
+
+  // A collapsed region was hidden by `max-height: 0` alone, so anything focusable
+  // projected into it stayed in the tab order while the region was aria-hidden —
+  // an invisible keyboard trap, and an axe `aria-hidden-focus` violation.
+  describe('Collapsed content is out of the tab order', () => {
+    const getContent = () =>
+      fixture.nativeElement.querySelector('.collapse-content') as HTMLElement;
+
+    it('should mark the content inert while collapsed', () => {
+      fixture.componentRef.setInput('expanded', false);
+      fixture.detectChanges();
+      expect(getContent().getAttribute('inert')).toBe('');
+    });
+
+    it('should drop inert once expanded', () => {
+      fixture.componentRef.setInput('expanded', true);
+      fixture.detectChanges();
+      expect(getContent().getAttribute('inert')).toBeNull();
+    });
+
+    it('should keep inert and aria-hidden in step with one another', () => {
+      for (const expanded of [false, true, false]) {
+        fixture.componentRef.setInput('expanded', expanded);
+        fixture.detectChanges();
+
+        const content = getContent();
+        expect(content.getAttribute('aria-hidden')).toBe(String(!expanded));
+        expect(content.hasAttribute('inert')).toBe(!expanded);
+      }
+    });
+  });
 });

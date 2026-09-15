@@ -53,8 +53,20 @@
   transform: translateX(100%);
 }
 
+/* Off-screen is not the same as out of the tab order: without `visibility`, every link
+   in a closed overlay sidebar stays focusable while the host is aria-hidden. The
+   zero-duration delay keeps the panel visible for the length of the slide-out. */
+.sidebar.overlay:not(.open) {
+  visibility: hidden;
+  transition: transform var(--animation-duration-default) var(--animation-easing-smooth),
+              visibility 0s linear var(--animation-duration-default);
+}
+
 .sidebar.overlay.open {
   transform: translateX(0);
+  visibility: visible;
+  transition: transform var(--animation-duration-default) var(--animation-easing-smooth),
+              visibility 0s linear 0s;
 }
 
 /* Open state - only affects fixed mode visibility */

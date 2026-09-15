@@ -85,7 +85,10 @@
 .step-header.success:not(.completed):not(.active) .step-indicator {
   background: var(--surface-card);
   border-color: var(--success-color);
-  border-width: var(--border-width-3);
+  /* --border-width-3 never existed, so this declaration was dropped and the indicator
+     rendered at the base width. The scale is 0/1/2/4/8; keeping 2 preserves what ships
+     today rather than silently doubling the ring. */
+  border-width: var(--border-width-2);
   color: var(--success-color);
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--success-color) 15%, transparent);
 }

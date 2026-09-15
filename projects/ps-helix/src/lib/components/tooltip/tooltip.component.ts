@@ -9,9 +9,11 @@ import {
   effect,
   InjectionToken,
   ElementRef,
-  AfterViewInit,
-  OnDestroy
+  OnDestroy,
+  PLATFORM_ID,
+  afterNextRender
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { PshOverlayPositionService } from '../../a11y/overlay-position.service';
 import { TooltipPosition, TooltipConfig, TooltipVariant } from './tooltip.types';
 
@@ -42,10 +44,11 @@ export const TOOLTIP_CONFIG = new InjectionToken<Partial<TooltipConfig>>('TOOLTI
     '[style.position]': '"relative"',
   }
 })
-export class PshTooltipComponent implements AfterViewInit, OnDestroy {
+export class PshTooltipComponent implements OnDestroy {
   private config = inject(TOOLTIP_CONFIG) as Required<TooltipConfig>;
   private elementRef = inject(ElementRef);
   private readonly overlayPosition = inject(PshOverlayPositionService);
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   variant = input<TooltipVariant>(this.config.variant ?? 'dark');
   position = input<TooltipPosition>(this.config.position ?? 'top');
@@ -86,17 +89,22 @@ export class PshTooltipComponent implements AfterViewInit, OnDestroy {
         this.computedPosition.set(pos);
       }
     });
-  }
 
-  ngAfterViewInit(): void {
-    if (this.autoFlip()) {
+    // ResizeObserver is a browser-only global, absent from the platform-server runtime.
+    // It used to be constructed from ngAfterViewInit, which Angular also runs on the
+    // server, so every SSR render of a tooltip threw. afterNextRender moves it out of the
+    // render path and the explicit platform check makes the guarantee independent of how
+    // render hooks are scheduled in any given environment.
+    afterNextRender(() => {
+      if (!this.isBrowser || !this.autoFlip()) return;
+
       this.resizeObserver = new ResizeObserver(() => {
         if (this.isVisible()) {
           this.updatePosition();
         }
       });
       this.resizeObserver.observe(this.elementRef.nativeElement);
-    }
+    });
   }
 
   ngOnDestroy(): void {

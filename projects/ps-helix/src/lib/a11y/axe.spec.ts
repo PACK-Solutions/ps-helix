@@ -27,6 +27,13 @@ import { SelectOption } from '../components/select/select.types';
 import { DropdownItem } from '../components/dropdown/dropdown.types';
 import { MenuItem } from '../components/menu/menu.types';
 import { TabBarItem } from '../components/tab-bar/tab-bar.types';
+import { PshCollapseComponent } from '../components/collapse/collapse.component';
+import { PshSidebarComponent } from '../components/sidebar/sidebar.component';
+import { PshTableComponent } from '../components/table/table.component';
+import { PshModalComponent } from '../components/modal/modal.component';
+import { PshStepperComponent } from '../components/stepper/stepper.component';
+import { PshStepComponent } from '../components/stepper/step.component';
+import { TableColumn, TableRow } from '../components/table/table.types';
 
 /** Runs axe-core on a rendered fixture and asserts no accessibility violations. */
 async function expectNoViolations(fixture: ComponentFixture<unknown>): Promise<void> {
@@ -220,6 +227,80 @@ class TabBarHost {
   ];
 }
 
+// Each of the five hosts below projects a focusable control into the region under test.
+// That is deliberate: `aria-hidden` on a subtree that is still in the tab order is only
+// a violation when something in it can actually take focus.
+
+@Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
+  template: `
+    <psh-collapse [expanded]="expanded">
+      <span collapse-header>Billing details</span>
+      <a href="#invoice">Download the invoice</a>
+    </psh-collapse>
+  `,
+  imports: [PshCollapseComponent],
+})
+class CollapseHost {
+  expanded = false;
+}
+
+@Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
+  template: `
+    <psh-sidebar [open]="open" [mode]="mode">
+      <a href="#dashboard">Dashboard</a>
+    </psh-sidebar>
+  `,
+  imports: [PshSidebarComponent],
+})
+class SidebarHost {
+  open = false;
+  mode: 'fixed' | 'overlay' = 'overlay';
+}
+
+@Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
+  template: `<psh-table [columns]="columns" [data]="data" [hoverable]="true" />`,
+  imports: [PshTableComponent],
+})
+class TableHost {
+  columns: TableColumn[] = [
+    { key: 'name', label: 'Name', sortable: true },
+    { key: 'role', label: 'Role' },
+  ];
+  data: TableRow[] = [
+    { id: 1, name: 'Ada Lovelace', role: 'Engineer' },
+    { id: 2, name: 'Grace Hopper', role: 'Admiral' },
+  ];
+}
+
+@Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
+  template: `
+    <psh-modal [open]="open" [title]="title">
+      <p>Deleting this project cannot be undone.</p>
+    </psh-modal>
+  `,
+  imports: [PshModalComponent],
+})
+class ModalHost {
+  open = true;
+  title = 'Delete project';
+}
+
+@Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
+  template: `
+    <psh-stepper [activeStep]="0">
+      <psh-step title="Account"><p>Step one</p></psh-step>
+      <psh-step title="Payment"><p>Step two</p></psh-step>
+    </psh-stepper>
+  `,
+  imports: [PshStepperComponent, PshStepComponent],
+})
+class StepperHost {}
+
 describe('a11y (jest-axe)', () => {
   it('checkbox — default', async () => {
     await expectNoViolations(TestBed.createComponent(CheckboxHost));
@@ -318,5 +399,44 @@ describe('a11y (jest-axe)', () => {
 
   it('tab-bar', async () => {
     await expectNoViolations(TestBed.createComponent(TabBarHost));
+  });
+
+  it('collapse — collapsed', async () => {
+    await expectNoViolations(TestBed.createComponent(CollapseHost));
+  });
+
+  it('collapse — expanded', async () => {
+    const f = TestBed.createComponent(CollapseHost);
+    f.componentInstance.expanded = true;
+    await expectNoViolations(f);
+  });
+
+  it('sidebar — overlay, closed', async () => {
+    await expectNoViolations(TestBed.createComponent(SidebarHost));
+  });
+
+  it('sidebar — overlay, open', async () => {
+    const f = TestBed.createComponent(SidebarHost);
+    f.componentInstance.open = true;
+    await expectNoViolations(f);
+  });
+
+  it('sidebar — fixed', async () => {
+    const f = TestBed.createComponent(SidebarHost);
+    f.componentInstance.mode = 'fixed';
+    f.componentInstance.open = true;
+    await expectNoViolations(f);
+  });
+
+  it('table — sortable, interactive rows', async () => {
+    await expectNoViolations(TestBed.createComponent(TableHost));
+  });
+
+  it('modal — open', async () => {
+    await expectNoViolations(TestBed.createComponent(ModalHost));
+  });
+
+  it('stepper', async () => {
+    await expectNoViolations(TestBed.createComponent(StepperHost));
   });
 });

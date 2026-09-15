@@ -27,7 +27,7 @@
       [attr.aria-label]="computedAriaLabel()"
       [attr.aria-invalid]="!!error()"
       [attr.aria-required]="required()"
-      [attr.aria-describedby]="error() ? 'error-message' : success() ? 'success-message' : hint() ? 'hint-message' : null"
+      [attr.aria-describedby]="describedBy()"
       [disabled]="disabled()"
       [readonly]="readonly()"
       [required]="required()"
@@ -85,19 +85,19 @@
   </div>
 
   @if (error()) {
-    <div id="error-message" class="input-error" role="alert">
+    <div [id]="inputId + '-error'" class="input-error" role="alert">
       <ng-content select="[input-error]">
         {{ error() }}
       </ng-content>
     </div>
   } @else if (success()) {
-    <div id="success-message" class="input-success" role="status">
+    <div [id]="inputId + '-success'" class="input-success" role="status">
       <ng-content select="[input-success]">
         {{ success() }}
       </ng-content>
     </div>
   } @else if (hint()) {
-    <div id="hint-message" class="input-hint">
+    <div [id]="inputId + '-hint'" class="input-hint">
       <ng-content select="[input-hint]">
         {{ hint() }}
       </ng-content>

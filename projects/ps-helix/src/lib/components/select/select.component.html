@@ -32,8 +32,13 @@
     </div>
     <div class="select-actions">
       @if (clearable() && hasValue() && !disabled()) {
-        <button class="select-clear" (click)="clear($event)">
-          <i class="ph ph-x"></i>
+        <!-- Icon-only control: without an explicit name it is announced as "button",
+             and without type="button" it submits any surrounding form. -->
+        <button class="select-clear"
+                type="button"
+                [attr.aria-label]="clearLabel()"
+                (click)="clear($event)">
+          <i class="ph ph-x" aria-hidden="true"></i>
         </button>
       }
       @if (loading()) {
@@ -48,8 +53,9 @@
     <div class="select-dropdown" [class.open-top]="resolvedSide() === 'top'">
       @if (searchable()) {
         <div class="select-search">
-          <i class="ph ph-magnifying-glass select-search-icon"></i>
+          <i class="ph ph-magnifying-glass select-search-icon" aria-hidden="true"></i>
           <input type="text"
+                 [attr.aria-label]="searchConfig().placeholder"
                  [placeholder]="searchConfig().placeholder"
                  [value]="searchTerm()"
                  (input)="onSearch($event)"

@@ -27,6 +27,15 @@ describe('PshTableComponent', () => {
   const getColumnHeaders = () =>
     Array.from(fixture.nativeElement.querySelectorAll('thead th')) as HTMLTableCellElement[];
 
+  // Sorting now lives on a real <button> inside the <th> so that it is reachable by
+  // keyboard. "Clicking the header" therefore means clicking whatever is interactive
+  // in it, which is the button for a sortable column and the cell itself otherwise.
+  const clickHeader = (index: number) => {
+    const header = getColumnHeaders()[index]!;
+    const sortButton = header.querySelector('.sort-button') as HTMLButtonElement | null;
+    (sortButton ?? header).click();
+  };
+
   const getRows = () =>
     Array.from(fixture.nativeElement.querySelectorAll('tbody tr')) as HTMLTableRowElement[];
 
@@ -181,7 +190,7 @@ describe('PshTableComponent', () => {
       fixture.componentInstance.sortChange.subscribe(sortChangeSpy);
 
       const headers = getColumnHeaders();
-      headers[0]!.click();
+      clickHeader(0);
 
       expect(sortChangeSpy).toHaveBeenCalledWith({ key: 'name', direction: 'asc' });
     });
@@ -195,8 +204,8 @@ describe('PshTableComponent', () => {
       fixture.componentInstance.sortChange.subscribe(sortChangeSpy);
 
       const headers = getColumnHeaders();
-      headers[0]!.click();
-      headers[0]!.click();
+      clickHeader(0);
+      clickHeader(0);
 
       expect(sortChangeSpy).toHaveBeenLastCalledWith({ key: 'name', direction: 'desc' });
     });
@@ -207,7 +216,7 @@ describe('PshTableComponent', () => {
       fixture.detectChanges();
 
       const headers = getColumnHeaders();
-      headers[0]!.click();
+      clickHeader(0);
       fixture.detectChanges();
 
       expect(headers[0]!.getAttribute('aria-sort')).toBe('ascending');
@@ -219,9 +228,9 @@ describe('PshTableComponent', () => {
       fixture.detectChanges();
 
       const headers = getColumnHeaders();
-      headers[0]!.click();
+      clickHeader(0);
       fixture.detectChanges();
-      headers[0]!.click();
+      clickHeader(0);
       fixture.detectChanges();
 
       expect(headers[0]!.getAttribute('aria-sort')).toBe('descending');
@@ -236,7 +245,7 @@ describe('PshTableComponent', () => {
       fixture.componentInstance.sortChange.subscribe(sortChangeSpy);
 
       const headers = getColumnHeaders();
-      headers[1]!.click();
+      clickHeader(1);
 
       expect(sortChangeSpy).not.toHaveBeenCalled();
     });
@@ -250,9 +259,9 @@ describe('PshTableComponent', () => {
       fixture.componentInstance.sortChange.subscribe(sortChangeSpy);
 
       const headers = getColumnHeaders();
-      headers[0]!.click();
-      headers[0]!.click();
-      headers[2]!.click();
+      clickHeader(0);
+      clickHeader(0);
+      clickHeader(2);
 
       expect(sortChangeSpy).toHaveBeenLastCalledWith({ key: 'status', direction: 'asc' });
     });
@@ -263,7 +272,7 @@ describe('PshTableComponent', () => {
       fixture.detectChanges();
 
       const headers = getColumnHeaders();
-      headers[0]!.click();
+      clickHeader(0);
       fixture.detectChanges();
 
       const rows = getRows();
@@ -277,9 +286,9 @@ describe('PshTableComponent', () => {
       fixture.detectChanges();
 
       const headers = getColumnHeaders();
-      headers[0]!.click();
+      clickHeader(0);
       fixture.detectChanges();
-      headers[0]!.click();
+      clickHeader(0);
       fixture.detectChanges();
 
       const rows = getRows();
@@ -630,9 +639,9 @@ describe('PshTableComponent', () => {
       fixture.detectChanges();
 
       const headers = getColumnHeaders();
-      headers[0]!.click();
+      clickHeader(0);
       fixture.detectChanges();
-      headers[0]!.click();
+      clickHeader(0);
       fixture.detectChanges();
 
       const rows = getRows();
@@ -881,7 +890,7 @@ describe('PshTableComponent', () => {
       expect(childRows.length).toBe(2);
 
       const headers = getColumnHeaders();
-      headers[1]!.click();
+      clickHeader(1);
       fixture.detectChanges();
 
       childRows = fixture.nativeElement.querySelectorAll('.child-row');
@@ -970,5 +979,93 @@ describe('PshTableComponent - Expandable rows with custom template', () => {
     const childRow = hostFixture.nativeElement.querySelector('.child-row');
     expect(expandedRow).toBeTruthy();
     expect(childRow).toBeFalsy();
+  });
+});
+
+// Sorting used to live in a (click) on the <th> itself, so it was unreachable without a
+// mouse — and the .sort-button:focus-visible rule in the CSS targeted a class the
+// template never rendered.
+describe('PshTableComponent — sorting is keyboard-operable', () => {
+  let fixture: ComponentFixture<PshTableComponent>;
+
+  const columns: TableColumn[] = [
+    { key: 'name', label: 'Name', sortable: true },
+    { key: 'role', label: 'Role' },
+  ];
+  const data: TableRow[] = [
+    { id: 1, name: 'Grace Hopper', role: 'Admiral' },
+    { id: 2, name: 'Ada Lovelace', role: 'Engineer' },
+  ];
+
+  const sortButtons = () =>
+    Array.from(fixture.nativeElement.querySelectorAll('thead .sort-button')) as HTMLButtonElement[];
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ imports: [PshTableComponent] }).compileComponents();
+
+    fixture = TestBed.createComponent(PshTableComponent);
+    fixture.componentRef.setInput('columns', columns);
+    fixture.componentRef.setInput('data', data);
+    fixture.detectChanges();
+  });
+
+  it('should render a real button only for sortable columns', () => {
+    const buttons = sortButtons();
+    expect(buttons.length).toBe(1);
+    expect(buttons[0]!.tagName).toBe('BUTTON');
+    expect(buttons[0]!.getAttribute('type')).toBe('button');
+    expect(buttons[0]!.textContent).toContain('Name');
+  });
+
+  it('should sort when the header button is activated by keyboard', () => {
+    const sortChange = jest.fn();
+    fixture.componentInstance.sortChange.subscribe(sortChange);
+
+    // A native button turns Enter/Space into a click event; dispatching it is what a
+    // keyboard user's key press ends up doing.
+    sortButtons()[0]!.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    fixture.detectChanges();
+
+    expect(sortChange).toHaveBeenCalledWith({ key: 'name', direction: 'asc' });
+  });
+
+  it('should expose the sort state on the th, not on a decorative icon', () => {
+    const header = fixture.nativeElement.querySelector('thead th') as HTMLTableCellElement;
+    expect(header.getAttribute('scope')).toBe('col');
+    expect(header.getAttribute('aria-sort')).toBe('none');
+
+    sortButtons()[0]!.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    fixture.detectChanges();
+    expect(header.getAttribute('aria-sort')).toBe('ascending');
+
+    const icons = Array.from(header.querySelectorAll('i')) as HTMLElement[];
+    expect(icons.length).toBeGreaterThan(0);
+    for (const icon of icons) {
+      expect(icon.getAttribute('aria-hidden')).toBe('true');
+      expect(icon.getAttribute('aria-label')).toBeNull();
+    }
+  });
+
+  it('should only make rows focusable when they are interactive', () => {
+    const row = () => fixture.nativeElement.querySelector('tbody tr') as HTMLTableRowElement;
+    expect(row().getAttribute('tabindex')).toBeNull();
+
+    fixture.componentRef.setInput('hoverable', true);
+    fixture.detectChanges();
+    expect(row().getAttribute('tabindex')).toBe('0');
+  });
+
+  it('should emit rowClick from Enter on a focusable row', () => {
+    fixture.componentRef.setInput('hoverable', true);
+    fixture.detectChanges();
+
+    const rowClick = jest.fn();
+    fixture.componentInstance.rowClick.subscribe(rowClick);
+
+    const row = fixture.nativeElement.querySelector('tbody tr') as HTMLTableRowElement;
+    row.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    fixture.detectChanges();
+
+    expect(rowClick).toHaveBeenCalledWith(expect.objectContaining({ id: 1 }));
   });
 });

@@ -23,13 +23,27 @@
     "@angular/common": "^22.0.0",
     "@angular/core": "^22.0.0",
     "@angular/forms": "^22.0.0",
-    "@ngx-translate/core": "^15.0.0",
+    "@ngx-translate/core": ">=15.0.0",
     "rxjs": "^7.8.0"
+  },
+  "peerDependenciesMeta": {
+    "@ngx-translate/core": {
+      "optional": true
+    }
   },
   "dependencies": {
     "tslib": "^2.6.0",
-    "date-fns": "^3.3.1",
     "@phosphor-icons/web": "2.0.3"
+  },
+  "exports": {
+    "./styles.css": {
+      "style": "./styles.css",
+      "default": "./styles.css"
+    },
+    "./src/lib/styles/*": {
+      "style": "./src/lib/styles/*",
+      "default": "./src/lib/styles/*"
+    }
   },
   "sideEffects": [
     "*.css"

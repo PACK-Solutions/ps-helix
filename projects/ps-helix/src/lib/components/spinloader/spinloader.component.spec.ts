@@ -240,7 +240,7 @@ describe('PshSpinLoaderComponent', () => {
   });
 });
 
-describe('PshSpinLoaderComponent - Memory Leak Detection', () => {
+describe('PshSpinLoaderComponent - Listener lifecycle', () => {
   let fixture: ComponentFixture<PshSpinLoaderComponent>;
   let addEventListenerSpy: jest.Mock;
   let removeEventListenerSpy: jest.Mock;
@@ -269,12 +269,12 @@ describe('PshSpinLoaderComponent - Memory Leak Detection', () => {
     expect(addEventListenerSpy).toHaveBeenCalledWith('change', expect.any(Function));
   });
 
-  it('should NOT cleanup event listener on component destroy (memory leak)', () => {
+  it('should cleanup event listener on component destroy', () => {
     fixture.destroy();
-    expect(removeEventListenerSpy).not.toHaveBeenCalled();
+    expect(removeEventListenerSpy).toHaveBeenCalledWith('change', expect.any(Function));
   });
 
-  it('should add multiple listeners when creating multiple components (memory leak)', () => {
+  it('should remove exactly one listener per destroyed component', () => {
     const fixture2 = TestBed.createComponent(PshSpinLoaderComponent);
     fixture2.detectChanges();
 
@@ -287,7 +287,7 @@ describe('PshSpinLoaderComponent - Memory Leak Detection', () => {
     fixture2.destroy();
     fixture3.destroy();
 
-    expect(removeEventListenerSpy).not.toHaveBeenCalled();
+    expect(removeEventListenerSpy).toHaveBeenCalledTimes(3);
   });
 });
 

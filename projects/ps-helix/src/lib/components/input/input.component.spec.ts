@@ -36,7 +36,7 @@ describe('PshInputComponent', () => {
     fixture.nativeElement.querySelector('[role="status"]') as HTMLElement;
 
   const getHintMessage = () =>
-    fixture.nativeElement.querySelector('#hint-message') as HTMLElement;
+    fixture.nativeElement.querySelector('.input-hint') as HTMLElement;
 
   const getPasswordToggle = () =>
     fixture.nativeElement.querySelector('button.password-toggle') as HTMLButtonElement;
@@ -432,21 +432,27 @@ describe('PshInputComponent', () => {
         fixture.componentRef.setInput('error', 'Error occurred');
         fixture.detectChanges();
 
-        expect(getInput().getAttribute('aria-describedby')).toBe('error-message');
+        // Per-instance, not the constant 'error-message': two inputs in error on the
+        // same page used to emit duplicate ids, so a screen reader read the first one's
+        // message for both.
+        expect(getInput().getAttribute('aria-describedby'))
+          .toBe(`${fixture.componentInstance.inputId}-error`);
       });
 
       it('should link to success message via aria-describedby', () => {
         fixture.componentRef.setInput('success', 'Looks good');
         fixture.detectChanges();
 
-        expect(getInput().getAttribute('aria-describedby')).toBe('success-message');
+        expect(getInput().getAttribute('aria-describedby'))
+          .toBe(`${fixture.componentInstance.inputId}-success`);
       });
 
       it('should link to hint message via aria-describedby', () => {
         fixture.componentRef.setInput('hint', 'Helpful hint');
         fixture.detectChanges();
 
-        expect(getInput().getAttribute('aria-describedby')).toBe('hint-message');
+        expect(getInput().getAttribute('aria-describedby'))
+          .toBe(`${fixture.componentInstance.inputId}-hint`);
       });
 
       it('should not have aria-describedby when no messages', () => {
@@ -1110,5 +1116,50 @@ describe('PshInputComponent CVA emission safety', () => {
     input.dispatchEvent(new Event('input'));
     fixture.detectChanges();
     expect(host.onValueChange).toHaveBeenCalledWith('typed-by-user');
+  });
+});
+
+@Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
+  template: `
+    <psh-input label="Email" error="Required" />
+    <psh-input label="Phone" error="Required" />
+  `,
+  imports: [PshInputComponent],
+})
+class TwoInputsInErrorHost {}
+
+// The message ids were the constants 'error-message' / 'success-message' /
+// 'hint-message', so two inputs in error on one page emitted duplicate ids and every
+// aria-describedby pointed at the first one's message.
+describe('PshInputComponent — message ids are unique per instance', () => {
+  let fixture: ComponentFixture<TwoInputsInErrorHost>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ imports: [TwoInputsInErrorHost] }).compileComponents();
+    fixture = TestBed.createComponent(TwoInputsInErrorHost);
+    fixture.detectChanges();
+  });
+
+  it('should not emit duplicate ids for two inputs in error', () => {
+    const ids = Array.from(
+      fixture.nativeElement.querySelectorAll('[role="alert"]') as NodeListOf<HTMLElement>,
+    ).map(el => el.id);
+
+    expect(ids.length).toBe(2);
+    expect(new Set(ids).size).toBe(2);
+  });
+
+  it('should point each input at its own message', () => {
+    const inputs = Array.from(
+      fixture.nativeElement.querySelectorAll('input') as NodeListOf<HTMLInputElement>,
+    );
+    const messages = Array.from(
+      fixture.nativeElement.querySelectorAll('[role="alert"]') as NodeListOf<HTMLElement>,
+    );
+
+    inputs.forEach((input, i) => {
+      expect(input.getAttribute('aria-describedby')).toBe(messages[i]!.id);
+    });
   });
 });

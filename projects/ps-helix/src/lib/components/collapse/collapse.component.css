@@ -73,12 +73,20 @@
 .collapse-content {
   max-height: 0;
   overflow: hidden;
-  transition: max-height var(--collapse-transition-duration) var(--collapse-transition-timing);
+  /* `max-height: 0` alone still leaves projected controls in the tab order while the
+     region is aria-hidden. `visibility` takes them out of it in every browser; the
+     zero-duration delay keeps the subtree visible for the length of the collapse. */
+  visibility: hidden;
+  transition: max-height var(--collapse-transition-duration) var(--collapse-transition-timing),
+              visibility 0s linear var(--collapse-transition-duration);
 }
 
 .collapse.expanded .collapse-content {
   max-height: var(--collapse-max-height);
   overflow: visible;
+  visibility: visible;
+  transition: max-height var(--collapse-transition-duration) var(--collapse-transition-timing),
+              visibility 0s linear 0s;
 }
 
 .content-wrapper {

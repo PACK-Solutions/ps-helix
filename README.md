@@ -131,14 +131,17 @@ L'application de démonstration présente tous les composants avec :
   "@angular/common": "^22.0.0",
   "@angular/core": "^22.0.0",
   "@angular/forms": "^22.0.0",
-  "@ngx-translate/core": "^15.0.0",
   "rxjs": "^7.8.0"
 }
 ```
 
+`@ngx-translate/core` (`>=15.0.0`) est une peer **optionnelle** : elle n'est requise
+que si vous utilisez `TranslationService`. Aucun composant ne l'utilise, et la
+contrainte de version est volontairement large pour ne pas entrer en conflit avec
+la version déjà installée dans votre application.
+
 ### Dépendances incluses
 - **@phosphor-icons/web** : 2.0.3 - Bibliothèque d'icônes
-- **date-fns** : ^3.3.1 - Utilitaires de dates
 - **tslib** : ^2.6.0 - Runtime TypeScript
 
 ## Installation et développement

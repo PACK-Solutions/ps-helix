@@ -27,8 +27,3 @@
 @import './src/lib/styles/utilities/animations.utils.css';
 @import './src/lib/styles/utilities/focus.utils.css';
 @import './src/lib/styles/utilities/responsive.utils.css';
-
-/* Demo navigation scrollbar compensation */
-.demo-navigation {
-  padding-right: var(--scrollbar-width);
-}

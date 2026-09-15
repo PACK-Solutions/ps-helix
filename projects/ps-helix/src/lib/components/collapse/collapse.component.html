@@ -37,6 +37,7 @@
     role="region"
     [attr.aria-labelledby]="headerId()"
     [attr.aria-hidden]="!expanded()"
+    [attr.inert]="expanded() ? null : ''"
   >
     <div class="content-wrapper">
       <ng-content></ng-content>

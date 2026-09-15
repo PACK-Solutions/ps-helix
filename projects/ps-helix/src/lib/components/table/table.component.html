@@ -30,33 +30,37 @@
     <thead>
       <tr>
         @if (expandable()) {
-          <th class="expand-header" aria-label="Expand"></th>
+          <th class="expand-header" scope="col" aria-label="Expand"></th>
         }
         @for (column of columns(); track column.key) {
           <th
             [style.width]="column.width"
+            scope="col"
             [attr.aria-sort]="column.sortable ? (currentSort()?.key === column.key ? (currentSort()?.direction === 'asc' ? 'ascending' : 'descending') : 'none') : null"
             [class.sortable]="column.sortable"
-            (click)="handleSort(column)"
           >
-            <div class="th-content">
-              {{ column.label }}
-              @if (column.sortable) {
+            @if (column.sortable) {
+              <!-- A real button, so sorting is reachable by keyboard and gets a native
+                   focus ring. The icons are decorative: aria-sort on the th carries the
+                   state, which is why they had aria-hidden cancelling their aria-label. -->
+              <button
+                type="button"
+                class="th-content sort-button"
+                (click)="handleSort(column)"
+              >
+                {{ column.label }}
                 @if (currentSort()?.key === column.key) {
                   <i
                     [class]="'ph ' + (currentSort()?.direction === 'desc' ? 'ph-sort-descending' : 'ph-sort-ascending')"
-                    [attr.aria-label]="'Sort ' + currentSort()?.direction"
                     aria-hidden="true">
                   </i>
                 } @else {
-                  <i
-                    class="ph ph-arrows-down-up sort-icon-neutral"
-                    aria-label="Sortable"
-                    aria-hidden="true">
-                  </i>
+                  <i class="ph ph-arrows-down-up sort-icon-neutral" aria-hidden="true"></i>
                 }
-              }
-            </div>
+              </button>
+            } @else {
+              <div class="th-content">{{ column.label }}</div>
+            }
           </th>
         }
       </tr>
@@ -79,7 +83,13 @@
         </tr>
       } @else {
         @for (row of filteredData(); track row.id) {
-          <tr (click)="handleRowClick(row)" [class.expanded]="expandable() && isRowExpanded(row)">
+          <tr
+            [class.expanded]="expandable() && isRowExpanded(row)"
+            [attr.tabindex]="hoverable() ? 0 : null"
+            (click)="handleRowClick(row)"
+            (keydown.enter)="handleRowClick(row)"
+            (keydown.space)="handleRowClick(row); $event.preventDefault()"
+          >
             @if (expandable()) {
               <td class="expand-cell">
                 @if (isRowExpandable(row)) {
