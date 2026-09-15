@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { PLATFORM_ID } from '@angular/core';
 import { PshTooltipComponent, TOOLTIP_CONFIG } from './tooltip.component';
 import { TooltipPosition, TooltipVariant } from './tooltip.types';
 
@@ -317,5 +318,70 @@ describe('PshTooltipComponent', () => {
 
       expect(getTooltip()).toBeFalsy();
     }));
+  });
+});
+
+// `ResizeObserver` was constructed from ngAfterViewInit, which Angular also runs on the
+// server — where the global does not exist, so every SSR render of a tooltip threw.
+// setup-jest.ts installs a ResizeObserver mock globally, which is precisely why a
+// "does it throw?" test would have proved nothing: these assert on construction instead.
+describe('PshTooltipComponent — SSR safety', () => {
+  const originalResizeObserver = globalThis.ResizeObserver;
+  let constructed: jest.Mock;
+
+  const renderOn = async (platform: 'server' | 'browser') => {
+    TestBed.resetTestingModule();
+    await TestBed.configureTestingModule({
+      imports: [PshTooltipComponent],
+      providers: [{ provide: PLATFORM_ID, useValue: platform }],
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(PshTooltipComponent);
+    fixture.componentRef.setInput('content', 'Saved automatically');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    return fixture;
+  };
+
+  beforeEach(() => {
+    constructed = jest.fn();
+    globalThis.ResizeObserver = class {
+      constructor(callback: ResizeObserverCallback) {
+        constructed(callback);
+      }
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+    } as unknown as typeof ResizeObserver;
+  });
+
+  afterEach(() => {
+    globalThis.ResizeObserver = originalResizeObserver;
+  });
+
+  it('should not construct a ResizeObserver when rendering on the server', async () => {
+    await renderOn('server');
+    expect(constructed).not.toHaveBeenCalled();
+  });
+
+  it('should still construct one in the browser, so auto-flip keeps working', async () => {
+    await renderOn('browser');
+    expect(constructed).toHaveBeenCalledTimes(1);
+  });
+
+  it('should construct none in the browser when auto-flip is off', async () => {
+    TestBed.resetTestingModule();
+    await TestBed.configureTestingModule({
+      imports: [PshTooltipComponent],
+      providers: [{ provide: PLATFORM_ID, useValue: 'browser' }],
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(PshTooltipComponent);
+    fixture.componentRef.setInput('content', 'Saved automatically');
+    fixture.componentRef.setInput('autoFlip', false);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(constructed).not.toHaveBeenCalled();
   });
 });
