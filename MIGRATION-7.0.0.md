@@ -113,7 +113,45 @@ replaces; extending it now would mean writing into a structure that is about to 
 They are typed as `Exclude<PshColor, 'info' | 'neutral'>` rather than accepting a value
 that would silently fall through to the default styling.
 
-## 4. Styling a component from outside
+## 4. Component inputs — the surface-treatment axis
+
+`variant` carried three incompatible notions at once: elevation on card and table, colour
+on badge and button, display form on tabs and stepper. Colour became `color` (above);
+surface treatment is now `appearance`, with one vocabulary:
+
+| Before | After |
+|---|---|
+| `filled` | `solid` |
+| `outlined` | `outline` |
+| `text` | `ghost` |
+| `default` | `flat` |
+| `elevated` | `elevated` *(unchanged)* |
+| `outline` | `outline` *(unchanged)* |
+
+| Component | Before | After |
+|---|---|---|
+| `psh-button`, `psh-dropdown` | `appearance="filled"` | `appearance="solid"` |
+| `psh-input`, `psh-select`, `psh-textarea` | `variant="outlined"` | `appearance="outline"` |
+| `psh-card`, `psh-horizontal-card`, `psh-info-card`, `psh-stat-card` | `variant="default"` | `appearance="flat"` |
+| `psh-collapse`, `psh-pagination`, `psh-table` | `variant="default"` | `appearance="flat"` |
+
+**`variant` still exists** — but only where the notion is genuinely component-specific and
+is neither colour nor surface: `psh-tabs` (`underline | pills`), `psh-stepper`
+(`numbered | progress`), `psh-menu` (`compact | expanded`), `psh-spinloader`
+(`circle | dots | pulse`), `psh-tooltip` (`light | dark`). Those are unchanged.
+
+### If you targeted the classes
+
+The values change, so the classes derived from them change too: `.filled` → `.solid`,
+`.text` → `.ghost`, `.outlined` → `.outline`, `.variant-*` → `.appearance-*`.
+
+### What the codemod cannot do
+
+`[appearance]="'outlined'"` — a bound literal — **is** rewritten. A computed expression
+such as `[appearance]="isActive ? 'filled' : 'outline'"` is not: the codemod reports each
+one by file so you can go through them.
+
+## 5. Styling a component from outside
 
 Component custom properties used to be declared on the element that consumed them, so
 setting one on the host did nothing:
@@ -136,7 +174,7 @@ The 82 available properties are listed per component in
 If you were reaching in with `::ng-deep` to work around the old behaviour, check whether a
 property now covers your case.
 
-## 5. Smaller changes
+## 6. Smaller changes
 
 - **Dependencies.** `date-fns` is gone (it had zero usages). `@ngx-translate/core` is an
   optional peer with a `>=15` range — if you were held to `^15` by ps-helix, you no longer
