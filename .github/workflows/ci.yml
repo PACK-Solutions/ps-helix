@@ -31,6 +31,12 @@ jobs:
       - name: Token reference and theme parity
         run: npm run verify:tokens
 
+      # Four components render with ViewEncapsulation.None so they can style projected
+      # content, which means every class they declare is global. Fails if one escapes the
+      # psh- namespace, or if the codemod's rename map drifted from the stylesheets.
+      - name: Class namespace and codemod map
+        run: npm run verify:classes
+
       - name: Unit tests (with coverage gate)
         run: npm run test:coverage
 

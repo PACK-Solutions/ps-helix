@@ -20,6 +20,8 @@
     "verify:bundle": "node scripts/verify-bundle.mjs",
     "docs:tokens": "node scripts/generate-token-reference.mjs",
     "verify:tokens": "node scripts/generate-token-reference.mjs --check",
+    "docs:classes": "node scripts/verify-class-namespace.mjs",
+    "verify:classes": "node scripts/verify-class-namespace.mjs --check",
     "publish:lib": "npm publish ./dist/ps-helix --access public",
     "watch:lib": "ng build ps-helix --watch",
     "test": "jest",
