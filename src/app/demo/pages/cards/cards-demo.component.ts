@@ -55,7 +55,7 @@ export class CardsDemoComponent {
   infoColorCode = `<psh-card
   title="Information"
   variant="outlined"
-  colorVariant="info"
+  color="info"
 >
   Message informatif
 </psh-card>`;
@@ -63,7 +63,7 @@ export class CardsDemoComponent {
   successColorCode = `<psh-card
   title="Succès"
   variant="outlined"
-  colorVariant="success"
+  color="success"
 >
   Opération réussie
 </psh-card>`;
@@ -71,7 +71,7 @@ export class CardsDemoComponent {
   warningColorCode = `<psh-card
   title="Attention"
   variant="outlined"
-  colorVariant="warning"
+  color="warning"
 >
   Action requise
 </psh-card>`;
@@ -79,7 +79,7 @@ export class CardsDemoComponent {
   dangerColorCode = `<psh-card
   title="Erreur"
   variant="outlined"
-  colorVariant="danger"
+  color="danger"
 >
   Erreur critique
 </psh-card>`;
@@ -121,7 +121,7 @@ export class CardsDemoComponent {
 
   <!-- Valeur alignée à droite -->
   <span card-header-extra>
-    <psh-tag variant="success">1 500 €</psh-tag>
+    <psh-tag color="success">1 500 €</psh-tag>
   </span>
 
   Le style du titre est défini dans la portée du composant consommateur.

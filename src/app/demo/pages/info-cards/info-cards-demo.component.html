@@ -83,7 +83,7 @@
                 <psh-button appearance="text" size="small" ariaLabel="Modifier">
                   <i class="ph ph-pencil"></i>
                 </psh-button>
-                <psh-button appearance="text" size="small" variant="danger" ariaLabel="Supprimer">
+                <psh-button appearance="text" size="small" color="danger" ariaLabel="Supprimer">
                   <i class="ph ph-trash"></i>
                 </psh-button>
               </div>
@@ -101,7 +101,7 @@
               icon="folder"
             >
               <div card-header-actions>
-                <psh-badge variant="success">Actif</psh-badge>
+                <psh-badge color="success">Actif</psh-badge>
               </div>
             </psh-info-card>
             <p class="header-actions-description">Badge indiquant le statut directement dans le header.</p>
@@ -117,11 +117,11 @@
               icon="package"
             >
               <div card-header-actions>
-                <psh-badge variant="warning">En cours</psh-badge>
+                <psh-badge color="warning">En cours</psh-badge>
               </div>
               <div card-actions>
-                <psh-button variant="primary">Suivre</psh-button>
-                <psh-button variant="secondary" appearance="text">Annuler</psh-button>
+                <psh-button color="primary">Suivre</psh-button>
+                <psh-button color="secondary" appearance="text">Annuler</psh-button>
               </div>
             </psh-info-card>
             <p class="header-actions-description">Combinaison des deux slots pour une carte complete.</p>
@@ -154,7 +154,7 @@
                 </psh-button>
               </div>
               <div card-actions>
-                <psh-button variant="primary" appearance="outline">Enregistrer</psh-button>
+                <psh-button color="primary" appearance="outline">Enregistrer</psh-button>
               </div>
             </psh-info-card>
             <p class="usage-description">
@@ -172,11 +172,11 @@
               [hoverable]="true"
             >
               <div card-header-actions>
-                <psh-badge variant="info">En livraison</psh-badge>
+                <psh-badge color="info">En livraison</psh-badge>
               </div>
               <div card-actions>
-                <psh-button variant="primary">Suivre</psh-button>
-                <psh-button variant="secondary" appearance="text">Détails</psh-button>
+                <psh-button color="primary">Suivre</psh-button>
+                <psh-button color="secondary" appearance="text">Détails</psh-button>
               </div>
             </psh-info-card>
             <p class="usage-description">
@@ -193,7 +193,7 @@
               icon="monitor"
             >
               <div card-header-actions>
-                <psh-badge variant="success">En ligne</psh-badge>
+                <psh-badge color="success">En ligne</psh-badge>
               </div>
             </psh-info-card>
             <p class="usage-description">
@@ -224,7 +224,7 @@
                   [loading]="isLoading"
                 ></psh-info-card>
                 <psh-button
-                  variant="primary"
+                  color="primary"
                   appearance="outline"
                   (clicked)="handleSimulateLoading()"
                   [disabled]="isLoading"
@@ -427,9 +427,9 @@
               icon="check-circle"
             >
               <div card-actions>
-                <psh-button variant="primary">Valider</psh-button>
-                <psh-button variant="secondary" appearance="outline">Annuler</psh-button>
-                <psh-button variant="secondary" appearance="text">Aide</psh-button>
+                <psh-button color="primary">Valider</psh-button>
+                <psh-button color="secondary" appearance="outline">Annuler</psh-button>
+                <psh-button color="secondary" appearance="text">Aide</psh-button>
               </div>
             </psh-info-card>
             <p class="customization-description">

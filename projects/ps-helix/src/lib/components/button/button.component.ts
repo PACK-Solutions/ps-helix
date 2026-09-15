@@ -10,7 +10,7 @@ import {
   output,
   signal,
 } from '@angular/core';
-import { ButtonAppearance, ButtonVariant, ButtonSize, ButtonIconPosition } from './button.types';
+import { ButtonAppearance, ButtonColor, ButtonSize, ButtonIconPosition } from './button.types';
 
 @Component({
   selector: 'psh-button',
@@ -28,7 +28,7 @@ export class PshButtonComponent implements AfterContentChecked {
   private projectedText = signal<string | undefined>(undefined);
 
   appearance = input<ButtonAppearance>('filled');
-  variant = input<ButtonVariant>('primary');
+  color = input<ButtonColor>('primary');
   size = input<ButtonSize>('medium');
   disabled = input(false);
   loading = input(false);

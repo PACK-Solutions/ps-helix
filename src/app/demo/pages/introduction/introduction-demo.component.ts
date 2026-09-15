@@ -77,7 +77,7 @@ import { PshButtonComponent } from 'ps-helix';
   selector: 'app-root',
   imports: [PshButtonComponent],
   template: \`
-    <psh-button variant="primary">
+    <psh-button color="primary">
       Cliquez ici
     </psh-button>
   \`
@@ -130,7 +130,7 @@ export class AppComponent implements OnInit {
       title: 'Button Component',
       description: 'Bouton polyvalent avec plusieurs variantes et états',
       code: `<psh-button
-  variant="primary"
+  color="primary"
   size="medium"
   appearance="filled"
   (clicked)="handleClick()">
@@ -178,7 +178,7 @@ export class MyComponent {
       Annuler
     </psh-button>
     <psh-button
-      variant="primary"
+      color="primary"
       (clicked)="confirm()">
       Confirmer
     </psh-button>

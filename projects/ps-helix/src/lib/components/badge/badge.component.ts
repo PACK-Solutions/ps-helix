@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BadgeSize, BadgeVariant, BadgePosition, BadgeDisplayType } from './badge.types';
+import { BadgeSize, BadgePosition, BadgeDisplayType } from './badge.types';
+import { PshColor } from '../../types/semantic.types';
 
 const DEFAULT_CONFIG = {
-  variant: 'primary' as BadgeVariant,
+  color: 'primary' as PshColor,
   size: 'medium' as BadgeSize,
   displayType: 'text' as BadgeDisplayType,
   max: 99,
@@ -20,7 +21,14 @@ const DEFAULT_CONFIG = {
 })
 export class PshBadgeComponent<T = number> {
 
-  readonly variant = input<BadgeVariant>(DEFAULT_CONFIG.variant);
+  readonly color = input<PshColor>(DEFAULT_CONFIG.color);
+
+  /**
+   * Disabled is a state, not a colour. It used to be the seventh value of the colour union
+   * — `variant="disabled"` — which meant a disabled badge could not also be a danger
+   * badge, and which is not how `disabled` is spelled anywhere else in the library.
+   */
+  readonly disabled = input(false);
   readonly size = input<BadgeSize>(DEFAULT_CONFIG.size);
   readonly displayType = input<BadgeDisplayType>(DEFAULT_CONFIG.displayType);
   readonly content = input<string>('');

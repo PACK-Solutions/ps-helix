@@ -74,7 +74,7 @@ describe('PshStatCardComponent', () => {
     });
 
     it('should render tag when tagVariant and tagLabel are provided', () => {
-      fixture.componentRef.setInput('tagVariant', 'success');
+      fixture.componentRef.setInput('tagColor', 'success');
       fixture.componentRef.setInput('tagLabel', '+12.6%');
       fixture.detectChanges();
 
@@ -84,7 +84,7 @@ describe('PshStatCardComponent', () => {
     });
 
     it('should not render tag when tagLabel is missing', () => {
-      fixture.componentRef.setInput('tagVariant', 'success');
+      fixture.componentRef.setInput('tagColor', 'success');
       fixture.detectChanges();
 
       expect(getTag()).toBeFalsy();
@@ -352,7 +352,7 @@ describe('PshStatCardComponent', () => {
       it('should include tag in aria-label when present', () => {
         fixture.componentRef.setInput('description', 'Revenue');
         fixture.componentRef.setInput('value', '$5000');
-        fixture.componentRef.setInput('tagVariant', 'success');
+        fixture.componentRef.setInput('tagColor', 'success');
         fixture.componentRef.setInput('tagLabel', '+15%');
         fixture.detectChanges();
 
@@ -461,7 +461,7 @@ describe('PshStatCardComponent', () => {
       'should apply default gradient for tagVariant "%s"',
       (variant) => {
         fixture.componentRef.setInput('icon', 'star');
-        fixture.componentRef.setInput('tagVariant', variant);
+        fixture.componentRef.setInput('tagColor', variant);
         fixture.componentRef.setInput('tagLabel', '+10%');
         fixture.detectChanges();
 
@@ -472,7 +472,7 @@ describe('PshStatCardComponent', () => {
 
     it('should prioritize iconBackground over tagVariant default', () => {
       fixture.componentRef.setInput('icon', 'star');
-      fixture.componentRef.setInput('tagVariant', 'success');
+      fixture.componentRef.setInput('tagColor', 'success');
       fixture.componentRef.setInput('tagLabel', '+10%');
       fixture.componentRef.setInput('iconBackground', '#FF0000');
       fixture.detectChanges();

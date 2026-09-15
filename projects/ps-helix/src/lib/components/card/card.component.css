@@ -60,6 +60,24 @@
   background: color-mix(in srgb, var(--psh-red-500) 5%, transparent);
 }
 
+/* primary and secondary complete the shared colour union introduced in 7.0.0.
+   `neutral` — the old `default` — stays deliberately unstyled: it means no emphasis. */
+.card.color-primary {
+  border-left: 4px solid var(--psh-primary-color);
+}
+
+.card.color-primary .card-header {
+  background: color-mix(in srgb, var(--psh-primary-color) 5%, transparent);
+}
+
+.card.color-secondary {
+  border-left: 4px solid var(--psh-secondary-color);
+}
+
+.card.color-secondary .card-header {
+  background: color-mix(in srgb, var(--psh-secondary-color) 5%, transparent);
+}
+
 .card.density-compact {
   --psh-card-density-header-padding: var(--psh-size-3) var(--psh-size-4);
   --psh-card-density-body-padding: var(--psh-size-4);

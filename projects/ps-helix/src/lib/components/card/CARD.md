@@ -41,7 +41,7 @@ export class MyComponent {}
 >
   <p>Cette carte utilise les propriétés title et description pour un rendu cohérent.</p>
   <div card-actions>
-    <psh-button variant="primary">Démarrer</psh-button>
+    <psh-button color="primary">Démarrer</psh-button>
   </div>
 </psh-card>
 ```
@@ -136,7 +136,7 @@ Zone dédiée en bas de la carte avec alignement configurable.
   <p>Êtes-vous sûr de vouloir continuer ?</p>
   <div card-actions>
     <psh-button appearance="outline">Annuler</psh-button>
-    <psh-button variant="primary">Confirmer</psh-button>
+    <psh-button color="primary">Confirmer</psh-button>
   </div>
 </psh-card>
 ```
@@ -177,7 +177,7 @@ Combiner plusieurs emplacements pour des interfaces complexes.
 
   <div card-actions>
     <psh-button appearance="outline">Réinitialiser</psh-button>
-    <psh-button variant="primary">Enregistrer</psh-button>
+    <psh-button color="primary">Enregistrer</psh-button>
   </div>
 </psh-card>
 ```
@@ -217,7 +217,7 @@ Le composant utilise `ng-content` avec des sélecteurs pour organiser le contenu
 
   <!-- Badge dans le header -->
   <div card-header-extra>
-    <psh-tag variant="success">Actif</psh-tag>
+    <psh-tag color="success">Actif</psh-tag>
   </div>
 
   <!-- Contenu principal -->
@@ -237,7 +237,7 @@ Le composant utilise `ng-content` avec des sélecteurs pour organiser le contenu
   <!-- Actions -->
   <div card-actions>
     <psh-button appearance="outline">Voir détails</psh-button>
-    <psh-button variant="primary">Ouvrir</psh-button>
+    <psh-button color="primary">Ouvrir</psh-button>
   </div>
 </psh-card>
 ```
@@ -330,7 +330,7 @@ Pour messages informatifs et notifications.
   title="Information"
   description="Message informatif"
   variant="outlined"
-  colorVariant="info"
+  color="info"
 >
   <p>Votre compte a été mis à jour avec succès.</p>
 </psh-card>
@@ -345,7 +345,7 @@ Pour confirmations et succès d'opérations.
   title="Succès"
   description="Opération réussie"
   variant="outlined"
-  colorVariant="success"
+  color="success"
 >
   <p>Votre paiement a été traité avec succès.</p>
 </psh-card>
@@ -360,11 +360,11 @@ Pour avertissements et actions requises.
   title="Attention"
   description="Action requise"
   variant="outlined"
-  colorVariant="warning"
+  color="warning"
 >
   <p>Votre abonnement expire dans 7 jours.</p>
   <div card-actions>
-    <psh-button variant="primary">Renouveler</psh-button>
+    <psh-button color="primary">Renouveler</psh-button>
   </div>
 </psh-card>
 ```
@@ -378,11 +378,11 @@ Pour erreurs et messages critiques.
   title="Erreur"
   description="Une erreur est survenue"
   variant="outlined"
-  colorVariant="danger"
+  color="danger"
 >
   <p>Impossible de se connecter au serveur.</p>
   <div card-actions>
-    <psh-button variant="primary">Réessayer</psh-button>
+    <psh-button color="primary">Réessayer</psh-button>
   </div>
 </psh-card>
 ```
@@ -503,7 +503,7 @@ Désactive la carte avec opacité réduite et interactions bloquées.
   title="Notifications"
   description="3 nouvelles notifications"
   variant="outlined"
-  colorVariant="info"
+  color="info"
   actionsAlignment="space-between"
 >
   <div card-header-icon>
@@ -511,7 +511,7 @@ Désactive la carte avec opacité réduite et interactions bloquées.
   </div>
 
   <div card-header-extra>
-    <psh-tag variant="primary">3</psh-tag>
+    <psh-tag color="primary">3</psh-tag>
   </div>
 
   <ul>
@@ -522,7 +522,7 @@ Désactive la carte avec opacité réduite et interactions bloquées.
 
   <div card-actions>
     <psh-button appearance="outline">Ignorer tout</psh-button>
-    <psh-button variant="primary">Voir tout</psh-button>
+    <psh-button color="primary">Voir tout</psh-button>
   </div>
 </psh-card>
 ```
@@ -565,7 +565,7 @@ Désactive la carte avec opacité réduite et interactions bloquées.
 
   <div card-actions>
     <psh-button appearance="outline">Annuler</psh-button>
-    <psh-button variant="primary">Créer</psh-button>
+    <psh-button color="primary">Créer</psh-button>
   </div>
 </psh-card>
 ```
@@ -583,7 +583,7 @@ Désactive la carte avec opacité réduite et interactions bloquées.
     (clicked)="openItem(item)"
   >
     <div card-header-extra>
-      <psh-tag [variant]="item.status">{{ item.statusLabel }}</psh-tag>
+      <psh-tag [color]="item.status">{{ item.statusLabel }}</psh-tag>
     </div>
 
     <p>{{ item.excerpt }}</p>
@@ -603,7 +603,7 @@ Désactive la carte avec opacité réduite et interactions bloquées.
   title="Erreur de Connexion"
   description="Impossible de se connecter au serveur"
   variant="outlined"
-  colorVariant="danger"
+  color="danger"
 >
   <div card-header-icon>
     <i class="ph ph-warning-circle" style="font-size: 1.5rem; color: var(--psh-danger-color);"></i>
@@ -618,7 +618,7 @@ Désactive la carte avec opacité réduite et interactions bloquées.
 
   <div card-actions>
     <psh-button appearance="outline">Détails</psh-button>
-    <psh-button variant="primary">Réessayer</psh-button>
+    <psh-button color="primary">Réessayer</psh-button>
   </div>
 </psh-card>
 ```

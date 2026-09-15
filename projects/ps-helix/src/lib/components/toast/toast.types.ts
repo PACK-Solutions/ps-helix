@@ -1,11 +1,16 @@
-export type ToastType = 'info' | 'success' | 'warning' | 'danger';
+import { PshColor } from '../../types/semantic.types';
+/**
+ * @deprecated since 7.0.0 — use {@link PshColor}. Every component now shares one
+ * semantic colour union, so this alias exists only to ease the migration.
+ */
+export type ToastType = PshColor;
 
 export type ToastPosition = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
 
 export interface Toast {
   id?: string;
   message: string;
-  type: ToastType;
+  color: ToastType;
   duration?: number;
   icon?: string;
   showCloseButton?: boolean;

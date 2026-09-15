@@ -1,7 +1,12 @@
+import { PshColor } from '../../types/semantic.types';
 /**
  * Variantes disponibles pour la barre de progression
  */
-export type ProgressbarVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
+/**
+ * @deprecated since 7.0.0 — use {@link PshColor}. Every component now shares one
+ * semantic colour union, so this alias exists only to ease the migration.
+ */
+export type ProgressbarVariant = PshColor;
 
 /**
  * Tailles disponibles pour la barre de progression
@@ -27,7 +32,7 @@ export interface ProgressbarConfig {
   /** Valeur maximale */
   max: number;
   /** Variante visuelle */
-  variant: ProgressbarVariant;
+  color: ProgressbarVariant;
   /** Taille de la barre */
   size: ProgressbarSize;
   /** Afficher le label */

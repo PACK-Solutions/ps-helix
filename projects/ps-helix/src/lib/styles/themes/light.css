@@ -39,6 +39,8 @@
   --psh-text-on-success: #FFFFFF;
   --psh-text-on-warning: #FFFFFF;
   --psh-text-on-danger: #FFFFFF;
+  --psh-text-on-info: #FFFFFF;
+  --psh-text-on-neutral: #FFFFFF;
   --psh-text-on-surface: var(--psh-text-color);
   --psh-text-on-dark: #FFFFFF;
   --psh-text-on-light: #0a0d16;
@@ -250,6 +252,19 @@
   --psh-success-color: #0F853A;
   --psh-success-color-rgb: 15, 133, 58;
   --psh-success-color-text: #FFFFFF;
+
+  /* Info and Neutral Colors
+     The semantic colour union is the same seven values on every component since 7.0.0, so
+     info and neutral need tokens of their own. Components used to improvise: badge reached
+     for --blue-500 directly, card for a hardcoded rgba, and the rest simply had no way to
+     render those two at all. */
+  --psh-info-color: #1F5FBF;
+  --psh-info-color-rgb: 31, 95, 191;
+  --psh-info-color-text: #FFFFFF;
+
+  --psh-neutral-color: #5A6070;
+  --psh-neutral-color-rgb: 90, 96, 112;
+  --psh-neutral-color-text: #FFFFFF;
 
   /* Warning Colors */
   --psh-warning-color: #b25310;

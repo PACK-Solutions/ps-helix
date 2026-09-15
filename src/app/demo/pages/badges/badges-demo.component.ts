@@ -31,35 +31,35 @@ export class BadgesDemoComponent {
   };
 
   badgePrimaryCode = `<psh-badge
-  variant="primary"
+  color="primary"
   displayType="text"
 >
   En cours
 </psh-badge>`;
 
   badgeSuccessCode = `<psh-badge
-  variant="success"
+  color="success"
   displayType="text"
 >
   Actif
 </psh-badge>`;
 
   badgeWarningCode = `<psh-badge
-  variant="warning"
+  color="warning"
   displayType="text"
 >
   En attente
 </psh-badge>`;
 
   badgeDangerCode = `<psh-badge
-  variant="danger"
+  color="danger"
   displayType="text"
 >
   Inactif
 </psh-badge>`;
 
   badgeDisabledCode = `<psh-badge
-  variant="disabled"
+  color="neutral" disabled
   displayType="text"
 >
   Désactivé
@@ -92,7 +92,7 @@ export class BadgesDemoComponent {
   overlapBadgeCode = `<div style="position: relative">
   <i class="ph ph-bell"></i>
   <psh-badge
-    variant="danger"
+    color="danger"
     [value]="3"
     [overlap]="true"
     position="top-right"
@@ -107,7 +107,7 @@ export class BadgesDemoComponent {
     <div style="position: relative">
       <i class="ph ph-bell"></i>
       <psh-badge
-        variant="danger"
+        color="danger"
         displayType="counter"
         size="medium"
         [value]="notificationCount"

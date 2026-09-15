@@ -8,14 +8,21 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PshTagComponent } from '../tag/tag.component';
-import { StatTagVariant, StatCardLayout, StatCardVariant } from './stat-card.types';
+import { StatCardLayout, StatCardVariant } from './stat-card.types';
+import { PshColor, PSH_COLORS } from '../../types/semantic.types';
 
-const ICON_GRADIENT_DEFAULTS: Record<StatTagVariant, string> = {
-  success: 'linear-gradient(135deg, #34D399, #059669)',
-  danger: 'linear-gradient(135deg, #F87171, #DC2626)',
-  warning: 'linear-gradient(135deg, #FBBF24, #D97706)',
-  primary: 'linear-gradient(135deg, #60A5FA, #2563EB)'
-};
+/**
+ * Icon background per semantic colour. These were four hardcoded hex pairs that ignored
+ * the theme entirely — a `danger` stat card rendered the same red in light and dark mode,
+ * and none of them matched the brand. Derived from the colour tokens instead, with
+ * color-mix supplying the lighter stop so no second token is needed.
+ */
+const ICON_GRADIENT_DEFAULTS: Record<PshColor, string> = Object.fromEntries(
+  PSH_COLORS.map(color => [
+    color,
+    `linear-gradient(135deg, color-mix(in srgb, var(--psh-${color}-color) 65%, white), var(--psh-${color}-color))`,
+  ]),
+) as Record<PshColor, string>;
 @Component({
   selector: 'psh-stat-card',
   imports: [CommonModule, PshTagComponent],
@@ -38,7 +45,7 @@ export class PshStatCardComponent {
 
   // Inputs optionnels
   /** Variante du tag d'évolution (détermine la couleur) */
-  tagVariant = input<StatTagVariant>();
+  tagColor = input<PshColor>();
 
   /** Label du tag d'évolution (ex: '+12.6%', '-8.1%') */
   tagLabel = input<string>();
@@ -87,7 +94,7 @@ export class PshStatCardComponent {
 
   private computedIcon = computed(() => this.icon() ?? '');
 
-  private computedTagVariant = computed(() => this.tagVariant());
+  private computedTagVariant = computed(() => this.tagColor());
 
   private computedTagLabel = computed(() => this.tagLabel());
 
@@ -95,7 +102,7 @@ export class PshStatCardComponent {
     const customBg = this.iconBackground();
     if (customBg) return customBg;
 
-    const variant = this.tagVariant();
+    const variant = this.tagColor();
     return variant ? ICON_GRADIENT_DEFAULTS[variant] : null;
   });
 

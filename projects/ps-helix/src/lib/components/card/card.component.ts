@@ -1,3 +1,4 @@
+import { PshColor } from '../../types/semantic.types';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -12,7 +13,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { CardVariant, CardColorVariant, CardDensity, CardActionsAlignment } from './card.types';
+import { CardVariant, CardDensity, CardActionsAlignment } from './card.types';
 
 /**
  * Composant carte métier - conteneur structuré pour contenu professionnel
@@ -36,7 +37,7 @@ import { CardVariant, CardColorVariant, CardDensity, CardActionsAlignment } from
  * >
  *   <p>Contenu principal</p>
  *   <div card-actions>
- *     <psh-button variant="primary">Action</psh-button>
+ *     <psh-button color="primary">Action</psh-button>
  *   </div>
  * </psh-card>
  */
@@ -73,8 +74,8 @@ export class PshCardComponent implements OnDestroy {
   /** Description/sous-titre optionnel */
   description = input<string>('');
 
-  /** Variante de couleur pour cartes spéciales (info, success, warning, danger) */
-  colorVariant = input<CardColorVariant>('default');
+  /** Couleur sémantique de la carte. `neutral` = aucune emphase (l'ancien `default`). */
+  color = input<PshColor>('neutral');
 
   /** Niveau de densité du spacing (compact, normal, spacious) */
   density = input<CardDensity>('normal');
@@ -115,7 +116,7 @@ export class PshCardComponent implements OnDestroy {
   computedClasses = computed(() => {
     const classes = ['card'];
     classes.push(`variant-${this.variant()}`);
-    classes.push(`color-${this.colorVariant()}`);
+    classes.push(`color-${this.color()}`);
     classes.push(`density-${this.density()}`);
 
     if (this.hoverable()) classes.push('hoverable');

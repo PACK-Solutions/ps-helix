@@ -547,11 +547,11 @@ import {
         </psh-button>
       }
       @if (!indicator.isLastStep()) {
-        <psh-button variant="primary" (clicked)="next()">
+        <psh-button color="primary" (clicked)="next()">
           Suivant
         </psh-button>
       } @else {
-        <psh-button variant="success" (clicked)="submit()">
+        <psh-button color="success" (clicked)="submit()">
           Confirmer
         </psh-button>
       }

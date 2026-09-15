@@ -15,7 +15,7 @@
           <div class="variant-card">
             <div class="variant-preview">
               <psh-alert
-                type="info"
+                color="info"
                 role="status"
                 ariaLive="polite"
                 ariaLabel="Message d'information"
@@ -31,7 +31,7 @@
           <div class="variant-card">
             <div class="variant-preview">
               <psh-alert
-                type="success"
+                color="success"
                 role="status"
                 ariaLive="polite"
                 ariaLabel="Message de succès"
@@ -47,7 +47,7 @@
           <div class="variant-card">
             <div class="variant-preview">
               <psh-alert
-                type="warning"
+                color="warning"
                 role="alert"
                 ariaLive="assertive"
                 ariaLabel="Message d'avertissement"
@@ -63,7 +63,7 @@
           <div class="variant-card">
             <div class="variant-preview">
               <psh-alert
-                type="danger"
+                color="danger"
                 role="alert"
                 ariaLive="assertive"
                 ariaLabel="Message d'erreur"
@@ -90,7 +90,7 @@
           <div class="icon-card">
             <div class="icon-preview">
               <psh-alert
-                type="info"
+                color="info"
                 icon="bell"
                 ariaLabel="Nouvelle notification"
               >{{ 'ALERT.NOTIFICATION' | translate }}</psh-alert>
@@ -105,7 +105,7 @@
           <div class="icon-card">
             <div class="icon-preview">
               <psh-alert
-                type="success"
+                color="success"
                 icon="check-circle"
                 ariaLabel="Profil mis à jour"
               >{{ 'ALERT.PROFILE_UPDATED' | translate }}</psh-alert>
@@ -120,7 +120,7 @@
           <div class="icon-card">
             <div class="icon-preview">
               <psh-alert
-                type="warning"
+                color="warning"
                 icon="clock"
                 iconPosition="left"
                 ariaLabel="Session expire bientôt"
@@ -136,7 +136,7 @@
           <div class="icon-card">
             <div class="icon-preview">
               <psh-alert
-                type="danger"
+                color="danger"
                 icon="lock"
                 iconPosition="left"
                 ariaLabel="Accès refusé"
@@ -163,7 +163,7 @@
           <div class="size-card">
             <div class="size-preview">
               <psh-alert
-                type="info"
+                color="info"
                 size="small"
                 ariaLabel="Alerte petite taille"
               >{{ 'ALERT.SMALL' | translate }}</psh-alert>
@@ -181,7 +181,7 @@
           <div class="size-card">
             <div class="size-preview">
               <psh-alert
-                type="info"
+                color="info"
                 size="medium"
                 ariaLabel="Alerte taille moyenne"
               >{{ 'ALERT.MEDIUM' | translate }}</psh-alert>
@@ -199,7 +199,7 @@
           <div class="size-card">
             <div class="size-preview">
               <psh-alert
-                type="info"
+                color="info"
                 size="large"
                 ariaLabel="Alerte grande taille"
               >{{ 'ALERT.LARGE' | translate }}</psh-alert>
@@ -228,7 +228,7 @@
           <div class="dismissible-demo">
             @if (showDismissibleAlert) {
             <psh-alert
-              type="info"
+              color="info"
               [closable]="true"
               (closed)="handleDismiss()"
               ariaLabel="Alerte fermable"
@@ -236,7 +236,7 @@
             }
             <div class="dismissible-actions">
               <psh-button
-                variant="primary"
+                color="primary"
                 [disabled]="showDismissibleAlert"
                 (clicked)="resetDismissibleAlert()"
               >

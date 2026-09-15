@@ -44,9 +44,16 @@
   color: var(--psh-text-on-danger);
 }
 
+/* Was --psh-blue-500 with --psh-text-on-primary: badge improvised because no semantic
+   info token existed. It does now, and the pair is contrast-checked in both themes. */
 .badge.info {
-  background-color: var(--psh-blue-500);
-  color: var(--psh-text-on-primary);
+  background-color: var(--psh-info-color);
+  color: var(--psh-text-on-info);
+}
+
+.badge.neutral {
+  background-color: var(--psh-neutral-color);
+  color: var(--psh-text-on-neutral);
 }
 
 .badge.disabled {

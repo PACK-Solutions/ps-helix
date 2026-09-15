@@ -14,7 +14,7 @@
         <div class="variants-grid">
           <div class="variant-card">
             <div class="variant-preview">
-              <psh-tag variant="primary">{{ 'TAG.VARIANTS.DEFAULT' | translate }}</psh-tag>
+              <psh-tag color="primary">{{ 'TAG.VARIANTS.DEFAULT' | translate }}</psh-tag>
             </div>
             <div class="variant-info">
               <h4>Primary</h4>
@@ -25,7 +25,7 @@
 
           <div class="variant-card">
             <div class="variant-preview">
-              <psh-tag variant="secondary">{{ 'TAG.VARIANTS.SECONDARY' | translate }}</psh-tag>
+              <psh-tag color="secondary">{{ 'TAG.VARIANTS.SECONDARY' | translate }}</psh-tag>
             </div>
             <div class="variant-info">
               <h4>Secondary</h4>
@@ -36,7 +36,7 @@
 
           <div class="variant-card">
             <div class="variant-preview">
-              <psh-tag variant="success">{{ 'TAG.VARIANTS.SUCCESS' | translate }}</psh-tag>
+              <psh-tag color="success">{{ 'TAG.VARIANTS.SUCCESS' | translate }}</psh-tag>
             </div>
             <div class="variant-info">
               <h4>Success</h4>
@@ -47,7 +47,7 @@
 
           <div class="variant-card">
             <div class="variant-preview">
-              <psh-tag variant="warning">{{ 'TAG.VARIANTS.WARNING' | translate }}</psh-tag>
+              <psh-tag color="warning">{{ 'TAG.VARIANTS.WARNING' | translate }}</psh-tag>
             </div>
             <div class="variant-info">
               <h4>Warning</h4>
@@ -58,7 +58,7 @@
 
           <div class="variant-card">
             <div class="variant-preview">
-              <psh-tag variant="danger">{{ 'TAG.VARIANTS.DANGER' | translate }}</psh-tag>
+              <psh-tag color="danger">{{ 'TAG.VARIANTS.DANGER' | translate }}</psh-tag>
             </div>
             <div class="variant-info">
               <h4>Danger</h4>
@@ -80,7 +80,7 @@
         <div class="icons-grid">
           <div class="icon-card">
             <div class="icon-preview">
-              <psh-tag icon="check-circle" variant="success">{{ 'TAG.STATES.VERIFIED' | translate }}</psh-tag>
+              <psh-tag icon="check-circle" color="success">{{ 'TAG.STATES.VERIFIED' | translate }}</psh-tag>
             </div>
             <div class="icon-info">
               <h4>Icône Check Circle</h4>
@@ -91,7 +91,7 @@
 
           <div class="icon-card">
             <div class="icon-preview">
-              <psh-tag icon="clock" variant="warning">{{ 'TAG.STATES.PENDING' | translate }}</psh-tag>
+              <psh-tag icon="clock" color="warning">{{ 'TAG.STATES.PENDING' | translate }}</psh-tag>
             </div>
             <div class="icon-info">
               <h4>Icône Clock</h4>
@@ -102,7 +102,7 @@
 
           <div class="icon-card">
             <div class="icon-preview">
-              <psh-tag icon="x-circle" variant="danger">{{ 'TAG.STATES.REJECTED' | translate }}</psh-tag>
+              <psh-tag icon="x-circle" color="danger">{{ 'TAG.STATES.REJECTED' | translate }}</psh-tag>
             </div>
             <div class="icon-info">
               <h4>Icône X Circle</h4>
@@ -113,7 +113,7 @@
 
           <div class="icon-card">
             <div class="icon-preview">
-              <psh-tag icon="star" variant="success">{{ 'TAG.STATES.FEATURED' | translate }}</psh-tag>
+              <psh-tag icon="star" color="success">{{ 'TAG.STATES.FEATURED' | translate }}</psh-tag>
             </div>
             <div class="icon-info">
               <h4>Icône Star</h4>
@@ -137,7 +137,7 @@
             <div class="closable-tags">
               @for (tag of closableTags(); track tag.id) {
                 <psh-tag
-                  [variant]="tag.variant"
+                  [color]="tag.variant"
                   [icon]="tag.icon"
                   [closable]="true"
                   (closed)="handleTagClose(tag.id)"
@@ -151,7 +151,7 @@
             </div>
             <div class="reset-button-container">
               <psh-button
-                variant="secondary"
+                color="secondary"
                 size="small"
                 icon="arrow-counter-clockwise"
                 (clicked)="resetClosableTags()"
@@ -185,7 +185,7 @@
         <div class="sizes-grid">
           <div class="size-card">
             <div class="size-preview">
-              <psh-tag size="small" variant="primary">{{ 'TAG.SIZES.SMALL' | translate }}</psh-tag>
+              <psh-tag size="small" color="primary">{{ 'TAG.SIZES.SMALL' | translate }}</psh-tag>
             </div>
             <div class="size-info">
               <h4>Small</h4>
@@ -198,7 +198,7 @@
 
           <div class="size-card">
             <div class="size-preview">
-              <psh-tag size="medium" variant="primary">{{ 'TAG.SIZES.MEDIUM' | translate }}</psh-tag>
+              <psh-tag size="medium" color="primary">{{ 'TAG.SIZES.MEDIUM' | translate }}</psh-tag>
             </div>
             <div class="size-info">
               <h4>Medium (Défaut)</h4>
@@ -211,7 +211,7 @@
 
           <div class="size-card">
             <div class="size-preview">
-              <psh-tag size="large" variant="primary">{{ 'TAG.SIZES.LARGE' | translate }}</psh-tag>
+              <psh-tag size="large" color="primary">{{ 'TAG.SIZES.LARGE' | translate }}</psh-tag>
             </div>
             <div class="size-info">
               <h4>Large</h4>

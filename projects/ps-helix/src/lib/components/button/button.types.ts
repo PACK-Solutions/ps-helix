@@ -1,3 +1,4 @@
+import { PshColor } from '../../types/semantic.types';
 /**
  * Apparences disponibles pour le bouton
  */
@@ -6,7 +7,20 @@ export type ButtonAppearance = 'filled' | 'outline' | 'text';
 /**
  * Variantes disponibles pour le bouton
  */
-export type ButtonVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
+/**
+ * @deprecated since 7.0.0 — use {@link PshColor}. Every component now shares one
+ * semantic colour union, so this alias exists only to ease the migration.
+ */
+export type ButtonVariant = PshColor;
+
+/**
+ * The colours button currently renders. `info` and `neutral` are part of {@link PshColor}
+ * but button's colour matrix is crossed with its three appearances and guarded by
+ * `:not()` chains that the appearance rework replaces; extending it here would mean
+ * writing into a structure that is about to change. Typed as a subset rather than
+ * accepting a value that would fall through to the default styling.
+ */
+export type ButtonColor = Exclude<PshColor, 'info' | 'neutral'>;
 
 /**
  * Tailles disponibles pour le bouton

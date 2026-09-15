@@ -42,7 +42,7 @@ export class TooltipsDemoComponent {
 >
   <psh-button
     appearance="outline"
-    variant="secondary"
+    color="secondary"
     icon="question"
     iconPosition="only"
     ariaLabel="Help"

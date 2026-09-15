@@ -1,3 +1,4 @@
+import { PshColor } from '../../types/semantic.types';
 /**
  * Interface pour un élément du dropdown
  */
@@ -22,7 +23,14 @@ export type DropdownAppearance = 'filled' | 'outline' | 'text';
 /**
  * Variantes disponibles pour le dropdown
  */
-export type DropdownVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
+/**
+ * @deprecated since 7.0.0 — use {@link PshColor}. Every component now shares one
+ * semantic colour union, so this alias exists only to ease the migration.
+ */
+export type DropdownVariant = PshColor;
+
+/** See {@link ButtonColor}: same colour-by-appearance matrix, same temporary subset. */
+export type DropdownColor = Exclude<PshColor, 'info' | 'neutral'>;
 
 /**
  * Tailles disponibles pour le dropdown
@@ -41,7 +49,7 @@ export interface DropdownConfig {
   /** Apparence visuelle */
   appearance?: DropdownAppearance;
   /** Variante de couleur */
-  variant?: DropdownVariant;
+  color?: DropdownVariant;
   /** Taille du dropdown */
   size?: DropdownSize;
   /** Position du menu */

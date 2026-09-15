@@ -36,7 +36,7 @@ describe('PshCardComponent', () => {
       expect(component.interactive()).toBe(false);
       expect(component.title()).toBe('');
       expect(component.description()).toBe('');
-      expect(component.colorVariant()).toBe('default');
+      expect(component.color()).toBe('neutral');
       expect(component.density()).toBe('normal');
       expect(component.showHeaderDivider()).toBe(true);
       expect(component.showFooterDivider()).toBe(true);
@@ -77,7 +77,7 @@ describe('PshCardComponent', () => {
 
     colorVariants.forEach((colorVariant) => {
       it(`should apply ${colorVariant} color variant class`, () => {
-        fixture.componentRef.setInput('colorVariant', colorVariant);
+        fixture.componentRef.setInput('color', colorVariant);
         fixture.detectChanges();
 
         const classes = cardElement.nativeElement.className;
@@ -613,7 +613,7 @@ describe('PshCardComponent', () => {
   describe('Computed Properties', () => {
     it('should compute classes correctly', () => {
       component.variant.set('elevated');
-      fixture.componentRef.setInput('colorVariant', 'success');
+      fixture.componentRef.setInput('color', 'success');
       fixture.componentRef.setInput('density', 'compact');
       component.hoverable.set(true);
       component.interactive.set(true);

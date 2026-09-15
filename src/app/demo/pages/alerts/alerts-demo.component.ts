@@ -22,7 +22,7 @@ export class AlertsDemoComponent {
   showDismissibleAlert = true;
 
   infoCode = `<psh-alert
-  type="info"
+  color="info"
   role="status"
   ariaLive="polite"
 >
@@ -30,7 +30,7 @@ export class AlertsDemoComponent {
 </psh-alert>`;
 
   successCode = `<psh-alert
-  type="success"
+  color="success"
   role="status"
   ariaLive="polite"
 >
@@ -38,7 +38,7 @@ export class AlertsDemoComponent {
 </psh-alert>`;
 
   warningCode = `<psh-alert
-  type="warning"
+  color="warning"
   role="alert"
   ariaLive="assertive"
 >
@@ -46,7 +46,7 @@ export class AlertsDemoComponent {
 </psh-alert>`;
 
   dangerCode = `<psh-alert
-  type="danger"
+  color="danger"
   role="alert"
   ariaLive="assertive"
 >
@@ -54,7 +54,7 @@ export class AlertsDemoComponent {
 </psh-alert>`;
 
   dismissibleCode = `<psh-alert
-  type="info"
+  color="info"
   [closable]="true"
   (closed)="handleDismiss()"
 >
@@ -67,7 +67,7 @@ export class AlertsDemoComponent {
   imports: [PshAlertComponent],
   template: \`
     <psh-alert
-      type="success"
+      color="success"
       icon="check-circle"
       size="large"
       ariaLabel="Profil mis a jour avec succes"

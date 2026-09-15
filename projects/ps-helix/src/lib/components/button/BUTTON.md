@@ -32,14 +32,14 @@ import { PshButtonComponent } from 'ps-helix';
 <psh-button>Mon bouton</psh-button>
 
 // Button avec apparence et variante
-<psh-button appearance="filled" variant="primary">
+<psh-button appearance="filled" color="primary">
   Bouton Principal
 </psh-button>
 
 // Button avec icône
 <psh-button
   appearance="filled"
-  variant="primary"
+  color="primary"
   icon="arrow-right"
   iconPosition="right"
 >
@@ -94,11 +94,11 @@ type ButtonType = 'button' | 'submit' | 'reset';
 
 **Exemple**:
 ```html
-<psh-button appearance="filled" variant="primary">Enregistrer</psh-button>
-<psh-button appearance="filled" variant="secondary">Annuler</psh-button>
-<psh-button appearance="filled" variant="success">Valider</psh-button>
-<psh-button appearance="filled" variant="warning">Attention</psh-button>
-<psh-button appearance="filled" variant="danger">Supprimer</psh-button>
+<psh-button appearance="filled" color="primary">Enregistrer</psh-button>
+<psh-button appearance="filled" color="secondary">Annuler</psh-button>
+<psh-button appearance="filled" color="success">Valider</psh-button>
+<psh-button appearance="filled" color="warning">Attention</psh-button>
+<psh-button appearance="filled" color="danger">Supprimer</psh-button>
 ```
 
 ### Outline
@@ -111,9 +111,9 @@ type ButtonType = 'button' | 'submit' | 'reset';
 
 **Exemple**:
 ```html
-<psh-button appearance="outline" variant="primary">Modifier</psh-button>
-<psh-button appearance="outline" variant="secondary">Retour</psh-button>
-<psh-button appearance="outline" variant="success">Approuver</psh-button>
+<psh-button appearance="outline" color="primary">Modifier</psh-button>
+<psh-button appearance="outline" color="secondary">Retour</psh-button>
+<psh-button appearance="outline" color="success">Approuver</psh-button>
 ```
 
 ### Text
@@ -127,9 +127,9 @@ type ButtonType = 'button' | 'submit' | 'reset';
 
 **Exemple**:
 ```html
-<psh-button appearance="text" variant="primary">En savoir plus</psh-button>
-<psh-button appearance="text" variant="secondary">Fermer</psh-button>
-<psh-button appearance="text" variant="danger">Supprimer</psh-button>
+<psh-button appearance="text" color="primary">En savoir plus</psh-button>
+<psh-button appearance="text" color="secondary">Fermer</psh-button>
+<psh-button appearance="text" color="danger">Supprimer</psh-button>
 ```
 
 ## Tailles
@@ -139,9 +139,9 @@ Utilisé pour les interfaces denses ou les actions secondaires.
 
 **Exemple**:
 ```html
-<psh-button size="small" variant="primary">Petit</psh-button>
-<psh-button size="small" appearance="outline" variant="secondary">Annuler</psh-button>
-<psh-button size="small" appearance="text" variant="primary">Lien</psh-button>
+<psh-button size="small" color="primary">Petit</psh-button>
+<psh-button size="small" appearance="outline" color="secondary">Annuler</psh-button>
+<psh-button size="small" appearance="text" color="primary">Lien</psh-button>
 ```
 
 ### Medium (40px) - Par défaut
@@ -149,9 +149,9 @@ Taille standard pour la majorité des cas d'utilisation.
 
 **Exemple**:
 ```html
-<psh-button size="medium" variant="primary">Moyen</psh-button>
-<psh-button size="medium" appearance="outline" variant="secondary">Annuler</psh-button>
-<psh-button size="medium" appearance="text" variant="primary">Action</psh-button>
+<psh-button size="medium" color="primary">Moyen</psh-button>
+<psh-button size="medium" appearance="outline" color="secondary">Annuler</psh-button>
+<psh-button size="medium" appearance="text" color="primary">Action</psh-button>
 ```
 
 ### Large (48px)
@@ -159,9 +159,9 @@ Utilisé pour les actions importantes ou les interfaces tactiles.
 
 **Exemple**:
 ```html
-<psh-button size="large" variant="primary">Grand</psh-button>
-<psh-button size="large" appearance="outline" variant="success">Valider</psh-button>
-<psh-button size="large" appearance="filled" variant="primary">Confirmer</psh-button>
+<psh-button size="large" color="primary">Grand</psh-button>
+<psh-button size="large" appearance="outline" color="success">Valider</psh-button>
+<psh-button size="large" appearance="filled" color="primary">Confirmer</psh-button>
 ```
 
 ## Variantes de Couleur
@@ -170,45 +170,45 @@ Utilisé pour les actions importantes ou les interfaces tactiles.
 Couleur principale de l'application. Utilisé pour les actions primaires.
 
 ```html
-<psh-button variant="primary" appearance="filled">Primary Filled</psh-button>
-<psh-button variant="primary" appearance="outline">Primary Outline</psh-button>
-<psh-button variant="primary" appearance="text">Primary Text</psh-button>
+<psh-button color="primary" appearance="filled">Primary Filled</psh-button>
+<psh-button color="primary" appearance="outline">Primary Outline</psh-button>
+<psh-button color="primary" appearance="text">Primary Text</psh-button>
 ```
 
 ### Secondary
 Couleur secondaire. Utilisé pour les actions moins importantes.
 
 ```html
-<psh-button variant="secondary" appearance="filled">Secondary Filled</psh-button>
-<psh-button variant="secondary" appearance="outline">Secondary Outline</psh-button>
-<psh-button variant="secondary" appearance="text">Secondary Text</psh-button>
+<psh-button color="secondary" appearance="filled">Secondary Filled</psh-button>
+<psh-button color="secondary" appearance="outline">Secondary Outline</psh-button>
+<psh-button color="secondary" appearance="text">Secondary Text</psh-button>
 ```
 
 ### Success
 Couleur de succès (vert). Utilisé pour les actions positives.
 
 ```html
-<psh-button variant="success" appearance="filled">Valider</psh-button>
-<psh-button variant="success" appearance="outline">Approuver</psh-button>
-<psh-button variant="success" appearance="text">Confirmer</psh-button>
+<psh-button color="success" appearance="filled">Valider</psh-button>
+<psh-button color="success" appearance="outline">Approuver</psh-button>
+<psh-button color="success" appearance="text">Confirmer</psh-button>
 ```
 
 ### Warning
 Couleur d'avertissement (orange). Utilisé pour les actions nécessitant attention.
 
 ```html
-<psh-button variant="warning" appearance="filled">Attention</psh-button>
-<psh-button variant="warning" appearance="outline">Modifier</psh-button>
-<psh-button variant="warning" appearance="text">Avertir</psh-button>
+<psh-button color="warning" appearance="filled">Attention</psh-button>
+<psh-button color="warning" appearance="outline">Modifier</psh-button>
+<psh-button color="warning" appearance="text">Avertir</psh-button>
 ```
 
 ### Danger
 Couleur de danger (rouge). Utilisé pour les actions destructives.
 
 ```html
-<psh-button variant="danger" appearance="filled">Supprimer</psh-button>
-<psh-button variant="danger" appearance="outline">Retirer</psh-button>
-<psh-button variant="danger" appearance="text">Annuler</psh-button>
+<psh-button color="danger" appearance="filled">Supprimer</psh-button>
+<psh-button color="danger" appearance="outline">Retirer</psh-button>
+<psh-button color="danger" appearance="text">Annuler</psh-button>
 ```
 
 ## États
@@ -217,15 +217,15 @@ Couleur de danger (rouge). Utilisé pour les actions destructives.
 Empêche toute interaction avec le bouton.
 
 ```html
-<psh-button [disabled]="true" variant="primary">Désactivé</psh-button>
-<psh-button [disabled]="isFormInvalid" variant="primary">Enregistrer</psh-button>
+<psh-button [disabled]="true" color="primary">Désactivé</psh-button>
+<psh-button [disabled]="isFormInvalid" color="primary">Enregistrer</psh-button>
 ```
 
 **Réagir au clic sur un bouton désactivé** :
 ```html
 <psh-button
   [disabled]="!form.valid"
-  variant="primary"
+  color="primary"
   (disabledClick)="onDisabledAttempt()"
 >
   Enregistrer
@@ -241,11 +241,11 @@ onDisabledAttempt() {
 Affiche un spinner de chargement et désactive les interactions.
 
 ```html
-<psh-button [loading]="true" variant="primary">En cours...</psh-button>
+<psh-button [loading]="true" color="primary">En cours...</psh-button>
 <psh-button
   [loading]="isSubmitting"
   loadingText="Enregistrement..."
-  variant="primary"
+  color="primary"
 >
   Enregistrer
 </psh-button>
@@ -255,8 +255,8 @@ Affiche un spinner de chargement et désactive les interactions.
 Occupe toute la largeur du conteneur parent.
 
 ```html
-<psh-button [fullWidth]="true" variant="primary">Largeur complète</psh-button>
-<psh-button [fullWidth]="true" appearance="outline" variant="secondary">
+<psh-button [fullWidth]="true" color="primary">Largeur complète</psh-button>
+<psh-button [fullWidth]="true" appearance="outline" color="secondary">
   S'inscrire
 </psh-button>
 ```
@@ -278,19 +278,19 @@ Occupe toute la largeur du conteneur parent.
 ### Hiérarchie Visuelle
 ```html
 <!-- Une seule action primaire par contexte -->
-<psh-button variant="primary">Action Principale</psh-button>
+<psh-button color="primary">Action Principale</psh-button>
 
 <!-- Actions secondaires en outline ou text -->
-<psh-button appearance="outline" variant="secondary">Action Secondaire</psh-button>
-<psh-button appearance="text" variant="secondary">Action Tertiaire</psh-button>
+<psh-button appearance="outline" color="secondary">Action Secondaire</psh-button>
+<psh-button appearance="text" color="secondary">Action Tertiaire</psh-button>
 ```
 
 ### Groupes de Boutons
 ```html
 <!-- Alignez les boutons de manière logique -->
 <div style="display: flex; gap: 12px; justify-content: flex-end;">
-  <psh-button appearance="outline" variant="secondary">Annuler</psh-button>
-  <psh-button variant="primary">Confirmer</psh-button>
+  <psh-button appearance="outline" color="secondary">Annuler</psh-button>
+  <psh-button color="primary">Confirmer</psh-button>
 </div>
 ```
 
@@ -306,7 +306,7 @@ Occupe toute la largeur du conteneur parent.
 <psh-button
   [loading]="isSubmitting"
   [disabled]="!form.valid"
-  variant="primary"
+  color="primary"
 >
   Enregistrer
 </psh-button>
@@ -348,7 +348,7 @@ L'état désactivé s'appuie sur l'attribut natif `disabled` (pas de `aria-disab
 **Pour les boutons avec texte**:
 ```html
 <!-- Le texte du bouton est utilisé comme label -->
-<psh-button variant="primary">Enregistrer</psh-button>
+<psh-button color="primary">Enregistrer</psh-button>
 ```
 
 **Pour les boutons avec icône seule**:
@@ -358,7 +358,7 @@ L'état désactivé s'appuie sur l'attribut natif `disabled` (pas de `aria-disab
   icon="x"
   iconPosition="only"
   iconOnlyText="Fermer la fenêtre"
-  variant="secondary"
+  color="secondary"
 ></psh-button>
 ```
 
@@ -368,7 +368,7 @@ L'état désactivé s'appuie sur l'attribut natif `disabled` (pas de `aria-disab
 <psh-button
   icon="arrow-right"
   ariaLabel="Passer à l'étape suivante du formulaire"
-  variant="primary"
+  color="primary"
 >
   Suivant
 </psh-button>
@@ -383,9 +383,9 @@ Le composant supporte nativement:
 ### États Visuels
 ```html
 <!-- États distincts pour tous les utilisateurs -->
-<psh-button variant="primary">Normal</psh-button>
-<psh-button variant="primary" [disabled]="true">Désactivé</psh-button>
-<psh-button variant="primary" [loading]="true">Chargement</psh-button>
+<psh-button color="primary">Normal</psh-button>
+<psh-button color="primary" [disabled]="true">Désactivé</psh-button>
+<psh-button color="primary" [loading]="true">Chargement</psh-button>
 ```
 
 ### Contraste des Couleurs
@@ -400,7 +400,7 @@ Le design system garantit:
 <psh-button
   [loading]="isSubmitting"
   loadingText="Enregistrement en cours, veuillez patienter"
-  variant="primary"
+  color="primary"
 >
   Enregistrer
 </psh-button>
@@ -409,7 +409,7 @@ Le design system garantit:
 <psh-button
   [disabled]="!hasPermission"
   disabledText="Vous n'avez pas les permissions nécessaires"
-  variant="primary"
+  color="primary"
 >
   Modifier
 </psh-button>
@@ -424,7 +424,7 @@ Le design system garantit:
 <psh-button
   icon="arrow-left"
   iconPosition="left"
-  variant="primary"
+  color="primary"
 >
   Retour
 </psh-button>
@@ -435,7 +435,7 @@ Le design system garantit:
 <psh-button
   icon="arrow-right"
   iconPosition="right"
-  variant="primary"
+  color="primary"
 >
   Suivant
 </psh-button>
@@ -447,7 +447,7 @@ Le design system garantit:
   icon="plus"
   iconPosition="only"
   iconOnlyText="Ajouter un élément"
-  variant="primary"
+  color="primary"
   appearance="filled"
 ></psh-button>
 ```
@@ -456,11 +456,11 @@ Le design system garantit:
 Utilisez n'importe quelle icône de [Phosphor Icons](https://phosphoricons.com/):
 
 ```html
-<psh-button icon="check" variant="success">Valider</psh-button>
-<psh-button icon="x" variant="danger">Fermer</psh-button>
-<psh-button icon="download-simple" variant="primary">Télécharger</psh-button>
-<psh-button icon="trash" variant="danger" appearance="outline">Supprimer</psh-button>
-<psh-button icon="pencil-simple" variant="secondary">Modifier</psh-button>
+<psh-button icon="check" color="success">Valider</psh-button>
+<psh-button icon="x" color="danger">Fermer</psh-button>
+<psh-button icon="download-simple" color="primary">Télécharger</psh-button>
+<psh-button icon="trash" color="danger" appearance="outline">Supprimer</psh-button>
+<psh-button icon="pencil-simple" color="secondary">Modifier</psh-button>
 ```
 
 ## Combinaisons Courantes
@@ -471,13 +471,13 @@ Utilisez n'importe quelle icône de [Phosphor Icons](https://phosphoricons.com/)
 <div class="form-actions">
   <psh-button
     appearance="outline"
-    variant="secondary"
+    color="secondary"
     (clicked)="onCancel()"
   >
     Annuler
   </psh-button>
   <psh-button
-    variant="primary"
+    color="primary"
     [disabled]="!form.valid"
     [loading]="isSubmitting"
     (clicked)="onSubmit()"
@@ -488,10 +488,10 @@ Utilisez n'importe quelle icône de [Phosphor Icons](https://phosphoricons.com/)
 
 <!-- Avec type submit pour formulaires natifs -->
 <form (ngSubmit)="onSubmit()">
-  <psh-button type="reset" appearance="outline" variant="secondary">
+  <psh-button type="reset" appearance="outline" color="secondary">
     Réinitialiser
   </psh-button>
-  <psh-button type="submit" variant="primary" [disabled]="!form.valid">
+  <psh-button type="submit" color="primary" [disabled]="!form.valid">
     Soumettre
   </psh-button>
 </form>
@@ -502,7 +502,7 @@ Utilisez n'importe quelle icône de [Phosphor Icons](https://phosphoricons.com/)
 <psh-button
   size="small"
   appearance="text"
-  variant="primary"
+  color="primary"
   icon="pencil-simple"
   (clicked)="onEdit(row)"
 >
@@ -511,7 +511,7 @@ Utilisez n'importe quelle icône de [Phosphor Icons](https://phosphoricons.com/)
 <psh-button
   size="small"
   appearance="text"
-  variant="danger"
+  color="danger"
   icon="trash"
   (clicked)="onDelete(row)"
 >
@@ -523,7 +523,7 @@ Utilisez n'importe quelle icône de [Phosphor Icons](https://phosphoricons.com/)
 ```html
 <psh-button
   appearance="text"
-  variant="primary"
+  color="primary"
   icon="arrow-left"
   iconPosition="left"
   (clicked)="goBack()"
@@ -532,7 +532,7 @@ Utilisez n'importe quelle icône de [Phosphor Icons](https://phosphoricons.com/)
 </psh-button>
 <psh-button
   appearance="filled"
-  variant="primary"
+  color="primary"
   icon="arrow-right"
   iconPosition="right"
   (clicked)="goNext()"
@@ -553,7 +553,7 @@ import { PshButtonComponent } from 'ps-helix';
   template: `
     <psh-button
       appearance="filled"
-      variant="primary"
+      color="primary"
       size="medium"
       icon="arrow-right"
       iconPosition="right"

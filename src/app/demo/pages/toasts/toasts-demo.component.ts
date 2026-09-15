@@ -18,31 +18,31 @@ export class ToastsDemoComponent {
 
   infoToastCode = `this.toastService.show({
   message: 'Nouvelle information',
-  type: 'info',
+  color: 'info',
   duration: 3000
 });`;
 
   successToastCode = `this.toastService.show({
   message: 'Opération réussie',
-  type: 'success',
+  color: 'success',
   duration: 3000
 });`;
 
   warningToastCode = `this.toastService.show({
   message: 'Attention requise',
-  type: 'warning',
+  color: 'warning',
   duration: 3000
 });`;
 
   dangerToastCode = `this.toastService.show({
   message: 'Erreur critique',
-  type: 'danger',
+  color: 'danger',
   duration: 3000
 });`;
 
   persistentToastCode = `this.toastService.show({
   message: 'Toast persistant',
-  type: 'warning',
+  color: 'warning',
   duration: 0  // 0 = ne disparaît pas
 });`;
 
@@ -50,32 +50,34 @@ export class ToastsDemoComponent {
 
 this.toastService.show({
   message: 'Notification positionnée',
-  type: 'info'
+  color: 'info'
 });`;
 
   standardToastCode = `this.toastService.show({
   message: 'Opération réussie',
-  type: 'success',
+  color: 'success',
   duration: 5000,
   showCloseButton: true
 });`;
 
   autoOnlyToastCode = `this.toastService.show({
   message: 'Message important',
-  type: 'info',
+  color: 'info',
   duration: 5000,
   showCloseButton: false
 });`;
 
   manualOnlyToastCode = `this.toastService.show({
   message: 'Action critique requise',
-  type: 'warning',
+  color: 'warning',
   duration: 0,
   showCloseButton: true
 });`;
 
   showToast(variant: ToastType): void {
-    const messages: Record<ToastType, string> = {
+    // Partial since 7.0.0: the colour union is the same seven values everywhere, and this
+    // demo only has copy for the four it used to be limited to.
+    const messages: Partial<Record<ToastType, string>> = {
       info: 'Nouvelle information disponible',
       success: 'Opération effectuée avec succès',
       warning: 'Veuillez vérifier avant de continuer',
@@ -83,8 +85,8 @@ this.toastService.show({
     };
 
     this.toastService.show({
-      message: messages[variant],
-      type: variant,
+      message: messages[variant] ?? '',
+      color: variant,
       duration: 3000,
     });
   }
@@ -92,7 +94,7 @@ this.toastService.show({
   showCustomToast(icon: string, type: ToastType, message: string): void {
     this.toastService.show({
       message,
-      type,
+      color: type,
       icon,
       duration: 4000,
     });
@@ -102,7 +104,7 @@ this.toastService.show({
     const seconds = duration / 1000;
     this.toastService.show({
       message: `Ce toast s'affiche pendant ${seconds} secondes`,
-      type: 'info',
+      color: 'info',
       duration,
     });
   }
@@ -110,7 +112,7 @@ this.toastService.show({
   showPersistentToast(): void {
     this.toastService.show({
       message: 'Ce toast ne disparaîtra pas automatiquement. Fermez-le manuellement.',
-      type: 'warning',
+      color: 'warning',
       duration: 0,
     });
   }
@@ -127,24 +129,24 @@ this.toastService.show({
 
     this.toastService.show({
       message: `Position changée: ${positionLabels[position]}`,
-      type: 'info',
+      color: 'info',
       duration: 3000,
     });
   }
 
   showMultipleToasts(): void {
     const messages = [
-      { message: 'Premier toast', type: 'info' as ToastType },
-      { message: 'Deuxième toast', type: 'success' as ToastType },
-      { message: 'Troisième toast', type: 'warning' as ToastType },
-      { message: 'Quatrième toast', type: 'danger' as ToastType }
+      { message: 'Premier toast', color: 'info' as ToastType },
+      { message: 'Deuxième toast', color: 'success' as ToastType },
+      { message: 'Troisième toast', color: 'warning' as ToastType },
+      { message: 'Quatrième toast', color: 'danger' as ToastType }
     ];
 
     messages.forEach((toast, index) => {
       setTimeout(() => {
         this.toastService.show({
           message: toast.message,
-          type: toast.type,
+          color: toast.color,
           duration: 5000
         });
       }, index * 300);
@@ -154,7 +156,7 @@ this.toastService.show({
   showHoverToast(): void {
     this.toastService.show({
       message: 'Survolez ce toast avec votre souris pour mettre en pause le timer de fermeture automatique',
-      type: 'info',
+      color: 'info',
       duration: 8000,
     });
   }
@@ -162,7 +164,7 @@ this.toastService.show({
   showToastWithIcon(): void {
     this.toastService.show({
       message: 'Toast avec icône automatique selon le type',
-      type: 'success',
+      color: 'success',
       duration: 3000,
     });
   }
@@ -170,7 +172,7 @@ this.toastService.show({
   showClosableToast(): void {
     this.toastService.show({
       message: 'Utilisez le bouton de fermeture ou la touche Escape pour fermer ce toast',
-      type: 'warning',
+      color: 'warning',
       duration: 10000,
     });
   }
@@ -178,7 +180,7 @@ this.toastService.show({
   showAutoOnlyToast(): void {
     this.toastService.show({
       message: 'Ce toast se fermera automatiquement après 5 secondes. Pas de bouton de fermeture manuelle.',
-      type: 'info',
+      color: 'info',
       duration: 5000,
       showCloseButton: false,
     });
@@ -187,7 +189,7 @@ this.toastService.show({
   showManualOnlyToast(): void {
     this.toastService.show({
       message: 'Ce toast persistant nécessite une fermeture manuelle. Cliquez sur la croix pour le fermer.',
-      type: 'warning',
+      color: 'warning',
       duration: 0,
       showCloseButton: true,
     });
@@ -196,7 +198,7 @@ this.toastService.show({
   showStandardToast(): void {
     this.toastService.show({
       message: 'Toast standard avec fermeture automatique après 5s OU fermeture manuelle avec le bouton.',
-      type: 'success',
+      color: 'success',
       duration: 5000,
       showCloseButton: true,
     });

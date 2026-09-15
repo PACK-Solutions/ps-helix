@@ -3,14 +3,14 @@
 > **Generated from the stylesheets — do not edit by hand.**
 > Run `npm run docs:tokens` after changing anything under `src/lib/styles/`.
 
-**398 tokens** across 8 files.
+**406 tokens** across 8 files.
 
 Every custom property the library exposes is namespaced `--psh-*`. The unprefixed names
 used before 7.0.0 remain available through the opt-in `styles/compat.css`.
 
 ## Theme
 
-221 semantic tokens. Each one is redefined in `dark.css`; the two themes are kept symmetrical, and this generator fails if they drift apart.
+229 semantic tokens. Each one is redefined in `dark.css`; the two themes are kept symmetrical, and this generator fails if they drift apart.
 
 | Token | Light | Dark |
 |---|---|---|
@@ -44,6 +44,8 @@ used before 7.0.0 remain available through the opt-in `styles/compat.css`.
 | `--psh-text-on-success` | `#FFFFFF` | `#000000` |
 | `--psh-text-on-warning` | `#FFFFFF` | `#000000` |
 | `--psh-text-on-danger` | `#FFFFFF` | `#000000` |
+| `--psh-text-on-info` | `#FFFFFF` | `#000000` |
+| `--psh-text-on-neutral` | `#FFFFFF` | `#000000` |
 | `--psh-text-on-surface` | `var(--psh-text-color)` | `var(--psh-text-color)` |
 | `--psh-text-on-dark` | `#FFFFFF` | `#FFFFFF` |
 | `--psh-text-on-light` | `#0a0d16` | `#0a0d16` |
@@ -217,6 +219,12 @@ used before 7.0.0 remain available through the opt-in `styles/compat.css`.
 | `--psh-success-color` | `#0F853A` | `#12B94F` |
 | `--psh-success-color-rgb` | `15, 133, 58` | `18, 185, 79` |
 | `--psh-success-color-text` | `#FFFFFF` | `#000000` |
+| `--psh-info-color` | `#1F5FBF` | `#5B9BFF` |
+| `--psh-info-color-rgb` | `31, 95, 191` | `91, 155, 255` |
+| `--psh-info-color-text` | `#FFFFFF` | `#000000` |
+| `--psh-neutral-color` | `#5A6070` | `#9AA0B0` |
+| `--psh-neutral-color-rgb` | `90, 96, 112` | `154, 160, 176` |
+| `--psh-neutral-color-text` | `#FFFFFF` | `#000000` |
 | `--psh-warning-color` | `#b25310` | `#E07518` |
 | `--psh-warning-color-rgb` | `178, 83, 16` | `224, 117, 24` |
 | `--psh-warning-color-text` | `#FFFFFF` | `#000000` |

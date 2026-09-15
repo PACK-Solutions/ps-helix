@@ -18,21 +18,21 @@ export class ButtonsDemoComponent {
 
   filledAppearanceCode = `<psh-button
   appearance="filled"
-  variant="primary"
+  color="primary"
 >
   Action principale
 </psh-button>`;
 
   outlineAppearanceCode = `<psh-button
   appearance="outline"
-  variant="primary"
+  color="primary"
 >
   Action secondaire
 </psh-button>`;
 
   textAppearanceCode = `<psh-button
   appearance="text"
-  variant="primary"
+  color="primary"
 >
   Action tertiaire
 </psh-button>`;
@@ -59,7 +59,7 @@ export class ButtonsDemoComponent {
 
   statesCode = `<psh-button
   appearance="filled"
-  variant="primary"
+  color="primary"
   [disabled]="isFormInvalid"
   [loading]="isSubmitting"
   [fullWidth]="isMobile"
@@ -70,7 +70,7 @@ export class ButtonsDemoComponent {
 
   disabledClickCode = `<psh-button
   [disabled]="true"
-  variant="primary"
+  color="primary"
   (disabledClick)="onDisabledAttempt()"
 >
   Action indisponible

@@ -18,27 +18,27 @@ export class ProgressbarDemoComponent {
 
   primaryVariantCode = `<psh-progressbar
   [value]="30"
-  variant="primary"
+  color="primary"
 ></psh-progressbar>`;
 
   secondaryVariantCode = `<psh-progressbar
   [value]="40"
-  variant="secondary"
+  color="secondary"
 ></psh-progressbar>`;
 
   successVariantCode = `<psh-progressbar
   [value]="50"
-  variant="success"
+  color="success"
 ></psh-progressbar>`;
 
   warningVariantCode = `<psh-progressbar
   [value]="60"
-  variant="warning"
+  color="warning"
 ></psh-progressbar>`;
 
   dangerVariantCode = `<psh-progressbar
   [value]="70"
-  variant="danger"
+  color="danger"
 ></psh-progressbar>`;
 
   defaultModeCode = `<psh-progressbar
@@ -63,7 +63,7 @@ export class ProgressbarDemoComponent {
 
   customLabelCode = `<psh-progressbar
   [value]="45"
-  variant="primary"
+  color="primary"
   label="Téléchargement: 45 Mo sur 120 Mo"
 ></psh-progressbar>`;
 }

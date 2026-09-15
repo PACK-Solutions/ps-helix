@@ -18,7 +18,7 @@ export class PshToastService {
     const newToast: Toast = {
       ...toast,
       id,
-      type: toast.type || 'info',
+      color: toast.color || 'info',
       duration: toast.duration ?? this.config.duration ?? 5000
     };
 
@@ -39,23 +39,23 @@ export class PshToastService {
   }
 
   info(message: string, options?: Partial<Omit<Toast, 'id' | 'message' | 'type'>>) {
-    return this.show({ message, type: 'info', ...options });
+    return this.show({ message, color: 'info', ...options });
   }
 
   success(message: string, options?: Partial<Omit<Toast, 'id' | 'message' | 'type'>>) {
-    return this.show({ message, type: 'success', ...options });
+    return this.show({ message, color: 'success', ...options });
   }
 
   warning(message: string, options?: Partial<Omit<Toast, 'id' | 'message' | 'type'>>) {
-    return this.show({ message, type: 'warning', ...options });
+    return this.show({ message, color: 'warning', ...options });
   }
 
   error(message: string, options?: Partial<Omit<Toast, 'id' | 'message' | 'type'>>) {
-    return this.show({ message, type: 'danger', ...options });
+    return this.show({ message, color: 'danger', ...options });
   }
 
   danger(message: string, options?: Partial<Omit<Toast, 'id' | 'message' | 'type'>>) {
-    return this.show({ message, type: 'danger', ...options });
+    return this.show({ message, color: 'danger', ...options });
   }
 
   setPosition(position: ToastPosition) {

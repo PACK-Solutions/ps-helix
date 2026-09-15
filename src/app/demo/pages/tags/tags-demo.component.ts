@@ -39,37 +39,37 @@ export class TagsDemoComponent {
   }
 
   primaryTagCode = `<psh-tag
-  variant="primary"
+  color="primary"
 >
   Tag principal
 </psh-tag>`;
 
   secondaryTagCode = `<psh-tag
-  variant="secondary"
+  color="secondary"
 >
   Tag secondaire
 </psh-tag>`;
 
   successTagCode = `<psh-tag
-  variant="success"
+  color="success"
 >
   Succès
 </psh-tag>`;
 
   warningTagCode = `<psh-tag
-  variant="warning"
+  color="warning"
 >
   Attention
 </psh-tag>`;
 
   dangerTagCode = `<psh-tag
-  variant="danger"
+  color="danger"
 >
   Erreur
 </psh-tag>`;
 
   closableTagCode = `<psh-tag
-  variant="success"
+  color="success"
   [closable]="true"
   (closed)="handleTagClose('myTag')"
 >

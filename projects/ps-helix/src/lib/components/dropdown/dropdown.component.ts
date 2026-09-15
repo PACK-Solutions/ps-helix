@@ -18,7 +18,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { PshOverlayPositionService } from '../../a11y/overlay-position.service';
 import { PshClickOutsideDirective } from '../../a11y/click-outside.directive';
 import { PshPortalService, PshPortalRef } from '../../a11y/portal.service';
-import { DropdownAppearance, DropdownItem, DropdownPlacement, DropdownSize, DropdownVariant } from './dropdown.types';
+import { DropdownAppearance, DropdownColor, DropdownItem, DropdownPlacement, DropdownSize } from './dropdown.types';
 
 @Component({
   selector: 'psh-dropdown',
@@ -44,7 +44,7 @@ export class PshDropdownComponent<T = string> {
 
   // Regular inputs
   appearance = input<DropdownAppearance>('filled');
-  variant = input<DropdownVariant>('primary');
+  color = input<DropdownColor>('primary');
   size = input<DropdownSize>('medium');
   placement = input<DropdownPlacement>('bottom-start');
   items = input<DropdownItem<T>[]>([]);

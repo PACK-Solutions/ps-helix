@@ -41,7 +41,7 @@ export class MyComponent {}
   </div>
   <p>Description du produit avec les details importants.</p>
   <div horizontal-actions>
-    <psh-button variant="primary">Acheter</psh-button>
+    <psh-button color="primary">Acheter</psh-button>
   </div>
 </psh-horizontal-card>
 ```
@@ -140,7 +140,7 @@ Le composant utilise `ng-content` avec des selecteurs pour organiser le contenu.
   <div horizontal-header>
     <div class="header-row">
       <h4>Produit Premium</h4>
-      <psh-tag variant="success">En stock</psh-tag>
+      <psh-tag color="success">En stock</psh-tag>
     </div>
   </div>
 
@@ -153,7 +153,7 @@ Le composant utilise `ng-content` avec des selecteurs pour organiser le contenu.
 
   <!-- Actions -->
   <div horizontal-actions>
-    <psh-button variant="primary">Acheter</psh-button>
+    <psh-button color="primary">Acheter</psh-button>
     <psh-button appearance="outline">Details</psh-button>
   </div>
 </psh-horizontal-card>
@@ -314,7 +314,7 @@ Le composant bascule automatiquement en layout vertical sur les petits ecrans.
   <div horizontal-header>
     <div class="product-header">
       <h4>{{ product.name }}</h4>
-      <psh-tag [variant]="product.inStock ? 'success' : 'warning'">
+      <psh-tag [color]="product.inStock ? 'success' : 'warning'">
         {{ product.inStock ? 'En stock' : 'Rupture' }}
       </psh-tag>
     </div>
@@ -325,7 +325,7 @@ Le composant bascule automatiquement en layout vertical sur les petits ecrans.
     <span class="price">{{ product.price | currency:'EUR' }}</span>
   </div>
   <div horizontal-actions>
-    <psh-button variant="primary">Acheter</psh-button>
+    <psh-button color="primary">Acheter</psh-button>
     <psh-button appearance="outline">Details</psh-button>
   </div>
 </psh-horizontal-card>
@@ -350,7 +350,7 @@ Le composant bascule automatiquement en layout vertical sur les petits ecrans.
   <div horizontal-header>
     <div class="user-header">
       <h4>{{ user.name }}</h4>
-      <psh-tag [variant]="user.isActive ? 'success' : 'secondary'">
+      <psh-tag [color]="user.isActive ? 'success' : 'secondary'">
         {{ user.isActive ? 'Actif' : 'Inactif' }}
       </psh-tag>
     </div>
@@ -367,7 +367,7 @@ Le composant bascule automatiquement en layout vertical sur les petits ecrans.
     </div>
   </div>
   <div horizontal-actions>
-    <psh-button variant="primary">Contacter</psh-button>
+    <psh-button color="primary">Contacter</psh-button>
     <psh-button appearance="text">Voir profil</psh-button>
   </div>
 </psh-horizontal-card>
@@ -388,7 +388,7 @@ Le composant bascule automatiquement en layout vertical sur les petits ecrans.
     <img [src]="article.coverImage" [alt]="article.title">
   </div>
   <div horizontal-header>
-    <psh-tag variant="primary" size="small">{{ article.category }}</psh-tag>
+    <psh-tag color="primary" size="small">{{ article.category }}</psh-tag>
   </div>
   <h4 class="article-title">{{ article.title }}</h4>
   <p class="article-excerpt">{{ article.excerpt }}</p>
@@ -403,7 +403,7 @@ Le composant bascule automatiquement en layout vertical sur les petits ecrans.
     </span>
   </div>
   <div horizontal-actions>
-    <psh-button variant="primary">Lire l'article</psh-button>
+    <psh-button color="primary">Lire l'article</psh-button>
     <psh-button appearance="text">Partager</psh-button>
   </div>
 </psh-horizontal-card>

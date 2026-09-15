@@ -16,7 +16,7 @@ import { PshDropdownComponent } from 'ps-helix';
 
 ### Approche Recommandee (avec contenu personnalise)
 ```typescript
-<psh-dropdown appearance="filled" variant="primary">
+<psh-dropdown appearance="filled" color="primary">
   <span dropdown-trigger>{{ 'DROPDOWN.TITLE' | translate }}</span>
   <div dropdown-menu>
     <button class="dropdown-item" (click)="handleSelect('1')">
@@ -39,7 +39,7 @@ Transforme le déclencheur en bouton carré compact affichant uniquement une ic�
   [iconOnly]="true"
   iconOnlyText="Menu d'actions"
   appearance="outline"
-  variant="primary"
+  color="primary"
 >
   <div dropdown-menu>
     <button class="dropdown-item">
@@ -61,7 +61,7 @@ Transforme le déclencheur en bouton carré compact affichant uniquement une ic�
     { content: 'Option 3', value: '3', disabled: true }
   ]"
   appearance="filled"
-  variant="primary"
+  color="primary"
   [label]="'Actions'"
   (selected)="handleSelect($event)"
 ></psh-dropdown>
@@ -150,7 +150,7 @@ Le dropdown suit la même logique que le bouton : l'`appearance` contrôle la fo
 ### Filled (Par défaut)
 Fond plein, idéal pour les actions principales.
 ```html
-<psh-dropdown appearance="filled" variant="primary">
+<psh-dropdown appearance="filled" color="primary">
   <span dropdown-trigger>Actions</span>
   <div dropdown-menu>...</div>
 </psh-dropdown>
@@ -159,7 +159,7 @@ Fond plein, idéal pour les actions principales.
 ### Outline
 Bordure sans fond, pour les actions secondaires.
 ```html
-<psh-dropdown appearance="outline" variant="primary">
+<psh-dropdown appearance="outline" color="primary">
   <span dropdown-trigger>Actions</span>
   <div dropdown-menu>...</div>
 </psh-dropdown>
@@ -168,7 +168,7 @@ Bordure sans fond, pour les actions secondaires.
 ### Text
 Sans fond ni bordure, pour les actions tertiaires et les menus discrets.
 ```html
-<psh-dropdown appearance="text" variant="primary">
+<psh-dropdown appearance="text" color="primary">
   <span dropdown-trigger>Actions</span>
   <div dropdown-menu>...</div>
 </psh-dropdown>
@@ -179,9 +179,9 @@ Sans fond ni bordure, pour les actions tertiaires et les menus discrets.
 Toutes les apparences acceptent les cinq variantes sémantiques : `primary`, `secondary`, `success`, `warning`, `danger`.
 
 ```html
-<psh-dropdown appearance="filled" variant="success"><span dropdown-trigger>Valider</span>...</psh-dropdown>
-<psh-dropdown appearance="outline" variant="danger"><span dropdown-trigger>Supprimer</span>...</psh-dropdown>
-<psh-dropdown appearance="text" variant="warning"><span dropdown-trigger>Attention</span>...</psh-dropdown>
+<psh-dropdown appearance="filled" color="success"><span dropdown-trigger>Valider</span>...</psh-dropdown>
+<psh-dropdown appearance="outline" color="danger"><span dropdown-trigger>Supprimer</span>...</psh-dropdown>
+<psh-dropdown appearance="text" color="warning"><span dropdown-trigger>Attention</span>...</psh-dropdown>
 ```
 
 ## Bonnes Pratiques

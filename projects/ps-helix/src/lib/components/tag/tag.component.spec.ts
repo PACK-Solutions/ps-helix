@@ -76,25 +76,25 @@ describe('PshTagComponent', () => {
       ['warning'],
       ['danger']
     ])('should apply "%s" variant class', (variant) => {
-      fixture.componentRef.setInput('variant', variant);
+      fixture.componentRef.setInput('color', variant);
       fixture.detectChanges();
 
       expect(getTagElement().classList.contains(variant)).toBe(true);
     });
 
     it('should switch between variants correctly', () => {
-      fixture.componentRef.setInput('variant', 'primary');
+      fixture.componentRef.setInput('color', 'primary');
       fixture.detectChanges();
       expect(getTagElement().classList.contains('primary')).toBe(true);
 
-      fixture.componentRef.setInput('variant', 'danger');
+      fixture.componentRef.setInput('color', 'danger');
       fixture.detectChanges();
       expect(getTagElement().classList.contains('danger')).toBe(true);
       expect(getTagElement().classList.contains('primary')).toBe(false);
     });
 
     it('should have exactly one variant class at a time', () => {
-      fixture.componentRef.setInput('variant', 'success');
+      fixture.componentRef.setInput('color', 'success');
       fixture.detectChanges();
 
       const activeVariants = allVariants.filter(v =>
@@ -112,9 +112,9 @@ describe('PshTagComponent', () => {
       ['danger']
     ])('should ensure mutual exclusivity when switching to "%s"', (targetVariant) => {
       allVariants.forEach(initialVariant => {
-        fixture.componentRef.setInput('variant', initialVariant);
+        fixture.componentRef.setInput('color', initialVariant);
         fixture.detectChanges();
-        fixture.componentRef.setInput('variant', targetVariant);
+        fixture.componentRef.setInput('color', targetVariant);
         fixture.detectChanges();
 
         const activeVariants = allVariants.filter(v =>
@@ -786,7 +786,7 @@ describe('PshTagComponent with ng-content', () => {
 describe('PshTagComponent with TAG_CONFIG injection', () => {
   describe('Custom configuration', () => {
     const customConfig: Partial<TagConfig> = {
-      variant: 'danger',
+      color: 'danger',
       size: 'large',
       closable: true,
       disabled: false,
@@ -836,7 +836,7 @@ describe('PshTagComponent with TAG_CONFIG injection', () => {
     });
 
     it('should allow input to override config values', () => {
-      fixture.componentRef.setInput('variant', 'success');
+      fixture.componentRef.setInput('color', 'success');
       fixture.detectChanges();
 
       expect(getTagElement().classList.contains('success')).toBe(true);
@@ -846,7 +846,7 @@ describe('PshTagComponent with TAG_CONFIG injection', () => {
 
   describe('Partial configuration', () => {
     const partialConfig: Partial<TagConfig> = {
-      variant: 'warning'
+      color: 'warning'
     };
 
     let fixture: ComponentFixture<PshTagComponent>;

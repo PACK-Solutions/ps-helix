@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, effect, inject, OnDestroy } from '@angular/core';
-import { Toast, ToastType } from './toast.types';
+import { Toast } from './toast.types';
+import { PshColor } from '../../types/semantic.types';
 import { PshToastService } from './toast.service';
 import { TOAST_CONFIG } from './toast.tokens';
 
@@ -75,14 +76,19 @@ export class PshToastComponent implements OnDestroy {
     }
   }
 
-  getDefaultIcon(type: ToastType): string {
-    const icons: Record<ToastType, string> = {
+  getDefaultIcon(color: PshColor): string {
+    const icons: Record<PshColor, string> = {
       info: 'info',
       success: 'check-circle',
       warning: 'warning',
-      danger: 'warning-octagon'
+      danger: 'warning-octagon',
+      // Reachable since 7.0.0: the colour union is the same seven values everywhere, so a
+      // toast can now be raised in any of them rather than the four it used to allow.
+      primary: 'info',
+      secondary: 'info',
+      neutral: 'info'
     };
-    return icons[type] || 'info';
+    return icons[color] || 'info';
   }
 
   shouldShowCloseButton(toast: Toast): boolean {

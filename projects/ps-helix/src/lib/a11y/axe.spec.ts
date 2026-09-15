@@ -113,7 +113,7 @@ class TagHost {}
 
 @Component({
   changeDetection: ChangeDetectionStrategy.Eager,
-  template: `<psh-alert type="info">Your changes were saved.</psh-alert>`,
+  template: `<psh-alert color="info">Your changes were saved.</psh-alert>`,
   imports: [PshAlertComponent],
 })
 class AlertHost {}
