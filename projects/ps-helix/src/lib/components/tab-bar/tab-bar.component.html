@@ -1,6 +1,8 @@
 <div class="tab-bar">
   @for (item of items(); track item.id; let i = $index) {
     <button
+      #tabButton
+      type="button"
       class="tab-item"
       [class.active]="activeIndex() === i"
       [class.disabled]="disabled() || item.disabled"
@@ -8,7 +10,9 @@
       [attr.aria-selected]="activeIndex() === i"
       [attr.aria-disabled]="disabled() || item.disabled"
       [attr.aria-label]="item.label"
+      [attr.tabindex]="activeIndex() === i ? 0 : -1"
       (click)="selectTab(i)"
+      (keydown)="onKeydown($event, i)"
     >
       <i 
         [class]="activeIndex() === i ? 'ph-fill ph-' + item.icon : 'ph ph-' + item.icon"

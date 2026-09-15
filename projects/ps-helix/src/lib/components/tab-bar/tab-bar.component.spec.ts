@@ -344,6 +344,75 @@ describe('PshTabBarComponent', () => {
       expect(getSelectedTab().getAttribute('aria-label')).toBe('Home');
     });
   });
+
+  // The component carried role="tablist"/role="tab" with no keyboard handling at all,
+  // which the ARIA tablist pattern requires. These cover the behaviour that was missing.
+  describe('Keyboard navigation', () => {
+    const press = (tab: HTMLButtonElement, key: string) => {
+      tab.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true }));
+      fixture.detectChanges();
+    };
+
+    it('should give only the active tab a tab stop (roving tabindex)', () => {
+      const tabs = getAllTabs();
+      expect(tabs.map(t => t.getAttribute('tabindex'))).toEqual(['0', '-1', '-1']);
+
+      press(tabs[0]!, 'ArrowRight');
+      expect(getAllTabs().map(t => t.getAttribute('tabindex'))).toEqual(['-1', '0', '-1']);
+    });
+
+    it('should move to the next tab on ArrowRight and the previous on ArrowLeft', () => {
+      press(getAllTabs()[0]!, 'ArrowRight');
+      expect(getSelectedTab().getAttribute('aria-label')).toBe('Search');
+
+      press(getAllTabs()[1]!, 'ArrowLeft');
+      expect(getSelectedTab().getAttribute('aria-label')).toBe('Home');
+    });
+
+    it('should wrap around at both ends', () => {
+      press(getAllTabs()[0]!, 'ArrowLeft');
+      expect(getSelectedTab().getAttribute('aria-label')).toBe('Profile');
+
+      press(getAllTabs()[2]!, 'ArrowRight');
+      expect(getSelectedTab().getAttribute('aria-label')).toBe('Home');
+    });
+
+    it('should jump to the first tab on Home and the last on End', () => {
+      press(getAllTabs()[0]!, 'End');
+      expect(getSelectedTab().getAttribute('aria-label')).toBe('Profile');
+
+      press(getAllTabs()[2]!, 'Home');
+      expect(getSelectedTab().getAttribute('aria-label')).toBe('Home');
+    });
+
+    it('should skip disabled tabs', () => {
+      fixture.componentRef.setInput('items', [
+        { id: 'home', label: 'Home', icon: 'house' },
+        { id: 'search', label: 'Search', icon: 'magnifying-glass', disabled: true },
+        { id: 'profile', label: 'Profile', icon: 'user' }
+      ] as TabBarItem[]);
+      fixture.detectChanges();
+
+      press(getAllTabs()[0]!, 'ArrowRight');
+      expect(getSelectedTab().getAttribute('aria-label')).toBe('Profile');
+    });
+
+    it('should move focus along with selection', () => {
+      document.body.appendChild(fixture.nativeElement);
+      try {
+        getAllTabs()[0]!.focus();
+        press(getAllTabs()[0]!, 'ArrowRight');
+        expect(document.activeElement).toBe(getAllTabs()[1]);
+      } finally {
+        fixture.nativeElement.remove();
+      }
+    });
+
+    it('should ignore keys it does not handle', () => {
+      press(getAllTabs()[0]!, 'a');
+      expect(getSelectedTab().getAttribute('aria-label')).toBe('Home');
+    });
+  });
 });
 
 describe('PshTabBarComponent with custom config', () => {
