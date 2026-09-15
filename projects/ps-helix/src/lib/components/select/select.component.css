@@ -16,7 +16,7 @@
 .select-label {
   display: block;
   color: var(--psh-text-color);
-  font-size: 0.875rem;
+  font-size: var(--psh-font-size-sm);
   font-weight: 500;
   cursor: pointer;
 }
@@ -26,8 +26,8 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 2.5rem;
-  padding: 0 1rem;
+  height: var(--psh-control-height-md);
+  padding: 0 var(--psh-spacing-md);
   background: var(--psh-surface-0);
   border: 0.125rem solid var(--psh-surface-border);
   border-radius: var(--psh-radius-lg);
@@ -93,7 +93,7 @@
 
 .select-arrow {
   transition: transform var(--psh-animation-duration-normal);
-  font-size: 1rem;
+  font-size: var(--psh-font-size-base);
   color: var(--psh-text-color-secondary);
 }
 
@@ -145,7 +145,7 @@
   border: 0.0625rem solid var(--psh-surface-border);
   border-radius: var(--psh-radius-lg);
   color: var(--psh-text-color);
-  font-size: 0.875rem;
+  font-size: var(--psh-font-size-sm);
   outline: none;
   box-sizing: border-box;
   transition: border-color var(--psh-animation-duration-fast);
@@ -214,7 +214,7 @@
 .select-success-message { color: var(--psh-success-color); }
 .select-hint { color: var(--psh-text-color-secondary); }
 
-:host.small .select-trigger { text-overflow: ellipsis; height: 2rem; font-size: 0.875rem; }
-:host.large .select-trigger { text-overflow: ellipsis; height: 3rem; font-size: 1.125rem; }
+:host.small .select-trigger { text-overflow: ellipsis; height: var(--psh-control-height-sm); font-size: var(--psh-font-size-sm); }
+:host.large .select-trigger { text-overflow: ellipsis; height: var(--psh-control-height-lg); font-size: var(--psh-font-size-lg); }
 
 @keyframes spin { to { transform: rotate(360deg); } }

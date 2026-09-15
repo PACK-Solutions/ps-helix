@@ -22,7 +22,7 @@
 .input-label {
   display: block;
   color: var(--psh-text-color);
-  font-size: 0.875rem; /* var(--psh-font-size-sm) */
+  font-size: var(--psh-font-size-sm);
   font-weight: 500;
   width: 100%;
   cursor: pointer;
@@ -44,10 +44,10 @@
 
 input {
   width: 100%;
-  height: 2.5rem; /* var(--psh-control-height-md) -> 40px */
-  padding: 0 1rem; /* var(--psh-spacing-md) */
+  height: var(--psh-control-height-md);
+  padding: 0 var(--psh-spacing-md);
   font-family: inherit;
-  font-size: 1rem; /* var(--psh-font-size-base) */
+  font-size: var(--psh-font-size-base);
   color: var(--psh-text-color);
   background: var(--psh-surface-0);
   border: 0.125rem solid var(--psh-surface-border); /* 2px */
@@ -118,13 +118,13 @@ input:focus-visible {
 
 /* --- Tailles (Via Host) --- */
 :host.small input {
-  height: 2rem; /* 32px */
-  font-size: 0.875rem; /* 14px */
+  height: var(--psh-control-height-sm);
+  font-size: var(--psh-font-size-sm);
 }
 
 :host.large input {
-  height: 3rem; /* 48px */
-  font-size: 1.125rem; /* 18px */
+  height: var(--psh-control-height-lg);
+  font-size: var(--psh-font-size-lg);
 }
 
 /* --- Icônes (Correction Alignement) --- */
@@ -140,7 +140,7 @@ input:focus-visible {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 1.25rem; /* var(--psh-icon-size-md) */
+  font-size: var(--psh-icon-size-md);
   color: var(--psh-text-color-secondary);
   pointer-events: none;
   z-index: 2;
@@ -233,7 +233,7 @@ input:focus-visible {
 }
 
 .input-error, .input-success, .input-hint {
-  font-size: 0.875rem;
+  font-size: var(--psh-font-size-sm);
 }
 
 .input-error { color: var(--psh-danger-color); }
