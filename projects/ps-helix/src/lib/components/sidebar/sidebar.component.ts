@@ -36,11 +36,14 @@ export const SIDEBAR_CONFIG = new InjectionToken<Partial<SidebarConfig>>('SIDEBA
   styleUrls: ['./sidebar.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    'role': 'complementary',
+    // `complementary` allows neither aria-expanded nor aria-modal. aria-expanded belongs
+    // on the trigger outside this component; aria-modal only exists on a dialog, which is
+    // exactly what an open overlay sidebar is — so the role follows the mode.
+    '[attr.role]': 'effectiveMode() === "overlay" ? "dialog" : "complementary"',
     '[attr.aria-label]': 'ariaLabel()',
     '[attr.aria-hidden]': '!open()',
-    '[attr.aria-expanded]': 'open()',
-    '[attr.aria-modal]': 'effectiveMode() === "overlay" && open()',
+    '[attr.aria-modal]': 'effectiveMode() === "overlay" && open() ? "true" : null',
+    '[attr.inert]': 'open() ? null : ""',
     '[attr.data-state]': 'state()'
   }
 })
