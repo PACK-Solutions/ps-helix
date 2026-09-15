@@ -171,7 +171,7 @@ input:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  transition: all var(--psh-animation-duration-normal) var(--psh-animation-easing-default);
   z-index: 3;
 }
 
@@ -201,7 +201,7 @@ input:focus {
   border: 0.125rem solid var(--psh-surface-border);
   border-top-color: var(--psh-primary-color);
   border-radius: 50%;
-  animation: spin 0.8s linear infinite;
+  animation: spin var(--psh-animation-loop-fast) var(--psh-animation-easing-linear) infinite;
 }
 
 /* --- Suggestions & Messages --- */

@@ -13,6 +13,15 @@
   --psh-animation-easing-out: ease-out;
   --psh-animation-easing-in-out: ease-in-out;
   --psh-animation-easing-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --psh-animation-easing-linear: linear;
+
+  /* Looping decorative animations — spinners, skeleton shimmer. A different job from a
+     UI transition, so a separate family: these are cycle lengths, not response times,
+     and they must not be tuned by whoever tunes how fast a button reacts. */
+  --psh-animation-loop-fast: 0.8s;
+  --psh-animation-loop-normal: 1s;
+  --psh-animation-loop-slow: 1.5s;
+  --psh-animation-loop-slower: 2s;
 
   /* Animation distances */
   --psh-animation-distance-sm: 10px;

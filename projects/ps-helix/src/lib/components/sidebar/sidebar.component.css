@@ -59,14 +59,14 @@
 .sidebar.overlay:not(.open) {
   visibility: hidden;
   transition: transform var(--psh-animation-duration-default) var(--psh-animation-easing-smooth),
-              visibility 0s linear var(--psh-animation-duration-default);
+              visibility 0s var(--psh-animation-easing-linear) var(--psh-animation-duration-default);
 }
 
 .sidebar.overlay.open {
   transform: translateX(0);
   visibility: visible;
   transition: transform var(--psh-animation-duration-default) var(--psh-animation-easing-smooth),
-              visibility 0s linear 0s;
+              visibility 0s var(--psh-animation-easing-linear) 0s;
 }
 
 /* Open state - only affects fixed mode visibility */

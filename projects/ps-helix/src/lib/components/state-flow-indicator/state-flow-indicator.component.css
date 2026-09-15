@@ -19,8 +19,7 @@
   background: var(--psh-surface-200);
   color: var(--psh-text-color-disabled);
   cursor: not-allowed;
-  transition:
-    background var(--psh-animation-duration-normal) var(--psh-animation-easing-smooth),
+  transition: background var(--psh-animation-duration-normal) var(--psh-animation-easing-smooth),
     color var(--psh-animation-duration-normal) var(--psh-animation-easing-smooth),
     opacity var(--psh-animation-duration-normal) var(--psh-animation-easing-smooth);
   clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 0 100%, 14px 50%);
@@ -174,12 +173,12 @@
 }
 
 .spinner {
-  animation: spin 1s linear infinite;
+  animation: spin var(--psh-animation-loop-normal) var(--psh-animation-easing-linear) infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .spinner {
-    animation: spin 2s linear infinite;
+    animation: spin var(--psh-animation-loop-slower) var(--psh-animation-easing-linear) infinite;
   }
 }
 

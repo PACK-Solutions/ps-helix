@@ -209,12 +209,12 @@
 }
 
 .spinner {
-  animation: spin 1s linear infinite;
+  animation: spin var(--psh-animation-loop-normal) var(--psh-animation-easing-linear) infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .spinner {
-    animation: spin 2s linear infinite;
+    animation: spin var(--psh-animation-loop-slower) var(--psh-animation-easing-linear) infinite;
   }
 }
 

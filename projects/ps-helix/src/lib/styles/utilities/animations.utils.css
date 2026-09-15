@@ -132,7 +132,7 @@
 }
 
 .psh-animate-spin {
-  animation: spin 1s linear infinite;
+  animation: spin var(--psh-animation-loop-normal) var(--psh-animation-easing-linear) infinite;
 }
 
 .psh-animate-bounce {

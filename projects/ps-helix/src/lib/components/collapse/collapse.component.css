@@ -1,10 +1,10 @@
 .collapse {
-  --psh-collapse-transition-duration: 0.3s;
-  --psh-collapse-transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+  --psh-collapse-transition-duration: var(--psh-animation-duration-default);
+  --psh-collapse-transition-timing: var(--psh-animation-easing-smooth);
 
   width: 100%;
-  border-radius: var(--psh-radius-lg, 8px);
-  background: var(--psh-surface-card, #fff);
+  border-radius: var(--psh-radius-lg);
+  background: var(--psh-surface-card);
   overflow: hidden;
 }
 
@@ -20,7 +20,7 @@
 
 .collapse.outline {
   background: transparent;
-  border: 1px solid var(--psh-surface-border, #e0e0e0);
+  border: 1px solid var(--psh-surface-border);
 }
 
 .collapse-header {
@@ -28,31 +28,31 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--psh-spacing-md, 12px) var(--psh-spacing-lg, 16px);
-  background: var(--psh-surface-ground, #f5f5f5);
+  padding: var(--psh-spacing-md) var(--psh-spacing-lg);
+  background: var(--psh-surface-ground);
   border: none;
   cursor: pointer;
-  color: var(--psh-text-color, #333);
+  color: var(--psh-text-color);
   font-family: inherit;
-  font-size: var(--psh-font-size-base, 14px);
-  transition: background-color 0.2s ease;
-  border-bottom: 1px solid var(--psh-surface-border, #e0e0e0);
+  font-size: var(--psh-font-size-base);
+  transition: background-color var(--psh-animation-duration-normal) var(--psh-animation-easing-default);
+  border-bottom: 1px solid var(--psh-surface-border);
   text-align: left;
 }
 
 .collapse-header:hover:not(:disabled) {
-  background: var(--psh-surface-hover, #ebebeb);
+  background: var(--psh-surface-hover);
 }
 
 .collapse-header:focus-visible {
-  outline: 2px solid var(--psh-primary-color, #0066cc);
+  outline: 2px solid var(--psh-primary-color);
   outline-offset: -2px;
   z-index: 1;
 }
 
 .collapse-header:disabled {
   cursor: not-allowed;
-  opacity: var(--psh-opacity-disabled, 0.6);
+  opacity: var(--psh-opacity-disabled);
 }
 
 .header-content {
@@ -61,7 +61,7 @@
 }
 
 .collapse-header i {
-  color: var(--psh-primary-color, #0066cc);
+  color: var(--psh-primary-color);
   font-size: 1.2rem;
   transition: transform var(--psh-collapse-transition-duration) var(--psh-collapse-transition-timing);
 }
@@ -78,7 +78,7 @@
      zero-duration delay keeps the subtree visible for the length of the collapse. */
   visibility: hidden;
   transition: max-height var(--psh-collapse-transition-duration) var(--psh-collapse-transition-timing),
-              visibility 0s linear var(--psh-collapse-transition-duration);
+              visibility 0s var(--psh-animation-easing-linear) var(--psh-collapse-transition-duration);
 }
 
 .collapse.expanded .collapse-content {
@@ -86,13 +86,13 @@
   overflow: visible;
   visibility: visible;
   transition: max-height var(--psh-collapse-transition-duration) var(--psh-collapse-transition-timing),
-              visibility 0s linear 0s;
+              visibility 0s var(--psh-animation-easing-linear) 0s;
 }
 
 .content-wrapper {
-  padding: var(--psh-spacing-lg, 16px);
-  padding-top: var(--psh-spacing-md, 12px);
-  color: var(--psh-text-color-secondary, #666);
+  padding: var(--psh-spacing-lg);
+  padding-top: var(--psh-spacing-md);
+  color: var(--psh-text-color-secondary);
   text-align: left;
   transform: translateY(-10px);
   opacity: 0;
@@ -109,8 +109,8 @@
 
 /* Sizes */
 .collapse.small .collapse-header {
-  padding: var(--psh-spacing-sm, 8px) var(--psh-spacing-md, 12px);
-  font-size: var(--psh-font-size-sm, 12px);
+  padding: var(--psh-spacing-sm) var(--psh-spacing-md);
+  font-size: var(--psh-font-size-sm);
 }
 
 .collapse.small .collapse-header i {
@@ -118,13 +118,13 @@
 }
 
 .collapse.small .content-wrapper {
-  padding: var(--psh-spacing-md, 12px);
-  padding-top: var(--psh-spacing-sm, 8px);
+  padding: var(--psh-spacing-md);
+  padding-top: var(--psh-spacing-sm);
 }
 
 .collapse.large .collapse-header {
-  padding: var(--psh-spacing-lg, 16px) var(--psh-spacing-xl, 24px);
-  font-size: var(--psh-font-size-lg, 16px);
+  padding: var(--psh-spacing-lg) var(--psh-spacing-xl);
+  font-size: var(--psh-font-size-lg);
 }
 
 .collapse.large .collapse-header i {
@@ -132,6 +132,6 @@
 }
 
 .collapse.large .content-wrapper {
-  padding: var(--psh-spacing-xl, 24px);
-  padding-top: var(--psh-spacing-lg, 16px);
+  padding: var(--psh-spacing-xl);
+  padding-top: var(--psh-spacing-lg);
 }

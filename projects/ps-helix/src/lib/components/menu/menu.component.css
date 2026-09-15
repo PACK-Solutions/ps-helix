@@ -1,7 +1,7 @@
 .menu {
   background: var(--psh-surface-card);
   border-radius: var(--psh-radius-lg);
-  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: width var(--psh-animation-duration-default) var(--psh-animation-easing-smooth);
   position: relative;
   overflow: visible;
   width: 100%;
@@ -103,7 +103,7 @@
   padding: var(--psh-spacing-sm) var(--psh-spacing-md);
   color: var(--psh-text-color);
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: all var(--psh-animation-duration-normal) var(--psh-animation-easing-default);
   cursor: pointer;
   border-radius: var(--psh-radius-lg);
   min-height: 44px;
@@ -148,7 +148,7 @@
 /* Menu Arrow */
 .menu-arrow {
   margin-left: auto;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform var(--psh-animation-duration-default) var(--psh-animation-easing-smooth);
   font-size: 1.1rem;
   color: var(--psh-text-color-secondary);
   flex-shrink: 0;
@@ -166,7 +166,7 @@
 .submenu {
   overflow: hidden;
   max-height: 0;
-  transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: max-height var(--psh-animation-duration-default) var(--psh-animation-easing-smooth);
   background: var(--psh-surface-ground);
   border-radius: var(--psh-radius-lg);
   margin: 0 var(--psh-spacing-sm);
@@ -335,7 +335,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  transition: opacity 0.3s ease;
+  transition: opacity var(--psh-animation-duration-default) var(--psh-animation-easing-default);
   min-width: 0;
   flex: 1;
 }
@@ -381,7 +381,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--psh-animation-duration-normal) var(--psh-animation-easing-default);
   color: var(--psh-text-color-secondary);
   z-index: 2;
   box-shadow: var(--psh-shadow-sm);
@@ -401,7 +401,7 @@
 
 .menu-collapse-button i {
   font-size: 1rem;
-  transition: transform 0.3s ease;
+  transition: transform var(--psh-animation-duration-default) var(--psh-animation-easing-default);
 }
 
 .menu.collapsed .menu-collapse-button i {

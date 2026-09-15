@@ -88,11 +88,11 @@
   border: 2px solid var(--psh-surface-border);
   border-top-color: var(--psh-primary-color);
   border-radius: 50%;
-  animation: spin 0.8s linear infinite;
+  animation: spin var(--psh-animation-loop-fast) var(--psh-animation-easing-linear) infinite;
 }
 
 .select-arrow {
-  transition: transform 0.2s;
+  transition: transform var(--psh-animation-duration-normal);
   font-size: 1rem;
   color: var(--psh-text-color-secondary);
 }
@@ -148,7 +148,7 @@
   font-size: 0.875rem;
   outline: none;
   box-sizing: border-box;
-  transition: border-color 0.15s;
+  transition: border-color var(--psh-animation-duration-fast);
 }
 
 .select-search input::placeholder { color: var(--psh-text-color-secondary); }

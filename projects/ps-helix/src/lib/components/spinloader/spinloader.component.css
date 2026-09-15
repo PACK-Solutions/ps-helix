@@ -25,7 +25,7 @@
   height: var(--psh-spinner-size-md);
   border: var(--psh-border-width-2) solid var(--psh-surface-border);
   border-radius: var(--psh-radius-full);
-  animation: spin 1s var(--psh-animation-easing-default) infinite;
+  animation: spin var(--psh-animation-loop-normal) var(--psh-animation-easing-default) infinite;
 }
 
 .spinner-circle.primary {
@@ -96,7 +96,7 @@
 .spinner-pulse .pulse {
   width: var(--psh-spinner-pulse-width-md);
   height: var(--psh-spinner-pulse-height-md);
-  animation: pulse 0.8s var(--psh-animation-easing-in-out) infinite;
+  animation: pulse var(--psh-animation-loop-fast) var(--psh-animation-easing-in-out) infinite;
 }
 
 .spinner-pulse.primary .pulse {
@@ -175,7 +175,7 @@
 :host.reduce-motion .spinner-circle,
 :host.reduce-motion .spinner-dots .dot,
 :host.reduce-motion .spinner-pulse .pulse {
-  animation-duration: 2s;
+  animation-duration: var(--psh-animation-loop-slower);
 }
 
 @keyframes spin {

@@ -94,7 +94,7 @@
   padding: var(--psh-spacing-xs);
   cursor: pointer;
   opacity: 0.7;
-  transition: opacity 0.2s ease;
+  transition: opacity var(--psh-animation-duration-normal) var(--psh-animation-easing-default);
   border-radius: var(--psh-radius-lg);
   display: flex;
   align-items: center;

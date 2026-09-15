@@ -116,7 +116,7 @@ th.sortable:hover .sort-icon-neutral {
   border: var(--psh-border-width-2) solid var(--psh-surface-border);
   border-top-color: var(--psh-primary-color);
   border-radius: 50%;
-  animation: spin 1s linear infinite;
+  animation: spin var(--psh-animation-loop-normal) var(--psh-animation-easing-linear) infinite;
 }
 
 @keyframes spin {

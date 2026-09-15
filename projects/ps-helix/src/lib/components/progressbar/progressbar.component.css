@@ -103,13 +103,13 @@
 
 /* Animated */
 .progressbar.animated .progress-track {
-  animation: progress-animation var(--psh-animation-duration-slow) linear infinite;
+  animation: progress-animation var(--psh-animation-duration-slow) var(--psh-animation-easing-linear) infinite;
 }
 
 /* Indeterminate */
 .progressbar.indeterminate .progress-track {
   width: 50% !important;
-  animation: indeterminate 1.5s var(--psh-animation-easing-in-out) infinite;
+  animation: indeterminate var(--psh-animation-loop-slow) var(--psh-animation-easing-in-out) infinite;
 }
 
 @keyframes progress-animation {

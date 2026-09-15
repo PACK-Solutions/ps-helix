@@ -50,7 +50,7 @@
   height: var(--psh-toast-progress-height);
   background: currentColor;
   opacity: 0.2;
-  animation: progress var(--psh-progress-duration) linear forwards;
+  animation: progress var(--psh-progress-duration) var(--psh-animation-easing-linear) forwards;
 }
 
 @media (prefers-reduced-motion: reduce) {

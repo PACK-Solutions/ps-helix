@@ -191,8 +191,8 @@
   }
 
   .page-button {
-    min-width: var(--psh-size-7, 28px);
-    height: var(--psh-size-7, 28px);
+    min-width: var(--psh-size-7);
+    height: var(--psh-size-7);
     font-size: var(--psh-font-size-xs);
     padding: 2px;
   }

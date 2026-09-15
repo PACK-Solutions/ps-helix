@@ -13,7 +13,7 @@ button {
 
   /* Button behavior */
   --psh-btn-font-weight: 500;
-  --psh-btn-transition: all 0.2s ease;
+  --psh-btn-transition: all var(--psh-animation-duration-normal) var(--psh-animation-easing-default);
 
   /* Base button styles */
   display: inline-flex;
@@ -59,7 +59,7 @@ button::before {
     rgba(255, 255, 255, 0.3),
     transparent
   );
-  transition: left 0.5s ease;
+  transition: left var(--psh-animation-duration-slow) var(--psh-animation-easing-default);
   pointer-events: none;
   z-index: 0;
 }
@@ -339,7 +339,7 @@ button.loading {
   border: var(--psh-border-width-2) solid currentColor;
   border-bottom-color: transparent;
   border-radius: 50%;
-  animation: rotate 1s linear infinite;
+  animation: rotate var(--psh-animation-loop-normal) var(--psh-animation-easing-linear) infinite;
 }
 
 /* Icons */
