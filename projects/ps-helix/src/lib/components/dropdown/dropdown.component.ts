@@ -136,7 +136,7 @@ export class PshDropdownComponent<T = string> {
   private reposition(): void {
     if (!this.portalRef) return;
     const host = this.elementRef.nativeElement as HTMLElement;
-    const trigger = host.querySelector('.dropdown-trigger') as HTMLElement | null;
+    const trigger = host.querySelector('.psh-dropdown-trigger') as HTMLElement | null;
     if (!trigger) return;
 
     const placement = this.overlayPosition.flipPlacement(trigger, this.placement(), {
@@ -357,7 +357,7 @@ export class PshDropdownComponent<T = string> {
     const active = host.ownerDocument.activeElement;
     if (!active || !this.portalRef.panel.contains(active)) return;
 
-    const trigger = host.querySelector('.dropdown-trigger') as HTMLElement | null;
+    const trigger = host.querySelector('.psh-dropdown-trigger') as HTMLElement | null;
     trigger?.focus();
   }
 

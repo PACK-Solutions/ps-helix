@@ -36,9 +36,9 @@ export const STEPPER_CONFIG = new InjectionToken<Partial<StepperConfig>>('STEPPE
   styleUrls: ['./stepper.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '[class.stepper-container]': 'true',
-    '[class.numbered]': 'variant() === "numbered"',
-    '[class.progress]': 'variant() === "progress"',
+    '[class.psh-stepper-container]': 'true',
+    '[class.psh-numbered]': 'variant() === "numbered"',
+    '[class.psh-progress]': 'variant() === "progress"',
     '[attr.role]': '"region"',
     '[attr.aria-label]': '"Navigation par étapes"'
   }

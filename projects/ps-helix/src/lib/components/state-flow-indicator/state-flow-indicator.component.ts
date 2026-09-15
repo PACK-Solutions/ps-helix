@@ -37,10 +37,10 @@ export const STATE_FLOW_INDICATOR_CONFIG = new InjectionToken<Partial<StateFlowI
   styleUrls: ['./state-flow-indicator.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '[class.state-flow-indicator]': 'true',
-    '[class.size-small]': 'size() === "small"',
-    '[class.size-medium]': 'size() === "medium"',
-    '[class.size-large]': 'size() === "large"',
+    '[class.psh-state-flow-indicator]': 'true',
+    '[class.psh-size-small]': 'size() === "small"',
+    '[class.psh-size-medium]': 'size() === "medium"',
+    '[class.psh-size-large]': 'size() === "large"',
     '[attr.role]': '"region"',
     '[attr.aria-label]': '"Indicateur de progression"'
   }

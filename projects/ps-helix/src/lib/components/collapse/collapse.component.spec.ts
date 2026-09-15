@@ -50,13 +50,13 @@ describe('PshCollapseComponent', () => {
   let fixture: ComponentFixture<PshCollapseComponent>;
 
   const getCollapseContainer = () =>
-    fixture.nativeElement.querySelector('.collapse') as HTMLElement;
+    fixture.nativeElement.querySelector('.psh-collapse') as HTMLElement;
 
   const getHeaderButton = () =>
-    fixture.nativeElement.querySelector('.collapse-header') as HTMLButtonElement;
+    fixture.nativeElement.querySelector('.psh-collapse-header') as HTMLButtonElement;
 
   const getContentRegion = () =>
-    fixture.nativeElement.querySelector('.collapse-content') as HTMLElement;
+    fixture.nativeElement.querySelector('.psh-collapse-content') as HTMLElement;
 
   const getIcon = () =>
     fixture.nativeElement.querySelector('i.ph') as HTMLElement;
@@ -112,7 +112,7 @@ describe('PshCollapseComponent', () => {
       const hostFixture = TestBed.createComponent(TestHostComponent);
       hostFixture.detectChanges();
 
-      const content = hostFixture.nativeElement.querySelector('.content-wrapper p');
+      const content = hostFixture.nativeElement.querySelector('.psh-content-wrapper p');
       expect(content.textContent).toContain('Projected content');
     });
   });
@@ -307,8 +307,8 @@ describe('PshCollapseComponent', () => {
       const hostFixture = TestBed.createComponent(TestHostWithIdComponent);
       hostFixture.detectChanges();
 
-      const header = hostFixture.nativeElement.querySelector('.collapse-header');
-      const content = hostFixture.nativeElement.querySelector('.collapse-content');
+      const header = hostFixture.nativeElement.querySelector('.psh-collapse-header');
+      const content = hostFixture.nativeElement.querySelector('.psh-collapse-content');
 
       expect(header.id).toBe('custom-collapse-header');
       expect(content.id).toBe('custom-collapse-content');
@@ -320,8 +320,8 @@ describe('PshCollapseComponent', () => {
       fixture1.detectChanges();
       fixture2.detectChanges();
 
-      const header1Id = fixture1.nativeElement.querySelector('.collapse-header').id;
-      const header2Id = fixture2.nativeElement.querySelector('.collapse-header').id;
+      const header1Id = fixture1.nativeElement.querySelector('.psh-collapse-header').id;
+      const header2Id = fixture2.nativeElement.querySelector('.psh-collapse-header').id;
 
       expect(header1Id).not.toBe(header2Id);
     });
@@ -514,14 +514,14 @@ describe('PshCollapseComponent', () => {
 
   describe('Variant classes', () => {
     it('should have default variant by default (no outline class)', () => {
-      expect(getCollapseContainer().classList.contains('outline')).toBe(false);
+      expect(getCollapseContainer().classList.contains('psh-outline')).toBe(false);
     });
 
     it('should apply outline class when variant is outline', () => {
       fixture.componentRef.setInput('appearance', 'outline');
       fixture.detectChanges();
 
-      expect(getCollapseContainer().classList.contains('outline')).toBe(true);
+      expect(getCollapseContainer().classList.contains('psh-outline')).toBe(true);
     });
 
     it.each<[CollapseVariant, boolean]>([
@@ -531,7 +531,7 @@ describe('PshCollapseComponent', () => {
       fixture.componentRef.setInput('appearance', variant);
       fixture.detectChanges();
 
-      expect(getCollapseContainer().classList.contains('outline')).toBe(hasOutline);
+      expect(getCollapseContainer().classList.contains('psh-outline')).toBe(hasOutline);
     });
 
     it('should warn and fallback to default for invalid variant', () => {
@@ -541,7 +541,7 @@ describe('PshCollapseComponent', () => {
       fixture.detectChanges();
 
       expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('Invalid variant'));
-      expect(getCollapseContainer().classList.contains('outline')).toBe(false);
+      expect(getCollapseContainer().classList.contains('psh-outline')).toBe(false);
 
       warnSpy.mockRestore();
     });
@@ -549,8 +549,8 @@ describe('PshCollapseComponent', () => {
 
   describe('Size classes', () => {
     it('should have medium size by default (no small/large class)', () => {
-      expect(getCollapseContainer().classList.contains('small')).toBe(false);
-      expect(getCollapseContainer().classList.contains('large')).toBe(false);
+      expect(getCollapseContainer().classList.contains('psh-small')).toBe(false);
+      expect(getCollapseContainer().classList.contains('psh-large')).toBe(false);
     });
 
     it.each<[CollapseSize, string | null]>([
@@ -562,10 +562,10 @@ describe('PshCollapseComponent', () => {
       fixture.detectChanges();
 
       if (expectedClass) {
-        expect(getCollapseContainer().classList.contains(expectedClass)).toBe(true);
+        expect(getCollapseContainer().classList.contains(`psh-${expectedClass}`)).toBe(true);
       } else {
-        expect(getCollapseContainer().classList.contains('small')).toBe(false);
-        expect(getCollapseContainer().classList.contains('large')).toBe(false);
+        expect(getCollapseContainer().classList.contains('psh-small')).toBe(false);
+        expect(getCollapseContainer().classList.contains('psh-large')).toBe(false);
       }
     });
 
@@ -576,8 +576,8 @@ describe('PshCollapseComponent', () => {
       fixture.detectChanges();
 
       expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('Invalid size'));
-      expect(getCollapseContainer().classList.contains('small')).toBe(false);
-      expect(getCollapseContainer().classList.contains('large')).toBe(false);
+      expect(getCollapseContainer().classList.contains('psh-small')).toBe(false);
+      expect(getCollapseContainer().classList.contains('psh-large')).toBe(false);
 
       warnSpy.mockRestore();
     });
@@ -592,8 +592,8 @@ describe('PshCollapseComponent', () => {
         prodFixture.componentRef.setInput('appearance', 'invalid' as PshSurfaceAppearance);
         prodFixture.detectChanges();
 
-        const container = prodFixture.nativeElement.querySelector('.collapse') as HTMLElement;
-        expect(container.classList.contains('outline')).toBe(false);
+        const container = prodFixture.nativeElement.querySelector('.psh-collapse') as HTMLElement;
+        expect(container.classList.contains('psh-outline')).toBe(false);
       });
 
       expect(pshWarnings(warnSpy)).toHaveLength(0);
@@ -608,9 +608,9 @@ describe('PshCollapseComponent', () => {
         prodFixture.componentRef.setInput('size', 'invalid' as CollapseSize);
         prodFixture.detectChanges();
 
-        const container = prodFixture.nativeElement.querySelector('.collapse') as HTMLElement;
-        expect(container.classList.contains('small')).toBe(false);
-        expect(container.classList.contains('large')).toBe(false);
+        const container = prodFixture.nativeElement.querySelector('.psh-collapse') as HTMLElement;
+        expect(container.classList.contains('psh-small')).toBe(false);
+        expect(container.classList.contains('psh-large')).toBe(false);
       });
 
       expect(pshWarnings(warnSpy)).toHaveLength(0);
@@ -635,11 +635,11 @@ describe('PshCollapseComponent', () => {
       fixture.componentRef.setInput('expanded', true);
       fixture.detectChanges();
 
-      expect(getIcon().classList.contains('expanded')).toBe(true);
+      expect(getIcon().classList.contains('psh-expanded')).toBe(true);
     });
 
     it('should not have expanded class on icon when collapsed', () => {
-      expect(getIcon().classList.contains('expanded')).toBe(false);
+      expect(getIcon().classList.contains('psh-expanded')).toBe(false);
     });
   });
 
@@ -648,7 +648,7 @@ describe('PshCollapseComponent', () => {
       fixture.componentRef.setInput('disabled', true);
       fixture.detectChanges();
 
-      expect(getCollapseContainer().classList.contains('disabled')).toBe(true);
+      expect(getCollapseContainer().classList.contains('psh-disabled')).toBe(true);
     });
 
     it('should have disabled attribute on button', () => {
@@ -675,7 +675,7 @@ describe('PshCollapseComponent', () => {
       fixture.detectChanges();
 
       expect(getHeaderButton().getAttribute('aria-expanded')).toBe('true');
-      expect(getCollapseContainer().classList.contains('expanded')).toBe(true);
+      expect(getCollapseContainer().classList.contains('psh-expanded')).toBe(true);
       expect(getContentRegion().getAttribute('aria-hidden')).toBe('false');
     });
 
@@ -683,7 +683,7 @@ describe('PshCollapseComponent', () => {
       fixture.componentRef.setInput('expanded', true);
       fixture.detectChanges();
 
-      expect(getCollapseContainer().classList.contains('expanded')).toBe(true);
+      expect(getCollapseContainer().classList.contains('psh-expanded')).toBe(true);
     });
   });
 
@@ -738,24 +738,24 @@ describe('PshCollapseComponent', () => {
 
   describe('disableAnimation input', () => {
     it('should not have no-animation class by default', () => {
-      expect(getCollapseContainer().classList.contains('no-animation')).toBe(false);
+      expect(getCollapseContainer().classList.contains('psh-no-animation')).toBe(false);
     });
 
     it('should apply no-animation class when disableAnimation is true', () => {
       fixture.componentRef.setInput('disableAnimation', true);
       fixture.detectChanges();
 
-      expect(getCollapseContainer().classList.contains('no-animation')).toBe(true);
+      expect(getCollapseContainer().classList.contains('psh-no-animation')).toBe(true);
     });
 
     it('should remove no-animation class when disableAnimation is set back to false', () => {
       fixture.componentRef.setInput('disableAnimation', true);
       fixture.detectChanges();
-      expect(getCollapseContainer().classList.contains('no-animation')).toBe(true);
+      expect(getCollapseContainer().classList.contains('psh-no-animation')).toBe(true);
 
       fixture.componentRef.setInput('disableAnimation', false);
       fixture.detectChanges();
-      expect(getCollapseContainer().classList.contains('no-animation')).toBe(false);
+      expect(getCollapseContainer().classList.contains('psh-no-animation')).toBe(false);
     });
   });
 
@@ -764,7 +764,7 @@ describe('PshCollapseComponent', () => {
   // an invisible keyboard trap, and an axe `aria-hidden-focus` violation.
   describe('Collapsed content is out of the tab order', () => {
     const getContent = () =>
-      fixture.nativeElement.querySelector('.collapse-content') as HTMLElement;
+      fixture.nativeElement.querySelector('.psh-collapse-content') as HTMLElement;
 
     it('should mark the content inert while collapsed', () => {
       fixture.componentRef.setInput('expanded', false);

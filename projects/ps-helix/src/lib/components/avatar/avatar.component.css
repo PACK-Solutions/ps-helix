@@ -1,5 +1,5 @@
 /* Component-Specific Design Tokens */
-.avatar {
+.psh-avatar {
 
   position: relative;
   display: inline-flex;
@@ -13,14 +13,14 @@
 }
 
 /* Background styles for icon and initials */
-.avatar:not(:has(img)) {
+.psh-avatar:not(:has(img)) {
   background: rgba(var(--psh-primary-color-rgb), 0.1);
   color: var(--psh-primary-color);
   overflow: hidden;
 }
 
 /* Optional subtle gradient overlay */
-.avatar:not(:has(img))::before {
+.psh-avatar:not(:has(img))::before {
   content: '';
   position: absolute;
   top: 0;
@@ -36,54 +36,54 @@
 }
 
 /* Ensure content stays above gradient */
-.avatar i,
-.avatar-initials {
+.psh-avatar i,
+.psh-avatar-initials {
   position: relative;
   z-index: 2;
 }
 
 /* Variants */
-.avatar.circle {
+.psh-avatar.psh-circle {
   border-radius: 50%;
 }
 
-.avatar.square {
+.psh-avatar.psh-square {
   border-radius: var(--psh-radius-lg);
 }
 
 /* Sizes */
-.avatar.small {
+.psh-avatar.psh-small {
   width: var(--psh-avatar-size-sm, var(--psh-size-8));
   height: var(--psh-avatar-size-sm, var(--psh-size-8));
   font-size: var(--psh-font-size-sm);
 }
 
-.avatar.small i {
+.psh-avatar.psh-small i {
   font-size: var(--psh-avatar-icon-size-sm, var(--psh-icon-size-sm));
 }
 
-.avatar.large {
+.psh-avatar.psh-large {
   width: var(--psh-avatar-size-lg, var(--psh-size-12));
   height: var(--psh-avatar-size-lg, var(--psh-size-12));
   font-size: var(--psh-font-size-lg);
 }
 
-.avatar.large i {
+.psh-avatar.psh-large i {
   font-size: var(--psh-avatar-icon-size-lg, var(--psh-icon-size-lg));
 }
 
-.avatar.xlarge {
+.psh-avatar.psh-xlarge {
   width: var(--psh-avatar-size-xl, var(--psh-size-16));
   height: var(--psh-avatar-size-xl, var(--psh-size-16));
   font-size: var(--psh-font-size-xl);
 }
 
-.avatar.xlarge i {
+.psh-avatar.psh-xlarge i {
   font-size: var(--psh-avatar-icon-size-xl, var(--psh-icon-size-xl));
 }
 
 /* Image */
-.avatar-image {
+.psh-avatar-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -92,14 +92,14 @@
 }
 
 /* Initials */
-.avatar-initials {
+.psh-avatar-initials {
   line-height: 1;
   text-transform: uppercase;
   border-radius: inherit;
 }
 
 /* Status indicator */
-.avatar-status {
+.psh-avatar-status {
   position: absolute;
   bottom: var(--psh-avatar-status-offset-md, calc(-1 * var(--psh-border-width-2)));
   right: var(--psh-avatar-status-offset-md, calc(-1 * var(--psh-border-width-2)));
@@ -110,21 +110,21 @@
   z-index: 3;
 }
 
-.avatar.small .avatar-status {
+.psh-avatar.psh-small .psh-avatar-status {
   width: var(--psh-avatar-status-size-sm, var(--psh-size-2-5));
   height: var(--psh-avatar-status-size-sm, var(--psh-size-2-5));
   bottom: var(--psh-avatar-status-offset-sm, calc(-1 * var(--psh-size-px)));
   right: var(--psh-avatar-status-offset-sm, calc(-1 * var(--psh-size-px)));
 }
 
-.avatar.large .avatar-status {
+.psh-avatar.psh-large .psh-avatar-status {
   width: var(--psh-avatar-status-size-lg, var(--psh-size-3-5));
   height: var(--psh-avatar-status-size-lg, var(--psh-size-3-5));
   bottom: var(--psh-avatar-status-offset-md, calc(-1 * var(--psh-border-width-2)));
   right: var(--psh-avatar-status-offset-md, calc(-1 * var(--psh-border-width-2)));
 }
 
-.avatar.xlarge .avatar-status {
+.psh-avatar.psh-xlarge .psh-avatar-status {
   width: var(--psh-avatar-status-size-xl, var(--psh-size-4));
   height: var(--psh-avatar-status-size-xl, var(--psh-size-4));
   bottom: var(--psh-avatar-status-offset-xl, calc(-1 * var(--psh-size-1)));

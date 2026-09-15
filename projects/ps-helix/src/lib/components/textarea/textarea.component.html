@@ -1,12 +1,12 @@
-<div class="textarea-container">
+<div class="psh-textarea-container">
   @if (showLabel()) {
     <!-- label[for] delegates focus to its control natively; the click handler is a convenience. -->
     <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
     <label
-      class="textarea-label"
+      class="psh-textarea-label"
       [for]="textareaId"
       (click)="focus()"
-      [class.required]="required()"
+      [class.psh-required]="required()"
     >
       <ng-content select="[textarea-label]"></ng-content>
       @if (!hasLabelContent()) {
@@ -15,7 +15,7 @@
     </label>
   }
 
-  <div class="textarea-wrapper">
+  <div class="psh-textarea-wrapper">
     <textarea
       #textareaRef
       [id]="textareaId"
@@ -39,22 +39,22 @@
   </div>
 
   @if (error() || success() || hint() || shouldShowCount()) {
-    <div class="textarea-footer">
-      <div class="textarea-messages">
+    <div class="psh-textarea-footer">
+      <div class="psh-textarea-messages">
         @if (error()) {
-          <div [id]="textareaId + '-error'" class="textarea-error" role="alert">
+          <div [id]="textareaId + '-error'" class="psh-textarea-error" role="alert">
             <ng-content select="[textarea-error]">
               {{ error() }}
             </ng-content>
           </div>
         } @else if (success()) {
-          <div [id]="textareaId + '-success'" class="textarea-success" role="status">
+          <div [id]="textareaId + '-success'" class="psh-textarea-success" role="status">
             <ng-content select="[textarea-success]">
               {{ success() }}
             </ng-content>
           </div>
         } @else if (hint()) {
-          <div [id]="textareaId + '-hint'" class="textarea-hint">
+          <div [id]="textareaId + '-hint'" class="psh-textarea-hint">
             <ng-content select="[textarea-hint]">
               {{ hint() }}
             </ng-content>
@@ -64,9 +64,9 @@
 
       @if (shouldShowCount()) {
         <div
-          class="textarea-count"
-          [class.at-limit]="isAtLimit() && !isOverLimit()"
-          [class.over-limit]="isOverLimit()"
+          class="psh-textarea-count"
+          [class.psh-at-limit]="isAtLimit() && !isOverLimit()"
+          [class.psh-over-limit]="isOverLimit()"
           aria-live="polite"
         >
           {{ characterCount().current }}@if (maxLength() !== undefined) {

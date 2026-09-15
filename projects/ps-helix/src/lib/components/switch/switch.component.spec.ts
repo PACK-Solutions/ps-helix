@@ -29,7 +29,7 @@ describe('PshSwitchComponent', () => {
   const getHostElement = () => fixture.nativeElement as HTMLElement;
 
   const getLabelText = () =>
-    fixture.nativeElement.querySelector('.switch-text') as HTMLElement;
+    fixture.nativeElement.querySelector('.psh-switch-text') as HTMLElement;
 
   const getErrorMessage = () =>
     fixture.nativeElement.querySelector('[role="alert"]') as HTMLElement;
@@ -59,7 +59,7 @@ describe('PshSwitchComponent', () => {
       const hostFixture = TestBed.createComponent(TestHostComponent);
       hostFixture.detectChanges();
 
-      const labelText = hostFixture.nativeElement.querySelector('.switch-text');
+      const labelText = hostFixture.nativeElement.querySelector('.psh-switch-text');
       expect(labelText.textContent).toContain('Projected label');
     });
 
@@ -277,8 +277,8 @@ describe('PshSwitchComponent', () => {
       fixture.componentRef.setInput('size', size);
       fixture.detectChanges();
 
-      const container = fixture.nativeElement.querySelector('.switch-container');
-      expect(container.classList.contains(size)).toBe(hasClass);
+      const container = fixture.nativeElement.querySelector('.psh-switch-container');
+      expect(container.classList.contains(`psh-${size}`)).toBe(hasClass);
     });
   });
 
@@ -287,16 +287,16 @@ describe('PshSwitchComponent', () => {
       fixture.componentRef.setInput('labelPosition', 'left');
       fixture.detectChanges();
 
-      const label = fixture.nativeElement.querySelector('.switch-label');
-      expect(label.classList.contains('label-left')).toBe(true);
+      const label = fixture.nativeElement.querySelector('.psh-switch-label');
+      expect(label.classList.contains('psh-label-left')).toBe(true);
     });
 
     it('should apply label-right class by default', () => {
       fixture.componentRef.setInput('labelPosition', 'right');
       fixture.detectChanges();
 
-      const label = fixture.nativeElement.querySelector('.switch-label');
-      expect(label.classList.contains('label-right')).toBe(true);
+      const label = fixture.nativeElement.querySelector('.psh-switch-label');
+      expect(label.classList.contains('psh-label-right')).toBe(true);
     });
   });
 
@@ -312,27 +312,27 @@ describe('PshSwitchComponent', () => {
       fixture.componentRef.setInput('disabled', true);
       fixture.detectChanges();
 
-      expect(getHostElement().classList.contains('switch-disabled')).toBe(true);
+      expect(getHostElement().classList.contains('psh-switch-disabled')).toBe(true);
     });
   });
 
   describe('Host classes', () => {
     it('should have switch-wrapper class', () => {
-      expect(getHostElement().classList.contains('switch-wrapper')).toBe(true);
+      expect(getHostElement().classList.contains('psh-switch-wrapper')).toBe(true);
     });
 
     it('should apply switch-error class when error is present', () => {
       fixture.componentRef.setInput('error', 'Error');
       fixture.detectChanges();
 
-      expect(getHostElement().classList.contains('switch-error')).toBe(true);
+      expect(getHostElement().classList.contains('psh-switch-error')).toBe(true);
     });
 
     it('should apply switch-success class when success is present', () => {
       fixture.componentRef.setInput('success', 'Success');
       fixture.detectChanges();
 
-      expect(getHostElement().classList.contains('switch-success')).toBe(true);
+      expect(getHostElement().classList.contains('psh-switch-success')).toBe(true);
     });
   });
 

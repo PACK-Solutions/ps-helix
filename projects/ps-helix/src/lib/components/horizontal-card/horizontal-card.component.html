@@ -9,21 +9,21 @@
   [attr.aria-busy]="loading() ? 'true' : null"
 >
   <!-- Contenu latéral -->
-  <div class="horizontal-side">
+  <div class="psh-horizontal-side">
     @if (loading()) {
-      <div class="horizontal-skeleton"></div>
+      <div class="psh-horizontal-skeleton"></div>
     } @else {
       <ng-content select="[horizontal-side]"></ng-content>
     }
   </div>
 
   <!-- Contenu principal -->
-  <div class="horizontal-content">
+  <div class="psh-horizontal-content">
     @if (loading()) {
-      <div class="horizontal-loading">
-        <div class="skeleton-line"></div>
-        <div class="skeleton-line"></div>
-        <div class="skeleton-line short"></div>
+      <div class="psh-horizontal-loading">
+        <div class="psh-skeleton-line"></div>
+        <div class="psh-skeleton-line"></div>
+        <div class="psh-skeleton-line psh-short"></div>
       </div>
     } @else {
       <!-- Header optionnel -->

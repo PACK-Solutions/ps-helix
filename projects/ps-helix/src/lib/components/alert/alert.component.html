@@ -1,18 +1,18 @@
 <div
-  class="alert"
-  [class.small]="size() === 'small'"
-  [class.large]="size() === 'large'"
-  [class]="color()"
+  class="psh-alert"
+  [class.psh-small]="size() === 'small'"
+  [class.psh-large]="size() === 'large'"
+  [class]="'psh-' + color()"
   [attr.role]="computedRole()"
   [attr.aria-label]="ariaLabel()"
   [attr.aria-live]="computedAriaLive()"
   [attr.data-state]="state()"
 >
-  <div class="alert-content" [class.icon-right]="iconPosition() === 'right'">
+  <div class="psh-alert-content" [class.psh-icon-right]="iconPosition() === 'right'">
     @if (showIcon()) {
       <i class="ph ph-{{ getIcon() }}" aria-hidden="true"></i>
     }
-    <div class="alert-message">
+    <div class="psh-alert-message">
       <ng-content>{{ content() }}</ng-content>
     </div>
   </div>
@@ -20,7 +20,7 @@
   @if (closable()) {
     <button
       type="button"
-      class="alert-dismiss"
+      class="psh-alert-dismiss"
       (click)="handleClose()"
       [attr.aria-label]="dismissLabel()"
     >

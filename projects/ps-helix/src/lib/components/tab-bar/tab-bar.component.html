@@ -1,11 +1,11 @@
-<div class="tab-bar">
+<div class="psh-tab-bar">
   @for (item of items(); track item.id; let i = $index) {
     <button
       #tabButton
       type="button"
-      class="tab-item"
-      [class.active]="activeIndex() === i"
-      [class.disabled]="disabled() || item.disabled"
+      class="psh-tab-item"
+      [class.psh-active]="activeIndex() === i"
+      [class.psh-disabled]="disabled() || item.disabled"
       role="tab"
       [attr.aria-selected]="activeIndex() === i"
       [attr.aria-disabled]="disabled() || item.disabled"
@@ -18,9 +18,9 @@
         [class]="activeIndex() === i ? 'ph-fill ph-' + item.icon : 'ph ph-' + item.icon"
         aria-hidden="true"
       ></i>
-      <span class="tab-label">{{ item.label }}</span>
+      <span class="psh-tab-label">{{ item.label }}</span>
       @if (item.badge) {
-        <span class="tab-badge">{{ item.badge }}</span>
+        <span class="psh-tab-badge">{{ item.badge }}</span>
       }
     </button>
   }

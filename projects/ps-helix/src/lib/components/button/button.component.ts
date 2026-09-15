@@ -20,7 +20,7 @@ import { ButtonColor, ButtonSize, ButtonIconPosition } from './button.types';
   styleUrls: ['./button.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '[class.full-width]': 'fullWidth()',
+    '[class.psh-full-width]': 'fullWidth()',
     '(click)': 'onHostClick($event)',
   },
 })
@@ -48,7 +48,7 @@ export class PshButtonComponent implements AfterContentChecked {
   ngAfterContentChecked(): void {
     const button = this.elementRef.nativeElement.querySelector('button');
     if (button) {
-      const ngContentElement = button.querySelector('.button-content');
+      const ngContentElement = button.querySelector('.psh-button-content');
       if (ngContentElement) {
         const textContent = ngContentElement.textContent?.trim() || '';
         const currentProjectedText = this.projectedText();

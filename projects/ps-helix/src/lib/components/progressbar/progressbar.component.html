@@ -1,11 +1,11 @@
 @if (showLabel()) {
-  <span class="progress-label">{{ displayLabel() }}</span>
+  <span class="psh-progress-label">{{ displayLabel() }}</span>
 }
 <div
-  class="progressbar"
-  [class.striped]="isStriped()"
-  [class.animated]="isAnimated()"
-  [class.indeterminate]="isIndeterminate()"
+  class="psh-progressbar"
+  [class.psh-striped]="isStriped()"
+  [class.psh-animated]="isAnimated()"
+  [class.psh-indeterminate]="isIndeterminate()"
   role="progressbar"
   [attr.aria-label]="ariaLabel() || label() || 'Progression'"
   [attr.aria-valuenow]="isIndeterminate() ? null : value()"
@@ -14,8 +14,8 @@
   [attr.aria-valuetext]="computedAriaValueText()"
 >
   <div
-    class="progress-track"
-    [class]="color()"
+    class="psh-progress-track"
+    [class]="'psh-' + color()"
     [style.width.%]="percentage()"
   ></div>
 </div>

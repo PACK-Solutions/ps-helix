@@ -1,16 +1,16 @@
-.tabs-wrapper {
+.psh-tabs-wrapper {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
-.tabs-container {
+.psh-tabs-container {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
-.tabs-header {
+.psh-tabs-header {
   display: flex;
   gap: var(--psh-spacing-xs);
   margin-bottom: var(--psh-spacing-lg);
@@ -22,18 +22,18 @@
   scrollbar-width: thin;
 }
 
-.tabs-header.pills {
+.psh-tabs-header.psh-pills {
   border-bottom: none;
   background: var(--psh-surface-ground);
   padding: var(--psh-spacing-xs);
   border-radius: var(--psh-radius-lg);
 }
 
-.tabs-header.underline {
+.psh-tabs-header.psh-underline {
   gap: var(--psh-spacing-lg);
 }
 
-.tab-button {
+.psh-tab-button {
   display: inline-flex;
   align-items: center;
   gap: var(--psh-spacing-sm);
@@ -52,50 +52,50 @@
   flex-shrink: 0;
 }
 
-.tab-button:focus-visible {
+.psh-tab-button:focus-visible {
   outline: var(--psh-focus-outline-width) var(--psh-focus-outline-style) var(--psh-focus-outline-color);
   outline-offset: var(--psh-focus-outline-offset);
   box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-color);
 }
 
-.tab-button:disabled,
-.tab-button[aria-disabled="true"] {
+.psh-tab-button:disabled,
+.psh-tab-button[aria-disabled="true"] {
   opacity: var(--psh-opacity-disabled);
   cursor: not-allowed;
   pointer-events: none;
 }
 
-.default .tab-button {
+.psh-default .psh-tab-button {
   border-radius: var(--psh-radius-lg);
 }
 
-.default .tab-button:hover:not(:disabled):not([aria-disabled="true"]):not(.active) {
+.psh-default .psh-tab-button:hover:not(:disabled):not([aria-disabled="true"]):not(.psh-active) {
   background: var(--psh-surface-hover);
   color: var(--psh-text-color);
 }
 
-.default .tab-button.active {
+.psh-default .psh-tab-button.psh-active {
   background: var(--psh-primary-color);
   color: var(--psh-primary-color-text);
   font-weight: var(--psh-font-weight-medium);
 }
 
-.pills .tab-button {
+.psh-pills .psh-tab-button {
   border-radius: var(--psh-radius-lg);
 }
 
-.pills .tab-button:hover:not(:disabled):not([aria-disabled="true"]):not(.active) {
+.psh-pills .psh-tab-button:hover:not(:disabled):not([aria-disabled="true"]):not(.psh-active) {
   background: var(--psh-surface-card);
   color: var(--psh-text-color);
 }
 
-.pills .tab-button.active {
+.psh-pills .psh-tab-button.psh-active {
   background: var(--psh-primary-color);
   color: var(--psh-primary-color-text);
   font-weight: var(--psh-font-weight-medium);
 }
 
-.underline .tab-button {
+.psh-underline .psh-tab-button {
   padding-left: 0;
   padding-right: 0;
   padding-bottom: var(--psh-spacing-sm);
@@ -103,57 +103,57 @@
   border-bottom: var(--psh-border-width-2) solid transparent;
 }
 
-.underline .tab-button:hover:not(:disabled):not([aria-disabled="true"]):not(.active) {
+.psh-underline .psh-tab-button:hover:not(:disabled):not([aria-disabled="true"]):not(.psh-active) {
   color: var(--psh-text-color);
 }
 
-.underline .tab-button.active {
+.psh-underline .psh-tab-button.psh-active {
   color: var(--psh-primary-color);
   font-weight: var(--psh-font-weight-medium);
   border-bottom-color: var(--psh-primary-color);
 }
 
-.tab-panel,
+.psh-tab-panel,
 psh-tab {
   display: none;
 }
 
-.tab-panel:focus,
+.psh-tab-panel:focus,
 psh-tab:focus-visible {
   outline: none;
 }
 
-.tab-panel.active,
-psh-tab.active {
+.psh-tab-panel.psh-active,
+psh-tab.psh-active {
   display: block;
 }
 
-.tabs-animated .tab-panel.active,
-.tabs-animated psh-tab.active {
+.psh-tabs-animated .psh-tab-panel.psh-active,
+.psh-tabs-animated psh-tab.psh-active {
   animation: fadeIn var(--psh-animation-duration-normal) var(--psh-animation-easing-out);
 }
 
-:host(.tabs-small) .tab-button {
+:host(.psh-tabs-small) .psh-tab-button {
   padding: var(--psh-spacing-xs) var(--psh-spacing-sm);
   font-size: var(--psh-font-size-sm);
   gap: var(--psh-spacing-xs);
 }
 
-:host(.tabs-small) .tab-button i {
+:host(.psh-tabs-small) .psh-tab-button i {
   font-size: var(--psh-icon-size-sm);
 }
 
-:host(.tabs-large) .tab-button {
+:host(.psh-tabs-large) .psh-tab-button {
   padding: var(--psh-spacing-md) var(--psh-spacing-lg);
   font-size: var(--psh-font-size-lg);
   gap: var(--psh-spacing-md);
 }
 
-:host(.tabs-large) .tab-button i {
+:host(.psh-tabs-large) .psh-tab-button i {
   font-size: var(--psh-icon-size-lg);
 }
 
-.tab-button i {
+.psh-tab-button i {
   font-size: var(--psh-icon-size-md);
   flex-shrink: 0;
 }

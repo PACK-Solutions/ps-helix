@@ -1,6 +1,6 @@
 /* Component-Specific Design Tokens */
 button {
-  /* Heights come from --psh-control-height-* in sizing.tokens.css. button used to
+  /* Heights come from --psh-control-height-* in sizing.psh-tokens.psh-css. button used to
      redefine them locally under the name --btn-height-*, so the fact that a button and
      an input lined up was a coincidence of two identical literals rather than a shared
      contract. Redefining them here would reintroduce exactly that. */
@@ -26,7 +26,7 @@ button {
 }
 
 /* Button content */
-.button-content {
+.psh-button-content {
   display: flex;
   align-items: center;
   gap: var(--psh-spacing-sm);
@@ -54,7 +54,7 @@ button::before {
   z-index: 0;
 }
 
-button:hover:not(.disabled):not(.loading)::before {
+button:hover:not(.psh-disabled):not(.psh-loading)::before {
   left: 100%;
 }
 
@@ -65,21 +65,21 @@ button:hover:not(.disabled):not(.loading)::before {
 }
 
 /* Sizes */
-button.small {
+button.psh-small {
   height: var(--psh-control-height-sm);
   font-size: var(--psh-font-size-sm);
   padding: 0 var(--psh-spacing-md);
   min-width: var(--psh-btn-min-width-sm, 6rem);
 }
 
-button.medium {
+button.psh-medium {
   height: var(--psh-control-height-md);
   font-size: var(--psh-font-size-base);
   padding: 0 var(--psh-spacing-lg);
   min-width: var(--psh-btn-min-width-md, 7.5rem);
 }
 
-button.large {
+button.psh-large {
   height: var(--psh-control-height-lg);
   font-size: var(--psh-font-size-lg);
   padding: 0 var(--psh-spacing-xl);
@@ -87,22 +87,22 @@ button.large {
 }
 
 /* Icon only mode */
-button.icon-only {
+button.psh-icon-only {
   width: var(--psh-btn-min-width-icon-only, 2.5rem);
   padding: 0;
   min-width: unset;
   aspect-ratio: 1;
 }
 
-button.icon-only.small {
+button.psh-icon-only.psh-small {
   width: var(--psh-control-height-sm);
 }
 
-button.icon-only.medium {
+button.psh-icon-only.psh-medium {
   width: var(--psh-control-height-md);
 }
 
-button.icon-only.large {
+button.psh-icon-only.psh-large {
   width: var(--psh-control-height-lg);
 }
 
@@ -112,12 +112,12 @@ button.icon-only.large {
 }
 
 /* Full width */
-:host.full-width {
+:host.psh-full-width {
   display: flex;
   width: 100%;
 }
 
-:host.full-width button {
+:host.psh-full-width button {
   width: 100%;
   min-width: 100%;
   flex: 1;
@@ -135,12 +135,12 @@ button.icon-only.large {
   min-width: 100%;
 }
 
-.mobile-full-width-buttons :host {
+.psh-mobile-full-width-buttons :host {
   display: flex;
   width: 100%;
 }
 
-.mobile-full-width-buttons :host button {
+.psh-mobile-full-width-buttons :host button {
   width: 100%;
   min-width: 100%;
   flex: 1;
@@ -148,153 +148,153 @@ button.icon-only.large {
 
 /* Appearances */
 /* Filled */
-button.solid {
+button.psh-solid {
   background-color: currentColor;
 }
 
-button.solid.primary {
+button.psh-solid.psh-primary {
   background: var(--psh-primary-gradient);
   color: var(--psh-text-on-primary);
 }
 
-button.solid.primary .button-content {
+button.psh-solid.psh-primary .psh-button-content {
   color: var(--psh-text-on-primary);
 }
 
-button.solid.secondary .button-content {
+button.psh-solid.psh-secondary .psh-button-content {
   color: var(--psh-text-on-secondary);
 }
 
-button.solid.success .button-content {
+button.psh-solid.psh-success .psh-button-content {
   color: var(--psh-text-on-success);
 }
 
-button.solid.warning .button-content {
+button.psh-solid.psh-warning .psh-button-content {
   color: var(--psh-text-on-warning);
 }
 
-button.solid.danger .button-content {
+button.psh-solid.psh-danger .psh-button-content {
   color: var(--psh-text-on-danger);
 }
 
-button.solid:not(.primary):not(.secondary):not(.success):not(.warning):not(.danger) .button-content {
+button.psh-solid:not(.psh-primary):not(.psh-secondary):not(.psh-success):not(.psh-warning):not(.psh-danger) .psh-button-content {
   color: var(--psh-text-on-surface);
 }
 
 /* Filled hover states for each variant */
-button.solid.primary:hover:not(.disabled):not(.loading) {
+button.psh-solid.psh-primary:hover:not(.psh-disabled):not(.psh-loading) {
   background: var(--psh-primary-gradient-hover);
 }
 
-button.solid.secondary:hover:not(.disabled):not(.loading) {
+button.psh-solid.psh-secondary:hover:not(.psh-disabled):not(.psh-loading) {
   background-color: var(--psh-secondary-color-light);
 }
 
-button.solid.success:hover:not(.disabled):not(.loading) {
+button.psh-solid.psh-success:hover:not(.psh-disabled):not(.psh-loading) {
   background-color: var(--psh-green-400);
 }
 
-button.solid.warning:hover:not(.disabled):not(.loading) {
+button.psh-solid.psh-warning:hover:not(.psh-disabled):not(.psh-loading) {
   background-color: var(--psh-orange-400);
 }
 
-button.solid.danger:hover:not(.disabled):not(.loading) {
+button.psh-solid.psh-danger:hover:not(.psh-disabled):not(.psh-loading) {
   background-color: var(--psh-red-400);
 }
 
 /* Outline */
-button.outline {
+button.psh-outline {
   background: transparent;
   border: var(--psh-border-width-2) solid currentColor;
   color: currentColor;
 }
 
-button.outline .button-content {
+button.psh-outline .psh-button-content {
   color: inherit;
 }
 
-button.outline:hover:not(.disabled):not(.loading) {
+button.psh-outline:hover:not(.psh-disabled):not(.psh-loading) {
   background: currentColor;
 }
 
-button.outline.primary:hover:not(.disabled):not(.loading) .button-content {
+button.psh-outline.psh-primary:hover:not(.psh-disabled):not(.psh-loading) .psh-button-content {
   color: var(--psh-text-on-primary);
 }
 
-button.outline.secondary:hover:not(.disabled):not(.loading) .button-content {
+button.psh-outline.psh-secondary:hover:not(.psh-disabled):not(.psh-loading) .psh-button-content {
   color: var(--psh-text-on-secondary);
 }
 
-button.outline.success:hover:not(.disabled):not(.loading) .button-content {
+button.psh-outline.psh-success:hover:not(.psh-disabled):not(.psh-loading) .psh-button-content {
   color: var(--psh-text-on-success);
 }
 
-button.outline.warning:hover:not(.disabled):not(.loading) .button-content {
+button.psh-outline.psh-warning:hover:not(.psh-disabled):not(.psh-loading) .psh-button-content {
   color: var(--psh-text-on-warning);
 }
 
-button.outline.danger:hover:not(.disabled):not(.loading) .button-content {
+button.psh-outline.psh-danger:hover:not(.psh-disabled):not(.psh-loading) .psh-button-content {
   color: var(--psh-text-on-danger);
 }
 
-button.outline:not(.primary):not(.secondary):not(.success):not(.warning):not(.danger):hover:not(.disabled):not(.loading) .button-content {
+button.psh-outline:not(.psh-primary):not(.psh-secondary):not(.psh-success):not(.psh-warning):not(.psh-danger):hover:not(.psh-disabled):not(.psh-loading) .psh-button-content {
   color: var(--psh-text-on-surface);
 }
 
 /* Text */
-button.ghost {
+button.psh-ghost {
   background: transparent;
   padding: 0 var(--psh-spacing-lg);
   color: currentColor;
   border-radius: var(--psh-radius-lg);
 }
 
-button.ghost .button-content {
+button.psh-ghost .psh-button-content {
   color: inherit;
 }
 
-button.ghost:hover:not(.disabled):not(.loading) {
+button.psh-ghost:hover:not(.psh-disabled):not(.psh-loading) {
   background: var(--psh-surface-hover);
 }
 
 /* Text icon only */
-button.ghost.icon-only {
+button.psh-ghost.psh-icon-only {
   min-width: unset;
   width: var(--psh-control-height-md);
   padding: 0;
 }
 
-button.ghost.icon-only.small {
+button.psh-ghost.psh-icon-only.psh-small {
   width: var(--psh-control-height-sm);
 }
 
-button.ghost.icon-only.large {
+button.psh-ghost.psh-icon-only.psh-large {
   width: var(--psh-control-height-lg);
 }
 
 /* Variants */
 /* Primary */
-button.primary {
+button.psh-primary {
   color: var(--psh-primary-color);
 }
 
 /* Secondary */
-button.secondary {
+button.psh-secondary {
   color: var(--psh-secondary-color);
 }
 
 /* Success */
-button.success {
+button.psh-success {
   color: var(--psh-success-color);
 }
 
 /* Warning */
-button.warning {
+button.psh-warning {
   color: var(--psh-warning-color);
 }
 
 /* Danger */
-button.danger {
+button.psh-danger {
   color: var(--psh-danger-color);
 }
 
@@ -306,24 +306,24 @@ button:focus-visible {
 }
 
 /* Active */
-button:active:not(.disabled):not(.loading) {
+button:active:not(.psh-disabled):not(.psh-loading) {
   transform: translateY(0.0625rem);
 }
 
 /* Disabled */
-button.disabled {
+button.psh-disabled {
   opacity: 0.6;
   cursor: not-allowed;
   pointer-events: none;
 }
 
 /* Loading */
-button.loading {
+button.psh-loading {
   cursor: wait;
   pointer-events: none;
 }
 
-.loader {
+.psh-loader {
   width: var(--psh-icon-size-sm);
   height: var(--psh-icon-size-sm);
   border: var(--psh-border-width-2) solid currentColor;
@@ -340,11 +340,11 @@ button i {
   justify-content: center;
 }
 
-button.small i {
+button.psh-small i {
   font-size: 1.1em;
 }
 
-button.large i {
+button.psh-large i {
   font-size: 1.3em;
 }
 

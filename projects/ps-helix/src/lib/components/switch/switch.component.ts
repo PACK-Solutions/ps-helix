@@ -34,10 +34,10 @@ export const SWITCH_CONFIG = new InjectionToken<Partial<SwitchConfig>>('SWITCH_C
     multi: true
   }],
   host: {
-    '[class.switch-wrapper]': 'true',
-    '[class.switch-disabled]': 'disabled()',
-    '[class.switch-error]': '!!error()',
-    '[class.switch-success]': '!!success()'
+    '[class.psh-switch-wrapper]': 'true',
+    '[class.psh-switch-disabled]': 'disabled()',
+    '[class.psh-switch-error]': '!!error()',
+    '[class.psh-switch-success]': '!!success()'
   }
 })
 export class PshSwitchComponent implements ControlValueAccessor, FormCheckboxControl {

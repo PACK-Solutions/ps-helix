@@ -1,23 +1,23 @@
 @switch (variant()) {
   @case ('circle') {
-    <div class="spinner-circle" [class]="color()"></div>
+    <div class="psh-spinner-circle" [class]="'psh-' + color()"></div>
   }
   @case ('dots') {
-    <div class="spinner-dots" [class]="color()">
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
+    <div class="psh-spinner-dots" [class]="'psh-' + color()">
+      <div class="psh-dot"></div>
+      <div class="psh-dot"></div>
+      <div class="psh-dot"></div>
     </div>
   }
   @case ('pulse') {
-    <div class="spinner-pulse" [class]="color()">
-      <div class="pulse"></div>
-      <div class="pulse"></div>
-      <div class="pulse"></div>
+    <div class="psh-spinner-pulse" [class]="'psh-' + color()">
+      <div class="psh-pulse"></div>
+      <div class="psh-pulse"></div>
+      <div class="psh-pulse"></div>
     </div>
   }
 }
 
 @if (label()) {
-  <span class="spinner-label">{{ label() }}</span>
+  <span class="psh-spinner-label">{{ label() }}</span>
 }

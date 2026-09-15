@@ -260,7 +260,7 @@ describe('PshBadgeComponent', () => {
       fixture.componentRef.setInput('color', color);
       fixture.detectChanges();
 
-      expect(getBadgeElement().classList.contains(color)).toBe(true);
+      expect(getBadgeElement().classList.contains(`psh-${color}`)).toBe(true);
     });
 
     // `disabled` used to be the seventh value of the colour union, which meant a badge
@@ -272,19 +272,19 @@ describe('PshBadgeComponent', () => {
       fixture.detectChanges();
 
       const classes = getBadgeElement().classList;
-      expect(classes.contains('danger')).toBe(true);
-      expect(classes.contains('disabled')).toBe(true);
+      expect(classes.contains('psh-danger')).toBe(true);
+      expect(classes.contains('psh-disabled')).toBe(true);
     });
 
     it('should switch between variants', () => {
       fixture.componentRef.setInput('color', 'primary');
       fixture.detectChanges();
-      expect(getBadgeElement().classList.contains('primary')).toBe(true);
+      expect(getBadgeElement().classList.contains('psh-primary')).toBe(true);
 
       fixture.componentRef.setInput('color', 'danger');
       fixture.detectChanges();
-      expect(getBadgeElement().classList.contains('danger')).toBe(true);
-      expect(getBadgeElement().classList.contains('primary')).toBe(false);
+      expect(getBadgeElement().classList.contains('psh-danger')).toBe(true);
+      expect(getBadgeElement().classList.contains('psh-primary')).toBe(false);
     });
   });
 
@@ -295,7 +295,7 @@ describe('PshBadgeComponent', () => {
         fixture.componentRef.setInput('size', size);
         fixture.detectChanges();
 
-        expect(getBadgeElement().classList.contains(size)).toBe(true);
+        expect(getBadgeElement().classList.contains(`psh-${size}`)).toBe(true);
       }
     );
   });
@@ -310,7 +310,7 @@ describe('PshBadgeComponent', () => {
       fixture.componentRef.setInput('position', position);
       fixture.detectChanges();
 
-      expect(getBadgeElement().classList.contains(position)).toBe(true);
+      expect(getBadgeElement().classList.contains(`psh-${position}`)).toBe(true);
     });
   });
 });

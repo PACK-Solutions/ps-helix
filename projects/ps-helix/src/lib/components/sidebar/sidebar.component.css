@@ -2,7 +2,7 @@
   display: contents;
 }
 
-.sidebar {
+.psh-sidebar {
   background: var(--psh-surface-card);
   display: flex;
   flex-direction: column;
@@ -10,33 +10,33 @@
 }
 
 /* Position variants - only for overlay mode */
-.sidebar.overlay.left {
+.psh-sidebar.psh-overlay.psh-left {
   left: 0;
 }
 
-.sidebar.overlay.right {
+.psh-sidebar.psh-overlay.psh-right {
   right: 0;
 }
 
 /* Mode variants */
-.sidebar.fixed {
+.psh-sidebar.psh-fixed {
   position: relative;
   width: var(--psh-sidebar-width);
   border: var(--psh-border-width-1) solid var(--psh-surface-border);
   flex-shrink: 0;
 }
 
-.sidebar.fixed.left {
+.psh-sidebar.psh-fixed.psh-left {
   border-right: var(--psh-border-width-1) solid var(--psh-surface-border);
   border-left: none;
 }
 
-.sidebar.fixed.right {
+.psh-sidebar.psh-fixed.psh-right {
   border-left: var(--psh-border-width-1) solid var(--psh-surface-border);
   border-right: none;
 }
 
-.sidebar.overlay {
+.psh-sidebar.psh-overlay {
   position: fixed;
   top: 0;
   height: 100vh;
@@ -45,24 +45,24 @@
   transition: transform var(--psh-animation-duration-default) var(--psh-animation-easing-smooth);
 }
 
-.sidebar.overlay.left {
+.psh-sidebar.psh-overlay.psh-left {
   transform: translateX(-100%);
 }
 
-.sidebar.overlay.right {
+.psh-sidebar.psh-overlay.psh-right {
   transform: translateX(100%);
 }
 
 /* Off-screen is not the same as out of the tab order: without `visibility`, every link
    in a closed overlay sidebar stays focusable while the host is aria-hidden. The
    zero-duration delay keeps the panel visible for the length of the slide-out. */
-.sidebar.overlay:not(.open) {
+.psh-sidebar.psh-overlay:not(.psh-open) {
   visibility: hidden;
   transition: transform var(--psh-animation-duration-default) var(--psh-animation-easing-smooth),
               visibility 0s var(--psh-animation-easing-linear) var(--psh-animation-duration-default);
 }
 
-.sidebar.overlay.open {
+.psh-sidebar.psh-overlay.psh-open {
   transform: translateX(0);
   visibility: visible;
   transition: transform var(--psh-animation-duration-default) var(--psh-animation-easing-smooth),
@@ -70,12 +70,12 @@
 }
 
 /* Open state - only affects fixed mode visibility */
-.sidebar.fixed:not(.open) {
+.psh-sidebar.psh-fixed:not(.psh-open) {
   display: none;
 }
 
 /* Content */
-.sidebar-content {
+.psh-sidebar-content {
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
@@ -87,7 +87,7 @@
 }
 
 /* Backdrop */
-.sidebar-backdrop {
+.psh-sidebar-backdrop {
   position: fixed;
   top: 0;
   left: 0;
@@ -110,6 +110,6 @@
 }
 
 /* Responsive - mobile constraint handled by JS, this is a fallback */
-.sidebar.overlay {
+.psh-sidebar.psh-overlay {
   max-width: 100vw;
 }

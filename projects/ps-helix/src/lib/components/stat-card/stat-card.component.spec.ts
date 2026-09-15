@@ -9,19 +9,19 @@ describe('PshStatCardComponent', () => {
     fixture.nativeElement.querySelector('[role="article"], [role="button"]') as HTMLElement;
 
   const getValueElement = () =>
-    fixture.nativeElement.querySelector('.stat-value') as HTMLElement;
+    fixture.nativeElement.querySelector('.psh-stat-value') as HTMLElement;
 
   const getDescriptionElement = () =>
-    fixture.nativeElement.querySelector('.stat-description') as HTMLElement;
+    fixture.nativeElement.querySelector('.psh-stat-description') as HTMLElement;
 
   const getIconContainer = () =>
-    fixture.nativeElement.querySelector('.stat-icon') as HTMLElement;
+    fixture.nativeElement.querySelector('.psh-stat-icon') as HTMLElement;
 
   const getTag = () =>
     fixture.nativeElement.querySelector('psh-tag') as HTMLElement;
 
   const getLoadingState = () =>
-    fixture.nativeElement.querySelector('.stat-loading') as HTMLElement;
+    fixture.nativeElement.querySelector('.psh-stat-loading') as HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -126,7 +126,7 @@ describe('PshStatCardComponent', () => {
 
   describe('Variants', () => {
     it('should have elevated as default variant', () => {
-      expect(getContainer().className).toContain('appearance-elevated');
+      expect(getContainer().className).toContain('psh-appearance-elevated');
     });
 
     it.each<[StatCardVariant]>([['flat'], ['elevated'], ['outline']])(
@@ -142,7 +142,7 @@ describe('PshStatCardComponent', () => {
 
   describe('Layouts', () => {
     it('should have horizontal layout by default', () => {
-      expect(getContainer().className).toContain('stat-card--horizontal');
+      expect(getContainer().className).toContain('psh-stat-card--horizontal');
     });
 
     it.each<[StatCardLayout]>([['horizontal'], ['vertical']])(
@@ -159,7 +159,7 @@ describe('PshStatCardComponent', () => {
       fixture.componentRef.setInput('rowDirection', true);
       fixture.detectChanges();
 
-      expect(getContainer().className).toContain('stat-card--row');
+      expect(getContainer().className).toContain('psh-stat-card--row');
     });
 
     it('should render card-body wrapper in rowDirection mode', () => {
@@ -167,7 +167,7 @@ describe('PshStatCardComponent', () => {
       fixture.componentRef.setInput('value', '100');
       fixture.detectChanges();
 
-      const cardBody = fixture.nativeElement.querySelector('.stat-card-body');
+      const cardBody = fixture.nativeElement.querySelector('.psh-stat-card-body');
       expect(cardBody).toBeTruthy();
     });
   });
@@ -177,36 +177,36 @@ describe('PshStatCardComponent', () => {
       fixture.componentRef.setInput('hoverable', true);
       fixture.detectChanges();
 
-      expect(getContainer().className).toContain('hoverable');
+      expect(getContainer().className).toContain('psh-hoverable');
     });
 
     it('should not have hoverable class by default', () => {
-      expect(getContainer().className).not.toContain('hoverable');
+      expect(getContainer().className).not.toContain('psh-hoverable');
     });
 
     it('should add interactive class when interactive is true', () => {
       fixture.componentRef.setInput('interactive', true);
       fixture.detectChanges();
 
-      expect(getContainer().className).toContain('interactive');
+      expect(getContainer().className).toContain('psh-interactive');
     });
 
     it('should not have interactive class by default', () => {
-      expect(getContainer().className).not.toContain('interactive');
+      expect(getContainer().className).not.toContain('psh-interactive');
     });
 
     it('should add loading class when loading is true', () => {
       fixture.componentRef.setInput('loading', true);
       fixture.detectChanges();
 
-      expect(getContainer().className).toContain('loading');
+      expect(getContainer().className).toContain('psh-loading');
     });
 
     it('should add disabled class when disabled is true', () => {
       fixture.componentRef.setInput('disabled', true);
       fixture.detectChanges();
 
-      expect(getContainer().className).toContain('disabled');
+      expect(getContainer().className).toContain('psh-disabled');
     });
 
     it('should apply custom CSS class', () => {

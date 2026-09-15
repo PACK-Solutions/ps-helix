@@ -97,7 +97,7 @@ describe('PshSelectComponent', () => {
     getOptions()[index] as HTMLElement;
 
   const getLabel = () =>
-    fixture.nativeElement.querySelector('.select-label') as HTMLElement;
+    fixture.nativeElement.querySelector('.psh-select-label') as HTMLElement;
 
   const getErrorMessage = () =>
     fixture.nativeElement.querySelector('[role="alert"]') as HTMLElement;
@@ -106,19 +106,19 @@ describe('PshSelectComponent', () => {
     fixture.nativeElement.querySelector('[role="status"]') as HTMLElement;
 
   const getHintMessage = () =>
-    fixture.nativeElement.querySelector('.select-hint') as HTMLElement;
+    fixture.nativeElement.querySelector('.psh-select-hint') as HTMLElement;
 
   const getClearButton = () =>
-    fixture.nativeElement.querySelector('.select-clear') as HTMLButtonElement;
+    fixture.nativeElement.querySelector('.psh-select-clear') as HTMLButtonElement;
 
   const getSearchInput = () =>
-    document.querySelector('.select-search input') as HTMLInputElement;
+    document.querySelector('.psh-select-search input') as HTMLInputElement;
 
   const getNoResultsMessage = () =>
-    document.querySelector('.select-no-results') as HTMLElement;
+    document.querySelector('.psh-select-no-results') as HTMLElement;
 
   const getGroupLabels = () =>
-    Array.from(document.querySelectorAll('.select-group-label')) as HTMLElement[];
+    Array.from(document.querySelectorAll('.psh-select-group-label')) as HTMLElement[];
 
   const openSelect = () => {
     getCombobox().click();
@@ -145,7 +145,7 @@ describe('PshSelectComponent', () => {
     it('flips the panel above the trigger when there is no room below (anti-overflow)', async () => {
       Object.defineProperty(window, 'innerHeight', { value: 768, configurable: true });
 
-      const trigger = fixture.nativeElement.querySelector('.select-trigger') as HTMLElement;
+      const trigger = fixture.nativeElement.querySelector('.psh-select-trigger') as HTMLElement;
       // Anchor the trigger near the bottom edge: no room for the panel below.
       trigger.getBoundingClientRect = () =>
         ({
@@ -164,8 +164,8 @@ describe('PshSelectComponent', () => {
       await fixture.whenStable();
       fixture.detectChanges();
 
-      const panel = document.querySelector('.select-dropdown') as HTMLElement;
-      expect(panel.classList.contains('open-top')).toBe(true);
+      const panel = document.querySelector('.psh-select-dropdown') as HTMLElement;
+      expect(panel.classList.contains('psh-open-top')).toBe(true);
     });
   });
 
@@ -177,7 +177,7 @@ describe('PshSelectComponent', () => {
       expect(layer).toBeTruthy();
       expect(layer!.parentElement).toBe(document.body);
 
-      const panel = document.querySelector('.select-dropdown') as HTMLElement;
+      const panel = document.querySelector('.psh-select-dropdown') as HTMLElement;
       expect(panel).toBeTruthy();
       expect(layer!.contains(panel)).toBe(true);
       // The panel lives outside the component host, escaping any ancestor overflow.
@@ -186,11 +186,11 @@ describe('PshSelectComponent', () => {
 
     it('removes the teleported panel and layer from the body when closed', () => {
       openSelect();
-      expect(document.querySelector('.select-dropdown')).toBeTruthy();
+      expect(document.querySelector('.psh-select-dropdown')).toBeTruthy();
 
       pressKey('Escape');
 
-      expect(document.querySelector('.select-dropdown')).toBeFalsy();
+      expect(document.querySelector('.psh-select-dropdown')).toBeFalsy();
       expect(document.querySelector('.psh-overlay-layer')).toBeFalsy();
     });
   });
@@ -751,7 +751,7 @@ describe('PshSelectComponent', () => {
       fixture.componentRef.setInput('disabled', true);
       fixture.detectChanges();
 
-      expect(fixture.nativeElement.classList.contains('disabled')).toBe(true);
+      expect(fixture.nativeElement.classList.contains('psh-disabled')).toBe(true);
     });
   });
 
@@ -783,7 +783,7 @@ describe('PshSelectComponent', () => {
       fixture.componentRef.setInput('loading', true);
       fixture.detectChanges();
 
-      expect(fixture.nativeElement.classList.contains('loading')).toBe(true);
+      expect(fixture.nativeElement.classList.contains('psh-loading')).toBe(true);
     });
   });
 
@@ -795,15 +795,15 @@ describe('PshSelectComponent', () => {
       fixture.componentRef.setInput('size', size);
       fixture.detectChanges();
 
-      expect(fixture.nativeElement.classList.contains(expectedClass)).toBe(true);
+      expect(fixture.nativeElement.classList.contains(`psh-${expectedClass}`)).toBe(true);
     });
 
     it('should NOT apply small or large class when size is medium', () => {
       fixture.componentRef.setInput('size', 'medium');
       fixture.detectChanges();
 
-      expect(fixture.nativeElement.classList.contains('small')).toBe(false);
-      expect(fixture.nativeElement.classList.contains('large')).toBe(false);
+      expect(fixture.nativeElement.classList.contains('psh-small')).toBe(false);
+      expect(fixture.nativeElement.classList.contains('psh-large')).toBe(false);
     });
   });
 
@@ -812,21 +812,21 @@ describe('PshSelectComponent', () => {
       fixture.componentRef.setInput('error', 'Error message');
       fixture.detectChanges();
 
-      expect(fixture.nativeElement.classList.contains('error')).toBe(true);
+      expect(fixture.nativeElement.classList.contains('psh-error')).toBe(true);
     });
 
     it('should apply success class when success is set', () => {
       fixture.componentRef.setInput('success', 'Success message');
       fixture.detectChanges();
 
-      expect(fixture.nativeElement.classList.contains('success')).toBe(true);
+      expect(fixture.nativeElement.classList.contains('psh-success')).toBe(true);
     });
 
     it('should apply full-width class when fullWidth is true', () => {
       fixture.componentRef.setInput('fullWidth', true);
       fixture.detectChanges();
 
-      expect(fixture.nativeElement.classList.contains('full-width')).toBe(true);
+      expect(fixture.nativeElement.classList.contains('psh-full-width')).toBe(true);
     });
   });
 
@@ -987,7 +987,7 @@ describe('PshSelectComponent', () => {
       fixture.detectChanges();
 
       const label = getLabel();
-      expect(label.classList.contains('required')).toBe(true);
+      expect(label.classList.contains('psh-required')).toBe(true);
     });
   });
 
@@ -1057,7 +1057,7 @@ describe('PshSelectComponent', () => {
       fixture.detectChanges();
       openSelect();
 
-      const icons = document.querySelectorAll('.select-option i.ph');
+      const icons = document.querySelectorAll('.psh-select-option i.ph');
       expect(icons.length).toBe(2);
       expect(icons[0].classList.contains('ph-house')).toBe(true);
       expect(icons[1].classList.contains('ph-gear')).toBe(true);

@@ -141,13 +141,13 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
 
   /** Computed CSS classes */
   computedClasses = computed(() => {
-    const classes = ['info-card'];
-    classes.push(`appearance-${this.appearance()}`);
+    const classes = ['psh-info-card'];
+    classes.push(`psh-appearance-${this.appearance()}`);
 
-    if (this.hoverable()) classes.push('hoverable');
-    if (this.interactive()) classes.push('interactive');
-    if (this.loading()) classes.push('loading');
-    if (this.disabled()) classes.push('disabled');
+    if (this.hoverable()) classes.push('psh-hoverable');
+    if (this.interactive()) classes.push('psh-interactive');
+    if (this.loading()) classes.push('psh-loading');
+    if (this.disabled()) classes.push('psh-disabled');
     if (this.cssClass()) classes.push(this.cssClass());
 
     return classes.join(' ');
@@ -162,7 +162,7 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
   getActionsClasses = computed(() => {
     const classes: string[] = [];
     if (this.autoFullWidthOnMobile() && this.isMobile()) {
-      classes.push('mobile-full-width-buttons');
+      classes.push('psh-mobile-full-width-buttons');
     }
     return classes.join(' ');
   });
@@ -246,18 +246,18 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
    * Un emphasis explicite prime sur l'auto-muted des valeurs nullish.
    */
   getValueClasses(item: InfoCardData): string {
-    const classes = ['info-card-value'];
+    const classes = ['psh-info-card-value'];
     const emphasis = item.emphasis;
     const isEmpty = item.value == null;
     const autoMuted = isEmpty && this.options().mutedEmptyValues !== false && !emphasis;
 
     if (autoMuted) {
-      classes.push('info-card-value--italic', 'info-card-value--tone-muted');
+      classes.push('psh-info-card-value--italic', 'psh-info-card-value--tone-muted');
     } else if (emphasis) {
-      if (emphasis.italic) classes.push('info-card-value--italic');
-      if (emphasis.bold) classes.push('info-card-value--bold');
-      if (emphasis.strikethrough) classes.push('info-card-value--strikethrough');
-      if (emphasis.tone) classes.push(`info-card-value--tone-${emphasis.tone}`);
+      if (emphasis.italic) classes.push('psh-info-card-value--italic');
+      if (emphasis.bold) classes.push('psh-info-card-value--bold');
+      if (emphasis.strikethrough) classes.push('psh-info-card-value--strikethrough');
+      if (emphasis.tone) classes.push(`psh-info-card-value--tone-${emphasis.tone}`);
     }
 
     return classes.join(' ');

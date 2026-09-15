@@ -22,10 +22,10 @@ describe('PshSpinLoaderComponent', () => {
   const getHostElement = () => fixture.nativeElement as HTMLElement;
 
   const getLabel = () =>
-    fixture.nativeElement.querySelector('.spinner-label') as HTMLElement;
+    fixture.nativeElement.querySelector('.psh-spinner-label') as HTMLElement;
 
   const getSpinnerContainer = () =>
-    fixture.nativeElement.querySelector('[class^="spinner-"]') as HTMLElement;
+    fixture.nativeElement.querySelector('[class^="psh-spinner-"]') as HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -110,22 +110,22 @@ describe('PshSpinLoaderComponent', () => {
 
       const host = getHostElement();
       if (size === 'medium') {
-        expect(host.classList.contains('small')).toBe(false);
-        expect(host.classList.contains('large')).toBe(false);
+        expect(host.classList.contains('psh-small')).toBe(false);
+        expect(host.classList.contains('psh-large')).toBe(false);
       } else {
-        expect(host.classList.contains(size)).toBe(hasClass);
+        expect(host.classList.contains(`psh-${size}`)).toBe(hasClass);
       }
     });
 
     it('should switch between size classes', () => {
       fixture.componentRef.setInput('size', 'small');
       fixture.detectChanges();
-      expect(getHostElement().classList.contains('small')).toBe(true);
+      expect(getHostElement().classList.contains('psh-small')).toBe(true);
 
       fixture.componentRef.setInput('size', 'large');
       fixture.detectChanges();
-      expect(getHostElement().classList.contains('large')).toBe(true);
-      expect(getHostElement().classList.contains('small')).toBe(false);
+      expect(getHostElement().classList.contains('psh-large')).toBe(true);
+      expect(getHostElement().classList.contains('psh-small')).toBe(false);
     });
   });
 
@@ -166,9 +166,9 @@ describe('PshSpinLoaderComponent', () => {
 
   describe('Variant rendering', () => {
     it.each<[SpinLoaderVariant, string]>([
-      ['circle', '.spinner-circle'],
-      ['dots', '.spinner-dots'],
-      ['pulse', '.spinner-pulse']
+      ['circle', '.psh-spinner-circle'],
+      ['dots', '.psh-spinner-dots'],
+      ['pulse', '.psh-spinner-pulse']
     ])('variant "%s" should render %s container', (variant, selector) => {
       fixture.componentRef.setInput('variant', variant);
       fixture.detectChanges();
@@ -180,9 +180,9 @@ describe('PshSpinLoaderComponent', () => {
       fixture.componentRef.setInput('variant', 'dots');
       fixture.detectChanges();
 
-      expect(fixture.nativeElement.querySelector('.spinner-circle')).toBeFalsy();
-      expect(fixture.nativeElement.querySelector('.spinner-dots')).toBeTruthy();
-      expect(fixture.nativeElement.querySelector('.spinner-pulse')).toBeFalsy();
+      expect(fixture.nativeElement.querySelector('.psh-spinner-circle')).toBeFalsy();
+      expect(fixture.nativeElement.querySelector('.psh-spinner-dots')).toBeTruthy();
+      expect(fixture.nativeElement.querySelector('.psh-spinner-pulse')).toBeFalsy();
     });
   });
 
@@ -198,18 +198,18 @@ describe('PshSpinLoaderComponent', () => {
       fixture.detectChanges();
 
       const spinner = getSpinnerContainer();
-      expect(spinner.classList.contains(color)).toBe(true);
+      expect(spinner.classList.contains(`psh-${color}`)).toBe(true);
     });
 
     it('should switch between color classes', () => {
       fixture.componentRef.setInput('color', 'primary');
       fixture.detectChanges();
-      expect(getSpinnerContainer().classList.contains('primary')).toBe(true);
+      expect(getSpinnerContainer().classList.contains('psh-primary')).toBe(true);
 
       fixture.componentRef.setInput('color', 'danger');
       fixture.detectChanges();
-      expect(getSpinnerContainer().classList.contains('danger')).toBe(true);
-      expect(getSpinnerContainer().classList.contains('primary')).toBe(false);
+      expect(getSpinnerContainer().classList.contains('psh-danger')).toBe(true);
+      expect(getSpinnerContainer().classList.contains('psh-primary')).toBe(false);
     });
   });
 
@@ -225,7 +225,7 @@ describe('PshSpinLoaderComponent', () => {
       newFixture.detectChanges();
       await newFixture.whenStable();
 
-      expect(newFixture.nativeElement.classList.contains('reduce-motion')).toBe(true);
+      expect(newFixture.nativeElement.classList.contains('psh-reduce-motion')).toBe(true);
     });
 
     it('should not apply reduce-motion class when prefers-reduced-motion does not match', async () => {
@@ -235,7 +235,7 @@ describe('PshSpinLoaderComponent', () => {
       newFixture.detectChanges();
       await newFixture.whenStable();
 
-      expect(newFixture.nativeElement.classList.contains('reduce-motion')).toBe(false);
+      expect(newFixture.nativeElement.classList.contains('psh-reduce-motion')).toBe(false);
     });
   });
 });
@@ -315,14 +315,14 @@ describe('PshSpinLoaderComponent - Dynamic Media Query Behavior', () => {
   });
 
   it('should update reduceMotion signal when media query changes', () => {
-    expect(fixture.nativeElement.classList.contains('reduce-motion')).toBe(false);
+    expect(fixture.nativeElement.classList.contains('psh-reduce-motion')).toBe(false);
 
     if (mediaQueryHandler) {
       mediaQueryHandler({ matches: true } as MediaQueryListEvent);
       fixture.detectChanges();
     }
 
-    expect(fixture.nativeElement.classList.contains('reduce-motion')).toBe(true);
+    expect(fixture.nativeElement.classList.contains('psh-reduce-motion')).toBe(true);
   });
 
   it('should toggle reduceMotion class on multiple media query changes', () => {
@@ -332,15 +332,15 @@ describe('PshSpinLoaderComponent - Dynamic Media Query Behavior', () => {
 
     mediaQueryHandler({ matches: true } as MediaQueryListEvent);
     fixture.detectChanges();
-    expect(fixture.nativeElement.classList.contains('reduce-motion')).toBe(true);
+    expect(fixture.nativeElement.classList.contains('psh-reduce-motion')).toBe(true);
 
     mediaQueryHandler({ matches: false } as MediaQueryListEvent);
     fixture.detectChanges();
-    expect(fixture.nativeElement.classList.contains('reduce-motion')).toBe(false);
+    expect(fixture.nativeElement.classList.contains('psh-reduce-motion')).toBe(false);
 
     mediaQueryHandler({ matches: true } as MediaQueryListEvent);
     fixture.detectChanges();
-    expect(fixture.nativeElement.classList.contains('reduce-motion')).toBe(true);
+    expect(fixture.nativeElement.classList.contains('psh-reduce-motion')).toBe(true);
   });
 });
 
@@ -361,7 +361,7 @@ describe('PshSpinLoaderComponent - DOM Structure Validation', () => {
     fixture.componentRef.setInput('variant', 'dots');
     fixture.detectChanges();
 
-    const dots = fixture.nativeElement.querySelectorAll('.dot');
+    const dots = fixture.nativeElement.querySelectorAll('.psh-dot');
     expect(dots.length).toBe(3);
   });
 
@@ -369,7 +369,7 @@ describe('PshSpinLoaderComponent - DOM Structure Validation', () => {
     fixture.componentRef.setInput('variant', 'pulse');
     fixture.detectChanges();
 
-    const pulses = fixture.nativeElement.querySelectorAll('.pulse');
+    const pulses = fixture.nativeElement.querySelectorAll('.psh-pulse');
     expect(pulses.length).toBe(3);
   });
 
@@ -378,10 +378,10 @@ describe('PshSpinLoaderComponent - DOM Structure Validation', () => {
     fixture.componentRef.setInput('color', 'success');
     fixture.detectChanges();
 
-    const container = fixture.nativeElement.querySelector('.spinner-dots');
-    expect(container?.classList.contains('success')).toBe(true);
+    const container = fixture.nativeElement.querySelector('.psh-spinner-dots');
+    expect(container?.classList.contains('psh-success')).toBe(true);
 
-    const dots = fixture.nativeElement.querySelectorAll('.dot');
+    const dots = fixture.nativeElement.querySelectorAll('.psh-dot');
     expect(dots.length).toBe(3);
   });
 
@@ -390,10 +390,10 @@ describe('PshSpinLoaderComponent - DOM Structure Validation', () => {
     fixture.componentRef.setInput('color', 'warning');
     fixture.detectChanges();
 
-    const container = fixture.nativeElement.querySelector('.spinner-pulse');
-    expect(container?.classList.contains('warning')).toBe(true);
+    const container = fixture.nativeElement.querySelector('.psh-spinner-pulse');
+    expect(container?.classList.contains('psh-warning')).toBe(true);
 
-    const pulses = fixture.nativeElement.querySelectorAll('.pulse');
+    const pulses = fixture.nativeElement.querySelectorAll('.psh-pulse');
     expect(pulses.length).toBe(3);
   });
 
@@ -401,7 +401,7 @@ describe('PshSpinLoaderComponent - DOM Structure Validation', () => {
     fixture.componentRef.setInput('variant', 'circle');
     fixture.detectChanges();
 
-    const circleDiv = fixture.nativeElement.querySelector('.spinner-circle');
+    const circleDiv = fixture.nativeElement.querySelector('.psh-spinner-circle');
     expect(circleDiv).toBeTruthy();
     expect(circleDiv?.tagName).toBe('DIV');
   });
@@ -437,7 +437,7 @@ describe('PshSpinLoaderComponent - SSR Compatibility', () => {
     const fixture = TestBed.createComponent(PshSpinLoaderComponent);
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.classList.contains('reduce-motion')).toBe(false);
+    expect(fixture.nativeElement.classList.contains('psh-reduce-motion')).toBe(false);
 
     (globalThis as any).window = originalWindow;
   });
@@ -461,7 +461,7 @@ describe('PshSpinLoaderComponent - Edge Cases', () => {
     fixture.componentRef.setInput('label', '');
     fixture.detectChanges();
 
-    const label = fixture.nativeElement.querySelector('.spinner-label');
+    const label = fixture.nativeElement.querySelector('.psh-spinner-label');
     expect(label).toBeFalsy();
   });
 
@@ -483,9 +483,9 @@ describe('PshSpinLoaderComponent - Edge Cases', () => {
       fixture.detectChanges();
 
       if (size === 'small') {
-        expect(fixture.nativeElement.classList.contains('small')).toBe(true);
+        expect(fixture.nativeElement.classList.contains('psh-small')).toBe(true);
       } else if (size === 'large') {
-        expect(fixture.nativeElement.classList.contains('large')).toBe(true);
+        expect(fixture.nativeElement.classList.contains('psh-large')).toBe(true);
       }
     });
   });
@@ -497,8 +497,8 @@ describe('PshSpinLoaderComponent - Edge Cases', () => {
       fixture.componentRef.setInput('color', color);
       fixture.detectChanges();
 
-      const spinner = fixture.nativeElement.querySelector('[class^="spinner-"]');
-      expect(spinner?.classList.contains(color)).toBe(true);
+      const spinner = fixture.nativeElement.querySelector('[class^="psh-spinner-"]');
+      expect(spinner?.classList.contains(`psh-${color}`)).toBe(true);
     });
   });
 
@@ -512,14 +512,14 @@ describe('PshSpinLoaderComponent - Edge Cases', () => {
     fixture.detectChanges();
 
     expect(fixture.nativeElement.getAttribute('data-state')).toBe('pulse');
-    expect(fixture.nativeElement.classList.contains('large')).toBe(true);
+    expect(fixture.nativeElement.classList.contains('psh-large')).toBe(true);
     expect(fixture.nativeElement.getAttribute('aria-label')).toBe('Please wait');
     expect(fixture.nativeElement.getAttribute('aria-live')).toBe('assertive');
 
-    const spinner = fixture.nativeElement.querySelector('.spinner-pulse');
-    expect(spinner?.classList.contains('danger')).toBe(true);
+    const spinner = fixture.nativeElement.querySelector('.psh-spinner-pulse');
+    expect(spinner?.classList.contains('psh-danger')).toBe(true);
 
-    const label = fixture.nativeElement.querySelector('.spinner-label');
+    const label = fixture.nativeElement.querySelector('.psh-spinner-label');
     expect(label?.textContent).toContain('Loading data...');
   });
 
@@ -528,12 +528,12 @@ describe('PshSpinLoaderComponent - Edge Cases', () => {
     fixture.componentRef.setInput('label', 'Loading...');
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('.spinner-label')).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('.psh-spinner-label')).toBeTruthy();
 
     fixture.componentRef.setInput('label', undefined);
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('.spinner-label')).toBeFalsy();
+    expect(fixture.nativeElement.querySelector('.psh-spinner-label')).toBeFalsy();
     expect(fixture.nativeElement.getAttribute('data-state')).toBe('dots');
   });
 });
@@ -544,7 +544,7 @@ describe('PshSpinLoaderComponent with custom config', () => {
   const getHostElement = () => fixture.nativeElement as HTMLElement;
 
   const getSpinnerContainer = () =>
-    fixture.nativeElement.querySelector('[class^="spinner-"]') as HTMLElement;
+    fixture.nativeElement.querySelector('[class^="psh-spinner-"]') as HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -570,11 +570,11 @@ describe('PshSpinLoaderComponent with custom config', () => {
   });
 
   it('should use injected config for default size', () => {
-    expect(getHostElement().classList.contains('large')).toBe(true);
+    expect(getHostElement().classList.contains('psh-large')).toBe(true);
   });
 
   it('should use injected config for default color', () => {
-    expect(getSpinnerContainer().classList.contains('success')).toBe(true);
+    expect(getSpinnerContainer().classList.contains('psh-success')).toBe(true);
   });
 
   it('should allow overriding injected defaults via inputs', () => {
@@ -584,7 +584,7 @@ describe('PshSpinLoaderComponent with custom config', () => {
     fixture.detectChanges();
 
     expect(getHostElement().getAttribute('data-state')).toBe('pulse');
-    expect(getHostElement().classList.contains('small')).toBe(true);
-    expect(getSpinnerContainer().classList.contains('danger')).toBe(true);
+    expect(getHostElement().classList.contains('psh-small')).toBe(true);
+    expect(getSpinnerContainer().classList.contains('psh-danger')).toBe(true);
   });
 });

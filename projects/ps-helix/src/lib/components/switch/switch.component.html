@@ -1,13 +1,13 @@
 <div
-  class="switch-container"
-  [class.small]="size() === 'small'"
-  [class.large]="size() === 'large'"
+  class="psh-switch-container"
+  [class.psh-small]="size() === 'small'"
+  [class.psh-large]="size() === 'large'"
 >
-  <label class="switch-label" [class]="labelPosition() === 'left' ? 'label-left' : 'label-right'">
+  <label class="psh-switch-label" [class]="labelPosition() === 'left' ? 'psh-label-left' : 'psh-label-right'">
     <input
       #switchInput
       type="checkbox"
-      class="switch-input"
+      class="psh-switch-input"
       [id]="id()"
       [name]="name() || id()"
       [checked]="checked()"
@@ -20,10 +20,10 @@
       [attr.aria-describedby]="describedBy()"
       (change)="toggle()"
     />
-    <span class="switch-control">
-      <span class="switch-thumb"></span>
+    <span class="psh-switch-control">
+      <span class="psh-switch-thumb"></span>
     </span>
-    <span class="switch-text">
+    <span class="psh-switch-text">
       @if (label()) {
         {{ label() }}
       } @else {
@@ -33,11 +33,11 @@
   </label>
 
   @if (error()) {
-    <div [id]="errorId()!" class="switch-error" role="alert" aria-live="polite">
+    <div [id]="errorId()!" class="psh-switch-error" role="alert" aria-live="polite">
       {{ error() }}
     </div>
   } @else if (success()) {
-    <div [id]="successId()!" class="switch-success" role="status" aria-live="polite">
+    <div [id]="successId()!" class="psh-switch-success" role="status" aria-live="polite">
       {{ success() }}
     </div>
   }

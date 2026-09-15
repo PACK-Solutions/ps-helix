@@ -4,16 +4,16 @@
   max-width: 18.75rem;
 }
 
-:host.full-width { max-width: none; }
-.select-container {
+:host.psh-full-width { max-width: none; }
+.psh-select-container {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: var(--psh-form-field-gap);
 }
-.select-trigger-wrapper { position: relative; }
+.psh-select-trigger-wrapper { position: relative; }
 
-.select-label {
+.psh-select-label {
   display: block;
   color: var(--psh-text-color);
   font-size: var(--psh-font-size-sm);
@@ -21,7 +21,7 @@
   cursor: pointer;
 }
 
-.select-trigger {
+.psh-select-trigger {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -35,28 +35,28 @@
   box-sizing: border-box;
 }
 
-.select-trigger:focus-visible {
+.psh-select-trigger:focus-visible {
   border-color: var(--psh-primary-color);
   outline: none;
   box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-color);
 }
 
-:host.error .select-trigger { border-color: var(--psh-danger-color); }
-:host.error .select-trigger:focus-visible { box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-error); }
-:host.success .select-trigger { border-color: var(--psh-success-color); }
-:host.success .select-trigger:focus-visible { box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-success); }
-:host.disabled .select-trigger { background: var(--psh-surface-ground); cursor: not-allowed; opacity: var(--psh-opacity-disabled); }
+:host.psh-error .psh-select-trigger { border-color: var(--psh-danger-color); }
+:host.psh-error .psh-select-trigger:focus-visible { box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-error); }
+:host.psh-success .psh-select-trigger { border-color: var(--psh-success-color); }
+:host.psh-success .psh-select-trigger:focus-visible { box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-success); }
+:host.psh-disabled .psh-select-trigger { background: var(--psh-surface-ground); cursor: not-allowed; opacity: var(--psh-opacity-disabled); }
 
-:host.solid .select-trigger {
+:host.psh-solid .psh-select-trigger {
   background: var(--psh-surface-ground);
   border: 0.125rem solid var(--psh-surface-border);
 }
 
-:host.solid .select-trigger:hover:not([disabled]):not(:focus) {
+:host.psh-solid .psh-select-trigger:hover:not([disabled]):not(:focus) {
   background: var(--psh-surface-hover);
 }
 
-.select-value {
+.psh-select-value {
   flex: 1;
   min-width: 0;
   overflow: hidden;
@@ -64,14 +64,14 @@
   white-space: nowrap;
 }
 
-.select-actions {
+.psh-select-actions {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   flex-shrink: 0;
 }
 
-.select-clear {
+.psh-select-clear {
   background: none;
   border: none;
   cursor: pointer;
@@ -80,9 +80,9 @@
   display: flex;
 }
 
-.select-clear:hover { color: var(--psh-danger-color); }
+.psh-select-clear:hover { color: var(--psh-danger-color); }
 
-.select-loader-trigger {
+.psh-select-loader-trigger {
   width: 1rem;
   height: 1rem;
   border: 2px solid var(--psh-surface-border);
@@ -91,25 +91,25 @@
   animation: spin var(--psh-animation-loop-fast) var(--psh-animation-easing-linear) infinite;
 }
 
-.select-arrow {
+.psh-select-arrow {
   transition: transform var(--psh-animation-duration-normal);
   font-size: var(--psh-font-size-base);
   color: var(--psh-text-color-secondary);
 }
 
-:host[aria-expanded="true"] .select-arrow {
+:host[aria-expanded="true"] .psh-select-arrow {
   transform: rotate(180deg);
 }
 
 /*
  * The panel is teleported into the body-level overlay layer (PshPortalService)
  * and positioned as `fixed` from JS, so it escapes any ancestor overflow /
- * stacking context (e.g. a modal body). It re-enables pointer events (the layer
+ * stacking context (e.psh-g. a modal body). It re-enables pointer events (the layer
  * is click-through) and lays out as a flex column so the options area scrolls
- * inside the JS-bounded max-height. `.open-top` is kept as a hook (no positional
+ * inside the JS-bounded max-height. `.psh-open-top` is kept as a hook (no positional
  * CSS needed — the service sets `top` for both sides).
  */
-.select-dropdown {
+.psh-select-dropdown {
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -120,14 +120,14 @@
   box-shadow: var(--psh-shadow-lg);
 }
 
-.select-search {
+.psh-select-search {
   position: relative;
   flex-shrink: 0;
   padding: 0.5rem;
   border-bottom: 0.0625rem solid var(--psh-surface-border);
 }
 
-.select-search-icon {
+.psh-select-search-icon {
   position: absolute;
   left: 1.25rem;
   top: 50%;
@@ -137,7 +137,7 @@
   pointer-events: none;
 }
 
-.select-search input {
+.psh-select-search input {
   width: 100%;
   height: 2rem;
   padding: 0 0.75rem 0 2rem;
@@ -151,11 +151,11 @@
   transition: border-color var(--psh-animation-duration-fast);
 }
 
-.select-search input::placeholder { color: var(--psh-text-color-secondary); }
-.select-search input:focus-visible { border-color: var(--psh-primary-color); }
-.select-options { flex: 0 1 auto; max-height: 15rem; overflow-y: auto; }
+.psh-select-search input::placeholder { color: var(--psh-text-color-secondary); }
+.psh-select-search input:focus-visible { border-color: var(--psh-primary-color); }
+.psh-select-options { flex: 0 1 auto; max-height: 15rem; overflow-y: auto; }
 
-.select-group-label {
+.psh-select-group-label {
   padding: 0.5rem 1rem;
   font-size: 0.75rem;
   font-weight: 600;
@@ -163,7 +163,7 @@
   background: var(--psh-surface-ground);
 }
 
-.select-option {
+.psh-select-option {
   padding: 0.625rem 1rem;
   cursor: pointer;
   display: flex;
@@ -171,23 +171,23 @@
   gap: 0.5rem;
 }
 
-.select-option:hover { background: var(--psh-surface-hover); }
+.psh-select-option:hover { background: var(--psh-surface-hover); }
 
-.select-option.selected {
+.psh-select-option.psh-selected {
   background: rgba(var(--psh-primary-color-rgb), 0.1);
   color: var(--psh-primary-color);
   font-weight: 500;
 }
 
-.select-option.focused { background: var(--psh-surface-hover); }
-.select-option.disabled { opacity: var(--psh-opacity-disabled); cursor: not-allowed; }
+.psh-select-option.psh-focused { background: var(--psh-surface-hover); }
+.psh-select-option.psh-disabled { opacity: var(--psh-opacity-disabled); cursor: not-allowed; }
 
-.select-option i {
+.psh-select-option i {
   flex-shrink: 0;
   line-height: 1.4;
 }
 
-.select-option-content {
+.psh-select-option-content {
   flex: 1;
   min-width: 0;
   display: flex;
@@ -195,26 +195,26 @@
   gap: 0.125rem;
 }
 
-.select-option-label {
+.psh-select-option-label {
   min-width: 0;
 }
 
-.select-option-description {
+.psh-select-option-description {
   font-size: 0.75rem;
   color: var(--psh-text-color-secondary);
 }
 
-.select-error-message,
-.select-success-message,
-.select-hint {
+.psh-select-error-message,
+.psh-select-success-message,
+.psh-select-hint {
   font-size: 0.875rem;
 }
 
-.select-error-message { color: var(--psh-danger-color); }
-.select-success-message { color: var(--psh-success-color); }
-.select-hint { color: var(--psh-text-color-secondary); }
+.psh-select-error-message { color: var(--psh-danger-color); }
+.psh-select-success-message { color: var(--psh-success-color); }
+.psh-select-hint { color: var(--psh-text-color-secondary); }
 
-:host.small .select-trigger { text-overflow: ellipsis; height: var(--psh-control-height-sm); font-size: var(--psh-font-size-sm); }
-:host.large .select-trigger { text-overflow: ellipsis; height: var(--psh-control-height-lg); font-size: var(--psh-font-size-lg); }
+:host.psh-small .psh-select-trigger { text-overflow: ellipsis; height: var(--psh-control-height-sm); font-size: var(--psh-font-size-sm); }
+:host.psh-large .psh-select-trigger { text-overflow: ellipsis; height: var(--psh-control-height-lg); font-size: var(--psh-font-size-lg); }
 
 @keyframes spin { to { transform: rotate(360deg); } }

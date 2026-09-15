@@ -1,15 +1,15 @@
-<div class="select-container">
+<div class="psh-select-container">
   @if (label()) {
     <!-- label[for] delegates focus to its control natively; the click handler is a convenience. -->
     <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
-    <label class="select-label" [attr.for]="selectId" (click)="focusSelect()" [class.required]="required()">
+    <label class="psh-select-label" [attr.for]="selectId" (click)="focusSelect()" [class.psh-required]="required()">
       {{ label() }}
-      @if (required()) { <span class="required-mark">*</span> }
+      @if (required()) { <span class="psh-required-mark">*</span> }
     </label>
   }
 
-  <div class="select-trigger-wrapper">
-  <div class="select-trigger"
+  <div class="psh-select-trigger-wrapper">
+  <div class="psh-select-trigger"
        role="combobox"
        [id]="selectId"
        [attr.aria-expanded]="isOpen()"
@@ -25,16 +25,16 @@
        [attr.tabindex]="disabled() || loading() ? -1 : 0"
        (keydown)="handleKeydown($event)"
        (click)="toggle()">
-    <div class="select-value">
-      <span [class.placeholder]="!hasValue()">
+    <div class="psh-select-value">
+      <span [class.psh-placeholder]="!hasValue()">
         {{ selectedLabel() }}
       </span>
     </div>
-    <div class="select-actions">
+    <div class="psh-select-actions">
       @if (clearable() && hasValue() && !disabled()) {
         <!-- Icon-only control: without an explicit name it is announced as "button",
              and without type="button" it submits any surrounding form. -->
-        <button class="select-clear"
+        <button class="psh-select-clear"
                 type="button"
                 [attr.aria-label]="clearLabel()"
                 (click)="clear($event)">
@@ -42,18 +42,18 @@
         </button>
       }
       @if (loading()) {
-        <div class="select-loader-trigger"></div>
+        <div class="psh-select-loader-trigger"></div>
       } @else {
-        <i class="ph ph-caret-down select-arrow"></i>
+        <i class="ph ph-caret-down psh-select-arrow"></i>
       }
     </div>
   </div>
 
   <ng-template #panelTpl>
-    <div class="select-dropdown" [class.open-top]="resolvedSide() === 'top'">
+    <div class="psh-select-dropdown" [class.psh-open-top]="resolvedSide() === 'top'">
       @if (searchable()) {
-        <div class="select-search">
-          <i class="ph ph-magnifying-glass select-search-icon" aria-hidden="true"></i>
+        <div class="psh-select-search">
+          <i class="ph ph-magnifying-glass psh-select-search-icon" aria-hidden="true"></i>
           <input type="text"
                  [attr.aria-label]="searchConfig().placeholder"
                  [placeholder]="searchConfig().placeholder"
@@ -62,32 +62,32 @@
                  (click)="$event.stopPropagation()">
         </div>
       }
-      <div class="select-options"
+      <div class="psh-select-options"
            role="listbox"
            [id]="selectId + '-listbox'"
            [attr.aria-multiselectable]="multiple() || null"
            (scroll)="onScroll($event)">
         @for (item of filteredOptions(); track getOptionKey(item)) {
           @if (isOptionGroup(item)) {
-            <div class="select-group" role="group" [attr.aria-label]="item.label">
-              <div class="select-group-label">{{ item.label }}</div>
+            <div class="psh-select-group" role="group" [attr.aria-label]="item.label">
+              <div class="psh-select-group-label">{{ item.label }}</div>
               @for (opt of item.options; track opt.label) {
                 <!-- option in a listbox: keyboard is handled at the widget level (arrows + aria-activedescendant). -->
                 <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events -->
-                <div class="select-option"
+                <div class="psh-select-option"
                      role="option"
                      [id]="selectId + '-' + opt.value"
                      [attr.aria-selected]="isSelected(opt)"
                      [attr.aria-disabled]="(item.disabled || opt.disabled) ? true : null"
                      [attr.tabindex]="(item.disabled || opt.disabled) ? -1 : null"
-                     [class.selected]="isSelected(opt)"
-                     [class.disabled]="item.disabled || opt.disabled"
-                     [class.focused]="getFlatIndex(opt) === focusedIndex()"
+                     [class.psh-selected]="isSelected(opt)"
+                     [class.psh-disabled]="item.disabled || opt.disabled"
+                     [class.psh-focused]="getFlatIndex(opt) === focusedIndex()"
                      (click)="select(opt, !!item.disabled)">
                   @if (opt.icon) { <i [class]="'ph ph-' + opt.icon" aria-hidden="true"></i> }
-                  <div class="select-option-content">
-                    <span class="select-option-label">{{ opt.label }}</span>
-                    @if (opt.description) { <span class="select-option-description">{{ opt.description }}</span> }
+                  <div class="psh-select-option-content">
+                    <span class="psh-select-option-label">{{ opt.label }}</span>
+                    @if (opt.description) { <span class="psh-select-option-description">{{ opt.description }}</span> }
                   </div>
                 </div>
               }
@@ -95,25 +95,25 @@
           } @else {
             <!-- option in a listbox: keyboard is handled at the widget level (arrows + aria-activedescendant). -->
             <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events -->
-            <div class="select-option"
+            <div class="psh-select-option"
                  role="option"
                  [id]="selectId + '-' + item.value"
                  [attr.aria-selected]="isSelected(item)"
                  [attr.aria-disabled]="item.disabled ? true : null"
                  [attr.tabindex]="item.disabled ? -1 : null"
-                 [class.selected]="isSelected(item)"
-                 [class.disabled]="item.disabled"
-                 [class.focused]="getFlatIndex(item) === focusedIndex()"
+                 [class.psh-selected]="isSelected(item)"
+                 [class.psh-disabled]="item.disabled"
+                 [class.psh-focused]="getFlatIndex(item) === focusedIndex()"
                  (click)="select(item)">
               @if (item.icon) { <i [class]="'ph ph-' + item.icon" aria-hidden="true"></i> }
-              <div class="select-option-content">
-                <span class="select-option-label">{{ item.label }}</span>
-                @if (item.description) { <span class="select-option-description">{{ item.description }}</span> }
+              <div class="psh-select-option-content">
+                <span class="psh-select-option-label">{{ item.label }}</span>
+                @if (item.description) { <span class="psh-select-option-description">{{ item.description }}</span> }
               </div>
             </div>
           }
         } @empty {
-          <div class="select-no-results">Aucun résultat</div>
+          <div class="psh-select-no-results">Aucun résultat</div>
         }
       </div>
     </div>
@@ -121,10 +121,10 @@
   </div>
 
   @if (error()) {
-    <div id="error-message" class="select-error-message" role="alert">{{ error() }}</div>
+    <div id="error-message" class="psh-select-error-message" role="alert">{{ error() }}</div>
   } @else if (success()) {
-    <div id="success-message" class="select-success-message" role="status">{{ success() }}</div>
+    <div id="success-message" class="psh-select-success-message" role="status">{{ success() }}</div>
   } @else if (hint()) {
-    <div id="hint-message" class="select-hint">{{ hint() }}</div>
+    <div id="hint-message" class="psh-select-hint">{{ hint() }}</div>
   }
 </div>

@@ -85,13 +85,13 @@ export class PshHorizontalCardComponent {
 
   /** Classes CSS calculées selon les propriétés */
   computedClasses = computed(() => {
-    const classes = ['horizontal-card'];
-    classes.push(`appearance-${this.appearance()}`);
+    const classes = ['psh-horizontal-card'];
+    classes.push(`psh-appearance-${this.appearance()}`);
 
-    if (this.hoverable()) classes.push('hoverable');
-    if (this.interactive()) classes.push('interactive');
-    if (this.loading()) classes.push('loading');
-    if (this.disabled()) classes.push('disabled');
+    if (this.hoverable()) classes.push('psh-hoverable');
+    if (this.interactive()) classes.push('psh-interactive');
+    if (this.loading()) classes.push('psh-loading');
+    if (this.disabled()) classes.push('psh-disabled');
     if (this.cssClass()) classes.push(this.cssClass());
 
     return classes.join(' ');

@@ -10,8 +10,8 @@ import {
   template: `<ng-content />`,
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '[class.step-content]': 'true',
-    '[class.active]': 'isActive()',
+    '[class.psh-step-content]': 'true',
+    '[class.psh-active]': 'isActive()',
     '[attr.role]': '"tabpanel"',
     '[attr.aria-labelledby]': '"step-" + index()',
     '[attr.id]': '"panel-" + index()',

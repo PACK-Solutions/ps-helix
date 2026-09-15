@@ -9,10 +9,10 @@ describe('PshProgressbarComponent', () => {
     fixture.nativeElement.querySelector('[role="progressbar"]') as HTMLElement;
 
   const getLabel = () =>
-    fixture.nativeElement.querySelector('.progress-label') as HTMLElement;
+    fixture.nativeElement.querySelector('.psh-progress-label') as HTMLElement;
 
   const getProgressTrack = () =>
-    fixture.nativeElement.querySelector('.progress-track') as HTMLElement;
+    fixture.nativeElement.querySelector('.psh-progress-track') as HTMLElement;
 
   const getHostElement = () =>
     fixture.nativeElement as HTMLElement;
@@ -152,7 +152,7 @@ describe('PshProgressbarComponent', () => {
       fixture.detectChanges();
 
       const track = getProgressTrack();
-      expect(track.classList.contains(variant)).toBe(true);
+      expect(track.classList.contains(`psh-${variant}`)).toBe(true);
     });
   });
 
@@ -167,10 +167,10 @@ describe('PshProgressbarComponent', () => {
 
       const host = getHostElement();
       if (size === 'medium') {
-        expect(host.classList.contains('small')).toBe(false);
-        expect(host.classList.contains('large')).toBe(false);
+        expect(host.classList.contains('psh-small')).toBe(false);
+        expect(host.classList.contains('psh-large')).toBe(false);
       } else {
-        expect(host.classList.contains(size)).toBe(hasClass);
+        expect(host.classList.contains(`psh-${size}`)).toBe(hasClass);
       }
     });
   });
@@ -193,7 +193,7 @@ describe('PshProgressbarComponent', () => {
       fixture.detectChanges();
 
       const progressbar = getProgressbar();
-      expect(progressbar.classList.contains('striped')).toBe(true);
+      expect(progressbar.classList.contains('psh-striped')).toBe(true);
     });
 
     it('should apply striped and animated classes for animated mode', () => {
@@ -201,8 +201,8 @@ describe('PshProgressbarComponent', () => {
       fixture.detectChanges();
 
       const progressbar = getProgressbar();
-      expect(progressbar.classList.contains('striped')).toBe(true);
-      expect(progressbar.classList.contains('animated')).toBe(true);
+      expect(progressbar.classList.contains('psh-striped')).toBe(true);
+      expect(progressbar.classList.contains('psh-animated')).toBe(true);
     });
 
     it('should apply indeterminate class for indeterminate mode', () => {
@@ -210,7 +210,7 @@ describe('PshProgressbarComponent', () => {
       fixture.detectChanges();
 
       const progressbar = getProgressbar();
-      expect(progressbar.classList.contains('indeterminate')).toBe(true);
+      expect(progressbar.classList.contains('psh-indeterminate')).toBe(true);
     });
 
     it('should use percentage width for indeterminate mode (CSS handles animation)', () => {
@@ -234,10 +234,10 @@ describe('PshProgressbarComponent', () => {
 
       const host = getHostElement();
       if (expectedClass) {
-        expect(host.classList.contains(expectedClass)).toBe(true);
+        expect(host.classList.contains(`psh-${expectedClass}`)).toBe(true);
       } else {
-        expect(host.classList.contains('label-bottom')).toBe(false);
-        expect(host.classList.contains('label-inline')).toBe(false);
+        expect(host.classList.contains('psh-label-bottom')).toBe(false);
+        expect(host.classList.contains('psh-label-inline')).toBe(false);
       }
     });
   });

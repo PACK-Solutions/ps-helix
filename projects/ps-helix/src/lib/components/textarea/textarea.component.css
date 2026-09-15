@@ -6,11 +6,11 @@
   transition: all var(--psh-animation-duration-default) var(--psh-animation-easing-default);
 }
 
-:host.full-width {
+:host.psh-full-width {
   max-width: none;
 }
 
-.textarea-container {
+.psh-textarea-container {
   position: relative;
   width: 100%;
   display: flex;
@@ -19,7 +19,7 @@
 }
 
 /* --- Label --- */
-.textarea-label {
+.psh-textarea-label {
   display: block;
   color: var(--psh-text-color);
   font-size: var(--psh-font-size-sm);
@@ -28,14 +28,14 @@
   cursor: pointer;
 }
 
-.textarea-label.required::after {
+.psh-textarea-label.psh-required::after {
   content: '*';
   color: var(--psh-danger-color);
   margin-left: 0.125rem;
 }
 
 /* --- Wrapper & Textarea Base --- */
-.textarea-wrapper {
+.psh-textarea-wrapper {
   position: relative;
   display: flex;
   width: 100%;
@@ -73,72 +73,72 @@ textarea:focus-visible {
 }
 
 /* --- Variantes --- */
-:host.outline textarea {
+:host.psh-outline textarea {
   background: transparent;
 }
 
-:host.solid textarea {
+:host.psh-solid textarea {
   background: var(--psh-surface-ground);
   border: 0.125rem solid var(--psh-surface-border);
 }
 
-:host.solid textarea:hover:not(:disabled):not(:focus):not([readonly]) {
+:host.psh-solid textarea:hover:not(:disabled):not(:focus):not([readonly]) {
   background: var(--psh-surface-hover);
 }
 
-:host.solid textarea:focus-visible {
+:host.psh-solid textarea:focus-visible {
   background: var(--psh-surface-0);
 }
 
 /* --- États --- */
-:host.error textarea {
+:host.psh-error textarea {
   border-color: var(--psh-danger-color);
 }
 
-:host.error textarea:focus-visible {
+:host.psh-error textarea:focus-visible {
   box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-error);
 }
 
-:host.success textarea {
+:host.psh-success textarea {
   border-color: var(--psh-success-color);
 }
 
-:host.success textarea:focus-visible {
+:host.psh-success textarea:focus-visible {
   box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-success);
 }
 
-:host.disabled textarea {
+:host.psh-disabled textarea {
   background: var(--psh-surface-ground);
   cursor: not-allowed;
   opacity: var(--psh-opacity-disabled);
 }
 
-:host.readonly textarea {
+:host.psh-readonly textarea {
   background: var(--psh-surface-ground);
   cursor: default;
 }
 
 /* --- Tailles --- */
-:host.small textarea {
+:host.psh-small textarea {
   font-size: var(--psh-font-size-sm);
   padding: 0.5rem 0.75rem;
   min-height: 4rem;
 }
 
-:host.large textarea {
+:host.psh-large textarea {
   font-size: var(--psh-font-size-lg);
   padding: 0.75rem 1.125rem;
   min-height: 6rem;
 }
 
 /* --- Auto-size --- */
-:host.auto-size textarea {
+:host.psh-auto-size textarea {
   overflow: hidden;
   resize: none;
 }
 
 /* --- Footer, messages & compteur --- */
-.textarea-footer {
+.psh-textarea-footer {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -146,23 +146,23 @@ textarea:focus-visible {
   width: 100%;
 }
 
-.textarea-messages {
+.psh-textarea-messages {
   flex: 1 1 auto;
   min-width: 0;
 }
 
-.textarea-error,
-.textarea-success,
-.textarea-hint {
+.psh-textarea-error,
+.psh-textarea-success,
+.psh-textarea-hint {
   font-size: var(--psh-font-size-sm);
   line-height: 1.4;
 }
 
-.textarea-error { color: var(--psh-danger-color); }
-.textarea-success { color: var(--psh-success-color); }
-.textarea-hint { color: var(--psh-text-color-secondary); }
+.psh-textarea-error { color: var(--psh-danger-color); }
+.psh-textarea-success { color: var(--psh-success-color); }
+.psh-textarea-hint { color: var(--psh-text-color-secondary); }
 
-.textarea-count {
+.psh-textarea-count {
   flex: 0 0 auto;
   font-size: 0.8125rem;
   color: var(--psh-text-color-tertiary);
@@ -170,12 +170,12 @@ textarea:focus-visible {
   white-space: nowrap;
 }
 
-.textarea-count.at-limit {
+.psh-textarea-count.psh-at-limit {
   color: var(--psh-warning-color);
   font-weight: 500;
 }
 
-.textarea-count.over-limit {
+.psh-textarea-count.psh-over-limit {
   color: var(--psh-danger-color);
   font-weight: 600;
 }

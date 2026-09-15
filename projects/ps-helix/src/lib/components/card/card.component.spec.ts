@@ -63,12 +63,12 @@ describe('PshCardComponent', () => {
     it('should update variant class when variant changes', () => {
       fixture.componentRef.setInput('appearance', 'flat');
       fixture.detectChanges();
-      expect(cardElement.nativeElement.className).toContain('appearance-flat');
+      expect(cardElement.nativeElement.className).toContain('psh-appearance-flat');
 
       fixture.componentRef.setInput('appearance', 'elevated');
       fixture.detectChanges();
-      expect(cardElement.nativeElement.className).toContain('appearance-elevated');
-      expect(cardElement.nativeElement.className).not.toContain('appearance-flat');
+      expect(cardElement.nativeElement.className).toContain('psh-appearance-elevated');
+      expect(cardElement.nativeElement.className).not.toContain('psh-appearance-flat');
     });
   });
 
@@ -108,7 +108,7 @@ describe('PshCardComponent', () => {
         fixture.componentRef.setInput('actionsAlignment', alignment);
         fixture.detectChanges();
 
-        const actionsElement = fixture.debugElement.query(By.css('.card-actions'));
+        const actionsElement = fixture.debugElement.query(By.css('.psh-card-actions'));
         expect(actionsElement.nativeElement.className).toContain(`actions-align-${alignment}`);
       });
     });
@@ -116,30 +116,30 @@ describe('PshCardComponent', () => {
 
   describe('Hoverable State', () => {
     it('should not have hoverable class by default', () => {
-      expect(cardElement.nativeElement.className).not.toContain('hoverable');
+      expect(cardElement.nativeElement.className).not.toContain('psh-hoverable');
     });
 
     it('should add hoverable class when hoverable is true', () => {
       component.hoverable.set(true);
       fixture.detectChanges();
 
-      expect(cardElement.nativeElement.className).toContain('hoverable');
+      expect(cardElement.nativeElement.className).toContain('psh-hoverable');
     });
 
     it('should remove hoverable class when hoverable is set to false', () => {
       component.hoverable.set(true);
       fixture.detectChanges();
-      expect(cardElement.nativeElement.className).toContain('hoverable');
+      expect(cardElement.nativeElement.className).toContain('psh-hoverable');
 
       component.hoverable.set(false);
       fixture.detectChanges();
-      expect(cardElement.nativeElement.className).not.toContain('hoverable');
+      expect(cardElement.nativeElement.className).not.toContain('psh-hoverable');
     });
   });
 
   describe('Interactive State', () => {
     it('should not be interactive by default', () => {
-      expect(cardElement.nativeElement.className).not.toContain('interactive');
+      expect(cardElement.nativeElement.className).not.toContain('psh-interactive');
       expect(cardElement.nativeElement.getAttribute('tabindex')).toBeNull();
     });
 
@@ -147,7 +147,7 @@ describe('PshCardComponent', () => {
       component.interactive.set(true);
       fixture.detectChanges();
 
-      expect(cardElement.nativeElement.className).toContain('interactive');
+      expect(cardElement.nativeElement.className).toContain('psh-interactive');
     });
 
     it('should set tabindex to 0 when interactive is true', () => {
@@ -175,14 +175,14 @@ describe('PshCardComponent', () => {
 
   describe('Loading State', () => {
     it('should not have loading class by default', () => {
-      expect(cardElement.nativeElement.className).not.toContain('loading');
+      expect(cardElement.nativeElement.className).not.toContain('psh-loading');
     });
 
     it('should add loading class when loading is true', () => {
       fixture.componentRef.setInput('loading', true);
       fixture.detectChanges();
 
-      expect(cardElement.nativeElement.className).toContain('loading');
+      expect(cardElement.nativeElement.className).toContain('psh-loading');
     });
 
     it('should set aria-busy to true when loading', () => {
@@ -203,36 +203,36 @@ describe('PshCardComponent', () => {
       fixture.componentRef.setInput('loading', true);
       fixture.detectChanges();
 
-      const skeleton = fixture.debugElement.query(By.css('.card-loading'));
+      const skeleton = fixture.debugElement.query(By.css('.psh-card-loading'));
       expect(skeleton).toBeTruthy();
-      expect(skeleton.nativeElement.querySelectorAll('.skeleton-line').length).toBe(3);
+      expect(skeleton.nativeElement.querySelectorAll('.psh-skeleton-line').length).toBe(3);
     });
 
     it('should hide main content when loading', () => {
       fixture.componentRef.setInput('loading', false);
       fixture.detectChanges();
 
-      let skeleton = fixture.debugElement.query(By.css('.card-loading'));
+      let skeleton = fixture.debugElement.query(By.css('.psh-card-loading'));
       expect(skeleton).toBeNull();
 
       fixture.componentRef.setInput('loading', true);
       fixture.detectChanges();
 
-      skeleton = fixture.debugElement.query(By.css('.card-loading'));
+      skeleton = fixture.debugElement.query(By.css('.psh-card-loading'));
       expect(skeleton).toBeTruthy();
     });
   });
 
   describe('Disabled State', () => {
     it('should not have disabled class by default', () => {
-      expect(cardElement.nativeElement.className).not.toContain('disabled');
+      expect(cardElement.nativeElement.className).not.toContain('psh-disabled');
     });
 
     it('should add disabled class when disabled is true', () => {
       fixture.componentRef.setInput('disabled', true);
       fixture.detectChanges();
 
-      expect(cardElement.nativeElement.className).toContain('disabled');
+      expect(cardElement.nativeElement.className).toContain('psh-disabled');
     });
 
     it('should set aria-disabled to true when disabled', () => {
@@ -253,13 +253,13 @@ describe('PshCardComponent', () => {
   describe('Title and Description', () => {
     it('should render an empty header (hidden via CSS) when title, description and header slots are all empty', () => {
       // Le .card-header est désormais rendu inconditionnellement puis masqué en CSS
-      // via `.card-header:not(:has(*))`. En unit test (jsdom n'applique pas le CSS),
+      // via `.psh-card-header:not(:has(*))`. En unit test (jsdom n'applique pas le CSS),
       // on vérifie le critère réel de masquage : le header ne contient aucun élément.
       fixture.componentRef.setInput('title', '');
       fixture.componentRef.setInput('description', '');
       fixture.detectChanges();
 
-      const header = fixture.debugElement.query(By.css('.card-header'));
+      const header = fixture.debugElement.query(By.css('.psh-card-header'));
       expect(header).toBeTruthy();
       expect(header.nativeElement.children.length).toBe(0);
     });
@@ -268,7 +268,7 @@ describe('PshCardComponent', () => {
       fixture.componentRef.setInput('title', 'Test Title');
       fixture.detectChanges();
 
-      const header = fixture.debugElement.query(By.css('.card-header'));
+      const header = fixture.debugElement.query(By.css('.psh-card-header'));
       expect(header).toBeTruthy();
     });
 
@@ -277,7 +277,7 @@ describe('PshCardComponent', () => {
       fixture.componentRef.setInput('title', testTitle);
       fixture.detectChanges();
 
-      const titleElement = fixture.debugElement.query(By.css('.card-title'));
+      const titleElement = fixture.debugElement.query(By.css('.psh-card-title'));
       expect(titleElement).toBeTruthy();
       expect(titleElement.nativeElement.textContent.trim()).toBe(testTitle);
     });
@@ -286,7 +286,7 @@ describe('PshCardComponent', () => {
       fixture.componentRef.setInput('description', 'Test Description');
       fixture.detectChanges();
 
-      const header = fixture.debugElement.query(By.css('.card-header'));
+      const header = fixture.debugElement.query(By.css('.psh-card-header'));
       expect(header).toBeTruthy();
     });
 
@@ -295,7 +295,7 @@ describe('PshCardComponent', () => {
       fixture.componentRef.setInput('description', testDescription);
       fixture.detectChanges();
 
-      const descriptionElement = fixture.debugElement.query(By.css('.card-description'));
+      const descriptionElement = fixture.debugElement.query(By.css('.psh-card-description'));
       expect(descriptionElement).toBeTruthy();
       expect(descriptionElement.nativeElement.textContent.trim()).toBe(testDescription);
     });
@@ -305,8 +305,8 @@ describe('PshCardComponent', () => {
       fixture.componentRef.setInput('description', 'Description');
       fixture.detectChanges();
 
-      const titleElement = fixture.debugElement.query(By.css('.card-title'));
-      const descriptionElement = fixture.debugElement.query(By.css('.card-description'));
+      const titleElement = fixture.debugElement.query(By.css('.psh-card-title'));
+      const descriptionElement = fixture.debugElement.query(By.css('.psh-card-description'));
 
       expect(titleElement).toBeTruthy();
       expect(descriptionElement).toBeTruthy();
@@ -320,42 +320,42 @@ describe('PshCardComponent', () => {
     });
 
     it('should show header divider by default', () => {
-      const header = fixture.debugElement.query(By.css('.card-header'));
-      expect(header.nativeElement.className).toContain('has-divider');
+      const header = fixture.debugElement.query(By.css('.psh-card-header'));
+      expect(header.nativeElement.className).toContain('psh-has-divider');
     });
 
     it('should hide header divider when showHeaderDivider is false', () => {
       fixture.componentRef.setInput('showHeaderDivider', false);
       fixture.detectChanges();
 
-      const header = fixture.debugElement.query(By.css('.card-header'));
-      expect(header.nativeElement.className).not.toContain('has-divider');
+      const header = fixture.debugElement.query(By.css('.psh-card-header'));
+      expect(header.nativeElement.className).not.toContain('psh-has-divider');
     });
 
     it('should show footer divider by default', () => {
-      const footer = fixture.debugElement.query(By.css('.card-footer'));
-      expect(footer.nativeElement.className).toContain('has-divider');
+      const footer = fixture.debugElement.query(By.css('.psh-card-footer'));
+      expect(footer.nativeElement.className).toContain('psh-has-divider');
     });
 
     it('should hide footer divider when showFooterDivider is false', () => {
       fixture.componentRef.setInput('showFooterDivider', false);
       fixture.detectChanges();
 
-      const footer = fixture.debugElement.query(By.css('.card-footer'));
-      expect(footer.nativeElement.className).not.toContain('has-divider');
+      const footer = fixture.debugElement.query(By.css('.psh-card-footer'));
+      expect(footer.nativeElement.className).not.toContain('psh-has-divider');
     });
 
     it('should show actions divider by default', () => {
-      const actions = fixture.debugElement.query(By.css('.card-actions'));
-      expect(actions.nativeElement.className).toContain('has-divider');
+      const actions = fixture.debugElement.query(By.css('.psh-card-actions'));
+      expect(actions.nativeElement.className).toContain('psh-has-divider');
     });
 
     it('should hide actions divider when showActionsDivider is false', () => {
       fixture.componentRef.setInput('showActionsDivider', false);
       fixture.detectChanges();
 
-      const actions = fixture.debugElement.query(By.css('.card-actions'));
-      expect(actions.nativeElement.className).not.toContain('has-divider');
+      const actions = fixture.debugElement.query(By.css('.psh-card-actions'));
+      expect(actions.nativeElement.className).not.toContain('psh-has-divider');
     });
   });
 
@@ -620,12 +620,12 @@ describe('PshCardComponent', () => {
       fixture.detectChanges();
 
       const classes = component.computedClasses();
-      expect(classes).toContain('card');
-      expect(classes).toContain('appearance-elevated');
-      expect(classes).toContain('color-success');
-      expect(classes).toContain('density-compact');
-      expect(classes).toContain('hoverable');
-      expect(classes).toContain('interactive');
+      expect(classes).toContain('psh-card');
+      expect(classes).toContain('psh-appearance-elevated');
+      expect(classes).toContain('psh-color-success');
+      expect(classes).toContain('psh-density-compact');
+      expect(classes).toContain('psh-hoverable');
+      expect(classes).toContain('psh-interactive');
     });
 
     it('should compute hasHeader correctly', () => {
@@ -647,16 +647,16 @@ describe('PshCardComponent', () => {
 
     it('should compute actionsAlignmentClass correctly', () => {
       fixture.componentRef.setInput('actionsAlignment', 'left');
-      expect(component.actionsAlignmentClass()).toBe('actions-align-left');
+      expect(component.actionsAlignmentClass()).toBe('psh-actions-align-left');
 
       fixture.componentRef.setInput('actionsAlignment', 'center');
-      expect(component.actionsAlignmentClass()).toBe('actions-align-center');
+      expect(component.actionsAlignmentClass()).toBe('psh-actions-align-center');
 
       fixture.componentRef.setInput('actionsAlignment', 'right');
-      expect(component.actionsAlignmentClass()).toBe('actions-align-right');
+      expect(component.actionsAlignmentClass()).toBe('psh-actions-align-right');
 
       fixture.componentRef.setInput('actionsAlignment', 'space-between');
-      expect(component.actionsAlignmentClass()).toBe('actions-align-space-between');
+      expect(component.actionsAlignmentClass()).toBe('psh-actions-align-space-between');
     });
 
     it('should merge custom styles correctly', () => {
@@ -672,8 +672,8 @@ describe('PshCardComponent', () => {
       component.isMobile.set(false);
 
       const classes = component.actionsClasses();
-      expect(classes).toBe('actions-align-center');
-      expect(classes).not.toContain('mobile-full-width-buttons');
+      expect(classes).toBe('psh-actions-align-center');
+      expect(classes).not.toContain('psh-mobile-full-width-buttons');
     });
 
     it('should compute actionsClasses with mobile-full-width-buttons when mobile', () => {
@@ -681,8 +681,8 @@ describe('PshCardComponent', () => {
       component.isMobile.set(true);
 
       const classes = component.actionsClasses();
-      expect(classes).toContain('actions-align-right');
-      expect(classes).toContain('mobile-full-width-buttons');
+      expect(classes).toContain('psh-actions-align-right');
+      expect(classes).toContain('psh-mobile-full-width-buttons');
     });
   });
 
@@ -722,16 +722,16 @@ describe('PshCardComponent', () => {
       component.isMobile.set(true);
       fixture.detectChanges();
 
-      const actionsElement = fixture.debugElement.query(By.css('.card-actions'));
-      expect(actionsElement.nativeElement.className).toContain('mobile-full-width-buttons');
+      const actionsElement = fixture.debugElement.query(By.css('.psh-card-actions'));
+      expect(actionsElement.nativeElement.className).toContain('psh-mobile-full-width-buttons');
     });
 
     it('should not have mobile-full-width-buttons class when isMobile is false', () => {
       component.isMobile.set(false);
       fixture.detectChanges();
 
-      const actionsElement = fixture.debugElement.query(By.css('.card-actions'));
-      expect(actionsElement.nativeElement.className).not.toContain('mobile-full-width-buttons');
+      const actionsElement = fixture.debugElement.query(By.css('.psh-card-actions'));
+      expect(actionsElement.nativeElement.className).not.toContain('psh-mobile-full-width-buttons');
     });
   });
 
@@ -761,17 +761,17 @@ describe('PshCardComponent', () => {
 
   describe('Content Structure', () => {
     it('should always render card-body', () => {
-      const body = fixture.debugElement.query(By.css('.card-body'));
+      const body = fixture.debugElement.query(By.css('.psh-card-body'));
       expect(body).toBeTruthy();
     });
 
     it('should always render card-footer', () => {
-      const footer = fixture.debugElement.query(By.css('.card-footer'));
+      const footer = fixture.debugElement.query(By.css('.psh-card-footer'));
       expect(footer).toBeTruthy();
     });
 
     it('should always render card-actions', () => {
-      const actions = fixture.debugElement.query(By.css('.card-actions'));
+      const actions = fixture.debugElement.query(By.css('.psh-card-actions'));
       expect(actions).toBeTruthy();
     });
 
@@ -780,14 +780,14 @@ describe('PshCardComponent', () => {
       fixture.componentRef.setInput('description', '');
       fixture.detectChanges();
 
-      let header = fixture.debugElement.query(By.css('.card-header'));
+      let header = fixture.debugElement.query(By.css('.psh-card-header'));
       expect(header).toBeTruthy();
       expect(header.nativeElement.children.length).toBe(0);
 
       fixture.componentRef.setInput('title', 'Title');
       fixture.detectChanges();
 
-      header = fixture.debugElement.query(By.css('.card-header'));
+      header = fixture.debugElement.query(By.css('.psh-card-header'));
       expect(header).toBeTruthy();
       expect(header.nativeElement.children.length).toBeGreaterThan(0);
     });
@@ -812,10 +812,10 @@ describe('PshCardComponent', () => {
       fixture.detectChanges();
 
       const classes = cardElement.nativeElement.className;
-      expect(classes).toContain('interactive');
-      expect(classes).toContain('hoverable');
-      expect(classes).toContain('loading');
-      expect(classes).toContain('disabled');
+      expect(classes).toContain('psh-interactive');
+      expect(classes).toContain('psh-hoverable');
+      expect(classes).toContain('psh-loading');
+      expect(classes).toContain('psh-disabled');
     });
 
     it('should prevent interaction when both disabled and loading', () => {
@@ -894,11 +894,11 @@ describe('PshCardComponent - projected header slots', () => {
     const fixture = TestBed.createComponent(HeaderContentHostComponent);
     fixture.detectChanges();
 
-    const header = fixture.debugElement.query(By.css('.card-header'));
+    const header = fixture.debugElement.query(By.css('.psh-card-header'));
     expect(header).toBeTruthy();
     expect(header.nativeElement.children.length).toBeGreaterThan(0);
     // Aucun titre par défaut : le markup vient uniquement du contenu projeté.
-    expect(fixture.debugElement.query(By.css('.card-title'))).toBeNull();
+    expect(fixture.debugElement.query(By.css('.psh-card-title'))).toBeNull();
     expect(header.nativeElement.querySelector('[card-header-content]')).toBeTruthy();
   });
 
@@ -906,7 +906,7 @@ describe('PshCardComponent - projected header slots', () => {
     const fixture = TestBed.createComponent(HeaderIconHostComponent);
     fixture.detectChanges();
 
-    const header = fixture.debugElement.query(By.css('.card-header'));
+    const header = fixture.debugElement.query(By.css('.psh-card-header'));
     expect(header).toBeTruthy();
     expect(header.nativeElement.querySelector('[card-header-icon]')).toBeTruthy();
   });
@@ -915,7 +915,7 @@ describe('PshCardComponent - projected header slots', () => {
     const fixture = TestBed.createComponent(HeaderExtraHostComponent);
     fixture.detectChanges();
 
-    const header = fixture.debugElement.query(By.css('.card-header'));
+    const header = fixture.debugElement.query(By.css('.psh-card-header'));
     expect(header).toBeTruthy();
     expect(header.nativeElement.querySelector('[card-header-extra]')).toBeTruthy();
   });
@@ -924,9 +924,9 @@ describe('PshCardComponent - projected header slots', () => {
     const fixture = TestBed.createComponent(NoHeaderHostComponent);
     fixture.detectChanges();
 
-    const header = fixture.debugElement.query(By.css('.card-header'));
+    const header = fixture.debugElement.query(By.css('.psh-card-header'));
     expect(header).toBeTruthy();
-    // Header vide → masqué en CSS via `.card-header:not(:has(*))`.
+    // Header vide → masqué en CSS via `.psh-card-header:not(:has(*))`.
     expect(header.nativeElement.children.length).toBe(0);
   });
 });

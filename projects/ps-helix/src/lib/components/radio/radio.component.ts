@@ -43,11 +43,11 @@ let radioIdCounter = 0;
   styleUrls: ['./radio.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '[class.radio-disabled]': 'disabled()',
-    '[class.radio-error]': '!!error()',
-    '[class.radio-success]': '!!success()',
-    '[class.radio-small]': 'size() === "small"',
-    '[class.radio-large]': 'size() === "large"',
+    '[class.psh-radio-disabled]': 'disabled()',
+    '[class.psh-radio-error]': '!!error()',
+    '[class.psh-radio-success]': '!!success()',
+    '[class.psh-radio-small]': 'size() === "small"',
+    '[class.psh-radio-large]': 'size() === "large"',
     '[attr.data-state]': 'state()'
   }
 })

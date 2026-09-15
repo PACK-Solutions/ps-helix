@@ -1,12 +1,12 @@
-<div class="input-container">
+<div class="psh-input-container">
   @if (showLabel()) {
     <!-- label[for] delegates focus to its control natively; the click handler is a convenience. -->
     <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
     <label
-      class="input-label"
+      class="psh-input-label"
       [for]="inputId"
       (click)="focusSelect()"
-      [class.required]="required()"
+      [class.psh-required]="required()"
     >
       <ng-content select="[input-label]"></ng-content>
       @if (!hasLabelContent()) {
@@ -15,7 +15,7 @@
     </label>
   }
 
-  <div class="input-wrapper">
+  <div class="psh-input-wrapper">
     @if (iconStart()) {
       <i class="ph ph-{{ iconStart() }}" aria-hidden="true"></i>
     }
@@ -46,7 +46,7 @@
     @if (type() === 'password') {
       <button
         type="button"
-        class="password-toggle"
+        class="psh-password-toggle"
         (click)="togglePasswordVisibility()"
         [attr.aria-label]="passwordToggleLabel()"
         [disabled]="disabled() || readonly()"
@@ -59,19 +59,19 @@
     }
 
     @if (loading()) {
-      <div class="input-loader" aria-hidden="true">
-        <div class="loader"></div>
+      <div class="psh-input-loader" aria-hidden="true">
+        <div class="psh-loader"></div>
       </div>
     }
 
     <ng-template #suggestionsTpl>
-      <div class="suggestions-list" role="listbox">
+      <div class="psh-suggestions-list" role="listbox">
         @for (suggestion of filteredSuggestions(); track suggestion; let i = $index) {
           <!-- option in a listbox: keyboard is handled by the input (arrow keys + focusedSuggestionIndex). -->
           <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
           <div
-            class="suggestion-item"
-            [class.focused]="i === focusedSuggestionIndex()"
+            class="psh-suggestion-item"
+            [class.psh-focused]="i === focusedSuggestionIndex()"
             role="option"
             [attr.aria-selected]="i === focusedSuggestionIndex()"
             (click)="handleSuggestionClick(suggestion)"
@@ -85,19 +85,19 @@
   </div>
 
   @if (error()) {
-    <div [id]="inputId + '-error'" class="input-error" role="alert">
+    <div [id]="inputId + '-error'" class="psh-input-error" role="alert">
       <ng-content select="[input-error]">
         {{ error() }}
       </ng-content>
     </div>
   } @else if (success()) {
-    <div [id]="inputId + '-success'" class="input-success" role="status">
+    <div [id]="inputId + '-success'" class="psh-input-success" role="status">
       <ng-content select="[input-success]">
         {{ success() }}
       </ng-content>
     </div>
   } @else if (hint()) {
-    <div [id]="inputId + '-hint'" class="input-hint">
+    <div [id]="inputId + '-hint'" class="psh-input-hint">
       <ng-content select="[input-hint]">
         {{ hint() }}
       </ng-content>

@@ -14,18 +14,18 @@
     Se rend dès que title/description est renseigné OU qu'un slot de header
     ([card-header-icon] / [card-header-content] / [card-header-extra]) est projeté.
   -->
-  <div class="card-header" [class.has-divider]="showHeaderDivider()">
+  <div class="psh-card-header" [class.psh-has-divider]="showHeaderDivider()">
     <!-- Slot pour icône/avatar avant le titre -->
     <ng-content select="[card-header-icon]"></ng-content>
 
     <!-- Zone de titre et description -->
     @if (title() || description()) {
-      <div class="card-header-content">
+      <div class="psh-card-header-content">
         @if (title()) {
-          <h3 class="card-title">{{ title() }}</h3>
+          <h3 class="psh-card-title">{{ title() }}</h3>
         }
         @if (description()) {
-          <p class="card-description">{{ description() }}</p>
+          <p class="psh-card-description">{{ description() }}</p>
         }
       </div>
     }
@@ -38,13 +38,13 @@
   </div>
 
   <!-- Body avec contenu principal -->
-  <div class="card-body" [class.no-padding]="!bodyPadding()">
+  <div class="psh-card-body" [class.psh-no-padding]="!bodyPadding()">
     <!-- État de chargement -->
     @if (loading()) {
-      <div class="card-loading">
-        <div class="skeleton-line"></div>
-        <div class="skeleton-line"></div>
-        <div class="skeleton-line short"></div>
+      <div class="psh-card-loading">
+        <div class="psh-skeleton-line"></div>
+        <div class="psh-skeleton-line"></div>
+        <div class="psh-skeleton-line psh-short"></div>
       </div>
     } @else {
       <!-- Contenu principal (slot par défaut) -->
@@ -53,12 +53,12 @@
   </div>
 
   <!-- Footer optionnel pour métadonnées -->
-  <div class="card-footer" [class.has-divider]="showFooterDivider()">
+  <div class="psh-card-footer" [class.psh-has-divider]="showFooterDivider()">
     <ng-content select="[card-footer]"></ng-content>
   </div>
 
   <!-- Actions -->
-  <div class="card-actions" [class]="actionsClasses()" [class.has-divider]="showActionsDivider()">
+  <div class="psh-card-actions" [class]="actionsClasses()" [class.psh-has-divider]="showActionsDivider()">
     <ng-content select="[card-actions]"></ng-content>
   </div>
 </div>

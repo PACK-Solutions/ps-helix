@@ -12,13 +12,13 @@ describe('PshAvatarComponent', () => {
     fixture.nativeElement.querySelector('img') as HTMLImageElement;
 
   const getInitials = () =>
-    fixture.nativeElement.querySelector('.avatar-initials') as HTMLElement;
+    fixture.nativeElement.querySelector('.psh-avatar-initials') as HTMLElement;
 
   const getIcon = () =>
     fixture.nativeElement.querySelector('i[aria-hidden="true"]') as HTMLElement;
 
   const getStatusIndicator = () =>
-    fixture.nativeElement.querySelector('.avatar-status') as HTMLElement;
+    fixture.nativeElement.querySelector('.psh-avatar-status') as HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -136,7 +136,7 @@ describe('PshAvatarComponent', () => {
 
         const indicator = getStatusIndicator();
         expect(indicator).toBeTruthy();
-        expect(indicator.classList.contains(status)).toBe(true);
+        expect(indicator.classList.contains(`psh-${status}`)).toBe(true);
         expect(indicator.getAttribute('aria-label')).toBe(status);
       }
     );
@@ -195,11 +195,11 @@ describe('PshAvatarComponent', () => {
 
         const container = getAvatarContainer();
         if (hasClass) {
-          expect(container.classList.contains(size)).toBe(true);
+          expect(container.classList.contains(`psh-${size}`)).toBe(true);
         } else {
-          expect(container.classList.contains('small')).toBe(false);
-          expect(container.classList.contains('large')).toBe(false);
-          expect(container.classList.contains('xlarge')).toBe(false);
+          expect(container.classList.contains('psh-small')).toBe(false);
+          expect(container.classList.contains('psh-large')).toBe(false);
+          expect(container.classList.contains('psh-xlarge')).toBe(false);
         }
       });
     });
@@ -212,19 +212,19 @@ describe('PshAvatarComponent', () => {
           fixture.detectChanges();
 
           const container = getAvatarContainer();
-          expect(container.classList.contains(shape)).toBe(true);
+          expect(container.classList.contains(`psh-${shape}`)).toBe(true);
         }
       );
 
       it('should switch between shapes', () => {
         fixture.componentRef.setInput('shape', 'circle');
         fixture.detectChanges();
-        expect(getAvatarContainer().classList.contains('circle')).toBe(true);
+        expect(getAvatarContainer().classList.contains('psh-circle')).toBe(true);
 
         fixture.componentRef.setInput('shape', 'square');
         fixture.detectChanges();
-        expect(getAvatarContainer().classList.contains('square')).toBe(true);
-        expect(getAvatarContainer().classList.contains('circle')).toBe(false);
+        expect(getAvatarContainer().classList.contains('psh-square')).toBe(true);
+        expect(getAvatarContainer().classList.contains('psh-circle')).toBe(false);
       });
     });
   });

@@ -21,10 +21,10 @@ export const PROGRESSBAR_CONFIG = new InjectionToken<Partial<ProgressbarConfig>>
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'progressbar-container',
-    '[class.small]': 'size() === "small"',
-    '[class.large]': 'size() === "large"',
-    '[class.label-bottom]': 'labelPosition() === "bottom"',
-    '[class.label-inline]': 'labelPosition() === "inline"',
+    '[class.psh-small]': 'size() === "small"',
+    '[class.psh-large]': 'size() === "large"',
+    '[class.psh-label-bottom]': 'labelPosition() === "bottom"',
+    '[class.psh-label-inline]': 'labelPosition() === "inline"',
     '[attr.data-state]': 'mode()',
     '[attr.aria-live]': '"polite"'
   }

@@ -5,17 +5,17 @@
   gap: var(--psh-spacing-xs);
 }
 
-:host.label-bottom {
+:host.psh-label-bottom {
   flex-direction: column-reverse;
 }
 
-:host.label-inline {
+:host.psh-label-inline {
   flex-direction: row;
   align-items: center;
   gap: var(--psh-spacing-md);
 }
 
-.progressbar {
+.psh-progressbar {
   position: relative;
   width: 100%;
   height: var(--psh-progressbar-height-md, var(--psh-size-2));
@@ -24,53 +24,53 @@
   overflow: hidden;
 }
 
-.progress-track {
+.psh-progress-track {
   height: 100%;
   border-radius: var(--psh-radius-lg);
   transition: width var(--psh-animation-duration-default) var(--psh-animation-easing-smooth);
 }
 
 /* Variants */
-.progress-track.primary {
+.psh-progress-track.psh-primary {
   background: var(--psh-primary-gradient);
 }
 
-.progress-track.secondary {
+.psh-progress-track.psh-secondary {
   background: var(--psh-secondary-color);
 }
 
-.progress-track.success {
+.psh-progress-track.psh-success {
   background: var(--psh-success-color);
 }
 
-.progress-track.warning {
+.psh-progress-track.psh-warning {
   background: var(--psh-warning-color);
 }
 
-.progress-track.danger {
+.psh-progress-track.psh-danger {
   background: var(--psh-danger-color);
 }
 
 /* info and neutral complete the shared colour union introduced in 7.0.0. */
-.progress-track.info {
+.psh-progress-track.psh-info {
   background: var(--psh-info-color);
 }
 
-.progress-track.neutral {
+.psh-progress-track.psh-neutral {
   background: var(--psh-neutral-color);
 }
 
 /* Sizes */
-:host.small .progressbar {
+:host.psh-small .psh-progressbar {
   height: var(--psh-progressbar-height-sm, var(--psh-size-1));
 }
 
-:host.large .progressbar {
+:host.psh-large .psh-progressbar {
   height: var(--psh-progressbar-height-lg, var(--psh-size-3));
 }
 
 /* Label */
-.progress-label {
+.psh-progress-label {
   display: block;
   text-align: right;
   font-size: var(--psh-font-size-sm);
@@ -78,21 +78,21 @@
   font-weight: var(--psh-font-weight-medium);
 }
 
-:host.small .progress-label {
+:host.psh-small .psh-progress-label {
   font-size: var(--psh-font-size-xs);
 }
 
-:host.large .progress-label {
+:host.psh-large .psh-progress-label {
   font-size: var(--psh-font-size-base);
 }
 
-:host.label-inline .progress-label {
+:host.psh-label-inline .psh-progress-label {
   text-align: left;
   min-width: fit-content;
 }
 
 /* Striped */
-.progressbar.striped .progress-track {
+.psh-progressbar.psh-striped .psh-progress-track {
   background-image: linear-gradient(
     45deg,
     rgba(255, 255, 255, var(--psh-progressbar-stripe-opacity, 0.15)) 25%,
@@ -107,12 +107,12 @@
 }
 
 /* Animated */
-.progressbar.animated .progress-track {
+.psh-progressbar.psh-animated .psh-progress-track {
   animation: progress-animation var(--psh-animation-duration-slow) var(--psh-animation-easing-linear) infinite;
 }
 
 /* Indeterminate */
-.progressbar.indeterminate .progress-track {
+.psh-progressbar.psh-indeterminate .psh-progress-track {
   width: 50% !important;
   animation: indeterminate var(--psh-animation-loop-slow) var(--psh-animation-easing-in-out) infinite;
 }

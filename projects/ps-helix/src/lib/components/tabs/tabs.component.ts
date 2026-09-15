@@ -62,13 +62,13 @@ export class PshTabsComponent {
   tabChange = output<TabChangeEvent>();
 
   hostClasses = computed(() => {
-    const classes = ['tabs-wrapper'];
+    const classes = ['psh-tabs-wrapper'];
     const size = this.size();
     const variant = this.variant();
 
-    if (size !== 'medium') classes.push(`tabs-${size}`);
-    classes.push(`tabs-${variant}`);
-    if (this.animated()) classes.push('tabs-animated');
+    if (size !== 'medium') classes.push(`psh-tabs-${size}`);
+    classes.push(`psh-tabs-${variant}`);
+    if (this.animated()) classes.push('psh-tabs-animated');
 
     return classes.join(' ');
   });

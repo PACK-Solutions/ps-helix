@@ -64,13 +64,13 @@ describe('PshTabBarComponent', () => {
       fixture.componentRef.setInput('items', itemsWithBadge);
       fixture.detectChanges();
 
-      const badge = getTabByName('Notifications').querySelector('.tab-badge');
+      const badge = getTabByName('Notifications').querySelector('.psh-tab-badge');
       expect(badge).toBeTruthy();
       expect(badge!.textContent).toBe('5');
     });
 
     it('should not display badge when item has no badge', () => {
-      const badge = getTabByName('Home').querySelector('.tab-badge');
+      const badge = getTabByName('Home').querySelector('.psh-tab-badge');
       expect(badge).toBeFalsy();
     });
 
@@ -81,7 +81,7 @@ describe('PshTabBarComponent', () => {
       fixture.componentRef.setInput('items', itemsWithNumericBadge);
       fixture.detectChanges();
 
-      const badge = getTabByName('Messages').querySelector('.tab-badge');
+      const badge = getTabByName('Messages').querySelector('.psh-tab-badge');
       expect(badge!.textContent).toBe('42');
     });
   });
@@ -145,7 +145,7 @@ describe('PshTabBarComponent', () => {
 
   describe('Active state visual feedback', () => {
     it('should apply active class to selected tab', () => {
-      expect(getSelectedTab().classList.contains('active')).toBe(true);
+      expect(getSelectedTab().classList.contains('psh-active')).toBe(true);
     });
 
     it('should not apply active class to non-selected tabs', () => {
@@ -153,7 +153,7 @@ describe('PshTabBarComponent', () => {
         tab => tab.getAttribute('aria-selected') === 'false'
       );
       nonSelectedTabs.forEach(tab => {
-        expect(tab.classList.contains('active')).toBe(false);
+        expect(tab.classList.contains('psh-active')).toBe(false);
       });
     });
 
@@ -161,8 +161,8 @@ describe('PshTabBarComponent', () => {
       getTabByName('Search').click();
       fixture.detectChanges();
 
-      expect(getTabByName('Home').classList.contains('active')).toBe(false);
-      expect(getTabByName('Search').classList.contains('active')).toBe(true);
+      expect(getTabByName('Home').classList.contains('psh-active')).toBe(false);
+      expect(getTabByName('Search').classList.contains('psh-active')).toBe(true);
     });
   });
 
@@ -294,37 +294,37 @@ describe('PshTabBarComponent', () => {
 
   describe('Position variants', () => {
     it('should NOT have top class by default', () => {
-      expect(getTabList().classList.contains('top')).toBe(false);
+      expect(getTabList().classList.contains('psh-top')).toBe(false);
     });
 
     it('should apply top class when position is top', () => {
       fixture.componentRef.setInput('position', 'top');
       fixture.detectChanges();
 
-      expect(getTabList().classList.contains('top')).toBe(true);
+      expect(getTabList().classList.contains('psh-top')).toBe(true);
     });
 
     it('should remove top class when position changes back to bottom', () => {
       fixture.componentRef.setInput('position', 'top');
       fixture.detectChanges();
-      expect(getTabList().classList.contains('top')).toBe(true);
+      expect(getTabList().classList.contains('psh-top')).toBe(true);
 
       fixture.componentRef.setInput('position', 'bottom');
       fixture.detectChanges();
-      expect(getTabList().classList.contains('top')).toBe(false);
+      expect(getTabList().classList.contains('psh-top')).toBe(false);
     });
   });
 
   describe('Animation configuration', () => {
     it('should have animated class by default', () => {
-      expect(getTabList().classList.contains('animated')).toBe(true);
+      expect(getTabList().classList.contains('psh-animated')).toBe(true);
     });
 
     it('should remove animated class when animations are disabled', () => {
       fixture.componentRef.setInput('animated', false);
       fixture.detectChanges();
 
-      expect(getTabList().classList.contains('animated')).toBe(false);
+      expect(getTabList().classList.contains('psh-animated')).toBe(false);
     });
   });
 
@@ -457,11 +457,11 @@ describe('PshTabBarComponent with custom config', () => {
   });
 
   it('should use position from injected config', () => {
-    expect(getTabList().classList.contains('top')).toBe(true);
+    expect(getTabList().classList.contains('psh-top')).toBe(true);
   });
 
   it('should use animated from injected config', () => {
-    expect(getTabList().classList.contains('animated')).toBe(false);
+    expect(getTabList().classList.contains('psh-animated')).toBe(false);
   });
 
   it('should allow overriding config values via inputs', () => {
@@ -471,7 +471,7 @@ describe('PshTabBarComponent with custom config', () => {
     fixture.detectChanges();
 
     expect(getDisabledTabs().length).toBe(0);
-    expect(getTabList().classList.contains('top')).toBe(false);
-    expect(getTabList().classList.contains('animated')).toBe(true);
+    expect(getTabList().classList.contains('psh-top')).toBe(false);
+    expect(getTabList().classList.contains('psh-animated')).toBe(true);
   });
 });

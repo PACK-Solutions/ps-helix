@@ -2,8 +2,8 @@
 <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events -->
 <div
   #modalBackdrop
-  [class]="'modal-backdrop ' + backdropClass()"
-  [class.open]="open()"
+  [class]="'psh-modal-backdrop ' + backdropClass()"
+  [class.psh-open]="open()"
   (click)="handleBackdropClick($event)"
   role="dialog"
   aria-modal="true"
@@ -14,23 +14,23 @@
   [attr.data-state]="state()"
 >
   <div
-    [class]="'modal-container ' + styleClass()"
-    [class.small]="size() === 'small'"
-    [class.medium]="size() === 'medium'"
-    [class.large]="size() === 'large'"
+    [class]="'psh-modal-container ' + styleClass()"
+    [class.psh-small]="size() === 'small'"
+    [class.psh-medium]="size() === 'medium'"
+    [class.psh-large]="size() === 'large'"
     [attr.id]="modalDialogId()"
     role="document"
     [pshFocusTrap]="open()"
   >
-    <div class="modal-content-wrapper">
-      <div class="modal-header">
-        <h2 class="modal-title" [attr.id]="modalDialogId() + '-title'">
+    <div class="psh-modal-content-wrapper">
+      <div class="psh-modal-header">
+        <h2 class="psh-modal-title" [attr.id]="modalDialogId() + '-title'">
           <ng-content select="[modal-title]">{{ title() }}</ng-content>
         </h2>
         @if (showClose()) {
         <button
           type="button"
-          class="modal-close"
+          class="psh-modal-close"
           (click)="handleClose()"
           [attr.aria-label]="dismissLabel()"
         >
@@ -39,7 +39,7 @@
         }
       </div>
 
-      <div class="modal-content" [attr.id]="modalDescriptionId()">
+      <div class="psh-modal-content" [attr.id]="modalDescriptionId()">
         <ng-content>
           <p>
             Modal content goes here. You can replace this with your own content.
@@ -48,7 +48,7 @@
       </div>
 
       @if (showFooter() && !hasCustomFooter()) {
-      <div class="modal-footer">
+      <div class="psh-modal-footer">
         <psh-button
           appearance="outline"
           color="primary"
@@ -67,7 +67,7 @@
         </psh-button>
       </div>
       } @if (showFooter() && hasCustomFooter()) {
-      <div class="modal-footer">
+      <div class="psh-modal-footer">
         <!--
           Note: When using a custom footer, buttons should also use [fullWidth]="isMobileScreen()"
           to ensure proper responsive behavior on mobile devices.

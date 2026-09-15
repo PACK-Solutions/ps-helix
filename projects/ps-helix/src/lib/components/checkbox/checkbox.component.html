@@ -1,9 +1,9 @@
-<div class="checkbox-container">
-  <label class="checkbox-label" [class.label-left]="labelPosition() === 'left'">
+<div class="psh-checkbox-container">
+  <label class="psh-checkbox-label" [class.psh-label-left]="labelPosition() === 'left'">
     <input
       #checkboxInput
       type="checkbox"
-      class="checkbox-input"
+      class="psh-checkbox-input"
       [checked]="checked()"
       [disabled]="disabled()"
       [required]="required()"
@@ -16,7 +16,7 @@
       (keydown)="handleKeydown($event)"
     />
     
-    <span class="checkbox-control">
+    <span class="psh-checkbox-control">
       @if (checked() && !indeterminate()) {
         <i class="ph ph-check" aria-hidden="true"></i>
       }
@@ -25,7 +25,7 @@
       }
     </span>
 
-    <span class="checkbox-text" #labelSlot>
+    <span class="psh-checkbox-text" #labelSlot>
       @if (label()) {
         {{ label() }}
       } @else {
@@ -35,11 +35,11 @@
   </label>
 
   @if (error()) {
-    <div [id]="uniqueId + '-error'" class="checkbox-message error" role="alert">
+    <div [id]="uniqueId + '-error'" class="psh-checkbox-message psh-error" role="alert">
       {{ error() }}
     </div>
   } @else if (success()) {
-    <div [id]="uniqueId + '-success'" class="checkbox-message success" role="status">
+    <div [id]="uniqueId + '-success'" class="psh-checkbox-message psh-success" role="status">
       {{ success() }}
     </div>
   }

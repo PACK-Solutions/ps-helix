@@ -29,7 +29,7 @@ describe('PshCheckboxComponent', () => {
   const getHostElement = () => fixture.nativeElement as HTMLElement;
 
   const getLabelText = () =>
-    fixture.nativeElement.querySelector('.checkbox-text') as HTMLElement;
+    fixture.nativeElement.querySelector('.psh-checkbox-text') as HTMLElement;
 
   const getErrorMessage = () =>
     fixture.nativeElement.querySelector('[role="alert"]') as HTMLElement;
@@ -59,7 +59,7 @@ describe('PshCheckboxComponent', () => {
       const hostFixture = TestBed.createComponent(TestHostComponent);
       hostFixture.detectChanges();
 
-      const labelText = hostFixture.nativeElement.querySelector('.checkbox-text');
+      const labelText = hostFixture.nativeElement.querySelector('.psh-checkbox-text');
       expect(labelText.textContent).toContain('Projected label');
     });
 
@@ -328,15 +328,15 @@ describe('PshCheckboxComponent', () => {
       fixture.componentRef.setInput('size', size);
       fixture.detectChanges();
 
-      expect(getHostElement().classList.contains(expectedClass)).toBe(true);
+      expect(getHostElement().classList.contains(`psh-${expectedClass}`)).toBe(true);
     });
 
     it('should not have size class for medium (default)', () => {
       fixture.componentRef.setInput('size', 'medium');
       fixture.detectChanges();
 
-      expect(getHostElement().classList.contains('checkbox-small')).toBe(false);
-      expect(getHostElement().classList.contains('checkbox-large')).toBe(false);
+      expect(getHostElement().classList.contains('psh-checkbox-small')).toBe(false);
+      expect(getHostElement().classList.contains('psh-checkbox-large')).toBe(false);
     });
   });
 
@@ -345,16 +345,16 @@ describe('PshCheckboxComponent', () => {
       fixture.componentRef.setInput('labelPosition', 'left');
       fixture.detectChanges();
 
-      const label = fixture.nativeElement.querySelector('.checkbox-label');
-      expect(label.classList.contains('label-left')).toBe(true);
+      const label = fixture.nativeElement.querySelector('.psh-checkbox-label');
+      expect(label.classList.contains('psh-label-left')).toBe(true);
     });
 
     it('should not have label-left class by default (right position)', () => {
       fixture.componentRef.setInput('labelPosition', 'right');
       fixture.detectChanges();
 
-      const label = fixture.nativeElement.querySelector('.checkbox-label');
-      expect(label.classList.contains('label-left')).toBe(false);
+      const label = fixture.nativeElement.querySelector('.psh-checkbox-label');
+      expect(label.classList.contains('psh-label-left')).toBe(false);
     });
   });
 
@@ -395,7 +395,7 @@ describe('PshCheckboxComponent', () => {
       fixture.componentRef.setInput('disabled', true);
       fixture.detectChanges();
 
-      expect(getHostElement().classList.contains('checkbox-disabled')).toBe(true);
+      expect(getHostElement().classList.contains('psh-checkbox-disabled')).toBe(true);
     });
   });
 
@@ -690,7 +690,7 @@ describe('PshCheckboxComponent accessible-label warning', () => {
     const hostFixture = TestBed.createComponent(TestHostComponent);
     hostFixture.detectChanges();
 
-    expect(hostFixture.nativeElement.querySelector('.checkbox-text').textContent).toContain(
+    expect(hostFixture.nativeElement.querySelector('.psh-checkbox-text').textContent).toContain(
       'Projected label'
     );
     expect(pshWarnings(warnSpy)).toHaveLength(0);

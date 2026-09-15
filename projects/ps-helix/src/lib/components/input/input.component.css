@@ -6,11 +6,11 @@
   transition: all var(--psh-animation-duration-default) var(--psh-animation-easing-default);
 }
 
-:host.full-width {
+:host.psh-full-width {
   max-width: none;
 }
 
-.input-container {
+.psh-input-container {
   position: relative;
   width: 100%;
   display: flex;
@@ -19,7 +19,7 @@
 }
 
 /* --- Label --- */
-.input-label {
+.psh-input-label {
   display: block;
   color: var(--psh-text-color);
   font-size: var(--psh-font-size-sm);
@@ -28,14 +28,14 @@
   cursor: pointer;
 }
 
-.input-label.required::after {
+.psh-input-label.psh-required::after {
   content: '*';
   color: var(--psh-danger-color);
   margin-left: 0.125rem; /* var(--psh-spacing-xxs) */
 }
 
 /* --- Wrapper & Input Base --- */
-.input-wrapper {
+.psh-input-wrapper {
   position: relative;
   display: flex;
   align-items: center;
@@ -71,72 +71,72 @@ input:focus-visible {
 }
 
 /* --- Variantes (Via Host) --- */
-:host.outline input {
+:host.psh-outline input {
   background: transparent;
 }
 
-:host.solid input {
+:host.psh-solid input {
   background: var(--psh-surface-ground);
   border: 0.125rem solid var(--psh-surface-border); /* 2px */
 }
 
-:host.solid input:hover:not(:disabled):not(:focus) {
+:host.psh-solid input:hover:not(:disabled):not(:focus) {
   background: var(--psh-surface-hover);
 }
 
-:host.solid input:focus-visible {
+:host.psh-solid input:focus-visible {
   background: var(--psh-surface-0);
 }
 
 /* --- États (Via Host) --- */
-:host.error input {
+:host.psh-error input {
   border-color: var(--psh-danger-color);
 }
 
-:host.error input:focus-visible {
+:host.psh-error input:focus-visible {
   box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-error);
 }
 
-:host.success input {
+:host.psh-success input {
   border-color: var(--psh-success-color);
 }
 
-:host.success input:focus-visible {
+:host.psh-success input:focus-visible {
   box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-success);
 }
 
-:host.disabled input {
+:host.psh-disabled input {
   background: var(--psh-surface-ground);
   cursor: not-allowed;
   opacity: var(--psh-opacity-disabled);
 }
 
-:host.readonly input {
+:host.psh-readonly input {
   background: var(--psh-surface-ground);
   cursor: default;
 }
 
 /* --- Tailles (Via Host) --- */
-:host.small input {
+:host.psh-small input {
   height: var(--psh-control-height-sm);
   font-size: var(--psh-font-size-sm);
 }
 
-:host.large input {
+:host.psh-large input {
   height: var(--psh-control-height-lg);
   font-size: var(--psh-font-size-lg);
 }
 
 /* --- Icônes (Correction Alignement) --- */
-:host.has-start-icon input {
+:host.psh-has-start-icon input {
   padding-left: 2.75rem; /* Espace pour icône + padding */
 }
 
-:host.has-end-icon input {
+:host.psh-has-end-icon input {
   padding-right: 2.75rem;
 }
 
-.input-wrapper i {
+.psh-input-wrapper i {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -146,16 +146,16 @@ input:focus-visible {
   z-index: 2;
 }
 
-.input-wrapper i:first-of-type {
+.psh-input-wrapper i:first-of-type {
   padding-left: 1rem;
 }
 
-.input-wrapper i:last-of-type {
+.psh-input-wrapper i:last-of-type {
  padding-right: 1rem;
 }
 
 /* --- Password Toggle --- */
-.password-toggle {
+.psh-password-toggle {
   position: absolute;
   right: 0.5rem;
   top: 50%;
@@ -175,19 +175,19 @@ input:focus-visible {
   z-index: 3;
 }
 
-.password-toggle:hover:not(:disabled) {
+.psh-password-toggle:hover:not(:disabled) {
   background: var(--psh-surface-hover);
   color: var(--psh-text-color);
 }
 
-.password-toggle i {
+.psh-password-toggle i {
   position: static;
   transform: none;
   pointer-events: auto;
 }
 
 /* --- Loader --- */
-.input-loader {
+.psh-input-loader {
   position: absolute;
   right: 1rem;
   top: 50%;
@@ -195,7 +195,7 @@ input:focus-visible {
   z-index: 3;
 }
 
-.loader {
+.psh-loader {
   width: 1rem; /* var(--psh-icon-size-sm) */
   height: 1rem;
   border: 0.125rem solid var(--psh-surface-border);
@@ -211,7 +211,7 @@ input:focus-visible {
  * context. Re-enables pointer events (the layer is click-through); the JS sets a
  * viewport-bounded max-height, this keeps the internal scroll.
  */
-.suggestions-list {
+.psh-suggestions-list {
   pointer-events: auto;
   background: var(--psh-surface-0);
   border: 0.0625rem solid var(--psh-surface-border);
@@ -220,25 +220,25 @@ input:focus-visible {
   overflow-y: auto;
 }
 
-.suggestion-item {
+.psh-suggestion-item {
   padding: 0.5rem 1rem;
   cursor: pointer;
   color: var(--psh-text-color);
 }
 
-.suggestion-item:hover,
-.suggestion-item.focused {
+.psh-suggestion-item:hover,
+.psh-suggestion-item.psh-focused {
   background: var(--psh-surface-hover);
   color: var(--psh-primary-color);
 }
 
-.input-error, .input-success, .input-hint {
+.psh-input-error, .psh-input-success, .psh-input-hint {
   font-size: var(--psh-font-size-sm);
 }
 
-.input-error { color: var(--psh-danger-color); }
-.input-success { color: var(--psh-success-color); }
-.input-hint { color: var(--psh-text-color-secondary); }
+.psh-input-error { color: var(--psh-danger-color); }
+.psh-input-success { color: var(--psh-success-color); }
+.psh-input-hint { color: var(--psh-text-color-secondary); }
 
 @keyframes spin {
   to { transform: rotate(360deg); }

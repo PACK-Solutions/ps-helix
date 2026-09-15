@@ -41,7 +41,7 @@ describe('PshRadioComponent', () => {
   const getHostElement = () => fixture.nativeElement as HTMLElement;
 
   const getLabelText = () =>
-    fixture.nativeElement.querySelector('.radio-text') as HTMLElement;
+    fixture.nativeElement.querySelector('.psh-radio-text') as HTMLElement;
 
   const getErrorMessage = () =>
     fixture.nativeElement.querySelector('[role="alert"]') as HTMLElement;
@@ -71,7 +71,7 @@ describe('PshRadioComponent', () => {
       const hostFixture = TestBed.createComponent(TestHostComponent);
       hostFixture.detectChanges();
 
-      const labelText = hostFixture.nativeElement.querySelector('.radio-text');
+      const labelText = hostFixture.nativeElement.querySelector('.psh-radio-text');
       expect(labelText.textContent).toContain('Projected label');
     });
 
@@ -376,15 +376,15 @@ describe('PshRadioComponent', () => {
       fixture.componentRef.setInput('size', size);
       fixture.detectChanges();
 
-      expect(getHostElement().classList.contains(expectedClass)).toBe(true);
+      expect(getHostElement().classList.contains(`psh-${expectedClass}`)).toBe(true);
     });
 
     it('should not have size class for medium (default)', () => {
       fixture.componentRef.setInput('size', 'medium');
       fixture.detectChanges();
 
-      expect(getHostElement().classList.contains('radio-small')).toBe(false);
-      expect(getHostElement().classList.contains('radio-large')).toBe(false);
+      expect(getHostElement().classList.contains('psh-radio-small')).toBe(false);
+      expect(getHostElement().classList.contains('psh-radio-large')).toBe(false);
     });
   });
 
@@ -393,16 +393,16 @@ describe('PshRadioComponent', () => {
       fixture.componentRef.setInput('labelPosition', 'left');
       fixture.detectChanges();
 
-      const label = fixture.nativeElement.querySelector('.radio-label');
-      expect(label.classList.contains('label-left')).toBe(true);
+      const label = fixture.nativeElement.querySelector('.psh-radio-label');
+      expect(label.classList.contains('psh-label-left')).toBe(true);
     });
 
     it('should not have label-left class by default (right position)', () => {
       fixture.componentRef.setInput('labelPosition', 'right');
       fixture.detectChanges();
 
-      const label = fixture.nativeElement.querySelector('.radio-label');
-      expect(label.classList.contains('label-left')).toBe(false);
+      const label = fixture.nativeElement.querySelector('.psh-radio-label');
+      expect(label.classList.contains('psh-label-left')).toBe(false);
     });
   });
 
@@ -418,7 +418,7 @@ describe('PshRadioComponent', () => {
       fixture.componentRef.setInput('disabled', true);
       fixture.detectChanges();
 
-      expect(getHostElement().classList.contains('radio-disabled')).toBe(true);
+      expect(getHostElement().classList.contains('psh-radio-disabled')).toBe(true);
     });
   });
 
@@ -450,28 +450,28 @@ describe('PshRadioComponent', () => {
       fixture.componentRef.setInput('error', 'Error message');
       fixture.detectChanges();
 
-      expect(getHostElement().classList.contains('radio-error')).toBe(true);
+      expect(getHostElement().classList.contains('psh-radio-error')).toBe(true);
     });
 
     it('should apply radio-success class when success is present', () => {
       fixture.componentRef.setInput('success', 'Success message');
       fixture.detectChanges();
 
-      expect(getHostElement().classList.contains('radio-success')).toBe(true);
+      expect(getHostElement().classList.contains('psh-radio-success')).toBe(true);
     });
 
     it('should not have error class when no error', () => {
       fixture.componentRef.setInput('error', '');
       fixture.detectChanges();
 
-      expect(getHostElement().classList.contains('radio-error')).toBe(false);
+      expect(getHostElement().classList.contains('psh-radio-error')).toBe(false);
     });
 
     it('should not have success class when no success', () => {
       fixture.componentRef.setInput('success', '');
       fixture.detectChanges();
 
-      expect(getHostElement().classList.contains('radio-success')).toBe(false);
+      expect(getHostElement().classList.contains('psh-radio-success')).toBe(false);
     });
   });
 
@@ -768,7 +768,7 @@ describe('PshRadioComponent accessible-label warning', () => {
     const hostFixture = TestBed.createComponent(TestHostComponent);
     hostFixture.detectChanges();
 
-    expect(hostFixture.nativeElement.querySelector('.radio-text').textContent).toContain(
+    expect(hostFixture.nativeElement.querySelector('.psh-radio-text').textContent).toContain(
       'Projected label'
     );
     expect(pshWarnings(warnSpy)).toHaveLength(0);
@@ -793,7 +793,7 @@ describe('PshRadioComponent accessible-label warning', () => {
     const fixture = TestBed.createComponent(PshRadioComponent);
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('.radio-text').textContent.trim()).toBe('');
+    expect(fixture.nativeElement.querySelector('.psh-radio-text').textContent.trim()).toBe('');
     expect(
       fixture.nativeElement.querySelector('input[type="radio"]').getAttribute('aria-label')
     ).toBeNull();

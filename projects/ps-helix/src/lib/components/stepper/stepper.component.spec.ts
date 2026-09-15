@@ -97,7 +97,7 @@ describe('PshStepperComponent', () => {
     fixture.nativeElement.querySelector('psh-stepper') as HTMLElement;
 
   const getStepHeaders = () =>
-    Array.from(fixture.nativeElement.querySelectorAll('.step-header')) as HTMLElement[];
+    Array.from(fixture.nativeElement.querySelectorAll('.psh-step-header')) as HTMLElement[];
 
   const getStepIndicators = () =>
     Array.from(fixture.nativeElement.querySelectorAll('[role="tab"]')) as HTMLElement[];
@@ -107,34 +107,34 @@ describe('PshStepperComponent', () => {
 
   const getStepTitle = (index: number) => {
     const header = getStepHeaders()[index];
-    return header?.querySelector('.step-title')?.textContent?.trim();
+    return header?.querySelector('.psh-step-title')?.textContent?.trim();
   };
 
   const getStepSubtitle = (index: number) => {
     const header = getStepHeaders()[index];
-    return header?.querySelector('.step-subtitle')?.textContent?.trim();
+    return header?.querySelector('.psh-step-subtitle')?.textContent?.trim();
   };
 
   const getStepErrorMessage = (index: number) => {
     const header = getStepHeaders()[index];
-    return header?.querySelector('.step-error') as HTMLElement | null;
+    return header?.querySelector('.psh-step-error') as HTMLElement | null;
   };
 
   const getStepWarningMessage = (index: number) => {
     const header = getStepHeaders()[index];
-    return header?.querySelector('.step-warning') as HTMLElement | null;
+    return header?.querySelector('.psh-step-warning') as HTMLElement | null;
   };
 
   const getStepSuccessMessage = (index: number) => {
     const header = getStepHeaders()[index];
-    return header?.querySelector('.step-success') as HTMLElement | null;
+    return header?.querySelector('.psh-step-success') as HTMLElement | null;
   };
 
   const getStepPanels = () =>
     Array.from(fixture.nativeElement.querySelectorAll('psh-step')) as HTMLElement[];
 
   const getConnectors = () =>
-    Array.from(fixture.nativeElement.querySelectorAll('.step-connector')) as HTMLElement[];
+    Array.from(fixture.nativeElement.querySelectorAll('.psh-step-connector')) as HTMLElement[];
 
   const getStepper = () =>
     fixture.debugElement.children[0]!.componentInstance as PshStepperComponent;
@@ -163,7 +163,7 @@ describe('PshStepperComponent', () => {
 
     it('should not render subtitle when not provided', () => {
       const header = getStepHeaders()[2];
-      expect(header?.querySelector('.step-subtitle')).toBeFalsy();
+      expect(header?.querySelector('.psh-step-subtitle')).toBeFalsy();
     });
 
     it('should render error message with role="alert"', () => {
@@ -224,8 +224,8 @@ describe('PshStepperComponent', () => {
       fixture.detectChanges();
 
       const host = getStepperHost();
-      expect(host.classList.contains('numbered')).toBe(hasNumbered);
-      expect(host.classList.contains('progress')).toBe(hasProgress);
+      expect(host.classList.contains('psh-numbered')).toBe(hasNumbered);
+      expect(host.classList.contains('psh-progress')).toBe(hasProgress);
     });
 
     it('should display step numbers in numbered variant', () => {
@@ -256,7 +256,7 @@ describe('PshStepperComponent', () => {
 
     it('should display dot when no icon in default variant', () => {
       const indicator = getStepIndicator(0);
-      const dot = indicator.querySelector('.step-dot');
+      const dot = indicator.querySelector('.psh-step-dot');
       expect(dot).toBeTruthy();
     });
   });
@@ -264,8 +264,8 @@ describe('PshStepperComponent', () => {
   describe('Step states', () => {
     it('should apply active class to current step header', () => {
       const headers = getStepHeaders();
-      expect(headers[0]!.classList.contains('active')).toBe(true);
-      expect(headers[1]!.classList.contains('active')).toBe(false);
+      expect(headers[0]!.classList.contains('psh-active')).toBe(true);
+      expect(headers[1]!.classList.contains('psh-active')).toBe(false);
     });
 
     it('should apply completed class when step is completed', () => {
@@ -273,7 +273,7 @@ describe('PshStepperComponent', () => {
       fixture.detectChanges();
 
       const header = getStepHeaders()[0];
-      expect(header!.classList.contains('completed')).toBe(true);
+      expect(header!.classList.contains('psh-completed')).toBe(true);
     });
 
     it('should apply disabled class when step is disabled', () => {
@@ -281,7 +281,7 @@ describe('PshStepperComponent', () => {
       fixture.detectChanges();
 
       const header = getStepHeaders()[1];
-      expect(header!.classList.contains('disabled')).toBe(true);
+      expect(header!.classList.contains('psh-disabled')).toBe(true);
     });
 
     it('should apply error class when step has error', () => {
@@ -289,7 +289,7 @@ describe('PshStepperComponent', () => {
       fixture.detectChanges();
 
       const header = getStepHeaders()[0];
-      expect(header!.classList.contains('error')).toBe(true);
+      expect(header!.classList.contains('psh-error')).toBe(true);
     });
 
     it('should apply warning class when step has warning', () => {
@@ -297,7 +297,7 @@ describe('PshStepperComponent', () => {
       fixture.detectChanges();
 
       const header = getStepHeaders()[0];
-      expect(header!.classList.contains('warning')).toBe(true);
+      expect(header!.classList.contains('psh-warning')).toBe(true);
     });
 
     it('should apply success class when step has success message', () => {
@@ -305,7 +305,7 @@ describe('PshStepperComponent', () => {
       fixture.detectChanges();
 
       const header = getStepHeaders()[0];
-      expect(header!.classList.contains('success')).toBe(true);
+      expect(header!.classList.contains('psh-success')).toBe(true);
     });
   });
 
@@ -651,7 +651,7 @@ describe('PshStepperComponent', () => {
     });
 
     it('should have role="tablist" on header container', () => {
-      const header = fixture.nativeElement.querySelector('.stepper-header');
+      const header = fixture.nativeElement.querySelector('.psh-stepper-header');
       expect(header.getAttribute('role')).toBe('tablist');
     });
 
@@ -777,17 +777,17 @@ describe('PshStepperComponent', () => {
       fixture.detectChanges();
 
       const headers = getStepHeaders();
-      expect(headers[2]!.classList.contains('active')).toBe(true);
-      expect(headers[0]!.classList.contains('active')).toBe(false);
+      expect(headers[2]!.classList.contains('psh-active')).toBe(true);
+      expect(headers[0]!.classList.contains('psh-active')).toBe(false);
     });
 
     it('should handle step state changes after initialization', () => {
-      expect(getStepHeaders()[0]!.classList.contains('completed')).toBe(false);
+      expect(getStepHeaders()[0]!.classList.contains('psh-completed')).toBe(false);
 
       hostComponent.step1Completed = true;
       fixture.detectChanges();
 
-      expect(getStepHeaders()[0]!.classList.contains('completed')).toBe(true);
+      expect(getStepHeaders()[0]!.classList.contains('psh-completed')).toBe(true);
     });
 
     it('should validate step correctly', () => {
@@ -1074,7 +1074,7 @@ describe('PshStepperComponent', () => {
       fixture.detectChanges();
 
       const indicator = getStepIndicator(0);
-      const spinner = indicator.querySelector('.spinner');
+      const spinner = indicator.querySelector('.psh-spinner');
       expect(spinner).toBeTruthy();
       expect(spinner!.classList.contains('ph-circle-notch')).toBe(true);
     });
@@ -1189,7 +1189,7 @@ describe('PshStepperComponent with custom config', () => {
 
   it('should use variant from injected config', () => {
     expect(getStepper().variant()).toBe('numbered');
-    expect(getStepperHost().classList.contains('numbered')).toBe(true);
+    expect(getStepperHost().classList.contains('psh-numbered')).toBe(true);
   });
 
   it('should use linear setting from injected config', () => {
@@ -1266,7 +1266,7 @@ describe('PshStepperComponent with single step', () => {
     fixture.debugElement.children[0]!.componentInstance as PshStepperComponent;
 
   const getConnectors = () =>
-    Array.from(fixture.nativeElement.querySelectorAll('.step-connector')) as HTMLElement[];
+    Array.from(fixture.nativeElement.querySelectorAll('.psh-step-connector')) as HTMLElement[];
 
   it('should handle single step correctly', () => {
     expect(getStepper().steps().length).toBe(1);

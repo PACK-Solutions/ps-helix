@@ -11,8 +11,8 @@ import { Tab } from './tabs.types';
   template: '<ng-content />',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '[class.tab-panel]': 'true',
-    '[class.active]': 'isActive()',
+    '[class.psh-tab-panel]': 'true',
+    '[class.psh-active]': 'isActive()',
     '[attr.role]': '"tabpanel"',
     '[attr.aria-labelledby]': '"tab-" + index()',
     '[attr.id]': '"panel-" + index()',

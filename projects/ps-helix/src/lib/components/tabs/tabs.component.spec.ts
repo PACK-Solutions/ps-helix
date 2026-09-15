@@ -176,9 +176,9 @@ describe('PshTabsComponent', () => {
 
     it('should display only active tab panel content', () => {
       const panels = getTabPanels();
-      expect(panels[0]!.classList.contains('active')).toBe(true);
-      expect(panels[1]!.classList.contains('active')).toBe(false);
-      expect(panels[2]!.classList.contains('active')).toBe(false);
+      expect(panels[0]!.classList.contains('psh-active')).toBe(true);
+      expect(panels[1]!.classList.contains('psh-active')).toBe(false);
+      expect(panels[2]!.classList.contains('psh-active')).toBe(false);
     });
   });
 
@@ -192,7 +192,7 @@ describe('PshTabsComponent', () => {
       fixture.detectChanges();
 
       const host = getTabsHost();
-      expect(host.classList.contains(`tabs-${variant}`)).toBe(true);
+      expect(host.classList.contains(`psh-tabs-${variant}`)).toBe(true);
     });
   });
 
@@ -207,10 +207,10 @@ describe('PshTabsComponent', () => {
 
       const host = getTabsHost();
       if (size === 'medium') {
-        expect(host.classList.contains('tabs-small')).toBe(false);
-        expect(host.classList.contains('tabs-large')).toBe(false);
+        expect(host.classList.contains('psh-tabs-small')).toBe(false);
+        expect(host.classList.contains('psh-tabs-large')).toBe(false);
       } else {
-        expect(host.classList.contains(`tabs-${size}`)).toBe(hasClass);
+        expect(host.classList.contains(`psh-tabs-${size}`)).toBe(hasClass);
       }
     });
   });
@@ -268,9 +268,9 @@ describe('PshTabsComponent', () => {
       fixture.detectChanges();
 
       const panels = getTabPanels();
-      expect(panels[0]!.classList.contains('active')).toBe(false);
-      expect(panels[1]!.classList.contains('active')).toBe(false);
-      expect(panels[2]!.classList.contains('active')).toBe(true);
+      expect(panels[0]!.classList.contains('psh-active')).toBe(false);
+      expect(panels[1]!.classList.contains('psh-active')).toBe(false);
+      expect(panels[2]!.classList.contains('psh-active')).toBe(true);
     });
   });
 
@@ -523,9 +523,9 @@ describe('PshTabsComponent', () => {
     });
 
     it('should have active class only on active panel', () => {
-      expect(getTabPanel(0).classList.contains('active')).toBe(true);
-      expect(getTabPanel(1).classList.contains('active')).toBe(false);
-      expect(getTabPanel(2).classList.contains('active')).toBe(false);
+      expect(getTabPanel(0).classList.contains('psh-active')).toBe(true);
+      expect(getTabPanel(1).classList.contains('psh-active')).toBe(false);
+      expect(getTabPanel(2).classList.contains('psh-active')).toBe(false);
     });
 
     it('should have correct tabindex on panels', () => {
@@ -573,7 +573,7 @@ describe('PshTabsComponent', () => {
       fixture.detectChanges();
 
       expect(getTabButton(2).getAttribute('aria-selected')).toBe('true');
-      expect(getTabPanel(2).classList.contains('active')).toBe(true);
+      expect(getTabPanel(2).classList.contains('psh-active')).toBe(true);
     });
 
     it('should update parent activeIndex when tab is selected', () => {
@@ -589,14 +589,14 @@ describe('PshTabsComponent', () => {
       hostComponent.animated = true;
       fixture.detectChanges();
 
-      expect(getTabsHost().classList.contains('tabs-animated')).toBe(true);
+      expect(getTabsHost().classList.contains('psh-tabs-animated')).toBe(true);
     });
 
     it('should not apply tabs-animated class when animated is false', () => {
       hostComponent.animated = false;
       fixture.detectChanges();
 
-      expect(getTabsHost().classList.contains('tabs-animated')).toBe(false);
+      expect(getTabsHost().classList.contains('psh-tabs-animated')).toBe(false);
     });
   });
 
@@ -684,25 +684,25 @@ describe('PshTabsComponent', () => {
     it('should remove previous variant class when variant changes', () => {
       hostComponent.variant = 'pills';
       fixture.detectChanges();
-      expect(getTabsHost().classList.contains('tabs-pills')).toBe(true);
+      expect(getTabsHost().classList.contains('psh-tabs-pills')).toBe(true);
 
       hostComponent.variant = 'underline';
       fixture.detectChanges();
 
-      expect(getTabsHost().classList.contains('tabs-underline')).toBe(true);
-      expect(getTabsHost().classList.contains('tabs-pills')).toBe(false);
+      expect(getTabsHost().classList.contains('psh-tabs-underline')).toBe(true);
+      expect(getTabsHost().classList.contains('psh-tabs-pills')).toBe(false);
     });
 
     it('should remove previous size class when size changes', () => {
       hostComponent.size = 'large';
       fixture.detectChanges();
-      expect(getTabsHost().classList.contains('tabs-large')).toBe(true);
+      expect(getTabsHost().classList.contains('psh-tabs-large')).toBe(true);
 
       hostComponent.size = 'small';
       fixture.detectChanges();
 
-      expect(getTabsHost().classList.contains('tabs-small')).toBe(true);
-      expect(getTabsHost().classList.contains('tabs-large')).toBe(false);
+      expect(getTabsHost().classList.contains('psh-tabs-small')).toBe(true);
+      expect(getTabsHost().classList.contains('psh-tabs-large')).toBe(false);
     });
 
     it('should have exactly one variant class at any time', () => {
@@ -713,7 +713,7 @@ describe('PshTabsComponent', () => {
         fixture.detectChanges();
 
         const host = getTabsHost();
-        const variantClasses = variants.filter(v => host.classList.contains(`tabs-${v}`));
+        const variantClasses = variants.filter(v => host.classList.contains(`psh-tabs-${v}`));
         expect(variantClasses.length).toBe(1);
         expect(variantClasses[0]).toBe(variant);
       }
@@ -780,13 +780,13 @@ describe('PshTabsComponent', () => {
   describe('Integration test: complete user journey', () => {
     it('should complete a full tab navigation workflow', () => {
       expect(getTabButton(0).getAttribute('aria-selected')).toBe('true');
-      expect(getTabPanel(0).classList.contains('active')).toBe(true);
+      expect(getTabPanel(0).classList.contains('psh-active')).toBe(true);
 
       getTabButton(1).click();
       fixture.detectChanges();
 
       expect(getTabButton(1).getAttribute('aria-selected')).toBe('true');
-      expect(getTabPanel(1).classList.contains('active')).toBe(true);
+      expect(getTabPanel(1).classList.contains('psh-active')).toBe(true);
       expect(hostComponent.activeIndexChanges).toContain(1);
 
       const event = createKeyboardEvent('ArrowRight');
@@ -794,14 +794,14 @@ describe('PshTabsComponent', () => {
       fixture.detectChanges();
 
       expect(getTabButton(2).getAttribute('aria-selected')).toBe('true');
-      expect(getTabPanel(2).classList.contains('active')).toBe(true);
+      expect(getTabPanel(2).classList.contains('psh-active')).toBe(true);
 
       const homeEvent = createKeyboardEvent('Home');
       getTabButton(2).dispatchEvent(homeEvent);
       fixture.detectChanges();
 
       expect(getTabButton(0).getAttribute('aria-selected')).toBe('true');
-      expect(getTabPanel(0).classList.contains('active')).toBe(true);
+      expect(getTabPanel(0).classList.contains('psh-active')).toBe(true);
     });
   });
 });
@@ -1025,15 +1025,15 @@ describe('PshTabsComponent with custom config', () => {
   });
 
   it('should use variant from injected config', () => {
-    expect(getTabsHost().classList.contains('tabs-pills')).toBe(true);
+    expect(getTabsHost().classList.contains('psh-tabs-pills')).toBe(true);
   });
 
   it('should use size from injected config', () => {
-    expect(getTabsHost().classList.contains('tabs-large')).toBe(true);
+    expect(getTabsHost().classList.contains('psh-tabs-large')).toBe(true);
   });
 
   it('should use animated setting from injected config', () => {
-    expect(getTabsHost().classList.contains('tabs-animated')).toBe(false);
+    expect(getTabsHost().classList.contains('psh-tabs-animated')).toBe(false);
   });
 
   it('should use activeIndex from injected config', () => {
@@ -1081,9 +1081,9 @@ describe('PshTabsComponent input overrides config', () => {
   });
 
   it('should allow input values to override config', () => {
-    expect(getTabsHost().classList.contains('tabs-underline')).toBe(true);
-    expect(getTabsHost().classList.contains('tabs-small')).toBe(true);
-    expect(getTabsHost().classList.contains('tabs-animated')).toBe(true);
+    expect(getTabsHost().classList.contains('psh-tabs-underline')).toBe(true);
+    expect(getTabsHost().classList.contains('psh-tabs-small')).toBe(true);
+    expect(getTabsHost().classList.contains('psh-tabs-animated')).toBe(true);
   });
 });
 

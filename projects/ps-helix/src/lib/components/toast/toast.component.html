@@ -1,12 +1,12 @@
 <div
-  class="toast-container"
-  [class]="position()"
+  class="psh-toast-container"
+  [class]="'psh-' + position()"
   role="region"
   aria-label="Notifications"
 >
   @for (toast of toasts(); track toast.id) {
     <div
-      class="toast-item"
+      class="psh-toast-item"
       [class]="toast.color"
       role="alert"
       aria-live="polite"
@@ -17,17 +17,17 @@
     >
       @if (config.showIcon !== false) {
         <i
-          class="ph ph-{{ toast.icon || getDefaultIcon(toast.color) }} toast-icon"
+          class="ph ph-{{ toast.icon || getDefaultIcon(toast.color) }} psh-toast-icon"
           aria-hidden="true"
         ></i>
       }
-      <div class="toast-content">
+      <div class="psh-toast-content">
         {{ toast.message }}
       </div>
       @if (shouldShowCloseButton(toast)) {
         <button
           type="button"
-          class="toast-close"
+          class="psh-toast-close"
           (click)="handleDismiss(toast.id)"
           [attr.aria-label]="getCloseButtonAriaLabel(toast)"
         >
