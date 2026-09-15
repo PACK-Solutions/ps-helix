@@ -66,10 +66,10 @@ textarea::placeholder {
   opacity: 1;
 }
 
-textarea:focus {
+textarea:focus-visible {
   outline: none;
   border-color: var(--psh-primary-color);
-  box-shadow: 0 0 0 0.125rem var(--psh-focus-ring-color);
+  box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-color);
 }
 
 /* --- Variantes --- */
@@ -86,7 +86,7 @@ textarea:focus {
   background: var(--psh-surface-hover);
 }
 
-:host.filled textarea:focus {
+:host.filled textarea:focus-visible {
   background: var(--psh-surface-0);
 }
 
@@ -95,16 +95,16 @@ textarea:focus {
   border-color: var(--psh-danger-color);
 }
 
-:host.error textarea:focus {
-  box-shadow: 0 0 0 0.125rem var(--psh-focus-ring-error);
+:host.error textarea:focus-visible {
+  box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-error);
 }
 
 :host.success textarea {
   border-color: var(--psh-success-color);
 }
 
-:host.success textarea:focus {
-  box-shadow: 0 0 0 0.125rem var(--psh-focus-ring-success);
+:host.success textarea:focus-visible {
+  box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-success);
 }
 
 :host.disabled textarea {

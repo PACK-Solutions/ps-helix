@@ -35,13 +35,9 @@
   user-select: none;
 }
 
-.info-card.interactive:focus {
+.info-card.interactive:focus-visible {
   outline: none;
   box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-color);
-}
-
-.info-card.interactive:focus:not(:focus-visible) {
-  box-shadow: none;
 }
 
 .info-card.interactive:active {
@@ -341,7 +337,7 @@
 
 .info-card-copy-btn:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--psh-primary-color);
+  box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-color);
   opacity: 1;
 }
 

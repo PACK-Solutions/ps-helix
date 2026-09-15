@@ -35,14 +35,6 @@ body.psh-modal-open {
  * A single global guard neutralises animations, transitions and smooth
  * scrolling for every component and utility (WCAG 2.3.3 / 2.2.2).
  */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
+/* The prefers-reduced-motion guard moved to base/a11y.css, which is always imported
+   even when this file is not. */
 

@@ -302,7 +302,7 @@ button.danger {
 /* Focus */
 button:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 0.1875rem rgba(var(--psh-primary-color-rgb), 0.2);
+  box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-color);
 }
 
 /* Active */

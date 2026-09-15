@@ -280,13 +280,9 @@
   user-select: none;
 }
 
-.card.interactive:focus {
+.card.interactive:focus-visible {
   outline: none;
   box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-color);
-}
-
-.card.interactive:focus:not(:focus-visible) {
-  box-shadow: none;
 }
 
 .card.interactive:active {

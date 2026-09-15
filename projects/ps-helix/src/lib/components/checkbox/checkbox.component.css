@@ -55,8 +55,8 @@
 
 /* Focus Management */
 .checkbox-input:focus-visible + .checkbox-control {
-  outline: 0.125rem solid var(--psh-focus-outline-color);
-  outline-offset: 0.125rem;
+  outline: var(--psh-focus-outline-width) var(--psh-focus-outline-style) var(--psh-focus-outline-color);
+  outline-offset: var(--psh-focus-outline-offset);
 }
 
 /* Icônes Phosphor */

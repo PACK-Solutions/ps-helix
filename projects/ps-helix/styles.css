@@ -6,6 +6,10 @@
 @import './src/lib/styles/base/reset.css';
 @import './src/lib/styles/base/global.css';
 
+/* 2. ACCESSIBILITY - forced-colors focus fallback, reduced-motion guard.
+   Always imported: these are guarantees, not opinions. */
+@import './src/lib/styles/base/a11y.css';
+
 /* 2. DESIGN TOKENS - Primitive Values */
 @import './src/lib/styles/tokens/spacing.tokens.css';
 @import './src/lib/styles/tokens/sizing.tokens.css';

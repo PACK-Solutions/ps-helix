@@ -119,7 +119,7 @@ psh-tab {
 }
 
 .tab-panel:focus,
-psh-tab:focus {
+psh-tab:focus-visible {
   outline: none;
 }
 

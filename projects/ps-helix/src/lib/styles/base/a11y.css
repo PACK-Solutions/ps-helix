@@ -1,0 +1,36 @@
+/* ============================================================================
+   Accessibility guarantees — always shipped
+
+   These two rules must reach every consumer, which is why they live here and not in
+   global.css: that file carries opinionated page styling (body background, list resets)
+   that an application may legitimately not want, whereas losing a focus indicator or
+   ignoring a motion preference is never a legitimate trade.
+   ========================================================================== */
+
+/* A box-shadow is not painted in forced-colors mode, so every component in the library
+   that draws its focus ring with one — the majority — would have no visible focus
+   indicator at all under Windows High Contrast. `outline` is honoured there, and
+   CanvasText follows whatever palette the user picked.
+
+   Components that already use outline are unaffected: this only restores what
+   forced-colors removes. */
+@media (forced-colors: active) {
+  :focus-visible {
+    outline: 2px solid CanvasText;
+    outline-offset: 2px;
+  }
+}
+
+/* Respect the user's "reduce motion" OS setting across the whole library. Moved here
+   from global.css so it survives that file becoming opt-in. Individual components do not
+   need their own copy — this covers every element, including projected content. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

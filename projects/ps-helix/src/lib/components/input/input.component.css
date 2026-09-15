@@ -64,10 +64,10 @@ input::placeholder {
   opacity: 1;
 }
 
-input:focus {
+input:focus-visible {
   outline: none;
   border-color: var(--psh-primary-color);
-  box-shadow: 0 0 0 0.125rem var(--psh-focus-ring-color); /* 2px */
+  box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-color); /* 2px */
 }
 
 /* --- Variantes (Via Host) --- */
@@ -84,7 +84,7 @@ input:focus {
   background: var(--psh-surface-hover);
 }
 
-:host.filled input:focus {
+:host.filled input:focus-visible {
   background: var(--psh-surface-0);
 }
 
@@ -93,16 +93,16 @@ input:focus {
   border-color: var(--psh-danger-color);
 }
 
-:host.error input:focus {
-  box-shadow: 0 0 0 0.125rem var(--psh-focus-ring-error);
+:host.error input:focus-visible {
+  box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-error);
 }
 
 :host.success input {
   border-color: var(--psh-success-color);
 }
 
-:host.success input:focus {
-  box-shadow: 0 0 0 0.125rem var(--psh-focus-ring-success);
+:host.success input:focus-visible {
+  box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-success);
 }
 
 :host.disabled input {

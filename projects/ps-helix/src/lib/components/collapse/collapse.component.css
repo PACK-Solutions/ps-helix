@@ -43,8 +43,8 @@
 }
 
 .collapse-header:focus-visible {
-  outline: 2px solid var(--psh-primary-color);
-  outline-offset: -2px;
+  outline: none;
+  box-shadow: inset 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-color);
   z-index: 1;
 }
 
