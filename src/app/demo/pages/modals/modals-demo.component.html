@@ -117,7 +117,7 @@
                 Titre Personnalise
               </psh-button>
               <psh-modal [(open)]="customTitleModalOpen">
-                <span modal-title style="display: flex; align-items: center; gap: var(--spacing-sm);">
+                <span modal-title style="display: flex; align-items: center; gap: var(--psh-spacing-sm);">
                   <i class="ph ph-warning" style="color: var(--warning-500);"></i>
                   Attention requise
                 </span>
@@ -190,7 +190,7 @@
               <psh-modal [(open)]="largeModalOpen" title="{{ 'MODAL.LARGE_MODAL_TITLE' | translate }}" size="large">
                 <p>{{ 'MODAL.LARGE_MODAL_CONTENT' | translate }}</p>
                 <div
-                  style="height: 300px; display: flex; align-items: center; justify-content: center; background: var(--surface-ground); border-radius: var(--border-radius); margin-top: var(--spacing-md);"
+                  style="height: 300px; display: flex; align-items: center; justify-content: center; background: var(--psh-surface-ground); border-radius: var(--psh-radius-lg); margin-top: var(--psh-spacing-md);"
                 >
                   {{ 'MODAL.EXTENDED_CONTENT_AREA' | translate }}
                 </div>
@@ -623,37 +623,37 @@ export class MyComponent &#123;
             </thead>
             <tbody>
               <tr>
-                <td><code>--modal-max-width-sm</code></td>
+                <td><code>--psh-modal-max-width-sm</code></td>
                 <td><code>25rem</code></td>
                 <td>Largeur maximale des modales small (400px)</td>
               </tr>
               <tr>
-                <td><code>--modal-max-width-md</code></td>
+                <td><code>--psh-modal-max-width-md</code></td>
                 <td><code>37.5rem</code></td>
                 <td>Largeur maximale des modales medium (600px)</td>
               </tr>
               <tr>
-                <td><code>--modal-max-width-lg</code></td>
+                <td><code>--psh-modal-max-width-lg</code></td>
                 <td><code>50rem</code></td>
                 <td>Largeur maximale des modales large (800px)</td>
               </tr>
               <tr>
-                <td><code>--modal-backdrop-opacity</code></td>
+                <td><code>--psh-modal-backdrop-opacity</code></td>
                 <td><code>0.6</code></td>
                 <td>Opacité de l'arrière-plan sombre</td>
               </tr>
               <tr>
-                <td><code>--modal-backdrop-blur</code></td>
+                <td><code>--psh-modal-backdrop-blur</code></td>
                 <td><code>4px</code></td>
                 <td>Flou appliqué à l'arrière-plan</td>
               </tr>
               <tr>
-                <td><code>--modal-animation-distance</code></td>
+                <td><code>--psh-modal-animation-distance</code></td>
                 <td><code>20px</code></td>
                 <td>Distance de translation de l'animation d'entrée</td>
               </tr>
               <tr>
-                <td><code>--modal-animation-scale</code></td>
+                <td><code>--psh-modal-animation-scale</code></td>
                 <td><code>0.95</code></td>
                 <td>Échelle de l'animation d'entrée</td>
               </tr>
@@ -661,9 +661,9 @@ export class MyComponent &#123;
           </table>
           <div class="code-block">
             <pre><code>:root &#123;
-  --modal-backdrop-opacity: 0.8;
-  --modal-backdrop-blur: 8px;
-  --modal-max-width-lg: 60rem;
+  --psh-modal-backdrop-opacity: 0.8;
+  --psh-modal-backdrop-blur: 8px;
+  --psh-modal-max-width-lg: 60rem;
 &#125;</code></pre>
           </div>
         </div>
@@ -674,7 +674,7 @@ export class MyComponent &#123;
           <div class="code-block">
             <pre><code>body.modal-open &#123;
   overflow: hidden;
-  padding-right: var(--scrollbar-width);
+  padding-right: var(--psh-scrollbar-width);
 &#125;</code></pre>
           </div>
         </div>

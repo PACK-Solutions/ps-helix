@@ -6,16 +6,16 @@
 .checkbox-container {
   display: flex;
   flex-direction: column;
-  gap: var(--form-field-gap);
+  gap: var(--psh-form-field-gap);
 }
 
 .checkbox-label {
   display: inline-flex;
   align-items: center;
-  gap: var(--form-label-gap);
+  gap: var(--psh-form-label-gap);
   cursor: pointer;
   user-select: none;
-  color: var(--text-color);
+  color: var(--psh-text-color);
 }
 
 .checkbox-label.label-left {
@@ -37,10 +37,10 @@
   justify-content: center;
   width: 1.25rem; /* 20px */
   height: 1.25rem;
-  border: 0.125rem solid var(--surface-border);
-  border-radius: var(--border-radius);
-  background: var(--surface-card);
-  transition: all var(--animation-duration-fast) var(--animation-easing-default);
+  border: 0.125rem solid var(--psh-surface-border);
+  border-radius: var(--psh-radius-lg);
+  background: var(--psh-surface-card);
+  transition: all var(--psh-animation-duration-fast) var(--psh-animation-easing-default);
   color: white;
   position: relative;
   flex-shrink: 0;
@@ -49,13 +49,13 @@
 /* États via les classes du Host */
 :host.checkbox-checked .checkbox-control,
 :host.checkbox-indeterminate .checkbox-control {
-  background: var(--primary-color);
-  border-color: var(--primary-color);
+  background: var(--psh-primary-color);
+  border-color: var(--psh-primary-color);
 }
 
 /* Focus Management */
 .checkbox-input:focus-visible + .checkbox-control {
-  outline: 0.125rem solid var(--focus-outline-color);
+  outline: 0.125rem solid var(--psh-focus-outline-color);
   outline-offset: 0.125rem;
 }
 
@@ -77,15 +77,15 @@
 }
 
 /* États d'erreur et succès */
-:host.checkbox-error .checkbox-control { border-color: var(--danger-color); }
-:host.checkbox-error.checkbox-checked .checkbox-control { background: var(--danger-color); }
+:host.checkbox-error .checkbox-control { border-color: var(--psh-danger-color); }
+:host.checkbox-error.checkbox-checked .checkbox-control { background: var(--psh-danger-color); }
 
-:host.checkbox-success .checkbox-control { border-color: var(--success-color); }
-:host.checkbox-success.checkbox-checked .checkbox-control { background: var(--success-color); }
+:host.checkbox-success .checkbox-control { border-color: var(--psh-success-color); }
+:host.checkbox-success.checkbox-checked .checkbox-control { background: var(--psh-success-color); }
 
 /* Désactivation */
 :host.checkbox-disabled {
-  opacity: var(--opacity-disabled);
+  opacity: var(--psh-opacity-disabled);
   cursor: not-allowed;
 }
 
@@ -97,5 +97,5 @@
   font-size: 0.875rem;
 }
 
-.checkbox-message.error { color: var(--danger-color); }
-.checkbox-message.success { color: var(--success-color); }
+.checkbox-message.error { color: var(--psh-danger-color); }
+.checkbox-message.success { color: var(--psh-success-color); }

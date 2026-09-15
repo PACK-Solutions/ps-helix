@@ -76,10 +76,10 @@ const DEFAULT_CONFIG = {
 };
 
 const DEFAULT_STATUS_COLORS = {
-  online: 'var(--success-color)',
-  offline: 'var(--surface-400)',
-  away: 'var(--warning-color)',
-  busy: 'var(--danger-color)'
+  online: 'var(--psh-success-color)',
+  offline: 'var(--psh-surface-400)',
+  away: 'var(--psh-warning-color)',
+  busy: 'var(--psh-danger-color)'
 };
 ```
 

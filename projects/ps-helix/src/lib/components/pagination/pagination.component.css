@@ -2,10 +2,10 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: var(--spacing-xs);
-  padding: var(--spacing-sm);
-  border-radius: var(--border-radius);
-  background: var(--surface-card);
+  gap: var(--psh-spacing-xs);
+  padding: var(--psh-spacing-sm);
+  border-radius: var(--psh-radius-lg);
+  background: var(--psh-surface-card);
   width: 100%;
   max-width: 100%;
   overflow-x: auto;
@@ -13,149 +13,149 @@
 }
 
 .pagination:focus-within {
-  outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color);
-  outline-offset: var(--focus-outline-offset);
+  outline: var(--psh-focus-outline-width) var(--psh-focus-outline-style) var(--psh-focus-outline-color);
+  outline-offset: var(--psh-focus-outline-offset);
 }
 
 .pagination.outline {
   background: transparent;
-  border: var(--border-width-1) solid var(--surface-border);
+  border: var(--psh-border-width-1) solid var(--psh-surface-border);
 }
 
 .items-per-page {
   display: flex;
   align-items: center;
-  gap: var(--spacing-xs);
-  margin-right: var(--spacing-md);
+  gap: var(--psh-spacing-xs);
+  margin-right: var(--psh-spacing-md);
   flex-shrink: 0;
 }
 
 .items-per-page-label {
-  font-size: var(--font-size-sm);
-  color: var(--text-color-secondary);
+  font-size: var(--psh-font-size-sm);
+  color: var(--psh-text-color-secondary);
   white-space: nowrap;
   flex-shrink: 0;
 }
 
 .items-per-page select {
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border: var(--border-width-1) solid var(--surface-border);
-  border-radius: var(--border-radius);
-  background: var(--surface-card);
-  color: var(--text-color);
+  padding: var(--psh-spacing-xs) var(--psh-spacing-sm);
+  border: var(--psh-border-width-1) solid var(--psh-surface-border);
+  border-radius: var(--psh-radius-lg);
+  background: var(--psh-surface-card);
+  color: var(--psh-text-color);
   font-family: inherit;
-  font-size: var(--font-size-base);
+  font-size: var(--psh-font-size-base);
   cursor: pointer;
-  transition: all var(--animation-duration-fast) var(--animation-easing-default);
+  transition: all var(--psh-animation-duration-fast) var(--psh-animation-easing-default);
 }
 
 .items-per-page select:hover {
-  border-color: var(--primary-color);
+  border-color: var(--psh-primary-color);
 }
 
 .items-per-page select:focus-visible {
   outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
+  border-color: var(--psh-primary-color);
+  box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-color);
 }
 
 .small .items-per-page select {
-  padding: calc(var(--spacing-xs) * 0.75) var(--spacing-sm);
-  font-size: var(--font-size-sm);
+  padding: calc(var(--psh-spacing-xs) * 0.75) var(--psh-spacing-sm);
+  font-size: var(--psh-font-size-sm);
 }
 
 .large .items-per-page select {
-  padding: var(--spacing-sm) var(--spacing-md);
-  font-size: var(--font-size-lg);
+  padding: var(--psh-spacing-sm) var(--psh-spacing-md);
+  font-size: var(--psh-font-size-lg);
 }
 
 .page-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: var(--size-9);
-  height: var(--size-9);
-  padding: var(--spacing-xs);
+  min-width: var(--psh-size-9);
+  height: var(--psh-size-9);
+  padding: var(--psh-spacing-xs);
   border: none;
-  border-radius: var(--border-radius);
-  background: var(--surface-ground);
-  color: var(--text-color);
+  border-radius: var(--psh-radius-lg);
+  background: var(--psh-surface-ground);
+  color: var(--psh-text-color);
   font-family: inherit;
-  font-size: var(--font-size-base);
+  font-size: var(--psh-font-size-base);
   cursor: pointer;
-  transition: all var(--animation-duration-fast) var(--animation-easing-default);
+  transition: all var(--psh-animation-duration-fast) var(--psh-animation-easing-default);
   flex-shrink: 0;
 }
 
 .page-button:focus-visible {
-  outline: var(--focus-outline-width) var(--focus-outline-style) var(--focus-outline-color);
-  outline-offset: var(--focus-outline-offset);
+  outline: var(--psh-focus-outline-width) var(--psh-focus-outline-style) var(--psh-focus-outline-color);
+  outline-offset: var(--psh-focus-outline-offset);
 }
 
 .page-button:hover:not(.disabled):not(.active) {
-  background: var(--surface-hover);
+  background: var(--psh-surface-hover);
 }
 
 .page-button.active {
-  background: var(--primary-gradient);
-  color: var(--primary-color-text);
+  background: var(--psh-primary-gradient);
+  color: var(--psh-primary-color-text);
 }
 
 .page-button.disabled {
-  opacity: var(--opacity-disabled);
+  opacity: var(--psh-opacity-disabled);
   cursor: not-allowed;
 }
 
 .page-button i {
-  font-size: var(--icon-size-sm);
+  font-size: var(--psh-icon-size-sm);
 }
 
 .pagination.outline .page-button {
   background: transparent;
-  border: var(--border-width-1) solid var(--surface-border);
+  border: var(--psh-border-width-1) solid var(--psh-surface-border);
 }
 
 .pagination.outline .page-button:hover:not(.disabled):not(.active) {
-  background: var(--surface-hover);
-  border-color: var(--primary-color);
+  background: var(--psh-surface-hover);
+  border-color: var(--psh-primary-color);
 }
 
 .pagination.outline .page-button.active {
-  background: var(--primary-gradient);
-  color: var(--primary-color-text);
-  border-color: var(--primary-color);
+  background: var(--psh-primary-gradient);
+  color: var(--psh-primary-color-text);
+  border-color: var(--psh-primary-color);
 }
 
 .pagination.small .page-button {
-  min-width: var(--size-8);
-  height: var(--size-8);
-  font-size: var(--font-size-sm);
+  min-width: var(--psh-size-8);
+  height: var(--psh-size-8);
+  font-size: var(--psh-font-size-sm);
 }
 
 .pagination.small .page-button i {
-  font-size: var(--icon-size-xs);
+  font-size: var(--psh-icon-size-xs);
 }
 
 .pagination.large .page-button {
-  min-width: var(--size-11);
-  height: var(--size-11);
-  font-size: var(--font-size-lg);
+  min-width: var(--psh-size-11);
+  height: var(--psh-size-11);
+  font-size: var(--psh-font-size-lg);
 }
 
 .pagination.large .page-button i {
-  font-size: var(--icon-size-md);
+  font-size: var(--psh-icon-size-md);
 }
 
 @media (max-width: 768px) {
   .pagination {
     justify-content: center;
-    gap: var(--spacing-xs);
-    padding: var(--spacing-sm);
+    gap: var(--psh-spacing-xs);
+    padding: var(--psh-spacing-sm);
   }
 
   .items-per-page {
     margin-right: 0;
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: var(--psh-spacing-sm);
     width: 100%;
     justify-content: center;
     flex-wrap: wrap;
@@ -164,7 +164,7 @@
   .items-per-page-label {
     width: 100%;
     text-align: center;
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: var(--psh-spacing-xs);
   }
 
   .items-per-page select {
@@ -174,44 +174,44 @@
   }
 
   .page-button {
-    min-width: var(--size-8);
-    height: var(--size-8);
-    font-size: var(--font-size-sm);
+    min-width: var(--psh-size-8);
+    height: var(--psh-size-8);
+    font-size: var(--psh-font-size-sm);
   }
 
   .page-button i {
-    font-size: var(--icon-size-xs);
+    font-size: var(--psh-icon-size-xs);
   }
 }
 
 @media (max-width: 480px) {
   .pagination {
-    padding: var(--spacing-xs);
+    padding: var(--psh-spacing-xs);
     gap: 2px;
   }
 
   .page-button {
-    min-width: var(--size-7, 28px);
-    height: var(--size-7, 28px);
-    font-size: var(--font-size-xs);
+    min-width: var(--psh-size-7, 28px);
+    height: var(--psh-size-7, 28px);
+    font-size: var(--psh-font-size-xs);
     padding: 2px;
   }
 
   .page-button i {
-    font-size: var(--icon-size-xs);
+    font-size: var(--psh-icon-size-xs);
   }
 
   .items-per-page {
-    margin-bottom: var(--spacing-xs);
+    margin-bottom: var(--psh-spacing-xs);
   }
 
   .items-per-page-label {
-    font-size: var(--font-size-xs);
+    font-size: var(--psh-font-size-xs);
   }
 
   .items-per-page select {
-    font-size: var(--font-size-sm);
-    padding: var(--spacing-xs);
+    font-size: var(--psh-font-size-sm);
+    padding: var(--psh-spacing-xs);
   }
 }
 

@@ -3,10 +3,10 @@
 }
 
 .sidebar {
-  background: var(--surface-card);
+  background: var(--psh-surface-card);
   display: flex;
   flex-direction: column;
-  transition: all var(--animation-duration-default) var(--animation-easing-smooth);
+  transition: all var(--psh-animation-duration-default) var(--psh-animation-easing-smooth);
 }
 
 /* Position variants - only for overlay mode */
@@ -21,18 +21,18 @@
 /* Mode variants */
 .sidebar.fixed {
   position: relative;
-  width: var(--sidebar-width);
-  border: var(--border-width-1) solid var(--surface-border);
+  width: var(--psh-sidebar-width);
+  border: var(--psh-border-width-1) solid var(--psh-surface-border);
   flex-shrink: 0;
 }
 
 .sidebar.fixed.left {
-  border-right: var(--border-width-1) solid var(--surface-border);
+  border-right: var(--psh-border-width-1) solid var(--psh-surface-border);
   border-left: none;
 }
 
 .sidebar.fixed.right {
-  border-left: var(--border-width-1) solid var(--surface-border);
+  border-left: var(--psh-border-width-1) solid var(--psh-surface-border);
   border-right: none;
 }
 
@@ -40,9 +40,9 @@
   position: fixed;
   top: 0;
   height: 100vh;
-  z-index: var(--z-index-modal);
-  box-shadow: var(--shadow-lg);
-  transition: transform var(--animation-duration-default) var(--animation-easing-smooth);
+  z-index: var(--psh-z-index-modal);
+  box-shadow: var(--psh-shadow-lg);
+  transition: transform var(--psh-animation-duration-default) var(--psh-animation-easing-smooth);
 }
 
 .sidebar.overlay.left {
@@ -58,14 +58,14 @@
    zero-duration delay keeps the panel visible for the length of the slide-out. */
 .sidebar.overlay:not(.open) {
   visibility: hidden;
-  transition: transform var(--animation-duration-default) var(--animation-easing-smooth),
-              visibility 0s linear var(--animation-duration-default);
+  transition: transform var(--psh-animation-duration-default) var(--psh-animation-easing-smooth),
+              visibility 0s linear var(--psh-animation-duration-default);
 }
 
 .sidebar.overlay.open {
   transform: translateX(0);
   visibility: visible;
-  transition: transform var(--animation-duration-default) var(--animation-easing-smooth),
+  transition: transform var(--psh-animation-duration-default) var(--psh-animation-easing-smooth),
               visibility 0s linear 0s;
 }
 
@@ -79,9 +79,9 @@
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: var(--spacing-md);
-  transition: all var(--animation-duration-default) var(--animation-easing-smooth);
-  min-width: var(--sidebar-width);
+  padding: var(--psh-spacing-md);
+  transition: all var(--psh-animation-duration-default) var(--psh-animation-easing-smooth);
+  min-width: var(--psh-sidebar-width);
   opacity: 1;
   transform: translateX(0);
 }
@@ -93,10 +93,10 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(var(--surface-900-rgb), 0.5);
-  backdrop-filter: blur(var(--size-1));
-  z-index: var(--z-index-modal-backdrop);
-  animation: fadeIn var(--animation-duration-default) var(--animation-easing-default);
+  background: rgba(var(--psh-surface-900-rgb), 0.5);
+  backdrop-filter: blur(var(--psh-size-1));
+  z-index: var(--psh-z-index-modal-backdrop);
+  animation: fadeIn var(--psh-animation-duration-default) var(--psh-animation-easing-default);
 }
 
 /* Animations */

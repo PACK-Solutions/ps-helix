@@ -1,27 +1,27 @@
 /* Component-Specific Design Tokens */
 .alert {
-  --alert-animation-duration: var(--animation-duration-fast);
-  --alert-animation-distance: var(--animation-distance-sm);
-  --alert-icon-size: var(--icon-size-md);
-  --alert-icon-size-sm: var(--icon-size-sm);
-  --alert-icon-size-lg: var(--icon-size-lg);
-  --alert-dismiss-hover-bg: rgba(0, 0, 0, 0.1);
+  --psh-alert-animation-duration: var(--psh-animation-duration-fast);
+  --psh-alert-animation-distance: var(--psh-animation-distance-sm);
+  --psh-alert-icon-size: var(--psh-icon-size-md);
+  --psh-alert-icon-size-sm: var(--psh-icon-size-sm);
+  --psh-alert-icon-size-lg: var(--psh-icon-size-lg);
+  --psh-alert-dismiss-hover-bg: rgba(0, 0, 0, 0.1);
 
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: var(--spacing-md);
-  padding: var(--spacing-md) var(--spacing-lg);
-  border-radius: var(--border-radius);
-  border: var(--border-width-1) solid transparent;
-  animation: slideIn var(--alert-animation-duration) var(--animation-easing-default);
+  gap: var(--psh-spacing-md);
+  padding: var(--psh-spacing-md) var(--psh-spacing-lg);
+  border-radius: var(--psh-radius-lg);
+  border: var(--psh-border-width-1) solid transparent;
+  animation: slideIn var(--psh-alert-animation-duration) var(--psh-animation-easing-default);
 }
 
 .alert-content {
   display: flex;
   align-items: flex-start;
   flex-direction: row;
-  gap: var(--spacing-md);
+  gap: var(--psh-spacing-md);
   flex: 1;
 }
 
@@ -30,60 +30,60 @@
 }
 
 .alert i {
-  font-size: var(--alert-icon-size);
+  font-size: var(--psh-alert-icon-size);
   flex-shrink: 0;
 }
 
 .alert-message {
   color: inherit;
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-relaxed);
+  font-size: var(--psh-font-size-base);
+  line-height: var(--psh-line-height-relaxed);
   word-break: break-word;
   overflow-wrap: break-word;
 }
 
 /* Variants */
 .alert.info {
-  background: var(--alert-info-bg);
-  border-color: var(--alert-info-border-color);
-  color: var(--alert-info-text-color);
+  background: var(--psh-alert-info-bg);
+  border-color: var(--psh-alert-info-border-color);
+  color: var(--psh-alert-info-text-color);
 }
 
 .alert.success {
-  background: rgba(var(--success-color-rgb), 0.1);
-  border-color: var(--success-color);
-  color: var(--success-color);
+  background: rgba(var(--psh-success-color-rgb), 0.1);
+  border-color: var(--psh-success-color);
+  color: var(--psh-success-color);
 }
 
 .alert.warning {
-  background: rgba(var(--warning-color-rgb), 0.1);
-  border-color: var(--warning-color);
-  color: var(--warning-color);
+  background: rgba(var(--psh-warning-color-rgb), 0.1);
+  border-color: var(--psh-warning-color);
+  color: var(--psh-warning-color);
 }
 
 .alert.danger {
-  background: rgba(var(--danger-color-rgb), 0.1);
-  border-color: var(--danger-color);
-  color: var(--danger-color);
+  background: rgba(var(--psh-danger-color-rgb), 0.1);
+  border-color: var(--psh-danger-color);
+  color: var(--psh-danger-color);
 }
 
 /* Sizes */
 .alert.small {
-  padding: var(--spacing-sm) var(--spacing-md);
-  font-size: var(--font-size-sm);
+  padding: var(--psh-spacing-sm) var(--psh-spacing-md);
+  font-size: var(--psh-font-size-sm);
 }
 
 .alert.small i {
-  font-size: var(--alert-icon-size-sm);
+  font-size: var(--psh-alert-icon-size-sm);
 }
 
 .alert.large {
-  padding: var(--spacing-lg) var(--spacing-xl);
-  font-size: var(--font-size-lg);
+  padding: var(--psh-spacing-lg) var(--psh-spacing-xl);
+  font-size: var(--psh-font-size-lg);
 }
 
 .alert.large i {
-  font-size: var(--alert-icon-size-lg);
+  font-size: var(--psh-alert-icon-size-lg);
 }
 
 /* Dismiss button */
@@ -91,11 +91,11 @@
   background: transparent;
   border: none;
   color: inherit;
-  padding: var(--spacing-xs);
+  padding: var(--psh-spacing-xs);
   cursor: pointer;
   opacity: 0.7;
   transition: opacity 0.2s ease;
-  border-radius: var(--border-radius);
+  border-radius: var(--psh-radius-lg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -104,13 +104,13 @@
 
 .alert-dismiss:hover {
   opacity: 1;
-  background: var(--alert-dismiss-hover-bg);
+  background: var(--psh-alert-dismiss-hover-bg);
 }
 
 @keyframes slideIn {
   from {
     opacity: 0;
-    transform: translateY(calc(-1 * var(--alert-animation-distance)));
+    transform: translateY(calc(-1 * var(--psh-alert-animation-distance)));
   }
   to {
     opacity: 1;
@@ -121,68 +121,68 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .alert {
-    padding: var(--spacing-sm) var(--spacing-md);
-    gap: var(--spacing-sm);
+    padding: var(--psh-spacing-sm) var(--psh-spacing-md);
+    gap: var(--psh-spacing-sm);
   }
 
   .alert-content {
-    gap: var(--spacing-sm);
+    gap: var(--psh-spacing-sm);
   }
 
   .alert-message {
-    font-size: var(--font-size-sm);
+    font-size: var(--psh-font-size-sm);
     word-break: break-word;
     overflow-wrap: break-word;
   }
 
   .alert i {
-    font-size: var(--icon-size-sm);
+    font-size: var(--psh-icon-size-sm);
   }
 
   .alert.large {
-    padding: var(--spacing-md) var(--spacing-lg);
+    padding: var(--psh-spacing-md) var(--psh-spacing-lg);
   }
 
   .alert.large i {
-    font-size: var(--icon-size-md);
+    font-size: var(--psh-icon-size-md);
   }
 }
 
 @media (max-width: 400px) {
   .alert {
-    padding: var(--spacing-xs) var(--spacing-sm);
-    gap: var(--spacing-xs);
+    padding: var(--psh-spacing-xs) var(--psh-spacing-sm);
+    gap: var(--psh-spacing-xs);
   }
 
   .alert-content {
-    gap: var(--spacing-xs);
+    gap: var(--psh-spacing-xs);
   }
 
   .alert-message {
-    font-size: var(--font-size-xs);
+    font-size: var(--psh-font-size-xs);
   }
 
   .alert i {
-    font-size: var(--icon-size-xs);
+    font-size: var(--psh-icon-size-xs);
   }
 
   .alert.small {
-    padding: var(--spacing-xxs) var(--spacing-xs);
+    padding: var(--psh-spacing-xxs) var(--psh-spacing-xs);
   }
 
   .alert.medium {
-    padding: var(--spacing-xs) var(--spacing-sm);
+    padding: var(--psh-spacing-xs) var(--psh-spacing-sm);
   }
 
   .alert.large {
-    padding: var(--spacing-sm) var(--spacing-md);
+    padding: var(--psh-spacing-sm) var(--psh-spacing-md);
   }
 
   .alert.large i {
-    font-size: var(--icon-size-sm);
+    font-size: var(--psh-icon-size-sm);
   }
 
   .alert-dismiss {
-    padding: var(--spacing-xxs);
+    padding: var(--psh-spacing-xxs);
   }
 }

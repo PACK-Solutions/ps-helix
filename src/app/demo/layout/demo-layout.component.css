@@ -3,18 +3,18 @@
   display: none;
   justify-content: space-between;
   align-items: center;
-  padding: var(--spacing-md) var(--spacing-lg);
-  background: var(--surface-card);
-  border-bottom: 1px solid var(--surface-border);
+  padding: var(--psh-spacing-md) var(--psh-spacing-lg);
+  background: var(--psh-surface-card);
+  border-bottom: 1px solid var(--psh-surface-border);
   position: sticky;
   top: 0;
   z-index: 100;
 }
 
 .mobile-title {
-  font-size: var(--font-size-lg);
+  font-size: var(--psh-font-size-lg);
   font-weight: 600;
-  color: var(--text-color);
+  color: var(--psh-text-color);
   margin: 0;
 }
 
@@ -26,8 +26,8 @@
 .mobile-close-button {
   display: none;
   justify-content: flex-end;
-  padding: var(--spacing-md);
-  border-bottom: 1px solid var(--surface-border);
+  padding: var(--psh-spacing-md);
+  border-bottom: 1px solid var(--psh-surface-border);
 }
 
 .mobile-backdrop {
@@ -49,16 +49,16 @@
 }
 
 .demo-sidebar {
-  background: var(--surface-card);
-  border-right: 1px solid var(--surface-border);
+  background: var(--psh-surface-card);
+  border-right: 1px solid var(--psh-surface-border);
   padding: 0;
   overflow-y: auto;
   overflow-x: hidden;
 }
 
 .demo-content {
-  padding: var(--spacing-xl);
-  background: var(--surface-ground);
+  padding: var(--psh-spacing-xl);
+  background: var(--psh-surface-ground);
   min-width: 0;
   overflow-x: auto;
   content-visibility: auto;
@@ -72,7 +72,7 @@
   }
   
   .demo-content {
-    padding: var(--spacing-lg);
+    padding: var(--psh-spacing-lg);
   }
 }
 
@@ -82,7 +82,7 @@
   }
   
   .demo-content {
-    padding: var(--spacing-md);
+    padding: var(--psh-spacing-md);
   }
 }
 
@@ -92,7 +92,7 @@
   }
   
   .demo-content {
-    padding: var(--spacing-md);
+    padding: var(--psh-spacing-md);
   }
 }
 
@@ -123,8 +123,8 @@
     z-index: 200;
     transform: translateX(-100%);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border-right: 1px solid var(--surface-border);
-    box-shadow: var(--shadow-lg);
+    border-right: 1px solid var(--psh-surface-border);
+    box-shadow: var(--psh-shadow-lg);
     overflow-y: auto;
     overflow-x: hidden;
     /* Hide scrollbars on mobile */
@@ -141,7 +141,7 @@
   }
   
   .demo-content {
-    padding: var(--spacing-md);
+    padding: var(--psh-spacing-md);
     width: 100%;
     overflow: hidden;
     min-height: calc(100vh - 60px);
@@ -155,21 +155,21 @@
   }
   
   .demo-sidebar {
-    background: var(--surface-card);
-    border-right: 1px solid var(--surface-border);
+    background: var(--psh-surface-card);
+    border-right: 1px solid var(--psh-surface-border);
   }
   
   .demo-content {
-    padding: var(--spacing-lg);
+    padding: var(--psh-spacing-lg);
   }
 }
 @media (max-width: 480px) {
   .mobile-header {
-    padding: var(--spacing-sm) var(--spacing-md);
+    padding: var(--psh-spacing-sm) var(--psh-spacing-md);
   }
   
   .mobile-title {
-    font-size: var(--font-size-base);
+    font-size: var(--psh-font-size-base);
   }
   
   .demo-sidebar {
@@ -179,7 +179,7 @@
   }
   
   .demo-content {
-    padding: var(--spacing-sm);
+    padding: var(--psh-spacing-sm);
     /* Hide scrollbars completely on small mobile */
     overflow: hidden;
   }

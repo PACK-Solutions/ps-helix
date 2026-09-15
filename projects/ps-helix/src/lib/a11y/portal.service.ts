@@ -30,7 +30,7 @@ export interface PshPortalRef {
  * consumer's `ViewContainerRef` (so it stays in that component's change-detection
  * tree and keeps its bindings reactive), then its root nodes are moved into the
  * shared `.psh-overlay-layer`. The layer is `position: fixed; inset: 0;
- * pointer-events: none` at `z-index: var(--z-index-overlay)`; panels re-enable
+ * pointer-events: none` at `z-index: var(--psh-z-index-overlay)`; panels re-enable
  * pointer events. The layer is created lazily and removed once empty.
  */
 @Injectable({ providedIn: 'root' })
@@ -131,7 +131,7 @@ export class PshPortalService {
     const layer = this.document.createElement('div');
     layer.className = 'psh-overlay-layer';
     layer.style.cssText =
-      'position:fixed;inset:0;z-index:var(--z-index-overlay);pointer-events:none;';
+      'position:fixed;inset:0;z-index:var(--psh-z-index-overlay);pointer-events:none;';
     this.document.body.appendChild(layer);
     this.layer = layer;
     return layer;

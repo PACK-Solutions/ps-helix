@@ -229,43 +229,43 @@ describe('PshHorizontalCardComponent', () => {
 
   describe('CSS Custom Properties', () => {
     it('should apply sideWidth as CSS custom property', () => {
-      fixture.componentRef.setInput('sideWidth', 'var(--size-64)');
+      fixture.componentRef.setInput('sideWidth', 'var(--psh-size-64)');
       fixture.detectChanges();
 
       const style = cardElement.nativeElement.style;
-      expect(style.getPropertyValue('--horizontal-side-width')).toBe('var(--size-64)');
+      expect(style.getPropertyValue('--psh-horizontal-side-width')).toBe('var(--psh-size-64)');
     });
 
     it('should apply gap as CSS custom property', () => {
-      fixture.componentRef.setInput('gap', 'var(--spacing-lg)');
+      fixture.componentRef.setInput('gap', 'var(--psh-spacing-lg)');
       fixture.detectChanges();
 
       const style = cardElement.nativeElement.style;
-      expect(style.getPropertyValue('--horizontal-gap')).toBe('var(--spacing-lg)');
+      expect(style.getPropertyValue('--psh-horizontal-gap')).toBe('var(--psh-spacing-lg)');
     });
 
     it('should apply sidePadding as CSS custom property', () => {
-      fixture.componentRef.setInput('sidePadding', 'var(--spacing-sm)');
+      fixture.componentRef.setInput('sidePadding', 'var(--psh-spacing-sm)');
       fixture.detectChanges();
 
       const style = cardElement.nativeElement.style;
-      expect(style.getPropertyValue('--horizontal-side-padding')).toBe('var(--spacing-sm)');
+      expect(style.getPropertyValue('--psh-horizontal-side-padding')).toBe('var(--psh-spacing-sm)');
     });
 
     it('should apply contentPadding as CSS custom property', () => {
-      fixture.componentRef.setInput('contentPadding', 'var(--spacing-xl)');
+      fixture.componentRef.setInput('contentPadding', 'var(--psh-spacing-xl)');
       fixture.detectChanges();
 
       const style = cardElement.nativeElement.style;
-      expect(style.getPropertyValue('--horizontal-content-padding')).toBe('var(--spacing-xl)');
+      expect(style.getPropertyValue('--psh-horizontal-content-padding')).toBe('var(--psh-spacing-xl)');
     });
 
     it('should apply mobileHeight as CSS custom property', () => {
-      fixture.componentRef.setInput('mobileHeight', 'var(--size-32)');
+      fixture.componentRef.setInput('mobileHeight', 'var(--psh-size-32)');
       fixture.detectChanges();
 
       const style = cardElement.nativeElement.style;
-      expect(style.getPropertyValue('--horizontal-mobile-height')).toBe('var(--size-32)');
+      expect(style.getPropertyValue('--psh-horizontal-mobile-height')).toBe('var(--psh-size-32)');
     });
   });
 

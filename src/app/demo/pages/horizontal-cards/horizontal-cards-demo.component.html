@@ -13,21 +13,21 @@
         <div class="use-cases-grid">
           <div class="use-case-item">
             <div class="use-case-icon">
-              <i class="ph ph-shopping-bag" style="font-size: 2rem; color: var(--primary-color);"></i>
+              <i class="ph ph-shopping-bag" style="font-size: 2rem; color: var(--psh-primary-color);"></i>
             </div>
             <h4>Cartes Produits</h4>
             <p>Affichage de produits avec image latérale, informations détaillées et actions d'achat. Idéal pour les e-commerce et catalogues.</p>
           </div>
           <div class="use-case-item">
             <div class="use-case-icon">
-              <i class="ph ph-user-circle" style="font-size: 2rem; color: var(--primary-color);"></i>
+              <i class="ph ph-user-circle" style="font-size: 2rem; color: var(--psh-primary-color);"></i>
             </div>
             <h4>Profils Utilisateurs</h4>
             <p>Présentation de profils avec avatar latéral, informations personnelles et métadonnées. Parfait pour les annuaires et équipes.</p>
           </div>
           <div class="use-case-item">
             <div class="use-case-icon">
-              <i class="ph ph-article" style="font-size: 2rem; color: var(--primary-color);"></i>
+              <i class="ph ph-article" style="font-size: 2rem; color: var(--psh-primary-color);"></i>
             </div>
             <h4>Articles et Contenus</h4>
             <p>Affichage d'articles avec illustration latérale, extrait et métadonnées. Adapté aux blogs et actualités.</p>
@@ -48,8 +48,8 @@
               [variant]="'elevated'"
               [interactive]="true"
               [hoverable]="true"
-              [sideWidth]="'var(--size-40)'"
-              [gap]="'var(--spacing-md)'"
+              [sideWidth]="'var(--psh-size-40)'"
+              [gap]="'var(--psh-spacing-md)'"
               (clicked)="handleCardClick($event, 'Product ' + product.id)"
             >
               <div horizontal-side>
@@ -94,8 +94,8 @@
               [variant]="'outlined'"
               [interactive]="true"
               [hoverable]="true"
-              [sideWidth]="'var(--size-32)'"
-              [gap]="'var(--spacing-lg)'"
+              [sideWidth]="'var(--psh-size-32)'"
+              [gap]="'var(--psh-spacing-lg)'"
               (clicked)="handleCardClick($event, 'User ' + user.id)"
             >
               <div horizontal-side>
@@ -155,8 +155,8 @@
               [variant]="'elevated'"
               [interactive]="true"
               [hoverable]="true"
-              [sideWidth]="'var(--size-48)'"
-              [gap]="'var(--spacing-lg)'"
+              [sideWidth]="'var(--psh-size-48)'"
+              [gap]="'var(--psh-spacing-lg)'"
               (clicked)="handleCardClick($event, 'Article ' + article.id)"
             >
               <div horizontal-side>
@@ -202,7 +202,7 @@
         <div class="variants-demo">
           <div class="variant-example">
             <h4>Elevated</h4>
-            <psh-horizontal-card [variant]="'elevated'" [sideWidth]="'var(--size-32)'">
+            <psh-horizontal-card [variant]="'elevated'" [sideWidth]="'var(--psh-size-32)'">
               <div horizontal-side>
                 <div class="demo-side" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
               </div>
@@ -214,7 +214,7 @@
           </div>
           <div class="variant-example">
             <h4>Outlined</h4>
-            <psh-horizontal-card [variant]="'outlined'" [sideWidth]="'var(--size-32)'">
+            <psh-horizontal-card [variant]="'outlined'" [sideWidth]="'var(--psh-size-32)'">
               <div horizontal-side>
                 <div class="demo-side" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
               </div>
@@ -226,7 +226,7 @@
           </div>
           <div class="variant-example">
             <h4>Default</h4>
-            <psh-horizontal-card [variant]="'default'" [sideWidth]="'var(--size-32)'">
+            <psh-horizontal-card [variant]="'default'" [sideWidth]="'var(--psh-size-32)'">
               <div horizontal-side>
                 <div class="demo-side" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
               </div>
@@ -250,7 +250,7 @@
           <div class="state-example">
             <h4>État Loading</h4>
             <p class="state-description">Affiche un skeleton animé pendant le chargement des données.</p>
-            <psh-horizontal-card [loading]="true" [sideWidth]="'var(--size-32)'">
+            <psh-horizontal-card [loading]="true" [sideWidth]="'var(--psh-size-32)'">
               <div horizontal-side>
                 <div class="demo-side"></div>
               </div>
@@ -267,7 +267,7 @@
               [variant]="'elevated'"
               [interactive]="true"
               [disabled]="true"
-              [sideWidth]="'var(--size-32)'"
+              [sideWidth]="'var(--psh-size-32)'"
             >
               <div horizontal-side>
                 <div class="demo-side" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
@@ -341,13 +341,13 @@
               <tr>
                 <td><code>sideWidth</code></td>
                 <td><code>string</code></td>
-                <td><code>'var(--size-48)'</code></td>
+                <td><code>'var(--psh-size-48)'</code></td>
                 <td>Largeur du contenu latéral (utiliser les design tokens)</td>
               </tr>
               <tr>
                 <td><code>gap</code></td>
                 <td><code>string</code></td>
-                <td><code>'var(--spacing-md)'</code></td>
+                <td><code>'var(--psh-spacing-md)'</code></td>
                 <td>Espacement entre le contenu latéral et principal</td>
               </tr>
               <tr>
@@ -359,13 +359,13 @@
               <tr>
                 <td><code>contentPadding</code></td>
                 <td><code>string</code></td>
-                <td><code>'var(--spacing-md)'</code></td>
+                <td><code>'var(--psh-spacing-md)'</code></td>
                 <td>Padding du contenu principal</td>
               </tr>
               <tr>
                 <td><code>mobileHeight</code></td>
                 <td><code>string</code></td>
-                <td><code>'var(--size-48)'</code></td>
+                <td><code>'var(--psh-size-48)'</code></td>
                 <td>Hauteur du contenu latéral sur mobile</td>
               </tr>
               <tr>
@@ -446,9 +446,9 @@
       [variant]="'elevated'"
       [interactive]="true"
       [hoverable]="true"
-      [sideWidth]="'var(--size-40)'"
-      [gap]="'var(--spacing-md)'"
-      [contentPadding]="'var(--spacing-lg)'"
+      [sideWidth]="'var(--psh-size-40)'"
+      [gap]="'var(--psh-spacing-md)'"
+      [contentPadding]="'var(--psh-spacing-lg)'"
       (clicked)="handleClick($event)"
     &gt;
       &lt;div horizontal-side&gt;

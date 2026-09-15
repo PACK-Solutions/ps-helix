@@ -712,7 +712,7 @@ describe('PshCollapseComponent', () => {
 
   describe('maxHeight input', () => {
     it('should have default maxHeight of 1000px', () => {
-      const style = getCollapseContainer().style.getPropertyValue('--collapse-max-height');
+      const style = getCollapseContainer().style.getPropertyValue('--psh-collapse-max-height');
       expect(style).toBe('1000px');
     });
 
@@ -720,18 +720,18 @@ describe('PshCollapseComponent', () => {
       fixture.componentRef.setInput('maxHeight', '500px');
       fixture.detectChanges();
 
-      const style = getCollapseContainer().style.getPropertyValue('--collapse-max-height');
+      const style = getCollapseContainer().style.getPropertyValue('--psh-collapse-max-height');
       expect(style).toBe('500px');
     });
 
     it('should apply different maxHeight values', () => {
       fixture.componentRef.setInput('maxHeight', '200px');
       fixture.detectChanges();
-      expect(getCollapseContainer().style.getPropertyValue('--collapse-max-height')).toBe('200px');
+      expect(getCollapseContainer().style.getPropertyValue('--psh-collapse-max-height')).toBe('200px');
 
       fixture.componentRef.setInput('maxHeight', '100vh');
       fixture.detectChanges();
-      expect(getCollapseContainer().style.getPropertyValue('--collapse-max-height')).toBe('100vh');
+      expect(getCollapseContainer().style.getPropertyValue('--psh-collapse-max-height')).toBe('100vh');
     });
   });
 

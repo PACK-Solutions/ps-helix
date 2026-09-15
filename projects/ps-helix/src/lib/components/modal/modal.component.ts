@@ -448,9 +448,9 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
 
     const root = this.document.documentElement;
     const view = this.document.defaultView;
-    if (view && !root.style.getPropertyValue('--scrollbar-width')) {
+    if (view && !root.style.getPropertyValue('--psh-scrollbar-width')) {
       const scrollbarWidth = view.innerWidth - root.clientWidth;
-      root.style.setProperty('--scrollbar-width', `${scrollbarWidth}px`);
+      root.style.setProperty('--psh-scrollbar-width', `${scrollbarWidth}px`);
     }
     this.document.body.classList.add('psh-modal-open');
   }

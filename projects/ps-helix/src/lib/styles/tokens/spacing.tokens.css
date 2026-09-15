@@ -2,26 +2,26 @@
 
 :root {
   /* Positive spacing scale */
-  --spacing-xxs: 0.125rem;    /* 2px */
-  --spacing-xs: 0.25rem;      /* 4px */
-  --spacing-sm: 0.5rem;       /* 8px */
-  --spacing-md: 1rem;         /* 16px */
-  --spacing-lg: 1.5rem;       /* 24px */
-  --spacing-xl: 2rem;         /* 32px */
-  --spacing-2xl: 3rem;        /* 48px */
-  --spacing-3xl: 4rem;        /* 64px */
-  --spacing-4xl: 5rem;        /* 80px */
+  --psh-spacing-xxs: 0.125rem;    /* 2px */
+  --psh-spacing-xs: 0.25rem;      /* 4px */
+  --psh-spacing-sm: 0.5rem;       /* 8px */
+  --psh-spacing-md: 1rem;         /* 16px */
+  --psh-spacing-lg: 1.5rem;       /* 24px */
+  --psh-spacing-xl: 2rem;         /* 32px */
+  --psh-spacing-2xl: 3rem;        /* 48px */
+  --psh-spacing-3xl: 4rem;        /* 64px */
+  --psh-spacing-4xl: 5rem;        /* 80px */
 
   /* Form field semantic spacing */
-  --form-field-gap: var(--spacing-xs);  /* label <-> control <-> message */
-  --form-label-gap: var(--spacing-sm);  /* control <-> inline label (checkbox/radio/switch) */
+  --psh-form-field-gap: var(--psh-spacing-xs);  /* label <-> control <-> message */
+  --psh-form-label-gap: var(--psh-spacing-sm);  /* control <-> inline label (checkbox/radio/switch) */
 
   /* Negative spacing scale (for negative margins) */
-  --negative-spacing-xxs: -0.125rem;
-  --negative-spacing-xs: -0.25rem;
-  --negative-spacing-sm: -0.5rem;
-  --negative-spacing-md: -1rem;
-  --negative-spacing-lg: -1.5rem;
-  --negative-spacing-xl: -2rem;
-  --negative-spacing-2xl: -3rem;
+  --psh-negative-spacing-xxs: -0.125rem;
+  --psh-negative-spacing-xs: -0.25rem;
+  --psh-negative-spacing-sm: -0.5rem;
+  --psh-negative-spacing-md: -1rem;
+  --psh-negative-spacing-lg: -1.5rem;
+  --psh-negative-spacing-xl: -2rem;
+  --psh-negative-spacing-2xl: -3rem;
 }

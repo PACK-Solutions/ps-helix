@@ -400,7 +400,7 @@ Desactive la carte avec opacite reduite et interactions bloquees.
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: var(--spacing-lg);
+  gap: var(--psh-spacing-lg);
 }
 ```
 
@@ -555,42 +555,42 @@ Exemple : `"Revenus mensuels: 12,847, +12.6%"`
 
 ```css
 /* Espacement */
---spacing-lg    /* Padding de la carte */
---spacing-md    /* Gap entre elements */
---spacing-sm    /* Gap dans le contenu */
---spacing-xs    /* Petit espacement */
+--psh-spacing-lg    /* Padding de la carte */
+--psh-spacing-md    /* Gap entre elements */
+--psh-spacing-sm    /* Gap dans le contenu */
+--psh-spacing-xs    /* Petit espacement */
 
 /* Tailles */
---size-16       /* Taille de l'icone (desktop) */
---size-14       /* Taille de l'icone (tablet) */
---size-12       /* Taille de l'icone (mobile) */
---size-32       /* Hauteur minimale (horizontal) */
---size-28       /* Hauteur minimale (tablet) */
+--psh-size-16       /* Taille de l'icone (desktop) */
+--psh-size-14       /* Taille de l'icone (tablet) */
+--psh-size-12       /* Taille de l'icone (mobile) */
+--psh-size-32       /* Hauteur minimale (horizontal) */
+--psh-size-28       /* Hauteur minimale (tablet) */
 
 /* Bordures */
---border-radius-lg  /* Rayon de bordure */
---radius-lg         /* Rayon de l'icone */
+--psh-radius-xl  /* Rayon de bordure */
+--psh-radius-lg         /* Rayon de l'icone */
 
 /* Typographie */
---font-size-2xl     /* Taille de la valeur */
---font-size-xl      /* Taille de la valeur (tablet) */
---font-size-lg      /* Taille de la valeur (mobile) */
---font-size-sm      /* Taille de la description */
---font-size-xs      /* Taille de la description (mobile) */
---font-weight-semibold  /* Poids de la valeur */
+--psh-font-size-2xl     /* Taille de la valeur */
+--psh-font-size-xl      /* Taille de la valeur (tablet) */
+--psh-font-size-lg      /* Taille de la valeur (mobile) */
+--psh-font-size-sm      /* Taille de la description */
+--psh-font-size-xs      /* Taille de la description (mobile) */
+--psh-font-weight-semibold  /* Poids de la valeur */
 
 /* Couleurs */
---surface-card      /* Fond de la carte */
---surface-ground    /* Fond variant default */
---surface-border    /* Bordure variant outlined */
---text-color        /* Couleur de la valeur */
---text-color-secondary  /* Couleur de la description */
---surface-0         /* Couleur de l'icone */
+--psh-surface-card      /* Fond de la carte */
+--psh-surface-ground    /* Fond variant default */
+--psh-surface-border    /* Bordure variant outlined */
+--psh-text-color        /* Couleur de la valeur */
+--psh-text-color-secondary  /* Couleur de la description */
+--psh-surface-0         /* Couleur de l'icone */
 
 /* Icones */
---icon-size-xl      /* Taille de l'icone (desktop) */
---icon-size-lg      /* Taille de l'icone (tablet) */
---icon-size-md      /* Taille de l'icone (mobile) */
+--psh-icon-size-xl      /* Taille de l'icone (desktop) */
+--psh-icon-size-lg      /* Taille de l'icone (tablet) */
+--psh-icon-size-md      /* Taille de l'icone (mobile) */
 ```
 
 ### Exemple de Personnalisation
@@ -598,12 +598,12 @@ Exemple : `"Revenus mensuels: 12,847, +12.6%"`
 ```css
 /* Personnalisation globale */
 psh-stat-card {
-  --font-size-2xl: 2.5rem;
+  --psh-font-size-2xl: 2.5rem;
 }
 
 /* Personnalisation d'une instance */
 .custom-stat-card {
-  --surface-card: #f0f9ff;
+  --psh-surface-card: #f0f9ff;
 }
 ```
 

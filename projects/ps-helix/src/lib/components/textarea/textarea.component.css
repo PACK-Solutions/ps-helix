@@ -3,7 +3,7 @@
   display: block;
   width: 100%;
   max-width: 32rem;
-  transition: all var(--animation-duration-default) var(--animation-easing-default);
+  transition: all var(--psh-animation-duration-default) var(--psh-animation-easing-default);
 }
 
 :host.full-width {
@@ -15,13 +15,13 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: var(--form-field-gap);
+  gap: var(--psh-form-field-gap);
 }
 
 /* --- Label --- */
 .textarea-label {
   display: block;
-  color: var(--text-color);
+  color: var(--psh-text-color);
   font-size: 0.875rem;
   font-weight: 500;
   width: 100%;
@@ -30,7 +30,7 @@
 
 .textarea-label.required::after {
   content: '*';
-  color: var(--danger-color);
+  color: var(--psh-danger-color);
   margin-left: 0.125rem;
 }
 
@@ -48,28 +48,28 @@ textarea {
   font-family: inherit;
   font-size: 1rem;
   line-height: 1.5;
-  color: var(--text-color);
-  background: var(--surface-0);
-  border: 0.125rem solid var(--surface-border);
-  border-radius: var(--border-radius);
-  transition: border-color var(--animation-duration-default) var(--animation-easing-default),
-              box-shadow var(--animation-duration-default) var(--animation-easing-default),
-              background var(--animation-duration-default) var(--animation-easing-default);
+  color: var(--psh-text-color);
+  background: var(--psh-surface-0);
+  border: 0.125rem solid var(--psh-surface-border);
+  border-radius: var(--psh-radius-lg);
+  transition: border-color var(--psh-animation-duration-default) var(--psh-animation-easing-default),
+              box-shadow var(--psh-animation-duration-default) var(--psh-animation-easing-default),
+              background var(--psh-animation-duration-default) var(--psh-animation-easing-default);
 }
 
 textarea:hover:not(:disabled):not(:focus):not([readonly]) {
-  border-color: var(--primary-color);
+  border-color: var(--psh-primary-color);
 }
 
 textarea::placeholder {
-  color: var(--text-color-tertiary);
+  color: var(--psh-text-color-tertiary);
   opacity: 1;
 }
 
 textarea:focus {
   outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 0.125rem var(--focus-ring-color);
+  border-color: var(--psh-primary-color);
+  box-shadow: 0 0 0 0.125rem var(--psh-focus-ring-color);
 }
 
 /* --- Variantes --- */
@@ -78,43 +78,43 @@ textarea:focus {
 }
 
 :host.filled textarea {
-  background: var(--surface-ground);
-  border: 0.125rem solid var(--surface-border);
+  background: var(--psh-surface-ground);
+  border: 0.125rem solid var(--psh-surface-border);
 }
 
 :host.filled textarea:hover:not(:disabled):not(:focus):not([readonly]) {
-  background: var(--surface-hover);
+  background: var(--psh-surface-hover);
 }
 
 :host.filled textarea:focus {
-  background: var(--surface-0);
+  background: var(--psh-surface-0);
 }
 
 /* --- États --- */
 :host.error textarea {
-  border-color: var(--danger-color);
+  border-color: var(--psh-danger-color);
 }
 
 :host.error textarea:focus {
-  box-shadow: 0 0 0 0.125rem var(--focus-ring-error);
+  box-shadow: 0 0 0 0.125rem var(--psh-focus-ring-error);
 }
 
 :host.success textarea {
-  border-color: var(--success-color);
+  border-color: var(--psh-success-color);
 }
 
 :host.success textarea:focus {
-  box-shadow: 0 0 0 0.125rem var(--focus-ring-success);
+  box-shadow: 0 0 0 0.125rem var(--psh-focus-ring-success);
 }
 
 :host.disabled textarea {
-  background: var(--surface-ground);
+  background: var(--psh-surface-ground);
   cursor: not-allowed;
-  opacity: var(--opacity-disabled);
+  opacity: var(--psh-opacity-disabled);
 }
 
 :host.readonly textarea {
-  background: var(--surface-ground);
+  background: var(--psh-surface-ground);
   cursor: default;
 }
 
@@ -158,24 +158,24 @@ textarea:focus {
   line-height: 1.4;
 }
 
-.textarea-error { color: var(--danger-color); }
-.textarea-success { color: var(--success-color); }
-.textarea-hint { color: var(--text-color-secondary); }
+.textarea-error { color: var(--psh-danger-color); }
+.textarea-success { color: var(--psh-success-color); }
+.textarea-hint { color: var(--psh-text-color-secondary); }
 
 .textarea-count {
   flex: 0 0 auto;
   font-size: 0.8125rem;
-  color: var(--text-color-tertiary);
+  color: var(--psh-text-color-tertiary);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
 
 .textarea-count.at-limit {
-  color: var(--warning-color);
+  color: var(--psh-warning-color);
   font-weight: 500;
 }
 
 .textarea-count.over-limit {
-  color: var(--danger-color);
+  color: var(--psh-danger-color);
   font-weight: 600;
 }

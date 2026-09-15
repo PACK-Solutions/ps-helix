@@ -1,30 +1,30 @@
 .horizontal-card {
-  background: var(--surface-card);
-  border-radius: var(--border-radius-lg, 0.75rem);
+  background: var(--psh-surface-card);
+  border-radius: var(--psh-radius-xl, 0.75rem);
   overflow: hidden;
   transition: all 0.2s ease;
   width: 100%;
   display: flex;
   flex-direction: row;
   align-items: stretch;
-  gap: var(--horizontal-gap, var(--spacing-md));
+  gap: var(--psh-horizontal-gap, var(--psh-spacing-md));
   position: relative;
 }
 
 .horizontal-card.variant-elevated {
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--psh-shadow-sm);
 }
 
 .horizontal-card.variant-elevated.hoverable:hover {
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--psh-shadow-md);
 }
 
 .horizontal-card.variant-outlined {
-  border: 1px solid var(--surface-border);
+  border: 1px solid var(--psh-surface-border);
 }
 
 .horizontal-card.variant-default {
-  background: var(--surface-section);
+  background: var(--psh-surface-section);
 }
 
 .horizontal-card.hoverable:hover {
@@ -38,7 +38,7 @@
 
 .horizontal-card.interactive:focus {
   outline: none;
-  box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
+  box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-color);
 }
 
 .horizontal-card.interactive:focus:not(:focus-visible) {
@@ -62,10 +62,10 @@
 .horizontal-side {
   display: flex;
   justify-content: center;
-  background: var(--surface-ground);
+  background: var(--psh-surface-ground);
   overflow: hidden;
   border: none;
-  width: var(--horizontal-side-width, var(--size-48));
+  width: var(--psh-horizontal-side-width, var(--psh-size-48));
   flex-shrink: 0;
   position: relative;
 }
@@ -80,7 +80,7 @@
 .horizontal-skeleton {
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, var(--surface-border) 25%, var(--surface-hover) 50%, var(--surface-border) 75%);
+  background: linear-gradient(90deg, var(--psh-surface-border) 25%, var(--psh-surface-hover) 50%, var(--psh-surface-border) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s ease-in-out infinite;
 }
@@ -90,38 +90,38 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
-  padding: var(--horizontal-content-padding, var(--spacing-md));
-  gap: var(--spacing-sm);
+  padding: var(--psh-horizontal-content-padding, var(--psh-spacing-md));
+  gap: var(--psh-spacing-sm);
 }
 
 [horizontal-header] {
   margin: 0;
-  font-size: var(--font-size-lg, 1.125rem);
+  font-size: var(--psh-font-size-lg, 1.125rem);
   font-weight: 600;
   line-height: 1.4;
-  color: var(--text-color);
+  color: var(--psh-text-color);
 }
 
 [horizontal-actions] {
   margin-top: auto;
   display: flex;
-  gap: var(--spacing-sm);
+  gap: var(--psh-spacing-sm);
   align-items: center;
 }
 
 .horizontal-loading {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm);
+  gap: var(--psh-spacing-sm);
   animation: pulse 1.5s ease-in-out infinite;
 }
 
 .skeleton-line {
-  height: var(--size-4);
-  background: linear-gradient(90deg, var(--surface-border) 25%, var(--surface-hover) 50%, var(--surface-border) 75%);
+  height: var(--psh-size-4);
+  background: linear-gradient(90deg, var(--psh-surface-border) 25%, var(--psh-surface-hover) 50%, var(--psh-surface-border) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s ease-in-out infinite;
-  border-radius: var(--spacing-xs);
+  border-radius: var(--psh-spacing-xs);
 }
 
 .skeleton-line.short {
@@ -153,12 +153,12 @@
 
   .horizontal-side {
     width: 100%;
-    height: var(--horizontal-mobile-height, var(--size-48));
-    min-height: var(--size-44);
+    height: var(--psh-horizontal-mobile-height, var(--psh-size-48));
+    min-height: var(--psh-size-44);
   }
 
   .horizontal-content {
-    padding: var(--spacing-sm);
+    padding: var(--psh-spacing-sm);
   }
 
   [horizontal-actions] {
@@ -169,16 +169,16 @@
 @media (max-width: 30em) {
   .horizontal-side {
     height: auto;
-    min-height: var(--size-36);
-    padding: var(--spacing-sm);
+    min-height: var(--psh-size-36);
+    padding: var(--psh-spacing-sm);
   }
 
   .horizontal-content {
-    padding: var(--spacing-xs);
+    padding: var(--psh-spacing-xs);
   }
 
   [horizontal-header] {
-    font-size: var(--font-size-base, 1rem);
+    font-size: var(--psh-font-size-base, 1rem);
   }
 
   [horizontal-actions] {

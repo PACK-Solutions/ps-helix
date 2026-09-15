@@ -10,13 +10,13 @@
 .table-wrapper {
   width: 100%;
   overflow-x: auto;
-  background: var(--surface-card);
-  border-radius: var(--border-radius);
+  background: var(--psh-surface-card);
+  border-radius: var(--psh-radius-lg);
 }
 
 .table-wrapper.outline {
   background: transparent;
-  border: var(--border-width-1) solid var(--surface-border);
+  border: var(--psh-border-width-1) solid var(--psh-surface-border);
 }
 
 table {
@@ -26,15 +26,15 @@ table {
 }
 
 th, td {
-  padding: var(--spacing-md);
-  color: var(--text-color);
-  border-bottom: var(--border-width-1) solid var(--surface-border);
+  padding: var(--psh-spacing-md);
+  color: var(--psh-text-color);
+  border-bottom: var(--psh-border-width-1) solid var(--psh-surface-border);
 }
 
 th {
   font-weight: 600;
-  color: var(--text-color);
-  background: var(--surface-ground);
+  color: var(--psh-text-color);
+  background: var(--psh-surface-ground);
   white-space: nowrap;
   user-select: none;
 }
@@ -44,64 +44,64 @@ th.sortable {
 }
 
 th.sortable:hover {
-  background: var(--surface-hover);
+  background: var(--psh-surface-hover);
 }
 
 .th-content {
   display: flex;
   align-items: center;
-  gap: var(--spacing-xs);
+  gap: var(--psh-spacing-xs);
 }
 
 .th-content i {
-  font-size: var(--font-size-base);
-  color: var(--primary-color);
+  font-size: var(--psh-font-size-base);
+  color: var(--psh-primary-color);
   display: inline-block;
-  transition: color var(--animation-duration-fast) var(--animation-easing-default);
+  transition: color var(--psh-animation-duration-fast) var(--psh-animation-easing-default);
 }
 
 .th-content i.sort-icon-neutral {
-  color: var(--text-color-secondary);
+  color: var(--psh-text-color-secondary);
   opacity: 0.5;
 }
 
 th.sortable:hover .sort-icon-neutral {
   opacity: 1;
-  color: var(--primary-color);
+  color: var(--psh-primary-color);
 }
 /* Variants */
 .table-wrapper.striped tr:nth-child(even) {
-  background: var(--surface-ground);
+  background: var(--psh-surface-ground);
 }
 
 .table-wrapper.hoverable tr:hover {
-  background: var(--surface-hover);
+  background: var(--psh-surface-hover);
 }
 
 .table-wrapper.bordered th,
 .table-wrapper.bordered td {
-  border: var(--border-width-1) solid var(--surface-border);
+  border: var(--psh-border-width-1) solid var(--psh-surface-border);
 }
 
 /* Sizes */
 .table-wrapper.small th,
 .table-wrapper.small td {
-  padding: var(--spacing-sm);
-  font-size: var(--font-size-sm);
+  padding: var(--psh-spacing-sm);
+  font-size: var(--psh-font-size-sm);
 }
 
 .table-wrapper.large th,
 .table-wrapper.large td {
-  padding: var(--spacing-lg);
-  font-size: var(--font-size-lg);
+  padding: var(--psh-spacing-lg);
+  font-size: var(--psh-font-size-lg);
 }
 
 /* Loading state */
 .loading-row td,
 .empty-row td {
   text-align: center;
-  padding: var(--spacing-xl);
-  color: var(--text-color-secondary);
+  padding: var(--psh-spacing-xl);
+  color: var(--psh-text-color-secondary);
 }
 
 .loading-indicator {
@@ -111,10 +111,10 @@ th.sortable:hover .sort-icon-neutral {
 }
 
 .spinner {
-  width: var(--size-6);
-  height: var(--size-6);
-  border: var(--border-width-2) solid var(--surface-border);
-  border-top-color: var(--primary-color);
+  width: var(--psh-size-6);
+  height: var(--psh-size-6);
+  border: var(--psh-border-width-2) solid var(--psh-surface-border);
+  border-top-color: var(--psh-primary-color);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -127,7 +127,7 @@ th.sortable:hover .sort-icon-neutral {
 
 /* Global Search */
 .global-search {
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--psh-spacing-md);
 }
 
 /* Sort Button
@@ -143,24 +143,24 @@ th.sortable:hover .sort-icon-neutral {
   color: inherit;
   text-align: left;
   cursor: pointer;
-  border-radius: var(--border-radius);
-  transition: color var(--animation-duration-normal) var(--animation-easing-default);
+  border-radius: var(--psh-radius-lg);
+  transition: color var(--psh-animation-duration-normal) var(--psh-animation-easing-default);
 }
 
 .sort-button:hover {
-  color: var(--primary-color);
+  color: var(--psh-primary-color);
 }
 
 .sort-button:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
+  box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-color);
 }
 
 /* Rows are only reachable by keyboard when the consumer opted into interactive rows.
    Making every row of a 50-row table a tab stop otherwise would be worse than the bug. */
 tbody tr[tabindex]:focus-visible {
   outline: none;
-  box-shadow: inset 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
+  box-shadow: inset 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-color);
 }
 
 /* Table Layout Fixed */
@@ -194,7 +194,7 @@ tbody tr[tabindex]:focus-visible {
   min-width: 48px;
   max-width: 48px;
   text-align: center;
-  padding: var(--spacing-xs);
+  padding: var(--psh-spacing-xs);
   vertical-align: middle;
 }
 
@@ -202,31 +202,31 @@ tbody tr[tabindex]:focus-visible {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: var(--size-8);
-  height: var(--size-8);
+  width: var(--psh-size-8);
+  height: var(--psh-size-8);
   padding: 0;
   background: transparent;
   border: none;
-  border-radius: var(--radius-sm);
+  border-radius: var(--psh-radius-sm);
   cursor: pointer;
-  color: var(--text-color-secondary);
-  font-size: var(--font-size-base);
-  transition: color var(--animation-duration-fast) var(--animation-easing-default);
+  color: var(--psh-text-color-secondary);
+  font-size: var(--psh-font-size-base);
+  transition: color var(--psh-animation-duration-fast) var(--psh-animation-easing-default);
 }
 
 .expand-toggle:hover {
-  color: var(--primary-color);
-  background: var(--surface-hover);
+  color: var(--psh-primary-color);
+  background: var(--psh-surface-hover);
 }
 
 .expand-toggle:focus-visible {
-  outline: var(--focus-outline-width) solid var(--focus-ring-color);
+  outline: var(--psh-focus-outline-width) solid var(--psh-focus-ring-color);
   outline-offset: 2px;
 }
 
 .expand-toggle i {
   display: inline-block;
-  transition: transform var(--animation-duration-fast) var(--animation-easing-default);
+  transition: transform var(--psh-animation-duration-fast) var(--psh-animation-easing-default);
 }
 
 .expand-toggle[aria-expanded="true"] i {
@@ -238,61 +238,61 @@ tr.expanded {
 }
 
 .expanded-content-row td {
-  background: var(--surface-ground);
-  padding: var(--spacing-md) var(--spacing-lg);
-  border-bottom: var(--border-width-1) solid var(--surface-border);
+  background: var(--psh-surface-ground);
+  padding: var(--psh-spacing-md) var(--psh-spacing-lg);
+  border-bottom: var(--psh-border-width-1) solid var(--psh-surface-border);
 }
 
 .child-row {
-  background: var(--surface-ground);
+  background: var(--psh-surface-ground);
 }
 
 .child-row td {
   font-size: 0.95em;
-  color: var(--text-color-secondary);
+  color: var(--psh-text-color-secondary);
 }
 
 .table-wrapper.striped .child-row,
 .table-wrapper.striped .expanded-content-row {
-  background: var(--surface-ground);
+  background: var(--psh-surface-ground);
 }
 
 .table-wrapper.hoverable .child-row:hover {
-  background: var(--surface-hover);
+  background: var(--psh-surface-hover);
 }
 
 /* Responsive Design */
 @media (max-width: 48em) {
   .table-wrapper {
-    font-size: var(--font-size-sm);
+    font-size: var(--psh-font-size-sm);
   }
   
   th, td {
-    padding: var(--spacing-sm);
+    padding: var(--psh-spacing-sm);
   }
   
   .global-search {
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: var(--psh-spacing-sm);
   }
 }
 
 @media (max-width: 30em) {
   .table-wrapper {
     border-radius: 0;
-    margin: 0 calc(-1 * var(--spacing-sm));
+    margin: 0 calc(-1 * var(--psh-spacing-sm));
   }
   
   th, td {
-    padding: var(--spacing-xs) var(--spacing-sm);
-    font-size: var(--font-size-xs);
+    padding: var(--psh-spacing-xs) var(--psh-spacing-sm);
+    font-size: var(--psh-font-size-xs);
   }
   
   .th-content {
-    gap: var(--spacing-xxs);
+    gap: var(--psh-spacing-xxs);
   }
   
   .th-content i {
-    font-size: var(--font-size-sm);
+    font-size: var(--psh-font-size-sm);
   }
   
 }

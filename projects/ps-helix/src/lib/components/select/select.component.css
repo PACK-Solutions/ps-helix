@@ -9,13 +9,13 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: var(--form-field-gap);
+  gap: var(--psh-form-field-gap);
 }
 .select-trigger-wrapper { position: relative; }
 
 .select-label {
   display: block;
-  color: var(--text-color);
+  color: var(--psh-text-color);
   font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
@@ -28,32 +28,32 @@
   width: 100%;
   height: 2.5rem;
   padding: 0 1rem;
-  background: var(--surface-0);
-  border: 0.125rem solid var(--surface-border);
-  border-radius: var(--border-radius);
+  background: var(--psh-surface-0);
+  border: 0.125rem solid var(--psh-surface-border);
+  border-radius: var(--psh-radius-lg);
   cursor: pointer;
   box-sizing: border-box;
 }
 
 .select-trigger:focus {
-  border-color: var(--primary-color);
+  border-color: var(--psh-primary-color);
   outline: none;
-  box-shadow: 0 0 0 0.125rem var(--focus-ring-color);
+  box-shadow: 0 0 0 0.125rem var(--psh-focus-ring-color);
 }
 
-:host.error .select-trigger { border-color: var(--danger-color); }
-:host.error .select-trigger:focus { box-shadow: 0 0 0 0.125rem var(--focus-ring-error); }
-:host.success .select-trigger { border-color: var(--success-color); }
-:host.success .select-trigger:focus { box-shadow: 0 0 0 0.125rem var(--focus-ring-success); }
-:host.disabled .select-trigger { background: var(--surface-ground); cursor: not-allowed; opacity: var(--opacity-disabled); }
+:host.error .select-trigger { border-color: var(--psh-danger-color); }
+:host.error .select-trigger:focus { box-shadow: 0 0 0 0.125rem var(--psh-focus-ring-error); }
+:host.success .select-trigger { border-color: var(--psh-success-color); }
+:host.success .select-trigger:focus { box-shadow: 0 0 0 0.125rem var(--psh-focus-ring-success); }
+:host.disabled .select-trigger { background: var(--psh-surface-ground); cursor: not-allowed; opacity: var(--psh-opacity-disabled); }
 
 :host.filled .select-trigger {
-  background: var(--surface-ground);
-  border: 0.125rem solid var(--surface-border);
+  background: var(--psh-surface-ground);
+  border: 0.125rem solid var(--psh-surface-border);
 }
 
 :host.filled .select-trigger:hover:not([disabled]):not(:focus) {
-  background: var(--surface-hover);
+  background: var(--psh-surface-hover);
 }
 
 .select-value {
@@ -76,17 +76,17 @@
   border: none;
   cursor: pointer;
   padding: 0;
-  color: var(--text-color-secondary);
+  color: var(--psh-text-color-secondary);
   display: flex;
 }
 
-.select-clear:hover { color: var(--danger-color); }
+.select-clear:hover { color: var(--psh-danger-color); }
 
 .select-loader-trigger {
   width: 1rem;
   height: 1rem;
-  border: 2px solid var(--surface-border);
-  border-top-color: var(--primary-color);
+  border: 2px solid var(--psh-surface-border);
+  border-top-color: var(--psh-primary-color);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -94,7 +94,7 @@
 .select-arrow {
   transition: transform 0.2s;
   font-size: 1rem;
-  color: var(--text-color-secondary);
+  color: var(--psh-text-color-secondary);
 }
 
 :host[aria-expanded="true"] .select-arrow {
@@ -114,17 +114,17 @@
   flex-direction: column;
   overflow: hidden;
   pointer-events: auto;
-  background: var(--surface-0);
-  border: 0.125rem solid var(--surface-border);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-lg);
+  background: var(--psh-surface-0);
+  border: 0.125rem solid var(--psh-surface-border);
+  border-radius: var(--psh-radius-lg);
+  box-shadow: var(--psh-shadow-lg);
 }
 
 .select-search {
   position: relative;
   flex-shrink: 0;
   padding: 0.5rem;
-  border-bottom: 0.0625rem solid var(--surface-border);
+  border-bottom: 0.0625rem solid var(--psh-surface-border);
 }
 
 .select-search-icon {
@@ -132,7 +132,7 @@
   left: 1.25rem;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--text-color-secondary);
+  color: var(--psh-text-color-secondary);
   font-size: 0.875rem;
   pointer-events: none;
 }
@@ -141,26 +141,26 @@
   width: 100%;
   height: 2rem;
   padding: 0 0.75rem 0 2rem;
-  background: var(--surface-ground);
-  border: 0.0625rem solid var(--surface-border);
-  border-radius: var(--border-radius);
-  color: var(--text-color);
+  background: var(--psh-surface-ground);
+  border: 0.0625rem solid var(--psh-surface-border);
+  border-radius: var(--psh-radius-lg);
+  color: var(--psh-text-color);
   font-size: 0.875rem;
   outline: none;
   box-sizing: border-box;
   transition: border-color 0.15s;
 }
 
-.select-search input::placeholder { color: var(--text-color-secondary); }
-.select-search input:focus { border-color: var(--primary-color); }
+.select-search input::placeholder { color: var(--psh-text-color-secondary); }
+.select-search input:focus { border-color: var(--psh-primary-color); }
 .select-options { flex: 0 1 auto; max-height: 15rem; overflow-y: auto; }
 
 .select-group-label {
   padding: 0.5rem 1rem;
   font-size: 0.75rem;
   font-weight: 600;
-  color: var(--text-color-secondary);
-  background: var(--surface-ground);
+  color: var(--psh-text-color-secondary);
+  background: var(--psh-surface-ground);
 }
 
 .select-option {
@@ -171,16 +171,16 @@
   gap: 0.5rem;
 }
 
-.select-option:hover { background: var(--surface-hover); }
+.select-option:hover { background: var(--psh-surface-hover); }
 
 .select-option.selected {
-  background: rgba(var(--primary-color-rgb), 0.1);
-  color: var(--primary-color);
+  background: rgba(var(--psh-primary-color-rgb), 0.1);
+  color: var(--psh-primary-color);
   font-weight: 500;
 }
 
-.select-option.focused { background: var(--surface-hover); }
-.select-option.disabled { opacity: var(--opacity-disabled); cursor: not-allowed; }
+.select-option.focused { background: var(--psh-surface-hover); }
+.select-option.disabled { opacity: var(--psh-opacity-disabled); cursor: not-allowed; }
 
 .select-option i {
   flex-shrink: 0;
@@ -201,7 +201,7 @@
 
 .select-option-description {
   font-size: 0.75rem;
-  color: var(--text-color-secondary);
+  color: var(--psh-text-color-secondary);
 }
 
 .select-error-message,
@@ -210,9 +210,9 @@
   font-size: 0.875rem;
 }
 
-.select-error-message { color: var(--danger-color); }
-.select-success-message { color: var(--success-color); }
-.select-hint { color: var(--text-color-secondary); }
+.select-error-message { color: var(--psh-danger-color); }
+.select-success-message { color: var(--psh-success-color); }
+.select-hint { color: var(--psh-text-color-secondary); }
 
 :host.small .select-trigger { text-overflow: ellipsis; height: 2rem; font-size: 0.875rem; }
 :host.large .select-trigger { text-overflow: ellipsis; height: 3rem; font-size: 1.125rem; }

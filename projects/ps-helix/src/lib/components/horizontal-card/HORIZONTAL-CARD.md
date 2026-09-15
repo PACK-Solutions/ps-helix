@@ -32,7 +32,7 @@ export class MyComponent {}
 ### Carte Produit Simple
 
 ```html
-<psh-horizontal-card variant="elevated" sideWidth="var(--size-40)">
+<psh-horizontal-card variant="elevated" sideWidth="var(--psh-size-40)">
   <div horizontal-side>
     <img src="product.jpg" alt="Product image">
   </div>
@@ -76,11 +76,11 @@ export class MyComponent {}
 | `hoverable` | `boolean` | `false` | Active l'effet de survol (animation translateY) |
 | `loading` | `boolean` | `false` | Etat de chargement - affiche un skeleton anime |
 | `disabled` | `boolean` | `false` | Etat desactive - reduit l'opacite et bloque les interactions |
-| `sideWidth` | `string` | `'var(--size-48)'` | Largeur du contenu lateral (utiliser les design tokens) |
-| `gap` | `string` | `'var(--spacing-md)'` | Espacement entre le contenu lateral et principal |
+| `sideWidth` | `string` | `'var(--psh-size-48)'` | Largeur du contenu lateral (utiliser les design tokens) |
+| `gap` | `string` | `'var(--psh-spacing-md)'` | Espacement entre le contenu lateral et principal |
 | `sidePadding` | `string` | `'0'` | Padding du contenu lateral |
-| `contentPadding` | `string` | `'var(--spacing-md)'` | Padding du contenu principal |
-| `mobileHeight` | `string` | `'var(--size-48)'` | Hauteur du contenu lateral sur mobile |
+| `contentPadding` | `string` | `'var(--psh-spacing-md)'` | Padding du contenu principal |
+| `mobileHeight` | `string` | `'var(--psh-size-48)'` | Hauteur du contenu lateral sur mobile |
 | `cssClass` | `string` | `''` | Classes CSS additionnelles |
 | `customStyle` | `Record<string, string>` | `{}` | Styles inline personnalises |
 
@@ -128,8 +128,8 @@ Le composant utilise `ng-content` avec des selecteurs pour organiser le contenu.
 <psh-horizontal-card
   variant="elevated"
   [hoverable]="true"
-  sideWidth="var(--size-40)"
-  gap="var(--spacing-lg)"
+  sideWidth="var(--psh-size-40)"
+  gap="var(--psh-spacing-lg)"
 >
   <!-- Contenu lateral -->
   <div horizontal-side>
@@ -289,10 +289,10 @@ Le composant bascule automatiquement en layout vertical sur les petits ecrans.
 
 ```html
 <psh-horizontal-card
-  sideWidth="var(--size-40)"
-  mobileHeight="var(--size-48)"
+  sideWidth="var(--psh-size-40)"
+  mobileHeight="var(--psh-size-48)"
 >
-  <!-- La hauteur du contenu lateral sur mobile sera var(--size-48) -->
+  <!-- La hauteur du contenu lateral sur mobile sera var(--psh-size-48) -->
 </psh-horizontal-card>
 ```
 
@@ -305,7 +305,7 @@ Le composant bascule automatiquement en layout vertical sur les petits ecrans.
   variant="elevated"
   [interactive]="true"
   [hoverable]="true"
-  sideWidth="var(--size-40)"
+  sideWidth="var(--psh-size-40)"
   (clicked)="viewProduct(product)"
 >
   <div horizontal-side>
@@ -338,8 +338,8 @@ Le composant bascule automatiquement en layout vertical sur les petits ecrans.
   variant="outlined"
   [interactive]="true"
   [hoverable]="true"
-  sideWidth="var(--size-32)"
-  gap="var(--spacing-lg)"
+  sideWidth="var(--psh-size-32)"
+  gap="var(--psh-spacing-lg)"
   (clicked)="viewProfile(user)"
 >
   <div horizontal-side>
@@ -380,8 +380,8 @@ Le composant bascule automatiquement en layout vertical sur les petits ecrans.
   variant="elevated"
   [interactive]="true"
   [hoverable]="true"
-  sideWidth="var(--size-48)"
-  gap="var(--spacing-lg)"
+  sideWidth="var(--psh-size-48)"
+  gap="var(--psh-spacing-lg)"
   (clicked)="readArticle(article)"
 >
   <div horizontal-side>
@@ -414,7 +414,7 @@ Le composant bascule automatiquement en layout vertical sur les petits ecrans.
 ```html
 @if (isLoading) {
   @for (i of [1, 2, 3]; track i) {
-    <psh-horizontal-card [loading]="true" sideWidth="var(--size-40)">
+    <psh-horizontal-card [loading]="true" sideWidth="var(--psh-size-40)">
     </psh-horizontal-card>
   }
 } @else {
@@ -423,7 +423,7 @@ Le composant bascule automatiquement en layout vertical sur les petits ecrans.
       variant="elevated"
       [interactive]="true"
       [hoverable]="true"
-      sideWidth="var(--size-40)"
+      sideWidth="var(--psh-size-40)"
       (clicked)="selectItem(item)"
     >
       <div horizontal-side>
@@ -473,9 +473,9 @@ Pour les cartes interactives (`interactive=true`) :
 **A privilegier :**
 ```html
 <psh-horizontal-card
-  sideWidth="var(--size-40)"
-  gap="var(--spacing-lg)"
-  contentPadding="var(--spacing-md)"
+  sideWidth="var(--psh-size-40)"
+  gap="var(--psh-spacing-lg)"
+  contentPadding="var(--psh-spacing-md)"
 >
 ```
 
@@ -490,9 +490,9 @@ Pour les cartes interactives (`interactive=true`) :
 
 ### 2. Choix de la Largeur Laterale
 
-- **var(--size-32)** : Avatars, petites icones
-- **var(--size-40)** : Images produits, illustrations moyennes
-- **var(--size-48)** : Images d'articles, grandes illustrations
+- **var(--psh-size-32)** : Avatars, petites icones
+- **var(--psh-size-40)** : Images produits, illustrations moyennes
+- **var(--psh-size-48)** : Images d'articles, grandes illustrations
 
 ### 3. Cartes Interactives
 

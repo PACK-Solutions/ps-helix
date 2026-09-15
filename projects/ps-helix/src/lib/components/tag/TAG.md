@@ -257,15 +257,15 @@ Le composant Tag utilise des variables CSS que vous pouvez surcharger:
 
 ```css
 .tag {
-  --tag-padding-y: var(--spacing-xs);
-  --tag-padding-x: var(--spacing-sm);
-  --tag-font-size: var(--font-size-sm);
-  --tag-icon-size: var(--icon-size-sm);
-  --tag-close-padding: var(--spacing-xxs);
-  --tag-close-opacity: 0.7;
-  --tag-close-opacity-hover: 1;
-  --tag-close-hover-bg: rgba(0, 0, 0, 0.1);
-  --tag-transition: all var(--animation-duration-normal) var(--animation-easing-default);
+  --psh-tag-padding-y: var(--psh-spacing-xs);
+  --psh-tag-padding-x: var(--psh-spacing-sm);
+  --psh-tag-font-size: var(--psh-font-size-sm);
+  --psh-tag-icon-size: var(--psh-icon-size-sm);
+  --psh-tag-close-padding: var(--psh-spacing-xxs);
+  --psh-tag-close-opacity: 0.7;
+  --psh-tag-close-opacity-hover: 1;
+  --psh-tag-close-hover-bg: rgba(0, 0, 0, 0.1);
+  --psh-tag-transition: all var(--psh-animation-duration-normal) var(--psh-animation-easing-default);
 }
 ```
 
@@ -274,9 +274,9 @@ Le composant Tag utilise des variables CSS que vous pouvez surcharger:
 ```css
 /* Dans votre CSS global ou component styles */
 psh-tag {
-  --tag-padding-x: 16px;
-  --tag-font-size: 15px;
-  --tag-close-hover-bg: rgba(255, 0, 0, 0.2);
+  --psh-tag-padding-x: 16px;
+  --psh-tag-font-size: 15px;
+  --psh-tag-close-hover-bg: rgba(255, 0, 0, 0.2);
 }
 ```
 
@@ -368,12 +368,12 @@ Les variables CSS doivent être définies au niveau du composant parent:
 ```css
 /* ✅ Correct */
 .container psh-tag {
-  --tag-padding-x: 20px;
+  --psh-tag-padding-x: 20px;
 }
 
 /* ❌ Incorrect - trop spécifique */
 psh-tag .tag {
-  --tag-padding-x: 20px;
+  --psh-tag-padding-x: 20px;
 }
 ```
 

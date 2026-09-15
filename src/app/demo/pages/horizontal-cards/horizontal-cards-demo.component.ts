@@ -110,7 +110,7 @@ export class HorizontalCardsDemoComponent {
   [variant]="'elevated'"
   [interactive]="true"
   [hoverable]="true"
-  [sideWidth]="'var(--size-40)'"
+  [sideWidth]="'var(--psh-size-40)'"
 >
   <div horizontal-side>
     <img src="product.jpg" alt="Product">
@@ -128,7 +128,7 @@ export class HorizontalCardsDemoComponent {
   userCardCode = `<psh-horizontal-card
   [variant]="'outlined'"
   [interactive]="true"
-  [sideWidth]="'var(--size-32)'"
+  [sideWidth]="'var(--psh-size-32)'"
 >
   <div horizontal-side>
     <psh-avatar [initials]="'SM'" [size]="'xlarge'"></psh-avatar>
@@ -146,7 +146,7 @@ export class HorizontalCardsDemoComponent {
   articleCardCode = `<psh-horizontal-card
   [variant]="'elevated'"
   [interactive]="true"
-  [sideWidth]="'var(--size-48)'"
+  [sideWidth]="'var(--psh-size-48)'"
 >
   <div horizontal-side>
     <img src="article.jpg" alt="Article">
