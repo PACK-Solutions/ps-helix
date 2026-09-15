@@ -45,7 +45,7 @@
         <div class="products-demo">
           @for (product of products; track product.id) {
             <psh-horizontal-card
-              [variant]="'elevated'"
+              [appearance]="'elevated'"
               [interactive]="true"
               [hoverable]="true"
               [sideWidth]="'var(--psh-size-40)'"
@@ -91,7 +91,7 @@
         <div class="users-demo">
           @for (user of users; track user.id) {
             <psh-horizontal-card
-              [variant]="'outlined'"
+              [appearance]="'outline'"
               [interactive]="true"
               [hoverable]="true"
               [sideWidth]="'var(--psh-size-32)'"
@@ -131,7 +131,7 @@
               </div>
               <div horizontal-actions>
                 <psh-button [color]="'primary'">Contacter</psh-button>
-                <psh-button [appearance]="'text'" [color]="'secondary'">Voir profil</psh-button>
+                <psh-button [appearance]="'ghost'" [color]="'secondary'">Voir profil</psh-button>
               </div>
             </psh-horizontal-card>
           }
@@ -152,7 +152,7 @@
         <div class="articles-demo">
           @for (article of articles; track article.id) {
             <psh-horizontal-card
-              [variant]="'elevated'"
+              [appearance]="'elevated'"
               [interactive]="true"
               [hoverable]="true"
               [sideWidth]="'var(--psh-size-48)'"
@@ -181,7 +181,7 @@
               </div>
               <div horizontal-actions>
                 <psh-button [color]="'primary'">Lire l'article</psh-button>
-                <psh-button [appearance]="'text'" [color]="'secondary'">Partager</psh-button>
+                <psh-button [appearance]="'ghost'" [color]="'secondary'">Partager</psh-button>
               </div>
             </psh-horizontal-card>
           }
@@ -202,7 +202,7 @@
         <div class="variants-demo">
           <div class="variant-example">
             <h4>Elevated</h4>
-            <psh-horizontal-card [variant]="'elevated'" [sideWidth]="'var(--psh-size-32)'">
+            <psh-horizontal-card [appearance]="'elevated'" [sideWidth]="'var(--psh-size-32)'">
               <div horizontal-side>
                 <div class="demo-side" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
               </div>
@@ -214,7 +214,7 @@
           </div>
           <div class="variant-example">
             <h4>Outlined</h4>
-            <psh-horizontal-card [variant]="'outlined'" [sideWidth]="'var(--psh-size-32)'">
+            <psh-horizontal-card [appearance]="'outline'" [sideWidth]="'var(--psh-size-32)'">
               <div horizontal-side>
                 <div class="demo-side" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
               </div>
@@ -226,7 +226,7 @@
           </div>
           <div class="variant-example">
             <h4>Default</h4>
-            <psh-horizontal-card [variant]="'default'" [sideWidth]="'var(--psh-size-32)'">
+            <psh-horizontal-card [appearance]="'flat'" [sideWidth]="'var(--psh-size-32)'">
               <div horizontal-side>
                 <div class="demo-side" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
               </div>
@@ -264,7 +264,7 @@
             <h4>État Disabled</h4>
             <p class="state-description">Désactive les interactions avec opacité réduite.</p>
             <psh-horizontal-card
-              [variant]="'elevated'"
+              [appearance]="'elevated'"
               [interactive]="true"
               [disabled]="true"
               [sideWidth]="'var(--psh-size-32)'"

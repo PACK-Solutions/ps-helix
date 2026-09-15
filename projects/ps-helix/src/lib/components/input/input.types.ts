@@ -1,5 +1,10 @@
+import { PshFieldAppearance } from '../../types/semantic.types';
 export type InputType = 'text' | 'password' | 'email' | 'tel' | 'url' | 'search' | 'date' | 'number';
-export type InputVariant = 'outlined' | 'filled';
+/**
+ * @deprecated since 7.0.0 — use {@link PshFieldAppearance}. Surface treatment now shares one
+ * vocabulary across the library.
+ */
+export type InputVariant = PshFieldAppearance;
 export type InputSize = 'small' | 'medium' | 'large';
 
 export interface AutocompleteConfig {

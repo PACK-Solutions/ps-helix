@@ -78,7 +78,7 @@ export class DropdownsDemoComponent {
     console.log('Selected:', value);
   }
 
-  filledAppearanceCode = `<psh-dropdown appearance="filled" color="primary">
+  filledAppearanceCode = `<psh-dropdown appearance="solid" color="primary">
   <span dropdown-trigger>Menu</span>
   <div dropdown-menu>
     <button class="dropdown-item">
@@ -96,7 +96,7 @@ export class DropdownsDemoComponent {
   </div>
 </psh-dropdown>`;
 
-  textAppearanceCode = `<psh-dropdown appearance="text" color="primary">
+  textAppearanceCode = `<psh-dropdown appearance="ghost" color="primary">
   <span dropdown-trigger>Menu</span>
   <div dropdown-menu>
     <button class="dropdown-item">
@@ -143,7 +143,7 @@ export class DropdownsDemoComponent {
 </button>`;
 
   statesCode = `<psh-dropdown
-  appearance="filled"
+  appearance="solid"
   color="primary"
   [disabled]="isFormInvalid"
   (selected)="handleSelect($event)"

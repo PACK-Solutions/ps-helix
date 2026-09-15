@@ -45,14 +45,14 @@ import { PshModalComponent, PshButtonComponent } from 'ps-helix';
   <p>Choisissez une action à effectuer.</p>
   <div modal-footer #modalFooter>
     <psh-button
-      appearance="text"
+      appearance="ghost"
       [fullWidth]="modal.isMobileScreen()"
       (clicked)="isOpen = false"
     >
       Annuler
     </psh-button>
     <psh-button
-      appearance="filled"
+      appearance="solid"
       color="success"
       [fullWidth]="modal.isMobileScreen()"
       (clicked)="handleSave()"

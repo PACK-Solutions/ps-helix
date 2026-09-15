@@ -1,3 +1,4 @@
+import { PshFieldAppearance } from '../../types/semantic.types';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -19,8 +20,7 @@ import {
   TEXTAREA_LABELS,
   TextareaResize,
   TextareaSize,
-  TextareaVariant,
-} from './textarea.types';
+  } from './textarea.types';
 
 @Component({
   selector: 'psh-textarea',
@@ -39,8 +39,8 @@ import {
     '[class.full-width]': 'fullWidth()',
     '[class.small]': 'size() === "small"',
     '[class.large]': 'size() === "large"',
-    '[class.outlined]': 'variant() === "outlined"',
-    '[class.filled]': 'variant() === "filled"',
+    '[class.outline]': 'appearance() === "outline"',
+    '[class.solid]': 'appearance() === "solid"',
     '[class.error]': 'hasError()',
     '[class.success]': '!!success() && !hasError()',
     '[class.disabled]': 'disabled()',
@@ -64,7 +64,7 @@ export class PshTextareaComponent
   readonly readonly = model<boolean>(false);
   readonly touched = model<boolean>(false);
 
-  variant = input<TextareaVariant>('outlined');
+  appearance = input<PshFieldAppearance>('outline');
   size = input<TextareaSize>('medium');
   resize = input<TextareaResize>('vertical');
   rows = input<number>(4);

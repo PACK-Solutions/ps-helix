@@ -14,7 +14,7 @@
         <div class="appearances-grid">
           <div class="appearance-card">
             <div class="appearance-preview">
-              <psh-dropdown appearance="filled" color="primary">
+              <psh-dropdown appearance="solid" color="primary">
                 <span dropdown-trigger>Filled</span>
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
@@ -54,7 +54,7 @@
 
           <div class="appearance-card">
             <div class="appearance-preview">
-              <psh-dropdown appearance="text" color="primary">
+              <psh-dropdown appearance="ghost" color="primary">
                 <span dropdown-trigger>Text</span>
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
@@ -85,7 +85,7 @@
         <div class="variants-grid">
           <div class="variant-card">
             <div class="variant-preview">
-              <psh-dropdown appearance="filled" color="primary">
+              <psh-dropdown appearance="solid" color="primary">
                 <span dropdown-trigger>Primary</span>
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
@@ -105,7 +105,7 @@
                   }
                 </div>
               </psh-dropdown>
-              <psh-dropdown appearance="text" color="primary">
+              <psh-dropdown appearance="ghost" color="primary">
                 <span dropdown-trigger>Primary</span>
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
@@ -127,7 +127,7 @@
 
           <div class="variant-card">
             <div class="variant-preview">
-              <psh-dropdown appearance="filled" color="secondary">
+              <psh-dropdown appearance="solid" color="secondary">
                 <span dropdown-trigger>Secondary</span>
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
@@ -147,7 +147,7 @@
                   }
                 </div>
               </psh-dropdown>
-              <psh-dropdown appearance="text" color="secondary">
+              <psh-dropdown appearance="ghost" color="secondary">
                 <span dropdown-trigger>Secondary</span>
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
@@ -169,7 +169,7 @@
 
           <div class="variant-card">
             <div class="variant-preview">
-              <psh-dropdown appearance="filled" color="success">
+              <psh-dropdown appearance="solid" color="success">
                 <span dropdown-trigger>Success</span>
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
@@ -189,7 +189,7 @@
                   }
                 </div>
               </psh-dropdown>
-              <psh-dropdown appearance="text" color="success">
+              <psh-dropdown appearance="ghost" color="success">
                 <span dropdown-trigger>Success</span>
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
@@ -211,7 +211,7 @@
 
           <div class="variant-card">
             <div class="variant-preview">
-              <psh-dropdown appearance="filled" color="warning">
+              <psh-dropdown appearance="solid" color="warning">
                 <span dropdown-trigger>Warning</span>
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
@@ -231,7 +231,7 @@
                   }
                 </div>
               </psh-dropdown>
-              <psh-dropdown appearance="text" color="warning">
+              <psh-dropdown appearance="ghost" color="warning">
                 <span dropdown-trigger>Warning</span>
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
@@ -253,7 +253,7 @@
 
           <div class="variant-card">
             <div class="variant-preview">
-              <psh-dropdown appearance="filled" color="danger">
+              <psh-dropdown appearance="solid" color="danger">
                 <span dropdown-trigger>Danger</span>
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
@@ -273,7 +273,7 @@
                   }
                 </div>
               </psh-dropdown>
-              <psh-dropdown appearance="text" color="danger">
+              <psh-dropdown appearance="ghost" color="danger">
                 <span dropdown-trigger>Danger</span>
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
@@ -578,7 +578,7 @@
                 icon="dots-three-vertical"
                 [iconOnly]="true"
                 iconOnlyText="Menu d'actions"
-                appearance="filled"
+                appearance="solid"
                 color="primary"
               >
                 <div dropdown-menu>
@@ -618,7 +618,7 @@
                 icon="dots-three-vertical"
                 [iconOnly]="true"
                 iconOnlyText="Menu d'actions"
-                appearance="text"
+                appearance="ghost"
                 color="primary"
               >
                 <div dropdown-menu>
@@ -701,35 +701,35 @@
 
           <div class="icon-only-card">
             <div class="icon-only-preview">
-              <psh-dropdown icon="gear" [iconOnly]="true" iconOnlyText="Paramètres" appearance="filled" color="primary">
+              <psh-dropdown icon="gear" [iconOnly]="true" iconOnlyText="Paramètres" appearance="solid" color="primary">
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
                   <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
                   }
                 </div>
               </psh-dropdown>
-              <psh-dropdown icon="gear" [iconOnly]="true" iconOnlyText="Paramètres" appearance="filled" color="secondary">
+              <psh-dropdown icon="gear" [iconOnly]="true" iconOnlyText="Paramètres" appearance="solid" color="secondary">
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
                   <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
                   }
                 </div>
               </psh-dropdown>
-              <psh-dropdown icon="gear" [iconOnly]="true" iconOnlyText="Paramètres" appearance="filled" color="success">
+              <psh-dropdown icon="gear" [iconOnly]="true" iconOnlyText="Paramètres" appearance="solid" color="success">
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
                   <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
                   }
                 </div>
               </psh-dropdown>
-              <psh-dropdown icon="gear" [iconOnly]="true" iconOnlyText="Paramètres" appearance="filled" color="warning">
+              <psh-dropdown icon="gear" [iconOnly]="true" iconOnlyText="Paramètres" appearance="solid" color="warning">
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
                   <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>
                   }
                 </div>
               </psh-dropdown>
-              <psh-dropdown icon="gear" [iconOnly]="true" iconOnlyText="Paramètres" appearance="filled" color="danger">
+              <psh-dropdown icon="gear" [iconOnly]="true" iconOnlyText="Paramètres" appearance="solid" color="danger">
                 <div dropdown-menu>
                   @for (item of basicItems; track item.value) {
                   <button class="dropdown-item" (click)="selectItem(item.value)">{{ item.content }}</button>

@@ -32,29 +32,29 @@ describe('PshHorizontalCardComponent', () => {
   });
 
   describe('Card Variants', () => {
-    const variants: HorizontalCardVariant[] = ['default', 'elevated', 'outlined'];
+    const variants: HorizontalCardVariant[] = ['flat', 'elevated', 'outline'];
 
     it.each(variants)('should apply %s variant class', (variant) => {
-      fixture.componentRef.setInput('variant', variant);
+      fixture.componentRef.setInput('appearance', variant);
       fixture.detectChanges();
 
       const classes = cardElement.nativeElement.className;
-      expect(classes).toContain(`variant-${variant}`);
+      expect(classes).toContain(`appearance-${variant}`);
     });
 
     it('should have elevated as default variant', () => {
-      expect(cardElement.nativeElement.className).toContain('variant-elevated');
+      expect(cardElement.nativeElement.className).toContain('appearance-elevated');
     });
 
     it('should update variant class when variant changes', () => {
-      fixture.componentRef.setInput('variant', 'elevated');
+      fixture.componentRef.setInput('appearance', 'elevated');
       fixture.detectChanges();
-      expect(cardElement.nativeElement.className).toContain('variant-elevated');
+      expect(cardElement.nativeElement.className).toContain('appearance-elevated');
 
-      fixture.componentRef.setInput('variant', 'outlined');
+      fixture.componentRef.setInput('appearance', 'outline');
       fixture.detectChanges();
-      expect(cardElement.nativeElement.className).toContain('variant-outlined');
-      expect(cardElement.nativeElement.className).not.toContain('variant-elevated');
+      expect(cardElement.nativeElement.className).toContain('appearance-outline');
+      expect(cardElement.nativeElement.className).not.toContain('appearance-elevated');
     });
   });
 
@@ -540,13 +540,13 @@ describe('PshHorizontalCardComponent', () => {
     });
 
     it('should combine variant with other state classes', () => {
-      fixture.componentRef.setInput('variant', 'outlined');
+      fixture.componentRef.setInput('appearance', 'outline');
       fixture.componentRef.setInput('hoverable', true);
       fixture.componentRef.setInput('interactive', true);
       fixture.detectChanges();
 
       const classes = cardElement.nativeElement.className;
-      expect(classes).toContain('variant-outlined');
+      expect(classes).toContain('appearance-outline');
       expect(classes).toContain('hoverable');
       expect(classes).toContain('interactive');
     });

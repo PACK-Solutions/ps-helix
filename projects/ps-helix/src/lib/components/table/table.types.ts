@@ -77,7 +77,7 @@ export interface TableSort {
  */
 export interface TableConfig {
   /** Style de la table */
-  variant: 'default' | 'outline';
+  appearance: 'flat' | 'outline';
   /** Taille de la table */
   size: 'small' | 'medium' | 'large';
   /** Lignes alternées */

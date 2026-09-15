@@ -1,3 +1,4 @@
+import { PshSurfaceAppearance } from '../../types/semantic.types';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -21,13 +22,13 @@ export class PshCollapseComponent {
   expanded = model(false);
 
   disabled = input(false);
-  variant = input('default' as CollapseVariant, {
+  appearance = input('flat' as PshSurfaceAppearance, {
     transform: (value: CollapseVariant) => {
-      if (!['default', 'outline'].includes(value)) {
+      if (!['flat', 'outline'].includes(value)) {
         if (isDevMode()) {
-          console.warn(`[psh-collapse] Invalid variant "${value}", falling back to "default"`);
+          console.warn(`[psh-collapse] Invalid variant "${value}", falling back to "flat"`);
         }
-        return 'default';
+        return 'flat';
       }
       return value;
     }

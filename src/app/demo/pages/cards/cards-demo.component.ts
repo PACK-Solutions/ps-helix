@@ -31,7 +31,7 @@ export class CardsDemoComponent {
   elevatedVariantCode = `<psh-card
   title="Mon titre"
   description="Description"
-  variant="elevated"
+  appearance="elevated"
 >
   Contenu de la carte
 </psh-card>`;
@@ -39,7 +39,7 @@ export class CardsDemoComponent {
   outlinedVariantCode = `<psh-card
   title="Mon titre"
   description="Description"
-  variant="outlined"
+  appearance="outline"
 >
   Contenu de la carte
 </psh-card>`;
@@ -47,14 +47,14 @@ export class CardsDemoComponent {
   defaultVariantCode = `<psh-card
   title="Mon titre"
   description="Description"
-  variant="default"
+  appearance="flat"
 >
   Contenu de la carte
 </psh-card>`;
 
   infoColorCode = `<psh-card
   title="Information"
-  variant="outlined"
+  appearance="outline"
   color="info"
 >
   Message informatif
@@ -62,7 +62,7 @@ export class CardsDemoComponent {
 
   successColorCode = `<psh-card
   title="Succès"
-  variant="outlined"
+  appearance="outline"
   color="success"
 >
   Opération réussie
@@ -70,7 +70,7 @@ export class CardsDemoComponent {
 
   warningColorCode = `<psh-card
   title="Attention"
-  variant="outlined"
+  appearance="outline"
   color="warning"
 >
   Action requise
@@ -78,7 +78,7 @@ export class CardsDemoComponent {
 
   dangerColorCode = `<psh-card
   title="Erreur"
-  variant="outlined"
+  appearance="outline"
   color="danger"
 >
   Erreur critique
@@ -112,7 +112,7 @@ export class CardsDemoComponent {
   // Header entièrement personnalisé, SANS [title] : le header se rend dès qu'un
   // slot de header est projeté. Le style du titre est défini dans la portée CSS
   // du composant consommateur (pas de ::ng-deep).
-  customHeaderSlotCode = `<psh-card variant="outlined" density="compact">
+  customHeaderSlotCode = `<psh-card appearance="outline" density="compact">
   <!-- Titre + icône composés par le consommateur -->
   <div card-header-content class="premium-header">
     <i class="ph ph-currency-eur" aria-hidden="true"></i>

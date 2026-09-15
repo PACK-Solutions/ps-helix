@@ -38,6 +38,37 @@ export const PSH_COLORS: readonly PshColor[] = [
 ] as const;
 
 /**
+ * Surface treatment — how a component is drawn, independent of what colour it is.
+ *
+ * `variant` used to carry three incompatible notions at once: elevation on card and
+ * table, colour on badge and button, display form on tabs and stepper. Colour moved to
+ * {@link PshColor}; surface treatment lives here.
+ *
+ *   solid     filled with its colour            (was `filled`)
+ *   soft      tinted background, same hue
+ *   outline   border only                       (was `outline` / `outlined`)
+ *   ghost     no border and no fill             (was `text`)
+ *   elevated  raised with a shadow
+ *   flat      no elevation, no border           (was `default`)
+ *
+ * Each component declares the subset it supports; the words mean the same thing in all of
+ * them. `variant` survives only where the notion is a genuinely component-specific display
+ * form that is neither colour nor surface — tabs (`underline | pills`), stepper
+ * (`numbered | progress`), menu (`compact | expanded`), spinloader (`circle | dots |
+ * pulse`), tooltip (`light | dark`). It is no longer a catch-all.
+ */
+export type PshAppearance = 'solid' | 'soft' | 'outline' | 'ghost' | 'elevated' | 'flat';
+
+/** The appearances a control (button, dropdown) offers. */
+export type PshControlAppearance = Extract<PshAppearance, 'solid' | 'outline' | 'ghost'>;
+
+/** The appearances a text field (input, select, textarea) offers. */
+export type PshFieldAppearance = Extract<PshAppearance, 'outline' | 'solid'>;
+
+/** The appearances a surface (card, table, collapse, pagination) offers. */
+export type PshSurfaceAppearance = Extract<PshAppearance, 'flat' | 'elevated' | 'outline'>;
+
+/**
  * Size. Already homogeneous across all 30 components before 7.0.0 — the one axis that was
  * never inconsistent — and deliberately left alone.
  */

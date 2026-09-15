@@ -1,3 +1,4 @@
+import { PshSurfaceAppearance } from '../../types/semantic.types';
 /**
  * Represents a single data row in the info card
  */
@@ -39,7 +40,11 @@ export interface InfoCardOptions {
 /**
  * Available card variant styles
  */
-export type InfoCardVariant = 'default' | 'elevated' | 'outlined';
+/**
+ * @deprecated since 7.0.0 — use {@link PshSurfaceAppearance}. Surface treatment now shares one
+ * vocabulary across the library.
+ */
+export type InfoCardVariant = PshSurfaceAppearance;
 
 /**
  * Couleurs sémantiques autorisées pour la mise en forme d'une valeur.

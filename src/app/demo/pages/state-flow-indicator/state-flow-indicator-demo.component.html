@@ -33,7 +33,7 @@
 
           <div class="demo-controls">
             <psh-button
-              appearance="text"
+              appearance="ghost"
               color="primary"
               [disabled]="basicActiveStep() === 0"
               (clicked)="goToPreviousBasic()"
@@ -41,7 +41,7 @@
               Retour
             </psh-button>
             <psh-button
-              appearance="filled"
+              appearance="solid"
               color="primary"
               [disabled]="basicActiveStep() >= 3"
               (clicked)="completeCurrentAndNext()"

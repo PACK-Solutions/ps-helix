@@ -9,19 +9,19 @@
   position: relative;
 }
 
-.card.variant-elevated {
+.card.appearance-elevated {
   box-shadow: var(--psh-shadow-sm);
 }
 
-.card.variant-elevated.hoverable:hover {
+.card.appearance-elevated.hoverable:hover {
   box-shadow: var(--psh-shadow-md);
 }
 
-.card.variant-outlined {
+.card.appearance-outline {
   border: 1px solid var(--psh-surface-border);
 }
 
-.card.variant-default {
+.card.appearance-flat {
   background: var(--psh-surface-section);
 }
 

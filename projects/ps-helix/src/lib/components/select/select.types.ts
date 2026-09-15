@@ -1,3 +1,4 @@
+import { PshFieldAppearance } from '../../types/semantic.types';
 export interface SelectOption<T> {
   label: string;
   value: T;
@@ -13,7 +14,11 @@ export interface SelectOptionGroup<T> {
 }
 
 export type SelectSize = 'small' | 'medium' | 'large';
-export type SelectVariant = 'outlined' | 'filled';
+/**
+ * @deprecated since 7.0.0 — use {@link PshFieldAppearance}. Surface treatment now shares one
+ * vocabulary across the library.
+ */
+export type SelectVariant = PshFieldAppearance;
 
 export interface SearchConfig {
   debounceTime: number;

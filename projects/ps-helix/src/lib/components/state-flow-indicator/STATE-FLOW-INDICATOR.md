@@ -542,7 +542,7 @@ import {
 
     <div class="actions">
       @if (!indicator.isFirstStep()) {
-        <psh-button appearance="text" (clicked)="previous()">
+        <psh-button appearance="ghost" (clicked)="previous()">
           Retour
         </psh-button>
       }

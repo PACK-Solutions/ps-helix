@@ -1,3 +1,4 @@
+import { PshFieldAppearance } from '../../types/semantic.types';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -19,7 +20,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
 import { PshPortalService, PshPortalRef } from '../../a11y/portal.service';
 import { PshOverlayPositionService } from '../../a11y/overlay-position.service';
-import { InputType, InputVariant, InputSize, AutocompleteConfig, INPUT_LABELS } from './input.types';
+import { InputType, InputSize, AutocompleteConfig, INPUT_LABELS } from './input.types';
 
 @Component({
   selector: 'psh-input',
@@ -46,8 +47,8 @@ import { InputType, InputVariant, InputSize, AutocompleteConfig, INPUT_LABELS } 
     '[class.focused]': 'focused()',
     '[class.has-start-icon]': '!!iconStart()',
     '[class.has-end-icon]': '!!iconEnd() || type() === "password"',
-    '[class.outlined]': 'variant() === "outlined"',
-    '[class.filled]': 'variant() === "filled"',
+    '[class.outline]': 'appearance() === "outline"',
+    '[class.solid]': 'appearance() === "solid"',
   }
 })
 export class PshInputComponent implements ControlValueAccessor, FormValueControl<string> {
@@ -74,7 +75,7 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
   readonly loading = model(false);
   readonly touched = model(false);
 
-  variant = input<InputVariant>('outlined');
+  appearance = input<PshFieldAppearance>('outline');
   size = input<InputSize>('medium');
   fullWidth = input(false);
   required = input(false);

@@ -71,20 +71,20 @@ input:focus-visible {
 }
 
 /* --- Variantes (Via Host) --- */
-:host.outlined input {
+:host.outline input {
   background: transparent;
 }
 
-:host.filled input {
+:host.solid input {
   background: var(--psh-surface-ground);
   border: 0.125rem solid var(--psh-surface-border); /* 2px */
 }
 
-:host.filled input:hover:not(:disabled):not(:focus) {
+:host.solid input:hover:not(:disabled):not(:focus) {
   background: var(--psh-surface-hover);
 }
 
-:host.filled input:focus-visible {
+:host.solid input:focus-visible {
   background: var(--psh-surface-0);
 }
 

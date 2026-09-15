@@ -1,3 +1,4 @@
+import { PshSurfaceAppearance } from '../../types/semantic.types';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -7,7 +8,6 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HorizontalCardVariant } from './horizontal-card.types';
 
 /**
  * Composant carte horizontale autonome
@@ -23,7 +23,7 @@ import { HorizontalCardVariant } from './horizontal-card.types';
  * Le layout bascule automatiquement en vertical sur mobile.
  *
  * @example
- * <psh-horizontal-card variant="elevated" sideWidth="var(--psh-size-48)">
+ * <psh-horizontal-card appearance="elevated" sideWidth="var(--psh-size-48)">
  *   <div horizontal-side>
  *     <img src="image.jpg" alt="Product">
  *   </div>
@@ -45,7 +45,7 @@ import { HorizontalCardVariant } from './horizontal-card.types';
 export class PshHorizontalCardComponent {
 
   /** Variante de la carte de base */
-  variant = input<HorizontalCardVariant>('elevated');
+  appearance = input<PshSurfaceAppearance>('elevated');
 
   /** Carte cliquable */
   interactive = input(false);
@@ -86,7 +86,7 @@ export class PshHorizontalCardComponent {
   /** Classes CSS calculées selon les propriétés */
   computedClasses = computed(() => {
     const classes = ['horizontal-card'];
-    classes.push(`variant-${this.variant()}`);
+    classes.push(`appearance-${this.appearance()}`);
 
     if (this.hoverable()) classes.push('hoverable');
     if (this.interactive()) classes.push('interactive');

@@ -47,12 +47,12 @@
 :host.success .select-trigger:focus-visible { box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-success); }
 :host.disabled .select-trigger { background: var(--psh-surface-ground); cursor: not-allowed; opacity: var(--psh-opacity-disabled); }
 
-:host.filled .select-trigger {
+:host.solid .select-trigger {
   background: var(--psh-surface-ground);
   border: 0.125rem solid var(--psh-surface-border);
 }
 
-:host.filled .select-trigger:hover:not([disabled]):not(:focus) {
+:host.solid .select-trigger:hover:not([disabled]):not(:focus) {
   background: var(--psh-surface-hover);
 }
 

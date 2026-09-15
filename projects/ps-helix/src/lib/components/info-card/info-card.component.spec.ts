@@ -164,16 +164,16 @@ describe('PshInfoCardComponent', () => {
 
   describe('Variants', () => {
     it('should have outlined as default variant', () => {
-      expect(getRegion().className).toContain('variant-outlined');
+      expect(getRegion().className).toContain('appearance-outline');
     });
 
-    it.each<[InfoCardVariant]>([['default'], ['elevated'], ['outlined']])(
-      'should apply variant-%s class for variant "%s"',
+    it.each<[InfoCardVariant]>([['flat'], ['elevated'], ['outline']])(
+      'should apply appearance-%s class for variant "%s"',
       (variant) => {
-        fixture.componentRef.setInput('variant', variant);
+        fixture.componentRef.setInput('appearance', variant);
         fixture.detectChanges();
 
-        expect(getRegion().className).toContain(`variant-${variant}`);
+        expect(getRegion().className).toContain(`appearance-${variant}`);
       }
     );
   });

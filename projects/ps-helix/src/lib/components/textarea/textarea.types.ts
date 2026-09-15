@@ -1,4 +1,9 @@
-export type TextareaVariant = 'outlined' | 'filled';
+import { PshFieldAppearance } from '../../types/semantic.types';
+/**
+ * @deprecated since 7.0.0 — use {@link PshFieldAppearance}. Surface treatment now shares one
+ * vocabulary across the library.
+ */
+export type TextareaVariant = PshFieldAppearance;
 export type TextareaSize = 'small' | 'medium' | 'large';
 export type TextareaResize = 'none' | 'vertical' | 'horizontal' | 'both';
 

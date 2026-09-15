@@ -8,8 +8,8 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PshTagComponent } from '../tag/tag.component';
-import { StatCardLayout, StatCardVariant } from './stat-card.types';
-import { PshColor, PSH_COLORS } from '../../types/semantic.types';
+import { StatCardLayout } from './stat-card.types';
+import { PSH_COLORS, PshColor, PshSurfaceAppearance } from '../../types/semantic.types';
 
 /**
  * Icon background per semantic colour. These were four hardcoded hex pairs that ignored
@@ -54,7 +54,7 @@ export class PshStatCardComponent {
   iconBackground = input<string>();
 
   /** Variante visuelle de la carte de base */
-  variant = input<StatCardVariant>('elevated');
+  appearance = input<PshSurfaceAppearance>('elevated');
 
   /** Carte cliquable avec feedback visuel */
   interactive = input(false);
@@ -141,7 +141,7 @@ export class PshStatCardComponent {
     const classes = ['stat-card'];
     const layout = this.layout();
 
-    classes.push(`variant-${this.variant()}`);
+    classes.push(`appearance-${this.appearance()}`);
 
     if (layout === 'vertical') {
       classes.push('stat-card--vertical');

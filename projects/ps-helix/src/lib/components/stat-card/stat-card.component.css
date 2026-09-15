@@ -9,20 +9,20 @@
   padding: var(--psh-spacing-lg);
 }
 
-.stat-card.variant-elevated {
+.stat-card.appearance-elevated {
   box-shadow: var(--psh-shadow-md);
 }
 
-.stat-card.variant-elevated.hoverable:hover {
+.stat-card.appearance-elevated.hoverable:hover {
   box-shadow: var(--psh-shadow-lg);
 }
 
-.stat-card.variant-outlined {
+.stat-card.appearance-outline {
   border: 2px solid var(--psh-surface-border);
   box-shadow: none;
 }
 
-.stat-card.variant-default {
+.stat-card.appearance-flat {
   background: var(--psh-surface-ground);
   box-shadow: none;
 }

@@ -39,7 +39,7 @@ export class ExampleComponent {
   showBasicToast() {
     this.toastService.show({
       message: 'Message direct sans traduction',
-      type: 'info',
+      color: 'info',
       duration: 5000
     });
   }
@@ -292,7 +292,7 @@ export class ExampleComponent {
 showCustomToast() {
   this.toastService.show({
     message: 'Fichier telecharge avec succes',
-    type: 'success',
+    color: 'success',
     duration: 3000,
     icon: 'check-circle',
     showCloseButton: true
@@ -306,7 +306,7 @@ showCustomToast() {
 showPersistentToast() {
   const toastId = this.toastService.show({
     message: 'Action requise: veuillez confirmer',
-    type: 'warning',
+    color: 'warning',
     duration: 0,
     showCloseButton: true
   });
@@ -322,7 +322,7 @@ showPersistentToast() {
 uploadFile() {
   const toastId = this.toastService.show({
     message: 'Telechargement en cours...',
-    type: 'info',
+    color: 'info',
     duration: 0,
     showCloseButton: false
   });

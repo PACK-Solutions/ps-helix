@@ -1,4 +1,4 @@
-import { PshColor } from '../../types/semantic.types';
+import { PshColor, PshSurfaceAppearance } from '../../types/semantic.types';
 
 /**
  * @deprecated since 7.0.0 — use {@link PshColor}. The input is `tagColor`, not
@@ -9,4 +9,8 @@ export type StatTagVariant = PshColor;
 
 export type StatCardLayout = 'horizontal' | 'vertical';
 
-export type StatCardVariant = 'default' | 'elevated' | 'outlined';
+/**
+ * @deprecated since 7.0.0 — use {@link PshSurfaceAppearance}. Surface treatment now shares one
+ * vocabulary across the library.
+ */
+export type StatCardVariant = PshSurfaceAppearance;

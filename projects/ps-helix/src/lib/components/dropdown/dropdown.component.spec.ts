@@ -723,12 +723,12 @@ describe('PshDropdownComponent', () => {
       expect(getTrigger().classList.contains('primary')).toBe(true);
     });
 
-    // 'filled'/'outline'/'text' are DropdownAppearance values (visual style),
+    // 'solid'/'outline'/'ghost' are DropdownAppearance values (visual style),
     // applied via [class]="appearance()" on the trigger.
-    it.each<['filled' | 'outline' | 'text']>([
-      ['filled'],
+    it.each<['solid' | 'outline' | 'ghost']>([
+      ['solid'],
       ['outline'],
-      ['text']
+      ['ghost']
     ])('should apply %s appearance class to trigger', (appearance) => {
       fixture.componentRef.setInput('appearance', appearance);
       fixture.detectChanges();

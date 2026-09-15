@@ -154,7 +154,7 @@
                 position="top"
                 [autoFlip]="true"
               >
-                <psh-button appearance="filled" color="primary">{{ 'TOOLTIP.AUTOFLIP.ENABLED' | translate }}</psh-button>
+                <psh-button appearance="solid" color="primary">{{ 'TOOLTIP.AUTOFLIP.ENABLED' | translate }}</psh-button>
               </psh-tooltip>
             </div>
             <div class="autoflip-info">
@@ -240,7 +240,7 @@
                 [showDelay]="demoDelays.quick.show"
                 [hideDelay]="demoDelays.quick.hide"
               >
-                <psh-button appearance="filled" color="primary">
+                <psh-button appearance="solid" color="primary">
                   {{ 'TOOLTIP.TIMING.INSTANT_LABEL' | translate }}
                 </psh-button>
               </psh-tooltip>
@@ -263,7 +263,7 @@
                 [showDelay]="demoDelays.normal.show"
                 [hideDelay]="demoDelays.normal.hide"
               >
-                <psh-button appearance="filled" color="primary">
+                <psh-button appearance="solid" color="primary">
                   {{ 'TOOLTIP.TIMING.NORMAL_LABEL' | translate }}
                 </psh-button>
               </psh-tooltip>
@@ -286,7 +286,7 @@
                 [showDelay]="demoDelays.slow.show"
                 [hideDelay]="demoDelays.slow.hide"
               >
-                <psh-button appearance="filled" color="primary">
+                <psh-button appearance="solid" color="primary">
                   {{ 'TOOLTIP.TIMING.DELAYED_LABEL' | translate }}
                 </psh-button>
               </psh-tooltip>
@@ -317,16 +317,16 @@
             <h4>{{ 'TOOLTIP.APPLICATIONS.ICON_ACTIONS' | translate }}</h4>
             <div class="application-examples">
               <psh-tooltip [content]="'TOOLTIP.APPLICATIONS.EDIT' | translate" position="top">
-                <psh-button appearance="text" color="primary" icon="pencil" iconPosition="only" ariaLabel="Edit"></psh-button>
+                <psh-button appearance="ghost" color="primary" icon="pencil" iconPosition="only" ariaLabel="Edit"></psh-button>
               </psh-tooltip>
               <psh-tooltip [content]="'TOOLTIP.APPLICATIONS.DELETE' | translate" position="top">
-                <psh-button appearance="text" color="danger" icon="trash" iconPosition="only" ariaLabel="Delete"></psh-button>
+                <psh-button appearance="ghost" color="danger" icon="trash" iconPosition="only" ariaLabel="Delete"></psh-button>
               </psh-tooltip>
               <psh-tooltip [content]="'TOOLTIP.APPLICATIONS.SHARE' | translate" position="top">
-                <psh-button appearance="text" color="primary" icon="share" iconPosition="only" ariaLabel="Share"></psh-button>
+                <psh-button appearance="ghost" color="primary" icon="share" iconPosition="only" ariaLabel="Share"></psh-button>
               </psh-tooltip>
               <psh-tooltip [content]="'TOOLTIP.APPLICATIONS.DOWNLOAD' | translate" position="top">
-                <psh-button appearance="text" color="secondary" icon="download" iconPosition="only" ariaLabel="Download"></psh-button>
+                <psh-button appearance="ghost" color="secondary" icon="download" iconPosition="only" ariaLabel="Download"></psh-button>
               </psh-tooltip>
             </div>
           </div>
@@ -353,7 +353,7 @@
             <h4>{{ 'TOOLTIP.APPLICATIONS.BUTTON_VARIANTS' | translate }}</h4>
             <div class="application-examples">
               <psh-tooltip [content]="'TOOLTIP.APPLICATIONS.PRIMARY_ACTION' | translate">
-                <psh-button appearance="filled" color="primary" icon="check" iconPosition="left">
+                <psh-button appearance="solid" color="primary" icon="check" iconPosition="left">
                   {{ 'TOOLTIP.APPLICATIONS.SAVE' | translate }}
                 </psh-button>
               </psh-tooltip>
@@ -363,7 +363,7 @@
                 </psh-button>
               </psh-tooltip>
               <psh-tooltip [content]="'TOOLTIP.APPLICATIONS.DISABLED_INFO' | translate">
-                <psh-button appearance="filled" color="primary" [disabled]="true">
+                <psh-button appearance="solid" color="primary" [disabled]="true">
                   {{ 'TOOLTIP.APPLICATIONS.SUBMIT' | translate }}
                 </psh-button>
               </psh-tooltip>

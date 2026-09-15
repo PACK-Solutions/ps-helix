@@ -51,7 +51,7 @@ describe('PshInputComponent', () => {
   const getLoader = () =>
     fixture.nativeElement.querySelector('.input-loader') as HTMLElement;
 
-  const ALL_VARIANTS: InputVariant[] = ['outlined', 'filled'];
+  const ALL_VARIANTS: InputVariant[] = ['outline', 'solid'];
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -517,10 +517,10 @@ describe('PshInputComponent', () => {
   });
 
   describe('Variant classes', () => {
-    it.each<[InputVariant]>([['outlined'], ['filled']])(
+    it.each<[InputVariant]>([['outline'], ['solid']])(
       'should apply "%s" variant class',
       (variant) => {
-        fixture.componentRef.setInput('variant', variant);
+        fixture.componentRef.setInput('appearance', variant);
         fixture.detectChanges();
 
         const container = fixture.nativeElement;
@@ -530,13 +530,13 @@ describe('PshInputComponent', () => {
 
     it('should have outlined variant by default', () => {
       const container = fixture.nativeElement;
-      expect(container.classList.contains('outlined')).toBe(true);
+      expect(container.classList.contains('outline')).toBe(true);
     });
 
-    it.each<[InputVariant]>([['outlined'], ['filled']])(
+    it.each<[InputVariant]>([['outline'], ['solid']])(
       'should only have "%s" variant class and no other variant classes',
       (variant) => {
-        fixture.componentRef.setInput('variant', variant);
+        fixture.componentRef.setInput('appearance', variant);
         fixture.detectChanges();
 
         const container = fixture.nativeElement;

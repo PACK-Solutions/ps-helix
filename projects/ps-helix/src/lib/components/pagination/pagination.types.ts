@@ -1,3 +1,4 @@
+import { PshSurfaceAppearance } from '../../types/semantic.types';
 /**
  * Tailles disponibles pour la pagination
  */
@@ -6,7 +7,11 @@ export type PaginationSize = 'small' | 'medium' | 'large';
 /**
  * Variantes visuelles de la pagination
  */
-export type PaginationVariant = 'default' | 'outline';
+/**
+ * @deprecated since 7.0.0 — use {@link PshSurfaceAppearance}. Surface treatment now shares one
+ * vocabulary across the library.
+ */
+export type PaginationVariant = PshSurfaceAppearance;
 
 /**
  * Configuration complète de la pagination
@@ -15,7 +20,7 @@ export interface PaginationConfig {
   /** Taille de la pagination */
   size: PaginationSize;
   /** Variante visuelle */
-  variant: PaginationVariant;
+  appearance: PaginationVariant;
   /** Afficher les boutons premier/dernier */
   showFirstLast: boolean;
   /** Afficher les boutons précédent/suivant */

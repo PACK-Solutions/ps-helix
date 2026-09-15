@@ -56,14 +56,14 @@ loginForm = form(this.model, (p) => {
 </psh-input>`;
 
   outlinedVariantCode = `<psh-input
-  variant="outlined"
+  appearance="outline"
   placeholder="Entrez votre texte"
 >
   <span input-label>Label</span>
 </psh-input>`;
 
   filledVariantCode = `<psh-input
-  variant="filled"
+  appearance="solid"
   placeholder="Entrez votre texte"
 >
   <span input-label>Label</span>

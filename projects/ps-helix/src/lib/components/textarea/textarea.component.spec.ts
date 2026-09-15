@@ -137,13 +137,13 @@ describe('PshTextareaComponent', () => {
 
   describe('Variants & sizes', () => {
     it('should apply outlined variant class by default', () => {
-      expect(getHost().classList).toContain('outlined');
+      expect(getHost().classList).toContain('outline');
     });
 
     it('should apply filled variant class', () => {
-      fixture.componentRef.setInput('variant', 'filled');
+      fixture.componentRef.setInput('appearance', 'solid');
       fixture.detectChanges();
-      expect(getHost().classList).toContain('filled');
+      expect(getHost().classList).toContain('solid');
     });
 
     it('should apply small size class', () => {

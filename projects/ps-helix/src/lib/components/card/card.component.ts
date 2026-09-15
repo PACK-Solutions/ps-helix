@@ -1,4 +1,4 @@
-import { PshColor } from '../../types/semantic.types';
+import { PshColor, PshSurfaceAppearance } from '../../types/semantic.types';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -13,7 +13,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { CardVariant, CardDensity, CardActionsAlignment } from './card.types';
+import { CardDensity, CardActionsAlignment } from './card.types';
 
 /**
  * Composant carte métier - conteneur structuré pour contenu professionnel
@@ -33,7 +33,7 @@ import { CardVariant, CardDensity, CardActionsAlignment } from './card.types';
  * <psh-card
  *   title="Mon titre"
  *   description="Ma description"
- *   variant="elevated"
+ *   appearance="elevated"
  * >
  *   <p>Contenu principal</p>
  *   <div card-actions>
@@ -59,7 +59,9 @@ export class PshCardComponent implements OnDestroy {
   isMobile = signal<boolean>(false);
   // Model inputs - propriétés modifiables
   /** Variante visuelle de la carte (default, elevated, outlined) */
-  variant = model<CardVariant>('default');
+  // input(), not model(): the card never writes its own appearance back, so a model()
+  // only added a `variantChange` output that could never fire.
+  appearance = input<PshSurfaceAppearance>('flat');
 
   /** Effet de survol activé (animation translateY) */
   hoverable = model(false);
@@ -74,7 +76,7 @@ export class PshCardComponent implements OnDestroy {
   /** Description/sous-titre optionnel */
   description = input<string>('');
 
-  /** Couleur sémantique de la carte. `neutral` = aucune emphase (l'ancien `default`). */
+  /** Couleur sémantique de la carte. `neutral` = aucune emphase (l'ancien `flat`). */
   color = input<PshColor>('neutral');
 
   /** Niveau de densité du spacing (compact, normal, spacious) */
@@ -115,7 +117,7 @@ export class PshCardComponent implements OnDestroy {
   /** Classes CSS calculées selon les propriétés */
   computedClasses = computed(() => {
     const classes = ['card'];
-    classes.push(`variant-${this.variant()}`);
+    classes.push(`appearance-${this.appearance()}`);
     classes.push(`color-${this.color()}`);
     classes.push(`density-${this.density()}`);
 

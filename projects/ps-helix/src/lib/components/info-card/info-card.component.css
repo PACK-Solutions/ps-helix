@@ -10,19 +10,19 @@
   position: relative;
 }
 
-.info-card.variant-elevated {
+.info-card.appearance-elevated {
   box-shadow: var(--psh-shadow-sm);
 }
 
-.info-card.variant-elevated.hoverable:hover {
+.info-card.appearance-elevated.hoverable:hover {
   box-shadow: var(--psh-shadow-md);
 }
 
-.info-card.variant-outlined {
+.info-card.appearance-outline {
   border: 1px solid var(--psh-surface-border);
 }
 
-.info-card.variant-default {
+.info-card.appearance-flat {
   background: var(--psh-surface-section);
 }
 
