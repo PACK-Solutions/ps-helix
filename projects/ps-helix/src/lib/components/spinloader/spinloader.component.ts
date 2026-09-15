@@ -22,9 +22,9 @@ export const SPINLOADER_CONFIG = new InjectionToken<Partial<SpinLoaderConfig>>('
     '[attr.aria-live]': 'ariaLive()',
     '[attr.aria-busy]': 'true',
     '[attr.data-state]': 'variant()',
-    '[class.small]': 'size() === "small"',
-    '[class.large]': 'size() === "large"',
-    '[class.reduce-motion]': 'reduceMotion()',
+    '[class.psh-small]': 'size() === "small"',
+    '[class.psh-large]': 'size() === "large"',
+    '[class.psh-reduce-motion]': 'reduceMotion()',
   }
 })
 export class PshSpinLoaderComponent {

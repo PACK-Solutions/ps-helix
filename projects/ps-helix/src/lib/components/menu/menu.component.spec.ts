@@ -42,7 +42,7 @@ describe('PshMenuComponent', () => {
     fixture.nativeElement.querySelector(`[data-menu-item-id="${id}"]`) as HTMLElement;
 
   const getCollapseButton = () =>
-    fixture.nativeElement.querySelector('.menu-collapse-button') as HTMLButtonElement;
+    fixture.nativeElement.querySelector('.psh-menu-collapse-button') as HTMLButtonElement;
 
   const getDividers = () =>
     Array.from(fixture.nativeElement.querySelectorAll('[role="separator"]')) as HTMLElement[];
@@ -54,7 +54,7 @@ describe('PshMenuComponent', () => {
     Array.from(fixture.nativeElement.querySelectorAll('[role="menu"]')) as HTMLUListElement[];
 
   const getLabels = () =>
-    Array.from(fixture.nativeElement.querySelectorAll('.menu-label')) as HTMLElement[];
+    Array.from(fixture.nativeElement.querySelectorAll('.psh-menu-label')) as HTMLElement[];
 
   const dispatchKeyboardEvent = (element: HTMLElement, key: string) => {
     const event = new KeyboardEvent('keydown', {
@@ -105,7 +105,7 @@ describe('PshMenuComponent', () => {
     });
 
     it('should render icons with aria-hidden="true"', () => {
-      const icons = fixture.nativeElement.querySelectorAll('.menu-link i');
+      const icons = fixture.nativeElement.querySelectorAll('.psh-menu-link i');
       icons.forEach((icon: HTMLElement) => {
         expect(icon.getAttribute('aria-hidden')).toBe('true');
       });
@@ -201,7 +201,7 @@ describe('PshMenuComponent', () => {
       });
 
       it('should have role="none" on li container elements', () => {
-        const listItems = fixture.nativeElement.querySelectorAll('.menu-item');
+        const listItems = fixture.nativeElement.querySelectorAll('.psh-menu-item');
         listItems.forEach((li: HTMLElement) => {
           expect(li.getAttribute('role')).toBe('none');
         });
@@ -349,13 +349,13 @@ describe('PshMenuComponent', () => {
         fixture.componentRef.setInput('mode', mode);
         fixture.detectChanges();
 
-        expect(getNavigation().classList.contains(expectedClass)).toBe(true);
+        expect(getNavigation().classList.contains(`psh-${expectedClass}`)).toBe(true);
       });
     });
 
     it('should have vertical mode by default', () => {
       expect(fixture.componentInstance.mode()).toBe('vertical');
-      expect(getNavigation().classList.contains('vertical')).toBe(true);
+      expect(getNavigation().classList.contains('psh-vertical')).toBe(true);
     });
   });
 
@@ -372,10 +372,10 @@ describe('PshMenuComponent', () => {
         fixture.detectChanges();
 
         if (expectedClass) {
-          expect(getNavigation().classList.contains(expectedClass)).toBe(true);
+          expect(getNavigation().classList.contains(`psh-${expectedClass}`)).toBe(true);
         } else {
-          expect(getNavigation().classList.contains('compact')).toBe(false);
-          expect(getNavigation().classList.contains('expanded')).toBe(false);
+          expect(getNavigation().classList.contains('psh-compact')).toBe(false);
+          expect(getNavigation().classList.contains('psh-expanded')).toBe(false);
         }
       });
     });
@@ -466,7 +466,7 @@ describe('PshMenuComponent', () => {
       fixture.componentRef.setInput('collapsed', true);
       fixture.detectChanges();
 
-      expect(getNavigation().classList.contains('collapsed')).toBe(true);
+      expect(getNavigation().classList.contains('psh-collapsed')).toBe(true);
     });
 
     it('should use custom aria labels for collapse button', () => {
@@ -611,13 +611,13 @@ describe('PshMenuComponent', () => {
     });
 
     it('should apply expanded class to parent item when submenu is open', () => {
-      const parentLi = fixture.nativeElement.querySelector('.menu-item.has-children');
-      expect(parentLi.classList.contains('expanded')).toBe(false);
+      const parentLi = fixture.nativeElement.querySelector('.psh-menu-item.psh-has-children');
+      expect(parentLi.classList.contains('psh-expanded')).toBe(false);
 
       getMenuItemById('settings')!.click();
       fixture.detectChanges();
 
-      expect(parentLi.classList.contains('expanded')).toBe(true);
+      expect(parentLi.classList.contains('psh-expanded')).toBe(true);
     });
 
     it('should allow multiple submenus to be open simultaneously', () => {
@@ -707,7 +707,7 @@ describe('PshMenuComponent', () => {
     });
 
     it('should apply disabled class to parent li', () => {
-      const disabledLi = fixture.nativeElement.querySelector('.menu-item.disabled');
+      const disabledLi = fixture.nativeElement.querySelector('.psh-menu-item.psh-disabled');
       expect(disabledLi).toBeTruthy();
     });
   });
@@ -1104,7 +1104,7 @@ describe('PshMenuComponent', () => {
       expect(item).toBeTruthy();
       expect(item!.tagName.toLowerCase()).toBe('a');
       expect(item!.getAttribute('href')).toBe('/full');
-      expect(item!.classList.contains('active')).toBe(true);
+      expect(item!.classList.contains('psh-active')).toBe(true);
     });
 
     it('should handle dynamic item changes', () => {
@@ -1250,7 +1250,7 @@ describe('PshMenuComponent with host component', () => {
   let hostComponent: TestHostComponent;
 
   const getCollapseButton = () =>
-    fixture.nativeElement.querySelector('.menu-collapse-button') as HTMLButtonElement;
+    fixture.nativeElement.querySelector('.psh-menu-collapse-button') as HTMLButtonElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

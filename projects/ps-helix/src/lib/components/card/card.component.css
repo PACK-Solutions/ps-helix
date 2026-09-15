@@ -1,4 +1,4 @@
-.card {
+.psh-card {
   background: var(--psh-surface-card);
   border-radius: var(--psh-radius-xl);
   overflow: hidden;
@@ -9,76 +9,76 @@
   position: relative;
 }
 
-.card.appearance-elevated {
+.psh-card.psh-appearance-elevated {
   box-shadow: var(--psh-shadow-sm);
 }
 
-.card.appearance-elevated.hoverable:hover {
+.psh-card.psh-appearance-elevated.psh-hoverable:hover {
   box-shadow: var(--psh-shadow-md);
 }
 
-.card.appearance-outline {
+.psh-card.psh-appearance-outline {
   border: 1px solid var(--psh-surface-border);
 }
 
-.card.appearance-flat {
+.psh-card.psh-appearance-flat {
   background: var(--psh-surface-section);
 }
 
-.card.color-info {
+.psh-card.psh-color-info {
   border-left: 4px solid var(--psh-blue-500);
 }
 
 /* color-mix on the palette token the border-left already uses, rather than an -rgb
    triplet that was never defined: the fallback was a literal blue, so these four tints
    ignored the theme entirely. */
-.card.color-info .card-header {
+.psh-card.psh-color-info .psh-card-header {
   background: color-mix(in srgb, var(--psh-blue-500) 5%, transparent);
 }
 
-.card.color-success {
+.psh-card.psh-color-success {
   border-left: 4px solid var(--psh-green-500);
 }
 
-.card.color-success .card-header {
+.psh-card.psh-color-success .psh-card-header {
   background: color-mix(in srgb, var(--psh-green-500) 5%, transparent);
 }
 
-.card.color-warning {
+.psh-card.psh-color-warning {
   border-left: 4px solid var(--psh-orange-500);
 }
 
-.card.color-warning .card-header {
+.psh-card.psh-color-warning .psh-card-header {
   background: color-mix(in srgb, var(--psh-orange-500) 5%, transparent);
 }
 
-.card.color-danger {
+.psh-card.psh-color-danger {
   border-left: 4px solid var(--psh-red-500);
 }
 
-.card.color-danger .card-header {
+.psh-card.psh-color-danger .psh-card-header {
   background: color-mix(in srgb, var(--psh-red-500) 5%, transparent);
 }
 
 /* primary and secondary complete the shared colour union introduced in 7.0.0.
    `neutral` — the old `default` — stays deliberately unstyled: it means no emphasis. */
-.card.color-primary {
+.psh-card.psh-color-primary {
   border-left: 4px solid var(--psh-primary-color);
 }
 
-.card.color-primary .card-header {
+.psh-card.psh-color-primary .psh-card-header {
   background: color-mix(in srgb, var(--psh-primary-color) 5%, transparent);
 }
 
-.card.color-secondary {
+.psh-card.psh-color-secondary {
   border-left: 4px solid var(--psh-secondary-color);
 }
 
-.card.color-secondary .card-header {
+.psh-card.psh-color-secondary .psh-card-header {
   background: color-mix(in srgb, var(--psh-secondary-color) 5%, transparent);
 }
 
-.card.density-compact {
+.psh-card.psh-density-compact {
   --psh-card-density-header-padding: var(--psh-size-3) var(--psh-size-4);
   --psh-card-density-body-padding: var(--psh-size-4);
   --psh-card-density-footer-padding: var(--psh-size-3) var(--psh-size-4);
@@ -87,7 +87,7 @@
   --psh-card-density-body-gap: var(--psh-size-3);
 }
 
-.card.density-normal {
+.psh-card.psh-density-normal {
   --psh-card-density-header-padding: var(--psh-size-4) var(--psh-size-5);
   --psh-card-density-body-padding: var(--psh-size-6);
   --psh-card-density-footer-padding: var(--psh-size-4) var(--psh-size-5);
@@ -96,7 +96,7 @@
   --psh-card-density-body-gap: var(--psh-size-4);
 }
 
-.card.density-spacious {
+.psh-card.psh-density-spacious {
   --psh-card-density-header-padding: var(--psh-size-6) var(--psh-size-7);
   --psh-card-density-body-padding: var(--psh-size-8);
   --psh-card-density-footer-padding: var(--psh-size-5) var(--psh-size-7);
@@ -105,7 +105,7 @@
   --psh-card-density-body-gap: var(--psh-size-5);
 }
 
-.card-header {
+.psh-card-header {
   padding: var(--psh-card-header-padding, var(--psh-card-density-header-padding));
   display: flex;
   align-items: flex-start;
@@ -114,7 +114,7 @@
   position: relative;
 }
 
-.card-header.has-divider {
+.psh-card-header.psh-has-divider {
   border-bottom: 1px solid var(--psh-surface-border);
 }
 
@@ -124,11 +124,11 @@
   :not(:has(*)) ignore les nœuds commentaires/anchors laissés par @if et <ng-content>,
   et neutralise aussi le border-bottom (has-divider) et le padding sur un header vide.
 */
-.card-header:not(:has(*)) {
+.psh-card-header:not(:has(*)) {
   display: none;
 }
 
-.card-header-content {
+.psh-card-header-content {
   flex: 1;
   min-width: 0;
   display: flex;
@@ -136,7 +136,7 @@
   gap: var(--psh-spacing-xs);
 }
 
-.card-title {
+.psh-card-title {
   font-size: var(--psh-font-size-lg);
   font-weight: 600;
   line-height: 1.4;
@@ -146,7 +146,7 @@
   text-overflow: ellipsis;
 }
 
-.card-description {
+.psh-card-description {
   font-size: var(--psh-font-size-sm);
   line-height: 1.5;
   color: var(--psh-text-color-secondary);
@@ -172,7 +172,7 @@
   gap: var(--psh-spacing-sm);
 }
 
-.card-body {
+.psh-card-body {
   padding: var(--psh-card-body-padding, var(--psh-card-density-body-padding));
   flex: 1;
   display: flex;
@@ -183,28 +183,28 @@
   overflow: hidden;
 }
 
-.card-body.no-padding {
+.psh-card-body.psh-no-padding {
   padding: 0;
 }
 
-.card-body > * {
+.psh-card-body > * {
   margin: 0;
 }
 
-.card-body img {
+.psh-card-body img {
   max-width: 100%;
   height: auto;
   border-radius: var(--psh-radius-lg);
 }
 
-.card-body table {
+.psh-card-body table {
   width: 100%;
   max-width: 100%;
   overflow-x: auto;
   display: block;
 }
 
-.card-body pre {
+.psh-card-body pre {
   max-width: 100%;
   overflow-x: auto;
   padding: var(--psh-spacing-sm);
@@ -213,13 +213,13 @@
   font-size: var(--psh-font-size-sm);
 }
 
-.card-body video,
-.card-body iframe {
+.psh-card-body video,
+.psh-card-body iframe {
   max-width: 100%;
   height: auto;
 }
 
-.card-footer {
+.psh-card-footer {
   padding: var(--psh-card-footer-padding, var(--psh-card-density-footer-padding));
   background: var(--psh-surface-ground);
   display: flex;
@@ -230,15 +230,15 @@
   color: var(--psh-text-color-secondary);
 }
 
-.card-footer:empty {
+.psh-card-footer:empty {
   display: none;
 }
 
-.card-footer.has-divider {
+.psh-card-footer.psh-has-divider {
   border-top: 1px solid var(--psh-surface-border);
 }
 
-.card-actions {
+.psh-card-actions {
   padding: var(--psh-card-actions-padding, var(--psh-card-density-actions-padding));
   background: var(--psh-surface-ground);
   display: flex;
@@ -247,84 +247,84 @@
   justify-content: flex-end;
 }
 
-.card-actions > * {
+.psh-card-actions > * {
   flex-shrink: 0;
   display: flex;
   gap: var(--psh-spacing-sm);
 }
 
-.card-actions:empty {
+.psh-card-actions:empty {
   display: none;
 }
 
-.card-actions.has-divider {
+.psh-card-actions.psh-has-divider {
   border-top: 1px solid var(--psh-surface-border);
 }
 
-.card-actions.actions-align-left {
+.psh-card-actions.psh-actions-align-left {
   justify-content: flex-start;
 }
 
-.card-actions.actions-align-center {
+.psh-card-actions.psh-actions-align-center {
   justify-content: center;
 }
 
-.card-actions.actions-align-right {
+.psh-card-actions.psh-actions-align-right {
   justify-content: flex-end;
 }
 
-.card-actions.actions-align-space-between {
+.psh-card-actions.psh-actions-align-space-between {
   justify-content: space-between;
 }
 
-.card-actions.mobile-full-width-buttons {
+.psh-card-actions.psh-mobile-full-width-buttons {
   flex-direction: column;
   gap: var(--psh-spacing-sm);
 }
 
-.card-actions.mobile-full-width-buttons > * {
+.psh-card-actions.psh-mobile-full-width-buttons > * {
   display: flex;
   flex-direction: column;
   width: 100%;
   gap: var(--psh-spacing-sm);
 }
 
-.card.hoverable:hover {
+.psh-card.psh-hoverable:hover {
   transform: translateY(-2px);
 }
 
-.card.interactive {
+.psh-card.psh-interactive {
   cursor: pointer;
   user-select: none;
 }
 
-.card.interactive:focus-visible {
+.psh-card.psh-interactive:focus-visible {
   outline: none;
   box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-color);
 }
 
-.card.interactive:active {
+.psh-card.psh-interactive:active {
   transform: translateY(0);
 }
 
-.card.disabled {
+.psh-card.psh-disabled {
   opacity: 0.6;
   pointer-events: none;
   cursor: not-allowed;
 }
 
-.card.loading {
+.psh-card.psh-loading {
   pointer-events: none;
 }
 
-.card-loading {
+.psh-card-loading {
   display: flex;
   flex-direction: column;
   gap: var(--psh-size-3);
   animation: pulse var(--psh-animation-loop-slow) var(--psh-animation-easing-in-out) infinite;
 }
 
-.skeleton-line {
+.psh-skeleton-line {
   height: var(--psh-size-4);
   background: linear-gradient(90deg, var(--psh-surface-border) 25%, var(--psh-surface-hover) 50%, var(--psh-surface-border) 75%);
   background-size: 200% 100%;
@@ -332,7 +332,7 @@
   border-radius: var(--psh-spacing-xs);
 }
 
-.skeleton-line.short {
+.psh-skeleton-line.psh-short {
   width: 60%;
 }
 
@@ -347,7 +347,7 @@
 }
 
 @media (max-width: 1024px) {
-  .card.density-spacious {
+  .psh-card.psh-density-spacious {
     --psh-card-density-header-padding: var(--psh-size-5) var(--psh-size-6);
     --psh-card-density-body-padding: var(--psh-size-7);
     --psh-card-density-footer-padding: var(--psh-size-4-5) var(--psh-size-6);
@@ -356,86 +356,86 @@
 }
 
 @media (max-width: 768px) {
-  .card.density-compact {
+  .psh-card.psh-density-compact {
     --psh-card-density-header-padding: var(--psh-size-2-5) var(--psh-size-3);
     --psh-card-density-body-padding: var(--psh-size-3);
     --psh-card-density-footer-padding: var(--psh-size-2-5) var(--psh-size-3);
     --psh-card-density-actions-padding: var(--psh-size-2-5) var(--psh-size-3);
   }
 
-  .card.density-normal {
+  .psh-card.psh-density-normal {
     --psh-card-density-header-padding: var(--psh-size-3) var(--psh-size-4);
     --psh-card-density-body-padding: var(--psh-size-4);
     --psh-card-density-footer-padding: var(--psh-size-3) var(--psh-size-4);
     --psh-card-density-actions-padding: var(--psh-size-3) var(--psh-size-4);
   }
 
-  .card.density-spacious {
+  .psh-card.psh-density-spacious {
     --psh-card-density-header-padding: var(--psh-size-4) var(--psh-size-5);
     --psh-card-density-body-padding: var(--psh-size-5);
     --psh-card-density-footer-padding: var(--psh-size-4) var(--psh-size-5);
     --psh-card-density-actions-padding: var(--psh-size-4) var(--psh-size-5);
   }
 
-  .card-title {
+  .psh-card-title {
     font-size: clamp(0.9375rem, 2vw, 1rem);
   }
 
-  .card-description {
+  .psh-card-description {
     font-size: var(--psh-font-size-xs);
   }
 
-  .card-footer {
+  .psh-card-footer {
     font-size: var(--psh-font-size-xs);
     gap: var(--psh-size-3);
   }
 }
 
 @media (max-width: 640px) {
-  .card-actions {
+  .psh-card-actions {
     flex-direction: column;
     gap: var(--psh-spacing-md);
   }
 
-  .card-actions > * {
+  .psh-card-actions > * {
     flex-direction: column;
     width: 100%;
   }
 }
 
 @media (max-width: 480px) {
-  .card.density-compact {
+  .psh-card.psh-density-compact {
     --psh-card-density-header-padding: var(--psh-spacing-sm) var(--psh-size-3);
     --psh-card-density-body-padding: var(--psh-size-3);
     --psh-card-density-footer-padding: var(--psh-spacing-sm) var(--psh-size-3);
     --psh-card-density-actions-padding: var(--psh-spacing-sm) var(--psh-size-3);
   }
 
-  .card.density-normal {
+  .psh-card.psh-density-normal {
     --psh-card-density-header-padding: var(--psh-size-2-5) var(--psh-size-3);
     --psh-card-density-body-padding: var(--psh-size-3);
     --psh-card-density-footer-padding: var(--psh-size-2-5) var(--psh-size-3);
     --psh-card-density-actions-padding: var(--psh-size-2-5) var(--psh-size-3);
   }
 
-  .card.density-spacious {
+  .psh-card.psh-density-spacious {
     --psh-card-density-header-padding: var(--psh-size-3) var(--psh-size-4);
     --psh-card-density-body-padding: var(--psh-size-4);
     --psh-card-density-footer-padding: var(--psh-size-3) var(--psh-size-4);
     --psh-card-density-actions-padding: var(--psh-size-3) var(--psh-size-4);
   }
 
-  .card-header {
+  .psh-card-header {
     flex-wrap: wrap;
     gap: var(--psh-spacing-xs);
   }
 
-  .card-title {
+  .psh-card-title {
     font-size: clamp(0.875rem, 3vw, 0.9375rem);
     line-height: 1.3;
   }
 
-  .card-description {
+  .psh-card-description {
     font-size: var(--psh-font-size-xs);
     line-height: 1.4;
   }
@@ -450,13 +450,13 @@
     justify-content: flex-start;
   }
 
-  .card-footer {
+  .psh-card-footer {
     flex-direction: column;
     align-items: flex-start;
     gap: var(--psh-spacing-sm);
   }
 
-  .card-actions {
+  .psh-card-actions {
     flex-direction: column;
     gap: var(--psh-spacing-sm);
   }

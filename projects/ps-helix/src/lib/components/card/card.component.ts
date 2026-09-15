@@ -116,15 +116,15 @@ export class PshCardComponent implements OnDestroy {
   // Computed values
   /** Classes CSS calculées selon les propriétés */
   computedClasses = computed(() => {
-    const classes = ['card'];
-    classes.push(`appearance-${this.appearance()}`);
-    classes.push(`color-${this.color()}`);
-    classes.push(`density-${this.density()}`);
+    const classes = ['psh-card'];
+    classes.push(`psh-appearance-${this.appearance()}`);
+    classes.push(`psh-color-${this.color()}`);
+    classes.push(`psh-density-${this.density()}`);
 
-    if (this.hoverable()) classes.push('hoverable');
-    if (this.interactive()) classes.push('interactive');
-    if (this.loading()) classes.push('loading');
-    if (this.disabled()) classes.push('disabled');
+    if (this.hoverable()) classes.push('psh-hoverable');
+    if (this.interactive()) classes.push('psh-interactive');
+    if (this.loading()) classes.push('psh-loading');
+    if (this.disabled()) classes.push('psh-disabled');
     if (this.cssClass()) classes.push(this.cssClass());
 
     return classes.join(' ');
@@ -142,13 +142,13 @@ export class PshCardComponent implements OnDestroy {
 
   /** Classe d'alignement pour la zone d'actions */
   actionsAlignmentClass = computed(() => {
-    return `actions-align-${this.actionsAlignment()}`;
+    return `psh-actions-align-${this.actionsAlignment()}`;
   });
 
   actionsClasses = computed(() => {
     const classes = [this.actionsAlignmentClass()];
     if (this.isMobile()) {
-      classes.push('mobile-full-width-buttons');
+      classes.push('psh-mobile-full-width-buttons');
     }
     return classes.join(' ');
   });

@@ -78,10 +78,10 @@ const getSidebarHost = (fixture: ComponentFixture<unknown>) =>
   fixture.nativeElement.querySelector('psh-sidebar') as HTMLElement;
 
 const getSidebarElement = (fixture: ComponentFixture<unknown>) =>
-  fixture.nativeElement.querySelector('.sidebar') as HTMLElement;
+  fixture.nativeElement.querySelector('.psh-sidebar') as HTMLElement;
 
 const getBackdrop = (fixture: ComponentFixture<unknown>) =>
-  fixture.nativeElement.querySelector('.sidebar-backdrop') as HTMLElement;
+  fixture.nativeElement.querySelector('.psh-sidebar-backdrop') as HTMLElement;
 
 const dispatchKeyboardEvent = (key: string, options: Partial<KeyboardEvent> = {}) => {
   const event = new KeyboardEvent('keydown', {
@@ -326,7 +326,7 @@ describe('PshSidebarComponent', () => {
         fixture.detectChanges();
 
         const sidebar = getSidebarElement(fixture);
-        expect(sidebar.classList.contains(mode)).toBe(true);
+        expect(sidebar.classList.contains(`psh-${mode}`)).toBe(true);
       }
     );
 
@@ -341,7 +341,7 @@ describe('PshSidebarComponent', () => {
       fixture.detectChanges();
 
       const sidebar = getSidebarElement(fixture);
-      expect(sidebar.classList.contains('overlay')).toBe(true);
+      expect(sidebar.classList.contains('psh-overlay')).toBe(true);
     });
 
     it('should hide fixed mode sidebar when closed', () => {
@@ -350,7 +350,7 @@ describe('PshSidebarComponent', () => {
       fixture.detectChanges();
 
       const sidebar = getSidebarElement(fixture);
-      expect(sidebar.classList.contains('open')).toBe(false);
+      expect(sidebar.classList.contains('psh-open')).toBe(false);
     });
 
     it('should show fixed mode sidebar when open', () => {
@@ -359,7 +359,7 @@ describe('PshSidebarComponent', () => {
       fixture.detectChanges();
 
       const sidebar = getSidebarElement(fixture);
-      expect(sidebar.classList.contains('open')).toBe(true);
+      expect(sidebar.classList.contains('psh-open')).toBe(true);
     });
   });
 
@@ -372,7 +372,7 @@ describe('PshSidebarComponent', () => {
         fixture.detectChanges();
 
         const sidebar = getSidebarElement(fixture);
-        expect(sidebar.classList.contains(position)).toBe(true);
+        expect(sidebar.classList.contains(`psh-${position}`)).toBe(true);
       }
     );
 
@@ -390,8 +390,8 @@ describe('PshSidebarComponent', () => {
         fixture.detectChanges();
 
         const sidebar = getSidebarElement(fixture);
-        expect(sidebar.classList.contains(mode)).toBe(true);
-        expect(sidebar.classList.contains(position)).toBe(true);
+        expect(sidebar.classList.contains(`psh-${mode}`)).toBe(true);
+        expect(sidebar.classList.contains(`psh-${position}`)).toBe(true);
       }
     );
   });
@@ -705,7 +705,7 @@ describe('PshSidebarComponent', () => {
       fixture.detectChanges();
 
       const sidebar = getSidebarElement(fixture);
-      expect(sidebar.classList.contains('overlay')).toBe(true);
+      expect(sidebar.classList.contains('psh-overlay')).toBe(true);
     });
 
     it('should use desktop mode when above breakpoint', () => {
@@ -719,7 +719,7 @@ describe('PshSidebarComponent', () => {
       fixture.detectChanges();
 
       const sidebar = getSidebarElement(fixture);
-      expect(sidebar.classList.contains('fixed')).toBe(true);
+      expect(sidebar.classList.contains('psh-fixed')).toBe(true);
     });
 
     it('should call matchMedia with the correct breakpoint', () => {

@@ -13,23 +13,23 @@ describe('PshDropdownComponent', () => {
   ];
 
   const getContainer = () =>
-    fixture.nativeElement.querySelector('.dropdown-container') as HTMLElement;
+    fixture.nativeElement.querySelector('.psh-dropdown-container') as HTMLElement;
 
   const getTrigger = () =>
-    fixture.nativeElement.querySelector('.dropdown-trigger') as HTMLButtonElement;
+    fixture.nativeElement.querySelector('.psh-dropdown-trigger') as HTMLButtonElement;
 
   // The menu is teleported to a body-level overlay layer → query `document`.
   const getMenu = () =>
-    document.querySelector('.dropdown-menu') as HTMLElement;
+    document.querySelector('.psh-dropdown-menu') as HTMLElement;
 
   const getItems = () =>
-    Array.from(document.querySelectorAll('.dropdown-item')) as HTMLButtonElement[];
+    Array.from(document.querySelectorAll('.psh-dropdown-item')) as HTMLButtonElement[];
 
   const getItem = (index: number) =>
     getItems()[index] as HTMLButtonElement;
 
   const getTriggerArrow = () =>
-    fixture.nativeElement.querySelector('.trigger-arrow') as HTMLElement;
+    fixture.nativeElement.querySelector('.psh-trigger-arrow') as HTMLElement;
 
   const openDropdown = () => {
     getTrigger().click();
@@ -206,7 +206,7 @@ describe('PshDropdownComponent', () => {
     it('should apply open class to container when open', () => {
       openDropdown();
 
-      expect(getContainer().classList.contains('open')).toBe(true);
+      expect(getContainer().classList.contains('psh-open')).toBe(true);
     });
 
     it('should remove open class from container when closed', () => {
@@ -214,13 +214,13 @@ describe('PshDropdownComponent', () => {
       getTrigger().click();
       fixture.detectChanges();
 
-      expect(getContainer().classList.contains('open')).toBe(false);
+      expect(getContainer().classList.contains('psh-open')).toBe(false);
     });
 
     it('should apply open class to arrow when open', () => {
       openDropdown();
 
-      expect(getTriggerArrow().classList.contains('open')).toBe(true);
+      expect(getTriggerArrow().classList.contains('psh-open')).toBe(true);
     });
   });
 
@@ -258,7 +258,7 @@ describe('PshDropdownComponent', () => {
       fixture.detectChanges();
 
       openDropdown();
-      expect(getItem(1).classList.contains('active')).toBe(true);
+      expect(getItem(1).classList.contains('psh-active')).toBe(true);
     });
 
     it('should NOT select disabled item', () => {
@@ -319,7 +319,7 @@ describe('PshDropdownComponent', () => {
     });
 
     it('should apply disabled class to container', () => {
-      expect(getContainer().classList.contains('disabled')).toBe(true);
+      expect(getContainer().classList.contains('psh-disabled')).toBe(true);
     });
 
     it('should have data-state="disabled"', () => {
@@ -341,9 +341,9 @@ describe('PshDropdownComponent', () => {
     });
 
     it('should apply disabled class to disabled item', () => {
-      expect(getItem(0).classList.contains('disabled')).toBe(false);
-      expect(getItem(1).classList.contains('disabled')).toBe(true);
-      expect(getItem(2).classList.contains('disabled')).toBe(false);
+      expect(getItem(0).classList.contains('psh-disabled')).toBe(false);
+      expect(getItem(1).classList.contains('psh-disabled')).toBe(true);
+      expect(getItem(2).classList.contains('psh-disabled')).toBe(false);
     });
 
     it('should have aria-disabled on disabled item', () => {
@@ -708,7 +708,7 @@ describe('PshDropdownComponent', () => {
 
   describe('Variants', () => {
     // 'primary'/'secondary' are DropdownVariant values (color intent),
-    // applied via [class.primary]/[class.secondary] on the trigger.
+    // applied via [class.psh-primary]/[class.psh-secondary] on the trigger.
     it.each<['primary' | 'secondary']>([
       ['primary'],
       ['secondary']
@@ -716,15 +716,15 @@ describe('PshDropdownComponent', () => {
       fixture.componentRef.setInput('color', variant);
       fixture.detectChanges();
 
-      expect(getTrigger().classList.contains(variant)).toBe(true);
+      expect(getTrigger().classList.contains(`psh-${variant}`)).toBe(true);
     });
 
     it('should have primary variant by default', () => {
-      expect(getTrigger().classList.contains('primary')).toBe(true);
+      expect(getTrigger().classList.contains('psh-primary')).toBe(true);
     });
 
     // 'solid'/'outline'/'ghost' are DropdownAppearance values (visual style),
-    // applied via [class]="appearance()" on the trigger.
+    // applied via [class]="'psh-' + appearance()" on the trigger.
     it.each<['solid' | 'outline' | 'ghost']>([
       ['solid'],
       ['outline'],
@@ -733,7 +733,7 @@ describe('PshDropdownComponent', () => {
       fixture.componentRef.setInput('appearance', appearance);
       fixture.detectChanges();
 
-      expect(getTrigger().classList.contains(appearance)).toBe(true);
+      expect(getTrigger().classList.contains(`psh-${appearance}`)).toBe(true);
     });
   });
 
@@ -748,12 +748,12 @@ describe('PshDropdownComponent', () => {
       fixture.detectChanges();
       openDropdown();
 
-      expect(getMenu().classList.contains(placement)).toBe(true);
+      expect(getMenu().classList.contains(`psh-${placement}`)).toBe(true);
     });
 
     it('should have bottom-start placement by default', () => {
       openDropdown();
-      expect(getMenu().classList.contains('bottom-start')).toBe(true);
+      expect(getMenu().classList.contains('psh-bottom-start')).toBe(true);
     });
 
     it('flips the menu to the top when there is no room below (anti-overflow)', async () => {
@@ -779,8 +779,8 @@ describe('PshDropdownComponent', () => {
       await fixture.whenStable();
       fixture.detectChanges();
 
-      expect(getMenu().classList.contains('top-start')).toBe(true);
-      expect(getMenu().classList.contains('bottom-start')).toBe(false);
+      expect(getMenu().classList.contains('psh-top-start')).toBe(true);
+      expect(getMenu().classList.contains('psh-bottom-start')).toBe(false);
     });
   });
 
@@ -793,11 +793,11 @@ describe('PshDropdownComponent', () => {
       fixture.componentRef.setInput('size', size);
       fixture.detectChanges();
 
-      expect(getContainer().classList.contains(size)).toBe(true);
+      expect(getContainer().classList.contains(`psh-${size}`)).toBe(true);
     });
 
     it('should have medium size by default', () => {
-      expect(getContainer().classList.contains('medium')).toBe(true);
+      expect(getContainer().classList.contains('psh-medium')).toBe(true);
     });
   });
 
@@ -846,7 +846,7 @@ describe('PshDropdownComponent', () => {
     });
 
     it('should apply icon-only class to container', () => {
-      expect(getContainer().classList.contains('icon-only')).toBe(true);
+      expect(getContainer().classList.contains('psh-icon-only')).toBe(true);
     });
 
     it('should render the icon in the trigger', () => {
@@ -896,7 +896,7 @@ describe('PshDropdownComponent', () => {
       fixture.componentRef.setInput('icon', undefined);
       fixture.detectChanges();
 
-      expect(getContainer().classList.contains('icon-only')).toBe(false);
+      expect(getContainer().classList.contains('psh-icon-only')).toBe(false);
       expect(getTriggerArrow()).toBeTruthy();
     });
 
@@ -904,7 +904,7 @@ describe('PshDropdownComponent', () => {
       fixture.componentRef.setInput('iconOnly', false);
       fixture.detectChanges();
 
-      expect(getContainer().classList.contains('icon-only')).toBe(false);
+      expect(getContainer().classList.contains('psh-icon-only')).toBe(false);
       expect(getTriggerArrow()).toBeTruthy();
     });
   });
@@ -970,7 +970,7 @@ describe('PshDropdownComponent — teleport & projected content', () => {
   let fixture: ComponentFixture<ProjectedMenuHost>;
 
   const getTrigger = () =>
-    fixture.nativeElement.querySelector('.dropdown-trigger') as HTMLButtonElement;
+    fixture.nativeElement.querySelector('.psh-dropdown-trigger') as HTMLButtonElement;
   const getProjected = () =>
     document.querySelector('.custom-item') as HTMLElement | null;
   const open = () => {
@@ -990,7 +990,7 @@ describe('PshDropdownComponent — teleport & projected content', () => {
     open();
 
     const layer = document.querySelector('.psh-overlay-layer');
-    const menu = document.querySelector('.dropdown-menu') as HTMLElement;
+    const menu = document.querySelector('.psh-dropdown-menu') as HTMLElement;
     expect(layer).toBeTruthy();
     expect(layer!.parentElement).toBe(document.body);
     expect(menu).toBeTruthy();
@@ -1000,12 +1000,12 @@ describe('PshDropdownComponent — teleport & projected content', () => {
 
   it('removes the menu and layer from the body when closed', () => {
     open();
-    expect(document.querySelector('.dropdown-menu')).toBeTruthy();
+    expect(document.querySelector('.psh-dropdown-menu')).toBeTruthy();
 
     getTrigger().click(); // close
     fixture.detectChanges();
 
-    expect(document.querySelector('.dropdown-menu')).toBeFalsy();
+    expect(document.querySelector('.psh-dropdown-menu')).toBeFalsy();
     expect(document.querySelector('.psh-overlay-layer')).toBeFalsy();
   });
 

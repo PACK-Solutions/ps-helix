@@ -2,19 +2,19 @@
   display: block;
 }
 
-:host(.full-width) {
+:host(.psh-full-width) {
   max-width: none;
   width: 100%;
 }
 
-.table-wrapper {
+.psh-table-wrapper {
   width: 100%;
   overflow-x: auto;
   background: var(--psh-surface-card);
   border-radius: var(--psh-radius-lg);
 }
 
-.table-wrapper.outline {
+.psh-table-wrapper.psh-outline {
   background: transparent;
   border: var(--psh-border-width-1) solid var(--psh-surface-border);
 }
@@ -39,78 +39,78 @@ th {
   user-select: none;
 }
 
-th.sortable {
+th.psh-sortable {
   cursor: pointer;
 }
 
-th.sortable:hover {
+th.psh-sortable:hover {
   background: var(--psh-surface-hover);
 }
 
-.th-content {
+.psh-th-content {
   display: flex;
   align-items: center;
   gap: var(--psh-spacing-xs);
 }
 
-.th-content i {
+.psh-th-content i {
   font-size: var(--psh-font-size-base);
   color: var(--psh-primary-color);
   display: inline-block;
   transition: color var(--psh-animation-duration-fast) var(--psh-animation-easing-default);
 }
 
-.th-content i.sort-icon-neutral {
+.psh-th-content i.psh-sort-icon-neutral {
   color: var(--psh-text-color-secondary);
   opacity: 0.5;
 }
 
-th.sortable:hover .sort-icon-neutral {
+th.psh-sortable:hover .psh-sort-icon-neutral {
   opacity: 1;
   color: var(--psh-primary-color);
 }
 /* Variants */
-.table-wrapper.striped tr:nth-child(even) {
+.psh-table-wrapper.psh-striped tr:nth-child(even) {
   background: var(--psh-surface-ground);
 }
 
-.table-wrapper.hoverable tr:hover {
+.psh-table-wrapper.psh-hoverable tr:hover {
   background: var(--psh-surface-hover);
 }
 
-.table-wrapper.bordered th,
-.table-wrapper.bordered td {
+.psh-table-wrapper.psh-bordered th,
+.psh-table-wrapper.psh-bordered td {
   border: var(--psh-border-width-1) solid var(--psh-surface-border);
 }
 
 /* Sizes */
-.table-wrapper.small th,
-.table-wrapper.small td {
+.psh-table-wrapper.psh-small th,
+.psh-table-wrapper.psh-small td {
   padding: var(--psh-spacing-sm);
   font-size: var(--psh-font-size-sm);
 }
 
-.table-wrapper.large th,
-.table-wrapper.large td {
+.psh-table-wrapper.psh-large th,
+.psh-table-wrapper.psh-large td {
   padding: var(--psh-spacing-lg);
   font-size: var(--psh-font-size-lg);
 }
 
 /* Loading state */
-.loading-row td,
-.empty-row td {
+.psh-loading-row td,
+.psh-empty-row td {
   text-align: center;
   padding: var(--psh-spacing-xl);
   color: var(--psh-text-color-secondary);
 }
 
-.loading-indicator {
+.psh-loading-indicator {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.spinner {
+.psh-spinner {
   width: var(--psh-size-6);
   height: var(--psh-size-6);
   border: var(--psh-border-width-2) solid var(--psh-surface-border);
@@ -126,15 +126,15 @@ th.sortable:hover .sort-icon-neutral {
 }
 
 /* Global Search */
-.global-search {
+.psh-global-search {
   margin-bottom: var(--psh-spacing-md);
 }
 
 /* Sort Button
    These rules already existed but targeted a class the template never rendered, so the
    focus style was dead code. The sortable header is now a real button carrying both
-   .th-content (layout) and .sort-button (button-chrome reset). */
-.sort-button {
+   .psh-th-content (layout) and .psh-sort-button (button-chrome reset). */
+.psh-sort-button {
   width: 100%;
   background: transparent;
   border: none;
@@ -147,11 +147,11 @@ th.sortable:hover .sort-icon-neutral {
   transition: color var(--psh-animation-duration-normal) var(--psh-animation-easing-default);
 }
 
-.sort-button:hover {
+.psh-sort-button:hover {
   color: var(--psh-primary-color);
 }
 
-.sort-button:focus-visible {
+.psh-sort-button:focus-visible {
   outline: none;
   box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-color);
 }
@@ -164,32 +164,32 @@ tbody tr[tabindex]:focus-visible {
 }
 
 /* Table Layout Fixed */
-.table-wrapper.table-fixed table {
+.psh-table-wrapper.psh-table-fixed table {
   table-layout: fixed;
 }
 
 /* Truncate Text */
-.table-wrapper.truncate td {
+.psh-table-wrapper.psh-truncate td {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 0;
 }
 
-.table-wrapper.truncate th {
+.psh-table-wrapper.psh-truncate th {
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 /* Expandable Rows */
-.expand-header {
+.psh-expand-header {
   width: 48px;
   min-width: 48px;
   max-width: 48px;
   padding: 0;
 }
 
-.expand-cell {
+.psh-expand-cell {
   width: 48px;
   min-width: 48px;
   max-width: 48px;
@@ -198,7 +198,7 @@ tbody tr[tabindex]:focus-visible {
   vertical-align: middle;
 }
 
-.expand-toggle {
+.psh-expand-toggle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -214,56 +214,56 @@ tbody tr[tabindex]:focus-visible {
   transition: color var(--psh-animation-duration-fast) var(--psh-animation-easing-default);
 }
 
-.expand-toggle:hover {
+.psh-expand-toggle:hover {
   color: var(--psh-primary-color);
   background: var(--psh-surface-hover);
 }
 
-.expand-toggle:focus-visible {
+.psh-expand-toggle:focus-visible {
   outline: var(--psh-focus-outline-width) solid var(--psh-focus-ring-color);
   outline-offset: 2px;
 }
 
-.expand-toggle i {
+.psh-expand-toggle i {
   display: inline-block;
   transition: transform var(--psh-animation-duration-fast) var(--psh-animation-easing-default);
 }
 
-.expand-toggle[aria-expanded="true"] i {
+.psh-expand-toggle[aria-expanded="true"] i {
   transform: rotate(90deg);
 }
 
-tr.expanded {
+tr.psh-expanded {
   border-bottom-color: transparent;
 }
 
-.expanded-content-row td {
+.psh-expanded-content-row td {
   background: var(--psh-surface-ground);
   padding: var(--psh-spacing-md) var(--psh-spacing-lg);
   border-bottom: var(--psh-border-width-1) solid var(--psh-surface-border);
 }
 
-.child-row {
+.psh-child-row {
   background: var(--psh-surface-ground);
 }
 
-.child-row td {
+.psh-child-row td {
   font-size: 0.95em;
   color: var(--psh-text-color-secondary);
 }
 
-.table-wrapper.striped .child-row,
-.table-wrapper.striped .expanded-content-row {
+.psh-table-wrapper.psh-striped .psh-child-row,
+.psh-table-wrapper.psh-striped .psh-expanded-content-row {
   background: var(--psh-surface-ground);
 }
 
-.table-wrapper.hoverable .child-row:hover {
+.psh-table-wrapper.psh-hoverable .psh-child-row:hover {
   background: var(--psh-surface-hover);
 }
 
 /* Responsive Design */
 @media (max-width: 48em) {
-  .table-wrapper {
+  .psh-table-wrapper {
     font-size: var(--psh-font-size-sm);
   }
   
@@ -271,13 +271,13 @@ tr.expanded {
     padding: var(--psh-spacing-sm);
   }
   
-  .global-search {
+  .psh-global-search {
     margin-bottom: var(--psh-spacing-sm);
   }
 }
 
 @media (max-width: 30em) {
-  .table-wrapper {
+  .psh-table-wrapper {
     border-radius: 0;
     margin: 0 calc(-1 * var(--psh-spacing-sm));
   }
@@ -287,11 +287,11 @@ tr.expanded {
     font-size: var(--psh-font-size-xs);
   }
   
-  .th-content {
+  .psh-th-content {
     gap: var(--psh-spacing-xxs);
   }
   
-  .th-content i {
+  .psh-th-content i {
     font-size: var(--psh-font-size-sm);
   }
   

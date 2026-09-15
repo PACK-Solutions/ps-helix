@@ -42,13 +42,13 @@ let checkboxIdCounter = 0;
     multi: true
   }],
   host: {
-    '[class.checkbox-disabled]': 'disabled()',
-    '[class.checkbox-error]': '!!error()',
-    '[class.checkbox-success]': '!!success()',
-    '[class.checkbox-small]': 'size() === "small"',
-    '[class.checkbox-large]': 'size() === "large"',
-    '[class.checkbox-checked]': 'checked() && !indeterminate()',
-    '[class.checkbox-indeterminate]': 'indeterminate()',
+    '[class.psh-checkbox-disabled]': 'disabled()',
+    '[class.psh-checkbox-error]': '!!error()',
+    '[class.psh-checkbox-success]': '!!success()',
+    '[class.psh-checkbox-small]': 'size() === "small"',
+    '[class.psh-checkbox-large]': 'size() === "large"',
+    '[class.psh-checkbox-checked]': 'checked() && !indeterminate()',
+    '[class.psh-checkbox-indeterminate]': 'indeterminate()',
     '[attr.data-state]': 'state()',
     '[attr.aria-checked]': 'ariaChecked()'
   }

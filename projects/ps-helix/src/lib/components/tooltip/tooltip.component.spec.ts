@@ -10,7 +10,7 @@ describe('PshTooltipComponent', () => {
     fixture.nativeElement.querySelector('[role="tooltip"]') as HTMLElement | null;
 
   const getTriggerWrapper = () =>
-    fixture.nativeElement.querySelector('.tooltip-wrapper') as HTMLElement;
+    fixture.nativeElement.querySelector('.psh-tooltip-wrapper') as HTMLElement;
 
   const showTooltip = () => {
     fixture.componentInstance.show();
@@ -254,7 +254,7 @@ describe('PshTooltipComponent', () => {
         showTooltip();
 
         const tooltip = getTooltip();
-        expect(tooltip?.classList.contains(variant)).toBe(true);
+        expect(tooltip?.classList.contains(`psh-${variant}`)).toBe(true);
       })
     );
   });
@@ -269,7 +269,7 @@ describe('PshTooltipComponent', () => {
         showTooltip();
 
         const tooltip = getTooltip();
-        expect(tooltip?.classList.contains(position)).toBe(true);
+        expect(tooltip?.classList.contains(`psh-${position}`)).toBe(true);
       })
     );
   });

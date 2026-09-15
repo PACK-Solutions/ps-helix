@@ -84,7 +84,7 @@ describe('PshStateFlowIndicatorComponent', () => {
     fixture.nativeElement.querySelector('psh-state-flow-indicator') as HTMLElement;
 
   const getSegments = () =>
-    Array.from(fixture.nativeElement.querySelectorAll('.flow-segment')) as HTMLElement[];
+    Array.from(fixture.nativeElement.querySelectorAll('.psh-flow-segment')) as HTMLElement[];
 
   const getSegment = (index: number) =>
     getSegments()[index] as HTMLElement;
@@ -94,7 +94,7 @@ describe('PshStateFlowIndicatorComponent', () => {
 
   const getSegmentTitle = (index: number) => {
     const segment = getSegments()[index];
-    return segment?.querySelector('.flow-segment-title')?.textContent?.trim();
+    return segment?.querySelector('.psh-flow-segment-title')?.textContent?.trim();
   };
 
   const getIndicator = () =>
@@ -122,44 +122,44 @@ describe('PshStateFlowIndicatorComponent', () => {
     });
 
     it('should apply first class to first segment', () => {
-      expect(getSegment(0).classList.contains('first')).toBe(true);
-      expect(getSegment(1).classList.contains('first')).toBe(false);
+      expect(getSegment(0).classList.contains('psh-first')).toBe(true);
+      expect(getSegment(1).classList.contains('psh-first')).toBe(false);
     });
 
     it('should apply last class to last segment', () => {
-      expect(getSegment(2).classList.contains('last')).toBe(true);
-      expect(getSegment(1).classList.contains('last')).toBe(false);
+      expect(getSegment(2).classList.contains('psh-last')).toBe(true);
+      expect(getSegment(1).classList.contains('psh-last')).toBe(false);
     });
   });
 
   describe('Size variants', () => {
     it('should apply size-medium class by default', () => {
-      expect(getIndicatorHost().classList.contains('size-medium')).toBe(true);
+      expect(getIndicatorHost().classList.contains('psh-size-medium')).toBe(true);
     });
 
     it('should apply size-small class', () => {
       hostComponent.size = 'small';
       fixture.detectChanges();
-      expect(getIndicatorHost().classList.contains('size-small')).toBe(true);
+      expect(getIndicatorHost().classList.contains('psh-size-small')).toBe(true);
     });
 
     it('should apply size-large class', () => {
       hostComponent.size = 'large';
       fixture.detectChanges();
-      expect(getIndicatorHost().classList.contains('size-large')).toBe(true);
+      expect(getIndicatorHost().classList.contains('psh-size-large')).toBe(true);
     });
   });
 
   describe('Step states', () => {
     it('should mark active step with active class', () => {
-      expect(getSegment(0).classList.contains('active')).toBe(true);
-      expect(getSegment(1).classList.contains('active')).toBe(false);
+      expect(getSegment(0).classList.contains('psh-active')).toBe(true);
+      expect(getSegment(1).classList.contains('psh-active')).toBe(false);
     });
 
     it('should mark completed step with completed class', () => {
       hostComponent.step1Completed = true;
       fixture.detectChanges();
-      expect(getSegment(0).classList.contains('completed')).toBe(true);
+      expect(getSegment(0).classList.contains('psh-completed')).toBe(true);
     });
 
     it('should show check icon for completed step', () => {
@@ -172,13 +172,13 @@ describe('PshStateFlowIndicatorComponent', () => {
     it('should mark disabled step with disabled class', () => {
       hostComponent.step2Disabled = true;
       fixture.detectChanges();
-      expect(getSegment(1).classList.contains('disabled')).toBe(true);
+      expect(getSegment(1).classList.contains('psh-disabled')).toBe(true);
     });
 
     it('should mark error step with error class', () => {
       hostComponent.step1Error = 'Error occurred';
       fixture.detectChanges();
-      expect(getSegment(0).classList.contains('error')).toBe(true);
+      expect(getSegment(0).classList.contains('psh-error')).toBe(true);
     });
 
     it('should show error icon for error step', () => {
@@ -191,7 +191,7 @@ describe('PshStateFlowIndicatorComponent', () => {
     it('should mark warning step with warning class', () => {
       hostComponent.step1Warning = 'Needs attention';
       fixture.detectChanges();
-      expect(getSegment(0).classList.contains('warning')).toBe(true);
+      expect(getSegment(0).classList.contains('psh-warning')).toBe(true);
     });
 
     it('should show warning icon for warning step', () => {
@@ -204,7 +204,7 @@ describe('PshStateFlowIndicatorComponent', () => {
     it('should show spinner icon for loading step', () => {
       hostComponent.step1Loading = true;
       fixture.detectChanges();
-      const icon = getSegment(0).querySelector('.ph-circle-notch.spinner');
+      const icon = getSegment(0).querySelector('.ph-circle-notch.psh-spinner');
       expect(icon).toBeTruthy();
     });
   });
@@ -427,7 +427,7 @@ describe('PshStateFlowIndicatorComponent', () => {
     });
 
     it('should have role="tablist" on track', () => {
-      const track = fixture.nativeElement.querySelector('.flow-track');
+      const track = fixture.nativeElement.querySelector('.psh-flow-track');
       expect(track.getAttribute('role')).toBe('tablist');
     });
 

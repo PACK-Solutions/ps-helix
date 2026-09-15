@@ -1,5 +1,5 @@
 /* Component-Specific Design Tokens */
-.badge {
+.psh-badge {
   /* Badge styles */
   display: inline-flex;
   align-items: center;
@@ -19,44 +19,44 @@
 
 
 /* Variants */
-.badge.primary {
+.psh-badge.psh-primary {
   background: var(--psh-primary-gradient);
   color: var(--psh-text-on-primary);
 }
 
-.badge.secondary {
+.psh-badge.psh-secondary {
   background-color: var(--psh-secondary-color);
   color: var(--psh-text-on-secondary);
 }
 
-.badge.success {
+.psh-badge.psh-success {
   background-color: var(--psh-success-color);
   color: var(--psh-text-on-success);
 }
 
-.badge.warning {
+.psh-badge.psh-warning {
   background-color: var(--psh-warning-color);
   color: var(--psh-text-on-warning);
 }
 
-.badge.danger {
+.psh-badge.psh-danger {
   background-color: var(--psh-danger-color);
   color: var(--psh-text-on-danger);
 }
 
 /* Was --psh-blue-500 with --psh-text-on-primary: badge improvised because no semantic
    info token existed. It does now, and the pair is contrast-checked in both themes. */
-.badge.info {
+.psh-badge.psh-info {
   background-color: var(--psh-info-color);
   color: var(--psh-text-on-info);
 }
 
-.badge.neutral {
+.psh-badge.psh-neutral {
   background-color: var(--psh-neutral-color);
   color: var(--psh-text-on-neutral);
 }
 
-.badge.disabled {
+.psh-badge.psh-disabled {
   background-color: var(--psh-surface-400);
   color: var(--psh-surface-0);
   cursor: not-allowed;
@@ -64,21 +64,21 @@
 }
 
 /* Sizes */
-.badge.medium {
+.psh-badge.psh-medium {
   min-width: var(--psh-badge-width, var(--psh-size-5));
   min-height: var(--psh-badge-height, var(--psh-size-5));
   font-size: var(--psh-font-size-xs);
   padding: var(--psh-spacing-xs);
 }
 
-.badge.small {
+.psh-badge.psh-small {
   min-width: var(--psh-badge-width-sm, var(--psh-size-4));
   min-height: var(--psh-badge-height-sm, var(--psh-size-4));
   font-size: var(--psh-font-size-xs);
   padding: var(--psh-spacing-xxs);
 }
 
-.badge.large {
+.psh-badge.psh-large {
   min-width: var(--psh-badge-width-lg, var(--psh-size-6));
   min-height: var(--psh-badge-height-lg, var(--psh-size-6));
   font-size: var(--psh-font-size-sm);
@@ -86,41 +86,41 @@
 }
 
 /* Positioning */
-.badge.overlap {
+.psh-badge.psh-overlap {
   position: absolute;
   transform: translate(50%, -50%);
 }
 
-.badge.top-right {
+.psh-badge.psh-top-right {
   top: 0;
   right: 0;
 }
 
-.badge.top-left {
+.psh-badge.psh-top-left {
   top: 0;
   left: 0;
   transform: translate(-50%, -50%);
 }
 
-.badge.bottom-right {
+.psh-badge.psh-bottom-right {
   bottom: 0;
   right: 0;
   transform: translate(50%, 50%);
 }
 
-.badge.bottom-left {
+.psh-badge.psh-bottom-left {
   bottom: 0;
   left: 0;
   transform: translate(-50%, 50%);
 }
 
 /* Types */
-.badge.dot {
+.psh-badge.psh-dot {
   border-radius: var(--psh-radius-full);
   box-shadow: var(--psh-badge-dot-shadow, 0 0 0 var(--psh-border-width-2)) var(--psh-surface-card);
 }
 
-.badge.counter {
+.psh-badge.psh-counter {
   min-width: var(--psh-size-5);
   min-height: var(--psh-size-5);
   padding: 0 var(--psh-spacing-xs);

@@ -1,18 +1,18 @@
 <div
-  class="tabs-container"
-  [class.animated]="animated()"
+  class="psh-tabs-container"
+  [class.psh-animated]="animated()"
 >
   <div
-    class="tabs-header"
-    [class]="variant()"
+    class="psh-tabs-header"
+    [class]="'psh-' + variant()"
     role="tablist"
     [attr.aria-orientation]="ariaOrientation()"
   >
     @for (tab of tabsToDisplay(); track $index; let i = $index) {
       <button
-        class="tab-button"
+        class="psh-tab-button"
         role="tab"
-        [class.active]="i === activeIndex()"
+        [class.psh-active]="i === activeIndex()"
         [attr.aria-selected]="i === activeIndex()"
         [attr.aria-disabled]="tab.disabled || null"
         [attr.aria-controls]="'panel-' + i"
@@ -31,15 +31,15 @@
     }
   </div>
 
-  <div class="tabs-content">
+  <div class="psh-tabs-content">
     @if (hasContentProjection()) {
       <ng-content />
     } @else {
       @for (tab of tabsToDisplay(); track $index; let i = $index) {
         <div
-          class="tab-panel"
+          class="psh-tab-panel"
           role="tabpanel"
-          [class.active]="i === activeIndex()"
+          [class.psh-active]="i === activeIndex()"
           [attr.aria-labelledby]="'tab-' + i"
           [attr.id]="'panel-' + i"
           [attr.tabindex]="i === activeIndex() ? 0 : -1"

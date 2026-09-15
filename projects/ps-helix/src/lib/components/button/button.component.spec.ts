@@ -40,7 +40,7 @@ describe('PshButtonComponent', () => {
     fixture.nativeElement.querySelector('button') as HTMLButtonElement;
 
   const getLoader = () =>
-    fixture.nativeElement.querySelector('.loader[aria-hidden="true"]') as HTMLElement;
+    fixture.nativeElement.querySelector('.psh-loader[aria-hidden="true"]') as HTMLElement;
 
   const getIcon = () =>
     fixture.nativeElement.querySelector('i.ph[aria-hidden="true"]') as HTMLElement;
@@ -464,7 +464,7 @@ describe('PshButtonComponent', () => {
       fixture.componentRef.setInput('iconPosition', 'left');
       fixture.detectChanges();
 
-      const buttonContent = fixture.nativeElement.querySelector('.button-content');
+      const buttonContent = fixture.nativeElement.querySelector('.psh-button-content');
       const children = Array.from(buttonContent.children) as HTMLElement[];
       const iconIndex = children.findIndex(el => el.tagName === 'I' && el.classList.contains('ph'));
       const contentIndex = children.findIndex(el => el.tagName === 'NG-CONTENT' || el.nodeName === '#text' || !el.classList.contains('ph'));
@@ -477,7 +477,7 @@ describe('PshButtonComponent', () => {
       fixture.componentRef.setInput('iconPosition', 'right');
       fixture.detectChanges();
 
-      const buttonContent = fixture.nativeElement.querySelector('.button-content');
+      const buttonContent = fixture.nativeElement.querySelector('.psh-button-content');
       const icon = buttonContent.querySelector('i.ph');
       expect(icon).toBeTruthy();
       expect(icon.previousElementSibling).toBeFalsy();
@@ -495,22 +495,22 @@ describe('PshButtonComponent', () => {
       fixture.componentRef.setInput('color', variant);
       fixture.detectChanges();
 
-      expect(getButton().classList.contains(variant)).toBe(true);
+      expect(getButton().classList.contains(`psh-${variant}`)).toBe(true);
     });
 
     it('should have primary variant by default', () => {
-      expect(getButton().classList.contains('primary')).toBe(true);
+      expect(getButton().classList.contains('psh-primary')).toBe(true);
     });
 
     it('should switch between variants', () => {
       fixture.componentRef.setInput('color', 'primary');
       fixture.detectChanges();
-      expect(getButton().classList.contains('primary')).toBe(true);
+      expect(getButton().classList.contains('psh-primary')).toBe(true);
 
       fixture.componentRef.setInput('color', 'danger');
       fixture.detectChanges();
-      expect(getButton().classList.contains('danger')).toBe(true);
-      expect(getButton().classList.contains('primary')).toBe(false);
+      expect(getButton().classList.contains('psh-danger')).toBe(true);
+      expect(getButton().classList.contains('psh-primary')).toBe(false);
     });
 
     it.each<[ButtonVariant]>([
@@ -525,7 +525,7 @@ describe('PshButtonComponent', () => {
 
       const otherVariants = ALL_VARIANTS.filter(v => v !== variant);
       otherVariants.forEach(otherVariant => {
-        expect(getButton().classList.contains(otherVariant)).toBe(false);
+        expect(getButton().classList.contains(`psh-${otherVariant}`)).toBe(false);
       });
     });
   });
@@ -537,12 +537,12 @@ describe('PshButtonComponent', () => {
         fixture.componentRef.setInput('size', size);
         fixture.detectChanges();
 
-        expect(getButton().classList.contains(size)).toBe(true);
+        expect(getButton().classList.contains(`psh-${size}`)).toBe(true);
       }
     );
 
     it('should have medium size by default', () => {
-      expect(getButton().classList.contains('medium')).toBe(true);
+      expect(getButton().classList.contains('psh-medium')).toBe(true);
     });
 
     it.each<[ButtonSize]>([['small'], ['medium'], ['large']])(
@@ -553,7 +553,7 @@ describe('PshButtonComponent', () => {
 
         const otherSizes = ALL_SIZES.filter(s => s !== size);
         otherSizes.forEach(otherSize => {
-          expect(getButton().classList.contains(otherSize)).toBe(false);
+          expect(getButton().classList.contains(`psh-${otherSize}`)).toBe(false);
         });
       }
     );
@@ -566,12 +566,12 @@ describe('PshButtonComponent', () => {
         fixture.componentRef.setInput('appearance', appearance);
         fixture.detectChanges();
 
-        expect(getButton().classList.contains(appearance)).toBe(true);
+        expect(getButton().classList.contains(`psh-${appearance}`)).toBe(true);
       }
     );
 
     it('should have filled appearance by default', () => {
-      expect(getButton().classList.contains('solid')).toBe(true);
+      expect(getButton().classList.contains('psh-solid')).toBe(true);
     });
 
     it.each<[ButtonAppearance]>([['solid'], ['outline'], ['ghost']])(
@@ -582,7 +582,7 @@ describe('PshButtonComponent', () => {
 
         const otherAppearances = ALL_APPEARANCES.filter(a => a !== appearance);
         otherAppearances.forEach(otherAppearance => {
-          expect(getButton().classList.contains(otherAppearance)).toBe(false);
+          expect(getButton().classList.contains(`psh-${otherAppearance}`)).toBe(false);
         });
       }
     );
@@ -593,21 +593,21 @@ describe('PshButtonComponent', () => {
       fixture.componentRef.setInput('disabled', true);
       fixture.detectChanges();
 
-      expect(getButton().classList.contains('disabled')).toBe(true);
+      expect(getButton().classList.contains('psh-disabled')).toBe(true);
     });
 
     it('should apply loading class when loading', () => {
       fixture.componentRef.setInput('loading', true);
       fixture.detectChanges();
 
-      expect(getButton().classList.contains('loading')).toBe(true);
+      expect(getButton().classList.contains('psh-loading')).toBe(true);
     });
 
     it('should apply icon-only class when iconPosition is only', () => {
       fixture.componentRef.setInput('iconPosition', 'only');
       fixture.detectChanges();
 
-      expect(getButton().classList.contains('icon-only')).toBe(true);
+      expect(getButton().classList.contains('psh-icon-only')).toBe(true);
     });
   });
 
@@ -622,9 +622,9 @@ describe('PshButtonComponent', () => {
       const button = getButton();
       expect(button.disabled).toBe(true);
       expect(button.getAttribute('data-state')).toBe('disabled');
-      expect(button.classList.contains('icon-only')).toBe(true);
-      expect(button.classList.contains('loading')).toBe(true);
-      expect(button.classList.contains('disabled')).toBe(true);
+      expect(button.classList.contains('psh-icon-only')).toBe(true);
+      expect(button.classList.contains('psh-loading')).toBe(true);
+      expect(button.classList.contains('psh-disabled')).toBe(true);
     });
 
     it('should maintain disabled state when loading changes after disabled is set', () => {
@@ -792,14 +792,14 @@ describe('PshButtonComponent full width', () => {
   });
 
   it('should not have full-width class by default', () => {
-    expect(getHost().classList.contains('full-width')).toBe(false);
+    expect(getHost().classList.contains('psh-full-width')).toBe(false);
   });
 
   it('should have full-width class when fullWidth is true', () => {
     fixture.componentRef.setInput('fullWidth', true);
     fixture.detectChanges();
 
-    expect(getHost().classList.contains('full-width')).toBe(true);
+    expect(getHost().classList.contains('psh-full-width')).toBe(true);
   });
 });
 

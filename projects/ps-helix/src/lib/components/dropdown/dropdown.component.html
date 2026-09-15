@@ -1,19 +1,19 @@
 <div
-  class="dropdown-container"
-  [class]="size()"
-  [class.open]="isOpen()"
-  [class.disabled]="disabled()"
-  [class.icon-only]="isIconOnly()"
+  class="psh-dropdown-container"
+  [class]="'psh-' + size()"
+  [class.psh-open]="isOpen()"
+  [class.psh-disabled]="disabled()"
+  [class.psh-icon-only]="isIconOnly()"
   [attr.data-state]="state()"
 >
   <button
-    class="dropdown-trigger"
-    [class]="appearance()"
-    [class.primary]="color() === 'primary'"
-    [class.secondary]="color() === 'secondary'"
-    [class.success]="color() === 'success'"
-    [class.warning]="color() === 'warning'"
-    [class.danger]="color() === 'danger'"
+    class="psh-dropdown-trigger"
+    [class]="'psh-' + appearance()"
+    [class.psh-primary]="color() === 'primary'"
+    [class.psh-secondary]="color() === 'secondary'"
+    [class.psh-success]="color() === 'success'"
+    [class.psh-warning]="color() === 'warning'"
+    [class.psh-danger]="color() === 'danger'"
     (click)="toggleDropdown()"
     (keydown)="handleTriggerKeyDown($event)"
     [attr.aria-expanded]="isOpen()"
@@ -23,7 +23,7 @@
     type="button"
     [disabled]="disabled()"
   >
-    <span class="trigger-content">
+    <span class="psh-trigger-content">
       @if (isIconOnly()) {
         <i class="ph ph-{{ icon() }}" aria-hidden="true"></i>
       } @else {
@@ -36,8 +36,8 @@
           }
         </ng-content>
         <i
-          class="ph ph-caret-down trigger-arrow"
-          [class.open]="isOpen()"
+          class="ph ph-caret-down psh-trigger-arrow"
+          [class.psh-open]="isOpen()"
           aria-hidden="true"
         ></i>
       }
@@ -48,8 +48,8 @@
     <!-- stopPropagation only (keeps clicks inside the menu from closing it); not a user interaction. -->
     <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
     <div
-      class="dropdown-menu"
-      [class]="resolvedPlacement()"
+      class="psh-dropdown-menu"
+      [class]="'psh-' + resolvedPlacement()"
       role="menu"
       (click)="$event.stopPropagation()"
     >
@@ -57,9 +57,9 @@
         @for (item of items(); track item.value; let i = $index) {
           <button
             type="button"
-            class="dropdown-item"
-            [class.disabled]="item.disabled"
-            [class.active]="selectedItem() === item"
+            class="psh-dropdown-item"
+            [class.psh-disabled]="item.disabled"
+            [class.psh-active]="selectedItem() === item"
             [attr.data-dropdown-item-index]="i"
             (click)="selectItem(item)"
             (keydown)="handleItemKeyDown($event, item, i)"
@@ -71,7 +71,7 @@
             @if (item.icon) {
               <i class="ph ph-{{ item.icon }}" aria-hidden="true"></i>
             }
-            <span class="item-label">{{ item.content }}</span>
+            <span class="psh-item-label">{{ item.content }}</span>
           </button>
         }
       </ng-content>

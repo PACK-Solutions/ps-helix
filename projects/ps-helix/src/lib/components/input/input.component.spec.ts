@@ -36,10 +36,10 @@ describe('PshInputComponent', () => {
     fixture.nativeElement.querySelector('[role="status"]') as HTMLElement;
 
   const getHintMessage = () =>
-    fixture.nativeElement.querySelector('.input-hint') as HTMLElement;
+    fixture.nativeElement.querySelector('.psh-input-hint') as HTMLElement;
 
   const getPasswordToggle = () =>
-    fixture.nativeElement.querySelector('button.password-toggle') as HTMLButtonElement;
+    fixture.nativeElement.querySelector('button.psh-password-toggle') as HTMLButtonElement;
 
   // Suggestions are teleported to a body-level overlay layer → query `document`.
   const getSuggestionsList = () =>
@@ -49,7 +49,7 @@ describe('PshInputComponent', () => {
     document.querySelectorAll('[role="option"]') as NodeListOf<HTMLElement>;
 
   const getLoader = () =>
-    fixture.nativeElement.querySelector('.input-loader') as HTMLElement;
+    fixture.nativeElement.querySelector('.psh-input-loader') as HTMLElement;
 
   const ALL_VARIANTS: InputVariant[] = ['outline', 'solid'];
 
@@ -486,7 +486,7 @@ describe('PshInputComponent', () => {
         fixture.detectChanges();
 
         const label = getLabel();
-        expect(label.classList.contains('required')).toBe(true);
+        expect(label.classList.contains('psh-required')).toBe(true);
       });
     });
   });
@@ -524,13 +524,13 @@ describe('PshInputComponent', () => {
         fixture.detectChanges();
 
         const container = fixture.nativeElement;
-        expect(container.classList.contains(variant)).toBe(true);
+        expect(container.classList.contains(`psh-${variant}`)).toBe(true);
       }
     );
 
     it('should have outlined variant by default', () => {
       const container = fixture.nativeElement;
-      expect(container.classList.contains('outline')).toBe(true);
+      expect(container.classList.contains('psh-outline')).toBe(true);
     });
 
     it.each<[InputVariant]>([['outline'], ['solid']])(
@@ -542,7 +542,7 @@ describe('PshInputComponent', () => {
         const container = fixture.nativeElement;
         const otherVariants = ALL_VARIANTS.filter(v => v !== variant);
         otherVariants.forEach(otherVariant => {
-          expect(container.classList.contains(otherVariant)).toBe(false);
+          expect(container.classList.contains(`psh-${otherVariant}`)).toBe(false);
         });
       }
     );
@@ -556,7 +556,7 @@ describe('PshInputComponent', () => {
         fixture.detectChanges();
 
         const container = fixture.nativeElement;
-        expect(container.classList.contains(size)).toBe(true);
+        expect(container.classList.contains(`psh-${size}`)).toBe(true);
       }
     );
 
@@ -565,15 +565,15 @@ describe('PshInputComponent', () => {
       fixture.detectChanges();
 
       const container = fixture.nativeElement;
-      expect(container.classList.contains('small')).toBe(false);
-      expect(container.classList.contains('large')).toBe(false);
+      expect(container.classList.contains('psh-small')).toBe(false);
+      expect(container.classList.contains('psh-large')).toBe(false);
     });
   });
 
   describe('Full width', () => {
     it('should not have full-width class by default', () => {
       const container = fixture.nativeElement;
-      expect(container.classList.contains('full-width')).toBe(false);
+      expect(container.classList.contains('psh-full-width')).toBe(false);
     });
 
     it('should have full-width class when fullWidth is true', () => {
@@ -581,7 +581,7 @@ describe('PshInputComponent', () => {
       fixture.detectChanges();
 
       const container = fixture.nativeElement;
-      expect(container.classList.contains('full-width')).toBe(true);
+      expect(container.classList.contains('psh-full-width')).toBe(true);
     });
   });
 
@@ -844,7 +844,7 @@ describe('PshInputComponent', () => {
       fixture.detectChanges();
 
       const container = fixture.nativeElement;
-      expect(container.classList.contains('error')).toBe(true);
+      expect(container.classList.contains('psh-error')).toBe(true);
     });
 
     it('should apply success class when success is present', () => {
@@ -852,7 +852,7 @@ describe('PshInputComponent', () => {
       fixture.detectChanges();
 
       const container = fixture.nativeElement;
-      expect(container.classList.contains('success')).toBe(true);
+      expect(container.classList.contains('psh-success')).toBe(true);
     });
 
     it('should apply disabled class when disabled', () => {
@@ -860,7 +860,7 @@ describe('PshInputComponent', () => {
       fixture.detectChanges();
 
       const container = fixture.nativeElement;
-      expect(container.classList.contains('disabled')).toBe(true);
+      expect(container.classList.contains('psh-disabled')).toBe(true);
     });
 
     it('should apply readonly class when readonly', () => {
@@ -868,7 +868,7 @@ describe('PshInputComponent', () => {
       fixture.detectChanges();
 
       const container = fixture.nativeElement;
-      expect(container.classList.contains('readonly')).toBe(true);
+      expect(container.classList.contains('psh-readonly')).toBe(true);
     });
 
     it('should apply loading class when loading', () => {
@@ -876,7 +876,7 @@ describe('PshInputComponent', () => {
       fixture.detectChanges();
 
       const container = fixture.nativeElement;
-      expect(container.classList.contains('loading')).toBe(true);
+      expect(container.classList.contains('psh-loading')).toBe(true);
     });
 
     it('should apply focused class when focused', () => {
@@ -884,7 +884,7 @@ describe('PshInputComponent', () => {
       fixture.detectChanges();
 
       const container = fixture.nativeElement;
-      expect(container.classList.contains('focused')).toBe(true);
+      expect(container.classList.contains('psh-focused')).toBe(true);
     });
   });
 
@@ -894,7 +894,7 @@ describe('PshInputComponent', () => {
       fixture.detectChanges();
 
       const container = fixture.nativeElement;
-      expect(container.classList.contains('has-start-icon')).toBe(true);
+      expect(container.classList.contains('psh-has-start-icon')).toBe(true);
     });
 
     it('should apply has-end-icon class when iconEnd is set', () => {
@@ -902,7 +902,7 @@ describe('PshInputComponent', () => {
       fixture.detectChanges();
 
       const container = fixture.nativeElement;
-      expect(container.classList.contains('has-end-icon')).toBe(true);
+      expect(container.classList.contains('psh-has-end-icon')).toBe(true);
     });
 
     it('should apply has-end-icon class for password type', () => {
@@ -910,7 +910,7 @@ describe('PshInputComponent', () => {
       fixture.detectChanges();
 
       const container = fixture.nativeElement;
-      expect(container.classList.contains('has-end-icon')).toBe(true);
+      expect(container.classList.contains('psh-has-end-icon')).toBe(true);
     });
 
     it('should hide icons from screen readers', () => {
@@ -940,8 +940,8 @@ describe('PshInputComponent', () => {
       fixture.detectChanges();
 
       const container = fixture.nativeElement;
-      expect(container.classList.contains('loading')).toBe(true);
-      expect(container.classList.contains('full-width')).toBe(true);
+      expect(container.classList.contains('psh-loading')).toBe(true);
+      expect(container.classList.contains('psh-full-width')).toBe(true);
       expect(getLoader()).toBeTruthy();
     });
 

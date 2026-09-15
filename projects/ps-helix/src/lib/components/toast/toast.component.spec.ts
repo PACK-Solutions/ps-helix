@@ -27,7 +27,7 @@ describe('PshToastComponent', () => {
     toast.querySelector('button[aria-label]') as HTMLButtonElement | null;
 
   const getToastContent = (toast: HTMLElement) =>
-    toast.querySelector('.toast-content')?.textContent?.trim() ?? '';
+    toast.querySelector('.psh-toast-content')?.textContent?.trim() ?? '';
 
   const createTestModule = (config: Partial<ToastConfig> = defaultConfig) => {
     return TestBed.configureTestingModule({
@@ -212,7 +212,7 @@ describe('PshToastComponent', () => {
       fixture.detectChanges();
 
       const toast = getToastItems()[0]!;
-      const icon = toast.querySelector('.toast-icon');
+      const icon = toast.querySelector('.psh-toast-icon');
       expect(icon?.getAttribute('aria-hidden')).toBe('true');
     });
   });
@@ -368,7 +368,7 @@ describe('PshToastComponent', () => {
       fixture.detectChanges();
 
       const container = getToastContainer();
-      expect(container.classList.contains(position)).toBe(true);
+      expect(container.classList.contains(`psh-${position}`)).toBe(true);
     });
   });
 

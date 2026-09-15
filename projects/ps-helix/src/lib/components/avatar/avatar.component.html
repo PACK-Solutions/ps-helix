@@ -1,26 +1,26 @@
 <div 
-  class="avatar"
-  [class.circle]="shape() === 'circle'"
-  [class.square]="shape() === 'square'"
-  [class.small]="size() === 'small'"
-  [class.large]="size() === 'large'"
-  [class.xlarge]="size() === 'xlarge'"
+  class="psh-avatar"
+  [class.psh-circle]="shape() === 'circle'"
+  [class.psh-square]="shape() === 'square'"
+  [class.psh-small]="size() === 'small'"
+  [class.psh-large]="size() === 'large'"
+  [class.psh-xlarge]="size() === 'xlarge'"
   role="img"
   [attr.aria-label]="computedAriaLabel()"
   [attr.data-state]="state()"
 >
   @if (hasImage()) {
-    <img [src]="src()" [attr.alt]="alt()" class="avatar-image" />
+    <img [src]="src()" [attr.alt]="alt()" class="psh-avatar-image" />
   } @else if (hasInitials()) {
-    <span class="avatar-initials">{{ initials() }}</span>
+    <span class="psh-avatar-initials">{{ initials() }}</span>
   } @else if (hasIcon()) {
     <i class="ph ph-{{ icon() }}" aria-hidden="true"></i>
   }
 
   @if (status()) {
     <span 
-      class="avatar-status"
-      [class]="status()"
+      class="psh-avatar-status"
+      [class]="'psh-' + status()"
       [style.background-color]="statusColor()"
       [attr.aria-label]="status()"
     ></span>

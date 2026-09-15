@@ -61,13 +61,13 @@ const getDocument = () =>
   document.body.querySelector('[role="document"]') as HTMLElement;
 
 const getCloseButton = () =>
-  document.body.querySelector('.modal-close') as HTMLButtonElement;
+  document.body.querySelector('.psh-modal-close') as HTMLButtonElement;
 
 const getTitle = () =>
   document.body.querySelector('h2') as HTMLElement;
 
 const getFooter = () =>
-  document.body.querySelector('.modal-footer') as HTMLElement;
+  document.body.querySelector('.psh-modal-footer') as HTMLElement;
 
 const getFooterButtonByText = (text: string) => {
   const footer = getFooter();
@@ -121,7 +121,7 @@ describe('PshModalComponent', () => {
       hostComponent.isOpen = true;
       fixture.detectChanges();
 
-      const content = document.body.querySelector('.modal-content');
+      const content = document.body.querySelector('.psh-modal-content');
       expect(content?.textContent).toContain('Test modal content');
     });
 
@@ -346,7 +346,7 @@ describe('PshModalComponent', () => {
         fixture.detectChanges();
 
         const container = getDocument();
-        expect(container.classList.contains(size)).toBe(true);
+        expect(container.classList.contains(`psh-${size}`)).toBe(true);
       }
     );
   });
@@ -391,7 +391,7 @@ describe('PshModalComponent styleClass', () => {
 
   it('should keep modal-container base class when styleClass is applied', () => {
     const container = getDocument();
-    expect(container.classList.contains('modal-container')).toBe(true);
+    expect(container.classList.contains('psh-modal-container')).toBe(true);
   });
 
   it('should apply multiple classes when styleClass contains multiple classes', () => {
@@ -408,7 +408,7 @@ describe('PshModalComponent styleClass', () => {
     fixture.detectChanges();
 
     const container = getDocument();
-    expect(container.classList.contains('modal-container')).toBe(true);
+    expect(container.classList.contains('psh-modal-container')).toBe(true);
   });
 });
 

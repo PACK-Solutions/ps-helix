@@ -50,7 +50,7 @@ export class PshTagComponent implements AfterContentChecked {
   });
 
   ngAfterContentChecked(): void {
-    const contentElement = this.elementRef.nativeElement.querySelector('.tag-content');
+    const contentElement = this.elementRef.nativeElement.querySelector('.psh-tag-content');
     if (contentElement) {
       const text = (contentElement.textContent || '').trim();
       if (text !== this.projectedText()) {

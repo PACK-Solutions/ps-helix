@@ -102,14 +102,14 @@ describe('PshTextareaComponent', () => {
       fixture.componentInstance.setDisabledState(true);
       fixture.detectChanges();
       expect(getTextarea().disabled).toBe(true);
-      expect(getHost().classList).toContain('disabled');
+      expect(getHost().classList).toContain('psh-disabled');
     });
 
     it('should mark textarea as readonly', () => {
       fixture.componentRef.setInput('readonly', true);
       fixture.detectChanges();
       expect(getTextarea().readOnly).toBe(true);
-      expect(getHost().classList).toContain('readonly');
+      expect(getHost().classList).toContain('psh-readonly');
     });
   });
 
@@ -137,31 +137,31 @@ describe('PshTextareaComponent', () => {
 
   describe('Variants & sizes', () => {
     it('should apply outlined variant class by default', () => {
-      expect(getHost().classList).toContain('outline');
+      expect(getHost().classList).toContain('psh-outline');
     });
 
     it('should apply filled variant class', () => {
       fixture.componentRef.setInput('appearance', 'solid');
       fixture.detectChanges();
-      expect(getHost().classList).toContain('solid');
+      expect(getHost().classList).toContain('psh-solid');
     });
 
     it('should apply small size class', () => {
       fixture.componentRef.setInput('size', 'small');
       fixture.detectChanges();
-      expect(getHost().classList).toContain('small');
+      expect(getHost().classList).toContain('psh-small');
     });
 
     it('should apply large size class', () => {
       fixture.componentRef.setInput('size', 'large');
       fixture.detectChanges();
-      expect(getHost().classList).toContain('large');
+      expect(getHost().classList).toContain('psh-large');
     });
 
     it('should apply full-width class', () => {
       fixture.componentRef.setInput('fullWidth', true);
       fixture.detectChanges();
-      expect(getHost().classList).toContain('full-width');
+      expect(getHost().classList).toContain('psh-full-width');
     });
   });
 
@@ -174,25 +174,25 @@ describe('PshTextareaComponent', () => {
       fixture.componentRef.setInput('autoSize', true);
       fixture.detectChanges();
       expect(fixture.componentInstance.effectiveResize()).toBe('none');
-      expect(getHost().classList).toContain('auto-size');
+      expect(getHost().classList).toContain('psh-auto-size');
     });
   });
 
   describe('Character counter', () => {
     it('should not display counter by default', () => {
-      expect(fixture.nativeElement.querySelector('.textarea-count')).toBeNull();
+      expect(fixture.nativeElement.querySelector('.psh-textarea-count')).toBeNull();
     });
 
     it('should display counter when showCharacterCount is true', () => {
       fixture.componentRef.setInput('showCharacterCount', true);
       fixture.detectChanges();
-      expect(fixture.nativeElement.querySelector('.textarea-count')).toBeTruthy();
+      expect(fixture.nativeElement.querySelector('.psh-textarea-count')).toBeTruthy();
     });
 
     it('should display counter when maxLength is set', () => {
       fixture.componentRef.setInput('maxLength', 10);
       fixture.detectChanges();
-      expect(fixture.nativeElement.querySelector('.textarea-count')).toBeTruthy();
+      expect(fixture.nativeElement.querySelector('.psh-textarea-count')).toBeTruthy();
     });
 
     it('should mark over-limit when exceeding maxLength via writeValue', () => {
@@ -200,7 +200,7 @@ describe('PshTextareaComponent', () => {
       fixture.componentInstance.writeValue('too long');
       fixture.detectChanges();
       expect(fixture.componentInstance.isOverLimit()).toBe(true);
-      expect(getHost().classList).toContain('over-limit');
+      expect(getHost().classList).toContain('psh-over-limit');
     });
   });
 
@@ -223,7 +223,7 @@ describe('PshTextareaComponent', () => {
     it('should render hint message', () => {
       fixture.componentRef.setInput('hint', 'A useful hint');
       fixture.detectChanges();
-      const hint = fixture.nativeElement.querySelector('.textarea-hint');
+      const hint = fixture.nativeElement.querySelector('.psh-textarea-hint');
       expect(hint.textContent.trim()).toBe('A useful hint');
     });
 

@@ -1,4 +1,4 @@
-.tag {
+.psh-tag {
 
   display: inline-flex;
   align-items: center;
@@ -13,25 +13,25 @@
   user-select: none;
 }
 
-.tag[role="button"] {
+.psh-tag[role="button"] {
   cursor: pointer;
 }
 
-.tag[role="button"]:focus-visible {
+.psh-tag[role="button"]:focus-visible {
   outline: var(--psh-focus-outline-width) var(--psh-focus-outline-style) var(--psh-focus-outline-color);
   outline-offset: var(--psh-focus-outline-offset);
 }
 
-.tag i {
+.psh-tag i {
   font-size: var(--psh-tag-icon-size, var(--psh-icon-size-sm));
 }
 
-.tag-content {
+.psh-tag-content {
   display: inline-block;
   vertical-align: middle;
 }
 
-.tag-close {
+.psh-tag-close {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -46,71 +46,71 @@
   margin-left: var(--psh-spacing-xs);
 }
 
-.tag-close:hover:not(:disabled) {
+.psh-tag-close:hover:not(:disabled) {
   opacity: var(--psh-tag-close-opacity-hover, 1);
   background: var(--psh-tag-close-hover-bg, rgba(0, 0, 0, 0.1));
 }
 
-.tag-close:focus-visible {
+.psh-tag-close:focus-visible {
   outline: none;
   box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-color);
 }
 
-.tag.primary {
+.psh-tag.psh-primary {
   background: var(--psh-primary-gradient);
   color: var(--psh-text-on-primary);
 }
 
-.tag.secondary {
+.psh-tag.psh-secondary {
   background: var(--psh-secondary-color);
   color: var(--psh-text-on-secondary);
 }
 
-.tag.success {
+.psh-tag.psh-success {
   background: var(--psh-success-color);
   color: var(--psh-text-on-success);
 }
 
-.tag.warning {
+.psh-tag.psh-warning {
   background: var(--psh-warning-color);
   color: var(--psh-text-on-warning);
 }
 
-.tag.danger {
+.psh-tag.psh-danger {
   background: var(--psh-danger-color);
   color: var(--psh-text-on-danger);
 }
 
 /* info and neutral complete the shared colour union introduced in 7.0.0. */
-.tag.info {
+.psh-tag.psh-info {
   background: var(--psh-info-color);
   color: var(--psh-text-on-info);
 }
 
-.tag.neutral {
+.psh-tag.psh-neutral {
   background: var(--psh-neutral-color);
   color: var(--psh-text-on-neutral);
 }
 
-.tag.small {
+.psh-tag.psh-small {
   --psh-tag-padding-y: calc(var(--psh-spacing-xs) * 0.5);
   --psh-tag-padding-x: var(--psh-spacing-xs);
   --psh-tag-font-size: var(--psh-font-size-xs);
   --psh-tag-icon-size: var(--psh-icon-size-xs);
 }
 
-.tag.large {
+.psh-tag.psh-large {
   --psh-tag-padding-y: var(--psh-spacing-sm);
   --psh-tag-padding-x: var(--psh-spacing-md);
   --psh-tag-font-size: var(--psh-font-size-base);
   --psh-tag-icon-size: var(--psh-icon-size-md);
 }
 
-.tag.disabled {
+.psh-tag.psh-disabled {
   opacity: var(--psh-opacity-disabled);
   cursor: not-allowed;
 }
 
-.tag.disabled .tag-close {
+.psh-tag.psh-disabled .psh-tag-close {
   cursor: not-allowed;
 }

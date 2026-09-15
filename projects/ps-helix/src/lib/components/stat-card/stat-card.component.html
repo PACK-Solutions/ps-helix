@@ -10,25 +10,25 @@
   [attr.role]="interactive() ? 'button' : 'article'"
 >
   @if (loading()) {
-    <div class="stat-loading">
-      <div class="skeleton-circle"></div>
-      <div class="skeleton-content">
-        <div class="skeleton-line"></div>
-        <div class="skeleton-line short"></div>
+    <div class="psh-stat-loading">
+      <div class="psh-skeleton-circle"></div>
+      <div class="psh-skeleton-content">
+        <div class="psh-skeleton-line"></div>
+        <div class="psh-skeleton-line psh-short"></div>
       </div>
     </div>
   } @else {
     @if (useRowDirection()) {
-      <div class="stat-card-body">
+      <div class="psh-stat-card-body">
         @if (hasIcon()) {
-          <div class="stat-icon" [style]="iconStyle()">
+          <div class="psh-stat-icon" [style]="iconStyle()">
             <i class="ph ph-{{ displayIcon }}" aria-hidden="true"></i>
           </div>
         }
 
-        <div class="stat-content">
-          <h3 class="stat-value">{{ displayValue }}</h3>
-          <p class="stat-description">{{ displayDescription }}</p>
+        <div class="psh-stat-content">
+          <h3 class="psh-stat-value">{{ displayValue }}</h3>
+          <p class="psh-stat-description">{{ displayDescription }}</p>
 
           @if (hasTag()) {
             <psh-tag [color]="displayTagVariant!">
@@ -39,14 +39,14 @@
       </div>
     } @else {
       @if (hasIcon()) {
-        <div class="stat-icon" [style]="iconStyle()">
+        <div class="psh-stat-icon" [style]="iconStyle()">
           <i class="ph ph-{{ displayIcon }}" aria-hidden="true"></i>
         </div>
       }
 
-      <div class="stat-content">
-        <h3 class="stat-value">{{ displayValue }}</h3>
-        <p class="stat-description">{{ displayDescription }}</p>
+      <div class="psh-stat-content">
+        <h3 class="psh-stat-value">{{ displayValue }}</h3>
+        <p class="psh-stat-description">{{ displayDescription }}</p>
 
         @if (hasTag()) {
           <psh-tag [color]="displayTagVariant!">

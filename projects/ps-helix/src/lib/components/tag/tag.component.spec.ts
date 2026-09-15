@@ -26,16 +26,16 @@ describe('PshTagComponent', () => {
   let fixture: ComponentFixture<PshTagComponent>;
 
   const getTagElement = () =>
-    fixture.nativeElement.querySelector('.tag') as HTMLElement;
+    fixture.nativeElement.querySelector('.psh-tag') as HTMLElement;
 
   const getCloseButton = () =>
-    fixture.nativeElement.querySelector('.tag-close') as HTMLButtonElement;
+    fixture.nativeElement.querySelector('.psh-tag-close') as HTMLButtonElement;
 
   const getIconElement = () =>
-    fixture.nativeElement.querySelector('.tag i:not(.tag-close i)') as HTMLElement;
+    fixture.nativeElement.querySelector('.psh-tag i:not(.psh-tag-close i)') as HTMLElement;
 
   const getContentSpan = () =>
-    fixture.nativeElement.querySelector('.tag-content') as HTMLSpanElement;
+    fixture.nativeElement.querySelector('.psh-tag-content') as HTMLSpanElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -49,8 +49,8 @@ describe('PshTagComponent', () => {
   describe('Default rendering', () => {
     it('should render with default values', () => {
       expect(getTagElement()).toBeTruthy();
-      expect(getTagElement().classList.contains('primary')).toBe(true);
-      expect(getTagElement().classList.contains('disabled')).toBe(false);
+      expect(getTagElement().classList.contains('psh-primary')).toBe(true);
+      expect(getTagElement().classList.contains('psh-disabled')).toBe(false);
     });
 
     it('should display default content "Tag"', () => {
@@ -79,18 +79,18 @@ describe('PshTagComponent', () => {
       fixture.componentRef.setInput('color', variant);
       fixture.detectChanges();
 
-      expect(getTagElement().classList.contains(variant)).toBe(true);
+      expect(getTagElement().classList.contains(`psh-${variant}`)).toBe(true);
     });
 
     it('should switch between variants correctly', () => {
       fixture.componentRef.setInput('color', 'primary');
       fixture.detectChanges();
-      expect(getTagElement().classList.contains('primary')).toBe(true);
+      expect(getTagElement().classList.contains('psh-primary')).toBe(true);
 
       fixture.componentRef.setInput('color', 'danger');
       fixture.detectChanges();
-      expect(getTagElement().classList.contains('danger')).toBe(true);
-      expect(getTagElement().classList.contains('primary')).toBe(false);
+      expect(getTagElement().classList.contains('psh-danger')).toBe(true);
+      expect(getTagElement().classList.contains('psh-primary')).toBe(false);
     });
 
     it('should have exactly one variant class at a time', () => {
@@ -98,7 +98,7 @@ describe('PshTagComponent', () => {
       fixture.detectChanges();
 
       const activeVariants = allVariants.filter(v =>
-        getTagElement().classList.contains(v)
+        getTagElement().classList.contains(`psh-${v}`)
       );
       expect(activeVariants).toHaveLength(1);
       expect(activeVariants[0]).toBe('success');
@@ -118,7 +118,7 @@ describe('PshTagComponent', () => {
         fixture.detectChanges();
 
         const activeVariants = allVariants.filter(v =>
-          getTagElement().classList.contains(v)
+          getTagElement().classList.contains(`psh-${v}`)
         );
         expect(activeVariants).toEqual([targetVariant]);
       });
@@ -135,10 +135,10 @@ describe('PshTagComponent', () => {
         fixture.detectChanges();
 
         if (size === 'medium') {
-          expect(getTagElement().classList.contains('small')).toBe(false);
-          expect(getTagElement().classList.contains('large')).toBe(false);
+          expect(getTagElement().classList.contains('psh-small')).toBe(false);
+          expect(getTagElement().classList.contains('psh-large')).toBe(false);
         } else {
-          expect(getTagElement().classList.contains(size)).toBe(true);
+          expect(getTagElement().classList.contains(`psh-${size}`)).toBe(true);
         }
       }
     );
@@ -149,7 +149,7 @@ describe('PshTagComponent', () => {
 
       const sizeClasses = ['small', 'large'];
       const activeSizes = sizeClasses.filter(s =>
-        getTagElement().classList.contains(s)
+        getTagElement().classList.contains(`psh-${s}`)
       );
       expect(activeSizes).toHaveLength(1);
     });
@@ -157,12 +157,12 @@ describe('PshTagComponent', () => {
     it('should ensure mutual exclusivity between size classes', () => {
       fixture.componentRef.setInput('size', 'small');
       fixture.detectChanges();
-      expect(getTagElement().classList.contains('small')).toBe(true);
+      expect(getTagElement().classList.contains('psh-small')).toBe(true);
 
       fixture.componentRef.setInput('size', 'large');
       fixture.detectChanges();
-      expect(getTagElement().classList.contains('large')).toBe(true);
-      expect(getTagElement().classList.contains('small')).toBe(false);
+      expect(getTagElement().classList.contains('psh-large')).toBe(true);
+      expect(getTagElement().classList.contains('psh-small')).toBe(false);
     });
   });
 
@@ -438,7 +438,7 @@ describe('PshTagComponent', () => {
     });
 
     it('should apply disabled class', () => {
-      expect(getTagElement().classList.contains('disabled')).toBe(true);
+      expect(getTagElement().classList.contains('psh-disabled')).toBe(true);
     });
 
     it('should have aria-disabled attribute', () => {
@@ -571,15 +571,15 @@ describe('PshTagComponent', () => {
 
   describe('Dynamic property toggling', () => {
     it('should toggle disabled state dynamically', () => {
-      expect(getTagElement().classList.contains('disabled')).toBe(false);
+      expect(getTagElement().classList.contains('psh-disabled')).toBe(false);
 
       fixture.componentRef.setInput('disabled', true);
       fixture.detectChanges();
-      expect(getTagElement().classList.contains('disabled')).toBe(true);
+      expect(getTagElement().classList.contains('psh-disabled')).toBe(true);
 
       fixture.componentRef.setInput('disabled', false);
       fixture.detectChanges();
-      expect(getTagElement().classList.contains('disabled')).toBe(false);
+      expect(getTagElement().classList.contains('psh-disabled')).toBe(false);
     });
 
     it('should toggle interactive state dynamically', () => {
@@ -624,7 +624,7 @@ describe('PshTagComponent', () => {
   describe('DOM structure', () => {
     it('should have tag-content span for text', () => {
       expect(getContentSpan()).toBeTruthy();
-      expect(getContentSpan().classList.contains('tag-content')).toBe(true);
+      expect(getContentSpan().classList.contains('psh-tag-content')).toBe(true);
     });
 
     it('should render icon before content', () => {
@@ -633,7 +633,7 @@ describe('PshTagComponent', () => {
 
       const children = Array.from(getTagElement().children);
       const iconIndex = children.findIndex(el => el.tagName === 'I');
-      const contentIndex = children.findIndex(el => el.classList.contains('tag-content'));
+      const contentIndex = children.findIndex(el => el.classList.contains('psh-tag-content'));
 
       expect(iconIndex).toBeLessThan(contentIndex);
     });
@@ -643,8 +643,8 @@ describe('PshTagComponent', () => {
       fixture.detectChanges();
 
       const children = Array.from(getTagElement().children);
-      const contentIndex = children.findIndex(el => el.classList.contains('tag-content'));
-      const buttonIndex = children.findIndex(el => el.classList.contains('tag-close'));
+      const contentIndex = children.findIndex(el => el.classList.contains('psh-tag-content'));
+      const buttonIndex = children.findIndex(el => el.classList.contains('psh-tag-close'));
 
       expect(contentIndex).toBeLessThan(buttonIndex);
     });
@@ -688,7 +688,7 @@ describe('PshTagComponent', () => {
         fixture.detectChanges();
       }
 
-      expect(getTagElement().classList.contains('disabled')).toBe(false);
+      expect(getTagElement().classList.contains('psh-disabled')).toBe(false);
       expect(getTagElement().getAttribute('role')).toBe('button');
     });
 
@@ -708,7 +708,7 @@ describe('PshTagComponent with ng-content', () => {
   let hostFixture: ComponentFixture<TestHostComponent>;
 
   const getTagElement = () =>
-    hostFixture.nativeElement.querySelector('.tag') as HTMLElement;
+    hostFixture.nativeElement.querySelector('.psh-tag') as HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -797,10 +797,10 @@ describe('PshTagComponent with TAG_CONFIG injection', () => {
     let fixture: ComponentFixture<PshTagComponent>;
 
     const getTagElement = () =>
-      fixture.nativeElement.querySelector('.tag') as HTMLElement;
+      fixture.nativeElement.querySelector('.psh-tag') as HTMLElement;
 
     const getCloseButton = () =>
-      fixture.nativeElement.querySelector('.tag-close') as HTMLButtonElement;
+      fixture.nativeElement.querySelector('.psh-tag-close') as HTMLButtonElement;
 
     beforeEach(async () => {
       await TestBed.configureTestingModule({
@@ -815,11 +815,11 @@ describe('PshTagComponent with TAG_CONFIG injection', () => {
     });
 
     it('should use variant from injected config', () => {
-      expect(getTagElement().classList.contains('danger')).toBe(true);
+      expect(getTagElement().classList.contains('psh-danger')).toBe(true);
     });
 
     it('should use size from injected config', () => {
-      expect(getTagElement().classList.contains('large')).toBe(true);
+      expect(getTagElement().classList.contains('psh-large')).toBe(true);
     });
 
     it('should use closable from injected config', () => {
@@ -839,8 +839,8 @@ describe('PshTagComponent with TAG_CONFIG injection', () => {
       fixture.componentRef.setInput('color', 'success');
       fixture.detectChanges();
 
-      expect(getTagElement().classList.contains('success')).toBe(true);
-      expect(getTagElement().classList.contains('danger')).toBe(false);
+      expect(getTagElement().classList.contains('psh-success')).toBe(true);
+      expect(getTagElement().classList.contains('psh-danger')).toBe(false);
     });
   });
 
@@ -852,10 +852,10 @@ describe('PshTagComponent with TAG_CONFIG injection', () => {
     let fixture: ComponentFixture<PshTagComponent>;
 
     const getTagElement = () =>
-      fixture.nativeElement.querySelector('.tag') as HTMLElement;
+      fixture.nativeElement.querySelector('.psh-tag') as HTMLElement;
 
     const getCloseButton = () =>
-      fixture.nativeElement.querySelector('.tag-close') as HTMLButtonElement;
+      fixture.nativeElement.querySelector('.psh-tag-close') as HTMLButtonElement;
 
     beforeEach(async () => {
       await TestBed.configureTestingModule({
@@ -870,7 +870,7 @@ describe('PshTagComponent with TAG_CONFIG injection', () => {
     });
 
     it('should use provided config value', () => {
-      expect(getTagElement().classList.contains('warning')).toBe(true);
+      expect(getTagElement().classList.contains('psh-warning')).toBe(true);
     });
 
     it('should fall back to defaults for missing config values', () => {
@@ -883,7 +883,7 @@ describe('PshTagComponent with TAG_CONFIG injection', () => {
     let fixture: ComponentFixture<PshTagComponent>;
 
     const getTagElement = () =>
-      fixture.nativeElement.querySelector('.tag') as HTMLElement;
+      fixture.nativeElement.querySelector('.psh-tag') as HTMLElement;
 
     beforeEach(async () => {
       await TestBed.configureTestingModule({
@@ -898,9 +898,9 @@ describe('PshTagComponent with TAG_CONFIG injection', () => {
     });
 
     it('should use all default values', () => {
-      expect(getTagElement().classList.contains('primary')).toBe(true);
-      expect(getTagElement().classList.contains('small')).toBe(false);
-      expect(getTagElement().classList.contains('large')).toBe(false);
+      expect(getTagElement().classList.contains('psh-primary')).toBe(true);
+      expect(getTagElement().classList.contains('psh-small')).toBe(false);
+      expect(getTagElement().classList.contains('psh-large')).toBe(false);
       expect(getTagElement().getAttribute('role')).toBe('status');
     });
   });
@@ -910,10 +910,10 @@ describe('PshTagComponent keyboard navigation with closable', () => {
   let hostFixture: ComponentFixture<TestHostInteractiveComponent>;
 
   const getTagElement = () =>
-    hostFixture.nativeElement.querySelector('.tag') as HTMLElement;
+    hostFixture.nativeElement.querySelector('.psh-tag') as HTMLElement;
 
   const getCloseButton = () =>
-    hostFixture.nativeElement.querySelector('.tag-close') as HTMLButtonElement;
+    hostFixture.nativeElement.querySelector('.psh-tag-close') as HTMLButtonElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

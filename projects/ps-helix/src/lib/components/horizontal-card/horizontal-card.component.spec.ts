@@ -43,47 +43,47 @@ describe('PshHorizontalCardComponent', () => {
     });
 
     it('should have elevated as default variant', () => {
-      expect(cardElement.nativeElement.className).toContain('appearance-elevated');
+      expect(cardElement.nativeElement.className).toContain('psh-appearance-elevated');
     });
 
     it('should update variant class when variant changes', () => {
       fixture.componentRef.setInput('appearance', 'elevated');
       fixture.detectChanges();
-      expect(cardElement.nativeElement.className).toContain('appearance-elevated');
+      expect(cardElement.nativeElement.className).toContain('psh-appearance-elevated');
 
       fixture.componentRef.setInput('appearance', 'outline');
       fixture.detectChanges();
-      expect(cardElement.nativeElement.className).toContain('appearance-outline');
-      expect(cardElement.nativeElement.className).not.toContain('appearance-elevated');
+      expect(cardElement.nativeElement.className).toContain('psh-appearance-outline');
+      expect(cardElement.nativeElement.className).not.toContain('psh-appearance-elevated');
     });
   });
 
   describe('Hoverable State', () => {
     it('should not have hoverable class by default', () => {
-      expect(cardElement.nativeElement.className).not.toContain('hoverable');
+      expect(cardElement.nativeElement.className).not.toContain('psh-hoverable');
     });
 
     it('should add hoverable class when hoverable is true', () => {
       fixture.componentRef.setInput('hoverable', true);
       fixture.detectChanges();
 
-      expect(cardElement.nativeElement.className).toContain('hoverable');
+      expect(cardElement.nativeElement.className).toContain('psh-hoverable');
     });
 
     it('should remove hoverable class when hoverable is set to false', () => {
       fixture.componentRef.setInput('hoverable', true);
       fixture.detectChanges();
-      expect(cardElement.nativeElement.className).toContain('hoverable');
+      expect(cardElement.nativeElement.className).toContain('psh-hoverable');
 
       fixture.componentRef.setInput('hoverable', false);
       fixture.detectChanges();
-      expect(cardElement.nativeElement.className).not.toContain('hoverable');
+      expect(cardElement.nativeElement.className).not.toContain('psh-hoverable');
     });
   });
 
   describe('Interactive State', () => {
     it('should not be interactive by default', () => {
-      expect(cardElement.nativeElement.className).not.toContain('interactive');
+      expect(cardElement.nativeElement.className).not.toContain('psh-interactive');
       expect(cardElement.nativeElement.getAttribute('tabindex')).toBeNull();
     });
 
@@ -91,7 +91,7 @@ describe('PshHorizontalCardComponent', () => {
       fixture.componentRef.setInput('interactive', true);
       fixture.detectChanges();
 
-      expect(cardElement.nativeElement.className).toContain('interactive');
+      expect(cardElement.nativeElement.className).toContain('psh-interactive');
     });
 
     it('should set tabindex to 0 when interactive is true', () => {
@@ -119,14 +119,14 @@ describe('PshHorizontalCardComponent', () => {
 
   describe('Loading State', () => {
     it('should not have loading class by default', () => {
-      expect(cardElement.nativeElement.className).not.toContain('loading');
+      expect(cardElement.nativeElement.className).not.toContain('psh-loading');
     });
 
     it('should add loading class when loading is true', () => {
       fixture.componentRef.setInput('loading', true);
       fixture.detectChanges();
 
-      expect(cardElement.nativeElement.className).toContain('loading');
+      expect(cardElement.nativeElement.className).toContain('psh-loading');
     });
 
     it('should set aria-busy to true when loading', () => {
@@ -147,7 +147,7 @@ describe('PshHorizontalCardComponent', () => {
       fixture.componentRef.setInput('loading', true);
       fixture.detectChanges();
 
-      const sideSkeleton = fixture.debugElement.query(By.css('.horizontal-skeleton'));
+      const sideSkeleton = fixture.debugElement.query(By.css('.psh-horizontal-skeleton'));
       expect(sideSkeleton).toBeTruthy();
     });
 
@@ -155,30 +155,30 @@ describe('PshHorizontalCardComponent', () => {
       fixture.componentRef.setInput('loading', true);
       fixture.detectChanges();
 
-      const skeleton = fixture.debugElement.query(By.css('.horizontal-loading'));
+      const skeleton = fixture.debugElement.query(By.css('.psh-horizontal-loading'));
       expect(skeleton).toBeTruthy();
-      expect(skeleton.nativeElement.querySelectorAll('.skeleton-line').length).toBe(3);
+      expect(skeleton.nativeElement.querySelectorAll('.psh-skeleton-line').length).toBe(3);
     });
 
     it('should hide skeleton when not loading', () => {
       fixture.componentRef.setInput('loading', false);
       fixture.detectChanges();
 
-      const skeleton = fixture.debugElement.query(By.css('.horizontal-loading'));
+      const skeleton = fixture.debugElement.query(By.css('.psh-horizontal-loading'));
       expect(skeleton).toBeNull();
     });
   });
 
   describe('Disabled State', () => {
     it('should not have disabled class by default', () => {
-      expect(cardElement.nativeElement.className).not.toContain('disabled');
+      expect(cardElement.nativeElement.className).not.toContain('psh-disabled');
     });
 
     it('should add disabled class when disabled is true', () => {
       fixture.componentRef.setInput('disabled', true);
       fixture.detectChanges();
 
-      expect(cardElement.nativeElement.className).toContain('disabled');
+      expect(cardElement.nativeElement.className).toContain('psh-disabled');
     });
 
     it('should set aria-disabled to true when disabled', () => {
@@ -491,12 +491,12 @@ describe('PshHorizontalCardComponent', () => {
 
   describe('Content Structure', () => {
     it('should render horizontal-side container', () => {
-      const side = fixture.debugElement.query(By.css('.horizontal-side'));
+      const side = fixture.debugElement.query(By.css('.psh-horizontal-side'));
       expect(side).toBeTruthy();
     });
 
     it('should render horizontal-content container', () => {
-      const content = fixture.debugElement.query(By.css('.horizontal-content'));
+      const content = fixture.debugElement.query(By.css('.psh-horizontal-content'));
       expect(content).toBeTruthy();
     });
   });
@@ -517,10 +517,10 @@ describe('PshHorizontalCardComponent', () => {
       fixture.detectChanges();
 
       const classes = cardElement.nativeElement.className;
-      expect(classes).toContain('interactive');
-      expect(classes).toContain('hoverable');
-      expect(classes).toContain('loading');
-      expect(classes).toContain('disabled');
+      expect(classes).toContain('psh-interactive');
+      expect(classes).toContain('psh-hoverable');
+      expect(classes).toContain('psh-loading');
+      expect(classes).toContain('psh-disabled');
     });
 
     it('should prevent interaction when both disabled and loading', () => {
@@ -546,9 +546,9 @@ describe('PshHorizontalCardComponent', () => {
       fixture.detectChanges();
 
       const classes = cardElement.nativeElement.className;
-      expect(classes).toContain('appearance-outline');
-      expect(classes).toContain('hoverable');
-      expect(classes).toContain('interactive');
+      expect(classes).toContain('psh-appearance-outline');
+      expect(classes).toContain('psh-hoverable');
+      expect(classes).toContain('psh-interactive');
     });
   });
 });

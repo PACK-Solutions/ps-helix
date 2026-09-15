@@ -3,13 +3,13 @@
   flex-direction: column;
 }
 
-.checkbox-container {
+.psh-checkbox-container {
   display: flex;
   flex-direction: column;
   gap: var(--psh-form-field-gap);
 }
 
-.checkbox-label {
+.psh-checkbox-label {
   display: inline-flex;
   align-items: center;
   gap: var(--psh-form-label-gap);
@@ -18,12 +18,12 @@
   color: var(--psh-text-color);
 }
 
-.checkbox-label.label-left {
+.psh-checkbox-label.psh-label-left {
   flex-direction: row-reverse;
   justify-content: space-between;
 }
 
-.checkbox-input {
+.psh-checkbox-input {
   position: absolute;
   opacity: 0;
   width: 0;
@@ -31,7 +31,7 @@
 }
 
 /* Base du carré de sélection */
-.checkbox-control {
+.psh-checkbox-control {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,55 +47,55 @@
 }
 
 /* États via les classes du Host */
-:host.checkbox-checked .checkbox-control,
-:host.checkbox-indeterminate .checkbox-control {
+:host.psh-checkbox-checked .psh-checkbox-control,
+:host.psh-checkbox-indeterminate .psh-checkbox-control {
   background: var(--psh-primary-color);
   border-color: var(--psh-primary-color);
 }
 
 /* Focus Management */
-.checkbox-input:focus-visible + .checkbox-control {
+.psh-checkbox-input:focus-visible + .psh-checkbox-control {
   outline: var(--psh-focus-outline-width) var(--psh-focus-outline-style) var(--psh-focus-outline-color);
   outline-offset: var(--psh-focus-outline-offset);
 }
 
 /* Icônes Phosphor */
-.checkbox-control i {
+.psh-checkbox-control i {
   font-size: 0.875rem;
   line-height: 1;
 }
 
 /* Tailles via Host */
-:host.checkbox-small .checkbox-control {
+:host.psh-checkbox-small .psh-checkbox-control {
   width: 1rem;
   height: 1rem;
 }
 
-:host.checkbox-large .checkbox-control {
+:host.psh-checkbox-large .psh-checkbox-control {
   width: 1.5rem;
   height: 1.5rem;
 }
 
 /* États d'erreur et succès */
-:host.checkbox-error .checkbox-control { border-color: var(--psh-danger-color); }
-:host.checkbox-error.checkbox-checked .checkbox-control { background: var(--psh-danger-color); }
+:host.psh-checkbox-error .psh-checkbox-control { border-color: var(--psh-danger-color); }
+:host.psh-checkbox-error.psh-checkbox-checked .psh-checkbox-control { background: var(--psh-danger-color); }
 
-:host.checkbox-success .checkbox-control { border-color: var(--psh-success-color); }
-:host.checkbox-success.checkbox-checked .checkbox-control { background: var(--psh-success-color); }
+:host.psh-checkbox-success .psh-checkbox-control { border-color: var(--psh-success-color); }
+:host.psh-checkbox-success.psh-checkbox-checked .psh-checkbox-control { background: var(--psh-success-color); }
 
 /* Désactivation */
-:host.checkbox-disabled {
+:host.psh-checkbox-disabled {
   opacity: var(--psh-opacity-disabled);
   cursor: not-allowed;
 }
 
-:host.checkbox-disabled .checkbox-label {
+:host.psh-checkbox-disabled .psh-checkbox-label {
   cursor: not-allowed;
 }
 
-.checkbox-message {
+.psh-checkbox-message {
   font-size: 0.875rem;
 }
 
-.checkbox-message.error { color: var(--psh-danger-color); }
-.checkbox-message.success { color: var(--psh-success-color); }
+.psh-checkbox-message.psh-error { color: var(--psh-danger-color); }
+.psh-checkbox-message.psh-success { color: var(--psh-success-color); }

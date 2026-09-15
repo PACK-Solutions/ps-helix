@@ -10,9 +10,9 @@
   [attr.aria-busy]="loading() ? 'true' : null"
 >
   @if (title() || hasHeaderActions()) {
-    <div class="info-card-header">
+    <div class="psh-info-card-header">
       @if (title()) {
-        <h3 class="info-card-title">
+        <h3 class="psh-info-card-title">
           @if (icon()) {
             <i
               class="ph {{ titleIcon() }}"
@@ -23,27 +23,27 @@
           {{ title() }}
         </h3>
       }
-      <div class="info-card-header-actions">
+      <div class="psh-info-card-header-actions">
         <ng-content select="[card-header-actions]"></ng-content>
       </div>
     </div>
   }
 
-  <div class="info-card-body">
+  <div class="psh-info-card-body">
     @if (loading()) {
-      <div class="info-card-loading">
-        <div class="skeleton-line"></div>
-        <div class="skeleton-line"></div>
-        <div class="skeleton-line short"></div>
+      <div class="psh-info-card-loading">
+        <div class="psh-skeleton-line"></div>
+        <div class="psh-skeleton-line"></div>
+        <div class="psh-skeleton-line psh-short"></div>
       </div>
     } @else {
       <div
-        class="info-card-content"
+        class="psh-info-card-content"
         role="list"
       >
         @if (shouldShowEmptyState()) {
           <div
-            class="info-card-empty-state"
+            class="psh-info-card-empty-state"
             role="status"
             aria-live="polite"
             [attr.data-testid]="'info-card-empty-state'"
@@ -53,20 +53,20 @@
         } @else {
           @for (item of data(); track $index) {
             <div
-              class="info-card-row"
+              class="psh-info-card-row"
               role="listitem"
               [attr.data-index]="$index"
               [class]="item.customClass || ''"
             >
               <div
-                class="info-card-label"
+                class="psh-info-card-label"
                 [style.width]="item.labelWidth || options().labelWidth"
                 [attr.data-label]="item.label"
               >
                 {{ item.label }}
               </div>
               <div
-                class="info-card-value-group"
+                class="psh-info-card-value-group"
                 [style.width]="item.valueWidth || options().valueWidth"
               >
                 <span
@@ -77,14 +77,14 @@
                 @if (isRowCopyable(item) && hasNonEmptyValue(item)) {
                   <button
                     type="button"
-                    class="info-card-copy-btn"
-                    [class.copied]="copiedRowIndex() === $index"
+                    class="psh-info-card-copy-btn"
+                    [class.psh-copied]="copiedRowIndex() === $index"
                     [attr.aria-label]="copyButtonLabel() + ' ' + item.label"
                     (click)="copyRowValue(item, $index); $event.stopPropagation()"
                   >
                     @if (copiedRowIndex() === $index) {
                       <i class="ph ph-check" aria-hidden="true"></i>
-                      <span class="info-card-copy-feedback" aria-hidden="true">{{ copyFeedbackText() }}</span>
+                      <span class="psh-info-card-copy-feedback" aria-hidden="true">{{ copyFeedbackText() }}</span>
                     } @else {
                       <i class="ph ph-copy" aria-hidden="true"></i>
                     }
@@ -94,7 +94,7 @@
             </div>
           }
           <span
-            class="info-card-sr-only"
+            class="psh-info-card-sr-only"
             role="status"
             aria-live="polite"
           >
@@ -107,7 +107,7 @@
     }
   </div>
 
-  <div class="info-card-actions" [class]="getActionsClasses()">
+  <div class="psh-info-card-actions" [class]="'psh-' + getActionsClasses()">
     <ng-content select="[card-actions]"></ng-content>
   </div>
 </div>

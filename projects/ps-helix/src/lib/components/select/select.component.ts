@@ -42,15 +42,15 @@ interface FlatOption<T> {
   changeDetection: ChangeDetectionStrategy.OnPush,
   hostDirectives: [PshClickOutsideDirective],
   host: {
-    '[class.full-width]': 'fullWidth()',
-    '[class.small]': 'size() === "small"',
-    '[class.large]': 'size() === "large"',
-    '[class.outline]': 'appearance() === "outline"',
-    '[class.solid]': 'appearance() === "solid"',
-    '[class.error]': '!!error()',
-    '[class.success]': '!!success()',
-    '[class.disabled]': 'disabled()',
-    '[class.loading]': 'loading()',
+    '[class.psh-full-width]': 'fullWidth()',
+    '[class.psh-small]': 'size() === "small"',
+    '[class.psh-large]': 'size() === "large"',
+    '[class.psh-outline]': 'appearance() === "outline"',
+    '[class.psh-solid]': 'appearance() === "solid"',
+    '[class.psh-error]': '!!error()',
+    '[class.psh-success]': '!!success()',
+    '[class.psh-disabled]': 'disabled()',
+    '[class.psh-loading]': 'loading()',
     '[attr.aria-expanded]': 'isOpen().toString()',
     '[attr.data-state]': 'state()'
   }
@@ -239,7 +239,7 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
   private reposition(): void {
     if (!this.portalRef) return;
     const host = this.elementRef.nativeElement as HTMLElement;
-    const trigger = host.querySelector('.select-trigger') as HTMLElement | null;
+    const trigger = host.querySelector('.psh-select-trigger') as HTMLElement | null;
     if (!trigger) return;
     const side = this.overlayPosition.flipSide(trigger, 'bottom', {
       overlayHeight: this.portalRef.panel.offsetHeight,
@@ -396,7 +396,7 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
   }
 
   protected focusSelect(): void {
-    this.elementRef.nativeElement.querySelector('.select-trigger')?.focus();
+    this.elementRef.nativeElement.querySelector('.psh-select-trigger')?.focus();
   }
 
   private flattenOptions(options: (SelectOption<T> | SelectOptionGroup<T>)[]): SelectOption<T>[] {

@@ -1,17 +1,17 @@
 <div
-  class="collapse"
-  [class.expanded]="expanded()"
-  [class.disabled]="disabled()"
-  [class.outline]="appearance() === 'outline'"
-  [class.small]="size() === 'small'"
-  [class.large]="size() === 'large'"
-  [class.no-animation]="disableAnimation()"
+  class="psh-collapse"
+  [class.psh-expanded]="expanded()"
+  [class.psh-disabled]="disabled()"
+  [class.psh-outline]="appearance() === 'outline'"
+  [class.psh-small]="size() === 'small'"
+  [class.psh-large]="size() === 'large'"
+  [class.psh-no-animation]="disableAnimation()"
   [attr.data-state]="state()"
   [style.--psh-collapse-max-height]="maxHeight()"
 >
   <button
     [id]="headerId()"
-    class="collapse-header"
+    class="psh-collapse-header"
     (click)="toggle()"
     (keydown)="onKeydown($event)"
     [attr.aria-expanded]="expanded()"
@@ -19,27 +19,27 @@
     [disabled]="disabled()"
     type="button"
   >
-    <span class="header-content">
+    <span class="psh-header-content">
       <ng-content select="[collapse-header]">
         <span>Section pliable</span>
       </ng-content>
     </span>
     <i
       class="ph ph-{{ icon() }}"
-      [class.expanded]="expanded()"
+      [class.psh-expanded]="expanded()"
       aria-hidden="true"
     ></i>
   </button>
 
   <div
     [id]="contentId()"
-    class="collapse-content"
+    class="psh-collapse-content"
     role="region"
     [attr.aria-labelledby]="headerId()"
     [attr.aria-hidden]="!expanded()"
     [attr.inert]="expanded() ? null : ''"
   >
-    <div class="content-wrapper">
+    <div class="psh-content-wrapper">
       <ng-content></ng-content>
     </div>
   </div>

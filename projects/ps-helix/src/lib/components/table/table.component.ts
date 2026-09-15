@@ -31,7 +31,7 @@ export const TABLE_CONFIG = new InjectionToken<Partial<TableConfig>>('TABLE_CONF
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     'class': 'psh-table',
-    '[class.full-width]': 'fullWidth()'
+    '[class.psh-full-width]': 'fullWidth()'
   }
 })
 export class PshTableComponent {

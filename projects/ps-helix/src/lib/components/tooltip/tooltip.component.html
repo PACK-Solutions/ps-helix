@@ -1,5 +1,5 @@
 <div
-  class="tooltip-wrapper"
+  class="psh-tooltip-wrapper"
   [attr.id]="triggerId()"
   [attr.aria-describedby]="isVisible() ? tooltipId() : null"
 >
@@ -8,18 +8,18 @@
   @if (isVisible()) {
     <div
       [attr.id]="tooltipId()"
-      class="tooltip"
-      [class.top]="computedPosition() === 'top'"
-      [class.bottom]="computedPosition() === 'bottom'"
-      [class.left]="computedPosition() === 'left'"
-      [class.right]="computedPosition() === 'right'"
-      [class.light]="variant() === 'light'"
-      [class.dark]="variant() === 'dark'"
+      class="psh-tooltip"
+      [class.psh-top]="computedPosition() === 'top'"
+      [class.psh-bottom]="computedPosition() === 'bottom'"
+      [class.psh-left]="computedPosition() === 'left'"
+      [class.psh-right]="computedPosition() === 'right'"
+      [class.psh-light]="variant() === 'light'"
+      [class.psh-dark]="variant() === 'dark'"
       [style.max-width.px]="maxWidth()"
       role="tooltip"
     >
       {{ content() }}
-      <div class="tooltip-arrow"></div>
+      <div class="psh-tooltip-arrow"></div>
     </div>
   }
 </div>

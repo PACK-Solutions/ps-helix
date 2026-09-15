@@ -1,14 +1,14 @@
-.switch-wrapper {
+.psh-switch-wrapper {
   display: inline-block;
 }
 
-.switch-container {
+.psh-switch-container {
   display: inline-flex;
   flex-direction: column;
   gap: var(--psh-form-field-gap);
 }
 
-.switch-label {
+.psh-switch-label {
   display: inline-flex;
   align-items: center;
   cursor: pointer;
@@ -17,25 +17,25 @@
   width: 100%;
 }
 
-.switch-label.label-right {
+.psh-switch-label.psh-label-right {
   flex-direction: row;
   gap: var(--psh-form-label-gap);
 }
 
-.switch-label.label-left {
+.psh-switch-label.psh-label-left {
   flex-direction: row-reverse;
   justify-content: space-between;
   gap: var(--psh-form-label-gap);
 }
 
-.switch-input {
+.psh-switch-input {
   position: absolute;
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-.switch-control {
+.psh-switch-control {
   position: relative;
   display: inline-block;
   width: var(--psh-size-10);
@@ -46,7 +46,7 @@
               border-color var(--psh-animation-duration-fast) var(--psh-animation-easing-default);
 }
 
-.switch-thumb {
+.psh-switch-thumb {
   position: absolute;
   top: var(--psh-size-0-5);
   left: var(--psh-size-0-5);
@@ -58,87 +58,87 @@
               left var(--psh-animation-duration-fast) var(--psh-animation-easing-default);
 }
 
-.switch-input:checked + .switch-control {
+.psh-switch-input:checked + .psh-switch-control {
   background: var(--psh-primary-color);
 }
 
-.switch-input:checked + .switch-control .switch-thumb {
+.psh-switch-input:checked + .psh-switch-control .psh-switch-thumb {
   left: calc(100% - var(--psh-size-4-5) - var(--psh-size-0-5));
 }
 
-.switch-input:focus-visible + .switch-control {
+.psh-switch-input:focus-visible + .psh-switch-control {
   outline: var(--psh-focus-outline-width) var(--psh-focus-outline-style) var(--psh-focus-outline-color);
   outline-offset: var(--psh-focus-outline-offset);
   box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-color);
 }
 
 /* States */
-.switch-wrapper.switch-disabled .switch-label {
+.psh-switch-wrapper.psh-switch-disabled .psh-switch-label {
   opacity: var(--psh-opacity-disabled);
   cursor: not-allowed;
   pointer-events: none;
 }
 
-.switch-wrapper.switch-error .switch-input:not(:checked) + .switch-control {
+.psh-switch-wrapper.psh-switch-error .psh-switch-input:not(:checked) + .psh-switch-control {
   background: color-mix(in srgb, var(--psh-danger-color) 15%, var(--psh-surface-border));
   border: var(--psh-border-width-2) solid var(--psh-danger-color);
 }
 
-.switch-wrapper.switch-error .switch-input:focus-visible + .switch-control {
+.psh-switch-wrapper.psh-switch-error .psh-switch-input:focus-visible + .psh-switch-control {
   box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-error);
 }
 
-.switch-wrapper.switch-success .switch-input:checked + .switch-control {
+.psh-switch-wrapper.psh-switch-success .psh-switch-input:checked + .psh-switch-control {
   background: var(--psh-success-color);
 }
 
-.switch-wrapper.switch-success .switch-input:focus-visible + .switch-control {
+.psh-switch-wrapper.psh-switch-success .psh-switch-input:focus-visible + .psh-switch-control {
   box-shadow: 0 0 0 var(--psh-focus-ring-width) var(--psh-focus-ring-success);
 }
 
-.switch-error {
+.psh-switch-error {
   font-size: var(--psh-font-size-sm);
   color: var(--psh-danger-color);
 }
 
-.switch-success {
+.psh-switch-success {
   font-size: var(--psh-font-size-sm);
   color: var(--psh-success-color);
 }
 
 /* Sizes */
-.switch-container.small .switch-control {
+.psh-switch-container.psh-small .psh-switch-control {
   width: var(--psh-size-8-5);
   height: var(--psh-size-5);
 }
 
-.switch-container.small .switch-thumb {
+.psh-switch-container.psh-small .psh-switch-thumb {
   width: var(--psh-size-4);
   height: var(--psh-size-4);
 }
 
-.switch-container.small .switch-input:checked + .switch-control .switch-thumb {
+.psh-switch-container.psh-small .psh-switch-input:checked + .psh-switch-control .psh-switch-thumb {
   left: calc(100% - var(--psh-size-4) - var(--psh-size-0-5));
 }
 
-.switch-container.large .switch-control {
+.psh-switch-container.psh-large .psh-switch-control {
   width: var(--psh-size-12);
   height: var(--psh-size-6-5);
 }
 
-.switch-container.large .switch-thumb {
+.psh-switch-container.psh-large .psh-switch-thumb {
   width: var(--psh-size-5-5);
   height: var(--psh-size-5-5);
 }
 
-.switch-container.large .switch-input:checked + .switch-control .switch-thumb {
+.psh-switch-container.psh-large .psh-switch-input:checked + .psh-switch-control .psh-switch-thumb {
   left: calc(100% - var(--psh-size-5-5) - var(--psh-size-0-5));
 }
 
 /* Accessibilité - Respect des préférences utilisateur */
 @media (prefers-reduced-motion: reduce) {
-  .switch-control,
-  .switch-thumb {
+  .psh-switch-control,
+  .psh-switch-thumb {
     transition: none;
   }
 }

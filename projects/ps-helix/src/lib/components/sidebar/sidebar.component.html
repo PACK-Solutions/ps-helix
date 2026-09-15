@@ -1,23 +1,23 @@
 <div
-  class="sidebar"
-  [class.open]="open()"
-  [class.fixed]="effectiveMode() === 'fixed'"
-  [class.overlay]="effectiveMode() === 'overlay'"
-  [class.left]="position() === 'left'"
-  [class.right]="position() === 'right'"
+  class="psh-sidebar"
+  [class.psh-open]="open()"
+  [class.psh-fixed]="effectiveMode() === 'fixed'"
+  [class.psh-overlay]="effectiveMode() === 'overlay'"
+  [class.psh-left]="position() === 'left'"
+  [class.psh-right]="position() === 'right'"
   [style.width]="width()"
   [style.--psh-sidebar-width]="width()"
   [pshFocusTrap]="open()"
   [pshFocusTrapAutoFocus]="autoFocus()"
 >
-  <div class="sidebar-content">
+  <div class="psh-sidebar-content">
     <ng-content></ng-content>
   </div>
 </div>
 
 @if (effectiveMode() === 'overlay' && open()) {
   <div
-    class="sidebar-backdrop"
+    class="psh-sidebar-backdrop"
     role="presentation"
     (click)="handleBackdropClick()"
   ></div>

@@ -80,7 +80,7 @@ describe('PshPaginationComponent', () => {
     fixture.nativeElement.querySelector('select') as HTMLSelectElement;
 
   const getItemsPerPageLabel = () =>
-    fixture.nativeElement.querySelector('.items-per-page-label') as HTMLElement;
+    fixture.nativeElement.querySelector('.psh-items-per-page-label') as HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -128,8 +128,8 @@ describe('PshPaginationComponent', () => {
       fixture.detectChanges();
 
       const nav = getNavigation();
-      expect(nav.classList.contains('small')).toBe(true);
-      expect(nav.classList.contains('large')).toBe(false);
+      expect(nav.classList.contains('psh-small')).toBe(true);
+      expect(nav.classList.contains('psh-large')).toBe(false);
     });
 
     it('should not apply size class for size="medium" (default)', () => {
@@ -137,8 +137,8 @@ describe('PshPaginationComponent', () => {
       fixture.detectChanges();
 
       const nav = getNavigation();
-      expect(nav.classList.contains('small')).toBe(false);
-      expect(nav.classList.contains('large')).toBe(false);
+      expect(nav.classList.contains('psh-small')).toBe(false);
+      expect(nav.classList.contains('psh-large')).toBe(false);
     });
 
     it('should apply large class for size="large"', () => {
@@ -146,8 +146,8 @@ describe('PshPaginationComponent', () => {
       fixture.detectChanges();
 
       const nav = getNavigation();
-      expect(nav.classList.contains('large')).toBe(true);
-      expect(nav.classList.contains('small')).toBe(false);
+      expect(nav.classList.contains('psh-large')).toBe(true);
+      expect(nav.classList.contains('psh-small')).toBe(false);
     });
   });
 
@@ -157,7 +157,7 @@ describe('PshPaginationComponent', () => {
       fixture.detectChanges();
 
       const nav = getNavigation();
-      expect(nav.classList.contains('outline')).toBe(false);
+      expect(nav.classList.contains('psh-outline')).toBe(false);
     });
 
     it('should apply outline class for variant="outline"', () => {
@@ -165,7 +165,7 @@ describe('PshPaginationComponent', () => {
       fixture.detectChanges();
 
       const nav = getNavigation();
-      expect(nav.classList.contains('outline')).toBe(true);
+      expect(nav.classList.contains('psh-outline')).toBe(true);
     });
   });
 
@@ -179,8 +179,8 @@ describe('PshPaginationComponent', () => {
         expect.stringContaining('Invalid size')
       );
       const nav = getNavigation();
-      expect(nav.classList.contains('small')).toBe(false);
-      expect(nav.classList.contains('large')).toBe(false);
+      expect(nav.classList.contains('psh-small')).toBe(false);
+      expect(nav.classList.contains('psh-large')).toBe(false);
       consoleSpy.mockRestore();
     });
 
@@ -193,7 +193,7 @@ describe('PshPaginationComponent', () => {
         expect.stringContaining('Invalid variant')
       );
       const nav = getNavigation();
-      expect(nav.classList.contains('outline')).toBe(false);
+      expect(nav.classList.contains('psh-outline')).toBe(false);
       consoleSpy.mockRestore();
     });
 
@@ -983,9 +983,9 @@ describe('PshPaginationComponent', () => {
         const nav = prodFixture.nativeElement.querySelector(
           '[role="navigation"]'
         ) as HTMLElement;
-        expect(nav.classList.contains('small')).toBe(false);
-        expect(nav.classList.contains('large')).toBe(false);
-        expect(nav.classList.contains('outline')).toBe(false);
+        expect(nav.classList.contains('psh-small')).toBe(false);
+        expect(nav.classList.contains('psh-large')).toBe(false);
+        expect(nav.classList.contains('psh-outline')).toBe(false);
       });
 
       expect(pshWarnings(consoleSpy)).toHaveLength(0);

@@ -138,25 +138,25 @@ export class PshStatCardComponent {
 
   /** Classes CSS calculées */
   computedClasses = computed(() => {
-    const classes = ['stat-card'];
+    const classes = ['psh-stat-card'];
     const layout = this.layout();
 
-    classes.push(`appearance-${this.appearance()}`);
+    classes.push(`psh-appearance-${this.appearance()}`);
 
     if (layout === 'vertical') {
-      classes.push('stat-card--vertical');
+      classes.push('psh-stat-card--vertical');
     } else {
-      classes.push('stat-card--horizontal');
+      classes.push('psh-stat-card--horizontal');
     }
 
     if (this.useRowDirection()) {
-      classes.push('stat-card--row');
+      classes.push('psh-stat-card--row');
     }
 
-    if (this.hoverable()) classes.push('hoverable');
-    if (this.interactive()) classes.push('interactive');
-    if (this.loading()) classes.push('loading');
-    if (this.disabled()) classes.push('disabled');
+    if (this.hoverable()) classes.push('psh-hoverable');
+    if (this.interactive()) classes.push('psh-interactive');
+    if (this.loading()) classes.push('psh-loading');
+    if (this.disabled()) classes.push('psh-disabled');
     if (this.cssClass()) classes.push(this.cssClass());
 
     return classes.join(' ');

@@ -29,8 +29,8 @@ export const TAB_BAR_CONFIG = new InjectionToken<Partial<TabBarConfig>>('TAB_BAR
   styleUrls: ['./tab-bar.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
-    '[class.top]': 'position() === "top"',
-    '[class.animated]': 'animated()',
+    '[class.psh-top]': 'position() === "top"',
+    '[class.psh-animated]': 'animated()',
     'role': 'tablist',
     '[attr.aria-label]': '"Navigation par onglets"'
   }

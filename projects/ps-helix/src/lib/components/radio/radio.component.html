@@ -1,8 +1,8 @@
-<div class="radio-container">
-  <label class="radio-label" [class.label-left]="labelPosition() === 'left'">
+<div class="psh-radio-container">
+  <label class="psh-radio-label" [class.psh-label-left]="labelPosition() === 'left'">
     <input
       type="radio"
-      class="radio-input"
+      class="psh-radio-input"
       [checked]="checked()"
       [disabled]="disabled()"
       [required]="required()"
@@ -17,13 +17,13 @@
       (keydown)="handleKeydown($event)"
     />
     <span 
-      class="radio-control"
-      [class.error]="!!error()"
-      [class.success]="!!success()"
+      class="psh-radio-control"
+      [class.psh-error]="!!error()"
+      [class.psh-success]="!!success()"
     >
-      <span class="radio-dot"></span>
+      <span class="psh-radio-dot"></span>
     </span>
-    <span class="radio-text" #labelSlot>
+    <span class="psh-radio-text" #labelSlot>
       @if (label()) {
         {{ label() }}
       } @else {
@@ -33,11 +33,11 @@
   </label>
 
   @if (error()) {
-    <div [id]="errorMessageId()" class="radio-error" role="alert">
+    <div [id]="errorMessageId()" class="psh-radio-error" role="alert">
       {{ error() }}
     </div>
   } @else if (success()) {
-    <div [id]="successMessageId()" class="radio-success" role="status">
+    <div [id]="successMessageId()" class="psh-radio-success" role="status">
       {{ success() }}
     </div>
   }

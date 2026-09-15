@@ -22,7 +22,7 @@ describe('PshTableComponent', () => {
     fixture.nativeElement.querySelector('[role="table"]') as HTMLTableElement;
 
   const getTableWrapper = () =>
-    fixture.nativeElement.querySelector('.table-wrapper') as HTMLElement;
+    fixture.nativeElement.querySelector('.psh-table-wrapper') as HTMLElement;
 
   const getColumnHeaders = () =>
     Array.from(fixture.nativeElement.querySelectorAll('thead th')) as HTMLTableCellElement[];
@@ -32,7 +32,7 @@ describe('PshTableComponent', () => {
   // in it, which is the button for a sortable column and the cell itself otherwise.
   const clickHeader = (index: number) => {
     const header = getColumnHeaders()[index]!;
-    const sortButton = header.querySelector('.sort-button') as HTMLButtonElement | null;
+    const sortButton = header.querySelector('.psh-sort-button') as HTMLButtonElement | null;
     (sortButton ?? header).click();
   };
 
@@ -43,7 +43,7 @@ describe('PshTableComponent', () => {
     Array.from(row.querySelectorAll('td')) as HTMLTableCellElement[];
 
   const getSearchInput = () =>
-    fixture.nativeElement.querySelector('.global-search input') as HTMLInputElement;
+    fixture.nativeElement.querySelector('.psh-global-search input') as HTMLInputElement;
 
   const getEmptyRow = () =>
     fixture.nativeElement.querySelector('tbody tr td') as HTMLTableCellElement;
@@ -147,7 +147,7 @@ describe('PshTableComponent', () => {
 
       const rows = getRows();
       expect(rows.length).toBe(1);
-      expect(rows[0]!.querySelector('.spinner')).toBeTruthy();
+      expect(rows[0]!.querySelector('.psh-spinner')).toBeTruthy();
     });
 
     it('should set correct colspan on loading row', () => {
@@ -460,8 +460,8 @@ describe('PshTableComponent', () => {
       fixture.detectChanges();
 
       const wrapper = getTableWrapper();
-      expect(wrapper.classList.contains('small')).toBe(hasSmall);
-      expect(wrapper.classList.contains('large')).toBe(hasLarge);
+      expect(wrapper.classList.contains('psh-small')).toBe(hasSmall);
+      expect(wrapper.classList.contains('psh-large')).toBe(hasLarge);
     });
   });
 
@@ -472,7 +472,7 @@ describe('PshTableComponent', () => {
       fixture.detectChanges();
 
       const wrapper = getTableWrapper();
-      expect(wrapper.classList.contains('outline')).toBe(false);
+      expect(wrapper.classList.contains('psh-outline')).toBe(false);
     });
 
     it('should apply outline class for variant="outline"', () => {
@@ -481,7 +481,7 @@ describe('PshTableComponent', () => {
       fixture.detectChanges();
 
       const wrapper = getTableWrapper();
-      expect(wrapper.classList.contains('outline')).toBe(true);
+      expect(wrapper.classList.contains('psh-outline')).toBe(true);
     });
   });
 
@@ -492,7 +492,7 @@ describe('PshTableComponent', () => {
       fixture.detectChanges();
 
       const wrapper = getTableWrapper();
-      expect(wrapper.classList.contains('striped')).toBe(true);
+      expect(wrapper.classList.contains('psh-striped')).toBe(true);
     });
 
     it('should not apply striped class by default', () => {
@@ -500,7 +500,7 @@ describe('PshTableComponent', () => {
       fixture.detectChanges();
 
       const wrapper = getTableWrapper();
-      expect(wrapper.classList.contains('striped')).toBe(false);
+      expect(wrapper.classList.contains('psh-striped')).toBe(false);
     });
 
     it('should apply hoverable class when hoverable is true', () => {
@@ -509,7 +509,7 @@ describe('PshTableComponent', () => {
       fixture.detectChanges();
 
       const wrapper = getTableWrapper();
-      expect(wrapper.classList.contains('hoverable')).toBe(true);
+      expect(wrapper.classList.contains('psh-hoverable')).toBe(true);
     });
 
     it('should not apply hoverable class by default', () => {
@@ -517,7 +517,7 @@ describe('PshTableComponent', () => {
       fixture.detectChanges();
 
       const wrapper = getTableWrapper();
-      expect(wrapper.classList.contains('hoverable')).toBe(false);
+      expect(wrapper.classList.contains('psh-hoverable')).toBe(false);
     });
 
     it('should apply bordered class when bordered is true', () => {
@@ -526,7 +526,7 @@ describe('PshTableComponent', () => {
       fixture.detectChanges();
 
       const wrapper = getTableWrapper();
-      expect(wrapper.classList.contains('bordered')).toBe(true);
+      expect(wrapper.classList.contains('psh-bordered')).toBe(true);
     });
 
     it('should not apply bordered class by default', () => {
@@ -534,7 +534,7 @@ describe('PshTableComponent', () => {
       fixture.detectChanges();
 
       const wrapper = getTableWrapper();
-      expect(wrapper.classList.contains('bordered')).toBe(false);
+      expect(wrapper.classList.contains('psh-bordered')).toBe(false);
     });
   });
 
@@ -675,14 +675,14 @@ describe('PshTableComponent', () => {
     ];
 
     const getExpandToggle = (row: HTMLTableRowElement) =>
-      row.querySelector('.expand-toggle') as HTMLButtonElement | null;
+      row.querySelector('.psh-expand-toggle') as HTMLButtonElement | null;
 
     it('should not render expand column when expandable is false', () => {
       fixture.componentRef.setInput('columns', expandableColumns);
       fixture.componentRef.setInput('data', expandableData);
       fixture.detectChanges();
 
-      const expandHeader = fixture.nativeElement.querySelector('.expand-header');
+      const expandHeader = fixture.nativeElement.querySelector('.psh-expand-header');
       expect(expandHeader).toBeFalsy();
     });
 
@@ -694,7 +694,7 @@ describe('PshTableComponent', () => {
 
       const headers = getColumnHeaders();
       expect(headers.length).toBe(3);
-      expect(headers[0]!.classList.contains('expand-header')).toBe(true);
+      expect(headers[0]!.classList.contains('psh-expand-header')).toBe(true);
     });
 
     it('should render a caret button for expandable rows', () => {
@@ -789,7 +789,7 @@ describe('PshTableComponent', () => {
       getExpandToggle(rows[0]!)!.click();
       fixture.detectChanges();
 
-      const childRows = fixture.nativeElement.querySelectorAll('.child-row');
+      const childRows = fixture.nativeElement.querySelectorAll('.psh-child-row');
       expect(childRows.length).toBe(2);
       expect(childRows[0].textContent).toContain('Alice');
       expect(childRows[1].textContent).toContain('Bob');
@@ -824,14 +824,14 @@ describe('PshTableComponent', () => {
       getExpandToggle(rows[0]!)!.click();
       fixture.detectChanges();
 
-      let childRows = fixture.nativeElement.querySelectorAll('.child-row');
+      let childRows = fixture.nativeElement.querySelectorAll('.psh-child-row');
       expect(childRows.length).toBe(2);
 
       const updatedRows = getRows();
       getExpandToggle(updatedRows[3]!)!.click();
       fixture.detectChanges();
 
-      childRows = fixture.nativeElement.querySelectorAll('.child-row');
+      childRows = fixture.nativeElement.querySelectorAll('.psh-child-row');
       expect(childRows.length).toBe(1);
       expect(childRows[0].textContent).toContain('Charlie');
     });
@@ -886,14 +886,14 @@ describe('PshTableComponent', () => {
       getExpandToggle(rows[0]!)!.click();
       fixture.detectChanges();
 
-      let childRows = fixture.nativeElement.querySelectorAll('.child-row');
+      let childRows = fixture.nativeElement.querySelectorAll('.psh-child-row');
       expect(childRows.length).toBe(2);
 
       const headers = getColumnHeaders();
       clickHeader(1);
       fixture.detectChanges();
 
-      childRows = fixture.nativeElement.querySelectorAll('.child-row');
+      childRows = fixture.nativeElement.querySelectorAll('.psh-child-row');
       expect(childRows.length).toBe(2);
     });
 
@@ -956,12 +956,12 @@ describe('PshTableComponent - Expandable rows with custom template', () => {
   });
 
   it('should show expand toggle when expandedRowTemplate is provided even without children', () => {
-    const toggles = hostFixture.nativeElement.querySelectorAll('.expand-toggle');
+    const toggles = hostFixture.nativeElement.querySelectorAll('.psh-expand-toggle');
     expect(toggles.length).toBe(2);
   });
 
   it('should render custom template content when expanded', () => {
-    const toggles = hostFixture.nativeElement.querySelectorAll('.expand-toggle');
+    const toggles = hostFixture.nativeElement.querySelectorAll('.psh-expand-toggle');
     toggles[0].click();
     hostFixture.detectChanges();
 
@@ -971,12 +971,12 @@ describe('PshTableComponent - Expandable rows with custom template', () => {
   });
 
   it('should render expanded-content-row instead of child-row for custom template', () => {
-    const toggles = hostFixture.nativeElement.querySelectorAll('.expand-toggle');
+    const toggles = hostFixture.nativeElement.querySelectorAll('.psh-expand-toggle');
     toggles[0].click();
     hostFixture.detectChanges();
 
-    const expandedRow = hostFixture.nativeElement.querySelector('.expanded-content-row');
-    const childRow = hostFixture.nativeElement.querySelector('.child-row');
+    const expandedRow = hostFixture.nativeElement.querySelector('.psh-expanded-content-row');
+    const childRow = hostFixture.nativeElement.querySelector('.psh-child-row');
     expect(expandedRow).toBeTruthy();
     expect(childRow).toBeFalsy();
   });
@@ -998,7 +998,7 @@ describe('PshTableComponent — sorting is keyboard-operable', () => {
   ];
 
   const sortButtons = () =>
-    Array.from(fixture.nativeElement.querySelectorAll('thead .sort-button')) as HTMLButtonElement[];
+    Array.from(fixture.nativeElement.querySelectorAll('thead .psh-sort-button')) as HTMLButtonElement[];
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({ imports: [PshTableComponent] }).compileComponents();
