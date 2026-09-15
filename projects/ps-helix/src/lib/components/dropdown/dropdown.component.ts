@@ -39,6 +39,7 @@ export class PshDropdownComponent<T = string> {
   // any ancestor overflow / stacking context (a modal body, a scrollable card…).
   private readonly menuTpl = viewChild<TemplateRef<unknown>>('menuTpl');
   private portalRef: PshPortalRef | null = null;
+  private focusTimeout: ReturnType<typeof setTimeout> | null = null;
   private readonly repositionHandler = (): void => this.reposition();
 
   // Regular inputs
@@ -119,6 +120,10 @@ export class PshDropdownComponent<T = string> {
   }
 
   private closePanel(): void {
+    if (this.focusTimeout !== null) {
+      clearTimeout(this.focusTimeout);
+      this.focusTimeout = null;
+    }
     const view = (this.elementRef.nativeElement as HTMLElement).ownerDocument.defaultView;
     view?.removeEventListener('scroll', this.repositionHandler, true);
     view?.removeEventListener('resize', this.repositionHandler);
@@ -151,6 +156,7 @@ export class PshDropdownComponent<T = string> {
         this.openPanel();
       } else {
         this.focusedItemIndex.set(-1);
+        this.restoreFocusToTrigger();
         this.closePanel();
         this.closed.emit();
       }
@@ -169,6 +175,7 @@ export class PshDropdownComponent<T = string> {
     if (this.isOpen()) {
       this.isOpenSignal.set(false);
       this.focusedItemIndex.set(-1);
+      this.restoreFocusToTrigger();
       this.closePanel();
       this.closed.emit();
     }
@@ -323,12 +330,34 @@ export class PshDropdownComponent<T = string> {
   }
 
   private focusItemAtIndex(index: number): void {
-    setTimeout(() => {
+    if (this.focusTimeout !== null) clearTimeout(this.focusTimeout);
+
+    // The handle is kept so a queued focus cannot run against a panel that has since
+    // been detached, or after the component itself is gone.
+    this.focusTimeout = setTimeout(() => {
+      this.focusTimeout = null;
       const item = this.portalRef?.panel.querySelector(
         `[data-dropdown-item-index="${index}"]`,
       ) as HTMLElement | undefined;
       item?.focus();
     });
+  }
+
+  /**
+   * Returns focus to the trigger when the panel holding it goes away, so Escape or a
+   * selection does not drop the user back on <body>. Only when focus is genuinely inside
+   * the panel: closing from an outside click must not steal focus from whatever the user
+   * just clicked. Must run before closePanel() detaches the portal.
+   */
+  private restoreFocusToTrigger(): void {
+    if (!this.isBrowser || !this.portalRef) return;
+
+    const host = this.elementRef.nativeElement as HTMLElement;
+    const active = host.ownerDocument.activeElement;
+    if (!active || !this.portalRef.panel.contains(active)) return;
+
+    const trigger = host.querySelector('.dropdown-trigger') as HTMLElement | null;
+    trigger?.focus();
   }
 
 }
