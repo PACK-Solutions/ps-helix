@@ -52,6 +52,7 @@ export class PshSidebarComponent implements OnDestroy {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly document = inject(DOCUMENT);
   private mediaQueryList: MediaQueryList | null = null;
+  private pendingFrame: number | null = null;
   private mediaQueryHandler: ((e: MediaQueryListEvent) => void) | null = null;
 
   open = model(false);
@@ -144,17 +145,28 @@ export class PshSidebarComponent implements OnDestroy {
     // PshFocusTrapDirective on the .sidebar element (see the template).
     this.addEventListeners();
 
-    requestAnimationFrame(() => {
-      this.opened.emit();
-    });
+    this.scheduleEmit(() => this.opened.emit());
   }
 
   private onSidebarClose(): void {
     if (!isPlatformBrowser(this.platformId)) return;
     this.removeEventListeners();
 
-    requestAnimationFrame(() => {
-      this.closed.emit();
+    this.scheduleEmit(() => this.closed.emit());
+  }
+
+  /**
+   * Defers an emit by one frame so listeners see the panel after it has been laid out.
+   * The handle is kept so a pending frame cannot fire from a destroyed component.
+   */
+  private scheduleEmit(emit: () => void): void {
+    const view = this.document.defaultView;
+    if (!view) return;
+
+    if (this.pendingFrame !== null) view.cancelAnimationFrame(this.pendingFrame);
+    this.pendingFrame = view.requestAnimationFrame(() => {
+      this.pendingFrame = null;
+      emit();
     });
   }
 
@@ -192,5 +204,10 @@ export class PshSidebarComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.cleanupMediaQuery();
     this.removeEventListeners();
+
+    if (this.pendingFrame !== null) {
+      this.document.defaultView?.cancelAnimationFrame(this.pendingFrame);
+      this.pendingFrame = null;
+    }
   }
 }

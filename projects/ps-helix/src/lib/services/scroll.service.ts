@@ -1,4 +1,5 @@
 import { Injectable, PLATFORM_ID, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
@@ -12,12 +13,14 @@ export class ScrollService {
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
   constructor() {
-    // Subscribe to router events
+    // providedIn: 'root' makes this effectively immortal in an application, but the
+    // subscription still leaks wherever the root injector is recreated — tests, and
+    // micro-frontends that bootstrap more than once. Every other subscription in the
+    // library is torn down; this one was the exception.
     this.router.events.pipe(
-      // Filter only NavigationEnd events
-      filter(event => event instanceof NavigationEnd)
+      filter(event => event instanceof NavigationEnd),
+      takeUntilDestroyed(),
     ).subscribe(() => {
-      // Reset scroll position (browser only)
       if (this.isBrowser) {
         this.document.defaultView?.scrollTo(0, 0);
       }
