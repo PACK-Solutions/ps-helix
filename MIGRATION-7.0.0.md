@@ -158,7 +158,7 @@ one by file so you can go through them.
 
 ## 5. Every component class is now `psh-`
 
-The 353 classes the components render are namespaced: `.card-body` → `.psh-card-body`,
+The 354 classes the components render are namespaced: `.card-body` → `.psh-card-body`,
 `.stat-value` → `.psh-stat-value`, `.hoverable` → `.psh-hoverable`.
 
 This is not cosmetic. Four components — `psh-card`, `psh-horizontal-card`, `psh-info-card`,
@@ -310,7 +310,92 @@ Three inputs the audit proposed making required were left alone, each for a conc
 - **`psh-stat-card.value`** — the component has a `loading` state, so "no value yet" is a
   state it is built to render.
 
-## 7. Styling a component from outside
+## 7. Slots, and the end of `cssClass`
+
+### 7.1 One scheme for slots: `psh-<component>-<zone>`
+
+```html
+<!-- before -->                          <!-- after -->
+<div card-header-extra>…</div>           <div psh-card-header-actions>…</div>
+<div card-actions>…</div>                <div psh-card-actions>…</div>
+<img horizontal-side src="…" />          <img psh-horizontal-card-side src="…" />
+<span modal-title>…</span>               <span psh-modal-title>…</span>
+```
+
+Three things were wrong, all in the card family. `info-card` projected into `[card-actions]`
+and `[card-header-actions]` — the *card* prefix, on a different component.
+`horizontal-card` used `[horizontal-*]`, a prefix that names nothing. And `card` called the
+end-of-header slot `extra` while `info-card` called the same zone `actions`, with card's own
+comment describing it as *« badge/tag ou actions secondaires »*.
+
+**The `psh-` prefix is not decoration.** A slot is an attribute selector, and that is exactly
+how Angular selects directives: if you had a `[card-footer]` directive of your own, it was
+being instantiated on everything you projected into that slot.
+
+`[card-actions]` resolves to two different names, so the codemod rewrites it per enclosing
+element: `psh-card-actions` inside `<psh-card>`, `psh-info-card-actions` inside
+`<psh-info-card>`.
+
+| Component | Slots |
+|---|---|
+| `psh-card` | `psh-card-header-icon`, `psh-card-header-content`, `psh-card-header-actions`, `psh-card-footer`, `psh-card-actions` |
+| `psh-info-card` | `psh-info-card-header-actions`, `psh-info-card-actions` |
+| `psh-horizontal-card` | `psh-horizontal-card-side`, `psh-horizontal-card-header`, `psh-horizontal-card-actions` |
+| `psh-collapse` | `psh-collapse-header` |
+| `psh-dropdown` | `psh-dropdown-trigger`, `psh-dropdown-menu` |
+| `psh-input` | `psh-input-label`, `psh-input-error`, `psh-input-success`, `psh-input-hint` |
+| `psh-textarea` | `psh-textarea-label`, `psh-textarea-error`, `psh-textarea-success`, `psh-textarea-hint` |
+| `psh-modal` | `psh-modal-title`, `psh-modal-footer` |
+
+### 7.2 `cssClass` and `customStyle` are gone — the card is its own host
+
+The four card components rendered a wrapper `<div>` that carried every class the library set.
+Your `<psh-card class="…">` landed on the host, one level above all of it, which is precisely
+why these four — and only these four — had passthrough inputs.
+
+They are the host now.
+
+```html
+<!-- before -->                              <!-- after -->
+<psh-card cssClass="w-full elevated">        <psh-card class="w-full elevated">
+<psh-card [customStyle]="{ margin: 0 }">     <psh-card [style]="{ margin: 0 }">
+```
+
+The codemod does both rewrites. It reports instead of rewriting when the tag already has a
+native `class` or `style`, because merging them is a decision about which classes should win.
+
+**`psh-modal.styleClass` becomes `panelClass`** — renamed, not removed. The modal's panel is
+rendered away from the host (a backdrop covering the viewport, positioned by the overlay
+stack), so no class on `<psh-modal>` can reach it. That is the one shape where a passthrough
+still earns its place. `backdropClass` is unchanged.
+
+**One DOM level less** on every card, incidentally: their styles resolve on the host rather
+than a child.
+
+### 7.3 `info-card` row colours
+
+The last of the six names the colour axis had. It outlived the other five because it is not
+an attribute: it sits in an `InfoCardEmphasis` object, inside a `data` array, where no
+template rewrite could reach it.
+
+```ts
+// before
+{ label: 'Statut', value: 'Actif', emphasis: { bold: true, tone: 'success' } }
+{ label: 'E-mail', value: '—',     emphasis: { tone: 'muted' } }
+
+// after
+{ label: 'Statut', value: 'Actif', emphasis: { bold: true, color: 'success' } }
+{ label: 'E-mail', value: '—',     emphasis: { color: 'neutral' } }
+```
+
+`muted` becomes `neutral`, the same substitution `psh-card`'s `default` got in §3 and for the
+same reason: both meant "no semantic emphasis". `secondary` now works too — the old closed
+six-value union simply did not have it. The classes follow:
+`.psh-info-card-value--tone-*` → `.psh-info-card-value--color-*`.
+
+`InfoCardTone` still compiles, as a deprecated alias of `PshColor`.
+
+## 8. Styling a component from outside
 
 Component custom properties used to be declared on the element that consumed them, so
 setting one on the host did nothing:
@@ -333,7 +418,7 @@ The 82 available properties are listed per component in
 If you were reaching in with `::ng-deep` to work around the old behaviour, check whether a
 property now covers your case.
 
-## 8. Smaller changes
+## 9. Smaller changes
 
 - **Dependencies.** `date-fns` is gone (it had zero usages). `@ngx-translate/core` is an
   optional peer with a `>=15` range — if you were held to `^15` by ps-helix, you no longer
