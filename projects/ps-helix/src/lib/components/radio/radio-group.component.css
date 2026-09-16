@@ -1,0 +1,58 @@
+/* ============================================================================
+   psh-radio-group
+
+   The group is its own host: no wrapper element, following the rule the four
+   card components moved to in 7.0.0.
+   ========================================================================== */
+
+:host {
+  display: block;
+}
+
+.psh-radio-group-label {
+  display: block;
+  margin-bottom: var(--psh-radio-group-label-gap, var(--psh-spacing-xs));
+  font-size: var(--psh-font-size-sm);
+  font-weight: var(--psh-font-weight-medium);
+  color: var(--psh-text-color);
+}
+
+.psh-radio-group-label .psh-required-mark {
+  margin-left: var(--psh-spacing-2xs);
+  color: var(--psh-danger-color);
+}
+
+.psh-radio-group-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--psh-radio-group-gap, var(--psh-spacing-sm));
+}
+
+:host(.psh-horizontal) .psh-radio-group-items {
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: var(--psh-radio-group-gap-horizontal, var(--psh-spacing-lg));
+}
+
+:host(.psh-radio-group-disabled) {
+  opacity: var(--psh-radio-group-disabled-opacity, 0.6);
+}
+
+.psh-radio-group-error,
+.psh-radio-group-success,
+.psh-radio-group-hint {
+  margin-top: var(--psh-radio-group-message-gap, var(--psh-spacing-xs));
+  font-size: var(--psh-font-size-sm);
+}
+
+.psh-radio-group-error {
+  color: var(--psh-danger-color);
+}
+
+.psh-radio-group-success {
+  color: var(--psh-success-color);
+}
+
+.psh-radio-group-hint {
+  color: var(--psh-text-color-secondary);
+}

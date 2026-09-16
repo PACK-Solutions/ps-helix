@@ -1,0 +1,20 @@
+@if (label()) {
+  <span [id]="labelId()" class="psh-radio-group-label">
+    {{ label() }}
+    @if (required()) {
+      <span class="psh-required-mark" aria-hidden="true">*</span>
+    }
+  </span>
+}
+
+<div class="psh-radio-group-items">
+  <ng-content></ng-content>
+</div>
+
+@if (error()) {
+  <div [id]="errorId()!" class="psh-radio-group-error" role="alert">{{ error() }}</div>
+} @else if (success()) {
+  <div [id]="successId()!" class="psh-radio-group-success" role="status">{{ success() }}</div>
+} @else if (hint()) {
+  <div [id]="hintId()!" class="psh-radio-group-hint">{{ hint() }}</div>
+}
