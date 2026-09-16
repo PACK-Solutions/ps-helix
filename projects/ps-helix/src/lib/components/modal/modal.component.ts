@@ -23,6 +23,7 @@ import { PshButtonComponent } from '../button/button.component';
 import { PshFocusTrapDirective } from '../../a11y/focus-trap.directive';
 import { ModalSize, ModalConfig } from './modal.types';
 import { PshOverlayService, OverlayHandle } from '../../a11y/overlay.service';
+import { pshUniqueId } from '../../utils/unique-id';
 
 /**
  * Injection token for global modal configuration
@@ -96,7 +97,7 @@ export class ModalService {
    * Generates a unique identifier for a modal instance
    */
   generateId(): string {
-    return `modal-${Math.random().toString(36).substring(2, 11)}`;
+    return pshUniqueId('modal');
   }
 
   /**

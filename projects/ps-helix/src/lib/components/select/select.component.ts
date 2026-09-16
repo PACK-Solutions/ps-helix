@@ -12,15 +12,18 @@ import {
   DestroyRef,
   TemplateRef,
   ViewContainerRef,
-  viewChild
+  viewChild,
+  effect
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, FormsModule, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
 import { PshClickOutsideDirective } from '../../a11y/click-outside.directive';
 import { PshOverlayPositionService } from '../../a11y/overlay-position.service';
 import { PshPortalService, PshPortalRef } from '../../a11y/portal.service';
 import { SelectOption, SelectOptionGroup, SelectSize, SearchConfig } from './select.types';
+import { pshUniqueId } from '../../utils/unique-id';
+import { pshIsEmptyValue, pshRequiredError } from '../../utils/required-validator';
 
 interface FlatOption<T> {
   option: SelectOption<T>;
@@ -33,6 +36,7 @@ interface FlatOption<T> {
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.css'],
   providers: [
+    { provide: NG_VALIDATORS, useExisting: PshSelectComponent, multi: true },
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: PshSelectComponent,
@@ -55,7 +59,7 @@ interface FlatOption<T> {
     '[attr.data-state]': 'state()'
   }
 })
-export class PshSelectComponent<T = unknown> implements ControlValueAccessor, FormValueControl<T | T[] | null> {
+export class PshSelectComponent<T = unknown> implements ControlValueAccessor, FormValueControl<T | T[] | null>, Validator {
   private readonly elementRef = inject(ElementRef);
   private readonly destroyRef = inject(DestroyRef);
   private readonly overlayPosition = inject(PshOverlayPositionService);
@@ -71,11 +75,18 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
   // Side the panel actually opens on, after viewport collision/flip.
   protected readonly resolvedSide = signal<'top' | 'bottom'>('bottom');
 
-  protected readonly selectId = `psh-sel-${Math.random().toString(36).substring(2, 11)}`;
+  protected readonly selectId = pshUniqueId('select');
 
   readonly value = model<T | T[] | null>(null);
   readonly disabled = model<boolean>(false);
   readonly touched = model<boolean>(false);
+/**
+   * Emitted when the user finishes interacting with the control.
+   *
+   * Part of `FormUiControl`: the `Field` directive listens to **this**, not to
+   * `touchedChange`, to mark the bound field as touched.
+   */
+  readonly touch = output<void>();
 
   size = input<SelectSize>('medium');
   appearance = input<PshFieldAppearance>('outline');
@@ -197,6 +208,13 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
   });
 
   constructor() {
+    // A value change revalidates by itself; a change to `required` does not — Angular has
+    // no reason to suspect the validator's answer moved. This is what the callback is for.
+    effect(() => {
+      this.required();
+      this.onValidatorChange();
+    });
+
     // Close on outside click via the shared click-outside primitive. The options
     // panel is teleported to the body (outside the host), so a click inside it
     // must NOT count as "outside" — otherwise selecting an option would close the
@@ -250,6 +268,7 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
 
   private onChange: (value: T | T[] | null) => void = () => {};
   private onTouched: () => void = () => {};
+  private onValidatorChange: () => void = () => {};
 
   writeValue(value: unknown): void {
     this.value.set(value as T | T[] | null);
@@ -303,6 +322,7 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
     }
     this.onTouched();
     this.touched.set(true);
+    this.touch.emit();
   }
 
   clear(event: MouseEvent): void {
@@ -436,4 +456,19 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
       }
     }
   }
+
+  /**
+   * Makes `required` a real constraint rather than an asterisk.
+   *
+   * Re-run whenever `required` or the value changes: `registerOnValidatorChange` gives us
+   * the callback that tells Angular to revalidate, and an effect fires it.
+   */
+  validate(): ValidationErrors | null {
+    return pshRequiredError(this.required(), pshIsEmptyValue(this.value()));
+  }
+
+  registerOnValidatorChange(fn: () => void): void {
+    this.onValidatorChange = fn;
+  }
+
 }

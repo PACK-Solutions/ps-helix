@@ -16,6 +16,7 @@ import {
 import { isPlatformBrowser } from '@angular/common';
 import { PshOverlayPositionService } from '../../a11y/overlay-position.service';
 import { TooltipPosition, TooltipConfig, TooltipVariant } from './tooltip.types';
+import { pshUniqueId } from '../../utils/unique-id';
 
 export const TOOLTIP_CONFIG = new InjectionToken<Partial<TooltipConfig>>('TOOLTIP_CONFIG', {
   factory: () => ({
@@ -176,6 +177,6 @@ export class PshTooltipComponent implements OnDestroy {
   }
 
   private generateUniqueId(): string {
-    return `psh-tooltip-${Math.random().toString(36).substr(2, 9)}`;
+    return pshUniqueId('tooltip');
   }
 }

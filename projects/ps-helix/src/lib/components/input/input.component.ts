@@ -13,14 +13,16 @@ import {
   ChangeDetectorRef,
   TemplateRef,
   ViewContainerRef,
-  viewChild
+  viewChild,
+  effect
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
 import { PshPortalService, PshPortalRef } from '../../a11y/portal.service';
 import { PshOverlayPositionService } from '../../a11y/overlay-position.service';
 import { InputType, InputSize, AutocompleteConfig, INPUT_LABELS } from './input.types';
+import { pshIsEmptyValue, pshRequiredError } from '../../utils/required-validator';
 
 @Component({
   selector: 'psh-input',
@@ -28,6 +30,7 @@ import { InputType, InputSize, AutocompleteConfig, INPUT_LABELS } from './input.
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.css'],
   providers: [
+    { provide: NG_VALIDATORS, useExisting: PshInputComponent, multi: true },
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: PshInputComponent,
@@ -51,7 +54,7 @@ import { InputType, InputSize, AutocompleteConfig, INPUT_LABELS } from './input.
     '[class.psh-solid]': 'appearance() === "solid"',
   }
 })
-export class PshInputComponent implements ControlValueAccessor, FormValueControl<string> {
+export class PshInputComponent implements ControlValueAccessor, FormValueControl<string>, Validator {
   private readonly elementRef = inject(ElementRef);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly destroyRef = inject(DestroyRef);
@@ -74,6 +77,13 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
   readonly readonly = input(false);
   readonly loading = input(false);
   readonly touched = model(false);
+/**
+   * Emitted when the user finishes interacting with the control.
+   *
+   * Part of `FormUiControl`: the `Field` directive listens to **this**, not to
+   * `touchedChange`, to mark the bound field as touched.
+   */
+  readonly touch = output<void>();
 
   appearance = input<PshFieldAppearance>('outline');
   size = input<InputSize>('medium');
@@ -149,6 +159,13 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
   }
 
   constructor() {
+    // A value change revalidates by itself; a change to `required` does not — Angular has
+    // no reason to suspect the validator's answer moved. This is what the callback is for.
+    effect(() => {
+      this.required();
+      this.onValidatorChange();
+    });
+
     this.destroyRef.onDestroy(() => {
       if (this.blurTimeoutId) clearTimeout(this.blurTimeoutId);
       if (this.debounceTimeoutId) clearTimeout(this.debounceTimeoutId);
@@ -199,6 +216,7 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
 
   private onChange = (_: string) => {};
   private onTouched = () => {};
+  private onValidatorChange: () => void = () => {};
 
   writeValue(value: unknown): void {
     const safeValue = typeof value === 'string' ? value : '';
@@ -238,6 +256,7 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
     this.blurred.emit();
     this.onTouched();
     this.touched.set(true);
+    this.touch.emit();
 
     if (this.blurTimeoutId) clearTimeout(this.blurTimeoutId);
     this.blurTimeoutId = setTimeout(() => {
@@ -338,4 +357,19 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
       console.error('[psh-input] Suggestion provider failed:', error);
     }
   }
+
+  /**
+   * Makes `required` a real constraint rather than an asterisk.
+   *
+   * Re-run whenever `required` or the value changes: `registerOnValidatorChange` gives us
+   * the callback that tells Angular to revalidate, and an effect fires it.
+   */
+  validate(): ValidationErrors | null {
+    return pshRequiredError(this.required(), pshIsEmptyValue(this.value()));
+  }
+
+  registerOnValidatorChange(fn: () => void): void {
+    this.onValidatorChange = fn;
+  }
+
 }

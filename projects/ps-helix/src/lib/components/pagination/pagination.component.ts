@@ -14,6 +14,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { PaginationSize, PaginationVariant, PaginationConfig } from './pagination.types';
 import { InjectionToken } from '@angular/core';
+import { pshUniqueId } from '../../utils/unique-id';
 
 export const PAGINATION_CONFIG = new InjectionToken<Partial<PaginationConfig>>(
   'PAGINATION_CONFIG',
@@ -39,8 +40,7 @@ export const PAGINATION_CONFIG = new InjectionToken<Partial<PaginationConfig>>(
 })
 export class PshPaginationComponent {
   private config = inject(PAGINATION_CONFIG);
-  private static idCounter = 0;
-  private readonly uniqueId = `pagination-${++PshPaginationComponent.idCounter}`;
+  private readonly uniqueId = pshUniqueId('pagination');
 
   currentPage = model(1);
   totalPages = input(1);

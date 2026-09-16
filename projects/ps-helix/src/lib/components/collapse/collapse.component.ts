@@ -9,6 +9,7 @@ import {
   output
 } from '@angular/core';
 import { CollapseVariant, CollapseSize } from './collapse.types';
+import { pshUniqueId } from '../../utils/unique-id';
 
 @Component({
   selector: 'psh-collapse',
@@ -17,7 +18,6 @@ import { CollapseVariant, CollapseSize } from './collapse.types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PshCollapseComponent {
-  private static idCounter = 0;
 
   expanded = model(false);
 
@@ -53,7 +53,7 @@ export class PshCollapseComponent {
   closed = output<void>();
   toggled = output<boolean>();
 
-  private readonly uniqueId = `collapse-${++PshCollapseComponent.idCounter}`;
+  private readonly uniqueId = pshUniqueId('collapse');
 
   protected readonly headerId = computed(() => {
     const customId = this.id();
