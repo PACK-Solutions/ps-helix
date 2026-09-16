@@ -158,7 +158,7 @@ one by file so you can go through them.
 
 ## 5. Every component class is now `psh-`
 
-The 361 classes the components render are namespaced: `.card-body` → `.psh-card-body`,
+The 365 classes the components render are namespaced: `.card-body` → `.psh-card-body`,
 `.stat-value` → `.psh-stat-value`, `.hoverable` → `.psh-hoverable`.
 
 This is not cosmetic. Four components — `psh-card`, `psh-horizontal-card`, `psh-info-card`,
@@ -478,7 +478,70 @@ Five strategies became one. Three of them were unsafe:
 Ids look like `psh-input-1`, `psh-select-2`. If you asserted on the old shapes in tests,
 they have changed; if you passed your own `id`, nothing has.
 
-## 9. Styling a component from outside
+## 9. Extension points, where there were none
+
+One component out of thirty exposed a public `TemplateRef` before 7.0.0 — `psh-table`, for
+body cells. Everything else rendered from a closed interface (`MenuItem`, `TabBarItem`,
+`SelectOption`), so an avatar in a select option, a filter in a table header or an illustrated
+empty state had exactly one route: reach into the component's DOM with `::ng-deep`.
+
+Nothing below is breaking. Every template is optional, and the default rendering is unchanged
+when you do not pass one.
+
+| Component | New | Replaces |
+|---|---|---|
+| `psh-select` | `optionTemplate` | `::ng-deep` into a panel teleported to `document.body` |
+| `psh-table` | `headerTemplate` | the header was `{{ column.label }}` + a sort icon, full stop |
+| `psh-table` | `emptyTemplate` | `emptyMessage` was a `string`: no illustration, no CTA |
+| `psh-table` | `rowClass` | `InfoCardData.customClass` existed one component over; a table had no way to mark a row |
+| `psh-menu` | `itemTemplate` | `MenuItem` described an item completely |
+| `psh-tab-bar` | `itemTemplate` | `TabBarItem` likewise |
+| `psh-alert` | `[psh-alert-actions]` slot | one slot, in the message area — a "Retry" button had nowhere to go |
+
+**Each template replaces the element's *content*, never the element.** `role="option"`,
+`role="menuitem"`, `role="tab"`, `aria-selected`, `aria-sort`, the roving tabindex and the
+keyboard handling all stay with the component. A custom header receives `toggleSort` as a
+callback rather than being left to wire sorting itself — which is how B1's keyboard fix stays
+fixed.
+
+### 9.1 `psh-flow-step` rendered nothing, on purpose
+
+It was `template: ''` with a permanent `display: none`, and `psh-state-flow-indicator` had no
+`<ng-content>` either — so content projected into a step was **discarded without a word**. A
+developer copying the `psh-step` pattern, which does project, got a blank screen and no error.
+
+It projects now, shows the active step, hides the others, and each is a `tabpanel` labelled by
+its tab. `subtitle`, `icon` and `success` were also missing against `psh-step`; they exist.
+
+### 9.2 `psh-avatar`
+
+**The initials fallback could never run.** The `<img>` had no `(error)` handler, so a 404 left
+the browser's broken-image icon where a name should be. It falls back now, and retries when
+`src` changes rather than staying failed forever.
+
+Two new inputs/outputs: `interactive` (adds `role="button"`, a tab stop and a focus ring) and
+`clicked` — every other clickable component in the library had one.
+
+The failure output is **`imageFailed`, not `error`**: `error` is a native DOM event name, and
+`error` already means "the validation message" on every form control here.
+
+### 9.3 Two dimensions that disagreed with the rest
+
+**`psh-tooltip.maxWidth` is a `string`.** It was a `number` meaning implicit pixels, while
+`sidebar.width` and `horizontal-card.sideWidth` were already strings — three treatments for
+one notion, and this was the one that could not express `20rem` or `min(90vw, 24rem)`.
+
+```html
+<psh-tooltip [maxWidth]="300" />       <!-- before -->
+<psh-tooltip maxWidth="300px" />       <!-- after -->
+```
+
+**`psh-collapse.maxHeight` defaults to `'auto'`**, which does not clip. It defaulted to a
+magic `'1000px'` that **silently truncated** taller content, with no warning and no way out.
+A fixed length still works and is what gives the open/close a height animation; `auto` animates
+opacity and offset only. If you were relying on the clip, pass `maxHeight="1000px"`.
+
+## 10. Styling a component from outside
 
 Component custom properties used to be declared on the element that consumed them, so
 setting one on the host did nothing:
@@ -501,7 +564,7 @@ The 82 available properties are listed per component in
 If you were reaching in with `::ng-deep` to work around the old behaviour, check whether a
 property now covers your case.
 
-## 10. Smaller changes
+## 11. Smaller changes
 
 - **Dependencies.** `date-fns` is gone (it had zero usages). `@ngx-translate/core` is an
   optional peer with a `>=15` range — if you were held to `^15` by ps-helix, you no longer

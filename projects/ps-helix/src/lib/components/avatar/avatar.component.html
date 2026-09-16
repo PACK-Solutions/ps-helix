@@ -5,12 +5,22 @@
   [class.psh-small]="size() === 'small'"
   [class.psh-large]="size() === 'large'"
   [class.psh-xlarge]="size() === 'xlarge'"
-  role="img"
+  [class.psh-interactive]="interactive()"
+  [attr.role]="interactive() ? 'button' : 'img'"
+  [attr.tabindex]="interactive() ? 0 : null"
   [attr.aria-label]="computedAriaLabel()"
   [attr.data-state]="state()"
+  (click)="handleClick($event)"
+  (keydown)="handleKeydown($event)"
 >
   @if (hasImage()) {
-    <img [src]="src()" [attr.alt]="alt()" class="psh-avatar-image" />
+    <!-- (error) is what makes the initials/icon fallback below reachable at all. -->
+    <img
+      [src]="src()"
+      [attr.alt]="alt()"
+      class="psh-avatar-image"
+      (error)="handleImageError($event)"
+    />
   } @else if (hasInitials()) {
     <span class="psh-avatar-initials">{{ initials() }}</span>
   } @else if (hasIcon()) {

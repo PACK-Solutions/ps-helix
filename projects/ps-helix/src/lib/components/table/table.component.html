@@ -39,7 +39,12 @@
             [attr.aria-sort]="column.sortable ? (currentSort()?.key === column.key ? (currentSort()?.direction === 'asc' ? 'ascending' : 'descending') : 'none') : null"
             [class.psh-sortable]="column.sortable"
           >
-            @if (column.sortable) {
+            @if (headerTemplate()) {
+              <ng-container
+                [ngTemplateOutlet]="headerTemplate()!"
+                [ngTemplateOutletContext]="headerContext(column)"
+              ></ng-container>
+            } @else if (column.sortable) {
               <!-- A real button, so sorting is reachable by keyboard and gets a native
                    focus ring. The icons are decorative: aria-sort on the th carries the
                    state, which is why they had aria-hidden cancelling their aria-label. -->
@@ -78,12 +83,20 @@
       } @else if (filteredData().length === 0) {
         <tr class="psh-empty-row">
           <td [attr.colspan]="totalColumns()">
-            {{ computedEmptyMessage() }}
+            @if (emptyTemplate()) {
+              <ng-container
+                [ngTemplateOutlet]="emptyTemplate()!"
+                [ngTemplateOutletContext]="emptyContext()"
+              ></ng-container>
+            } @else {
+              {{ computedEmptyMessage() }}
+            }
           </td>
         </tr>
       } @else {
         @for (row of filteredData(); track row.id) {
           <tr
+            [class]="rowClasses(row)"
             [class.psh-expanded]="expandable() && isRowExpanded(row)"
             [attr.tabindex]="hoverable() ? 0 : null"
             (click)="handleRowClick(row)"

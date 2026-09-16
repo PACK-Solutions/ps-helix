@@ -55,7 +55,14 @@ export class PshTooltipComponent implements OnDestroy {
   position = input<TooltipPosition>(this.config.position ?? 'top');
   showDelay = input<number>(this.config.showDelay ?? 200);
   hideDelay = input<number>(this.config.hideDelay ?? 100);
-  maxWidth = input<number>(this.config.maxWidth ?? 200);
+  /**
+   * Any CSS length: `'200px'`, `'20rem'`, `'min(90vw, 24rem)'`.
+   *
+   * Was a `number` meaning implicit pixels, while `sidebar.width` and
+   * `horizontal-card.sideWidth` were already strings — three treatments for one notion, and
+   * this was the one that could not express a relative width.
+   */
+  maxWidth = input<string>(`${this.config.maxWidth ?? 200}px`);
   autoFlip = input<boolean>(this.config.autoFlip ?? true);
 
   content = input<string>('');
@@ -170,10 +177,22 @@ export class PshTooltipComponent implements OnDestroy {
     this.computedPosition.set(
       this.overlayPosition.flipSide(this.elementRef.nativeElement, this.position(), {
         overlayHeight: 40,
-        overlayWidth: Math.min(this.maxWidth(), 200),
+        overlayWidth: this.maxWidthInPixels(),
         offset: 12,
       }),
     );
+  }
+
+  /**
+   * The flip calculation needs a number. A relative length — `50vw`, `min(…)` — cannot be
+   * resolved without layout, so it falls back to the 200px the calculation used before;
+   * getting the flip slightly wrong is better than not flipping at all.
+   */
+  private maxWidthInPixels(): number {
+    const parsed = Number.parseFloat(this.maxWidth());
+    return Number.isFinite(parsed) && this.maxWidth().trim().endsWith('px')
+      ? Math.min(parsed, 200)
+      : 200;
   }
 
   private generateUniqueId(): string {

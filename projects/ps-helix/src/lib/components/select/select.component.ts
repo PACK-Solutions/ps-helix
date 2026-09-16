@@ -15,13 +15,13 @@ import {
   viewChild,
   effect
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgTemplateOutlet } from '@angular/common';
 import { ControlValueAccessor, FormsModule, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
 import { PshClickOutsideDirective } from '../../a11y/click-outside.directive';
 import { PshOverlayPositionService } from '../../a11y/overlay-position.service';
 import { PshPortalService, PshPortalRef } from '../../a11y/portal.service';
-import { SelectOption, SelectOptionGroup, SelectSize, SearchConfig } from './select.types';
+import { SelectOption, SelectOptionGroup, SelectSize, SearchConfig , SelectOptionContext } from './select.types';
 import { pshUniqueId } from '../../utils/unique-id';
 import { pshIsEmptyValue, pshRequiredError } from '../../utils/required-validator';
 
@@ -32,7 +32,7 @@ interface FlatOption<T> {
 
 @Component({
   selector: 'psh-select',
-  imports: [CommonModule, FormsModule],
+  imports: [NgTemplateOutlet, CommonModule, FormsModule],
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.css'],
   providers: [
@@ -98,6 +98,20 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
   required = input(false);
 
   options = input.required<(SelectOption<T> | SelectOptionGroup<T>)[]>();
+
+  /**
+   * Replaces the content of every option.
+   *
+   * The rendering was hard-coded — icon, label, description — so showing an avatar, a badge
+   * or two columns in an option meant `::ng-deep` into a panel that is teleported to
+   * `document.body`. The template receives the option, whether it is selected, and whether it
+   * is disabled.
+   *
+   * It replaces the option's *content* only: `role="option"`, the id, `aria-selected` and the
+   * click stay with the component, so a custom option cannot take the listbox's accessibility
+   * down with it.
+   */
+  readonly optionTemplate = input<TemplateRef<SelectOptionContext<T>>>();
   label = input('');
   placeholder = input<string>('Sélectionner une option');
   multiplePlaceholder = input<string>('Sélectionner des options');
@@ -391,6 +405,10 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
 
   protected isOptionGroup(item: SelectOption<T> | SelectOptionGroup<T>): item is SelectOptionGroup<T> {
     return 'options' in item;
+  }
+
+  protected optionContext(option: SelectOption<T>, disabled: boolean): SelectOptionContext<T> {
+    return { $implicit: option, selected: this.isSelected(option), disabled };
   }
 
   protected getOptionKey(item: SelectOption<T> | SelectOptionGroup<T>): string {

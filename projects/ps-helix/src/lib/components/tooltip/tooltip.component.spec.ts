@@ -72,13 +72,24 @@ describe('PshTooltipComponent', () => {
     }));
 
     it('should apply maxWidth style when visible', fakeAsync(() => {
-      fixture.componentRef.setInput('maxWidth', 300);
+      fixture.componentRef.setInput('maxWidth', '300px');
       fixture.detectChanges();
 
       showTooltip();
 
       const tooltip = getTooltip();
       expect(tooltip?.style.maxWidth).toBe('300px');
+    }));
+
+    it('accepts any CSS length, not just pixels', fakeAsync(() => {
+      // The point of the string: `sidebar.width` and `horizontal-card.sideWidth` already
+      // took one, and a number could not express a relative width.
+      fixture.componentRef.setInput('maxWidth', '20rem');
+      fixture.detectChanges();
+
+      showTooltip();
+
+      expect(getTooltip()?.style.maxWidth).toBe('20rem');
     }));
   });
 

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, output, signal, InjectionToken, TemplateRef } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { PshInputComponent } from '../input/input.component';
-import { TableColumn, TableRow, TableSort, TableConfig, TableRowClickEvent, TableRowExpandEvent, TableExpandedRowContext } from './table.types';
+import { TableColumn, TableRow, TableSort, TableConfig, TableRowClickEvent, TableRowExpandEvent, TableExpandedRowContext, TableHeaderContext, TableEmptyContext } from './table.types';
 
 export const TABLE_CONFIG = new InjectionToken<Partial<TableConfig>>('TABLE_CONFIG', {
   factory: () => ({
@@ -55,6 +55,31 @@ export class PshTableComponent {
   expandable = input(this.config.expandable ?? false);
   singleExpand = input(this.config.singleExpand ?? false);
   expandedRowTemplate = input<TemplateRef<TableExpandedRowContext>>();
+
+  /**
+   * Replaces the content of every column header.
+   *
+   * The body cell was templatable and the header was not, so a per-column filter or a
+   * two-line label meant `::ng-deep` into the `<th>`. The context carries the sort state and
+   * a `toggleSort` callback, so the component keeps owning the keyboard path and `aria-sort`.
+   */
+  headerTemplate = input<TemplateRef<TableHeaderContext>>();
+
+  /**
+   * Replaces the empty state.
+   *
+   * `emptyMessage` and `noResultsMessage` are strings, so an illustration or a "clear the
+   * filter" button had nowhere to go. Both inputs still work when no template is given.
+   */
+  emptyTemplate = input<TemplateRef<TableEmptyContext>>();
+
+  /**
+   * Extra classes for a row, from the row itself.
+   *
+   * `InfoCardData.customClass` already existed for the same need one component over; a table
+   * had no way to mark a row as overdue, selected or archived.
+   */
+  rowClass = input<(row: TableRow) => string | undefined>();
 
   sortChange = output<TableSort>();
   globalSearchChange = output<string>();
@@ -182,6 +207,30 @@ export class PshTableComponent {
 
   protected getCellValue(row: TableRow, column: TableColumn): unknown {
     return this.getNestedValue(row, column.path || column.key);
+  }
+
+  /**
+   * The context a custom header receives.
+   *
+   * `toggleSort` is handed over rather than left to the caller: the component keeps owning
+   * `aria-sort` and the keyboard path, so a custom header cannot accidentally ship a `<div>`
+   * that only responds to a mouse — which is the bug B1 fixed on the default header.
+   */
+  protected headerContext(column: TableColumn): TableHeaderContext {
+    const sort = this.currentSort();
+    return {
+      $implicit: column,
+      sort: sort?.key === column.key ? sort.direction : null,
+      toggleSort: () => this.handleSort(column),
+    };
+  }
+
+  protected emptyContext(): TableEmptyContext {
+    return { $implicit: this.computedEmptyMessage(), searchTerm: this.searchTerm() };
+  }
+
+  protected rowClasses(row: TableRow): string {
+    return this.rowClass()?.(row) ?? '';
   }
 
   totalColumns = computed(() => this.columns().length + (this.expandable() ? 1 : 0));

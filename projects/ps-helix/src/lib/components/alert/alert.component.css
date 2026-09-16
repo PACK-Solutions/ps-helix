@@ -180,3 +180,17 @@
     padding: var(--psh-spacing-xxs);
   }
 }
+/*
+  The actions slot. Collapsed to nothing when unused — `:empty` rather than a conditional in
+  the template, so projected content does not need a query to be detected.
+*/
+.psh-alert-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--psh-alert-actions-gap, var(--psh-spacing-sm));
+  margin-left: auto;
+}
+
+.psh-alert-actions:empty {
+  display: none;
+}

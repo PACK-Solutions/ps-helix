@@ -131,3 +131,13 @@
   right: var(--psh-avatar-status-offset-xl, calc(-1 * var(--psh-size-1)));
 }
 
+
+/* Interactive avatars: a real target, with the library's focus ring. */
+.psh-avatar.psh-interactive {
+  cursor: pointer;
+}
+
+.psh-avatar.psh-interactive:focus-visible {
+  outline: var(--psh-focus-ring-width) solid var(--psh-focus-ring-color);
+  outline-offset: var(--psh-focus-ring-offset, 2px);
+}

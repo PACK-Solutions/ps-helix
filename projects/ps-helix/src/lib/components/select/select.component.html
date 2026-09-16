@@ -84,11 +84,18 @@
                      [class.psh-disabled]="item.disabled || opt.disabled"
                      [class.psh-focused]="getFlatIndex(opt) === focusedIndex()"
                      (click)="select(opt, !!item.disabled)">
-                  @if (opt.icon) { <i [class]="'ph ph-' + opt.icon" aria-hidden="true"></i> }
-                  <div class="psh-select-option-content">
-                    <span class="psh-select-option-label">{{ opt.label }}</span>
-                    @if (opt.description) { <span class="psh-select-option-description">{{ opt.description }}</span> }
-                  </div>
+                  @if (optionTemplate()) {
+                    <ng-container
+                      [ngTemplateOutlet]="optionTemplate()!"
+                      [ngTemplateOutletContext]="optionContext(opt, !!(item.disabled || opt.disabled))"
+                    ></ng-container>
+                  } @else {
+                    @if (opt.icon) { <i [class]="'ph ph-' + opt.icon" aria-hidden="true"></i> }
+                    <div class="psh-select-option-content">
+                      <span class="psh-select-option-label">{{ opt.label }}</span>
+                      @if (opt.description) { <span class="psh-select-option-description">{{ opt.description }}</span> }
+                    </div>
+                  }
                 </div>
               }
             </div>
@@ -105,11 +112,18 @@
                  [class.psh-disabled]="item.disabled"
                  [class.psh-focused]="getFlatIndex(item) === focusedIndex()"
                  (click)="select(item)">
-              @if (item.icon) { <i [class]="'ph ph-' + item.icon" aria-hidden="true"></i> }
-              <div class="psh-select-option-content">
-                <span class="psh-select-option-label">{{ item.label }}</span>
-                @if (item.description) { <span class="psh-select-option-description">{{ item.description }}</span> }
-              </div>
+              @if (optionTemplate()) {
+                <ng-container
+                  [ngTemplateOutlet]="optionTemplate()!"
+                  [ngTemplateOutletContext]="optionContext(item, !!item.disabled)"
+                ></ng-container>
+              } @else {
+                @if (item.icon) { <i [class]="'ph ph-' + item.icon" aria-hidden="true"></i> }
+                <div class="psh-select-option-content">
+                  <span class="psh-select-option-label">{{ item.label }}</span>
+                  @if (item.description) { <span class="psh-select-option-description">{{ item.description }}</span> }
+                </div>
+              }
             </div>
           }
         } @empty {
@@ -128,3 +142,4 @@
     <div id="hint-message" class="psh-select-hint">{{ hint() }}</div>
   }
 </div>
+

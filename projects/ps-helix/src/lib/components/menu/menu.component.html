@@ -194,22 +194,10 @@
       role="menuitem"
       [attr.tabindex]="item.disabled ? -1 : 0"
     >
-      @if (item.icon) {
-        <i class="ph ph-{{ item.icon }}" aria-hidden="true"></i>
-      }
-      @if (withLabel) {
-        <span class="psh-menu-label">{{ item.content }}</span>
-      }
-      @if (item.badge) {
-        <span class="psh-menu-badge" role="status">{{ item.badge }}</span>
-      }
-      @if (withLabel && item.children?.length) {
-        <i
-          class="ph ph-caret-down psh-menu-arrow"
-          [class.psh-expanded]="isExpanded(item)"
-          aria-hidden="true"
-        ></i>
-      }
+      <ng-container
+        [ngTemplateOutlet]="itemTemplate() ?? defaultMenuItem"
+        [ngTemplateOutletContext]="itemContext(item, index, withLabel)"
+      ></ng-container>
     </a>
   } @else {
     <button
@@ -226,6 +214,20 @@
       [attr.tabindex]="item.disabled ? -1 : 0"
       [disabled]="item.disabled"
     >
+      <ng-container
+        [ngTemplateOutlet]="itemTemplate() ?? defaultMenuItem"
+        [ngTemplateOutletContext]="itemContext(item, index, withLabel)"
+      ></ng-container>
+    </button>
+  }
+</ng-template>
+
+<!--
+  The item's content, in one place rather than two. `itemTemplate` replaces this, and only
+  this: the surrounding <a>/<button> keeps role="menuitem", aria-expanded, the tabindex and
+  the keyboard handling.
+-->
+<ng-template #defaultMenuItem let-item let-withLabel="withLabel">
       @if (item.icon) {
         <i class="ph ph-{{ item.icon }}" aria-hidden="true"></i>
       }
@@ -242,6 +244,4 @@
           aria-hidden="true"
         ></i>
       }
-    </button>
-  }
 </ng-template>

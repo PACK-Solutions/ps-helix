@@ -14,13 +14,20 @@
       (click)="selectTab(i)"
       (keydown)="onKeydown($event, i)"
     >
-      <i 
-        [class]="activeIndex() === i ? 'ph-fill ph-' + item.icon : 'ph ph-' + item.icon"
-        aria-hidden="true"
-      ></i>
-      <span class="psh-tab-label">{{ item.label }}</span>
-      @if (item.badge) {
-        <span class="psh-tab-badge">{{ item.badge }}</span>
+      @if (itemTemplate()) {
+        <ng-container
+          [ngTemplateOutlet]="itemTemplate()!"
+          [ngTemplateOutletContext]="itemContext(item, i)"
+        ></ng-container>
+      } @else {
+        <i
+          [class]="activeIndex() === i ? 'ph-fill ph-' + item.icon : 'ph ph-' + item.icon"
+          aria-hidden="true"
+        ></i>
+        <span class="psh-tab-label">{{ item.label }}</span>
+        @if (item.badge) {
+          <span class="psh-tab-badge">{{ item.badge }}</span>
+        }
       }
     </button>
   }
