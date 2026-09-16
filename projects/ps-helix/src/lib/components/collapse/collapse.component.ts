@@ -55,6 +55,12 @@ export class PshCollapseComponent {
    */
   maxHeight = input<string>('auto');
 
+  /**
+   * Fallback header text, used when nothing is projected into `[psh-collapse-header]`.
+   * Was a literal in the template, so a non-French application could not change it.
+   */
+  readonly defaultHeaderText = input<string>('Section pliable');
+
   /** `auto` is not a usable `max-height` for the CSS; `none` is the same intent. */
   protected readonly resolvedMaxHeight = computed(() =>
     this.maxHeight() === 'auto' ? 'none' : this.maxHeight(),

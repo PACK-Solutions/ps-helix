@@ -2,7 +2,7 @@
   class="psh-toast-container"
   [class]="'psh-' + position()"
   role="region"
-  aria-label="Notifications"
+  [attr.aria-label]="ariaLabel()"
 >
   @for (toast of toasts(); track toast.id) {
     <div

@@ -45,6 +45,12 @@ export class PshMenuComponent<T = string> {
    */
   readonly itemTemplate = input<TemplateRef<MenuItemContext<T>>>();
 
+  /**
+   * Name of the navigation landmark. There was none, so a page with a sidebar menu and a
+   * top menu announced two landmarks both called "navigation".
+   */
+  readonly ariaLabel = input<string>();
+
   protected itemContext(item: MenuItem<T>, index: number, withLabel: boolean): MenuItemContext<T> {
     return { $implicit: item, index, withLabel, expanded: this.isExpanded(item) };
   }

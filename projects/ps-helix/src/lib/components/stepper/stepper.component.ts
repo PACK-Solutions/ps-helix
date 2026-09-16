@@ -41,7 +41,7 @@ export const STEPPER_CONFIG = new InjectionToken<Partial<StepperConfig>>('STEPPE
     '[class.psh-numbered]': 'variant() === "numbered"',
     '[class.psh-progress]': 'variant() === "progress"',
     '[attr.role]': '"region"',
-    '[attr.aria-label]': '"Navigation par étapes"'
+    '[attr.aria-label]': 'ariaLabel()'
   }
 })
 export class PshStepperComponent {
@@ -52,6 +52,9 @@ export class PshStepperComponent {
   linear = input(this.config.linear ?? true);
 
   ariaLabels = input<StepperAriaLabels>();
+
+  /** Name of the stepper landmark. Was hard-coded, in French, with no way out. */
+  readonly ariaLabel = input<string>('Navigation par étapes');
   beforeStepChange = input<(from: number, to: number) => Promise<boolean> | boolean>();
 
   stepChange = output<number>();

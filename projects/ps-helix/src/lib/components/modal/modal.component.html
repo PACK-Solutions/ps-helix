@@ -9,7 +9,8 @@
   aria-modal="true"
   [style.z-index]="zIndex()"
   [attr.aria-hidden]="!open()"
-  [attr.aria-labelledby]="modalDialogId() + '-title'"
+  [attr.aria-labelledby]="labelledBy()"
+  [attr.aria-label]="ariaLabel() || null"
   [attr.aria-describedby]="modalDescriptionId()"
   [attr.data-state]="state()"
 >
