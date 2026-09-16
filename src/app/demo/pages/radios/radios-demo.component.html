@@ -310,6 +310,58 @@
       </div>
     </section>
 
+    <!-- psh-radio-group : le composant qui porte le contrat de formulaire -->
+    <section class="radio-group-section">
+      <h3 class="section-title">psh-radio-group</h3>
+      <div class="groups-container">
+        <div class="groups-intro">
+          <p>
+            Depuis la 7.0.0, c'est <code>psh-radio-group</code> qui porte la valeur et le
+            contrat de formulaire. Un <code>psh-radio</code> seul ne pouvait pas :
+            la valeur d'un radio dans un formulaire n'est pas un booléen par bouton, c'est
+            <em>lequel du groupe est sélectionné</em> — il n'y avait donc rien à lier, et
+            <code>formControlName</code> comme <code>[field]</code> ne faisaient rien.
+          </p>
+          <p>
+            Le groupe gère aussi le <code>name</code> partagé, la navigation aux flèches
+            (avec bouclage et saut des désactivés), Home/End, et le roving tabindex — un seul
+            arrêt de tabulation pour tout le groupe.
+          </p>
+        </div>
+
+        <div class="groups-grid">
+          <div class="group-card">
+            <h4>Liaison bidirectionnelle</h4>
+            <psh-radio-group [(value)]="selectedPlan" label="Formule" hint="Modifiable à tout moment">
+              <psh-radio value="free" label="Gratuite" />
+              <psh-radio value="pro" label="Pro" />
+              <psh-radio value="enterprise" label="Entreprise" [disabled]="true" />
+            </psh-radio-group>
+            <p class="group-state">Sélection : <strong>{{ selectedPlan() ?? 'aucune' }}</strong></p>
+          </div>
+
+          <div class="group-card">
+            <h4>Horizontal, avec erreur</h4>
+            <psh-radio-group
+              [(value)]="selectedDelivery"
+              label="Livraison"
+              orientation="horizontal"
+              [required]="true"
+              [error]="selectedDelivery() ? null : 'Choisissez un mode de livraison'"
+            >
+              <psh-radio value="standard" label="Standard" />
+              <psh-radio value="express" label="Express" />
+            </psh-radio-group>
+          </div>
+        </div>
+
+        <ds-code-snippet
+          language="html"
+          [code]="radioGroupSnippet"
+        ></ds-code-snippet>
+      </div>
+    </section>
+
     <!-- Groupes de Radios - Section Pleine Largeur -->
     <section class="radio-groups-section">
       <h3 class="section-title">Groupes de Radio Buttons</h3>

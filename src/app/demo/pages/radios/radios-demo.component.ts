@@ -1,17 +1,38 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { PshRadioComponent } from '@lib/components/radio/radio.component';
+import { PshRadioGroupComponent } from '@lib/components/radio/radio-group.component';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
 import { CodeSnippetComponent } from '../../shared/code-snippet.component';
 
 @Component({
   selector: 'ds-radios-demo',
-  imports: [TranslateModule, PshRadioComponent, DemoPageLayoutComponent, CodeSnippetComponent],
+  imports: [TranslateModule, PshRadioComponent, PshRadioGroupComponent, DemoPageLayoutComponent, CodeSnippetComponent],
   templateUrl: './radios-demo.component.html',
   styleUrls: ['./radios-demo.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RadiosDemoComponent {
+  readonly selectedPlan = signal<string | null>('free');
+  readonly selectedDelivery = signal<string | null>(null);
+
+  readonly radioGroupSnippet = `<!-- liaison simple -->
+<psh-radio-group [(value)]="plan" label="Formule">
+  <psh-radio value="free" label="Gratuite" />
+  <psh-radio value="pro" label="Pro" />
+</psh-radio-group>
+
+<!-- Reactive Forms -->
+<psh-radio-group formControlName="plan" label="Formule" [required]="true">
+  <psh-radio value="free" label="Gratuite" />
+  <psh-radio value="pro" label="Pro" />
+</psh-radio-group>
+
+<!-- Signal Forms -->
+<psh-radio-group [field]="f.plan" label="Formule">
+  <psh-radio value="free" label="Gratuite" />
+  <psh-radio value="pro" label="Pro" />
+</psh-radio-group>`;
   labelPositionChecked = false;
 
   stateChecked = false;
