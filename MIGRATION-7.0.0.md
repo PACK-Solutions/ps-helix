@@ -158,7 +158,7 @@ one by file so you can go through them.
 
 ## 5. Every component class is now `psh-`
 
-The 350 classes the components render are namespaced: `.card-body` → `.psh-card-body`,
+The 353 classes the components render are namespaced: `.card-body` → `.psh-card-body`,
 `.stat-value` → `.psh-stat-value`, `.hoverable` → `.psh-hoverable`.
 
 This is not cosmetic. Four components — `psh-card`, `psh-horizontal-card`, `psh-info-card`,
@@ -199,7 +199,118 @@ the rename is what stops the library from interfering with it.
 There is no compatibility layer for classes. An alias would reintroduce the global names
 that are the entire problem.
 
-## 6. Styling a component from outside
+## 6. Outputs, phantom two-way bindings, and the error contract
+
+### 6.1 One convention for outputs
+
+Six coexisted: `xChange`, past participle, one infinitive, verb+noun, a redundant prefix, and
+one ad-hoc pair. Two survive — **`xChange` for two-way state, past participle for everything
+else** — and the codemod applies every rename below.
+
+| Component | Before | After |
+|---|---|---|
+| `psh-badge` | `(badgeClick)` | `(clicked)` |
+| `psh-button` | `(disabledClick)` | `(disabledClicked)` |
+| `psh-input` | `(inputFocus)` / `(inputBlur)` | `(focused)` / `(blurred)` |
+| `psh-input` | `(suggestionSelect)` | `(suggestionSelected)` |
+| `psh-textarea` | `(inputFocus)` / `(inputBlur)` | `(focused)` / `(blurred)` |
+| `psh-menu` | `(itemClick)` / `(submenuToggle)` | `(itemClicked)` / `(submenuToggled)` |
+| `psh-sidebar` | `(toggle)` / `(transitionStart)` | `(toggled)` / `(transitionStarted)` |
+| `psh-select` | `(scrollEnd)` | `(scrolledToEnd)` |
+| `psh-table` | `(rowClick)` / `(rowExpand)` / `(rowCollapse)` | `(rowClicked)` / `(rowExpanded)` / `(rowCollapsed)` |
+| `psh-tooltip` | `(shown)` / `(hidden)` | `(opened)` / `(closed)` |
+
+`psh-sidebar`'s `toggle` was the library's only infinitive — and a native event name, which
+needed a standing eslint exemption to exist. `psh-collapse` already said `toggled` for the
+same idea.
+
+Two knock-on renames, because the output took a name that was already taken:
+
+- **`psh-input.focused` and `psh-textarea.focused` were boolean state signals.** They are now
+  `isFocused`. The name reads as an event, and now it is one; the readout says it is a
+  readout.
+- **`psh-badge.valueChange` is gone.** It was never emitted — the badge has no way to change
+  its own value — so `[(value)]` on a badge type-checked and did nothing. `BADGE.md` still
+  described it as *« Émis lors d'un changement de valeur »*.
+
+### 6.2 `navigationError` has one payload
+
+Same output name, two incompatible payloads: `{ action, reason }` on `psh-pagination`, a bare
+English `string` on `psh-stepper` and `psh-state-flow-indicator`. Both are now
+[`PshNavigationError`](./projects/ps-helix/src/lib/types/semantic.types.ts):
+
+```ts
+{
+  action: 'goToPage' | 'goToStep';
+  reason: 'out-of-bounds' | 'blocked' | 'rejected' | 'prerequisite-incomplete';
+  target: number;
+  message: string;   // English, for logs — not a user-facing string
+  cause?: unknown;    // for 'rejected', whatever the guard threw
+}
+```
+
+If you were branching on the message — `if (e.includes('out of bounds'))` — branch on
+`reason` instead. That is what it is for; the sentence was never a contract.
+
+### 6.3 Seventeen `model()` that were never written
+
+Angular derives an `xChange` output from every `model()`. Seventeen inputs across nine
+components were declared `model()` although the component never writes them, so each
+published an event that could not fire: `[(fullWidth)]` on a button behaved exactly like
+`[fullWidth]`, and `(sizeChange)` on an avatar was a handler waiting forever.
+
+`psh-avatar` (`size`, `shape`, `src`, `alt`) · `psh-button` (`fullWidth`) · `psh-card`
+(`hoverable`, `interactive`) · `psh-dropdown` (`disabled`) · `psh-input` (`loading`,
+`readonly`) · `psh-pagination` (`totalPages`) · `psh-progressbar` (`value`, `max`) ·
+`psh-tab-bar` (`disabled`, `position`, `animated`) · `psh-textarea` (`readonly`).
+
+The codemod rewrites `[(x)]` to `[x]` and reports any `(xChange)` handler, which was dead
+code either way.
+
+> **One thing it cannot do for you.** `[(x)]="sig"` unwraps a signal; `[x]="sig"` does not. If
+> the expression was a bare identifier holding a signal, it now needs `sig()`. Only your
+> component says which, so the codemod prints the line and leaves it. This repository's own
+> demo hit it in eleven places.
+
+`disabled` on `psh-checkbox`, `psh-input`, `psh-select` and `psh-switch` stays a `model()`:
+`ControlValueAccessor.setDisabledState()` genuinely writes it. `readonly` does not — Signal
+Forms declares it `InputSignal<boolean>` and only ever pushes it down.
+
+### 6.4 One error contract
+
+`error` / `success` / `hint` are `string | null | undefined` on every input component, and
+`hint` now exists on all of them.
+
+| | Before | After |
+|---|---|---|
+| `psh-switch`, `psh-radio` | `error`/`success` were `string`, defaulting to `''` | `string \| null \| undefined`, defaulting to `null` |
+| `psh-checkbox`, `psh-switch`, `psh-radio` | no `hint` | `hint`, rendered when there is no error or success |
+| `psh-step`, `psh-flow-step` | `error`/`success`/`warning` were `string \| undefined` | `string \| null \| undefined`, in the config interfaces too |
+
+Nothing to change unless you relied on `error()` being `''` rather than `null` — a helper
+returning `string | null`, which used to fail to type-check on switch and radio, now works
+everywhere.
+
+### 6.5 `input.required()` where the data is not optional
+
+Required now: **`psh-table.columns`**, **`psh-table.data`**, **`psh-menu.items`**,
+**`psh-select.options`**, **`psh-info-card.data`**. An empty array is a meaningful state that
+the empty-state message exists to render; *no binding at all* is an unfinished call site.
+`[data]="[]"` costs two characters and says which one you meant.
+
+**`psh-tooltip.content` is now optional** — required blocked the conditional tooltip, which is
+the common case.
+
+Three inputs the audit proposed making required were left alone, each for a concrete reason:
+
+- **`psh-tabs.tabs`** — tabs also accept projected `<psh-tab>` children, and the component
+  prefers them over the input. Required would have broken the projection API outright.
+- **`psh-dropdown.items`** — `<ng-content select="[dropdown-menu]">` replaces the item list
+  entirely; the `items` rendering is that slot's fallback content.
+- **`psh-stat-card.value`** — the component has a `loading` state, so "no value yet" is a
+  state it is built to render.
+
+## 7. Styling a component from outside
 
 Component custom properties used to be declared on the element that consumed them, so
 setting one on the host did nothing:
@@ -222,7 +333,7 @@ The 82 available properties are listed per component in
 If you were reaching in with `::ng-deep` to work around the old behaviour, check whether a
 property now covers your case.
 
-## 7. Smaller changes
+## 8. Smaller changes
 
 - **Dependencies.** `date-fns` is gone (it had zero usages). `@ngx-translate/core` is an
   optional peer with a `>=15` range — if you were held to `^15` by ps-helix, you no longer

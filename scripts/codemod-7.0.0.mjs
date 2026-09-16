@@ -80,6 +80,63 @@ const APPEARANCE_VALUES = {
   'psh-table': { default: 'flat' },
 };
 
+/**
+ * The output axis. Six conventions coexisted — `xChange`, past participle, infinitive
+ * (`toggle`, a single case, while collapse already said `toggled` for the same idea),
+ * verb+noun (`rowClick`), a redundant prefix (`inputFocus` on an input), and one ad-hoc pair
+ * (`shown`/`hidden` where everything else says `opened`/`closed`).
+ *
+ * R3 leaves one: `xChange` for two-way state, past participle for everything else.
+ */
+export const OUTPUT_AXIS = {
+  'psh-badge': { badgeClick: 'clicked' },
+  'psh-button': { disabledClick: 'disabledClicked' },
+  'psh-input': {
+    inputFocus: 'focused',
+    inputBlur: 'blurred',
+    suggestionSelect: 'suggestionSelected',
+  },
+  'psh-textarea': { inputFocus: 'focused', inputBlur: 'blurred' },
+  'psh-menu': { itemClick: 'itemClicked', submenuToggle: 'submenuToggled' },
+  'psh-sidebar': { toggle: 'toggled', transitionStart: 'transitionStarted' },
+  'psh-select': { scrollEnd: 'scrolledToEnd' },
+  'psh-table': {
+    rowClick: 'rowClicked',
+    rowExpand: 'rowExpanded',
+    rowCollapse: 'rowCollapsed',
+  },
+  'psh-tooltip': { shown: 'opened', hidden: 'closed' },
+};
+
+/**
+ * Inputs that were declared `model()` although the component never wrote them. Angular
+ * derives an `xChange` output from every `model()`, so each of these published an event that
+ * could not fire: `[(fullWidth)]` behaved exactly like `[fullWidth]`, and `(sizeChange)` was
+ * a handler waiting forever.
+ *
+ * The codemod rewrites `[(x)]` to `[x]` — same behaviour, honest syntax — and reports any
+ * `(xChange)` handler, which was dead code.
+ */
+export const DEMOTED_MODELS = {
+  'psh-avatar': ['size', 'shape', 'src', 'alt'],
+  'psh-button': ['fullWidth'],
+  'psh-card': ['hoverable', 'interactive'],
+  'psh-dropdown': ['disabled'],
+  'psh-input': ['loading', 'readonly'],
+  'psh-pagination': ['totalPages'],
+  'psh-progressbar': ['value', 'max'],
+  'psh-tab-bar': ['disabled', 'position', 'animated'],
+  'psh-textarea': ['readonly'],
+};
+
+/** Inputs that became `input.required()`. Reported when the tag does not bind them. */
+export const NEWLY_REQUIRED = {
+  'psh-table': ['columns', 'data'],
+  'psh-menu': ['items'],
+  'psh-select': ['options'],
+  'psh-info-card': ['data'],
+};
+
 const RENAMES = {};
 for (const [selector, attrs] of Object.entries({ ...COLOR_AXIS })) {
   RENAMES[selector] = { ...attrs };
@@ -87,6 +144,10 @@ for (const [selector, attrs] of Object.entries({ ...COLOR_AXIS })) {
 for (const [selector, attrs] of Object.entries(APPEARANCE_AXIS)) {
   RENAMES[selector] = { ...(RENAMES[selector] ?? {}), ...attrs };
 }
+// OUTPUT_AXIS deliberately stays out of RENAMES. `renameInTag` also rewrites the *input*
+// forms — `x=`, `[x]=`, `[(x)]=` — and `psh-tooltip`'s output is called `hidden`, so folding
+// it in would turn `<psh-tooltip [hidden]="…">`, the native HTML attribute, into
+// `[closed]="…"`. Outputs get their own pass, which only ever touches `(x)=`.
 
 /* ---------------------------------------------------------------------- rewrite */
 
@@ -214,6 +275,70 @@ export function migrateStylesheet(source, warnings) {
   return { out, count };
 }
 
+/**
+ * Outputs, two-way bindings on demoted models, and the required-input report.
+ *
+ * Kept apart from the input pass because the three edits it makes are each anchored on one
+ * binding syntax and must not generalise:
+ *   `(shown)="…"`      -> `(opened)="…"`     never `[hidden]` -> `[closed]`
+ *   `[(fullWidth)]="x"` -> `[fullWidth]="x"`  same behaviour, honest syntax
+ *   `(sizeChange)="…"`  -> reported           the handler could never have fired
+ */
+function migrateOutputsAndModels(source, warnings) {
+  let out = source;
+  let count = 0;
+
+  const selectors = new Set([
+    ...Object.keys(OUTPUT_AXIS),
+    ...Object.keys(DEMOTED_MODELS),
+    ...Object.keys(NEWLY_REQUIRED),
+  ]);
+
+  for (const selector of selectors) {
+    out = out.replace(openingTag(selector), (tag, attrs = '') => {
+      let next = tag;
+
+      for (const [from, to] of Object.entries(OUTPUT_AXIS[selector] ?? {})) {
+        next = next.replace(new RegExp(`(?<=\\s)\\(${from}\\)=`, 'g'), `(${to})=`);
+      }
+
+      for (const name of DEMOTED_MODELS[selector] ?? []) {
+        // `[(x)]="sig"` unwraps a signal for you; `[x]="sig"` does not, so a bare identifier
+        // that happens to hold a signal now needs `sig()`. Only the component's own source
+        // says which — reported, never guessed. Guessing wrong here cost a round trip while
+        // writing this codemod: a blanket `()` broke every plain-number binding instead.
+        const twoWay = new RegExp(`(?<=\\s)\\[\\(${name}\\)\\]="([^"]*)"`, 'g');
+        for (const [, expr] of next.matchAll(twoWay)) {
+          if (/^[a-zA-Z_]\w*$/.test(expr.trim())) {
+            warnings.push(
+              `${selector} had [(${name})]="${expr.trim()}": the two-way form unwrapped a signal, the one-way form does not — add () if ${expr.trim()} is a signal`,
+            );
+          }
+        }
+        next = next.replace(new RegExp(`(?<=\\s)\\[\\(${name}\\)\\]=`, 'g'), `[${name}]=`);
+        if (new RegExp(`\\s\\(${name}Change\\)=`).test(next)) {
+          warnings.push(
+            `${selector} has a (${name}Change) handler: ${name} is a plain input now, and that event never fired — delete the handler`,
+          );
+        }
+      }
+
+      for (const name of NEWLY_REQUIRED[selector] ?? []) {
+        if (!new RegExp(`\\s\\[?${name}\\]?=`).test(attrs ?? '')) {
+          warnings.push(
+            `${selector} does not bind [${name}], which is required in 7.0.0 — pass [${name}]="[]" if the empty case is what you meant`,
+          );
+        }
+      }
+
+      if (next !== tag) count++;
+      return next;
+    });
+  }
+
+  return { out, count };
+}
+
 export function migrate(source) {
   let out = source;
   let count = 0;
@@ -256,6 +381,10 @@ export function migrate(source) {
   const afterToast = migrateToastOptions(out);
   if (afterToast !== out) count++;
   out = afterToast;
+
+  const outputs = migrateOutputsAndModels(out, warnings);
+  out = outputs.out;
+  count += outputs.count;
 
   return { out, count, warnings };
 }
