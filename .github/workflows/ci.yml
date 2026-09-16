@@ -48,6 +48,12 @@ jobs:
       - name: Responsive scale
         run: npm run verify:breakpoints
 
+      # Every settable default, generated from the tokens. A hand-written list of 201
+      # defaults drifts, and four of these tokens had already drifted from their own
+      # interface before this was in place.
+      - name: Configuration reference
+        run: npm run verify:config
+
       - name: Unit tests (with coverage gate)
         run: npm run test:coverage
 

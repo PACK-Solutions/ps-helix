@@ -26,6 +26,8 @@
     "verify:auto-dark": "node scripts/generate-auto-dark.mjs --check",
     "verify:breakpoints": "node scripts/verify-breakpoints.mjs",
     "verify:public-api": "node scripts/verify-public-api.mjs",
+    "docs:config": "node scripts/generate-config-reference.mjs",
+    "verify:config": "node scripts/generate-config-reference.mjs --check",
     "publish:lib": "npm publish ./dist/ps-helix --access public",
     "watch:lib": "ng build ps-helix --watch",
     "test": "jest",
