@@ -182,7 +182,9 @@ if (missingInDark.length || missingInLight.length) {
 }
 
 if (CHECK) {
-  const current = existsSync(TARGET) ? readFileSync(TARGET, 'utf8') : '';
+  // Normalised, because a Windows checkout with core.autocrlf=true holds the file in CRLF
+  // while this script writes LF: without it the gate fails on a tree that is in fact clean.
+  const current = existsSync(TARGET) ? readFileSync(TARGET, 'utf8').replace(/\r\n/g, '\n') : '';
   if (current !== doc) {
     console.error('✖ TOKENS.md is stale — run `npm run docs:tokens` and commit the result.');
     process.exit(1);
