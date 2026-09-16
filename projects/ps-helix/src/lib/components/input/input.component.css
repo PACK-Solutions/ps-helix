@@ -2,7 +2,7 @@
 :host {
   display: block;
   width: 100%;
-  max-width: 18.75rem; /* 300px */
+  max-width: var(--psh-input-max-width, 18.75rem); /* 300px */
   transition: all var(--psh-animation-duration-default) var(--psh-animation-easing-default);
 }
 

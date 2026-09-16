@@ -113,7 +113,7 @@
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 47.9375em) {
   .psh-alert {
     padding: var(--psh-spacing-sm) var(--psh-spacing-md);
     gap: var(--psh-spacing-sm);
@@ -142,7 +142,7 @@
   }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 29.9375em) {
   .psh-alert {
     padding: var(--psh-spacing-xs) var(--psh-spacing-sm);
     gap: var(--psh-spacing-xs);

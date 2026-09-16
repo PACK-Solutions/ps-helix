@@ -146,7 +146,7 @@
   font-size: var(--psh-icon-size-md);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 47.9375em) {
   .psh-pagination {
     justify-content: center;
     gap: var(--psh-spacing-xs);
@@ -184,7 +184,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 29.9375em) {
   .psh-pagination {
     padding: var(--psh-spacing-xs);
     gap: 2px;

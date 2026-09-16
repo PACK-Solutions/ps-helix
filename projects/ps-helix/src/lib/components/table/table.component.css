@@ -262,7 +262,7 @@ tr.psh-expanded {
 }
 
 /* Responsive Design */
-@media (max-width: 48em) {
+@media (max-width: 47.9375em) {
   .psh-table-wrapper {
     font-size: var(--psh-font-size-sm);
   }
@@ -276,7 +276,7 @@ tr.psh-expanded {
   }
 }
 
-@media (max-width: 30em) {
+@media (max-width: 29.9375em) {
   .psh-table-wrapper {
     border-radius: 0;
     margin: 0 calc(-1 * var(--psh-spacing-sm));

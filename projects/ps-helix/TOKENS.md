@@ -3,7 +3,7 @@
 > **Generated from the stylesheets — do not edit by hand.**
 > Run `npm run docs:tokens` after changing anything under `src/lib/styles/`.
 
-**406 tokens** across 8 files.
+**407 tokens** across 8 files.
 
 Every custom property the library exposes is namespaced `--psh-*`. The unprefixed names
 used before 7.0.0 remain available through the opt-in `styles/compat.css`.
@@ -405,6 +405,7 @@ used before 7.0.0 remain available through the opt-in `styles/compat.css`.
 | `--psh-control-height-sm` | `2rem` | 32px |
 | `--psh-control-height-md` | `2.5rem` | 40px |
 | `--psh-control-height-lg` | `3rem` | 48px |
+| `--psh-touch-target-min` | `2.75rem` | 44px |
 | `--psh-scrollbar-width` | `0` |  |
 
 ## Spacing
@@ -458,7 +459,7 @@ used before 7.0.0 remain available through the opt-in `styles/compat.css`.
 
 ## Component CSS API
 
-90 properties across 14 components. Set any of them on the
+96 properties across 19 components. Set any of them on the
 component element to restyle it without reaching inside:
 
 ```css
@@ -543,6 +544,13 @@ stylesheet and quietly beat the override; a fallback has no specificity to fight
 | `--psh-collapse-transition-duration` | `var(--psh-animation-duration-default` |
 | `--psh-collapse-transition-timing` | `var(--psh-animation-easing-smooth` |
 
+### `psh-dropdown`
+
+| Property | Default |
+|---|---|
+| `--psh-dropdown-max-width` | `calc(100vw - var(--psh-spacing-lg) * 2` |
+| `--psh-dropdown-min-width` | `12.5rem` |
+
 ### `psh-horizontal-card`
 
 | Property | Default |
@@ -551,6 +559,12 @@ stylesheet and quietly beat the override; a fallback has no specificity to fight
 | `--psh-horizontal-gap` | `var(--psh-spacing-md` |
 | `--psh-horizontal-mobile-height` | `var(--psh-size-48` |
 | `--psh-horizontal-side-width` | `var(--psh-size-48` |
+
+### `psh-input`
+
+| Property | Default |
+|---|---|
+| `--psh-input-max-width` | `18.75rem` |
 
 ### `psh-modal`
 
@@ -582,6 +596,18 @@ stylesheet and quietly beat the override; a fallback has no specificity to fight
 | `--psh-radio-group-gap-horizontal` | `var(--psh-spacing-lg` |
 | `--psh-radio-group-label-gap` | `var(--psh-spacing-xs` |
 | `--psh-radio-group-message-gap` | `var(--psh-spacing-xs` |
+
+### `psh-select`
+
+| Property | Default |
+|---|---|
+| `--psh-select-panel-max-height` | `15rem` |
+
+### `psh-sidebar`
+
+| Property | Default |
+|---|---|
+| `--psh-sidebar-width` | `250px` |
 
 ### `psh-spinloader`
 
@@ -619,6 +645,12 @@ stylesheet and quietly beat the override; a fallback has no specificity to fight
 | `--psh-tag-padding-x` | `var(--psh-spacing-sm` |
 | `--psh-tag-padding-y` | `var(--psh-spacing-xs` |
 | `--psh-tag-transition` | `all var(--psh-animation-duration-normal) var(--psh-animation-easing-default` |
+
+### `psh-textarea`
+
+| Property | Default |
+|---|---|
+| `--psh-textarea-max-width` | `32rem` |
 
 ### `psh-toast`
 

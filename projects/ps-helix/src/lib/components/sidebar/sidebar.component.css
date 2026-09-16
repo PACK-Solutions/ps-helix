@@ -21,7 +21,7 @@
 /* Mode variants */
 .psh-sidebar.psh-fixed {
   position: relative;
-  width: var(--psh-sidebar-width);
+  width: var(--psh-sidebar-width, 250px);
   border: var(--psh-border-width-1) solid var(--psh-surface-border);
   flex-shrink: 0;
 }
@@ -39,7 +39,8 @@
 .psh-sidebar.psh-overlay {
   position: fixed;
   top: 0;
-  height: 100vh;
+  height: 100vh; /* fallback: no dvh */
+  height: 100dvh;
   z-index: var(--psh-z-index-modal);
   box-shadow: var(--psh-shadow-lg);
   transition: transform var(--psh-animation-duration-default) var(--psh-animation-easing-smooth);
@@ -81,7 +82,7 @@
   overflow-x: hidden;
   padding: var(--psh-spacing-md);
   transition: all var(--psh-animation-duration-default) var(--psh-animation-easing-smooth);
-  min-width: var(--psh-sidebar-width);
+  min-width: var(--psh-sidebar-width, 250px);
   opacity: 1;
   transform: translateX(0);
 }
@@ -92,7 +93,8 @@
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height: 100vh; /* fallback: no dvh */
+  height: 100dvh;
   background: rgba(var(--psh-surface-900-rgb), 0.5);
   backdrop-filter: blur(var(--psh-size-1));
   z-index: var(--psh-z-index-modal-backdrop);

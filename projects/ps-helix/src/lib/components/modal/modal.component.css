@@ -133,7 +133,7 @@
   border-bottom-right-radius: var(--psh-radius-xl);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 47.9375em) {
   .psh-modal-container {
     width: 95%;
     margin: var(--psh-spacing-md);
@@ -158,10 +158,11 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 29.9375em) {
   .psh-modal-container {
     width: 100%;
-    max-height: 100vh;
+    max-height: 100vh; /* fallback: no dvh */
+    max-height: 100dvh;
     margin: 0;
     border-radius: 0;
   }

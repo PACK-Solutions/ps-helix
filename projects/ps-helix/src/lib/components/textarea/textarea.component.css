@@ -2,7 +2,7 @@
 :host {
   display: block;
   width: 100%;
-  max-width: 32rem;
+  max-width: var(--psh-textarea-max-width, 32rem);
   transition: all var(--psh-animation-duration-default) var(--psh-animation-easing-default);
 }
 

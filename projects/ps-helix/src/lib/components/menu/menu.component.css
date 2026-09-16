@@ -31,7 +31,8 @@
 /* Variantes */
 .psh-menu.psh-compact .psh-menu-link {
   padding: var(--psh-spacing-xs) var(--psh-spacing-sm);
-  min-height: var(--psh-size-9);
+  /* 2.25rem was 36px: under the 44px WCAG 2.5.5 asks of a touch target. */
+  min-height: var(--psh-touch-target-min);
   gap: var(--psh-spacing-xs);
 }
 
@@ -219,7 +220,9 @@
 .psh-menu.psh-collapsed .psh-submenu .psh-menu-link {
   padding: 0;
   justify-content: center;
-  min-height: var(--psh-size-8);
+  /* Was 2rem square — 32px. The icon inside keeps its size; the target grows. */
+  min-height: var(--psh-touch-target-min);
+  min-width: var(--psh-touch-target-min);
   width: var(--psh-size-8);
   height: var(--psh-size-8);
   margin: var(--psh-spacing-xxs) auto;
@@ -409,7 +412,7 @@
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 47.9375em) {
   .psh-menu.psh-horizontal {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -422,6 +425,10 @@
   }
 
   .psh-menu.psh-vertical:not(.psh-collapsed) {
-    min-width: 200px;
+    /*
+      Was `min-width: 200px`, declared inside this max-width block — a floor that applied
+      only on the screens least able to honour it, pinning 200px of a 320px phone.
+    */
+    min-width: 0;
   }
 }

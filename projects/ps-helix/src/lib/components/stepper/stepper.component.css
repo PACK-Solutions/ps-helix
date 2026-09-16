@@ -247,7 +247,7 @@ psh-step {
    RESPONSIVE - MOBILE
    ============================================ */
 
-@container (max-width: 768px) {
+@container (max-width: 47.9375em) {
   .psh-stepper-header {
     gap: var(--psh-spacing-xs);
   }
@@ -273,7 +273,7 @@ psh-step {
   }
 }
 
-@container (max-width: 640px) {
+@container (max-width: 39.9375em) {
   .psh-stepper-header {
     flex-wrap: wrap;
     gap: var(--psh-spacing-md);
@@ -311,7 +311,7 @@ psh-step {
   }
 }
 
-@container (max-width: 480px) {
+@container (max-width: 29.9375em) {
   .psh-step-indicator {
     width: var(--psh-size-8);
     height: var(--psh-size-8);

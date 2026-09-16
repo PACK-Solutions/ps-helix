@@ -37,6 +37,17 @@ jobs:
       - name: Class namespace and codemod map
         run: npm run verify:classes
 
+      # The dark tokens exist twice — once under [data-theme="dark"], once under
+      # prefers-color-scheme — so the stylesheet is correct without the theme service. The
+      # second copy is generated; this fails if the two have drifted.
+      - name: Auto dark theme in sync
+        run: npm run verify:auto-dark
+
+      # px in a media query does not scale with browser zoom, and a max-width written on the
+      # breakpoint itself is true at the same width as the min-width beside it.
+      - name: Responsive scale
+        run: npm run verify:breakpoints
+
       - name: Unit tests (with coverage gate)
         run: npm run test:coverage
 

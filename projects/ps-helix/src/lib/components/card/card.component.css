@@ -346,7 +346,7 @@
   50% { opacity: 0.7; }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 63.9375em) {
   .psh-card.psh-density-spacious {
     --psh-card-density-header-padding: var(--psh-size-5) var(--psh-size-6);
     --psh-card-density-body-padding: var(--psh-size-7);
@@ -355,7 +355,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 47.9375em) {
   .psh-card.psh-density-compact {
     --psh-card-density-header-padding: var(--psh-size-2-5) var(--psh-size-3);
     --psh-card-density-body-padding: var(--psh-size-3);
@@ -391,7 +391,7 @@
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 39.9375em) {
   .psh-card-actions {
     flex-direction: column;
     gap: var(--psh-spacing-md);
@@ -403,7 +403,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 29.9375em) {
   .psh-card.psh-density-compact {
     --psh-card-density-header-padding: var(--psh-spacing-sm) var(--psh-size-3);
     --psh-card-density-body-padding: var(--psh-size-3);

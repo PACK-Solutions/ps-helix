@@ -29,6 +29,9 @@
 /* 3. THEMES - Color Tokens and Theme Variables */
 @import './src/lib/styles/themes/light.css';
 @import './src/lib/styles/themes/dark.css';
+/* The same tokens behind prefers-color-scheme, so the stylesheet is correct without
+   PshThemeService and on the SSR first paint. Generated from dark.css. */
+@import './src/lib/styles/themes/dark-auto.css';
 
 /* 4. UTILITY CLASSES - Functional Helpers */
 @import './src/lib/styles/utilities/spacing.utils.css';
