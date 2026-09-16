@@ -115,10 +115,28 @@
   font-size: var(--psh-icon-size-md);
 }
 
+.psh-flow-segment-labels {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
 .psh-flow-segment-title {
   font-weight: var(--psh-font-weight-medium);
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.psh-flow-segment-subtitle {
+  font-size: var(--psh-font-size-sm);
+  color: var(--psh-text-color-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* The step panels, which had nowhere to render before 7.0.0. */
+.psh-flow-step-content {
+  margin-top: var(--psh-flow-panel-gap, var(--psh-spacing-lg));
 }
 
 :host(.psh-size-small) .psh-flow-segment {

@@ -64,11 +64,14 @@ export class PshStateFlowIndicatorComponent {
 
   steps = computed(() => this.stepComponents().map(step => ({
     title: step.title(),
+    subtitle: step.subtitle(),
+    icon: step.icon(),
     disabled: step.disabled(),
     completed: step.completed(),
     loading: step.loading(),
     error: step.error(),
-    warning: step.warning()
+    warning: step.warning(),
+    success: step.success()
   })));
 
   effectiveAriaLabels = computed(() =>

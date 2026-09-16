@@ -28,11 +28,26 @@
           <i class="ph ph-x-circle" aria-hidden="true"></i>
         } @else if (step.warning) {
           <i class="ph ph-warning" aria-hidden="true"></i>
+        } @else if (step.icon) {
+          <i class="ph ph-{{ step.icon }}" aria-hidden="true"></i>
         } @else if (step.completed) {
           <i class="ph ph-check-circle" aria-hidden="true"></i>
         }
-        <span class="psh-flow-segment-title">{{ step.title }}</span>
+        <span class="psh-flow-segment-labels">
+          <span class="psh-flow-segment-title">{{ step.title }}</span>
+          @if (step.subtitle) {
+            <span class="psh-flow-segment-subtitle">{{ step.subtitle }}</span>
+          }
+        </span>
       </span>
     </div>
   }
 </div>
+
+<!--
+  The panels. Missing until 7.0.0: `psh-flow-step` rendered `template: ''` behind a permanent
+  `display: none`, and there was no `<ng-content>` here either, so anything projected into a
+  step was discarded without a word. `psh-stepper` has always done this.
+-->
+<ng-content />
+

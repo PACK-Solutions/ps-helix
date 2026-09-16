@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  input,
+  output,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AvatarSize, AvatarShape, AvatarStatus } from './avatar.types';
 
@@ -38,11 +46,65 @@ export class PshAvatarComponent {
   icon = input<string>(DEFAULT_CONFIG.icon);
   status = input<AvatarStatus | undefined>();
   ariaLabel = input<string>();
+  /** Makes the avatar interactive: adds a button role, a tab stop and a focus ring. */
+  interactive = input(false);
+
+  /**
+   * Emitted on click or Enter/Space, but only when `interactive` is set.
+   *
+   * Every other clickable component in the library had one — card, stat-card, info-card,
+   * horizontal-card, tag, button — and the avatar did not, so a clickable user avatar, which
+   * is most of them, had to be wrapped in something else.
+   */
+  readonly clicked = output<MouseEvent | KeyboardEvent>();
+
+  /**
+   * Emitted when the image fails to load, just before the fallback takes over.
+   *
+   * Named `imageFailed`, not `error`: `error` is a native DOM event name — lint catches it,
+   * and rightly, since `sidebar.toggle` needed a standing exemption for the same reason until
+   * 7.0.0 — and `error` already means "the validation message" on every form control here.
+   * `copyFailed` on info-card set the precedent.
+   */
+  readonly imageFailed = output<Event>();
+
+  /**
+   * Whether the image failed.
+   *
+   * The initials/icon fallback existed but could never run: the `<img>` had no `(error)`
+   * handler, so a 404 left a broken image icon where a name should be. Reset by `effect`
+   * when `src` changes, or a new URL would inherit the previous one's failure.
+   */
+  private readonly loadFailed = signal(false);
+
+  constructor() {
+    effect(() => {
+      this.src();
+      this.loadFailed.set(false);
+    });
+  }
 
   // Computed values
-  hasImage = computed(() => !!this.src());
+  hasImage = computed(() => !!this.src() && !this.loadFailed());
   hasInitials = computed(() => !!this.initials() && !this.hasImage());
   hasIcon = computed(() => !this.hasImage() && !this.hasInitials());
+
+  protected handleImageError(event: Event): void {
+    this.loadFailed.set(true);
+    this.imageFailed.emit(event);
+  }
+
+  protected handleClick(event: MouseEvent): void {
+    if (this.interactive()) this.clicked.emit(event);
+  }
+
+  protected handleKeydown(event: KeyboardEvent): void {
+    if (!this.interactive()) return;
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      this.clicked.emit(event);
+    }
+  }
 
   computedAriaLabel = computed(() => this.ariaLabel() || this.alt());
 
