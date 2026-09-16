@@ -48,10 +48,10 @@ export interface StepConfig {
   /** État de chargement */
   loading: boolean;
   /** Message d'erreur */
-  error?: string;
+  error?: string | null;
   /** Message d'avertissement */
-  warning?: string;
+  warning?: string | null;
   /** Message de succès */
-  success?: string;
+  success?: string | null;
 }
 

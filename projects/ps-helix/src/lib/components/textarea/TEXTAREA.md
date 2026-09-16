@@ -82,8 +82,8 @@ control = new FormControl('', {
 
 | Output       | Type           | Description                      |
 | ------------ | -------------- | -------------------------------- |
-| `inputFocus` | `EventEmitter` | Declenche lorsque le champ recoit le focus |
-| `inputBlur`  | `EventEmitter` | Declenche lorsque le champ perd le focus   |
+| `focused` | `EventEmitter` | Declenche lorsque le champ recoit le focus |
+| `blurred`  | `EventEmitter` | Declenche lorsque le champ perd le focus   |
 
 ## Architecture hybride
 

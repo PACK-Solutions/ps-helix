@@ -99,3 +99,4 @@
 
 .psh-checkbox-message.psh-error { color: var(--psh-danger-color); }
 .psh-checkbox-message.psh-success { color: var(--psh-success-color); }
+.psh-checkbox-message.psh-hint { color: var(--psh-text-color-secondary); }

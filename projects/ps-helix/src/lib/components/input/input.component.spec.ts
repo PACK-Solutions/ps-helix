@@ -174,9 +174,9 @@ describe('PshInputComponent', () => {
       expect(fixture.componentInstance.value()).toBe('test value');
     });
 
-    it('should emit inputFocus when input receives focus', () => {
+    it('should emit focused when input receives focus', () => {
       const focusSpy = jest.fn();
-      fixture.componentInstance.inputFocus.subscribe(focusSpy);
+      fixture.componentInstance.focused.subscribe(focusSpy);
 
       getInput().dispatchEvent(new FocusEvent('focus'));
       fixture.detectChanges();
@@ -184,9 +184,9 @@ describe('PshInputComponent', () => {
       expect(focusSpy).toHaveBeenCalledTimes(1);
     });
 
-    it('should emit inputBlur when input loses focus', () => {
+    it('should emit blurred when input loses focus', () => {
       const blurSpy = jest.fn();
-      fixture.componentInstance.inputBlur.subscribe(blurSpy);
+      fixture.componentInstance.blurred.subscribe(blurSpy);
 
       getInput().dispatchEvent(new FocusEvent('blur'));
       fixture.detectChanges();
@@ -641,7 +641,7 @@ describe('PshInputComponent', () => {
 
     it('should select suggestion on click', fakeAsync(() => {
       const suggestionSelectSpy = jest.fn();
-      fixture.componentInstance.suggestionSelect.subscribe(suggestionSelectSpy);
+      fixture.componentInstance.suggestionSelected.subscribe(suggestionSelectSpy);
 
       const input = getInput();
       input.value = 'a';
@@ -691,7 +691,7 @@ describe('PshInputComponent', () => {
 
     it('should select highlighted suggestion with Enter', fakeAsync(() => {
       const suggestionSelectSpy = jest.fn();
-      fixture.componentInstance.suggestionSelect.subscribe(suggestionSelectSpy);
+      fixture.componentInstance.suggestionSelected.subscribe(suggestionSelectSpy);
 
       const input = getInput();
       input.value = 'a';

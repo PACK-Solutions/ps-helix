@@ -86,7 +86,7 @@ Transforme le déclencheur en bouton carré compact affichant uniquement une ic�
 ### Model (Two-way binding)
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
-| disabled | boolean | false | État désactivé (utiliser [(disabled)]) |
+| disabled | boolean | false | État désactivé (utiliser [disabled]) |
 
 ### Outputs
 | Nom | Type | Description |

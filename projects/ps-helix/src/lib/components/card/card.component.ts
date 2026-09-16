@@ -5,7 +5,6 @@ import {
   computed,
   inject,
   input,
-  model,
   OnDestroy,
   output,
   PLATFORM_ID,
@@ -64,10 +63,10 @@ export class PshCardComponent implements OnDestroy {
   appearance = input<PshSurfaceAppearance>('flat');
 
   /** Effet de survol activé (animation translateY) */
-  hoverable = model(false);
+  hoverable = input(false);
 
   /** Carte cliquable (ajoute cursor pointer et gestion du focus) */
-  interactive = model(false);
+  interactive = input(false);
 
   // Regular inputs - propriétés en lecture seule
   /** Titre principal de la carte */

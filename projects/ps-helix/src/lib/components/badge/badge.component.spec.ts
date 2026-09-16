@@ -226,9 +226,9 @@ describe('PshBadgeComponent', () => {
   });
 
   describe('Click event', () => {
-    it('should emit badgeClick when badge is clicked', () => {
+    it('should emit clicked when badge is clicked', () => {
       const clickSpy = jest.fn();
-      fixture.componentInstance.badgeClick.subscribe(clickSpy);
+      fixture.componentInstance.clicked.subscribe(clickSpy);
 
       getBadgeElement().click();
 
@@ -237,7 +237,7 @@ describe('PshBadgeComponent', () => {
 
     it('should emit on each click', () => {
       const clickSpy = jest.fn();
-      fixture.componentInstance.badgeClick.subscribe(clickSpy);
+      fixture.componentInstance.clicked.subscribe(clickSpy);
 
       getBadgeElement().click();
       getBadgeElement().click();

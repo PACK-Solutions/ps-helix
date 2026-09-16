@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input, model } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AvatarSize, AvatarShape, AvatarStatus } from './avatar.types';
 
@@ -28,10 +28,10 @@ const DEFAULT_STATUS_COLORS: Record<AvatarStatus, string> = {
 export class PshAvatarComponent {
 
   // Model inputs with defaults
-  size = model<AvatarSize>(DEFAULT_CONFIG.size);
-  shape = model<AvatarShape>(DEFAULT_CONFIG.shape);
-  src = model<string | undefined>();
-  alt = model<string>(DEFAULT_CONFIG.alt);
+  size = input<AvatarSize>(DEFAULT_CONFIG.size);
+  shape = input<AvatarShape>(DEFAULT_CONFIG.shape);
+  src = input<string | undefined>();
+  alt = input<string>(DEFAULT_CONFIG.alt);
 
   // Regular inputs
   initials = input('');

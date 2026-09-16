@@ -1,4 +1,4 @@
-import { PshSurfaceAppearance } from '../../types/semantic.types';
+import { PshNavigationError, PshSurfaceAppearance } from '../../types/semantic.types';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -43,7 +43,7 @@ export class PshPaginationComponent {
   private readonly uniqueId = `pagination-${++PshPaginationComponent.idCounter}`;
 
   currentPage = model(1);
-  totalPages = model(1);
+  totalPages = input(1);
   itemsPerPageInput = input(10, { alias: 'itemsPerPage' });
   itemsPerPage = linkedSignal(this.itemsPerPageInput);
 
@@ -137,7 +137,7 @@ export class PshPaginationComponent {
 
   pageChange = output<number>();
   itemsPerPageChange = output<number>();
-  navigationError = output<{ action: string; reason: string }>();
+  navigationError = output<PshNavigationError>();
 
   protected readonly navigationId = computed(() => {
     const customId = this.id();
@@ -188,7 +188,9 @@ export class PshPaginationComponent {
     } else if (page < 1 || page > total) {
       this.navigationError.emit({
         action: 'goToPage',
-        reason: `Page ${page} is out of bounds (1-${total})`,
+        reason: 'out-of-bounds',
+        target: page,
+        message: `Page ${page} is out of bounds (1-${total})`,
       });
     }
   }

@@ -701,7 +701,9 @@ describe('PshPaginationComponent', () => {
 
       expect(errorSpy).toHaveBeenCalledWith({
         action: 'goToPage',
-        reason: expect.stringContaining('out of bounds')
+        reason: 'out-of-bounds',
+        target: 10,
+        message: expect.stringContaining('out of bounds'),
       });
     });
 
@@ -716,7 +718,9 @@ describe('PshPaginationComponent', () => {
 
       expect(errorSpy).toHaveBeenCalledWith({
         action: 'goToPage',
-        reason: expect.stringContaining('out of bounds')
+        reason: 'out-of-bounds',
+        target: -1,
+        message: expect.stringContaining('out of bounds'),
       });
     });
   });
@@ -819,7 +823,7 @@ describe('PshPaginationComponent', () => {
     });
 
     it('should handle totalPages = 1 correctly', () => {
-      fixture.componentInstance.totalPages.set(1);
+      fixture.componentRef.setInput('totalPages', 1);
       fixture.componentInstance.currentPage.set(1);
       fixture.detectChanges();
 
@@ -831,7 +835,7 @@ describe('PshPaginationComponent', () => {
 
     it('should normalize currentPage > totalPages', () => {
       const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
-      fixture.componentInstance.totalPages.set(5);
+      fixture.componentRef.setInput('totalPages', 5);
       fixture.componentInstance.currentPage.set(10);
       fixture.detectChanges();
 
@@ -919,7 +923,9 @@ describe('PshPaginationComponent', () => {
 
       expect(errorSpy).toHaveBeenCalledWith({
         action: 'goToPage',
-        reason: 'Page 2 is out of bounds (1-1)',
+        reason: 'out-of-bounds',
+        target: 2,
+        message: 'Page 2 is out of bounds (1-1)',
       });
       expect(fixture.componentInstance.currentPage()).toBe(1);
     });

@@ -45,7 +45,7 @@ import {
     '[class.psh-success]': '!!success() && !hasError()',
     '[class.psh-disabled]': 'disabled()',
     '[class.psh-readonly]': 'readonly()',
-    '[class.psh-focused]': 'focused()',
+    '[class.psh-focused]': 'isFocused()',
     '[class.psh-auto-size]': 'autoSize()',
     '[class.psh-over-limit]': 'isOverLimit()',
   },
@@ -61,7 +61,7 @@ export class PshTextareaComponent
 
   readonly value = model<string>('');
   readonly disabled = model<boolean>(false);
-  readonly readonly = model<boolean>(false);
+  readonly readonly = input<boolean>(false);
   readonly touched = model<boolean>(false);
 
   appearance = input<PshFieldAppearance>('outline');
@@ -83,13 +83,14 @@ export class PshTextareaComponent
 
   private readonly focusedSignal = signal<boolean>(false);
 
-  inputFocus = output<void>();
-  inputBlur = output<void>();
+  focused = output<void>();
+  blurred = output<void>();
 
   @ViewChild('textareaRef')
   private textareaRef?: ElementRef<HTMLTextAreaElement>;
 
-  focused = computed(() => this.focusedSignal());
+  /** Whether the control currently has focus. A state readout; the event is `focused`. */
+  readonly isFocused = computed(() => this.focusedSignal());
 
   effectiveResize = computed<TextareaResize>(() =>
     this.autoSize() ? 'none' : this.resize(),
@@ -136,7 +137,7 @@ export class PshTextareaComponent
     if (this.readonly()) return 'readonly';
     if (this.hasError()) return 'error';
     if (this.success()) return 'success';
-    if (this.focused()) return 'focused';
+    if (this.isFocused()) return 'focused';
     return 'default';
   });
 
@@ -187,14 +188,14 @@ export class PshTextareaComponent
 
   handleFocus(): void {
     this.focusedSignal.set(true);
-    this.inputFocus.emit();
+    this.focused.emit();
   }
 
   handleBlur(): void {
     this.focusedSignal.set(false);
     this.touched.set(true);
     this.onTouched();
-    this.inputBlur.emit();
+    this.blurred.emit();
   }
 
   focus(): void {

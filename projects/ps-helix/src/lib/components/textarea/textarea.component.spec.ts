@@ -120,16 +120,16 @@ describe('PshTextareaComponent', () => {
       expect(fixture.componentInstance.touched()).toBe(true);
     });
 
-    it('should emit inputBlur on blur', () => {
+    it('should emit blurred on blur', () => {
       const spy = jest.fn();
-      fixture.componentInstance.inputBlur.subscribe(spy);
+      fixture.componentInstance.blurred.subscribe(spy);
       getTextarea().dispatchEvent(new Event('blur'));
       expect(spy).toHaveBeenCalled();
     });
 
-    it('should emit inputFocus on focus', () => {
+    it('should emit focused on focus', () => {
       const spy = jest.fn();
-      fixture.componentInstance.inputFocus.subscribe(spy);
+      fixture.componentInstance.focused.subscribe(spy);
       getTextarea().dispatchEvent(new Event('focus'));
       expect(spy).toHaveBeenCalled();
     });

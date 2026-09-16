@@ -57,7 +57,7 @@ import { PshButtonComponent } from 'ps-helix';
 | size | ButtonSize | 'medium' | Taille du bouton |
 | disabled | boolean | false | État désactivé |
 | loading | boolean | false | État de chargement |
-| fullWidth | boolean (model) | false | Largeur complète. Exposé via `model()`, supporte `[(fullWidth)]` |
+| fullWidth | boolean | false | Largeur complète. Simple `input()` depuis la 7.0.0 : le composant ne l'écrit jamais, donc `[(fullWidth)]` n'avait aucun effet. |
 | iconPosition | ButtonIconPosition | 'left' | Position de l'icône |
 | icon | string | undefined | Nom de l'icône Phosphor |
 | ariaLabel | string | undefined | Label ARIA personnalisé |
@@ -70,7 +70,7 @@ import { PshButtonComponent } from 'ps-helix';
 | Nom | Type | Description |
 |-----|------|-------------|
 | clicked | EventEmitter<MouseEvent> | Émis lors du clic |
-| disabledClick | EventEmitter<MouseEvent> | Émis lors du clic sur un bouton désactivé (hors chargement) |
+| disabledClicked | EventEmitter<MouseEvent> | Émis lors du clic sur un bouton désactivé (hors chargement) |
 
 ### Types
 
@@ -226,7 +226,7 @@ Empêche toute interaction avec le bouton.
 <psh-button
   [disabled]="!form.valid"
   color="primary"
-  (disabledClick)="onDisabledAttempt()"
+  (disabledClicked)="onDisabledAttempt()"
 >
   Enregistrer
 </psh-button>
@@ -563,7 +563,7 @@ import { PshButtonComponent } from 'ps-helix';
       ariaLabel="Continuer vers la prochaine étape"
       loadingText="Chargement en cours..."
       (clicked)="handleClick($event)"
-      (disabledClick)="handleDisabledClick()"
+      (disabledClicked)="handleDisabledClick()"
     >
       Continuer
     </psh-button>

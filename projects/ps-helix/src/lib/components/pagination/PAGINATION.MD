@@ -34,14 +34,14 @@ export class MyComponent {}
 // Pagination basique
 <psh-pagination
   [(currentPage)]="currentPage"
-  [(totalPages)]="totalPages"
+  [totalPages]="totalPages()"
   (pageChange)="onPageChange($event)"
 ></psh-pagination>
 
 // Avec sélecteur d'items par page
 <psh-pagination
   [(currentPage)]="currentPage"
-  [(totalPages)]="totalPages"
+  [totalPages]="totalPages()"
   [(itemsPerPage)]="itemsPerPage"
   [showItemsPerPage]="true"
   [itemsPerPageOptions]="[5, 10, 25, 50]"
@@ -52,7 +52,7 @@ export class MyComponent {}
 // Variante outline
 <psh-pagination
   [(currentPage)]="currentPage"
-  [(totalPages)]="totalPages"
+  [totalPages]="totalPages()"
   variant="outline"
 ></psh-pagination>
 ```
@@ -66,7 +66,7 @@ Propriétés avec two-way binding
 | Nom | Type | Défaut | Validation | Description |
 |-----|------|---------|------------|-------------|
 | `currentPage` | `number` | `1` | >= 1, <= totalPages | Page actuellement affichée (two-way binding avec `[(currentPage)]`) |
-| `totalPages` | `number` | `1` | `0` accepté (état vide), sinon entier >= 1 | Nombre total de pages disponibles. Donnée dérivée possédée par l'appelant : le composant ne la réécrit **jamais**. Un binding one-way `[totalPages]` est le mode d'emploi recommandé ; `[(totalPages)]` reste supporté |
+| `totalPages` | `number` | `1` | `0` accepté (état vide), sinon entier >= 1 | Nombre total de pages. Donnée dérivée possédée par l'appelant : le composant ne la réécrit **jamais**, et depuis la 7.0.0 c'est un simple `input()` — `[(totalPages)]` n'existe plus. |
 | `itemsPerPage` | `number` | `10` | >= 1 | Nombre d'éléments affichés par page (two-way binding avec `[(itemsPerPage)]`) |
 
 ### Regular Inputs (@input)
@@ -314,7 +314,7 @@ export class RobustPaginationComponent {
 ```html
 <psh-pagination
   [(currentPage)]="currentPage"
-  [(totalPages)]="totalPages"
+  [totalPages]="totalPages()"
   variant="default"
 ></psh-pagination>
 ```
@@ -332,7 +332,7 @@ export class RobustPaginationComponent {
 ```html
 <psh-pagination
   [(currentPage)]="currentPage"
-  [(totalPages)]="totalPages"
+  [totalPages]="totalPages()"
   variant="outline"
 ></psh-pagination>
 ```
@@ -352,7 +352,7 @@ export class RobustPaginationComponent {
 ```html
 <psh-pagination
   [(currentPage)]="currentPage"
-  [(totalPages)]="totalPages"
+  [totalPages]="totalPages()"
   size="small"
 ></psh-pagination>
 ```
@@ -370,7 +370,7 @@ export class RobustPaginationComponent {
 ```html
 <psh-pagination
   [(currentPage)]="currentPage"
-  [(totalPages)]="totalPages"
+  [totalPages]="totalPages()"
   size="medium"
 ></psh-pagination>
 ```
@@ -388,7 +388,7 @@ export class RobustPaginationComponent {
 ```html
 <psh-pagination
   [(currentPage)]="currentPage"
-  [(totalPages)]="totalPages"
+  [totalPages]="totalPages()"
   size="large"
 ></psh-pagination>
 ```
@@ -403,7 +403,7 @@ Vous pouvez configurer quels boutons de navigation afficher :
 <!-- Uniquement les numéros de page -->
 <psh-pagination
   [(currentPage)]="currentPage"
-  [(totalPages)]="totalPages"
+  [totalPages]="totalPages()"
   [showFirstLast]="false"
   [showPrevNext]="false"
 ></psh-pagination>
@@ -411,7 +411,7 @@ Vous pouvez configurer quels boutons de navigation afficher :
 <!-- Sans boutons Premier/Dernier -->
 <psh-pagination
   [(currentPage)]="currentPage"
-  [(totalPages)]="totalPages"
+  [totalPages]="totalPages()"
   [showFirstLast]="false"
 ></psh-pagination>
 ```
@@ -424,14 +424,14 @@ Contrôlez le nombre de numéros de page affichés :
 <!-- Affiche jusqu'à 7 pages -->
 <psh-pagination
   [(currentPage)]="currentPage"
-  [(totalPages)]="totalPages"
+  [totalPages]="totalPages()"
   [maxVisiblePages]="7"
 ></psh-pagination>
 
 <!-- Affiche seulement 3 pages (pour mobile) -->
 <psh-pagination
   [(currentPage)]="currentPage"
-  [(totalPages)]="totalPages"
+  [totalPages]="totalPages()"
   [maxVisiblePages]="3"
 ></psh-pagination>
 ```
@@ -443,7 +443,7 @@ Permettez aux utilisateurs de changer le nombre d'éléments affichés :
 ```html
 <psh-pagination
   [(currentPage)]="currentPage"
-  [(totalPages)]="totalPages"
+  [totalPages]="totalPages()"
   [(itemsPerPage)]="itemsPerPage"
   [showItemsPerPage]="true"
   [itemsPerPageOptions]="[10, 25, 50, 100]"
@@ -460,7 +460,7 @@ Personnalisez tous les labels pour l'internationalisation :
 ```html
 <psh-pagination
   [(currentPage)]="currentPage"
-  [(totalPages)]="totalPages"
+  [totalPages]="totalPages()"
   firstLabel="Premier"
   previousLabel="Précédent"
   nextLabel="Suivant"
@@ -491,7 +491,7 @@ Le composant supporte une navigation complète au clavier pour une meilleure acc
 // Aucune configuration nécessaire
 <psh-pagination
   [(currentPage)]="currentPage"
-  [(totalPages)]="totalPages"
+  [totalPages]="totalPages()"
 ></psh-pagination>
 ```
 
@@ -609,7 +609,7 @@ import { PshPaginationComponent } from 'ps-helix';
   template: `
     <psh-pagination #pagination
       [(currentPage)]="currentPage"
-      [(totalPages)]="totalPages"
+      [totalPages]="totalPages()"
     ></psh-pagination>
 
     <div class="actions">
@@ -649,7 +649,7 @@ import { PshPaginationComponent } from 'ps-helix';
   template: `
     <psh-pagination
       [(currentPage)]="currentPage"
-      [(totalPages)]="totalPages"
+      [totalPages]="totalPages()"
       (navigationError)="handleNavigationError($event)"
     ></psh-pagination>
   `
@@ -773,7 +773,7 @@ Utilisez le two-way binding pour synchroniser automatiquement l'état :
 // ✅ Bon - synchronisation automatique
 <psh-pagination
   [(currentPage)]="currentPage"
-  [(totalPages)]="totalPages"
+  [totalPages]="totalPages()"
 ></psh-pagination>
 
 // ❌ À éviter - synchronisation manuelle fastidieuse
@@ -827,7 +827,7 @@ Gérez correctement les états de chargement :
 @if (!loading()) {
   <psh-pagination
     [(currentPage)]="currentPage"
-    [(totalPages)]="totalPages"
+    [totalPages]="totalPages()"
     (pageChange)="loadPage($event)"
   ></psh-pagination>
 }
@@ -874,7 +874,7 @@ Adaptez la configuration selon la taille d'écran :
 // ✅ Bon - adaptation responsive
 <psh-pagination
   [(currentPage)]="currentPage"
-  [(totalPages)]="totalPages"
+  [totalPages]="totalPages()"
   [size]="isMobile ? 'small' : 'medium'"
   [maxVisiblePages]="isMobile ? 3 : 7"
 ></psh-pagination>

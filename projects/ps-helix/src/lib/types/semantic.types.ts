@@ -75,3 +75,49 @@ export type PshSurfaceAppearance = Extract<PshAppearance, 'flat' | 'elevated' | 
 export type PshSize = 'small' | 'medium' | 'large';
 
 export const PSH_SIZES: readonly PshSize[] = ['small', 'medium', 'large'] as const;
+
+/* ------------------------------------------------------------- navigation */
+
+/**
+ * Why a navigation was refused.
+ *
+ * Before 7.0.0 the reason was an English sentence — `"Page 12 is out of bounds (1-9)"`,
+ * `"Cannot activate step 3. Please complete previous steps first"`. A consumer who needed to
+ * react differently to "out of range" and "your guard said no" had to match on that prose,
+ * which is neither stable nor translatable. Branch on this instead.
+ */
+export type PshNavigationErrorReason =
+  /** The requested page or step index is outside the valid range. */
+  | 'out-of-bounds'
+  /** A `beforeChange` guard returned false. */
+  | 'blocked'
+  /** A `beforeChange` guard threw. The error is in `cause`. */
+  | 'rejected'
+  /** An earlier step has not been completed. */
+  | 'prerequisite-incomplete';
+
+/**
+ * Emitted when a component refuses to navigate.
+ *
+ * One shape for the three components that report this. `pagination` used to emit
+ * `{ action, reason }` and `stepper` / `state-flow-indicator` a bare `string`, so the same
+ * output name carried two incompatible payloads.
+ */
+export interface PshNavigationError {
+  /** The navigation that was attempted. */
+  action: 'goToPage' | 'goToStep';
+  /** Machine-readable cause. Branch on this, never on `message`. */
+  reason: PshNavigationErrorReason;
+  /** The page or step index that could not be reached. */
+  target: number;
+  /**
+   * English detail, for logs and debugging. Not a user-facing string: it is not translated
+   * and its wording is not part of the public contract.
+   */
+  message: string;
+  /**
+   * For `reason: 'rejected'`, whatever the guard threw. `unknown` is the honest type —
+   * JavaScript can throw anything — and it mirrors `Error.cause`.
+   */
+  cause?: unknown;
+}

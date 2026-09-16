@@ -7,7 +7,6 @@ import {
   ElementRef,
   inject,
   input,
-  model,
   output,
   signal,
 } from '@angular/core';
@@ -33,7 +32,7 @@ export class PshButtonComponent implements AfterContentChecked {
   size = input<ButtonSize>('medium');
   disabled = input(false);
   loading = input(false);
-  fullWidth = model(false);
+  fullWidth = input(false);
   iconPosition = input<ButtonIconPosition>('left');
   icon = input<string>();
   ariaLabel = input<string>();
@@ -43,7 +42,7 @@ export class PshButtonComponent implements AfterContentChecked {
   type = input<'button' | 'submit' | 'reset'>('button');
 
   clicked = output<MouseEvent>();
-  disabledClick = output<MouseEvent>();
+  disabledClicked = output<MouseEvent>();
 
   ngAfterContentChecked(): void {
     const button = this.elementRef.nativeElement.querySelector('button');
@@ -90,7 +89,7 @@ export class PshButtonComponent implements AfterContentChecked {
     if (this.disabled() && !this.loading()) {
       event.preventDefault();
       event.stopPropagation();
-      this.disabledClick.emit(event);
+      this.disabledClicked.emit(event);
     }
   }
 }

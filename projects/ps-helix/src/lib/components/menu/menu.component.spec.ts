@@ -484,10 +484,10 @@ describe('PshMenuComponent', () => {
   });
 
   describe('Output emissions', () => {
-    describe('itemClick', () => {
-      it('should emit itemClick when clicking an item without children', () => {
+    describe('itemClicked', () => {
+      it('should emit itemClicked when clicking an item without children', () => {
         const clickSpy = jest.fn();
-        fixture.componentInstance.itemClick.subscribe(clickSpy);
+        fixture.componentInstance.itemClicked.subscribe(clickSpy);
 
         getMenuItemById('home')!.click();
 
@@ -495,7 +495,7 @@ describe('PshMenuComponent', () => {
         expect(clickSpy).toHaveBeenCalledWith(mockItems[0]);
       });
 
-      it('should NOT emit itemClick when clicking a disabled item', () => {
+      it('should NOT emit itemClicked when clicking a disabled item', () => {
         const itemsWithDisabled: MenuItem[] = [
           { id: 'disabled', content: 'Disabled', disabled: true }
         ];
@@ -503,19 +503,19 @@ describe('PshMenuComponent', () => {
         fixture.detectChanges();
 
         const clickSpy = jest.fn();
-        fixture.componentInstance.itemClick.subscribe(clickSpy);
+        fixture.componentInstance.itemClicked.subscribe(clickSpy);
 
         getMenuItemById('disabled')!.click();
 
         expect(clickSpy).not.toHaveBeenCalled();
       });
 
-      it('should NOT emit itemClick when clicking an item with children', () => {
+      it('should NOT emit itemClicked when clicking an item with children', () => {
         fixture.componentRef.setInput('items', mockItemsWithChildren);
         fixture.detectChanges();
 
         const clickSpy = jest.fn();
-        fixture.componentInstance.itemClick.subscribe(clickSpy);
+        fixture.componentInstance.itemClicked.subscribe(clickSpy);
 
         getMenuItemById('settings')!.click();
 
@@ -535,7 +535,7 @@ describe('PshMenuComponent', () => {
         fixture.detectChanges();
 
         const clickSpy = jest.fn();
-        fixture.componentInstance.itemClick.subscribe(clickSpy);
+        fixture.componentInstance.itemClicked.subscribe(clickSpy);
 
         getMenuItemById('complex')!.click();
 
@@ -543,15 +543,15 @@ describe('PshMenuComponent', () => {
       });
     });
 
-    describe('submenuToggle', () => {
+    describe('submenuToggled', () => {
       beforeEach(() => {
         fixture.componentRef.setInput('items', mockItemsWithChildren);
         fixture.detectChanges();
       });
 
-      it('should emit submenuToggle with expanded: true when opening submenu', () => {
+      it('should emit submenuToggled with expanded: true when opening submenu', () => {
         const toggleSpy = jest.fn();
-        fixture.componentInstance.submenuToggle.subscribe(toggleSpy);
+        fixture.componentInstance.submenuToggled.subscribe(toggleSpy);
 
         getMenuItemById('settings')!.click();
 
@@ -561,12 +561,12 @@ describe('PshMenuComponent', () => {
         });
       });
 
-      it('should emit submenuToggle with expanded: false when closing submenu', () => {
+      it('should emit submenuToggled with expanded: false when closing submenu', () => {
         getMenuItemById('settings')!.click();
         fixture.detectChanges();
 
         const toggleSpy = jest.fn();
-        fixture.componentInstance.submenuToggle.subscribe(toggleSpy);
+        fixture.componentInstance.submenuToggled.subscribe(toggleSpy);
 
         getMenuItemById('settings')!.click();
 
@@ -576,12 +576,12 @@ describe('PshMenuComponent', () => {
         });
       });
 
-      it('should emit itemClick for child items', () => {
+      it('should emit itemClicked for child items', () => {
         getMenuItemById('settings')!.click();
         fixture.detectChanges();
 
         const clickSpy = jest.fn();
-        fixture.componentInstance.itemClick.subscribe(clickSpy);
+        fixture.componentInstance.itemClicked.subscribe(clickSpy);
 
         getMenuItemById('account')!.click();
 
@@ -656,13 +656,13 @@ describe('PshMenuComponent', () => {
       expect(fixture.componentInstance.isExpanded(mockItemsWithChildren[1]!)).toBe(true);
     });
 
-    it('should emit submenuToggle when clicking item with children while menu is collapsed', () => {
+    it('should emit submenuToggled when clicking item with children while menu is collapsed', () => {
       fixture.componentRef.setInput('collapsible', true);
       fixture.componentRef.setInput('collapsed', true);
       fixture.detectChanges();
 
       const toggleSpy = jest.fn();
-      fixture.componentInstance.submenuToggle.subscribe(toggleSpy);
+      fixture.componentInstance.submenuToggled.subscribe(toggleSpy);
 
       getMenuItemById('settings')!.click();
       fixture.detectChanges();
@@ -684,9 +684,9 @@ describe('PshMenuComponent', () => {
       fixture.detectChanges();
     });
 
-    it('should not emit itemClick for disabled items', () => {
+    it('should not emit itemClicked for disabled items', () => {
       const clickSpy = jest.fn();
-      fixture.componentInstance.itemClick.subscribe(clickSpy);
+      fixture.componentInstance.itemClicked.subscribe(clickSpy);
 
       getMenuItemById('disabled')!.click();
 
@@ -720,7 +720,7 @@ describe('PshMenuComponent', () => {
 
     it('should activate item on Enter key', () => {
       const clickSpy = jest.fn();
-      fixture.componentInstance.itemClick.subscribe(clickSpy);
+      fixture.componentInstance.itemClicked.subscribe(clickSpy);
 
       const firstItem = getMenuItemById('home')!;
       dispatchKeyboardEvent(firstItem, 'Enter');
@@ -730,7 +730,7 @@ describe('PshMenuComponent', () => {
 
     it('should activate item on Space key', () => {
       const clickSpy = jest.fn();
-      fixture.componentInstance.itemClick.subscribe(clickSpy);
+      fixture.componentInstance.itemClicked.subscribe(clickSpy);
 
       const firstItem = getMenuItemById('home')!;
       dispatchKeyboardEvent(firstItem, ' ');
@@ -959,7 +959,7 @@ describe('PshMenuComponent', () => {
 
       it('should open submenu on ArrowRight when item has children', () => {
         const toggleSpy = jest.fn();
-        fixture.componentInstance.submenuToggle.subscribe(toggleSpy);
+        fixture.componentInstance.submenuToggled.subscribe(toggleSpy);
 
         const settingsItem = getMenuItemById('settings')!;
         dispatchKeyboardEvent(settingsItem, 'ArrowRight');
@@ -976,7 +976,7 @@ describe('PshMenuComponent', () => {
         fixture.detectChanges();
 
         const toggleSpy = jest.fn();
-        fixture.componentInstance.submenuToggle.subscribe(toggleSpy);
+        fixture.componentInstance.submenuToggled.subscribe(toggleSpy);
 
         dispatchKeyboardEvent(settingsItem, 'ArrowLeft');
 
@@ -992,7 +992,7 @@ describe('PshMenuComponent', () => {
         fixture.detectChanges();
 
         const toggleSpy = jest.fn();
-        fixture.componentInstance.submenuToggle.subscribe(toggleSpy);
+        fixture.componentInstance.submenuToggled.subscribe(toggleSpy);
 
         dispatchKeyboardEvent(settingsItem, 'ArrowRight');
 
@@ -1001,7 +1001,7 @@ describe('PshMenuComponent', () => {
 
       it('should not close submenu on ArrowLeft if already collapsed', () => {
         const toggleSpy = jest.fn();
-        fixture.componentInstance.submenuToggle.subscribe(toggleSpy);
+        fixture.componentInstance.submenuToggled.subscribe(toggleSpy);
 
         const settingsItem = getMenuItemById('settings')!;
         dispatchKeyboardEvent(settingsItem, 'ArrowLeft');
@@ -1011,7 +1011,7 @@ describe('PshMenuComponent', () => {
 
       it('should toggle submenu with Enter on item with children', () => {
         const toggleSpy = jest.fn();
-        fixture.componentInstance.submenuToggle.subscribe(toggleSpy);
+        fixture.componentInstance.submenuToggled.subscribe(toggleSpy);
 
         const settingsItem = getMenuItemById('settings')!;
         dispatchKeyboardEvent(settingsItem, 'Enter');
@@ -1024,7 +1024,7 @@ describe('PshMenuComponent', () => {
 
       it('should toggle submenu with Space on item with children', () => {
         const toggleSpy = jest.fn();
-        fixture.componentInstance.submenuToggle.subscribe(toggleSpy);
+        fixture.componentInstance.submenuToggled.subscribe(toggleSpy);
 
         const settingsItem = getMenuItemById('settings')!;
         dispatchKeyboardEvent(settingsItem, ' ');
@@ -1035,12 +1035,12 @@ describe('PshMenuComponent', () => {
         });
       });
 
-      it('should emit itemClick when pressing Enter on child item', () => {
+      it('should emit itemClicked when pressing Enter on child item', () => {
         getMenuItemById('settings')!.click();
         fixture.detectChanges();
 
         const clickSpy = jest.fn();
-        fixture.componentInstance.itemClick.subscribe(clickSpy);
+        fixture.componentInstance.itemClicked.subscribe(clickSpy);
 
         const accountItem = getMenuItemById('account')!;
         dispatchKeyboardEvent(accountItem, 'Enter');
@@ -1048,12 +1048,12 @@ describe('PshMenuComponent', () => {
         expect(clickSpy).toHaveBeenCalledWith(mockItemsWithChildren[1]!.children![0]);
       });
 
-      it('should emit itemClick when pressing Space on child item', () => {
+      it('should emit itemClicked when pressing Space on child item', () => {
         getMenuItemById('settings')!.click();
         fixture.detectChanges();
 
         const clickSpy = jest.fn();
-        fixture.componentInstance.itemClick.subscribe(clickSpy);
+        fixture.componentInstance.itemClicked.subscribe(clickSpy);
 
         const accountItem = getMenuItemById('account')!;
         dispatchKeyboardEvent(accountItem, ' ');
@@ -1184,9 +1184,9 @@ describe('PshMenuComponent with generic type', () => {
     fixture.detectChanges();
   });
 
-  it('should emit itemClick with correct generic value type', () => {
+  it('should emit itemClicked with correct generic value type', () => {
     const clickSpy = jest.fn();
-    fixture.componentInstance.itemClick.subscribe(clickSpy);
+    fixture.componentInstance.itemClicked.subscribe(clickSpy);
 
     getMenuItemById('item1')!.click();
 
@@ -1195,7 +1195,7 @@ describe('PshMenuComponent with generic type', () => {
     expect(emittedItem.value).toEqual({ code: 'A1', priority: 1 });
   });
 
-  it('should preserve generic value in submenuToggle event', () => {
+  it('should preserve generic value in submenuToggled event', () => {
     const itemsWithChildren: MenuItem<CustomValue>[] = [
       {
         id: 'parent',
@@ -1210,7 +1210,7 @@ describe('PshMenuComponent with generic type', () => {
     fixture.detectChanges();
 
     const toggleSpy = jest.fn();
-    fixture.componentInstance.submenuToggle.subscribe(toggleSpy);
+    fixture.componentInstance.submenuToggled.subscribe(toggleSpy);
 
     const parentItem = getMenuItemById('parent')!;
     parentItem.click();
@@ -1228,7 +1228,7 @@ describe('PshMenuComponent with generic type', () => {
       [items]="items"
       [collapsible]="true"
       [(collapsed)]="isCollapsed"
-      (itemClick)="onItemClick($event)"
+      (itemClicked)="onItemClick($event)"
     />
   `,
   imports: [PshMenuComponent]
@@ -1279,7 +1279,7 @@ describe('PshMenuComponent with host component', () => {
     expect(menu!.collapsed()).toBe(true);
   });
 
-  it('should emit itemClick to host component', () => {
+  it('should emit itemClicked to host component', () => {
     const homeItem = fixture.nativeElement.querySelector('[data-menu-item-id="home"]');
     homeItem.click();
 

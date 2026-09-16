@@ -23,7 +23,7 @@ import { MenuItem } from 'ps-helix';
     <!-- Menu basique -->
     <psh-menu
       [items]="menuItems"
-      (itemClick)="handleItemClick($event)"
+      (itemClicked)="handleItemClick($event)"
     />
 
     <!-- Menu horizontal -->
@@ -37,7 +37,7 @@ import { MenuItem } from 'ps-helix';
       [items]="menuItems"
       [collapsible]="true"
       [(collapsed)]="isCollapsed"
-      (submenuToggle)="handleSubmenuToggle($event)"
+      (submenuToggled)="handleSubmenuToggle($event)"
     />
 
     <!-- Menu avec contrôle d'expansion -->
@@ -97,8 +97,8 @@ export class ExampleComponent {
 ### Outputs
 | Nom | Type | Description |
 |-----|------|-------------|
-| itemClick | EventEmitter<MenuItem<T>> | Émis lors du clic sur un item sans children |
-| submenuToggle | EventEmitter<{item, expanded}> | Émis lors du toggle d'un sous-menu |
+| itemClicked | EventEmitter<MenuItem<T>> | Émis lors du clic sur un item sans children |
+| submenuToggled | EventEmitter<{item, expanded}> | Émis lors du toggle d'un sous-menu |
 
 ### Méthodes Publiques
 | Méthode | Paramètres | Description |
@@ -242,8 +242,8 @@ interface CustomValue {
       variant="default"
       [collapsible]="true"
       [(collapsed)]="isCollapsed"
-      (itemClick)="handleItemClick($event)"
-      (submenuToggle)="handleSubmenuToggle($event)"
+      (itemClicked)="handleItemClick($event)"
+      (submenuToggled)="handleSubmenuToggle($event)"
     />
   `
 })

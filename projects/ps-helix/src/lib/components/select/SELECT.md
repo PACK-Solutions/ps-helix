@@ -110,7 +110,7 @@ selectedCountry: string | null = null;
 | opened | `void` | Émis à l'ouverture du dropdown |
 | closed | `void` | Émis à la fermeture du dropdown |
 | searched | `string` | Émis lors de la recherche (si `minLength` atteint) |
-| scrollEnd | `void` | Émis lorsque l'utilisateur atteint la fin de la liste |
+| scrolledToEnd | `void` | Émis lorsque l'utilisateur atteint la fin de la liste |
 
 ## Interfaces
 
@@ -393,7 +393,7 @@ export class ObjectSelectDemoComponent {
       [loading]="isLoading"
       [searchable]="true"
       label="Items"
-      (scrollEnd)="loadMore()"
+      (scrolledToEnd)="loadMore()"
       (searched)="search($event)"
     />
   `

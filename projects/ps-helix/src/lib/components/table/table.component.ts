@@ -45,8 +45,8 @@ export class PshTableComponent {
   loading = input(this.config.loading ?? false);
   globalSearch = input(this.config.globalSearch ?? false);
   fullWidth = input(this.config.fullWidth ?? false);
-  columns = input<TableColumn[]>([]);
-  data = input<TableRow[]>([]);
+  columns = input.required<TableColumn[]>();
+  data = input.required<TableRow[]>();
   emptyMessage = input<string>(this.config.emptyMessage ?? 'No data available');
   noResultsMessage = input<string>(this.config.noResultsMessage ?? 'No results found');
   globalSearchPlaceholder = input(this.config.globalSearchPlaceholder ?? 'Search in all columns...');
@@ -58,9 +58,9 @@ export class PshTableComponent {
 
   sortChange = output<TableSort>();
   globalSearchChange = output<string>();
-  rowClick = output<TableRowClickEvent>();
-  rowExpand = output<TableRowExpandEvent>();
-  rowCollapse = output<TableRowExpandEvent>();
+  rowClicked = output<TableRowClickEvent>();
+  rowExpanded = output<TableRowExpandEvent>();
+  rowCollapsed = output<TableRowExpandEvent>();
 
   private currentSortSignal = signal<TableSort | undefined>(undefined);
   readonly searchTermSignal = signal('');
@@ -177,7 +177,7 @@ export class PshTableComponent {
   }
 
   handleRowClick(row: TableRow): void {
-    this.rowClick.emit({ id: row.id, row });
+    this.rowClicked.emit({ id: row.id, row });
   }
 
   protected getCellValue(row: TableRow, column: TableColumn): unknown {
@@ -207,11 +207,11 @@ export class PshTableComponent {
     if (wasExpanded) {
       ids.delete(row.id);
       this.expandedRowIds.set(ids);
-      this.rowCollapse.emit({ id: row.id, row, expanded: false });
+      this.rowCollapsed.emit({ id: row.id, row, expanded: false });
     } else {
       ids.add(row.id);
       this.expandedRowIds.set(ids);
-      this.rowExpand.emit({ id: row.id, row, expanded: true });
+      this.rowExpanded.emit({ id: row.id, row, expanded: true });
     }
   }
 

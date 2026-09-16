@@ -137,9 +137,9 @@ Propriétés de configuration (unidirectionnelles).
 | valueChange | string | Émis automatiquement par le model lors du changement de valeur |
 | disabledChange | boolean | Émis automatiquement par le model |
 | touchedChange | boolean | Émis automatiquement par le model |
-| inputFocus | void | Émis lors du focus |
-| inputBlur | void | Émis lors du blur |
-| suggestionSelect | string | Émis lors de la sélection d'une suggestion |
+| focused | void | Émis lors du focus |
+| blurred | void | Émis lors du blur |
+| suggestionSelected | string | Émis lors de la sélection d'une suggestion |
 
 ### Types
 

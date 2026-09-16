@@ -71,8 +71,10 @@ export class PshRadioComponent implements AfterViewInit {
 
   // Regular inputs
   label = input('');
-  error = input('');
-  success = input('');
+  error = input<string | null | undefined>(null);
+  success = input<string | null | undefined>(null);
+  /** Guidance shown when there is neither an error nor a success message. */
+  hint = input<string | null | undefined>(null);
   name = input('');
   value = input<unknown>();
   ariaLabel = input<string>();
@@ -113,9 +115,15 @@ export class PshRadioComponent implements AfterViewInit {
     this.success() ? `${this.uniqueId}-success` : undefined
   );
 
-  // error and success are mutually exclusive in the template (@if/@else if),
-  // so aria-describedby references whichever message is actually rendered.
-  ariaDescribedBy = computed(() => this.errorMessageId() ?? this.successMessageId());
+  hintMessageId = computed(() =>
+    this.hint() ? `${this.uniqueId}-hint` : undefined
+  );
+
+  // error, success and hint are mutually exclusive in the template (@if/@else if), so
+  // aria-describedby references whichever message is actually rendered — in the same order.
+  ariaDescribedBy = computed(
+    () => this.errorMessageId() ?? this.successMessageId() ?? this.hintMessageId(),
+  );
 
   ngAfterViewInit(): void {
     if (!isDevMode()) return;

@@ -18,7 +18,7 @@ export class PshFlowStepComponent {
   disabled = input(false);
   completed = input(false);
   loading = input(false);
-  error = input<string>();
+  error = input<string | null | undefined>(null);
   warning = input<string>();
 
   private _index = signal(0);

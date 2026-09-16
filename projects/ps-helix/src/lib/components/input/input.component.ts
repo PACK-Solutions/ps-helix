@@ -44,7 +44,7 @@ import { InputType, InputSize, AutocompleteConfig, INPUT_LABELS } from './input.
     '[class.psh-disabled]': 'disabled()',
     '[class.psh-readonly]': 'readonly()',
     '[class.psh-loading]': 'loading()',
-    '[class.psh-focused]': 'focused()',
+    '[class.psh-focused]': 'isFocused()',
     '[class.psh-has-start-icon]': '!!iconStart()',
     '[class.psh-has-end-icon]': '!!iconEnd() || type() === "password"',
     '[class.psh-outline]': 'appearance() === "outline"',
@@ -71,8 +71,8 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
 
   readonly value = model<string>('');
   readonly disabled = model<boolean>(false);
-  readonly readonly = model(false);
-  readonly loading = model(false);
+  readonly readonly = input(false);
+  readonly loading = input(false);
   readonly touched = model(false);
 
   appearance = input<PshFieldAppearance>('outline');
@@ -105,13 +105,14 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
   private blurTimeoutId: number | null = null;
   private debounceTimeoutId: number | null = null;
 
-  inputFocus = output<void>();
-  inputBlur = output<void>();
-  suggestionSelect = output<string>();
+  focused = output<void>();
+  blurred = output<void>();
+  suggestionSelected = output<string>();
 
   showSuggestions = computed(() => this.suggestionsVisible() && this.filteredSuggestions().length > 0);
   filteredSuggestions = computed(() => this.filteredSuggestionsSignal());
-  focused = computed(() => this.focusedSignal());
+  /** Whether the control currently has focus. A state readout; the event is `focused`. */
+  readonly isFocused = computed(() => this.focusedSignal());
   passwordVisible = computed(() => this.passwordVisibleSignal());
   
   effectiveType = computed(() => {
@@ -143,7 +144,7 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
     if (this.loading()) return 'loading';
     if (this.error()) return 'error';
     if (this.success()) return 'success';
-    if (this.focused()) return 'focused';
+    if (this.isFocused()) return 'focused';
     return 'default';
   }
 
@@ -224,7 +225,7 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
 
   handleFocus(): void {
     this.focusedSignal.set(true);
-    this.inputFocus.emit();
+    this.focused.emit();
 
     const val = this.value();
     if (this.suggestions() && val.length >= this.autocompleteConfig().minLength) {
@@ -234,7 +235,7 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
 
   handleBlur(): void {
     this.focusedSignal.set(false);
-    this.inputBlur.emit();
+    this.blurred.emit();
     this.onTouched();
     this.touched.set(true);
 
@@ -283,7 +284,7 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
   handleSuggestionClick(suggestion: string): void {
     this.value.set(suggestion);
     this.onChange(suggestion);
-    this.suggestionSelect.emit(suggestion);
+    this.suggestionSelected.emit(suggestion);
     this.suggestionsVisible.set(false);
     this.focusedSuggestionIndex.set(-1);
     this.syncPanel();

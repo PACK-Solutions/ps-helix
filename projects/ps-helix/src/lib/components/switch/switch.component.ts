@@ -58,8 +58,10 @@ export class PshSwitchComponent implements ControlValueAccessor, FormCheckboxCon
   labelPosition = input<'left' | 'right'>(this.config.labelPosition ?? 'right');
 
   label = input('');
-  error = input('');
-  success = input('');
+  error = input<string | null | undefined>(null);
+  success = input<string | null | undefined>(null);
+  /** Guidance shown when there is neither an error nor a success message. */
+  hint = input<string | null | undefined>(null);
   ariaLabel = input<string>();
   name = input<string>('');
   id = input<string>(this.uniqueId);
@@ -75,9 +77,10 @@ export class PshSwitchComponent implements ControlValueAccessor, FormCheckboxCon
   });
   errorId = computed(() => this.error() ? `${this.id()}-error` : null);
   successId = computed(() => this.success() ? `${this.id()}-success` : null);
-  // error and success are mutually exclusive in the template (@if/@else if),
-  // so aria-describedby references whichever message is actually rendered.
-  describedBy = computed(() => this.errorId() ?? this.successId());
+  hintId = computed(() => this.hint() ? `${this.id()}-hint` : null);
+  // error, success and hint are mutually exclusive in the template (@if/@else if), so
+  // aria-describedby references whichever message is actually rendered — in the same order.
+  describedBy = computed(() => this.errorId() ?? this.successId() ?? this.hintId());
 
   toggle(): void {
     if (!this.disabled()) {

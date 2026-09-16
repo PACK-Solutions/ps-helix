@@ -40,5 +40,9 @@
     <div [id]="successId()!" class="psh-switch-success" role="status" aria-live="polite">
       {{ success() }}
     </div>
+  } @else if (hint()) {
+    <div [id]="hintId()!" class="psh-switch-hint">
+      {{ hint() }}
+    </div>
   }
 </div>

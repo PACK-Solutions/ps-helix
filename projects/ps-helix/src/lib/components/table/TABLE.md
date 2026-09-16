@@ -118,9 +118,9 @@ const data: TableRow[] = [
 |-----|------|-------------|
 | sortChange | EventEmitter<TableSort> | Émis lors du tri |
 | globalSearchChange | EventEmitter<string> | Émis lors de la recherche |
-| rowClick | EventEmitter<TableRowClickEvent> | Émis lors du clic sur une ligne |
-| rowExpand | EventEmitter<TableRowExpandEvent> | Émis lors de l'expansion d'une ligne |
-| rowCollapse | EventEmitter<TableRowExpandEvent> | Émis lors du repli d'une ligne |
+| rowClicked | EventEmitter<TableRowClickEvent> | Émis lors du clic sur une ligne |
+| rowExpanded | EventEmitter<TableRowExpandEvent> | Émis lors de l'expansion d'une ligne |
+| rowCollapsed | EventEmitter<TableRowExpandEvent> | Émis lors du repli d'une ligne |
 
 ### Interface TableColumn
 ```typescript

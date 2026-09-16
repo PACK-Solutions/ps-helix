@@ -16,10 +16,10 @@ import { SidebarMode, SidebarPosition } from './sidebar.types';
       [ariaLabel]="ariaLabel"
       [closeOnBackdrop]="closeOnBackdrop"
       [closeOnEscape]="closeOnEscape"
-      (toggle)="onToggle($event)"
+      (toggled)="onToggle($event)"
       (opened)="onOpened()"
       (closed)="onClosed()"
-      (transitionStart)="onTransitionStart($event)"
+      (transitionStarted)="onTransitionStart($event)"
     >
       <button id="first-button">First Button</button>
       <a href="#" id="sidebar-link">Sidebar Link</a>
@@ -397,7 +397,7 @@ describe('PshSidebarComponent', () => {
   });
 
   describe('Output events', () => {
-    it('should emit toggle output with true when sidebar opens', fakeAsync(() => {
+    it('should emit toggled output with true when sidebar opens', fakeAsync(() => {
       const sidebarComponent = getSidebarComponentInstance(fixture);
       sidebarComponent.toggleSidebar();
       tick();
@@ -406,7 +406,7 @@ describe('PshSidebarComponent', () => {
       expect(hostComponent.onToggle).toHaveBeenCalledWith(true);
     }));
 
-    it('should emit toggle output with false when sidebar closes', fakeAsync(() => {
+    it('should emit toggled output with false when sidebar closes', fakeAsync(() => {
       hostComponent.isOpen = true;
       fixture.detectChanges();
 
@@ -442,7 +442,7 @@ describe('PshSidebarComponent', () => {
       expect(hostComponent.onClosed).toHaveBeenCalledTimes(1);
     }));
 
-    it('should emit transitionStart output before state changes', fakeAsync(() => {
+    it('should emit transitionStarted output before state changes', fakeAsync(() => {
       const sidebarComponent = getSidebarComponentInstance(fixture);
       sidebarComponent.toggleSidebar();
       tick();

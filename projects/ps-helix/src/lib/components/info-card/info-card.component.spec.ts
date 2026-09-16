@@ -48,6 +48,7 @@ describe('PshInfoCardComponent', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(PshInfoCardComponent);
+    fixture.componentRef.setInput('data', []);
     fixture.detectChanges();
   });
 
@@ -590,6 +591,7 @@ describe('PshInfoCardComponent - Copy Feature', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(PshInfoCardComponent);
+    fixture.componentRef.setInput('data', []);
     fixture.detectChanges();
   });
 
@@ -874,6 +876,7 @@ describe('PshInfoCardComponent - Row emphasis / formatting', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(PshInfoCardComponent);
+    fixture.componentRef.setInput('data', []);
     fixture.detectChanges();
   });
 
