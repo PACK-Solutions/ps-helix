@@ -615,7 +615,62 @@ input would only let you break it:
 | `psh-tooltip` | `role="tooltip"`; its content *is* the text |
 | `psh-step`, `psh-flow-step` | `role="tabpanel"`, named by their tab |
 
-## 11. Styling a component from outside
+## 11. Responsive
+
+### 11.1 Every breakpoint is `em`, and a `max-width` is exclusive
+
+`breakpoints.tokens.css` documented this from the start and the code did not follow it.
+Mixing `px` and `em` means **browser zoom does not trigger the same switch in every
+component**: an em query scales with the user's root font size, a px query does not, so at
+150% zoom a px-based component has not switched while the em-based one beside it has.
+
+| Use | `min-width` | `max-width` |
+|---|---|---|
+| xs | `30em` | `29.9375em` |
+| sm | `40em` | `39.9375em` |
+| md | `48em` | `47.9375em` |
+| lg | `64em` | `63.9375em` |
+
+A `max-width` is the breakpoint **minus 0.0625em** — one pixel at a 16px root. Written on the
+breakpoint itself, it is true at the same width as the `min-width` beside it:
+`responsive.utils.css` paired `min-width: 48em` with `max-width: 48em` eight times, so at
+768px an element was simultaneously "small screen" and "large screen".
+
+`npm run verify:breakpoints` enforces it in CI.
+
+Two off-scale values moved to the nearest canonical breakpoint upward: `psh-alert`'s tight
+padding now starts at 480px instead of 400px, and `psh-toast` goes full-width up to 640px
+instead of 576px.
+
+### 11.2 The OS dark preference works without the theme service
+
+`dark-auto.css` restates the dark tokens behind `@media (prefers-color-scheme: dark)`, so the
+stylesheet is correct on its own. `PshThemeService` already did this at runtime; what it could
+not do is cover the SSR first paint, or an application that imports the CSS and does not use
+the service.
+
+An explicit `data-theme` always wins: the selector is `:root:not([data-theme="light"])`.
+
+Nothing to change unless you were relying on ps-helix *ignoring* the OS setting — in which
+case set `data-theme="light"` on your root element.
+
+### 11.3 Smaller fixes
+
+- **`100dvh`** on sidebar and modal. `100vh` is the viewport without the collapsing mobile
+  browser chrome, so a full-height sidebar's bottom sat under the URL bar. The `100vh`
+  declaration is kept first as a fallback.
+- **Touch targets** reach 44px (WCAG 2.5.5) on info-card's copy button and two menu links,
+  through the new `--psh-touch-target-min`. The icons are unchanged — this bounds the target,
+  not the drawing.
+- **`psh-dropdown`'s panel is bounded.** It is `position: fixed` and placed from JS, and had
+  no width or height constraint in CSS at all: on a narrow screen it ran past the edge, and
+  with many items past the bottom. `--psh-dropdown-max-width` and
+  `--psh-dropdown-max-height` override the new defaults.
+- **The fixed width caps are overridable**: `--psh-select-max-width`,
+  `--psh-select-panel-max-height`, `--psh-input-max-width`, `--psh-textarea-max-width`,
+  `--psh-dropdown-min-width`, `--psh-sidebar-width`.
+
+## 12. Styling a component from outside
 
 Component custom properties used to be declared on the element that consumed them, so
 setting one on the host did nothing:
@@ -638,7 +693,7 @@ The 82 available properties are listed per component in
 If you were reaching in with `::ng-deep` to work around the old behaviour, check whether a
 property now covers your case.
 
-## 12. Smaller changes
+## 13. Smaller changes
 
 - **Dependencies.** `date-fns` is gone (it had zero usages). `@ngx-translate/core` is an
   optional peer with a `>=15` range — if you were held to `^15` by ps-helix, you no longer
