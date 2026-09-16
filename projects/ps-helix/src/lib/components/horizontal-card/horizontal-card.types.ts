@@ -12,3 +12,15 @@ export interface HorizontalCardOptions {
   contentPadding?: string;
   mobileHeight?: string;
 }
+
+/** Application-wide defaults for `psh-horizontal-card`, provided through `HORIZONTAL_CARD_CONFIG`. */
+export interface HorizontalCardConfig {
+  appearance: HorizontalCardVariant;
+  hoverable: boolean;
+  interactive: boolean;
+  sideWidth: string;
+  gap: string;
+  sidePadding: string;
+  contentPadding: string;
+  mobileHeight: string;
+}

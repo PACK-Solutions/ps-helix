@@ -52,8 +52,8 @@ export type DropdownPlacement = 'bottom-start' | 'bottom-end' | 'top-start' | 't
 export interface DropdownConfig {
   /** Apparence visuelle */
   appearance?: DropdownAppearance;
-  /** Variante de couleur */
-  color?: DropdownVariant;
+  /** Variante de couleur — la union restreinte que le composant accepte réellement */
+  color?: DropdownColor;
   /** Taille du dropdown */
   size?: DropdownSize;
   /** Position du menu */
@@ -64,4 +64,6 @@ export interface DropdownConfig {
   iconOnly?: boolean;
   /** Texte accessible (aria-label) quand iconOnly est actif */
   iconOnlyText?: string;
+  /** Libellé du déclencheur */
+  label?: string;
 }

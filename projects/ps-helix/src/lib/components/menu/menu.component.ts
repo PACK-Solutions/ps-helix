@@ -13,6 +13,7 @@ import {
 import { CommonModule, NgTemplateOutlet } from '@angular/common';
 import { MenuItem, MenuMode, MenuVariant, MenuItemContext } from './menu.types';
 import { PshTooltipComponent } from '../tooltip/tooltip.component';
+import { MENU_CONFIG } from './menu.tokens';
 
 @Component({
   selector: 'psh-menu',
@@ -22,12 +23,14 @@ import { PshTooltipComponent } from '../tooltip/tooltip.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PshMenuComponent<T = string> {
+  private readonly config = inject(MENU_CONFIG);
+
   private readonly elementRef = inject(ElementRef<HTMLElement>);
   private focusTimeout: ReturnType<typeof setTimeout> | null = null;
 
-  mode = input<MenuMode>('vertical');
-  variant = input<MenuVariant>('default');
-  collapsible = input(false);
+  mode = input<MenuMode>(this.config.mode ?? 'vertical');
+  variant = input<MenuVariant>(this.config.variant ?? 'default');
+  collapsible = input(this.config.collapsible ?? false);
   ariaLabels = input<Record<string, string>>({
     disabled: 'Disabled',
     submenu: 'Submenu',

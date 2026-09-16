@@ -24,6 +24,7 @@ import { PshOverlayPositionService } from '../../a11y/overlay-position.service';
 import { InputType, InputSize, AutocompleteConfig, INPUT_LABELS } from './input.types';
 import { pshIsEmptyValue, pshRequiredError } from '../../utils/required-validator';
 import { pshJoinAriaIds } from '../../utils/aria';
+import { INPUT_CONFIG } from './input.tokens';
 
 @Component({
   selector: 'psh-input',
@@ -56,6 +57,8 @@ import { pshJoinAriaIds } from '../../utils/aria';
   }
 })
 export class PshInputComponent implements ControlValueAccessor, FormValueControl<string>, Validator {
+  private readonly config = inject(INPUT_CONFIG);
+
   private readonly elementRef = inject(ElementRef);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly destroyRef = inject(DestroyRef);
@@ -86,14 +89,14 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
    */
   readonly touch = output<void>();
 
-  appearance = input<PshFieldAppearance>('outline');
-  size = input<InputSize>('medium');
-  fullWidth = input(false);
-  required = input(false);
-  showLabel = input(true);
-  type = input<InputType>('text');
-  placeholder = input('');
-  label = input('');
+  appearance = input<PshFieldAppearance>(this.config.appearance ?? 'outline');
+  size = input<InputSize>(this.config.size ?? 'medium');
+  fullWidth = input(this.config.fullWidth ?? false);
+  required = input(this.config.required ?? false);
+  showLabel = input(this.config.showLabel ?? true);
+  type = input<InputType>(this.config.type ?? 'text');
+  placeholder = input(this.config.placeholder ?? '');
+  label = input(this.config.label ?? '');
   ariaLabel = input<string | null>(null);
   iconStart = input<string>();
   iconEnd = input<string>();

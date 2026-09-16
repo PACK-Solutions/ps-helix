@@ -23,6 +23,7 @@ import {
   TextareaResize,
   TextareaSize,
   } from './textarea.types';
+import { TEXTAREA_CONFIG } from './textarea.tokens';
 
 @Component({
   selector: 'psh-textarea',
@@ -56,6 +57,8 @@ import {
 export class PshTextareaComponent
   implements ControlValueAccessor, FormValueControl<string>, Validator
 {
+  private readonly config = inject(TEXTAREA_CONFIG);
+
   private readonly elementRef = inject(ElementRef<HTMLElement>);
   private readonly cdr = inject(ChangeDetectorRef);
 
@@ -74,18 +77,18 @@ export class PshTextareaComponent
    */
   readonly touch = output<void>();
 
-  appearance = input<PshFieldAppearance>('outline');
-  size = input<TextareaSize>('medium');
-  resize = input<TextareaResize>('vertical');
-  rows = input<number>(4);
+  appearance = input<PshFieldAppearance>(this.config.appearance ?? 'outline');
+  size = input<TextareaSize>(this.config.size ?? 'medium');
+  resize = input<TextareaResize>(this.config.resize ?? 'vertical');
+  rows = input<number>(this.config.rows ?? 4);
   maxLength = input<number | undefined>(undefined);
-  autoSize = input<boolean>(false);
-  showCharacterCount = input<boolean>(false);
-  fullWidth = input<boolean>(false);
-  required = input<boolean>(false);
-  showLabel = input<boolean>(true);
-  label = input<string>('');
-  placeholder = input<string>('');
+  autoSize = input<boolean>(this.config.autoSize ?? false);
+  showCharacterCount = input<boolean>(this.config.showCharacterCount ?? false);
+  fullWidth = input<boolean>(this.config.fullWidth ?? false);
+  required = input<boolean>(this.config.required ?? false);
+  showLabel = input<boolean>(this.config.showLabel ?? true);
+  label = input<string>(this.config.label ?? '');
+  placeholder = input<string>(this.config.placeholder ?? '');
   hint = input<string | null | undefined>(null);
 
   /**

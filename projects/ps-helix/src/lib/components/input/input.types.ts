@@ -14,11 +14,9 @@ export interface AutocompleteConfig {
 
 export interface InputConfig {
   type: InputType;
-  variant: InputVariant;
+  appearance: InputVariant;
   size: InputSize;
-  disabled: boolean;
   required: boolean;
-  readonly: boolean;
   fullWidth: boolean;
   showLabel: boolean;
   label: string;

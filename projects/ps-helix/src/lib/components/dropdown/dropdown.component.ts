@@ -19,6 +19,7 @@ import { PshOverlayPositionService } from '../../a11y/overlay-position.service';
 import { PshClickOutsideDirective } from '../../a11y/click-outside.directive';
 import { PshPortalService, PshPortalRef } from '../../a11y/portal.service';
 import { DropdownColor, DropdownItem, DropdownPlacement, DropdownSize } from './dropdown.types';
+import { DROPDOWN_CONFIG } from './dropdown.tokens';
 
 @Component({
   selector: 'psh-dropdown',
@@ -29,6 +30,8 @@ import { DropdownColor, DropdownItem, DropdownPlacement, DropdownSize } from './
   hostDirectives: [PshClickOutsideDirective]
 })
 export class PshDropdownComponent<T = string> {
+  private readonly config = inject(DROPDOWN_CONFIG);
+
   private elementRef = inject(ElementRef);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly overlayPosition = inject(PshOverlayPositionService);
@@ -43,19 +46,19 @@ export class PshDropdownComponent<T = string> {
   private readonly repositionHandler = (): void => this.reposition();
 
   // Regular inputs
-  appearance = input<PshControlAppearance>('solid');
-  color = input<DropdownColor>('primary');
-  size = input<DropdownSize>('medium');
-  placement = input<DropdownPlacement>('bottom-start');
+  appearance = input<PshControlAppearance>(this.config.appearance ?? 'solid');
+  color = input<DropdownColor>(this.config.color ?? 'primary');
+  size = input<DropdownSize>(this.config.size ?? 'medium');
+  placement = input<DropdownPlacement>(this.config.placement ?? 'bottom-start');
   items = input<DropdownItem<T>[]>([]);
-  label = input('Dropdown Menu');
+  label = input(this.config.label ?? 'Dropdown Menu');
   icon = input<string>();
   ariaLabel = input<string>();
-  iconOnly = input<boolean>(false);
+  iconOnly = input<boolean>(this.config.iconOnly ?? false);
   iconOnlyText = input<string>();
 
   // Model inputs
-  disabled = input(false);
+  disabled = input(this.config.disabled ?? false);
 
   // State
   private isOpenSignal = signal(false);

@@ -35,3 +35,16 @@ export type ButtonSize = 'small' | 'medium' | 'large';
  * Positions possibles de l'icône
  */
 export type ButtonIconPosition = 'left' | 'right' | 'only';
+/** Application-wide defaults for `psh-button`, provided through `BUTTON_CONFIG`. */
+export interface ButtonConfig {
+  appearance: ButtonAppearance;
+  color: ButtonColor;
+  size: ButtonSize;
+  type: 'button' | 'submit' | 'reset';
+  iconPosition: ButtonIconPosition;
+  fullWidth: boolean;
+  /** Announced while `loading` is set. */
+  loadingText: string;
+  /** Announced while `disabled` is set. */
+  disabledText: string;
+}

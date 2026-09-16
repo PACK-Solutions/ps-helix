@@ -5,9 +5,11 @@ import {
   computed,
   input,
   output,
-  ViewEncapsulation
+  ViewEncapsulation,
+  inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HORIZONTAL_CARD_CONFIG } from './horizontal-card.tokens';
 
 /**
  * Composant carte horizontale autonome
@@ -54,15 +56,17 @@ import { CommonModule } from '@angular/common';
   },
 })
 export class PshHorizontalCardComponent {
+  private readonly config = inject(HORIZONTAL_CARD_CONFIG);
+
 
   /** Variante de la carte de base */
-  appearance = input<PshSurfaceAppearance>('elevated');
+  appearance = input<PshSurfaceAppearance>(this.config.appearance ?? 'elevated');
 
   /** Carte cliquable */
-  interactive = input(false);
+  interactive = input(this.config.interactive ?? false);
 
   /** Effet de survol */
-  hoverable = input(false);
+  hoverable = input(this.config.hoverable ?? false);
 
   /** État de chargement */
   loading = input(false);
@@ -76,19 +80,19 @@ export class PshHorizontalCardComponent {
 
 
   /** Largeur du contenu latéral (utiliser les tokens de sizing comme var(--psh-size-48)) */
-  sideWidth = input<string>('var(--psh-size-48)');
+  sideWidth = input<string>(this.config.sideWidth ?? 'var(--psh-size-48)');
 
   /** Gap entre le contenu latéral et principal */
-  gap = input<string>('var(--psh-spacing-md)');
+  gap = input<string>(this.config.gap ?? 'var(--psh-spacing-md)');
 
   /** Padding du contenu latéral */
-  sidePadding = input<string>('0');
+  sidePadding = input<string>(this.config.sidePadding ?? '0');
 
   /** Padding du contenu principal */
-  contentPadding = input<string>('var(--psh-spacing-md)');
+  contentPadding = input<string>(this.config.contentPadding ?? 'var(--psh-spacing-md)');
 
   /** Hauteur du contenu latéral sur mobile (utiliser les tokens de sizing) */
-  mobileHeight = input<string>('var(--psh-size-48)');
+  mobileHeight = input<string>(this.config.mobileHeight ?? 'var(--psh-size-48)');
 
   /** Émis lors du clic sur la carte */
   clicked = output<MouseEvent | KeyboardEvent>();
