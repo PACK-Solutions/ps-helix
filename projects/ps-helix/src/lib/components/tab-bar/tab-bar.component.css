@@ -110,13 +110,13 @@
 }
 
 /* Responsive */
-@media (max-width: 640px) {
+@media (max-width: 39.9375em) {
   .psh-tab-label {
     font-size: var(--psh-font-size-xs);
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 29.9375em) {
   .psh-tab-label {
     display: none;
   }

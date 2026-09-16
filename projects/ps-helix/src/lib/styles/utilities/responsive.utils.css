@@ -201,7 +201,7 @@
 .psh-pointer-events-auto { pointer-events: auto; }
 
 /* Mobile-specific utilities */
-@media (max-width: 48em) {
+@media (max-width: 47.9375em) {
   .psh-mobile\:flex-col { flex-direction: column; }
   .psh-mobile\:gap-sm { gap: var(--psh-spacing-sm); }
   .psh-mobile\:gap-xs { gap: var(--psh-spacing-xs); }
@@ -212,7 +212,7 @@
 }
 
 /* Touch-friendly targets */
-@media (max-width: 48em) {
+@media (max-width: 47.9375em) {
   .psh-touch-target {
     min-height: 2.75rem;
     min-width: 2.75rem;

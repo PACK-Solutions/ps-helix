@@ -207,7 +207,7 @@
  * Placement classes stay for semantics; positioning is inline (no positional CSS).
  */
 .psh-dropdown-menu {
-  min-width: 12.5rem;
+  min-width: var(--psh-dropdown-min-width, 12.5rem);
   background: var(--psh-surface-card);
   border: var(--psh-border-width-1) solid var(--psh-surface-border);
   border-radius: var(--psh-radius-lg);
@@ -323,4 +323,19 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/*
+  The panel is `position: fixed` and placed from JS, which gives it a position but no
+  bounds: on a narrow screen it ran past the right edge, and with many items past the
+  bottom of the viewport with no way to scroll to them.
+
+  Both limits are overridable, per the 7.0.0 rule that a default is a `var()` fallback at
+  the point of use rather than a declaration to out-specify.
+*/
+.psh-dropdown-menu {
+  max-width: var(--psh-dropdown-max-width, calc(100vw - var(--psh-spacing-lg) * 2));
+  max-height: var(--psh-dropdown-max-height, min(60vh, 24rem));
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }

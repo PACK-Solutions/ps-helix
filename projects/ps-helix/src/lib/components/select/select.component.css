@@ -1,7 +1,7 @@
 :host {
   display: block;
   width: 100%;
-  max-width: 18.75rem;
+  max-width: var(--psh-select-max-width, 18.75rem);
 }
 
 :host.psh-full-width { max-width: none; }
@@ -153,7 +153,7 @@
 
 .psh-select-search input::placeholder { color: var(--psh-text-color-secondary); }
 .psh-select-search input:focus-visible { border-color: var(--psh-primary-color); }
-.psh-select-options { flex: 0 1 auto; max-height: 15rem; overflow-y: auto; }
+.psh-select-options { flex: 0 1 auto; max-height: var(--psh-select-panel-max-height, 15rem); overflow-y: auto; }
 
 .psh-select-group-label {
   padding: 0.5rem 1rem;

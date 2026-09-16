@@ -315,8 +315,9 @@
   color: var(--psh-text-color-secondary);
   border-radius: var(--psh-radius-lg);
   cursor: pointer;
-  min-width: 24px;
-  min-height: 24px;
+  /* Was 24px square: the smallest target in the library, on a button. WCAG 2.5.5 asks 44. */
+  min-width: var(--psh-touch-target-min);
+  min-height: var(--psh-touch-target-min);
   flex-shrink: 0;
   transition: opacity var(--psh-animation-duration-fast) var(--psh-animation-easing-default),
               color var(--psh-animation-duration-fast) var(--psh-animation-easing-default);
@@ -374,7 +375,7 @@
   border: 0;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 47.9375em) {
   .psh-info-card-title {
     font-size: var(--psh-font-size-sm);
     padding: var(--psh-size-1-5) var(--psh-size-3);
@@ -415,7 +416,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 29.9375em) {
   .psh-info-card-header {
     flex-wrap: wrap;
     gap: var(--psh-size-1);

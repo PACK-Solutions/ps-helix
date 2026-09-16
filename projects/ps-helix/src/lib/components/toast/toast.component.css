@@ -189,7 +189,7 @@
 }
 
 /* Responsive */
-@media (max-width: 576px) {
+@media (max-width: 39.9375em) {
   .psh-toast-container {
     padding: var(--psh-spacing-sm);
     width: 100%;
@@ -218,7 +218,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 29.9375em) {
   .psh-toast-container {
     padding: var(--psh-spacing-xs);
   }

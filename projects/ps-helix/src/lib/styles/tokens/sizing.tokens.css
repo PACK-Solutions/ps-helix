@@ -87,6 +87,18 @@
   --psh-control-height-md: 2.5rem;    /* 40px */
   --psh-control-height-lg: 3rem;      /* 48px */
 
+  /*
+   * Minimum hit area for anything tappable.
+   *
+   * WCAG 2.5.8 (AA) asks for 24px and 2.5.5 (AAA) for 44. The library had neither an opinion
+   * nor a token, and shipped targets at 24, 32 and 36px — so the smallest one was exactly at
+   * the AA floor and nothing was near AAA.
+   *
+   * It bounds the *target*, not the drawing: a 24px icon inside a 44px button looks the same
+   * and is twice as easy to hit.
+   */
+  --psh-touch-target-min: 2.75rem; /* 44px */
+
   /* Scrollbar width compensation */
   --psh-scrollbar-width: 0;
 

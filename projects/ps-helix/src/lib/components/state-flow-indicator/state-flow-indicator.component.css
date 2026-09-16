@@ -200,7 +200,7 @@
   }
 }
 
-@container (max-width: 640px) {
+@container (max-width: 39.9375em) {
   .psh-flow-segment-content {
     padding: 0 var(--psh-spacing-md);
   }
@@ -214,7 +214,7 @@
   }
 }
 
-@container (max-width: 480px) {
+@container (max-width: 29.9375em) {
   .psh-flow-track {
     flex-direction: column;
     gap: var(--psh-spacing-xxs);

@@ -9,6 +9,22 @@
  * queries must inline the literal value. Always use the canonical value from
  * this scale (prefer the em form) rather than an ad-hoc breakpoint, so the
  * library stays consistent across components and utilities.
+ *
+ * `min-width` uses the value above. `max-width` uses the value **minus
+ * 0.0625em** — one pixel at a 16px root — because the two are otherwise both
+ * true at exactly the breakpoint:
+ *
+ *     min-width: 48em        max-width: 47.9375em
+ *
+ * That overlap was live in `responsive.utils.css`, where eight rules paired
+ * `min-width: 48em` with `max-width: 48em`, so at 768px an element was both
+ * "small screen" and "large screen".
+ *
+ * Mixing px and em is not a style preference. An em query scales with the
+ * user's root font size and a px query does not, so at 150% browser zoom a
+ * px-based component has not switched while the em-based one beside it has.
+ * `@container` queries follow the same scale; there, em resolves against the
+ * container's own font size, which is the behaviour you want.
  */
 :root {
   --psh-breakpoint-xs: 30em; /* 480px */

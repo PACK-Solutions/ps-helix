@@ -142,7 +142,7 @@
   }
 }
 
-@media (max-width: 48em) {
+@media (max-width: 47.9375em) {
   .psh-horizontal-card {
     flex-direction: column;
   }
@@ -162,7 +162,7 @@
   }
 }
 
-@media (max-width: 30em) {
+@media (max-width: 29.9375em) {
   .psh-horizontal-side {
     height: auto;
     min-height: var(--psh-size-36);
