@@ -54,6 +54,12 @@ jobs:
       - name: Build library
         run: npm run build:lib
 
+      # psh-radio-group was built to carry the form contract and shipped unreachable:
+      # listed in a barrel the demo imports and the entry point does not. Reads the
+      # generated .d.ts, because that file is the contract a consumer actually gets.
+      - name: Public API reachability
+        run: npm run verify:public-api
+
       - name: Bundle smoke test (import-cycle guard)
         run: npm run verify:bundle
 
