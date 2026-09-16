@@ -16,17 +16,19 @@ import { isPlatformBrowser, CommonModule, DOCUMENT } from '@angular/common';
 import { PshFocusTrapDirective } from '../../a11y/focus-trap.directive';
 import { SidebarMode, SidebarPosition, SidebarConfig } from './sidebar.types';
 
+const SIDEBAR_DEFAULTS = {
+  mode: 'fixed',
+  position: 'left',
+  width: '250px',
+  breakpoint: '768px',
+  autoFocus: true,
+  ariaLabel: 'Sidebar navigation',
+  closeOnBackdrop: true,
+  closeOnEscape: true
+} satisfies Partial<SidebarConfig>;
+
 export const SIDEBAR_CONFIG = new InjectionToken<Partial<SidebarConfig>>('SIDEBAR_CONFIG', {
-  factory: () => ({
-    mode: 'fixed',
-    position: 'left',
-    width: '250px',
-    breakpoint: '768px',
-    autoFocus: true,
-    ariaLabel: 'Sidebar navigation',
-    closeOnBackdrop: true,
-    closeOnEscape: true
-  })
+  factory: () => SIDEBAR_DEFAULTS,
 });
 
 @Component({

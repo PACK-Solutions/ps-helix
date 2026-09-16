@@ -18,15 +18,17 @@ import { PshOverlayPositionService } from '../../a11y/overlay-position.service';
 import { TooltipPosition, TooltipConfig, TooltipVariant } from './tooltip.types';
 import { pshUniqueId } from '../../utils/unique-id';
 
+const TOOLTIP_DEFAULTS = {
+  variant: 'dark',
+  position: 'top',
+  showDelay: 200,
+  hideDelay: 100,
+  maxWidth: 200,
+  autoFlip: true,
+} satisfies Partial<TooltipConfig>;
+
 export const TOOLTIP_CONFIG = new InjectionToken<Partial<TooltipConfig>>('TOOLTIP_CONFIG', {
-  factory: () => ({
-    variant: 'dark',
-    position: 'top',
-    showDelay: 200,
-    hideDelay: 100,
-    maxWidth: 200,
-    autoFlip: true,
-  })
+  factory: () => TOOLTIP_DEFAULTS,
 });
 
 @Component({

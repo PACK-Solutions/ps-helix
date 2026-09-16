@@ -16,12 +16,14 @@ import { TabBarItem, TabBarConfig, TabBarChangeEvent, TabBarItemContext } from '
 /**
  * Token d'injection pour la configuration globale de la barre d'onglets
  */
+const TAB_BAR_DEFAULTS = {
+  disabled: false,
+  position: 'bottom',
+  animated: true
+} satisfies Partial<TabBarConfig>;
+
 export const TAB_BAR_CONFIG = new InjectionToken<Partial<TabBarConfig>>('TAB_BAR_CONFIG', {
-  factory: () => ({
-    disabled: false,
-    position: 'bottom',
-    animated: true
-  })
+  factory: () => TAB_BAR_DEFAULTS,
 });
 
 

@@ -25,11 +25,13 @@ const DEFAULT_ARIA_LABELS: StateFlowIndicatorAriaLabels = {
   error: 'Étape en erreur'
 };
 
+const STATE_FLOW_INDICATOR_DEFAULTS = {
+  linear: true,
+  ariaLabels: DEFAULT_ARIA_LABELS
+} satisfies Partial<StateFlowIndicatorConfig>;
+
 export const STATE_FLOW_INDICATOR_CONFIG = new InjectionToken<Partial<StateFlowIndicatorConfig>>('STATE_FLOW_INDICATOR_CONFIG', {
-  factory: () => ({
-    linear: true,
-    ariaLabels: DEFAULT_ARIA_LABELS
-  })
+  factory: () => STATE_FLOW_INDICATOR_DEFAULTS,
 });
 
 @Component({

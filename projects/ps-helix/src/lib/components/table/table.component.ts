@@ -3,24 +3,26 @@ import { NgTemplateOutlet } from '@angular/common';
 import { PshInputComponent } from '../input/input.component';
 import { TableColumn, TableRow, TableSort, TableConfig, TableRowClickEvent, TableRowExpandEvent, TableExpandedRowContext, TableHeaderContext, TableEmptyContext } from './table.types';
 
+const TABLE_DEFAULTS = {
+  appearance: 'flat',
+  size: 'medium',
+  striped: false,
+  hoverable: false,
+  bordered: false,
+  loading: false,
+  emptyMessage: 'No data available',
+  noResultsMessage: 'No results found',
+  globalSearch: false,
+  globalSearchPlaceholder: 'Search in all columns...',
+  tableLayout: 'auto',
+  truncateText: false,
+  fullWidth: false,
+  expandable: false,
+  singleExpand: false
+} satisfies Partial<TableConfig>;
+
 export const TABLE_CONFIG = new InjectionToken<Partial<TableConfig>>('TABLE_CONFIG', {
-  factory: () => ({
-    variant: 'flat',
-    size: 'medium',
-    striped: false,
-    hoverable: false,
-    bordered: false,
-    loading: false,
-    emptyMessage: 'No data available',
-    noResultsMessage: 'No results found',
-    globalSearch: false,
-    globalSearchPlaceholder: 'Search in all columns...',
-    tableLayout: 'auto',
-    truncateText: false,
-    fullWidth: false,
-    expandable: false,
-    singleExpand: false
-  })
+  factory: () => TABLE_DEFAULTS,
 });
 
 @Component({

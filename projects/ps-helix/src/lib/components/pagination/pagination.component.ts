@@ -16,20 +16,19 @@ import { PaginationSize, PaginationVariant, PaginationConfig } from './paginatio
 import { InjectionToken } from '@angular/core';
 import { pshUniqueId } from '../../utils/unique-id';
 
-export const PAGINATION_CONFIG = new InjectionToken<Partial<PaginationConfig>>(
-  'PAGINATION_CONFIG',
-  {
-    factory: () => ({
-      size: 'medium',
-      variant: 'flat',
-      showFirstLast: true,
-      showPrevNext: true,
-      maxVisiblePages: 5,
-      showItemsPerPage: false,
-      itemsPerPageOptions: [5, 10, 25, 50],
-    }),
-  },
-);
+const PAGINATION_DEFAULTS = {
+  size: 'medium',
+  appearance: 'flat',
+  showFirstLast: true,
+  showPrevNext: true,
+  maxVisiblePages: 5,
+  showItemsPerPage: false,
+  itemsPerPageOptions: [5, 10, 25, 50],
+} satisfies Partial<PaginationConfig>;
+
+export const PAGINATION_CONFIG = new InjectionToken<Partial<PaginationConfig>>('PAGINATION_CONFIG', {
+  factory: () => PAGINATION_DEFAULTS,
+});
 
 @Component({
   selector: 'psh-pagination',
@@ -124,7 +123,9 @@ export class PshPaginationComponent {
   readonly showPrevNext = input(this.config.showPrevNext ?? true);
   readonly maxVisiblePages = input(this.config.maxVisiblePages ?? 5);
   readonly showItemsPerPage = input(this.config.showItemsPerPage ?? false);
-  readonly itemsPerPageOptions = input<number[]>([5, 10, 25, 50]);
+  readonly itemsPerPageOptions = input<number[]>(
+    this.config.itemsPerPageOptions ?? [5, 10, 25, 50],
+  );
   readonly firstLabel = input('First');
   readonly previousLabel = input('Previous');
   readonly nextLabel = input('Next');

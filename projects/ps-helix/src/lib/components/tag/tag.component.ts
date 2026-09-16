@@ -1,15 +1,17 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, output, InjectionToken, ElementRef, AfterContentChecked, signal } from '@angular/core';
 import { TagVariant, TagSize, TagConfig } from './tag.types';
 
+const TAG_DEFAULTS = {
+  color: 'primary',
+  size: 'medium',
+  closable: false,
+  disabled: false,
+  interactive: false,
+  closeLabel: 'Supprimer le tag'
+} satisfies Partial<TagConfig>;
+
 export const TAG_CONFIG = new InjectionToken<Partial<TagConfig>>('TAG_CONFIG', {
-  factory: () => ({
-    variant: 'primary',
-    size: 'medium',
-    closable: false,
-    disabled: false,
-    interactive: false,
-    closeLabel: 'Supprimer le tag'
-  })
+  factory: () => TAG_DEFAULTS,
 });
 
 @Component({

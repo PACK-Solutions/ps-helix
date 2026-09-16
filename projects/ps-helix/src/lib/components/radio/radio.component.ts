@@ -18,14 +18,16 @@ import { PSH_RADIO_GROUP } from './radio-group.token';
 import { pshUniqueId } from '../../utils/unique-id';
 import { pshJoinAriaIds } from '../../utils/aria';
 
+const RADIO_DEFAULTS = {
+  checked: false,
+  disabled: false,
+  required: false,
+  size: 'medium',
+  labelPosition: 'right'
+} satisfies Partial<RadioConfig>;
+
 export const RADIO_CONFIG = new InjectionToken<Partial<RadioConfig>>('RADIO_CONFIG', {
-  factory: () => ({
-    checked: false,
-    disabled: false,
-    required: false,
-    size: 'medium',
-    labelPosition: 'right'
-  })
+  factory: () => RADIO_DEFAULTS,
 });
 
 export const RADIO_STYLES = new InjectionToken<Record<string, string>[]>('RADIO_STYLES', {

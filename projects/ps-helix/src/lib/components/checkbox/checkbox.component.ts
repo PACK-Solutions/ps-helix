@@ -20,16 +20,18 @@ import { pshUniqueId } from '../../utils/unique-id';
 import { pshRequiredError } from '../../utils/required-validator';
 import { pshJoinAriaIds } from '../../utils/aria';
 
+const CHECKBOX_DEFAULTS = {
+  checked: false,
+  disabled: false,
+  required: false,
+  indeterminate: false,
+  size: 'medium',
+  labelPosition: 'right',
+  label: ''
+} satisfies Partial<CheckboxConfig>;
+
 export const CHECKBOX_CONFIG = new InjectionToken<Partial<CheckboxConfig>>('CHECKBOX_CONFIG', {
-  factory: () => ({
-    checked: false,
-    disabled: false,
-    required: false,
-    indeterminate: false,
-    size: 'medium',
-    labelPosition: 'right',
-    label: ''
-  })
+  factory: () => CHECKBOX_DEFAULTS,
 });
 
 @Component({

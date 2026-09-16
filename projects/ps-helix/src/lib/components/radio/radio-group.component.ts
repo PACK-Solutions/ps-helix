@@ -26,9 +26,15 @@ export interface RadioGroupConfig {
   required: boolean;
 }
 
+const RADIO_GROUP_DEFAULTS = {
+  size: 'medium',
+  orientation: 'vertical',
+  required: false,
+} satisfies Partial<RadioGroupConfig>;
+
 export const RADIO_GROUP_CONFIG = new InjectionToken<Partial<RadioGroupConfig>>(
   'RADIO_GROUP_CONFIG',
-  { factory: () => ({ size: 'medium', orientation: 'vertical', required: false }) },
+  { factory: () => RADIO_GROUP_DEFAULTS },
 );
 
 /**

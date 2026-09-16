@@ -18,14 +18,16 @@ import { pshUniqueId } from '../../utils/unique-id';
 import { pshRequiredError } from '../../utils/required-validator';
 import { pshJoinAriaIds } from '../../utils/aria';
 
+const SWITCH_DEFAULTS = {
+  checked: false,
+  disabled: false,
+  required: false,
+  size: 'medium',
+  labelPosition: 'right'
+} satisfies Partial<SwitchConfig>;
+
 export const SWITCH_CONFIG = new InjectionToken<Partial<SwitchConfig>>('SWITCH_CONFIG', {
-  factory: () => ({
-    checked: false,
-    disabled: false,
-    required: false,
-    size: 'medium',
-    labelPosition: 'right'
-  })
+  factory: () => SWITCH_DEFAULTS,
 });
 
 @Component({
