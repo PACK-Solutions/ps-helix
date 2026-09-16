@@ -40,9 +40,9 @@ export class PshTabBarComponent {
   private readonly tabButtons = viewChildren<ElementRef<HTMLButtonElement>>('tabButton');
 
   // Model inputs with defaults from config
-  disabled = model(this.config.disabled ?? false);
-  position = model<'bottom' | 'top'>(this.config.position ?? 'bottom');
-  animated = model(this.config.animated ?? true);
+  disabled = input(this.config.disabled ?? false);
+  position = input<'bottom' | 'top'>(this.config.position ?? 'bottom');
+  animated = input(this.config.animated ?? true);
   activeIndex = model(0);
 
   // Regular inputs

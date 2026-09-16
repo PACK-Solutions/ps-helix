@@ -25,7 +25,7 @@ import { PshSidebarComponent } from 'ps-helix';
 <psh-sidebar
   [(open)]="isOpen"
   mode="overlay"
-  (toggle)="handleToggle($event)"
+  (toggled)="handleToggle($event)"
   (opened)="onOpened()"
   (closed)="onClosed()"
 >
@@ -55,10 +55,10 @@ import { PshSidebarComponent } from 'ps-helix';
 ### Outputs
 | Name | Type | Description |
 |------|------|-------------|
-| toggle | EventEmitter<boolean> | Emitted on toggle (open/close state) |
+| toggled | EventEmitter<boolean> | Emitted on toggle (open/close state) |
 | opened | EventEmitter<void> | Emitted after sidebar is fully opened |
 | closed | EventEmitter<void> | Emitted after sidebar is fully closed |
-| transitionStart | EventEmitter<boolean> | Emitted at start of transition (true = opening, false = closing) |
+| transitionStarted | EventEmitter<boolean> | Emitted at start of transition (true = opening, false = closing) |
 
 ## Available Modes
 
@@ -130,7 +130,7 @@ import { SIDEBAR_CONFIG } from 'ps-helix';
 ```html
 <psh-sidebar
   [(open)]="isOpen"
-  (transitionStart)="onTransitionStart($event)"
+  (transitionStarted)="onTransitionStart($event)"
   (opened)="onSidebarOpened()"
   (closed)="onSidebarClosed()"
 >

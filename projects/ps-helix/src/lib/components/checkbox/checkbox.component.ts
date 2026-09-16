@@ -75,6 +75,8 @@ export class PshCheckboxComponent
   label = input(this.config.label ?? '');
   error = input<string | null | undefined>(this.config.error);
   success = input<string | null | undefined>(this.config.success);
+  /** Guidance shown when there is neither an error nor a success message. */
+  hint = input<string | null | undefined>(null);
   ariaLabel = input<string | undefined>(this.config.ariaLabel);
   size = input<CheckboxSize>(this.config.size ?? 'medium');
   labelPosition = input<CheckboxLabelPosition>(this.config.labelPosition ?? 'right');
@@ -82,11 +84,14 @@ export class PshCheckboxComponent
   ariaChecked = computed(() => this.indeterminate() ? 'mixed' : (this.checked() ? 'true' : 'false'));
   computedAriaLabel = computed(() => this.ariaLabel() || undefined);
 
-  // Error and success are mutually exclusive in the template (@if/@else if),
-  // so aria-describedby references whichever message is actually rendered.
+  // Error, success and hint are mutually exclusive in the template (@if/@else if), so
+  // aria-describedby references whichever message is actually rendered — in the same order.
+  // Pointing at an id the template did not render leaves a dangling reference that no test
+  // in this repository would catch.
   ariaDescribedBy = computed(() => {
     if (this.error()) return `${this.uniqueId}-error`;
     if (this.success()) return `${this.uniqueId}-success`;
+    if (this.hint()) return `${this.uniqueId}-hint`;
     return undefined;
   });
 

@@ -7,13 +7,12 @@ import {
   ElementRef,
   inject,
   input,
-  model,
   output,
   signal,
   PLATFORM_ID,
   TemplateRef,
   ViewContainerRef,
-  viewChild
+  viewChild,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { PshOverlayPositionService } from '../../a11y/overlay-position.service';
@@ -56,7 +55,7 @@ export class PshDropdownComponent<T = string> {
   iconOnlyText = input<string>();
 
   // Model inputs
-  disabled = model(false);
+  disabled = input(false);
 
   // State
   private isOpenSignal = signal(false);

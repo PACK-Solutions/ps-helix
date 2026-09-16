@@ -73,7 +73,7 @@ describe('PshCardComponent', () => {
   });
 
   describe('Color Variants', () => {
-    const colorVariants: CardColorVariant[] = ['flat', 'info', 'success', 'warning', 'danger'];
+    const colorVariants: CardColorVariant[] = ['neutral', 'info', 'success', 'warning', 'danger'];
 
     colorVariants.forEach((colorVariant) => {
       it(`should apply ${colorVariant} color variant class`, () => {
@@ -120,18 +120,18 @@ describe('PshCardComponent', () => {
     });
 
     it('should add hoverable class when hoverable is true', () => {
-      component.hoverable.set(true);
+      fixture.componentRef.setInput('hoverable', true);
       fixture.detectChanges();
 
       expect(cardElement.nativeElement.className).toContain('psh-hoverable');
     });
 
     it('should remove hoverable class when hoverable is set to false', () => {
-      component.hoverable.set(true);
+      fixture.componentRef.setInput('hoverable', true);
       fixture.detectChanges();
       expect(cardElement.nativeElement.className).toContain('psh-hoverable');
 
-      component.hoverable.set(false);
+      fixture.componentRef.setInput('hoverable', false);
       fixture.detectChanges();
       expect(cardElement.nativeElement.className).not.toContain('psh-hoverable');
     });
@@ -144,28 +144,28 @@ describe('PshCardComponent', () => {
     });
 
     it('should add interactive class when interactive is true', () => {
-      component.interactive.set(true);
+      fixture.componentRef.setInput('interactive', true);
       fixture.detectChanges();
 
       expect(cardElement.nativeElement.className).toContain('psh-interactive');
     });
 
     it('should set tabindex to 0 when interactive is true', () => {
-      component.interactive.set(true);
+      fixture.componentRef.setInput('interactive', true);
       fixture.detectChanges();
 
       expect(cardElement.nativeElement.getAttribute('tabindex')).toBe('0');
     });
 
     it('should not set tabindex when interactive is false', () => {
-      component.interactive.set(false);
+      fixture.componentRef.setInput('interactive', false);
       fixture.detectChanges();
 
       expect(cardElement.nativeElement.getAttribute('tabindex')).toBeNull();
     });
 
     it('should remove tabindex when disabled even if interactive', () => {
-      component.interactive.set(true);
+      fixture.componentRef.setInput('interactive', true);
       fixture.componentRef.setInput('disabled', true);
       fixture.detectChanges();
 
@@ -395,7 +395,7 @@ describe('PshCardComponent', () => {
       const clickSpy = jest.fn();
       component.clicked.subscribe(clickSpy);
 
-      component.interactive.set(false);
+      fixture.componentRef.setInput('interactive', false);
       fixture.detectChanges();
 
       cardElement.nativeElement.click();
@@ -406,7 +406,7 @@ describe('PshCardComponent', () => {
       const clickSpy = jest.fn();
       component.clicked.subscribe(clickSpy);
 
-      component.interactive.set(true);
+      fixture.componentRef.setInput('interactive', true);
       fixture.detectChanges();
 
       cardElement.nativeElement.click();
@@ -417,7 +417,7 @@ describe('PshCardComponent', () => {
       const clickSpy = jest.fn();
       component.clicked.subscribe(clickSpy);
 
-      component.interactive.set(true);
+      fixture.componentRef.setInput('interactive', true);
       fixture.componentRef.setInput('disabled', true);
       fixture.detectChanges();
 
@@ -429,7 +429,7 @@ describe('PshCardComponent', () => {
       const clickSpy = jest.fn();
       component.clicked.subscribe(clickSpy);
 
-      component.interactive.set(true);
+      fixture.componentRef.setInput('interactive', true);
       fixture.componentRef.setInput('loading', true);
       fixture.detectChanges();
 
@@ -443,7 +443,7 @@ describe('PshCardComponent', () => {
         emittedEvent = event;
       });
 
-      component.interactive.set(true);
+      fixture.componentRef.setInput('interactive', true);
       fixture.detectChanges();
 
       const mouseEvent = new MouseEvent('click');
@@ -458,7 +458,7 @@ describe('PshCardComponent', () => {
       const clickSpy = jest.fn();
       component.clicked.subscribe(clickSpy);
 
-      component.interactive.set(true);
+      fixture.componentRef.setInput('interactive', true);
       fixture.detectChanges();
 
       const event = new KeyboardEvent('keydown', { key: 'Enter' });
@@ -471,7 +471,7 @@ describe('PshCardComponent', () => {
       const clickSpy = jest.fn();
       component.clicked.subscribe(clickSpy);
 
-      component.interactive.set(true);
+      fixture.componentRef.setInput('interactive', true);
       fixture.detectChanges();
 
       const event = new KeyboardEvent('keydown', { key: ' ' });
@@ -484,7 +484,7 @@ describe('PshCardComponent', () => {
       const clickSpy = jest.fn();
       component.clicked.subscribe(clickSpy);
 
-      component.interactive.set(true);
+      fixture.componentRef.setInput('interactive', true);
       fixture.detectChanges();
 
       const otherKeys = ['Tab', 'Escape', 'ArrowDown', 'a', '1'];
@@ -500,7 +500,7 @@ describe('PshCardComponent', () => {
       const clickSpy = jest.fn();
       component.clicked.subscribe(clickSpy);
 
-      component.interactive.set(false);
+      fixture.componentRef.setInput('interactive', false);
       fixture.detectChanges();
 
       const enterEvent = new KeyboardEvent('keydown', { key: 'Enter' });
@@ -513,7 +513,7 @@ describe('PshCardComponent', () => {
       const clickSpy = jest.fn();
       component.clicked.subscribe(clickSpy);
 
-      component.interactive.set(true);
+      fixture.componentRef.setInput('interactive', true);
       fixture.componentRef.setInput('disabled', true);
       fixture.detectChanges();
 
@@ -527,7 +527,7 @@ describe('PshCardComponent', () => {
       const clickSpy = jest.fn();
       component.clicked.subscribe(clickSpy);
 
-      component.interactive.set(true);
+      fixture.componentRef.setInput('interactive', true);
       fixture.componentRef.setInput('loading', true);
       fixture.detectChanges();
 
@@ -543,7 +543,7 @@ describe('PshCardComponent', () => {
         emittedEvent = event;
       });
 
-      component.interactive.set(true);
+      fixture.componentRef.setInput('interactive', true);
       fixture.detectChanges();
 
       const keyboardEvent = new KeyboardEvent('keydown', { key: 'Enter' });
@@ -559,7 +559,7 @@ describe('PshCardComponent', () => {
     });
 
     it('should have tabindex 0 when interactive and not disabled', () => {
-      component.interactive.set(true);
+      fixture.componentRef.setInput('interactive', true);
       fixture.componentRef.setInput('disabled', false);
       fixture.detectChanges();
 
@@ -567,14 +567,14 @@ describe('PshCardComponent', () => {
     });
 
     it('should not have tabindex when not interactive', () => {
-      component.interactive.set(false);
+      fixture.componentRef.setInput('interactive', false);
       fixture.detectChanges();
 
       expect(cardElement.nativeElement.getAttribute('tabindex')).toBeNull();
     });
 
     it('should not have tabindex when disabled', () => {
-      component.interactive.set(true);
+      fixture.componentRef.setInput('interactive', true);
       fixture.componentRef.setInput('disabled', true);
       fixture.detectChanges();
 
@@ -615,8 +615,8 @@ describe('PshCardComponent', () => {
       fixture.componentRef.setInput('appearance', 'elevated');
       fixture.componentRef.setInput('color', 'success');
       fixture.componentRef.setInput('density', 'compact');
-      component.hoverable.set(true);
-      component.interactive.set(true);
+      fixture.componentRef.setInput('hoverable', true);
+      fixture.componentRef.setInput('interactive', true);
       fixture.detectChanges();
 
       const classes = component.computedClasses();
@@ -805,8 +805,8 @@ describe('PshCardComponent', () => {
     });
 
     it('should handle simultaneous state changes', () => {
-      component.interactive.set(true);
-      component.hoverable.set(true);
+      fixture.componentRef.setInput('interactive', true);
+      fixture.componentRef.setInput('hoverable', true);
       fixture.componentRef.setInput('loading', true);
       fixture.componentRef.setInput('disabled', true);
       fixture.detectChanges();
@@ -822,7 +822,7 @@ describe('PshCardComponent', () => {
       const clickSpy = jest.fn();
       component.clicked.subscribe(clickSpy);
 
-      component.interactive.set(true);
+      fixture.componentRef.setInput('interactive', true);
       fixture.componentRef.setInput('disabled', true);
       fixture.componentRef.setInput('loading', true);
       fixture.detectChanges();

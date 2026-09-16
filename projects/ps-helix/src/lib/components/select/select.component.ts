@@ -86,7 +86,7 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
   fullWidth = input(false);
   required = input(false);
 
-  options = input<(SelectOption<T> | SelectOptionGroup<T>)[]>([]);
+  options = input.required<(SelectOption<T> | SelectOptionGroup<T>)[]>();
   label = input('');
   placeholder = input<string>('Sélectionner une option');
   multiplePlaceholder = input<string>('Sélectionner des options');
@@ -112,7 +112,7 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
   opened = output<void>();
   closed = output<void>();
   searched = output<string>();
-  scrollEnd = output<void>();
+  scrolledToEnd = output<void>();
 
   isOpen = computed(() => this.isOpenSignal());
   searchTerm = computed(() => this.searchTermSignal());
@@ -321,7 +321,7 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
   onScroll(event: Event): void {
     const el = event.target as HTMLElement;
     if (el.scrollHeight - el.scrollTop === el.clientHeight) {
-      this.scrollEnd.emit();
+      this.scrolledToEnd.emit();
     }
   }
 

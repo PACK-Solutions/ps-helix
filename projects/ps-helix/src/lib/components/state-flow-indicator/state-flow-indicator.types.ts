@@ -20,6 +20,6 @@ export interface FlowStepConfig {
   disabled: boolean;
   completed: boolean;
   loading: boolean;
-  error?: string;
-  warning?: string;
+  error?: string | null;
+  warning?: string | null;
 }

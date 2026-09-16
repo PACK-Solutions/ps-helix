@@ -42,5 +42,9 @@
     <div [id]="uniqueId + '-success'" class="psh-checkbox-message psh-success" role="status">
       {{ success() }}
     </div>
+  } @else if (hint()) {
+    <div [id]="uniqueId + '-hint'" class="psh-checkbox-message psh-hint">
+      {{ hint() }}
+    </div>
   }
 </div>

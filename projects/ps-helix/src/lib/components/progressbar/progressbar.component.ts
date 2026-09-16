@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject, input, model, output, InjectionToken } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, input, output, InjectionToken } from '@angular/core';
 import { ProgressbarVariant, ProgressbarSize, ProgressbarMode, ProgressbarLabelPosition, ProgressbarConfig } from './progressbar.types';
 
 export const PROGRESSBAR_CONFIG = new InjectionToken<Partial<ProgressbarConfig>>('PROGRESSBAR_CONFIG', {
@@ -33,8 +33,8 @@ export class PshProgressbarComponent {
   private config = inject(PROGRESSBAR_CONFIG);
 
   // Model inputs for two-way binding
-  value = model(this.config.value ?? 0);
-  max = model(this.config.max ?? 100);
+  value = input(this.config.value ?? 0);
+  max = input(this.config.max ?? 100);
 
   // Regular inputs
   color = input<ProgressbarVariant>(this.config.color ?? 'primary');

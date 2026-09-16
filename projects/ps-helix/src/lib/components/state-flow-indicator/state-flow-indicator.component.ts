@@ -11,6 +11,7 @@ import {
   InjectionToken,
   afterNextRender
 } from '@angular/core';
+import { PshNavigationError } from '../../types/semantic.types';
 import { StateFlowIndicatorSize, FlowStepConfig, StateFlowIndicatorConfig, StateFlowIndicatorAriaLabels } from './state-flow-indicator.types';
 import { PshFlowStepComponent } from './flow-step.component';
 
@@ -57,7 +58,7 @@ export class PshStateFlowIndicatorComponent {
 
   stepChange = output<number>();
   completed = output<void>();
-  navigationError = output<string>();
+  navigationError = output<PshNavigationError>();
 
   stepComponents = contentChildren(PshFlowStepComponent);
 
@@ -120,8 +121,12 @@ export class PshStateFlowIndicatorComponent {
 
   async goToStep(index: number): Promise<void> {
     if (index < 0 || index >= this.steps().length) {
-      const errorMsg = `Invalid step index: ${index}. Valid range: 0-${this.steps().length - 1}`;
-      this.navigationError.emit(errorMsg);
+      this.navigationError.emit({
+        action: 'goToStep',
+        reason: 'out-of-bounds',
+        target: index,
+        message: `Invalid step index: ${index}. Valid range: 0-${this.steps().length - 1}`,
+      });
       return;
     }
 
@@ -134,18 +139,33 @@ export class PshStateFlowIndicatorComponent {
       try {
         const canChange = await Promise.resolve(beforeChange(this.activeStep(), index));
         if (!canChange) {
-          this.navigationError.emit(`Navigation from step ${this.activeStep()} to step ${index} was blocked by validation`);
+          this.navigationError.emit({
+            action: 'goToStep',
+            reason: 'blocked',
+            target: index,
+            message: `Navigation from step ${this.activeStep()} to step ${index} was blocked by validation`,
+          });
           return;
         }
       } catch (error) {
-        const errorMsg = error instanceof Error ? error.message : 'Unknown error in beforeStepChange';
-        this.navigationError.emit(errorMsg);
+        this.navigationError.emit({
+          action: 'goToStep',
+          reason: 'rejected',
+          target: index,
+          message: error instanceof Error ? error.message : 'Unknown error in beforeStepChange',
+          cause: error,
+        });
         return;
       }
     }
 
     if (!this.canActivateStep(index)) {
-      this.navigationError.emit(`Cannot activate step ${index}. Please complete previous steps first`);
+      this.navigationError.emit({
+        action: 'goToStep',
+        reason: 'prerequisite-incomplete',
+        target: index,
+        message: `Cannot activate step ${index}. Please complete previous steps first`,
+      });
       return;
     }
 

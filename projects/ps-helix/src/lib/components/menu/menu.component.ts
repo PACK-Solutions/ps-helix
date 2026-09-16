@@ -24,13 +24,13 @@ export class PshMenuComponent<T = string> {
     collapse: 'Collapse menu'
   });
 
-  items = input<MenuItem<T>[]>([]);
+  items = input.required<MenuItem<T>[]>();
 
   collapsed = model(false);
   expandedItemIds = model<string[]>([]);
 
-  itemClick = output<MenuItem<T>>();
-  submenuToggle = output<{ item: MenuItem<T>; expanded: boolean }>();
+  itemClicked = output<MenuItem<T>>();
+  submenuToggled = output<{ item: MenuItem<T>; expanded: boolean }>();
 
   protected expandedItemsSet = computed(() => new Set(this.expandedItemIds()));
 
@@ -64,9 +64,9 @@ export class PshMenuComponent<T = string> {
       event?.preventDefault();
       this.toggleItemExpansion(item.id);
       const expanded = this.expandedItemsSet().has(item.id);
-      this.submenuToggle.emit({ item, expanded });
+      this.submenuToggled.emit({ item, expanded });
     } else {
-      this.itemClick.emit(item);
+      this.itemClicked.emit(item);
     }
   }
 

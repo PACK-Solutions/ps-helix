@@ -54,7 +54,7 @@ export class MyComponent {}
 <psh-badge
   color="primary"
   [value]="10"
-  (badgeClick)="handleBadgeClick()"
+  (clicked)="handleBadgeClick()"
   ariaLabel="10 nouveaux éléments"
 ></psh-badge>
 ```
@@ -82,8 +82,7 @@ export class MyComponent {}
 
 | Nom | Type | Description |
 |-----|------|-------------|
-| badgeClick | void | Émis lors d'un clic sur le badge |
-| valueChange | T | Émis lors d'un changement de valeur |
+| clicked | void | Émis lors d'un clic sur le badge |
 
 ### Types
 
@@ -212,8 +211,7 @@ export class MyComponent {
 <psh-badge
   color="primary"
   [value]="count"
-  (badgeClick)="handleBadgeClick()"
-  (valueChange)="handleValueChange($event)"
+  (clicked)="handleBadgeClick()"
 ></psh-badge>
 ```
 

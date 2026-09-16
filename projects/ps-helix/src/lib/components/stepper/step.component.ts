@@ -26,9 +26,9 @@ export class PshStepComponent {
   disabled = input(false);
   completed = input(false);
   loading = input(false);
-  error = input<string>();
+  error = input<string | null | undefined>(null);
   warning = input<string>();
-  success = input<string>();
+  success = input<string | null | undefined>(null);
 
   private _index = signal(0);
   private _isActive = signal(false);

@@ -47,8 +47,8 @@
             <div class="basic-preview">
               <psh-tooltip
                 [content]="'TOOLTIP.BASIC.HELP_TEXT' | translate"
-                (shown)="handleTooltipShown()"
-                (hidden)="handleTooltipHidden()"
+                (opened)="handleTooltipShown()"
+                (closed)="handleTooltipHidden()"
               >
                 <psh-button appearance="outline" color="secondary" icon="question" iconPosition="only" ariaLabel="Help">
                 </psh-button>

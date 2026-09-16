@@ -54,6 +54,8 @@ describe('PshTableComponent', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(PshTableComponent);
+    fixture.componentRef.setInput('columns', []);
+    fixture.componentRef.setInput('data', []);
     fixture.detectChanges();
   });
 
@@ -414,13 +416,13 @@ describe('PshTableComponent', () => {
   });
 
   describe('Row click events', () => {
-    it('should emit rowClick when clicking a row', () => {
+    it('should emit rowClicked when clicking a row', () => {
       fixture.componentRef.setInput('columns', mockColumns);
       fixture.componentRef.setInput('data', mockData);
       fixture.detectChanges();
 
       const rowClickSpy = jest.fn();
-      fixture.componentInstance.rowClick.subscribe(rowClickSpy);
+      fixture.componentInstance.rowClicked.subscribe(rowClickSpy);
 
       const rows = getRows();
       rows[0]!.click();
@@ -437,7 +439,7 @@ describe('PshTableComponent', () => {
       fixture.detectChanges();
 
       const rowClickSpy = jest.fn();
-      fixture.componentInstance.rowClick.subscribe(rowClickSpy);
+      fixture.componentInstance.rowClicked.subscribe(rowClickSpy);
 
       const rows = getRows();
       rows[1]!.click();
@@ -737,14 +739,14 @@ describe('PshTableComponent', () => {
       expect(updatedToggle.getAttribute('aria-expanded')).toBe('true');
     });
 
-    it('should emit rowExpand with correct data when expanding', () => {
+    it('should emit rowExpanded with correct data when expanding', () => {
       fixture.componentRef.setInput('columns', expandableColumns);
       fixture.componentRef.setInput('data', expandableData);
       fixture.componentRef.setInput('expandable', true);
       fixture.detectChanges();
 
       const expandSpy = jest.fn();
-      fixture.componentInstance.rowExpand.subscribe(expandSpy);
+      fixture.componentInstance.rowExpanded.subscribe(expandSpy);
 
       const rows = getRows();
       getExpandToggle(rows[0]!)!.click();
@@ -756,14 +758,14 @@ describe('PshTableComponent', () => {
       });
     });
 
-    it('should emit rowCollapse with correct data when collapsing', () => {
+    it('should emit rowCollapsed with correct data when collapsing', () => {
       fixture.componentRef.setInput('columns', expandableColumns);
       fixture.componentRef.setInput('data', expandableData);
       fixture.componentRef.setInput('expandable', true);
       fixture.detectChanges();
 
       const collapseSpy = jest.fn();
-      fixture.componentInstance.rowCollapse.subscribe(collapseSpy);
+      fixture.componentInstance.rowCollapsed.subscribe(collapseSpy);
 
       const rows = getRows();
       getExpandToggle(rows[0]!)!.click();
@@ -836,14 +838,14 @@ describe('PshTableComponent', () => {
       expect(childRows[0].textContent).toContain('Charlie');
     });
 
-    it('should not emit rowClick when clicking expand toggle', () => {
+    it('should not emit rowClicked when clicking expand toggle', () => {
       fixture.componentRef.setInput('columns', expandableColumns);
       fixture.componentRef.setInput('data', expandableData);
       fixture.componentRef.setInput('expandable', true);
       fixture.detectChanges();
 
       const rowClickSpy = jest.fn();
-      fixture.componentInstance.rowClick.subscribe(rowClickSpy);
+      fixture.componentInstance.rowClicked.subscribe(rowClickSpy);
 
       const rows = getRows();
       getExpandToggle(rows[0]!)!.click();
@@ -1055,17 +1057,17 @@ describe('PshTableComponent — sorting is keyboard-operable', () => {
     expect(row().getAttribute('tabindex')).toBe('0');
   });
 
-  it('should emit rowClick from Enter on a focusable row', () => {
+  it('should emit rowClicked from Enter on a focusable row', () => {
     fixture.componentRef.setInput('hoverable', true);
     fixture.detectChanges();
 
-    const rowClick = jest.fn();
-    fixture.componentInstance.rowClick.subscribe(rowClick);
+    const onRowClicked = jest.fn();
+    fixture.componentInstance.rowClicked.subscribe(onRowClicked);
 
     const row = fixture.nativeElement.querySelector('tbody tr') as HTMLTableRowElement;
     row.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
     fixture.detectChanges();
 
-    expect(rowClick).toHaveBeenCalledWith(expect.objectContaining({ id: 1 }));
+    expect(onRowClicked).toHaveBeenCalledWith(expect.objectContaining({ id: 1 }));
   });
 });

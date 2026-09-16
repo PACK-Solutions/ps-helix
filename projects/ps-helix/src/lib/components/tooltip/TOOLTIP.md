@@ -49,8 +49,8 @@ import { PshTooltipComponent } from 'ps-helix';
 // Tooltip avec evenements
 <psh-tooltip
   content="Avec callbacks"
-  (shown)="onTooltipShown()"
-  (hidden)="onTooltipHidden()"
+  (opened)="onTooltipShown()"
+  (closed)="onTooltipHidden()"
 >
   <button>Avec evenements</button>
 </psh-tooltip>
@@ -83,8 +83,8 @@ import { PshTooltipComponent } from 'ps-helix';
 ### Outputs (@output)
 | Nom | Type | Description |
 |-----|------|-------------|
-| shown | void | Emis quand le tooltip apparait |
-| hidden | void | Emis quand le tooltip disparait |
+| opened | void | Emis quand le tooltip apparait |
+| closed | void | Emis quand le tooltip disparait |
 
 ## Configuration Globale
 
@@ -139,8 +139,8 @@ import { PshTooltipComponent } from 'ps-helix';
   template: `
     <psh-tooltip
       content="Tooltip avec suivi"
-      (shown)="onTooltipShown()"
-      (hidden)="onTooltipHidden()"
+      (opened)="onTooltipShown()"
+      (closed)="onTooltipHidden()"
     >
       <button>Survolez-moi</button>
     </psh-tooltip>
@@ -214,7 +214,7 @@ export class ExampleComponent {
    - Le contenu reste lisible avec un contraste suffisant dans les deux variantes
 
 5. **Evenements**
-   - Utiliser les outputs `shown` et `hidden` pour les analytics ou logs
+   - Utiliser les outputs `opened` et `closed` pour les analytics ou logs
    - Eviter les effets de bord complexes dans ces callbacks
    - Les evenements sont emis apres les delais configures
 
@@ -222,11 +222,16 @@ export class ExampleComponent {
 
 ### Breaking Changes
 
-| Avant | Apres |
-|-------|-------|
-| `showed` output | `shown` output |
-| `ariaLabel` input | Supprime (non necessaire) |
-| `model()` pour variant/position/etc. | `input()` |
+| Avant | Apres | Depuis |
+|-------|-------|--------|
+| `shown` / `hidden` outputs | `opened` / `closed` | 7.0.0 |
+| `showed` output | `shown`, puis `opened` | pre-6.x, puis 7.0.0 |
+| `ariaLabel` input | Supprime (non necessaire) | pre-6.x |
+| `model()` pour variant/position/etc. | `input()` | pre-6.x |
+
+En 7.0.0 le tooltip adopte la paire `opened` / `closed` utilisee par dropdown, select,
+sidebar, collapse et modal. `shown` / `hidden` etait la seule paire ad-hoc de la
+bibliotheque pour la meme notion.
 
 ### Exemple de migration
 
@@ -243,6 +248,6 @@ export class ExampleComponent {
 <psh-tooltip
   content="Info"
   [variant]="myVariant"
-  (shown)="onShow()"
+  (opened)="onShow()"
 >
 ```

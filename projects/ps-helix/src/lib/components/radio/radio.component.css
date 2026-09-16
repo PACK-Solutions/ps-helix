@@ -99,6 +99,11 @@
   color: var(--psh-success-color);
 }
 
+.psh-radio-hint {
+  font-size: var(--psh-font-size-sm);
+  color: var(--psh-text-color-secondary);
+}
+
 /* Sizes */
 :host(.psh-radio-small) .psh-radio-control {
   width: var(--psh-size-4);

@@ -183,12 +183,12 @@ describe('PshTooltipComponent', () => {
       expect(getTooltip()).toBeFalsy();
     }));
 
-    it('should not emit shown event when disabled', fakeAsync(() => {
+    it('should not emit opened event when disabled', fakeAsync(() => {
       fixture.componentRef.setInput('disabled', true);
       fixture.detectChanges();
 
       const shownSpy = jest.fn();
-      fixture.componentInstance.shown.subscribe(shownSpy);
+      fixture.componentInstance.opened.subscribe(shownSpy);
 
       fixture.componentInstance.show();
       tick(0);
@@ -275,31 +275,31 @@ describe('PshTooltipComponent', () => {
   });
 
   describe('Output events', () => {
-    it('should emit shown event when tooltip becomes visible', fakeAsync(() => {
+    it('should emit opened event when tooltip becomes visible', fakeAsync(() => {
       const shownSpy = jest.fn();
-      fixture.componentInstance.shown.subscribe(shownSpy);
+      fixture.componentInstance.opened.subscribe(shownSpy);
 
       showTooltip();
 
       expect(shownSpy).toHaveBeenCalledTimes(1);
     }));
 
-    it('should emit hidden event when tooltip is hidden', fakeAsync(() => {
+    it('should emit closed event when tooltip is hidden', fakeAsync(() => {
       showTooltip();
 
       const hiddenSpy = jest.fn();
-      fixture.componentInstance.hidden.subscribe(hiddenSpy);
+      fixture.componentInstance.closed.subscribe(hiddenSpy);
 
       hideTooltip();
 
       expect(hiddenSpy).toHaveBeenCalledTimes(1);
     }));
 
-    it('should emit hidden event on immediate hide', fakeAsync(() => {
+    it('should emit closed event on immediate hide', fakeAsync(() => {
       showTooltip();
 
       const hiddenSpy = jest.fn();
-      fixture.componentInstance.hidden.subscribe(hiddenSpy);
+      fixture.componentInstance.closed.subscribe(hiddenSpy);
 
       hideTooltipImmediate();
 

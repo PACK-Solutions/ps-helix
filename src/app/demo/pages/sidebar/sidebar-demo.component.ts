@@ -32,6 +32,13 @@ export class SidebarDemoComponent {
   isFixedOpen = true;
   isOverlayOpen = false;
 
+  /** The mock sidebar's category filter. `options` is required since 7.0.0. */
+  readonly categoryOptions = [
+    { value: 'all', label: 'All categories' },
+    { value: 'reports', label: 'Reports' },
+    { value: 'invoices', label: 'Invoices' },
+  ];
+
   fixedPosition: SidebarPosition = 'left';
   overlayPosition: SidebarPosition = 'left';
 

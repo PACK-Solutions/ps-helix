@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, signal, viewChild } from '@angular/core';
 import { PshStateFlowIndicatorComponent, PshFlowStepComponent, PshButtonComponent } from '@lib/components';
+import { PshNavigationError } from '@lib/types/semantic.types';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
 import { CodeSnippetComponent } from '../../shared/code-snippet.component';
 
@@ -85,8 +86,8 @@ export class StateFlowIndicatorDemoComponent {
     this.statesStep4Loading.set(false);
   }
 
-  handleNavigationError(error: string): void {
-    this.navigationErrorMessage.set(error);
+  handleNavigationError(error: PshNavigationError): void {
+    this.navigationErrorMessage.set(error.message);
     setTimeout(() => this.navigationErrorMessage.set(''), 4000);
   }
 

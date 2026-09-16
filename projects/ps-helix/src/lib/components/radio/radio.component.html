@@ -40,5 +40,9 @@
     <div [id]="successMessageId()" class="psh-radio-success" role="status">
       {{ success() }}
     </div>
+  } @else if (hint()) {
+    <div [id]="hintMessageId()" class="psh-radio-hint">
+      {{ hint() }}
+    </div>
   }
 </div>

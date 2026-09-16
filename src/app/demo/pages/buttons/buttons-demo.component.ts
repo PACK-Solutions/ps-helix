@@ -71,7 +71,7 @@ export class ButtonsDemoComponent {
   disabledClickCode = `<psh-button
   [disabled]="true"
   color="primary"
-  (disabledClick)="onDisabledAttempt()"
+  (disabledClicked)="onDisabledAttempt()"
 >
   Action indisponible
 </psh-button>`;

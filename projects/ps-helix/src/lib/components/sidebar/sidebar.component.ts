@@ -65,13 +65,13 @@ export class PshSidebarComponent implements OnDestroy {
   closeOnBackdrop = input<boolean>(this.config.closeOnBackdrop ?? true);
   closeOnEscape = input<boolean>(this.config.closeOnEscape ?? true);
 
-  // `toggle` is part of the public sidebar API and cannot be renamed (semver);
-  // the native-event-name clash is intentional and acknowledged here.
-  // eslint-disable-next-line @angular-eslint/no-output-native
-  toggle = output<boolean>();
+  // Was `toggle`, the only infinitive output in the library and a native event name, which
+  // needed an eslint exemption to exist. `toggled` matches collapse — same idea, same word —
+  // and the clash is gone with it.
+  toggled = output<boolean>();
   opened = output<void>();
   closed = output<void>();
-  transitionStart = output<boolean>();
+  transitionStarted = output<boolean>();
 
   private readonly mobileSignal = signal(false);
   private previousOpenState: boolean | null = null;
@@ -182,16 +182,16 @@ export class PshSidebarComponent implements OnDestroy {
 
   toggleSidebar(): void {
     const newState = !this.open();
-    this.transitionStart.emit(newState);
+    this.transitionStarted.emit(newState);
     this.open.set(newState);
-    this.toggle.emit(newState);
+    this.toggled.emit(newState);
   }
 
   closeSidebar(): void {
     if (this.open()) {
-      this.transitionStart.emit(false);
+      this.transitionStarted.emit(false);
       this.open.set(false);
-      this.toggle.emit(false);
+      this.toggled.emit(false);
     }
   }
 

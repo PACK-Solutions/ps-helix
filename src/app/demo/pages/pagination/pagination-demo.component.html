@@ -137,7 +137,7 @@
           <div class="programmatic-pagination">
             <psh-pagination #programmaticPagination
               [(currentPage)]="programmaticCurrentPage"
-              [(totalPages)]="programmaticTotalPages"
+              [totalPages]="programmaticTotalPages()"
               [firstLabel]="labels.first"
               [previousLabel]="labels.previous"
               [nextLabel]="labels.next"
@@ -183,7 +183,7 @@
           <div class="error-pagination-zone">
             <psh-pagination #errorDemoPagination
               [(currentPage)]="errorDemoCurrentPage"
-              [(totalPages)]="errorDemoTotalPages"
+              [totalPages]="errorDemoTotalPages()"
               [firstLabel]="labels.first"
               [previousLabel]="labels.previous"
               [nextLabel]="labels.next"
@@ -251,7 +251,7 @@
           <div class="i18n-pagination">
             <psh-pagination
               [(currentPage)]="i18nCurrentPage"
-              [(totalPages)]="i18nTotalPages"
+              [totalPages]="i18nTotalPages()"
               [firstLabel]="currentLabels().first"
               [previousLabel]="currentLabels().previous"
               [nextLabel]="currentLabels().next"
@@ -340,7 +340,7 @@
           <div class="computed-pagination">
             <psh-pagination
               [(currentPage)]="computedCurrentPage"
-              [(totalPages)]="computedTotalPages"
+              [totalPages]="computedTotalPages()"
               [firstLabel]="labels.first"
               [previousLabel]="labels.previous"
               [nextLabel]="labels.next"
@@ -413,7 +413,7 @@
           <div class="backend-pagination">
             <psh-pagination
               [(currentPage)]="simulatedCurrentPage"
-              [(totalPages)]="simulatedTotalPages"
+              [totalPages]="simulatedTotalPages()"
               [firstLabel]="labels.first"
               [previousLabel]="labels.previous"
               [nextLabel]="labels.next"
@@ -443,7 +443,7 @@
             <div class="config-preview">
               <psh-pagination
                 [(currentPage)]="defaultCurrentPage"
-                [(totalPages)]="defaultTotalPages"
+                [totalPages]="defaultTotalPages"
                 [firstLabel]="labels.first"
                 [previousLabel]="labels.previous"
                 [nextLabel]="labels.next"
@@ -465,7 +465,7 @@
             <div class="config-preview">
               <psh-pagination
                 [(currentPage)]="outlineCurrentPage"
-                [(totalPages)]="outlineTotalPages"
+                [totalPages]="outlineTotalPages"
                 appearance="outline"
                 [maxVisiblePages]="7"
                 [showItemsPerPage]="true"
@@ -504,7 +504,7 @@
             <div class="variant-preview">
               <psh-pagination
                 [(currentPage)]="defaultCurrentPage"
-                [(totalPages)]="defaultTotalPages"
+                [totalPages]="defaultTotalPages"
                 appearance="flat"
                 [firstLabel]="labels.first"
                 [previousLabel]="labels.previous"
@@ -525,7 +525,7 @@
             <div class="variant-preview">
               <psh-pagination
                 [(currentPage)]="outlineCurrentPage"
-                [(totalPages)]="outlineTotalPages"
+                [totalPages]="outlineTotalPages"
                 appearance="outline"
                 [firstLabel]="labels.first"
                 [previousLabel]="labels.previous"
@@ -557,7 +557,7 @@
             <div class="size-preview">
               <psh-pagination
                 [(currentPage)]="smallCurrentPage"
-                [(totalPages)]="sizesTotalPages"
+                [totalPages]="sizesTotalPages"
                 size="small"
                 [firstLabel]="labels.first"
                 [previousLabel]="labels.previous"
@@ -578,7 +578,7 @@
             <div class="size-preview">
               <psh-pagination
                 [(currentPage)]="mediumCurrentPage"
-                [(totalPages)]="sizesTotalPages"
+                [totalPages]="sizesTotalPages"
                 size="medium"
                 [firstLabel]="labels.first"
                 [previousLabel]="labels.previous"
@@ -599,7 +599,7 @@
             <div class="size-preview">
               <psh-pagination
                 [(currentPage)]="largeCurrentPage"
-                [(totalPages)]="sizesTotalPages"
+                [totalPages]="sizesTotalPages"
                 size="large"
                 [firstLabel]="labels.first"
                 [previousLabel]="labels.previous"
@@ -631,7 +631,7 @@
             <div class="feature-preview">
               <psh-pagination
                 [(currentPage)]="itemsPerPageCurrent"
-                [(totalPages)]="itemsPerPageTotal"
+                [totalPages]="itemsPerPageTotal"
                 [(itemsPerPage)]="itemsPerPage"
                 [showItemsPerPage]="true"
                 [itemsPerPageOptions]="itemsPerPageOptions"
@@ -662,7 +662,7 @@
             <div class="feature-preview">
               <psh-pagination
                 [(currentPage)]="customNavCurrent"
-                [(totalPages)]="customNavTotal"
+                [totalPages]="customNavTotal"
                 [showFirstLast]="false"
                 [maxVisiblePages]="3"
                 [firstLabel]="labels.first"
@@ -701,7 +701,7 @@
                 </div>
                 <psh-pagination
                   [(currentPage)]="keyboardCurrent"
-                  [(totalPages)]="keyboardTotal"
+                  [totalPages]="keyboardTotal"
                   [firstLabel]="labels.first"
                   [previousLabel]="labels.previous"
                   [nextLabel]="labels.next"
@@ -791,7 +791,7 @@
             <p>Cette pagination démontre toutes les fonctionnalités d'accessibilité :</p>
             <psh-pagination
               [(currentPage)]="accessibilityCurrent"
-              [(totalPages)]="accessibilityTotal"
+              [totalPages]="accessibilityTotal"
               [firstLabel]="labels.first"
               [previousLabel]="labels.previous"
               [nextLabel]="labels.next"

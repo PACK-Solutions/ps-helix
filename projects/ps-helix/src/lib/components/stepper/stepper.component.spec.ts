@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testin
 import { PshStepperComponent, STEPPER_CONFIG } from './stepper.component';
 import { PshStepComponent } from './step.component';
 import { StepperVariant } from './stepper.types';
+import { PshNavigationError } from '../../types/semantic.types';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -74,7 +75,7 @@ class TestHostComponent {
 
   stepChangeEvents: number[] = [];
   completedCount = 0;
-  navigationErrors: string[] = [];
+  navigationErrors: PshNavigationError[] = [];
 
   onStepChange(index: number): void {
     this.stepChangeEvents.push(index);
@@ -84,7 +85,7 @@ class TestHostComponent {
     this.completedCount++;
   }
 
-  onNavigationError(error: string): void {
+  onNavigationError(error: PshNavigationError): void {
     this.navigationErrors.push(error);
   }
 }
@@ -366,7 +367,8 @@ describe('PshStepperComponent', () => {
       fixture.detectChanges();
 
       expect(hostComponent.navigationErrors.length).toBe(1);
-      expect(hostComponent.navigationErrors[0]).toContain('Invalid step index');
+      expect(hostComponent.navigationErrors[0]!.reason).toBe('out-of-bounds');
+      expect(hostComponent.navigationErrors[0]!.target).toBe(10);
     });
 
     it('should not emit event when navigating to current step', async () => {
@@ -508,7 +510,8 @@ describe('PshStepperComponent', () => {
       fixture.detectChanges();
 
       expect(hostComponent.navigationErrors.length).toBe(1);
-      expect(hostComponent.navigationErrors[0]).toContain('Validation error');
+      expect(hostComponent.navigationErrors[0]!.reason).toBe('rejected');
+      expect(hostComponent.navigationErrors[0]!.message).toContain('Validation error');
     });
   });
 
@@ -974,7 +977,8 @@ describe('PshStepperComponent', () => {
       fixture.detectChanges();
 
       expect(hostComponent.navigationErrors.length).toBe(1);
-      expect(hostComponent.navigationErrors[0]).toContain('Async validation failed');
+      expect(hostComponent.navigationErrors[0]!.reason).toBe('rejected');
+      expect(hostComponent.navigationErrors[0]!.message).toContain('Async validation failed');
       expect(getStepper().activeStep()).toBe(0);
     });
 
@@ -1006,7 +1010,8 @@ describe('PshStepperComponent', () => {
       fixture.detectChanges();
 
       expect(hostComponent.navigationErrors.length).toBe(1);
-      expect(hostComponent.navigationErrors[0]).toContain('Invalid step index');
+      expect(hostComponent.navigationErrors[0]!.reason).toBe('out-of-bounds');
+      expect(hostComponent.navigationErrors[0]!.target).toBe(-1);
     });
   });
 

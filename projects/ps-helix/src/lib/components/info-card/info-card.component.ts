@@ -45,7 +45,7 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
   title = input<string>('');
 
   /** Array of label-value pairs to display */
-  data = input<InfoCardData[]>([]);
+  data = input.required<InfoCardData[]>();
 
   /** Display options for the card */
   options = input<InfoCardOptions>({

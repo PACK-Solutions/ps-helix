@@ -41,8 +41,7 @@ export class PshBadgeComponent<T = number> {
   readonly ariaLabel = input<string>();
   readonly formatter = input<((value: T) => string) | undefined>();
 
-  readonly badgeClick = output<void>();
-  readonly valueChange = output<T>();
+  readonly clicked = output<void>();
 
   readonly computedRole = computed(() =>
     this.displayType() === 'counter' ? 'status' : 'img'
@@ -118,6 +117,6 @@ export class PshBadgeComponent<T = number> {
   });
 
   onBadgeClick(): void {
-    this.badgeClick.emit();
+    this.clicked.emit();
   }
 }

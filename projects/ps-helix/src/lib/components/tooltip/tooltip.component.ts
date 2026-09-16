@@ -57,12 +57,12 @@ export class PshTooltipComponent implements OnDestroy {
   maxWidth = input<number>(this.config.maxWidth ?? 200);
   autoFlip = input<boolean>(this.config.autoFlip ?? true);
 
-  content = input.required<string>();
+  content = input<string>('');
   disabled = input<boolean>(false);
   id = input<string>(this.generateUniqueId());
 
-  shown = output<void>();
-  hidden = output<void>();
+  opened = output<void>();
+  closed = output<void>();
 
   isVisible = signal(false);
   computedPosition = signal<TooltipPosition>('top');
@@ -77,9 +77,9 @@ export class PshTooltipComponent implements OnDestroy {
   constructor() {
     effect(() => {
       if (this.isVisible()) {
-        this.shown.emit();
+        this.opened.emit();
       } else {
-        this.hidden.emit();
+        this.closed.emit();
       }
     });
 
