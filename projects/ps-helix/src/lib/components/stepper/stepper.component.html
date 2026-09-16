@@ -13,7 +13,8 @@
         class="psh-step-indicator"
         role="tab"
         tabindex="0"
-        [attr.id]="'step-' + i"
+        [attr.id]="idPrefix + '-tab-' + i"
+        [attr.aria-controls]="idPrefix + '-panel-' + i"
         [attr.aria-selected]="i === activeStep()"
         [attr.aria-disabled]="step.disabled"
         [attr.aria-label]="getStepAriaLabel(step, i)"
@@ -42,13 +43,13 @@
           <span class="psh-step-subtitle">{{ step.subtitle }}</span>
         }
         @if (step.error) {
-          <span class="psh-step-error" [id]="'error-' + i" role="alert" aria-live="polite">{{ step.error }}</span>
+          <span class="psh-step-error" [id]="idPrefix + '-error-' + i" role="alert" aria-live="polite">{{ step.error }}</span>
         }
         @if (step.warning) {
-          <span class="psh-step-warning" [id]="'warning-' + i" role="status" aria-live="polite">{{ step.warning }}</span>
+          <span class="psh-step-warning" [id]="idPrefix + '-warning-' + i" role="status" aria-live="polite">{{ step.warning }}</span>
         }
         @if (step.success) {
-          <span class="psh-step-success" [id]="'success-' + i" role="status" aria-live="polite">{{ step.success }}</span>
+          <span class="psh-step-success" [id]="idPrefix + '-success-' + i" role="status" aria-live="polite">{{ step.success }}</span>
         }
       </div>
 

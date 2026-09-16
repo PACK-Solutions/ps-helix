@@ -699,8 +699,11 @@ describe('PshStepperComponent', () => {
       hostComponent.step1Error = 'Error';
       fixture.detectChanges();
 
-      expect(getStepIndicator(0).getAttribute('aria-describedby')).toBe('error-0');
-      expect(getStepErrorMessage(0)?.getAttribute('id')).toBe('error-0');
+      // Assert the link, not the spelling. These ids were global — `error-0` on every
+      // stepper on the page — and a test that pins the string is how that survived.
+      const describedBy = getStepIndicator(0).getAttribute('aria-describedby')!;
+      expect(describedBy).toBeTruthy();
+      expect(document.getElementById(describedBy)).toBe(getStepErrorMessage(0));
     });
 
     it('should have aria-live="polite" on status messages', () => {
@@ -906,7 +909,8 @@ describe('PshStepperComponent', () => {
       fixture.detectChanges();
 
       const step = getStepper().steps()[0]!;
-      expect(getStepper().getStepDescribedBy(step, 0)).toBe('error-0');
+      const id = getStepper().getStepDescribedBy(step, 0)!;
+      expect(document.getElementById(id)).toBe(getStepErrorMessage(0));
     });
 
     it('should return warning id when step has warning', () => {
@@ -914,7 +918,8 @@ describe('PshStepperComponent', () => {
       fixture.detectChanges();
 
       const step = getStepper().steps()[0]!;
-      expect(getStepper().getStepDescribedBy(step, 0)).toBe('warning-0');
+      const id = getStepper().getStepDescribedBy(step, 0)!;
+      expect(document.getElementById(id)).toBe(getStepWarningMessage(0));
     });
 
     it('should return success id when step has success', () => {
@@ -922,7 +927,8 @@ describe('PshStepperComponent', () => {
       fixture.detectChanges();
 
       const step = getStepper().steps()[0]!;
-      expect(getStepper().getStepDescribedBy(step, 0)).toBe('success-0');
+      const id = getStepper().getStepDescribedBy(step, 0)!;
+      expect(document.getElementById(id)).toBe(getStepSuccessMessage(0));
     });
 
     it('should return null when step has no message', () => {
@@ -939,7 +945,8 @@ describe('PshStepperComponent', () => {
       fixture.detectChanges();
 
       const step = getStepper().steps()[0]!;
-      expect(getStepper().getStepDescribedBy(step, 0)).toBe('error-0');
+      const id = getStepper().getStepDescribedBy(step, 0)!;
+      expect(document.getElementById(id)).toBe(getStepErrorMessage(0));
     });
   });
 
@@ -1088,16 +1095,18 @@ describe('PshStepperComponent', () => {
       hostComponent.step1Warning = 'Warning message';
       fixture.detectChanges();
 
-      expect(getStepIndicator(0).getAttribute('aria-describedby')).toBe('warning-0');
-      expect(getStepWarningMessage(0)?.getAttribute('id')).toBe('warning-0');
+      const describedBy = getStepIndicator(0).getAttribute('aria-describedby')!;
+      expect(describedBy).toBeTruthy();
+      expect(document.getElementById(describedBy)).toBe(getStepWarningMessage(0));
     });
 
     it('should have aria-describedby pointing to success message', () => {
       hostComponent.step1Success = 'Success message';
       fixture.detectChanges();
 
-      expect(getStepIndicator(0).getAttribute('aria-describedby')).toBe('success-0');
-      expect(getStepSuccessMessage(0)?.getAttribute('id')).toBe('success-0');
+      const describedBy = getStepIndicator(0).getAttribute('aria-describedby')!;
+      expect(describedBy).toBeTruthy();
+      expect(document.getElementById(describedBy)).toBe(getStepSuccessMessage(0));
     });
   });
 

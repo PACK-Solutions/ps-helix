@@ -7,6 +7,12 @@ import { PshRadioComponent } from '../components/radio/radio.component';
 import { PshSelectComponent } from '../components/select/select.component';
 import { PshSwitchComponent } from '../components/switch/switch.component';
 import { PshTextareaComponent } from '../components/textarea/textarea.component';
+import { PshStepperComponent } from '../components/stepper/stepper.component';
+import { PshStepComponent } from '../components/stepper/step.component';
+import { PshStateFlowIndicatorComponent } from '../components/state-flow-indicator/state-flow-indicator.component';
+import { PshFlowStepComponent } from '../components/state-flow-indicator/flow-step.component';
+import { PshTabsComponent } from '../components/tabs/tabs.component';
+import { PshTabComponent } from '../components/tabs/tab.component';
 
 /**
  * `aria-describedby` is the only thing tying a field to its error message for a screen
@@ -221,5 +227,118 @@ describe('aria-describedby is unique per instance', () => {
     }
 
     fixture.nativeElement.remove();
+  });
+});
+
+/* ────────────────────────────────────────────────────────────────────────────────────────
+ * Tab / panel relationships.
+ *
+ * `psh-stepper`, `psh-state-flow-indicator` and `psh-tabs` each render a `tablist` whose tabs
+ * point at panels through `aria-controls`, and whose panels point back through
+ * `aria-labelledby`. Until 7.0.0 the ids in those links were **global** — `tab-0`, `panel-0`,
+ * `step-0`, `flow-step-0` — so two of the same component on a page produced duplicates, and
+ * `psh-tabs` and `psh-stepper` both used `panel-0`, which made a page holding one of each
+ * cross-wire two unrelated components.
+ *
+ * The assertion is deliberately not "the id is spelled like this". Pinning the spelling is
+ * exactly what let `error-0` survive: three tests asserted the literal and passed while the
+ * document held two of them.
+ * ──────────────────────────────────────────────────────────────────────────────────────── */
+
+@Component({
+  selector: 'psh-two-tablists-host',
+  imports: [
+    PshStepperComponent,
+    PshStepComponent,
+    PshStateFlowIndicatorComponent,
+    PshFlowStepComponent,
+    PshTabsComponent,
+    PshTabComponent,
+  ],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  template: `
+    <psh-stepper>
+      <psh-step title="One" error="Broken" />
+      <psh-step title="Two" />
+    </psh-stepper>
+    <psh-stepper>
+      <psh-step title="One" error="Broken" />
+      <psh-step title="Two" />
+    </psh-stepper>
+
+    <psh-state-flow-indicator>
+      <psh-flow-step title="One" />
+      <psh-flow-step title="Two" />
+    </psh-state-flow-indicator>
+    <psh-state-flow-indicator>
+      <psh-flow-step title="One" />
+      <psh-flow-step title="Two" />
+    </psh-state-flow-indicator>
+
+    <psh-tabs>
+      <psh-tab header="One" />
+      <psh-tab header="Two" />
+    </psh-tabs>
+    <psh-tabs>
+      <psh-tab header="One" />
+      <psh-tab header="Two" />
+    </psh-tabs>
+  `,
+})
+class TwoTablistsHostComponent {}
+
+/** Every id named by an ARIA relationship attribute anywhere in the fixture. */
+function referencedIds(root: HTMLElement): string[] {
+  const attrs = ['aria-controls', 'aria-labelledby', 'aria-describedby'];
+  const ids: string[] = [];
+  for (const attr of attrs) {
+    for (const el of Array.from(root.querySelectorAll(`[${attr}]`))) {
+      const value = el.getAttribute(attr);
+      if (value) ids.push(...value.split(/\s+/).filter(Boolean));
+    }
+  }
+  return ids;
+}
+
+describe('tab and panel ids are unique per instance', () => {
+  let fixture: ComponentFixture<TwoTablistsHostComponent>;
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(TwoTablistsHostComponent);
+    document.body.appendChild(fixture.nativeElement);
+    fixture.detectChanges();
+  });
+
+  afterEach(() => fixture.nativeElement.remove());
+
+  it('resolves every id a tab or panel references', () => {
+    const missing = referencedIds(fixture.nativeElement).filter(id => !document.getElementById(id));
+    expect(missing).toEqual([]);
+  });
+
+  it('renders no id twice, across components as well as within one', () => {
+    const seen = new Map<string, number>();
+    for (const el of Array.from(fixture.nativeElement.querySelectorAll('[id]'))) {
+      const id = (el as HTMLElement).id;
+      seen.set(id, (seen.get(id) ?? 0) + 1);
+    }
+    expect([...seen].filter(([, count]) => count > 1)).toEqual([]);
+  });
+
+  it('points each tab at its own panel and back', () => {
+    const tabs = Array.from(
+      fixture.nativeElement.querySelectorAll<HTMLElement>('[role="tab"]'),
+    );
+    expect(tabs.length).toBe(12);
+
+    for (const tab of tabs) {
+      const panelId = tab.getAttribute('aria-controls');
+      expect(panelId).toBeTruthy();
+
+      const panel = document.getElementById(panelId!);
+      expect(panel?.getAttribute('role')).toBe('tabpanel');
+      // and the panel names this very tab, not the one with the same index elsewhere
+      expect(panel?.getAttribute('aria-labelledby')).toBe(tab.id);
+    }
   });
 });

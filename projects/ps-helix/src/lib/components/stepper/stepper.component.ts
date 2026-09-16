@@ -14,6 +14,8 @@ import {
 import { PshNavigationError } from '../../types/semantic.types';
 import { StepperVariant, StepConfig, StepperConfig, StepperAriaLabels } from './stepper.types';
 import { PshStepComponent } from './step.component';
+import { PSH_STEPPER, PshStepperApi } from './stepper.token';
+import { pshUniqueId } from '../../utils/unique-id';
 
 const DEFAULT_ARIA_LABELS: StepperAriaLabels = {
   step: 'Étape',
@@ -38,6 +40,7 @@ export const STEPPER_CONFIG = new InjectionToken<Partial<StepperConfig>>('STEPPE
   templateUrl: './stepper.component.html',
   styleUrls: ['./stepper.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [{ provide: PSH_STEPPER, useExisting: PshStepperComponent }],
   host: {
     '[class.psh-stepper-container]': 'true',
     '[class.psh-numbered]': 'variant() === "numbered"',
@@ -46,8 +49,11 @@ export const STEPPER_CONFIG = new InjectionToken<Partial<StepperConfig>>('STEPPE
     '[attr.aria-label]': 'ariaLabel()'
   }
 })
-export class PshStepperComponent {
+export class PshStepperComponent implements PshStepperApi {
   private config = inject(STEPPER_CONFIG);
+
+  /** Namespaces every id this stepper renders. Read by its `psh-step` children. */
+  readonly idPrefix = pshUniqueId('stepper');
 
   activeStep = model(0);
   variant = input<StepperVariant>(this.config.variant ?? 'default');
@@ -224,9 +230,12 @@ export class PshStepperComponent {
   }
 
   getStepDescribedBy(step: StepConfig, index: number): string | null {
-    if (step.error) return `error-${index}`;
-    if (step.warning) return `warning-${index}`;
-    if (step.success) return `success-${index}`;
+    // These must match the `[id]` of the message the template actually renders. The
+    // prefix is part of that agreement, not decoration: a class-renaming pass once
+    // rewrote one side of it and 2 195 tests stayed green.
+    if (step.error) return `${this.idPrefix}-error-${index}`;
+    if (step.warning) return `${this.idPrefix}-warning-${index}`;
+    if (step.success) return `${this.idPrefix}-success-${index}`;
     return null;
   }
 

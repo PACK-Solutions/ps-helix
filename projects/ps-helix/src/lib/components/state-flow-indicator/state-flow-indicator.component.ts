@@ -14,6 +14,8 @@ import {
 import { PshNavigationError } from '../../types/semantic.types';
 import { StateFlowIndicatorSize, FlowStepConfig, StateFlowIndicatorConfig, StateFlowIndicatorAriaLabels } from './state-flow-indicator.types';
 import { PshFlowStepComponent } from './flow-step.component';
+import { PSH_STATE_FLOW, PshStateFlowApi } from './state-flow-indicator.token';
+import { pshUniqueId } from '../../utils/unique-id';
 
 const DEFAULT_ARIA_LABELS: StateFlowIndicatorAriaLabels = {
   step: 'Étape',
@@ -39,6 +41,9 @@ export const STATE_FLOW_INDICATOR_CONFIG = new InjectionToken<Partial<StateFlowI
   templateUrl: './state-flow-indicator.component.html',
   styleUrls: ['./state-flow-indicator.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    { provide: PSH_STATE_FLOW, useExisting: PshStateFlowIndicatorComponent },
+  ],
   host: {
     '[class.psh-state-flow-indicator]': 'true',
     '[class.psh-size-small]': 'size() === "small"',
@@ -48,7 +53,10 @@ export const STATE_FLOW_INDICATOR_CONFIG = new InjectionToken<Partial<StateFlowI
     '[attr.aria-label]': 'ariaLabel()'
   }
 })
-export class PshStateFlowIndicatorComponent {
+export class PshStateFlowIndicatorComponent implements PshStateFlowApi {
+  /** Namespaces every id this indicator renders. Read by its `psh-flow-step` children. */
+  readonly idPrefix = pshUniqueId('state-flow');
+
   private config = inject(STATE_FLOW_INDICATOR_CONFIG);
 
   activeStep = model(0);

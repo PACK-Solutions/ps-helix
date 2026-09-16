@@ -12,6 +12,8 @@ import {
 } from '@angular/core';
 import { TabsVariant, TabsSize, Tab, TabsConfig, TabChangeEvent } from './tabs.types';
 import { PshTabComponent } from './tab.component';
+import { PSH_TABS, PshTabsApi } from './tabs.token';
+import { pshUniqueId } from '../../utils/unique-id';
 
 const TABS_DEFAULTS = {
   variant: 'default',
@@ -29,13 +31,17 @@ export const TABS_CONFIG = new InjectionToken<Partial<TabsConfig>>('TABS_CONFIG'
   templateUrl: './tabs.component.html',
   styleUrls: ['./tabs.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [{ provide: PSH_TABS, useExisting: PshTabsComponent }],
   host: {
     '[class]': 'hostClasses()',
     role: 'region',
     '[attr.aria-label]': 'ariaLabel() || "Navigation par onglets"',
   },
 })
-export class PshTabsComponent {
+export class PshTabsComponent implements PshTabsApi {
+  /** Namespaces the tab and panel ids: they were `tab-0` / `panel-0` for every instance. */
+  readonly idPrefix = pshUniqueId('tabs');
+
   private config = inject(TABS_CONFIG);
 
   variant = input<TabsVariant>(this.config.variant ?? 'default');

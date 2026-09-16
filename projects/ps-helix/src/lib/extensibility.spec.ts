@@ -215,8 +215,10 @@ describe('the six cases that used to force ::ng-deep', () => {
     it('labels each panel by its tab, like psh-step', () => {
       const panel = root.querySelector('psh-flow-step');
       expect(panel?.getAttribute('role')).toBe('tabpanel');
-      expect(panel?.getAttribute('aria-labelledby')).toBe('flow-step-0');
-      expect(root.querySelector('#flow-step-0')).toBeTruthy();
+      const labelledBy = panel?.getAttribute('aria-labelledby');
+      expect(labelledBy).toBeTruthy();
+      const tab = document.getElementById(labelledBy!);
+      expect(tab?.getAttribute('role')).toBe('tab');
     });
   });
 });
