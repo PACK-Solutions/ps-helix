@@ -541,7 +541,81 @@ magic `'1000px'` that **silently truncated** taller content, with no warning and
 A fixed length still works and is what gives the open/close a height animation; `auto` animates
 opacity and offset only. If you were relying on the clip, pass `maxHeight="1000px"`.
 
-## 10. Styling a component from outside
+## 10. ARIA and the strings you could not reach
+
+Nothing here is breaking. Every input is new, and every default is the string that was
+hard-coded before.
+
+### 10.1 `ariaDescribedBy` and `ariaLabelledBy` on the seven form controls
+
+There were **zero** inputs of either kind across all 33 classes. Attaching extra guidance to a
+field meant setting the attribute from outside — which **overwrote** the id of the control's
+own error message.
+
+They **merge**, they do not replace. `aria-describedby` takes a list: a control that points at
+its error must not lose it because you added a hint, and your hint must not silently replace
+the error.
+
+```html
+<psh-input error="Required" ariaDescribedBy="password-rules" />
+<!-- aria-describedby="psh-input-3-error password-rules" -->
+```
+
+On `psh-input`, `psh-textarea`, `psh-select`, `psh-checkbox`, `psh-switch`, `psh-radio` and
+`psh-radio-group`.
+
+> **`psh-select`'s message ids were global.** `error-message`, `success-message`,
+> `hint-message` — literally those strings, on every instance. Two selects in error on one
+> page produced duplicate ids and a screen reader read the first one's message for both. This
+> is the bug fixed on `psh-input` in 6.2.5 and never propagated; the ids are per-instance now.
+> If you referenced `#error-message` in a test or a stylesheet, it is gone.
+
+### 10.2 The nine strings a consuming application could not reach
+
+Three were `aria-label`s hard-coded **in French** inside `host` blocks, so an English or
+multilingual application had a French landmark name and no way to change it:
+
+| Component | Input | Default (unchanged) |
+|---|---|---|
+| `psh-stepper` | `ariaLabel` | `'Navigation par étapes'` |
+| `psh-state-flow-indicator` | `ariaLabel` | `'Indicateur de progression'` |
+| `psh-tab-bar` | `ariaLabel` | `'Navigation par onglets'` |
+| `psh-toast` | `ariaLabel` | `'Notifications'` |
+| `psh-select` | `noResultsText` | `'Aucun résultat'` |
+| `psh-collapse` | `defaultHeaderText` | `'Section pliable'` |
+| `psh-table` | `expandColumnLabel` | `'Expand'` |
+| `psh-table` | `expandRowLabel` / `collapseRowLabel` | `'Expand row'` / `'Collapse row'` |
+
+`psh-tabs` already did this correctly (`ariaLabel() || '…'`) — the pattern existed in the
+repository and had simply not been applied.
+
+> This makes the strings **overridable**. It does not settle the French/English mix in the
+> defaults, which is one decision for the whole library rather than nine local ones, and is
+> still open.
+
+`psh-toast` gains its first `input()` ever: it had zero inputs and zero outputs on 118 lines.
+
+### 10.3 `ariaLabel` where a component had no accessible name at all
+
+`psh-card`, `psh-horizontal-card` (`role="article"`), `psh-menu` (`<nav>`), `psh-modal` and
+`psh-table`. A page with a sidebar menu and a top menu announced two landmarks both called
+"navigation".
+
+On `psh-modal`, setting `ariaLabel` **replaces** `aria-labelledby` rather than joining it —
+`aria-labelledby` wins over `aria-label` in the accessibility tree, so an input that did not
+replace it would silently do nothing. Setting it is you saying the visible title is absent or
+unsuitable.
+
+**Four components deliberately did not get one**, because theirs is already correct and an
+input would only let you break it:
+
+| Component | Why |
+|---|---|
+| `psh-collapse` | `role="region"` named by `aria-labelledby` on its header — an `aria-label` would be ignored |
+| `psh-tooltip` | `role="tooltip"`; its content *is* the text |
+| `psh-step`, `psh-flow-step` | `role="tabpanel"`, named by their tab |
+
+## 11. Styling a component from outside
 
 Component custom properties used to be declared on the element that consumed them, so
 setting one on the host did nothing:
@@ -564,7 +638,7 @@ The 82 available properties are listed per component in
 If you were reaching in with `::ng-deep` to work around the old behaviour, check whether a
 property now covers your case.
 
-## 11. Smaller changes
+## 12. Smaller changes
 
 - **Dependencies.** `date-fns` is gone (it had zero usages). `@ngx-translate/core` is an
   optional peer with a `>=15` range — if you were held to `^15` by ps-helix, you no longer
