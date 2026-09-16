@@ -14,7 +14,7 @@
   [attr.data-state]="state()"
 >
   <div
-    [class]="'psh-modal-container ' + styleClass()"
+    [class]="'psh-modal-container ' + panelClass()"
     [class.psh-small]="size() === 'small'"
     [class.psh-medium]="size() === 'medium'"
     [class.psh-large]="size() === 'large'"
@@ -25,7 +25,7 @@
     <div class="psh-modal-content-wrapper">
       <div class="psh-modal-header">
         <h2 class="psh-modal-title" [attr.id]="modalDialogId() + '-title'">
-          <ng-content select="[modal-title]">{{ title() }}</ng-content>
+          <ng-content select="[psh-modal-title]">{{ title() }}</ng-content>
         </h2>
         @if (showClose()) {
         <button
@@ -74,7 +74,7 @@
           Example:
           <psh-button [fullWidth]="isMobileScreen()" (clicked)="action()">Custom Button</psh-button>
         -->
-        <ng-content select="[modal-footer]" #modalFooter></ng-content>
+        <ng-content select="[psh-modal-footer]" #modalFooter></ng-content>
       </div>
       }
     </div>

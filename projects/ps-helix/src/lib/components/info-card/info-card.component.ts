@@ -34,8 +34,15 @@ import { InfoCardData, InfoCardOptions } from './info-card.types';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
   host: {
-    style: 'display: block; height: 100%;'
-  }
+    '[class]': 'computedClasses()',
+    '(click)': 'handleClick($event)',
+    '(keydown)': 'handleKeydown($event)',
+    role: 'region',
+    '[attr.tabindex]': 'interactive() && !disabled() ? 0 : null',
+    '[attr.aria-label]': 'computedAriaLabel()',
+    '[attr.aria-disabled]': 'disabled() ? "true" : null',
+    '[attr.aria-busy]': 'loading() ? "true" : null',
+  },
 })
 export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
 
@@ -64,11 +71,7 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
   /** Custom ARIA label for accessibility */
   ariaLabel = input<string>();
 
-  /** Custom CSS classes */
-  cssClass = input<string>('');
 
-  /** Custom inline styles */
-  customStyle = input<Record<string, string>>({});
 
   /** Whether the card should be interactive/clickable */
   interactive = input<boolean>(false);
@@ -148,15 +151,10 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
     if (this.interactive()) classes.push('psh-interactive');
     if (this.loading()) classes.push('psh-loading');
     if (this.disabled()) classes.push('psh-disabled');
-    if (this.cssClass()) classes.push(this.cssClass());
 
     return classes.join(' ');
   });
 
-  /** Computed styles */
-  computedStyles = computed(() => {
-    return { ...this.customStyle() };
-  });
 
   /** Gets CSS classes for card-actions based on mobile state */
   getActionsClasses = computed(() => {
@@ -188,7 +186,7 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
 
   private checkHeaderActionsContent(): void {
     if (isPlatformBrowser(this.platformId)) {
-      const headerActionsEl = this.elementRef.nativeElement.querySelector('[card-header-actions]');
+      const headerActionsEl = this.elementRef.nativeElement.querySelector('[psh-info-card-header-actions]');
       this.hasHeaderActions.set(!!headerActionsEl);
     }
   }
@@ -252,12 +250,12 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
     const autoMuted = isEmpty && this.options().mutedEmptyValues !== false && !emphasis;
 
     if (autoMuted) {
-      classes.push('psh-info-card-value--italic', 'psh-info-card-value--tone-muted');
+      classes.push('psh-info-card-value--italic', 'psh-info-card-value--color-neutral');
     } else if (emphasis) {
       if (emphasis.italic) classes.push('psh-info-card-value--italic');
       if (emphasis.bold) classes.push('psh-info-card-value--bold');
       if (emphasis.strikethrough) classes.push('psh-info-card-value--strikethrough');
-      if (emphasis.tone) classes.push(`psh-info-card-value--tone-${emphasis.tone}`);
+      if (emphasis.color) classes.push(`psh-info-card-value--color-${emphasis.color}`);
     }
 
     return classes.join(' ');

@@ -40,7 +40,7 @@ export class MyComponent {}
   appearance="elevated"
 >
   <p>Cette carte utilise les propriétés title et description pour un rendu cohérent.</p>
-  <div card-actions>
+  <div psh-card-actions>
     <psh-button color="primary">Démarrer</psh-button>
   </div>
 </psh-card>
@@ -85,8 +85,6 @@ Propriétés en lecture seule
 | `showHeaderDivider` | `boolean` | `true` | Afficher le divider entre header et body |
 | `showFooterDivider` | `boolean` | `true` | Afficher le divider entre body et footer |
 | `showActionsDivider` | `boolean` | `true` | Afficher le divider avant les actions |
-| `cssClass` | `string` | `''` | Classes CSS additionnelles |
-| `customStyle` | `Record<string, string>` | `{}` | Styles inline personnalisés |
 | `loading` | `boolean` | `false` | État de chargement - affiche un skeleton animé |
 | `disabled` | `boolean` | `false` | État désactivé - réduit l'opacité et bloque les interactions |
 
@@ -107,7 +105,6 @@ Propriétés en lecture seule
 | Nom | Type | Description |
 |-----|------|-------------|
 | `computedClasses` | `Signal<string>` | Classes CSS calculees selon les proprietes (variant, color, density, etats) |
-| `computedStyles` | `Signal<Record<string, string>>` | Styles inline fusionnes avec `customStyle` |
 | `hasHeader` | `Signal<boolean>` | `true` si `title` ou `description` est renseigné. N'est plus utilisé pour conditionner l'affichage du header (celui-ci se rend aussi via les slots projetés) ; conservé pour rétrocompatibilité |
 | `actionsAlignmentClass` | `Signal<string>` | Classe d'alignement pour la zone d'actions |
 | `actionsClasses` | `Signal<string>` | Classes CSS pour la zone d'actions incluant `mobile-full-width-buttons` sur mobile |
@@ -134,7 +131,7 @@ Zone dédiée en bas de la carte avec alignement configurable.
 ```html
 <psh-card title="Confirmation" actionsAlignment="space-between">
   <p>Êtes-vous sûr de vouloir continuer ?</p>
-  <div card-actions>
+  <div psh-card-actions>
     <psh-button appearance="outline">Annuler</psh-button>
     <psh-button color="primary">Confirmer</psh-button>
   </div>
@@ -147,7 +144,7 @@ Pour des actions secondaires ou des boutons de gestion.
 
 ```html
 <psh-card title="Mon projet">
-  <div card-header-extra>
+  <div psh-card-header-actions>
     <psh-button size="small" appearance="ghost">
       <i class="ph ph-pencil"></i>
       Éditer
@@ -163,7 +160,7 @@ Combiner plusieurs emplacements pour des interfaces complexes.
 
 ```html
 <psh-card title="Paramètres du compte">
-  <div card-header-extra>
+  <div psh-card-header-actions>
     <psh-button size="small" appearance="ghost">
       <i class="ph ph-gear"></i>
     </psh-button>
@@ -171,11 +168,11 @@ Combiner plusieurs emplacements pour des interfaces complexes.
 
   <p>Gérez vos préférences et paramètres de compte.</p>
 
-  <div card-footer>
+  <div psh-card-footer>
     <span>Dernière modification : il y a 2 heures</span>
   </div>
 
-  <div card-actions>
+  <div psh-card-actions>
     <psh-button appearance="outline">Réinitialiser</psh-button>
     <psh-button color="primary">Enregistrer</psh-button>
   </div>
@@ -188,16 +185,16 @@ Le composant utilise `ng-content` avec des sélecteurs pour organiser le contenu
 
 | Slot | Sélecteur | Description | Position |
 |------|-----------|-------------|----------|
-| **Header Icon** | `[card-header-icon]` | Icône ou avatar avant le titre | Header - gauche |
-| **Header Content** | `[card-header-content]` | Contenu personnalisé du header (remplace title/description) | Header - centre |
-| **Header Extra** | `[card-header-extra]` | Badge, tag ou actions secondaires | Header - droite |
+| **Header Icon** | `[psh-card-header-icon]` | Icône ou avatar avant le titre | Header - gauche |
+| **Header Content** | `[psh-card-header-content]` | Contenu personnalisé du header (remplace title/description) | Header - centre |
+| **Header Extra** | `[psh-card-header-actions]` | Badge, tag ou actions secondaires | Header - droite |
 | **Body** | (défaut) | Contenu principal de la carte | Corps principal |
-| **Footer** | `[card-footer]` | Métadonnées, dates, informations complémentaires | Avant actions |
-| **Actions** | `[card-actions]` | Boutons d'action principaux | Pied de carte |
+| **Footer** | `[psh-card-footer]` | Métadonnées, dates, informations complémentaires | Avant actions |
+| **Actions** | `[psh-card-actions]` | Boutons d'action principaux | Pied de carte |
 
 > **Le header s'affiche dès qu'un slot de header est utilisé.** Il n'est plus nécessaire de
-> renseigner `[title]` ou `[description]` : projeter du contenu dans `[card-header-icon]`,
-> `[card-header-content]` ou `[card-header-extra]` suffit à faire apparaître le header. Si
+> renseigner `[title]` ou `[description]` : projeter du contenu dans `[psh-card-header-icon]`,
+> `[psh-card-header-content]` ou `[psh-card-header-actions]` suffit à faire apparaître le header. Si
 > aucun de ces slots n'est utilisé et que `title`/`description` sont vides, le header n'est
 > pas affiché (ni bordure ni espace résiduel).
 
@@ -211,12 +208,12 @@ Le composant utilise `ng-content` avec des sélecteurs pour organiser le contenu
   [hoverable]="true"
 >
   <!-- Icône dans le header -->
-  <div card-header-icon>
+  <div psh-card-header-icon>
     <i class="ph ph-folder-open" style="font-size: 1.5rem; color: var(--psh-primary-color);"></i>
   </div>
 
   <!-- Badge dans le header -->
-  <div card-header-extra>
+  <div psh-card-header-actions>
     <psh-tag color="success">Actif</psh-tag>
   </div>
 
@@ -229,13 +226,13 @@ Le composant utilise `ng-content` avec des sélecteurs pour organiser le contenu
   </ul>
 
   <!-- Footer avec métadonnées -->
-  <div card-footer>
+  <div psh-card-footer>
     <span>Échéance: 15 Déc 2025</span>
     <span>Équipe: 6 personnes</span>
   </div>
 
   <!-- Actions -->
-  <div card-actions>
+  <div psh-card-actions>
     <psh-button appearance="outline">Voir détails</psh-button>
     <psh-button color="primary">Ouvrir</psh-button>
   </div>
@@ -252,13 +249,13 @@ CSS de votre composant consommateur, **sans `::ng-deep`**.
 ```html
 <psh-card appearance="outline" density="compact">
   <!-- Titre + icône, à gauche -->
-  <div card-header-content class="premium-title">
+  <div psh-card-header-content class="premium-title">
     <i class="ph ph-currency-eur" aria-hidden="true"></i>
     <h3>Versement initial</h3>
   </div>
 
   <!-- Montant / tag, aligné à droite -->
-  <span card-header-extra>
+  <span psh-card-header-actions>
     <psh-tag>{{ montant }}</psh-tag>
   </span>
 
@@ -363,7 +360,7 @@ Pour avertissements et actions requises.
   color="warning"
 >
   <p>Votre abonnement expire dans 7 jours.</p>
-  <div card-actions>
+  <div psh-card-actions>
     <psh-button color="primary">Renouveler</psh-button>
   </div>
 </psh-card>
@@ -381,7 +378,7 @@ Pour erreurs et messages critiques.
   color="danger"
 >
   <p>Impossible de se connecter au serveur.</p>
-  <div card-actions>
+  <div psh-card-actions>
     <psh-button color="primary">Réessayer</psh-button>
   </div>
 </psh-card>
@@ -488,7 +485,7 @@ Désactive la carte avec opacité réduite et interactions bloquées.
   [interactive]="true"
 >
   <p>Cette carte est désactivée.</p>
-  <div card-actions>
+  <div psh-card-actions>
     <psh-button>Action impossible</psh-button>
   </div>
 </psh-card>
@@ -506,11 +503,11 @@ Désactive la carte avec opacité réduite et interactions bloquées.
   color="info"
   actionsAlignment="space-between"
 >
-  <div card-header-icon>
+  <div psh-card-header-icon>
     <i class="ph ph-bell" style="font-size: 1.5rem; color: var(--psh-blue-500);"></i>
   </div>
 
-  <div card-header-extra>
+  <div psh-card-header-actions>
     <psh-tag color="primary">3</psh-tag>
   </div>
 
@@ -520,7 +517,7 @@ Désactive la carte avec opacité réduite et interactions bloquées.
     <li>Invitation à rejoindre une équipe</li>
   </ul>
 
-  <div card-actions>
+  <div psh-card-actions>
     <psh-button appearance="outline">Ignorer tout</psh-button>
     <psh-button color="primary">Voir tout</psh-button>
   </div>
@@ -536,7 +533,7 @@ Désactive la carte avec opacité réduite et interactions bloquées.
   density="compact"
   appearance="elevated"
 >
-  <div card-header-icon>
+  <div psh-card-header-icon>
     <i class="ph ph-users"></i>
   </div>
 
@@ -559,11 +556,11 @@ Désactive la carte avec opacité réduite et interactions bloquées.
     <psh-select label="Catégorie" [options]="categories"></psh-select>
   </form>
 
-  <div card-footer>
+  <div psh-card-footer>
     <span>* Champs obligatoires</span>
   </div>
 
-  <div card-actions>
+  <div psh-card-actions>
     <psh-button appearance="outline">Annuler</psh-button>
     <psh-button color="primary">Créer</psh-button>
   </div>
@@ -582,13 +579,13 @@ Désactive la carte avec opacité réduite et interactions bloquées.
     [hoverable]="true"
     (clicked)="openItem(item)"
   >
-    <div card-header-extra>
+    <div psh-card-header-actions>
       <psh-tag [color]="item.status">{{ item.statusLabel }}</psh-tag>
     </div>
 
     <p>{{ item.excerpt }}</p>
 
-    <div card-footer>
+    <div psh-card-footer>
       <span>Créé le {{ item.createdAt | date }}</span>
       <span>Par {{ item.author }}</span>
     </div>
@@ -605,18 +602,18 @@ Désactive la carte avec opacité réduite et interactions bloquées.
   appearance="outline"
   color="danger"
 >
-  <div card-header-icon>
+  <div psh-card-header-icon>
     <i class="ph ph-warning-circle" style="font-size: 1.5rem; color: var(--psh-danger-color);"></i>
   </div>
 
   <p><strong>Code d'erreur :</strong> CONNECTION_TIMEOUT</p>
   <p>Vérifiez votre connexion internet et réessayez dans quelques instants.</p>
 
-  <div card-footer>
+  <div psh-card-footer>
     <span>Dernière tentative : il y a 30 secondes</span>
   </div>
 
-  <div card-actions>
+  <div psh-card-actions>
     <psh-button appearance="outline">Détails</psh-button>
     <psh-button color="primary">Réessayer</psh-button>
   </div>

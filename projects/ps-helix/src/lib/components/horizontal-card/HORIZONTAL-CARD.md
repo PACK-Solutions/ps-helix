@@ -33,14 +33,14 @@ export class MyComponent {}
 
 ```html
 <psh-horizontal-card appearance="elevated" sideWidth="var(--psh-size-40)">
-  <div horizontal-side>
+  <div psh-horizontal-card-side>
     <img src="product.jpg" alt="Product image">
   </div>
-  <div horizontal-header>
+  <div psh-horizontal-card-header>
     <h4>Nom du Produit</h4>
   </div>
   <p>Description du produit avec les details importants.</p>
-  <div horizontal-actions>
+  <div psh-horizontal-card-actions>
     <psh-button color="primary">Acheter</psh-button>
   </div>
 </psh-horizontal-card>
@@ -55,10 +55,10 @@ export class MyComponent {}
   [hoverable]="true"
   (clicked)="handleCardClick($event)"
 >
-  <div horizontal-side>
+  <div psh-horizontal-card-side>
     <img src="image.jpg" alt="Illustration">
   </div>
-  <div horizontal-header>
+  <div psh-horizontal-card-header>
     <h4>Carte Cliquable</h4>
   </div>
   <p>Cliquez sur cette carte pour interagir</p>
@@ -81,8 +81,6 @@ export class MyComponent {}
 | `sidePadding` | `string` | `'0'` | Padding du contenu lateral |
 | `contentPadding` | `string` | `'var(--psh-spacing-md)'` | Padding du contenu principal |
 | `mobileHeight` | `string` | `'var(--psh-size-48)'` | Hauteur du contenu lateral sur mobile |
-| `cssClass` | `string` | `''` | Classes CSS additionnelles |
-| `customStyle` | `Record<string, string>` | `{}` | Styles inline personnalises |
 
 ### Outputs
 
@@ -117,10 +115,10 @@ Le composant utilise `ng-content` avec des selecteurs pour organiser le contenu.
 
 | Slot | Selecteur | Description | Position |
 |------|-----------|-------------|----------|
-| **Side** | `[horizontal-side]` | Contenu lateral (image, avatar, icone) | Gauche (desktop) / Haut (mobile) |
-| **Header** | `[horizontal-header]` | En-tete avec titre et badges | Haut du contenu principal |
+| **Side** | `[psh-horizontal-card-side]` | Contenu lateral (image, avatar, icone) | Gauche (desktop) / Haut (mobile) |
+| **Header** | `[psh-horizontal-card-header]` | En-tete avec titre et badges | Haut du contenu principal |
 | **Body** | (defaut) | Contenu principal de la carte | Centre du contenu principal |
-| **Actions** | `[horizontal-actions]` | Boutons d'action | Bas du contenu principal |
+| **Actions** | `[psh-horizontal-card-actions]` | Boutons d'action | Bas du contenu principal |
 
 ### Exemple Complet avec Tous les Slots
 
@@ -132,12 +130,12 @@ Le composant utilise `ng-content` avec des selecteurs pour organiser le contenu.
   gap="var(--psh-spacing-lg)"
 >
   <!-- Contenu lateral -->
-  <div horizontal-side>
+  <div psh-horizontal-card-side>
     <img src="product.jpg" alt="Photo du produit">
   </div>
 
   <!-- En-tete -->
-  <div horizontal-header>
+  <div psh-horizontal-card-header>
     <div class="header-row">
       <h4>Produit Premium</h4>
       <psh-tag color="success">En stock</psh-tag>
@@ -152,7 +150,7 @@ Le composant utilise `ng-content` avec des selecteurs pour organiser le contenu.
   </div>
 
   <!-- Actions -->
-  <div horizontal-actions>
+  <div psh-horizontal-card-actions>
     <psh-button color="primary">Acheter</psh-button>
     <psh-button appearance="outline">Details</psh-button>
   </div>
@@ -167,10 +165,10 @@ Style avec ombre portee pour creer de la profondeur. Recommande pour les contenu
 
 ```html
 <psh-horizontal-card appearance="elevated">
-  <div horizontal-side>
+  <div psh-horizontal-card-side>
     <img src="image.jpg" alt="Image">
   </div>
-  <div horizontal-header>
+  <div psh-horizontal-card-header>
     <h4>Carte Elevated</h4>
   </div>
   <p>Ombre douce pour mise en avant</p>
@@ -183,10 +181,10 @@ Style avec bordure pour delimiter clairement la carte. Ideal pour les interfaces
 
 ```html
 <psh-horizontal-card appearance="outline">
-  <div horizontal-side>
+  <div psh-horizontal-card-side>
     <img src="image.jpg" alt="Image">
   </div>
-  <div horizontal-header>
+  <div psh-horizontal-card-header>
     <h4>Carte Outlined</h4>
   </div>
   <p>Bordure subtile pour definition claire</p>
@@ -199,10 +197,10 @@ Style minimaliste sans bordure ni ombre. Utilise pour les contenus integres.
 
 ```html
 <psh-horizontal-card appearance="flat">
-  <div horizontal-side>
+  <div psh-horizontal-card-side>
     <img src="image.jpg" alt="Image">
   </div>
-  <div horizontal-header>
+  <div psh-horizontal-card-header>
     <h4>Carte Default</h4>
   </div>
   <p>Style minimaliste sans effets visuels</p>
@@ -221,10 +219,10 @@ Carte cliquable avec effet de survol et support du clavier.
   [hoverable]="true"
   (clicked)="handleCardClick($event)"
 >
-  <div horizontal-side>
+  <div psh-horizontal-card-side>
     <img src="image.jpg" alt="Image">
   </div>
-  <div horizontal-header>
+  <div psh-horizontal-card-header>
     <h4>Carte Interactive</h4>
   </div>
   <p>Cliquez ou appuyez sur Entree/Espace</p>
@@ -244,10 +242,10 @@ Affiche un skeleton anime pendant le chargement.
 
 ```html
 <psh-horizontal-card [loading]="isLoading">
-  <div horizontal-side>
+  <div psh-horizontal-card-side>
     <img src="image.jpg" alt="Image">
   </div>
-  <div horizontal-header>
+  <div psh-horizontal-card-header>
     <h4>Titre</h4>
   </div>
   <p>Ce contenu ne sera pas visible pendant le chargement</p>
@@ -263,10 +261,10 @@ Desactive la carte avec opacite reduite et interactions bloquees.
   [disabled]="true"
   [interactive]="true"
 >
-  <div horizontal-side>
+  <div psh-horizontal-card-side>
     <img src="image.jpg" alt="Image">
   </div>
-  <div horizontal-header>
+  <div psh-horizontal-card-header>
     <h4>Carte Desactivee</h4>
   </div>
   <p>Cette carte est desactivee</p>
@@ -308,10 +306,10 @@ Le composant bascule automatiquement en layout vertical sur les petits ecrans.
   sideWidth="var(--psh-size-40)"
   (clicked)="viewProduct(product)"
 >
-  <div horizontal-side>
+  <div psh-horizontal-card-side>
     <img [src]="product.image" [alt]="product.name">
   </div>
-  <div horizontal-header>
+  <div psh-horizontal-card-header>
     <div class="product-header">
       <h4>{{ product.name }}</h4>
       <psh-tag [color]="product.inStock ? 'success' : 'warning'">
@@ -324,7 +322,7 @@ Le composant bascule automatiquement en layout vertical sur les petits ecrans.
     <span class="category">{{ product.category }}</span>
     <span class="price">{{ product.price | currency:'EUR' }}</span>
   </div>
-  <div horizontal-actions>
+  <div psh-horizontal-card-actions>
     <psh-button color="primary">Acheter</psh-button>
     <psh-button appearance="outline">Details</psh-button>
   </div>
@@ -342,12 +340,12 @@ Le composant bascule automatiquement en layout vertical sur les petits ecrans.
   gap="var(--psh-spacing-lg)"
   (clicked)="viewProfile(user)"
 >
-  <div horizontal-side>
+  <div psh-horizontal-card-side>
     <div class="avatar-wrapper">
       <psh-avatar [initials]="user.initials" size="xlarge"></psh-avatar>
     </div>
   </div>
-  <div horizontal-header>
+  <div psh-horizontal-card-header>
     <div class="user-header">
       <h4>{{ user.name }}</h4>
       <psh-tag [color]="user.isActive ? 'success' : 'secondary'">
@@ -366,7 +364,7 @@ Le composant bascule automatiquement en layout vertical sur les petits ecrans.
       <span>{{ user.location }}</span>
     </div>
   </div>
-  <div horizontal-actions>
+  <div psh-horizontal-card-actions>
     <psh-button color="primary">Contacter</psh-button>
     <psh-button appearance="ghost">Voir profil</psh-button>
   </div>
@@ -384,10 +382,10 @@ Le composant bascule automatiquement en layout vertical sur les petits ecrans.
   gap="var(--psh-spacing-lg)"
   (clicked)="readArticle(article)"
 >
-  <div horizontal-side>
+  <div psh-horizontal-card-side>
     <img [src]="article.coverImage" [alt]="article.title">
   </div>
-  <div horizontal-header>
+  <div psh-horizontal-card-header>
     <psh-tag color="primary" size="small">{{ article.category }}</psh-tag>
   </div>
   <h4 class="article-title">{{ article.title }}</h4>
@@ -402,7 +400,7 @@ Le composant bascule automatiquement en layout vertical sur les petits ecrans.
       {{ article.readTime }} min de lecture
     </span>
   </div>
-  <div horizontal-actions>
+  <div psh-horizontal-card-actions>
     <psh-button color="primary">Lire l'article</psh-button>
     <psh-button appearance="ghost">Partager</psh-button>
   </div>
@@ -426,10 +424,10 @@ Le composant bascule automatiquement en layout vertical sur les petits ecrans.
       sideWidth="var(--psh-size-40)"
       (clicked)="selectItem(item)"
     >
-      <div horizontal-side>
+      <div psh-horizontal-card-side>
         <img [src]="item.image" [alt]="item.title">
       </div>
-      <div horizontal-header>
+      <div psh-horizontal-card-header>
         <h4>{{ item.title }}</h4>
       </div>
       <p>{{ item.description }}</p>

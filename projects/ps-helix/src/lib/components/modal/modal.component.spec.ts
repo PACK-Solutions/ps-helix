@@ -43,7 +43,7 @@ class TestHostComponent {
   template: `
     <psh-modal [open]="isOpen" [showFooter]="true">
       <p>Content</p>
-      <div modal-footer #modalFooter>
+      <div psh-modal-footer #modalFooter>
         <button>Custom Action</button>
       </div>
     </psh-modal>
@@ -355,7 +355,7 @@ describe('PshModalComponent', () => {
 @Component({
   changeDetection: ChangeDetectionStrategy.Eager,
   template: `
-    <psh-modal [(open)]="isOpen" [styleClass]="styleClass">
+    <psh-modal [(open)]="isOpen" [panelClass]="panelClass">
       <p>Content</p>
     </psh-modal>
   `,
@@ -363,10 +363,10 @@ describe('PshModalComponent', () => {
 })
 class TestHostStyleClassComponent {
   isOpen = true;
-  styleClass = 'custom-modal-class';
+  panelClass = 'custom-modal-class';
 }
 
-describe('PshModalComponent styleClass', () => {
+describe('PshModalComponent panelClass', () => {
   let fixture: ComponentFixture<TestHostStyleClassComponent>;
   let hostComponent: TestHostStyleClassComponent;
 
@@ -384,18 +384,18 @@ describe('PshModalComponent styleClass', () => {
     cleanupDialog();
   });
 
-  it('should apply custom styleClass to modal container', () => {
+  it('should apply custom panelClass to modal container', () => {
     const container = getDocument();
     expect(container.classList.contains('custom-modal-class')).toBe(true);
   });
 
-  it('should keep modal-container base class when styleClass is applied', () => {
+  it('should keep modal-container base class when panelClass is applied', () => {
     const container = getDocument();
     expect(container.classList.contains('psh-modal-container')).toBe(true);
   });
 
-  it('should apply multiple classes when styleClass contains multiple classes', () => {
-    hostComponent.styleClass = 'class-one class-two';
+  it('should apply multiple classes when panelClass contains multiple classes', () => {
+    hostComponent.panelClass = 'class-one class-two';
     fixture.detectChanges();
 
     const container = getDocument();
@@ -403,8 +403,8 @@ describe('PshModalComponent styleClass', () => {
     expect(container.classList.contains('class-two')).toBe(true);
   });
 
-  it('should work with empty styleClass', () => {
-    hostComponent.styleClass = '';
+  it('should work with empty panelClass', () => {
+    hostComponent.panelClass = '';
     fixture.detectChanges();
 
     const container = getDocument();
@@ -784,7 +784,7 @@ describe('PshModalComponent responsive behavior', () => {
   changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <psh-modal [open]="isOpen" [title]="defaultTitle">
-      <h2 modal-title>Custom Projected Title</h2>
+      <h2 psh-modal-title>Custom Projected Title</h2>
       <p>Content</p>
     </psh-modal>
   `,

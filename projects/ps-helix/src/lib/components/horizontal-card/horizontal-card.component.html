@@ -1,39 +1,28 @@
-<div
-  [class]="computedClasses()"
-  [ngStyle]="computedStyles()"
-  (click)="handleClick($event)"
-  (keydown)="handleKeydown($event)"
-  role="article"
-  [attr.tabindex]="interactive() && !disabled() ? 0 : null"
-  [attr.aria-disabled]="disabled() ? 'true' : null"
-  [attr.aria-busy]="loading() ? 'true' : null"
->
-  <!-- Contenu latéral -->
-  <div class="psh-horizontal-side">
-    @if (loading()) {
-      <div class="psh-horizontal-skeleton"></div>
-    } @else {
-      <ng-content select="[horizontal-side]"></ng-content>
-    }
-  </div>
+<!-- Contenu latéral -->
+<div class="psh-horizontal-side">
+  @if (loading()) {
+    <div class="psh-horizontal-skeleton"></div>
+  } @else {
+    <ng-content select="[psh-horizontal-card-side]"></ng-content>
+  }
+</div>
 
-  <!-- Contenu principal -->
-  <div class="psh-horizontal-content">
-    @if (loading()) {
-      <div class="psh-horizontal-loading">
-        <div class="psh-skeleton-line"></div>
-        <div class="psh-skeleton-line"></div>
-        <div class="psh-skeleton-line psh-short"></div>
-      </div>
-    } @else {
-      <!-- Header optionnel -->
-      <ng-content select="[horizontal-header]"></ng-content>
+<!-- Contenu principal -->
+<div class="psh-horizontal-content">
+  @if (loading()) {
+    <div class="psh-horizontal-loading">
+      <div class="psh-skeleton-line"></div>
+      <div class="psh-skeleton-line"></div>
+      <div class="psh-skeleton-line psh-short"></div>
+    </div>
+  } @else {
+    <!-- Header optionnel -->
+    <ng-content select="[psh-horizontal-card-header]"></ng-content>
 
-      <!-- Contenu principal -->
-      <ng-content></ng-content>
+    <!-- Contenu principal -->
+    <ng-content></ng-content>
 
-      <!-- Actions optionnelles -->
-      <ng-content select="[horizontal-actions]"></ng-content>
-    }
-  </div>
+    <!-- Actions optionnelles -->
+    <ng-content select="[psh-horizontal-card-actions]"></ng-content>
+  }
 </div>

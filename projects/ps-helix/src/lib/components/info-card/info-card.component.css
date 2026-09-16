@@ -187,28 +187,32 @@
 }
 
 /* Couleurs sémantiques — mappées sur les tokens existants du thème */
-.psh-info-card-value--tone-primary {
+.psh-info-card-value--color-primary {
   color: var(--psh-primary-color);
 }
 
-.psh-info-card-value--tone-success {
+.psh-info-card-value--color-success {
   color: var(--psh-success-color);
 }
 
-.psh-info-card-value--tone-warning {
+.psh-info-card-value--color-warning {
   color: var(--psh-warning-color);
 }
 
-.psh-info-card-value--tone-danger {
+.psh-info-card-value--color-danger {
   color: var(--psh-danger-color);
 }
 
-.psh-info-card-value--tone-info {
+.psh-info-card-value--color-info {
   color: var(--psh-alert-info-text-color);
 }
 
-/* muted = couleur secondaire + poids normal (intention « valeur atténuée ») */
-.psh-info-card-value.psh-info-card-value--tone-muted {
+.psh-info-card-value--color-secondary {
+  color: var(--psh-secondary-color);
+}
+
+/* neutral = couleur secondaire + poids normal (intention « valeur atténuée ») */
+.psh-info-card-value.psh-info-card-value--color-neutral {
   color: var(--psh-text-color-secondary);
   font-weight: var(--psh-font-weight-normal);
 }
