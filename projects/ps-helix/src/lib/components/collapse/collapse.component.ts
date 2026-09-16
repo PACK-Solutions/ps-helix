@@ -46,7 +46,19 @@ export class PshCollapseComponent {
   });
   icon = input('caret-down');
   id = input<string>();
-  maxHeight = input<string>('1000px');
+  /**
+   * Maximum height of the open content. `'auto'` — the default — does not clip.
+   *
+   * It used to default to a magic `'1000px'`, which **silently truncated** anything taller
+   * with no warning and no way to opt out. A fixed length still works, and is what gives the
+   * open/close a height animation; `auto` animates opacity and offset only.
+   */
+  maxHeight = input<string>('auto');
+
+  /** `auto` is not a usable `max-height` for the CSS; `none` is the same intent. */
+  protected readonly resolvedMaxHeight = computed(() =>
+    this.maxHeight() === 'auto' ? 'none' : this.maxHeight(),
+  );
   disableAnimation = input(false);
 
   opened = output<void>();

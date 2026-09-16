@@ -7,7 +7,7 @@
   [class.psh-large]="size() === 'large'"
   [class.psh-no-animation]="disableAnimation()"
   [attr.data-state]="state()"
-  [style.--psh-collapse-max-height]="maxHeight()"
+  [style.--psh-collapse-max-height]="resolvedMaxHeight()"
 >
   <button
     [id]="headerId()"

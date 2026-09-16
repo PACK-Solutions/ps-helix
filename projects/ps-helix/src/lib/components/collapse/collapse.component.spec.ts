@@ -712,9 +712,19 @@ describe('PshCollapseComponent', () => {
   });
 
   describe('maxHeight input', () => {
-    it('should have default maxHeight of 1000px', () => {
+    it('does not clip the content by default', () => {
+      // Was `should have default maxHeight of 1000px`, which asserted the magic number as the
+      // contract — and that number silently truncated anything taller.
       const style = getCollapseContainer().style.getPropertyValue('--psh-collapse-max-height');
-      expect(style).toBe('1000px');
+      expect(style).toBe('none');
+    });
+
+    it('maps auto to none, which is the same intent in CSS', () => {
+      fixture.componentRef.setInput('maxHeight', 'auto');
+      fixture.detectChanges();
+
+      const style = getCollapseContainer().style.getPropertyValue('--psh-collapse-max-height');
+      expect(style).toBe('none');
     });
 
     it('should apply custom maxHeight as CSS variable', () => {
