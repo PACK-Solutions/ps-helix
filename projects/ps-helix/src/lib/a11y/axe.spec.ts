@@ -5,6 +5,7 @@ import { axe } from 'jest-axe';
 import { PshCheckboxComponent } from '../components/checkbox/checkbox.component';
 import { PshSwitchComponent } from '../components/switch/switch.component';
 import { PshRadioComponent } from '../components/radio/radio.component';
+import { PshRadioGroupComponent } from '../components/radio/radio-group.component';
 import { PshInputComponent } from '../components/input/input.component';
 import { PshBadgeComponent } from '../components/badge/badge.component';
 import { PshButtonComponent } from '../components/button/button.component';
@@ -78,6 +79,22 @@ class SwitchHost {
 })
 class RadioHost {
   label = 'Option one';
+}
+
+@Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
+  template: `
+    <psh-radio-group [label]="label" [required]="true" [error]="error">
+      <psh-radio value="a" label="Option A" />
+      <psh-radio value="b" label="Option B" />
+      <psh-radio value="c" label="Option C" [disabled]="true" />
+    </psh-radio-group>
+  `,
+  imports: [PshRadioGroupComponent, PshRadioComponent],
+})
+class RadioGroupHost {
+  label = 'Pick one';
+  error: string | null = null;
 }
 
 @Component({
@@ -325,6 +342,16 @@ describe('a11y (jest-axe)', () => {
 
   it('radio', async () => {
     await expectNoViolations(TestBed.createComponent(RadioHost));
+  });
+
+  it('radio-group', async () => {
+    await expectNoViolations(TestBed.createComponent(RadioGroupHost));
+  });
+
+  it('radio-group — in error', async () => {
+    const f = TestBed.createComponent(RadioGroupHost);
+    f.componentInstance.error = 'Pick an option';
+    await expectNoViolations(f);
   });
 
   it('input — default', async () => {
