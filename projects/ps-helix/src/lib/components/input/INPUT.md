@@ -31,11 +31,11 @@ loginForm = form(this.model, (p) => {
 
 ```html
 <psh-input [formField]="loginForm.email" type="email" iconStart="envelope">
-  <span input-label>Email</span>
+  <span psh-input-label>Email</span>
 </psh-input>
 
 <psh-input [formField]="loginForm.password" type="password" iconStart="lock">
-  <span input-label>Mot de passe</span>
+  <span psh-input-label>Mot de passe</span>
 </psh-input>
 ```
 
@@ -62,8 +62,8 @@ loginForm = form(this.model, (p) => {
   [(value)]="inputValue"
   placeholder="Entrez votre email"
 >
-  <span input-label>Adresse email</span>
-  <span input-hint>Nous ne partagerons jamais votre email</span>
+  <span psh-input-label>Adresse email</span>
+  <span psh-input-hint>Nous ne partagerons jamais votre email</span>
 </psh-input>
 
 // Input avec icônes
@@ -160,10 +160,10 @@ Le composant supporte plusieurs slots pour personnaliser son contenu avec du HTM
 
 ```html
 <psh-input>
-  <span input-label>Label personnalisé</span>
-  <span input-hint>Texte d'aide</span>
-  <span input-error>Message d'erreur</span>
-  <span input-success>Message de succès</span>
+  <span psh-input-label>Label personnalisé</span>
+  <span psh-input-hint>Texte d'aide</span>
+  <span psh-input-error>Message d'erreur</span>
+  <span psh-input-success>Message de succès</span>
 </psh-input>
 ```
 
@@ -174,7 +174,7 @@ Pour les messages (hint, error, success), vous pouvez utiliser soit la propriét
 | Méthode | Cas d'utilisation |
 |---------|-------------------|
 | Input property (`error="Message"`) | Messages simples en texte brut |
-| Slot (`<span input-error>...</span>`) | Contenu riche avec HTML, icônes, liens |
+| Slot (`<span psh-input-error>...</span>`) | Contenu riche avec HTML, icônes, liens |
 
 **Important** : Si les deux sont fournis, le slot est affiché visuellement. Il est recommandé d'utiliser une seule méthode pour éviter toute confusion.
 
@@ -184,7 +184,7 @@ Pour les messages (hint, error, success), vous pouvez utiliser soit la propriét
 
 <!-- Utilisation avec slot (contenu riche) -->
 <psh-input>
-  <span input-error>
+  <span psh-input-error>
     <i class="ph ph-warning"></i> Ce champ est requis
   </span>
 </psh-input>

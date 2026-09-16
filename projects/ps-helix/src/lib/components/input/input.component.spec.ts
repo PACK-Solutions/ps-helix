@@ -6,7 +6,7 @@ import { InputType, InputVariant, InputSize, INPUT_LABELS } from './input.types'
 
 @Component({
   changeDetection: ChangeDetectionStrategy.Eager,
-  template: `<psh-input><span input-label>Custom Label</span></psh-input>`,
+  template: `<psh-input><span psh-input-label>Custom Label</span></psh-input>`,
   imports: [PshInputComponent]
 })
 class TestHostLabelComponent {}

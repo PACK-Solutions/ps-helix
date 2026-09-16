@@ -295,7 +295,7 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
   }
 
   protected hasLabelContent(): boolean {
-    return !!this.elementRef.nativeElement.querySelector('[input-label]');
+    return !!this.elementRef.nativeElement.querySelector('[psh-input-label]');
   }
 
   focus(): void {

@@ -8,7 +8,7 @@
       (click)="focus()"
       [class.psh-required]="required()"
     >
-      <ng-content select="[textarea-label]"></ng-content>
+      <ng-content select="[psh-textarea-label]"></ng-content>
       @if (!hasLabelContent()) {
         {{ label() }}
       }
@@ -43,19 +43,19 @@
       <div class="psh-textarea-messages">
         @if (error()) {
           <div [id]="textareaId + '-error'" class="psh-textarea-error" role="alert">
-            <ng-content select="[textarea-error]">
+            <ng-content select="[psh-textarea-error]">
               {{ error() }}
             </ng-content>
           </div>
         } @else if (success()) {
           <div [id]="textareaId + '-success'" class="psh-textarea-success" role="status">
-            <ng-content select="[textarea-success]">
+            <ng-content select="[psh-textarea-success]">
               {{ success() }}
             </ng-content>
           </div>
         } @else if (hint()) {
           <div [id]="textareaId + '-hint'" class="psh-textarea-hint">
-            <ng-content select="[textarea-hint]">
+            <ng-content select="[psh-textarea-hint]">
               {{ hint() }}
             </ng-content>
           </div>

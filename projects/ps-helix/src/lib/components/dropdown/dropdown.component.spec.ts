@@ -957,7 +957,7 @@ describe('PshDropdownComponent', () => {
   changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <psh-dropdown label="Menu">
-      <div dropdown-menu>
+      <div psh-dropdown-menu>
         <button class="custom-item">Projected Item</button>
       </div>
     </psh-dropdown>
@@ -1009,7 +1009,7 @@ describe('PshDropdownComponent — teleport & projected content', () => {
     expect(document.querySelector('.psh-overlay-layer')).toBeFalsy();
   });
 
-  it('projects [dropdown-menu] content and re-projects it after re-open', () => {
+  it('projects [psh-dropdown-menu] content and re-projects it after re-open', () => {
     open();
     expect(getProjected()?.textContent).toContain('Projected Item');
 
