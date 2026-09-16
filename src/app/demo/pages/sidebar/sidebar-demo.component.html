@@ -11,7 +11,7 @@
       mode="fixed"
       [position]="fixedPosition"
       width="250px"
-      (toggle)="handleToggle($event, 'fixed')"
+      (toggled)="handleToggle($event, 'fixed')"
     >
       <div class="sidebar-content">
         <div class="sidebar-header">
@@ -27,10 +27,10 @@
       mode="overlay"
       [position]="overlayPosition"
       width="320px"
-      (toggle)="handleToggle($event, 'overlay')"
+      (toggled)="handleToggle($event, 'overlay')"
       (opened)="onSidebarOpened()"
       (closed)="onSidebarClosed()"
-      (transitionStart)="onTransitionStart($event)"
+      (transitionStarted)="onTransitionStart($event)"
       ariaLabel="Filters and options panel"
     >
       <div class="sidebar-content">
@@ -49,7 +49,7 @@
         </div>
         <div class="sidebar-body">
           <psh-input placeholder="Search..." [fullWidth]="true"></psh-input>
-          <psh-select placeholder="Category" [fullWidth]="true"></psh-select>
+          <psh-select placeholder="Category" [options]="categoryOptions" [fullWidth]="true"></psh-select>
           <div class="checkbox-group">
             <psh-checkbox>Show archived items</psh-checkbox>
             <psh-checkbox>Include drafts</psh-checkbox>

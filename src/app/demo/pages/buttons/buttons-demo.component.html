@@ -274,7 +274,7 @@
             <div class="state-group">
               <h4>Clic sur Bouton Désactivé</h4>
               <div class="state-examples">
-                <psh-button appearance="solid" color="primary" [disabled]="true" (disabledClick)="onDisabledAttempt()">Cliquez-moi (désactivé)</psh-button>
+                <psh-button appearance="solid" color="primary" [disabled]="true" (disabledClicked)="onDisabledAttempt()">Cliquez-moi (désactivé)</psh-button>
               </div>
               @if (disabledClickMessage) {
                 <p class="state-description" style="color: var(--psh-warning-color); font-weight: 500;">{{ disabledClickMessage }}</p>

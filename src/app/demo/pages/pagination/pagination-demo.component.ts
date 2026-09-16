@@ -321,37 +321,37 @@ export class PaginationDemoComponent {
 
   defaultVariantCode = `<psh-pagination
   [(currentPage)]="currentPage"
-  [(totalPages)]="totalPages"
+  [totalPages]="totalPages"
   appearance="flat"
 ></psh-pagination>`;
 
   outlineVariantCode = `<psh-pagination
   [(currentPage)]="currentPage"
-  [(totalPages)]="totalPages"
+  [totalPages]="totalPages"
   appearance="outline"
 ></psh-pagination>`;
 
   smallSizeCode = `<psh-pagination
   size="small"
   [(currentPage)]="currentPage"
-  [(totalPages)]="totalPages"
+  [totalPages]="totalPages"
 ></psh-pagination>`;
 
   mediumSizeCode = `<psh-pagination
   size="medium"
   [(currentPage)]="currentPage"
-  [(totalPages)]="totalPages"
+  [totalPages]="totalPages"
 ></psh-pagination>`;
 
   largeSizeCode = `<psh-pagination
   size="large"
   [(currentPage)]="currentPage"
-  [(totalPages)]="totalPages"
+  [totalPages]="totalPages"
 ></psh-pagination>`;
 
   itemsPerPageCode = `<psh-pagination
   [(currentPage)]="currentPage"
-  [(totalPages)]="totalPages"
+  [totalPages]="totalPages"
   [(itemsPerPage)]="itemsPerPage"
   [showItemsPerPage]="true"
   [itemsPerPageOptions]="[10, 25, 50]"
@@ -360,7 +360,7 @@ export class PaginationDemoComponent {
 
   customNavigationCode = `<psh-pagination
   [(currentPage)]="currentPage"
-  [(totalPages)]="totalPages"
+  [totalPages]="totalPages"
   [showFirstLast]="false"
   [maxVisiblePages]="3"
 ></psh-pagination>`;
@@ -368,7 +368,7 @@ export class PaginationDemoComponent {
   keyboardNavigationCode = `<!-- La navigation au clavier est automatique -->
 <psh-pagination
   [(currentPage)]="currentPage"
-  [(totalPages)]="totalPages"
+  [totalPages]="totalPages"
   ariaLabel="Navigation des résultats"
 ></psh-pagination>`;
 
@@ -431,7 +431,7 @@ goToSpecificPage(page: number): void {
 // Template
 <psh-pagination #myPagination
   [(currentPage)]="currentPage"
-  [(totalPages)]="totalPages"
+  [totalPages]="totalPages"
 ></psh-pagination>
 
 <button (click)="goToFirst()">Première</button>
@@ -452,7 +452,7 @@ handleNavigationError(error: { action: string; reason: string }): void {
 // Template
 <psh-pagination
   [(currentPage)]="currentPage"
-  [(totalPages)]="totalPages"
+  [totalPages]="totalPages"
   (navigationError)="handleNavigationError($event)"
 ></psh-pagination>
 
@@ -481,7 +481,7 @@ readonly labels = computed(() => this.translations[this.currentLanguage()]);
 // Template
 <psh-pagination
   [(currentPage)]="currentPage"
-  [(totalPages)]="totalPages"
+  [totalPages]="totalPages"
   [firstLabel]="labels().first"
   [previousLabel]="labels().previous"
   [nextLabel]="labels().next"
@@ -576,6 +576,6 @@ export const appConfig = {
 // Toutes les paginations utiliseront cette config par défaut
 <psh-pagination
   [(currentPage)]="currentPage"
-  [(totalPages)]="totalPages"
+  [totalPages]="totalPages"
 ></psh-pagination>`;
 }

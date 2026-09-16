@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy, signal, viewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { PshStepperComponent, PshStepComponent, PshButtonComponent } from '@lib/components';
+import { PshNavigationError } from '@lib/types/semantic.types';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
 import { CodeSnippetComponent } from '../../shared/code-snippet.component';
 
@@ -284,8 +285,8 @@ handleError(error: string): void {
     return true;
   }
 
-  handleNavigationError(error: string): void {
-    this.navigationErrorMessage.set(error);
+  handleNavigationError(error: PshNavigationError): void {
+    this.navigationErrorMessage.set(error.message);
     setTimeout(() => this.navigationErrorMessage.set(''), 5000);
   }
 

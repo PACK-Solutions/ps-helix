@@ -37,8 +37,8 @@ export class TooltipsDemoComponent {
 
   helpTooltipCode = `<psh-tooltip
   content="Help text"
-  (shown)="onShow()"
-  (hidden)="onHide()"
+  (opened)="onShow()"
+  (closed)="onHide()"
 >
   <psh-button
     appearance="outline"

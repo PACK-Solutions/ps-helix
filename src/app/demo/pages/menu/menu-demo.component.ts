@@ -173,20 +173,20 @@ export class MenuDemoComponent {
   verticalModeCode = `<psh-menu
   [items]="navigationItems"
   mode="vertical"
-  (itemClick)="handleItemClick($event)"
+  (itemClicked)="handleItemClick($event)"
 ></psh-menu>`;
 
   horizontalModeCode = `<psh-menu
   [items]="horizontalItems"
   mode="horizontal"
-  (itemClick)="handleItemClick($event)"
+  (itemClicked)="handleItemClick($event)"
 ></psh-menu>`;
 
   collapsibleCode = `<psh-menu
   [items]="items"
   [collapsible]="true"
   [(collapsed)]="isCollapsed"
-  (itemClick)="handleClick($event)"
+  (itemClicked)="handleClick($event)"
 ></psh-menu>`;
 
   defaultVariantCode = `<psh-menu
@@ -321,7 +321,7 @@ export class MenuDemoComponent {
   expansionControlCode = `<psh-menu
   [items]="menuItems"
   [(expandedItemIds)]="expandedIds"
-  (itemClick)="handleClick($event)"
+  (itemClicked)="handleClick($event)"
 ></psh-menu>
 
 <psh-button (clicked)="menu.expandAll()">Tout ouvrir</psh-button>

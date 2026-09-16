@@ -18,7 +18,7 @@
                 <psh-menu
                   [items]="navigationItems"
                   mode="vertical"
-                  (itemClick)="handleItemClick($event)"
+                  (itemClicked)="handleItemClick($event)"
                 ></psh-menu>
               </div>
             </div>
@@ -35,7 +35,7 @@
                 <psh-menu
                   [items]="horizontalItems"
                   mode="horizontal"
-                  (itemClick)="handleItemClick($event)"
+                  (itemClicked)="handleItemClick($event)"
                 ></psh-menu>
               </div>
             </div>
@@ -63,7 +63,7 @@
                 [items]="collapsibleItems"
                 [collapsible]="true"
                 [(collapsed)]="controlledCollapsed"
-                (itemClick)="handleItemClick($event)"
+                (itemClicked)="handleItemClick($event)"
               ></psh-menu>
             </div>
             <div class="control-buttons">
@@ -122,7 +122,7 @@
                 #expansionControlMenu
                 [items]="expansionControlItems"
                 [(expandedItemIds)]="controlledExpandedIds"
-                (itemClick)="handleItemClick($event)"
+                (itemClicked)="handleItemClick($event)"
               ></psh-menu>
             </div>
             <div class="control-buttons">
@@ -194,7 +194,7 @@
                 <psh-menu
                   [items]="compactItems"
                   variant="default"
-                  (itemClick)="handleItemClick($event)"
+                  (itemClicked)="handleItemClick($event)"
                 ></psh-menu>
               </div>
             </div>
@@ -211,7 +211,7 @@
                 <psh-menu
                   [items]="compactItems"
                   variant="compact"
-                  (itemClick)="handleItemClick($event)"
+                  (itemClicked)="handleItemClick($event)"
                 ></psh-menu>
               </div>
             </div>
@@ -228,7 +228,7 @@
                 <psh-menu
                   [items]="expandedItems"
                   variant="expanded"
-                  (itemClick)="handleItemClick($event)"
+                  (itemClicked)="handleItemClick($event)"
                 ></psh-menu>
               </div>
             </div>
@@ -255,7 +255,7 @@
               <div class="menu-wrapper">
                 <psh-menu
                   [items]="iconItems"
-                  (itemClick)="handleItemClick($event)"
+                  (itemClicked)="handleItemClick($event)"
                 ></psh-menu>
               </div>
             </div>
@@ -271,7 +271,7 @@
               <div class="menu-wrapper">
                 <psh-menu
                   [items]="badgeItems"
-                  (itemClick)="handleItemClick($event)"
+                  (itemClicked)="handleItemClick($event)"
                 ></psh-menu>
               </div>
             </div>
@@ -287,7 +287,7 @@
               <div class="menu-wrapper">
                 <psh-menu
                   [items]="dividerItems"
-                  (itemClick)="handleItemClick($event)"
+                  (itemClicked)="handleItemClick($event)"
                 ></psh-menu>
               </div>
             </div>
@@ -303,7 +303,7 @@
               <div class="menu-wrapper">
                 <psh-menu
                   [items]="submenuItems"
-                  (itemClick)="handleItemClick($event)"
+                  (itemClicked)="handleItemClick($event)"
                 ></psh-menu>
               </div>
             </div>
@@ -329,7 +329,7 @@
             <div class="menu-wrapper">
               <psh-menu
                 [items]="stateItems"
-                (itemClick)="handleItemClick($event)"
+                (itemClicked)="handleItemClick($event)"
               ></psh-menu>
             </div>
           </div>
