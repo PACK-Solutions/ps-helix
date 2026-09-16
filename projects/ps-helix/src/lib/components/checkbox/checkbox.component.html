@@ -11,7 +11,7 @@
       [attr.aria-checked]="ariaChecked()"
       [attr.aria-required]="required() || null"
       [attr.aria-invalid]="error() ? 'true' : null"
-      [attr.aria-describedby]="ariaDescribedBy()"
+      [attr.aria-describedby]="describedBy()"
       (change)="toggle()"
       (blur)="handleBlur()"
       (keydown)="handleKeydown($event)"

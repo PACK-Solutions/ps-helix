@@ -18,6 +18,7 @@ import type { FormCheckboxControl } from '@angular/forms/signals';
 import { CheckboxSize, CheckboxConfig, CheckboxLabelPosition } from './checkbox.types';
 import { pshUniqueId } from '../../utils/unique-id';
 import { pshRequiredError } from '../../utils/required-validator';
+import { pshJoinAriaIds } from '../../utils/aria';
 
 export const CHECKBOX_CONFIG = new InjectionToken<Partial<CheckboxConfig>>('CHECKBOX_CONFIG', {
   factory: () => ({
@@ -88,6 +89,18 @@ export class PshCheckboxComponent
   success = input<string | null | undefined>(this.config.success);
   /** Guidance shown when there is neither an error nor a success message. */
   hint = input<string | null | undefined>(null);
+
+  /**
+   * Extra ids for `aria-describedby`. **Merged** with the control's own — the id of its error,
+   * success or hint message — never replacing them.
+   */
+  readonly ariaDescribedBy = input<string>();
+
+  /**
+   * Ids of the elements that name this control, for the cases a visible `<label>` cannot
+   * cover. Merged with anything the control already points at.
+   */
+  readonly ariaLabelledBy = input<string>();
   ariaLabel = input<string | undefined>(this.config.ariaLabel);
   size = input<CheckboxSize>(this.config.size ?? 'medium');
   labelPosition = input<CheckboxLabelPosition>(this.config.labelPosition ?? 'right');
@@ -99,11 +112,15 @@ export class PshCheckboxComponent
   // aria-describedby references whichever message is actually rendered — in the same order.
   // Pointing at an id the template did not render leaves a dangling reference that no test
   // in this repository would catch.
-  ariaDescribedBy = computed(() => {
-    if (this.error()) return `${this.uniqueId}-error`;
-    if (this.success()) return `${this.uniqueId}-success`;
-    if (this.hint()) return `${this.uniqueId}-hint`;
-    return undefined;
+  describedBy = computed(() => {
+    const own = this.error()
+      ? `${this.uniqueId}-error`
+      : this.success()
+        ? `${this.uniqueId}-success`
+        : this.hint()
+          ? `${this.uniqueId}-hint`
+          : null;
+    return pshJoinAriaIds(own, this.ariaDescribedBy());
   });
 
   state = computed(() => {

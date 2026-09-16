@@ -23,6 +23,7 @@ import { PshPortalService, PshPortalRef } from '../../a11y/portal.service';
 import { PshOverlayPositionService } from '../../a11y/overlay-position.service';
 import { InputType, InputSize, AutocompleteConfig, INPUT_LABELS } from './input.types';
 import { pshIsEmptyValue, pshRequiredError } from '../../utils/required-validator';
+import { pshJoinAriaIds } from '../../utils/aria';
 
 @Component({
   selector: 'psh-input',
@@ -99,6 +100,18 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
   error = input<string | null | undefined>(null);
   success = input<string | null | undefined>(null);
   hint = input<string | null | undefined>(null);
+
+  /**
+   * Extra ids for `aria-describedby`. **Merged** with the control's own — the id of its error,
+   * success or hint message — never replacing them.
+   */
+  readonly ariaDescribedBy = input<string>();
+
+  /**
+   * Ids of the elements that name this control, for the cases a visible `<label>` cannot
+   * cover. Merged with anything the control already points at.
+   */
+  readonly ariaLabelledBy = input<string>();
   
   suggestions = input<string[] | ((query: string) => Promise<string[]>)>([]);
   autocompleteConfig = input<AutocompleteConfig>({
@@ -140,10 +153,14 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
   // same page produced duplicate ids and a screen reader read the first one's message
   // for both. Same shape as textarea's describedBy.
   describedBy = computed(() => {
-    if (this.error()) return `${this.inputId}-error`;
-    if (this.success()) return `${this.inputId}-success`;
-    if (this.hint()) return `${this.inputId}-hint`;
-    return null;
+    const own = this.error()
+      ? `${this.inputId}-error`
+      : this.success()
+        ? `${this.inputId}-success`
+        : this.hint()
+          ? `${this.inputId}-hint`
+          : null;
+    return pshJoinAriaIds(own, this.ariaDescribedBy());
   });
 
   state = computed(() => this.getState());

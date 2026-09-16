@@ -17,6 +17,7 @@ import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
 import { pshIsEmptyValue, pshRequiredError } from '../../utils/required-validator';
+import { pshJoinAriaIds } from '../../utils/aria';
 import {
   TEXTAREA_LABELS,
   TextareaResize,
@@ -86,6 +87,18 @@ export class PshTextareaComponent
   label = input<string>('');
   placeholder = input<string>('');
   hint = input<string | null | undefined>(null);
+
+  /**
+   * Extra ids for `aria-describedby`. **Merged** with the control's own — the id of its error,
+   * success or hint message — never replacing them.
+   */
+  readonly ariaDescribedBy = input<string>();
+
+  /**
+   * Ids of the elements that name this control, for the cases a visible `<label>` cannot
+   * cover. Merged with anything the control already points at.
+   */
+  readonly ariaLabelledBy = input<string>();
   error = input<string | null | undefined>(null);
   success = input<string | null | undefined>(null);
   ariaLabel = input<string | null>(null);
@@ -135,10 +148,14 @@ export class PshTextareaComponent
   );
 
   describedBy = computed(() => {
-    if (this.error()) return `${this.textareaId}-error`;
-    if (this.success()) return `${this.textareaId}-success`;
-    if (this.hint()) return `${this.textareaId}-hint`;
-    return null;
+    const own = this.error()
+      ? `${this.textareaId}-error`
+      : this.success()
+        ? `${this.textareaId}-success`
+        : this.hint()
+          ? `${this.textareaId}-hint`
+          : null;
+    return pshJoinAriaIds(own, this.ariaDescribedBy());
   });
 
   state = computed(() => {

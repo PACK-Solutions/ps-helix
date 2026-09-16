@@ -14,7 +14,7 @@
       [attr.aria-required]="effectiveRequired() || null"
       [attr.aria-invalid]="error() ? 'true' : null"
       [attr.aria-checked]="isChecked()"
-      [attr.aria-describedby]="ariaDescribedBy()"
+      [attr.aria-describedby]="describedBy()"
       (change)="handleChange()"
       (keydown)="handleKeydown($event)"
     />

@@ -24,6 +24,7 @@ import { PshPortalService, PshPortalRef } from '../../a11y/portal.service';
 import { SelectOption, SelectOptionGroup, SelectSize, SearchConfig , SelectOptionContext } from './select.types';
 import { pshUniqueId } from '../../utils/unique-id';
 import { pshIsEmptyValue, pshRequiredError } from '../../utils/required-validator';
+import { pshJoinAriaIds } from '../../utils/aria';
 
 interface FlatOption<T> {
   option: SelectOption<T>;
@@ -118,6 +119,21 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
   error = input<string | null | undefined>(null);
   success = input<string | null | undefined>(null);
   hint = input<string | null | undefined>(null);
+
+  /** Shown when the search matches nothing. Was a literal in the template. */
+  readonly noResultsText = input<string>('Aucun résultat');
+
+  /**
+   * Extra ids for `aria-describedby`. **Merged** with the control's own — the id of its error,
+   * success or hint message — never replacing them.
+   */
+  readonly ariaDescribedBy = input<string>();
+
+  /**
+   * Ids of the elements that name this control, for the cases a visible `<label>` cannot
+   * cover. Merged with anything the control already points at.
+   */
+  readonly ariaLabelledBy = input<string>();
   ariaLabel = input<string | null>(null);
   /** Accessible name of the clear button, which renders as a bare icon. */
   clearLabel = input<string>('Effacer la sélection');
@@ -151,11 +167,18 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
 
   computedAriaLabel = computed(() => this.ariaLabel() || this.label() || this.placeholder());
 
+  // Was the global 'error-message' / 'success-message' / 'hint-message': two selects in
+  // error on one page produced duplicate ids, and a screen reader read the first one's
+  // message for both. Fixed on `input` in 6.2.5 and never propagated until now.
   describedBy = computed(() => {
-    if (this.error()) return 'error-message';
-    if (this.success()) return 'success-message';
-    if (this.hint()) return 'hint-message';
-    return null;
+    const own = this.error()
+      ? `${this.selectId}-error`
+      : this.success()
+        ? `${this.selectId}-success`
+        : this.hint()
+          ? `${this.selectId}-hint`
+          : null;
+    return pshJoinAriaIds(own, this.ariaDescribedBy());
   });
 
   flatFilteredOptions = computed<FlatOption<T>[]>(() => {

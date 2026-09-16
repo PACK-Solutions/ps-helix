@@ -874,21 +874,51 @@ describe('PshSelectComponent', () => {
       fixture.componentRef.setInput('error', 'Error');
       fixture.detectChanges();
 
-      expect(getCombobox().getAttribute('aria-describedby')).toBe('error-message');
+      // Asserts the link, not the literal: the old assertion pinned a *global* id
+      // ('error-message'), which is exactly how two selects on one page came to share one.
+      const id = getCombobox().getAttribute('aria-describedby');
+      expect(id).toBeTruthy();
+      expect(fixture.nativeElement.querySelector(`#${id}`)?.className).toContain('psh-select-error-message');
     });
 
     it('should have aria-describedby pointing to success message when success exists', () => {
       fixture.componentRef.setInput('success', 'Success');
       fixture.detectChanges();
 
-      expect(getCombobox().getAttribute('aria-describedby')).toBe('success-message');
+      // Asserts the link, not the literal: the old assertion pinned a *global* id
+      // ('success-message'), which is exactly how two selects on one page came to share one.
+      const id = getCombobox().getAttribute('aria-describedby');
+      expect(id).toBeTruthy();
+      expect(fixture.nativeElement.querySelector(`#${id}`)?.className).toContain('psh-select-success-message');
     });
 
     it('should have aria-describedby pointing to hint message when hint exists', () => {
       fixture.componentRef.setInput('hint', 'Hint');
       fixture.detectChanges();
 
-      expect(getCombobox().getAttribute('aria-describedby')).toBe('hint-message');
+      // Asserts the link, not the literal: the old assertion pinned a *global* id
+      // ('hint-message'), which is exactly how two selects on one page came to share one.
+      const id = getCombobox().getAttribute('aria-describedby');
+      expect(id).toBeTruthy();
+      expect(fixture.nativeElement.querySelector(`#${id}`)?.className).toContain('psh-select-hint');
+    });
+
+    it('gives two selects in error two different message ids', () => {
+      const a = TestBed.createComponent(PshSelectComponent);
+      a.componentRef.setInput('options', []);
+      a.componentRef.setInput('error', 'First');
+      a.detectChanges();
+
+      const b = TestBed.createComponent(PshSelectComponent);
+      b.componentRef.setInput('options', []);
+      b.componentRef.setInput('error', 'Second');
+      b.detectChanges();
+
+      const idA = a.nativeElement.querySelector('[aria-describedby]')?.getAttribute('aria-describedby');
+      const idB = b.nativeElement.querySelector('[aria-describedby]')?.getAttribute('aria-describedby');
+
+      expect(idA).toBeTruthy();
+      expect(idA).not.toBe(idB);
     });
 
     it('should use ariaLabel as aria-label when provided', () => {

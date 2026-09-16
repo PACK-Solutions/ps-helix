@@ -127,7 +127,7 @@
             </div>
           }
         } @empty {
-          <div class="psh-select-no-results">Aucun résultat</div>
+          <div class="psh-select-no-results">{{ noResultsText() }}</div>
         }
       </div>
     </div>
@@ -135,11 +135,11 @@
   </div>
 
   @if (error()) {
-    <div id="error-message" class="psh-select-error-message" role="alert">{{ error() }}</div>
+    <div [id]="selectId + '-error'" class="psh-select-error-message" role="alert">{{ error() }}</div>
   } @else if (success()) {
-    <div id="success-message" class="psh-select-success-message" role="status">{{ success() }}</div>
+    <div [id]="selectId + '-success'" class="psh-select-success-message" role="status">{{ success() }}</div>
   } @else if (hint()) {
-    <div id="hint-message" class="psh-select-hint">{{ hint() }}</div>
+    <div [id]="selectId + '-hint'" class="psh-select-hint">{{ hint() }}</div>
   }
 </div>
 

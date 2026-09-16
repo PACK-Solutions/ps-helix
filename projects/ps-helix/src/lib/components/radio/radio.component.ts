@@ -16,6 +16,7 @@ import { RadioSize, RadioConfig } from './radio.types';
 import { InjectionToken } from '@angular/core';
 import { PSH_RADIO_GROUP } from './radio-group.token';
 import { pshUniqueId } from '../../utils/unique-id';
+import { pshJoinAriaIds } from '../../utils/aria';
 
 export const RADIO_CONFIG = new InjectionToken<Partial<RadioConfig>>('RADIO_CONFIG', {
   factory: () => ({
@@ -89,6 +90,18 @@ export class PshRadioComponent<T = unknown> implements AfterViewInit {
   success = input<string | null | undefined>(null);
   /** Guidance shown when there is neither an error nor a success message. */
   hint = input<string | null | undefined>(null);
+
+  /**
+   * Extra ids for `aria-describedby`. **Merged** with the control's own — the id of its error,
+   * success or hint message — never replacing them.
+   */
+  readonly ariaDescribedBy = input<string>();
+
+  /**
+   * Ids of the elements that name this control, for the cases a visible `<label>` cannot
+   * cover. Merged with anything the control already points at.
+   */
+  readonly ariaLabelledBy = input<string>();
   name = input('');
   value = input<T | undefined>(undefined);
   ariaLabel = input<string>();
@@ -162,8 +175,11 @@ export class PshRadioComponent<T = unknown> implements AfterViewInit {
 
   // error, success and hint are mutually exclusive in the template (@if/@else if), so
   // aria-describedby references whichever message is actually rendered — in the same order.
-  ariaDescribedBy = computed(
-    () => this.errorMessageId() ?? this.successMessageId() ?? this.hintMessageId(),
+  describedBy = computed(() =>
+    pshJoinAriaIds(
+      this.errorMessageId() ?? this.successMessageId() ?? this.hintMessageId(),
+      this.ariaDescribedBy(),
+    ),
   );
 
   ngAfterViewInit(): void {
