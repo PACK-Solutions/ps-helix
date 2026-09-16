@@ -19,6 +19,7 @@
       [attr.aria-checked]="checked()"
       [attr.aria-describedby]="describedBy()"
       (change)="toggle()"
+      (blur)="handleBlur()"
     />
     <span class="psh-switch-control">
       <span class="psh-switch-thumb"></span>

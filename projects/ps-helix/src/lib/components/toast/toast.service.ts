@@ -1,6 +1,7 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { TOAST_CONFIG } from './toast.tokens';
 import { Toast, ToastPosition } from './toast.types';
+import { pshUniqueId } from '../../utils/unique-id';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,9 @@ export class PshToastService {
   readonly position = this._position.asReadonly();
 
   show(toast: Omit<Toast, 'id'>) {
-    const id = crypto.randomUUID();
+    // Not `crypto.randomUUID()`: it is undefined in a non-secure context, so raising a
+    // toast over plain http threw instead of showing anything.
+    const id = pshUniqueId('toast');
     const newToast: Toast = {
       ...toast,
       id,

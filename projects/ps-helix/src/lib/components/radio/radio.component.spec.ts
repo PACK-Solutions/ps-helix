@@ -475,61 +475,6 @@ describe('PshRadioComponent', () => {
     });
   });
 
-  describe('Arrow key navigation', () => {
-    it('should call focusNextRadio on ArrowDown key', () => {
-      const input = getRadioInput();
-      const focusNextSpy = jest.spyOn(fixture.componentInstance as any, 'focusNextRadio');
-
-      input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
-      fixture.detectChanges();
-
-      expect(focusNextSpy).toHaveBeenCalled();
-    });
-
-    it('should call focusNextRadio on ArrowRight key', () => {
-      const input = getRadioInput();
-      const focusNextSpy = jest.spyOn(fixture.componentInstance as any, 'focusNextRadio');
-
-      input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
-      fixture.detectChanges();
-
-      expect(focusNextSpy).toHaveBeenCalled();
-    });
-
-    it('should call focusPreviousRadio on ArrowUp key', () => {
-      const input = getRadioInput();
-      const focusPrevSpy = jest.spyOn(fixture.componentInstance as any, 'focusPreviousRadio');
-
-      input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }));
-      fixture.detectChanges();
-
-      expect(focusPrevSpy).toHaveBeenCalled();
-    });
-
-    it('should call focusPreviousRadio on ArrowLeft key', () => {
-      const input = getRadioInput();
-      const focusPrevSpy = jest.spyOn(fixture.componentInstance as any, 'focusPreviousRadio');
-
-      input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true }));
-      fixture.detectChanges();
-
-      expect(focusPrevSpy).toHaveBeenCalled();
-    });
-
-    it('should not navigate when disabled', () => {
-      fixture.componentRef.setInput('disabled', true);
-      fixture.detectChanges();
-
-      const input = getRadioInput();
-      const focusNextSpy = jest.spyOn(fixture.componentInstance as any, 'focusNextRadio');
-
-      input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
-      fixture.detectChanges();
-
-      expect(focusNextSpy).not.toHaveBeenCalled();
-    });
-  });
-
   describe('updateProjectedContent method', () => {
     it('should set hasProjectedContent to true when called with true', () => {
       fixture.componentInstance.updateProjectedContent(true);

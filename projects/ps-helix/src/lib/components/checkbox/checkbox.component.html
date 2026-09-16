@@ -13,6 +13,7 @@
       [attr.aria-invalid]="error() ? 'true' : null"
       [attr.aria-describedby]="ariaDescribedBy()"
       (change)="toggle()"
+      (blur)="handleBlur()"
       (keydown)="handleKeydown($event)"
     />
     

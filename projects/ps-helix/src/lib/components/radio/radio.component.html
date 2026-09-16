@@ -1,22 +1,24 @@
 <div class="psh-radio-container">
   <label class="psh-radio-label" [class.psh-label-left]="labelPosition() === 'left'">
     <input
+      #radioInput
       type="radio"
       class="psh-radio-input"
-      [checked]="checked()"
-      [disabled]="disabled()"
-      [required]="required()"
-      [name]="name()"
+      [checked]="isChecked()"
+      [disabled]="isDisabled()"
+      [required]="effectiveRequired()"
+      [name]="effectiveName()"
+      [tabIndex]="tabIndex()"
       [attr.value]="value()"
       [attr.aria-label]="computedAriaLabel()"
-      [attr.aria-required]="required() || null"
+      [attr.aria-required]="effectiveRequired() || null"
       [attr.aria-invalid]="error() ? 'true' : null"
-      [attr.aria-checked]="checked()"
+      [attr.aria-checked]="isChecked()"
       [attr.aria-describedby]="ariaDescribedBy()"
       (change)="handleChange()"
       (keydown)="handleKeydown($event)"
     />
-    <span 
+    <span
       class="psh-radio-control"
       [class.psh-error]="!!error()"
       [class.psh-success]="!!success()"

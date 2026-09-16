@@ -796,7 +796,7 @@ describe('PshPaginationComponent', () => {
 
       const id = getNavigation().getAttribute('id');
       expect(id).toBeTruthy();
-      expect(id).toMatch(/^pagination-\d+$/);
+      expect(id).toMatch(/^psh-pagination-\d+$/);
     });
   });
 

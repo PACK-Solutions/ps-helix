@@ -14,8 +14,9 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
+import { pshIsEmptyValue, pshRequiredError } from '../../utils/required-validator';
 import {
   TEXTAREA_LABELS,
   TextareaResize,
@@ -28,6 +29,7 @@ import {
   templateUrl: './textarea.component.html',
   styleUrls: ['./textarea.component.css'],
   providers: [
+    { provide: NG_VALIDATORS, useExisting: PshTextareaComponent, multi: true },
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: PshTextareaComponent,
@@ -51,7 +53,7 @@ import {
   },
 })
 export class PshTextareaComponent
-  implements ControlValueAccessor, FormValueControl<string>
+  implements ControlValueAccessor, FormValueControl<string>, Validator
 {
   private readonly elementRef = inject(ElementRef<HTMLElement>);
   private readonly cdr = inject(ChangeDetectorRef);
@@ -63,6 +65,13 @@ export class PshTextareaComponent
   readonly disabled = model<boolean>(false);
   readonly readonly = input<boolean>(false);
   readonly touched = model<boolean>(false);
+/**
+   * Emitted when the user finishes interacting with the control.
+   *
+   * Part of `FormUiControl`: the `Field` directive listens to **this**, not to
+   * `touchedChange`, to mark the bound field as touched.
+   */
+  readonly touch = output<void>();
 
   appearance = input<PshFieldAppearance>('outline');
   size = input<TextareaSize>('medium');
@@ -144,6 +153,13 @@ export class PshTextareaComponent
   characterCountLabel = TEXTAREA_LABELS.characterCountSuffix;
 
   constructor() {
+    // A value change revalidates by itself; a change to `required` does not — Angular has
+    // no reason to suspect the validator's answer moved. This is what the callback is for.
+    effect(() => {
+      this.required();
+      this.onValidatorChange();
+    });
+
     effect(() => {
       this.value();
       this.autoSize();
@@ -156,6 +172,7 @@ export class PshTextareaComponent
 
   private onChange: (value: string) => void = () => {};
   private onTouched: () => void = () => {};
+  private onValidatorChange: () => void = () => {};
 
   writeValue(value: unknown): void {
     const safeValue = typeof value === 'string' ? value : '';
@@ -195,6 +212,7 @@ export class PshTextareaComponent
     this.focusedSignal.set(false);
     this.touched.set(true);
     this.onTouched();
+    this.touch.emit();
     this.blurred.emit();
   }
 
@@ -212,4 +230,19 @@ export class PshTextareaComponent
   protected hasLabelContent(): boolean {
     return !!this.elementRef.nativeElement.querySelector('[psh-textarea-label]');
   }
+
+  /**
+   * Makes `required` a real constraint rather than an asterisk.
+   *
+   * Re-run whenever `required` or the value changes: `registerOnValidatorChange` gives us
+   * the callback that tells Angular to revalidate, and an effect fires it.
+   */
+  validate(): ValidationErrors | null {
+    return pshRequiredError(this.required(), pshIsEmptyValue(this.value()));
+  }
+
+  registerOnValidatorChange(fn: () => void): void {
+    this.onValidatorChange = fn;
+  }
+
 }

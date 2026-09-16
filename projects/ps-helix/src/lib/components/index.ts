@@ -16,6 +16,8 @@ export * from './modal/modal.component';
 export * from './pagination/pagination.component';
 export * from './progressbar/progressbar.component';
 export * from './radio/radio.component';
+export * from './radio/radio-group.component';
+export * from './radio/radio-group.token';
 export * from './select/select.component';
 export * from './sidebar/sidebar.component';
 export * from './spinloader/spinloader.component';

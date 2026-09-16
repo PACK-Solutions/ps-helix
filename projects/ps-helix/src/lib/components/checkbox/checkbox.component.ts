@@ -9,11 +9,15 @@ import {
   input,
   isDevMode,
   model,
-  viewChild
+  output,
+  viewChild,
+  effect
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 import type { FormCheckboxControl } from '@angular/forms/signals';
 import { CheckboxSize, CheckboxConfig, CheckboxLabelPosition } from './checkbox.types';
+import { pshUniqueId } from '../../utils/unique-id';
+import { pshRequiredError } from '../../utils/required-validator';
 
 export const CHECKBOX_CONFIG = new InjectionToken<Partial<CheckboxConfig>>('CHECKBOX_CONFIG', {
   factory: () => ({
@@ -27,8 +31,6 @@ export const CHECKBOX_CONFIG = new InjectionToken<Partial<CheckboxConfig>>('CHEC
   })
 });
 
-let checkboxIdCounter = 0;
-
 @Component({
   selector: 'psh-checkbox',
   standalone: true,
@@ -36,7 +38,8 @@ let checkboxIdCounter = 0;
   templateUrl: './checkbox.component.html',
   styleUrls: ['./checkbox.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [{
+  providers: [
+    { provide: NG_VALIDATORS, useExisting: PshCheckboxComponent, multi: true },{
     provide: NG_VALUE_ACCESSOR,
     useExisting: PshCheckboxComponent,
     multi: true
@@ -54,22 +57,30 @@ let checkboxIdCounter = 0;
   }
 })
 export class PshCheckboxComponent
-  implements ControlValueAccessor, FormCheckboxControl, AfterViewInit
+  implements ControlValueAccessor, FormCheckboxControl, AfterViewInit, Validator
 {
   private readonly config = inject(CHECKBOX_CONFIG);
   private readonly checkboxInput = viewChild<ElementRef<HTMLInputElement>>('checkboxInput');
   /** Holds the `label` input or the projected content — whichever provides the visible label. */
   private readonly labelSlot = viewChild<ElementRef<HTMLElement>>('labelSlot');
 
-  protected readonly uniqueId = `psh-cb-${++checkboxIdCounter}`;
+  protected readonly uniqueId = pshUniqueId('checkbox');
 
   private onChange = (_: boolean) => {};
   private onTouched = () => {};
+  private onValidatorChange: () => void = () => {};
 
   readonly checked = model(this.config.checked ?? false);
   readonly disabled = model(this.config.disabled ?? false);
   readonly indeterminate = model(this.config.indeterminate ?? false);
   readonly touched = model(false);
+/**
+   * Emitted when the user finishes interacting with the control.
+   *
+   * Part of `FormUiControl`: the `Field` directive listens to **this**, not to
+   * `touchedChange`, to mark the bound field as touched.
+   */
+  readonly touch = output<void>();
 
   required = input(this.config.required ?? false);
   label = input(this.config.label ?? '');
@@ -123,9 +134,22 @@ export class PshCheckboxComponent
       this.checked.set(newValue);
       this.indeterminate.set(false);
       this.onChange(newValue);
-      this.onTouched();
-      this.touched.set(true);
+      this.markTouched();
     }
+  }
+
+  /**
+   * Blur, not toggle. Tabbing through a required checkbox without ticking it still means the
+   * user has been there, which is what a field needs to know before showing "required".
+   */
+  protected handleBlur(): void {
+    this.markTouched();
+  }
+
+  private markTouched(): void {
+    this.onTouched();
+    this.touched.set(true);
+    this.touch.emit();
   }
 
   protected handleKeydown(event: KeyboardEvent): void {
@@ -136,6 +160,15 @@ export class PshCheckboxComponent
     }
   }
 
+  constructor() {
+    // A value change revalidates by itself; a change to `required` does not — Angular has
+    // no reason to suspect the validator's answer moved. This is what the callback is for.
+    effect(() => {
+      this.required();
+      this.onValidatorChange();
+    });
+  }
+
   writeValue(value: unknown): void { this.checked.set(!!value); }
   registerOnChange(fn: (v: boolean) => void): void { this.onChange = fn; }
   registerOnTouched(fn: () => void): void { this.onTouched = fn; }
@@ -143,4 +176,19 @@ export class PshCheckboxComponent
 
   focus(): void { this.checkboxInput()?.nativeElement.focus(); }
   blur(): void { this.checkboxInput()?.nativeElement.blur(); }
+
+  /**
+   * Makes `required` a real constraint rather than an asterisk.
+   *
+   * Re-run whenever `required` or the value changes: `registerOnValidatorChange` gives us
+   * the callback that tells Angular to revalidate, and an effect fires it.
+   */
+  validate(): ValidationErrors | null {
+    return pshRequiredError(this.required(), !this.checked());
+  }
+
+  registerOnValidatorChange(fn: () => void): void {
+    this.onValidatorChange = fn;
+  }
+
 }

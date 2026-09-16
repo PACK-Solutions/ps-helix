@@ -458,7 +458,7 @@ used before 7.0.0 remain available through the opt-in `styles/compat.css`.
 
 ## Component CSS API
 
-82 properties across 12 components. Set any of them on the
+87 properties across 13 components. Set any of them on the
 component element to restyle it without reaching inside:
 
 ```css
@@ -570,6 +570,16 @@ stylesheet and quietly beat the override; a fallback has no specificity to fight
 | `--psh-progressbar-height-md` | `var(--psh-size-2` |
 | `--psh-progressbar-height-sm` | `var(--psh-size-1` |
 | `--psh-progressbar-stripe-opacity` | `0.15` |
+
+### `psh-radio-group`
+
+| Property | Default |
+|---|---|
+| `--psh-radio-group-disabled-opacity` | `0.6` |
+| `--psh-radio-group-gap` | `var(--psh-spacing-sm` |
+| `--psh-radio-group-gap-horizontal` | `var(--psh-spacing-lg` |
+| `--psh-radio-group-label-gap` | `var(--psh-spacing-xs` |
+| `--psh-radio-group-message-gap` | `var(--psh-spacing-xs` |
 
 ### `psh-spinloader`
 
