@@ -41,8 +41,16 @@ function walk(dir, out = []) {
   for (const entry of readdirSync(dir)) {
     const p = join(dir, entry);
     if (statSync(p).isDirectory()) walk(p, out);
-    // compat.css is generated aliases, not tokens in its own right.
-    else if (extname(entry) === '.css' && basename(entry) !== 'compat.css') out.push(p);
+    // Both are generated restatements of tokens declared elsewhere, not sources: compat.css
+    // aliases the pre-7.0.0 names, and dark-auto.css is dark.css again behind
+    // prefers-color-scheme. Counting either would double the reference and break the
+    // light/dark parity check against a file that is, by construction, only dark.
+    else if (
+      extname(entry) === '.css' &&
+      !['compat.css', 'dark-auto.css'].includes(basename(entry))
+    ) {
+      out.push(p);
+    }
   }
   return out;
 }
