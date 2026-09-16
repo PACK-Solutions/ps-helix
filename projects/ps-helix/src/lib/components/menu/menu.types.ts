@@ -33,3 +33,17 @@ export interface MenuItem<T = string> {
   /** Valeur associée */
   value?: T;
 }
+
+/**
+ * Contexte du template d'item de menu.
+ */
+export interface MenuItemContext<T = unknown> {
+  /** L'item rendu. */
+  $implicit: MenuItem<T>;
+  /** Index dans sa liste. */
+  index: number;
+  /** Le label est visible : faux quand le menu est replié en mode icônes. */
+  withLabel: boolean;
+  /** Sous-menu déplié. */
+  expanded: boolean;
+}

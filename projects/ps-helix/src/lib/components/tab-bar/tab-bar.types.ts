@@ -37,3 +37,17 @@ export interface TabBarChangeEvent {
   /** Index précédent */
   previousIndex: number;
 }
+
+/**
+ * Contexte du template d'item de tab-bar.
+ */
+export interface TabBarItemContext {
+  /** L'item rendu. */
+  $implicit: TabBarItem;
+  /** Index dans la barre. */
+  index: number;
+  /** Onglet actif. */
+  active: boolean;
+  /** Désactivé, par lui-même ou par la barre entière. */
+  disabled: boolean;
+}

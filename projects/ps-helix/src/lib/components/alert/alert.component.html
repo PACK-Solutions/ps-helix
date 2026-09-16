@@ -16,7 +16,15 @@
       <ng-content>{{ content() }}</ng-content>
     </div>
   </div>
-  
+
+  <!--
+    Actions. The alert had one slot, in the message area, so the standard pattern — a
+    "Retry" button aligned to the right of the text — had nowhere to go.
+  -->
+  <div class="psh-alert-actions">
+    <ng-content select="[psh-alert-actions]"></ng-content>
+  </div>
+
   @if (closable()) {
     <button
       type="button"

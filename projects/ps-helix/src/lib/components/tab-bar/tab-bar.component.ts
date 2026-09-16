@@ -7,9 +7,11 @@ import {
   model,
   output,
   viewChildren,
-  InjectionToken
+  InjectionToken,
+  TemplateRef,
 } from '@angular/core';
-import { TabBarItem, TabBarConfig, TabBarChangeEvent } from './tab-bar.types';
+import { NgTemplateOutlet } from '@angular/common';
+import { TabBarItem, TabBarConfig, TabBarChangeEvent, TabBarItemContext } from './tab-bar.types';
 
 /**
  * Token d'injection pour la configuration globale de la barre d'onglets
@@ -25,6 +27,7 @@ export const TAB_BAR_CONFIG = new InjectionToken<Partial<TabBarConfig>>('TAB_BAR
 
 @Component({
   selector: 'psh-tab-bar',
+  imports: [NgTemplateOutlet],
   templateUrl: './tab-bar.component.html',
   styleUrls: ['./tab-bar.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -47,6 +50,24 @@ export class PshTabBarComponent {
 
   // Regular inputs
   items = input.required<TabBarItem[]>();
+
+  /**
+   * Replaces the content of every tab.
+   *
+   * `TabBarItem` described a tab completely — icon, label, badge — and the component had no
+   * `ng-content`, so anything else meant `::ng-deep`. The button keeps `role="tab"`,
+   * `aria-selected`, the roving tabindex and the arrow-key handling.
+   */
+  readonly itemTemplate = input<TemplateRef<TabBarItemContext>>();
+
+  protected itemContext(item: TabBarItem, index: number): TabBarItemContext {
+    return {
+      $implicit: item,
+      index,
+      active: this.activeIndex() === index,
+      disabled: this.disabled() || !!item.disabled,
+    };
+  }
 
   // Outputs
   tabChange = output<TabBarChangeEvent>();

@@ -53,6 +53,34 @@ export interface TableExpandedRowContext {
 }
 
 /**
+ * Contexte du template d'en-tête de colonne.
+ *
+ * L'en-tête était figé avant la 7.0.0 : `{{ column.label }}` plus l'icône de tri, sans point
+ * d'extension — la cellule de corps était templatable, l'en-tête non. Un filtre par colonne
+ * ou un libellé à deux niveaux imposait `::ng-deep`.
+ */
+export interface TableHeaderContext {
+  /** La colonne rendue. */
+  $implicit: TableColumn;
+  /** Tri courant sur cette colonne, ou `null`. */
+  sort: 'asc' | 'desc' | null;
+  /** Déclenche le tri sur cette colonne. Le composant garde l'accessibilité clavier. */
+  toggleSort: () => void;
+}
+
+/**
+ * Contexte du template d'état vide.
+ *
+ * `emptyMessage` et `noResultsMessage` étaient des `string` : ni illustration, ni action.
+ */
+export interface TableEmptyContext {
+  /** Le message qui aurait été affiché, déjà résolu entre « vide » et « aucun résultat ». */
+  $implicit: string;
+  /** Terme de recherche courant, s'il y en a un — l'état est « aucun résultat », pas « vide ». */
+  searchTerm: string;
+}
+
+/**
  * Interface for row click event
  */
 export interface TableRowClickEvent {

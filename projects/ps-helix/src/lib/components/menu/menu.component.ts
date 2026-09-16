@@ -1,11 +1,22 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, computed, inject, input, model, output } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MenuItem, MenuMode, MenuVariant } from './menu.types';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  ElementRef,
+  computed,
+  inject,
+  input,
+  model,
+  output,
+  TemplateRef,
+} from '@angular/core';
+import { CommonModule, NgTemplateOutlet } from '@angular/common';
+import { MenuItem, MenuMode, MenuVariant, MenuItemContext } from './menu.types';
 import { PshTooltipComponent } from '../tooltip/tooltip.component';
 
 @Component({
   selector: 'psh-menu',
-  imports: [CommonModule, PshTooltipComponent],
+  imports: [NgTemplateOutlet, CommonModule, PshTooltipComponent],
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,6 +36,18 @@ export class PshMenuComponent<T = string> {
   });
 
   items = input.required<MenuItem<T>[]>();
+
+  /**
+   * Replaces the content of every menu item.
+   *
+   * `MenuItem` described an item completely — icon, content, badge — and the component had no
+   * `ng-content`, so anything else meant `::ng-deep`.
+   */
+  readonly itemTemplate = input<TemplateRef<MenuItemContext<T>>>();
+
+  protected itemContext(item: MenuItem<T>, index: number, withLabel: boolean): MenuItemContext<T> {
+    return { $implicit: item, index, withLabel, expanded: this.isExpanded(item) };
+  }
 
   collapsed = model(false);
   expandedItemIds = model<string[]>([]);
