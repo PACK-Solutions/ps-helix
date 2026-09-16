@@ -11,7 +11,7 @@
       [class.psh-first]="i === 0"
       [class.psh-last]="i === steps().length - 1"
       role="tab"
-      [attr.tabindex]="step.disabled ? -1 : 0"
+      [attr.tabindex]="i === activeStep() ? 0 : -1"
       [attr.id]="idPrefix + '-tab-' + i"
       [attr.aria-controls]="idPrefix + '-panel-' + i"
       [attr.aria-selected]="i === activeStep()"

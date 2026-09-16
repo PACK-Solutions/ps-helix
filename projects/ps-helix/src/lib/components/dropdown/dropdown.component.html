@@ -66,7 +66,7 @@
             role="menuitem"
             [attr.aria-disabled]="item.disabled"
             [disabled]="item.disabled"
-            [attr.tabindex]="item.disabled ? -1 : 0"
+            [attr.tabindex]="i === focusedItemIndex() ? 0 : -1"
           >
             @if (item.icon) {
               <i class="ph ph-{{ item.icon }}" aria-hidden="true"></i>
