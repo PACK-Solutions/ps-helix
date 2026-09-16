@@ -49,7 +49,7 @@ export class ModalsDemoComponent {
 
   customFooterCode = `<psh-modal #modal [(open)]="isOpen">
   Contenu
-  <div modal-footer #modalFooter>
+  <div psh-modal-footer #modalFooter>
     <psh-button [fullWidth]="modal.isMobileScreen()">Annuler</psh-button>
     <psh-button [fullWidth]="modal.isMobileScreen()">Confirmer</psh-button>
   </div>
@@ -64,7 +64,7 @@ export class ModalsDemoComponent {
 </psh-modal>`;
 
   customTitleCode = `<psh-modal [(open)]="isOpen">
-  <span modal-title>
+  <span psh-modal-title>
     <i class="ph ph-warning"></i>
     Titre avec icone
   </span>

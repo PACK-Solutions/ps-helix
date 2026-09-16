@@ -49,24 +49,24 @@ loginForm = form(this.model, (p) => {
 
 // Template :
 <psh-input [formField]="loginForm.email" type="email">
-  <span input-label>Email</span>
+  <span psh-input-label>Email</span>
 </psh-input>
 <psh-input [formField]="loginForm.password" type="password">
-  <span input-label>Mot de passe</span>
+  <span psh-input-label>Mot de passe</span>
 </psh-input>`;
 
   outlinedVariantCode = `<psh-input
   appearance="outline"
   placeholder="Entrez votre texte"
 >
-  <span input-label>Label</span>
+  <span psh-input-label>Label</span>
 </psh-input>`;
 
   filledVariantCode = `<psh-input
   appearance="solid"
   placeholder="Entrez votre texte"
 >
-  <span input-label>Label</span>
+  <span psh-input-label>Label</span>
 </psh-input>`;
 
   statesCode = `<psh-input
@@ -75,7 +75,7 @@ loginForm = form(this.model, (p) => {
   [error]="errorMessage"
   [success]="successMessage"
 >
-  <span input-label>Email</span>
+  <span psh-input-label>Email</span>
 </psh-input>`;
 
   autocompleteCode = `// Suggestions statiques

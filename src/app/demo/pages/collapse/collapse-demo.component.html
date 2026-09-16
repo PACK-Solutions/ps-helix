@@ -15,7 +15,7 @@
           <div class="variant-card">
             <div class="variant-preview">
               <psh-collapse appearance="flat">
-                <div collapse-header>
+                <div psh-collapse-header>
                   {{ 'COLLAPSE.VARIANTS.DEFAULT' | translate }}
                 </div>
                 {{ 'COLLAPSE.BASIC.CONTENT' | translate }}
@@ -31,7 +31,7 @@
           <div class="variant-card">
             <div class="variant-preview">
               <psh-collapse appearance="outline">
-                <div collapse-header>
+                <div psh-collapse-header>
                   {{ 'COLLAPSE.VARIANTS.OUTLINE' | translate }}
                 </div>
                 {{ 'COLLAPSE.BASIC.CONTENT' | translate }}
@@ -58,7 +58,7 @@
           <div class="size-card">
             <div class="size-preview">
               <psh-collapse size="small">
-                <div collapse-header>
+                <div psh-collapse-header>
                   {{ 'COLLAPSE.SIZES.SMALL' | translate }}
                 </div>
                 {{ 'COLLAPSE.BASIC.CONTENT' | translate }}
@@ -77,7 +77,7 @@
           <div class="size-card">
             <div class="size-preview">
               <psh-collapse size="medium">
-                <div collapse-header>
+                <div psh-collapse-header>
                   {{ 'COLLAPSE.SIZES.MEDIUM' | translate }}
                 </div>
                 {{ 'COLLAPSE.BASIC.CONTENT' | translate }}
@@ -96,7 +96,7 @@
           <div class="size-card">
             <div class="size-preview">
               <psh-collapse size="large">
-                <div collapse-header>
+                <div psh-collapse-header>
                   {{ 'COLLAPSE.SIZES.LARGE' | translate }}
                 </div>
                 {{ 'COLLAPSE.BASIC.CONTENT' | translate }}
@@ -126,7 +126,7 @@
           <div class="custom-card">
             <div class="custom-preview">
               <psh-collapse>
-                <div collapse-header>
+                <div psh-collapse-header>
                   <i class="ph ph-info"></i>
                   {{ 'COLLAPSE.CUSTOM.TITLE' | translate }}
                 </div>
@@ -154,7 +154,7 @@
           <div class="advanced-card">
             <div class="advanced-preview">
               <psh-collapse [(expanded)]="controlledExpanded">
-                <div collapse-header>
+                <div psh-collapse-header>
                   Collapse contrôlé ({{ controlledExpanded() ? 'Ouvert' : 'Fermé' }})
                 </div>
                 Contenu contrôlé programmatiquement depuis le composant parent.
@@ -182,7 +182,7 @@
           <div class="advanced-card">
             <div class="advanced-preview">
               <psh-collapse [disableAnimation]="true">
-                <div collapse-header>
+                <div psh-collapse-header>
                   Collapse sans animation
                 </div>
                 Ce collapse s'ouvre et se ferme instantanément sans transition.
@@ -198,7 +198,7 @@
           <div class="advanced-card">
             <div class="advanced-preview">
               <psh-collapse maxHeight="300px">
-                <div collapse-header>
+                <div psh-collapse-header>
                   Collapse avec hauteur max personnalisée
                 </div>
                 <div>
@@ -222,7 +222,7 @@
           <div class="advanced-card">
             <div class="advanced-preview">
               <psh-collapse id="custom-collapse-id">
-                <div collapse-header>
+                <div psh-collapse-header>
                   Collapse avec ID personnalisé
                 </div>
                 Ce collapse utilise des IDs personnalisés pour les tests E2E ou l'accessibilité.

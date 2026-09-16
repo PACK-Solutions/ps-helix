@@ -20,7 +20,7 @@
                 appearance="elevated"
               >
                 <p>Cette carte utilise une ombre pour créer une élévation visuelle et se détacher du fond.</p>
-                <div card-actions>
+                <div psh-card-actions>
                   <psh-button color="primary">Action</psh-button>
                 </div>
               </psh-card>
@@ -40,7 +40,7 @@
                 appearance="outline"
               >
                 <p>Cette carte utilise une bordure simple pour un design plus léger et discret.</p>
-                <div card-actions>
+                <div psh-card-actions>
                   <psh-button appearance="outline" color="primary">Action</psh-button>
                 </div>
               </psh-card>
@@ -60,7 +60,7 @@
                 appearance="flat"
               >
                 <p>Cette carte utilise le style par défaut, sans ombre ni bordure prononcée.</p>
-                <div card-actions>
+                <div psh-card-actions>
                   <psh-button appearance="ghost" color="primary">Action</psh-button>
                 </div>
               </psh-card>
@@ -128,7 +128,7 @@
                 color="warning"
               >
                 <p>Votre abonnement expire dans 7 jours. Renouvelez-le pour continuer à profiter de tous les avantages.</p>
-                <div card-actions>
+                <div psh-card-actions>
                   <psh-button color="primary">Renouveler</psh-button>
                 </div>
               </psh-card>
@@ -149,7 +149,7 @@
                 color="danger"
               >
                 <p>Impossible de se connecter au serveur. Vérifiez votre connexion internet et réessayez.</p>
-                <div card-actions>
+                <div psh-card-actions>
                   <psh-button color="primary">Réessayer</psh-button>
                 </div>
               </psh-card>
@@ -253,11 +253,11 @@
                 description="3 nouvelles notifications"
                 appearance="elevated"
               >
-                <div card-header-icon>
+                <div psh-card-header-icon>
                   <i class="ph ph-bell" style="font-size: 1.5rem; color: var(--psh-primary-color);"></i>
                 </div>
                 <p>Vous avez reçu de nouvelles notifications importantes concernant votre compte.</p>
-                <div card-actions>
+                <div psh-card-actions>
                   <psh-button appearance="outline" color="primary">Voir tout</psh-button>
                 </div>
               </psh-card>
@@ -278,11 +278,11 @@
                 appearance="elevated"
                 [hoverable]="true"
               >
-                <div card-header-extra>
+                <div psh-card-header-actions>
                   <psh-tag color="success">Actif</psh-tag>
                 </div>
                 <p>Développement du nouveau design system avec composants Angular 20 et Signals.</p>
-                <div card-footer>
+                <div psh-card-footer>
                   <span>Échéance: 15 Déc 2025</span>
                   <span>Équipe: 6 personnes</span>
                 </div>
@@ -305,7 +305,7 @@
                 appearance="elevated"
               >
                 <p>Cette carte utilise les propriétés title et description pour un rendu cohérent et bien espacé.</p>
-                <div card-actions>
+                <div psh-card-actions>
                   <psh-button color="primary">Démarrer</psh-button>
                   <psh-button appearance="outline" color="secondary">En savoir plus</psh-button>
                 </div>
@@ -322,11 +322,11 @@
           <div class="slot-card">
             <div class="slot-preview">
               <psh-card appearance="outline" density="compact">
-                <div card-header-content class="premium-header">
+                <div psh-card-header-content class="premium-header">
                   <i class="ph ph-currency-eur" aria-hidden="true"></i>
                   <h3>Versement initial</h3>
                 </div>
-                <span card-header-extra>
+                <span psh-card-header-actions>
                   <psh-tag color="success">1 500 €</psh-tag>
                 </span>
                 <p>Header entièrement composé par le consommateur, sans propriété <code>title</code>.</p>
@@ -395,7 +395,7 @@
                   [disabled]="true"
                 >
                   <p>Cette carte est désactivée avec opacité réduite et interactions bloquées.</p>
-                  <div card-actions>
+                  <div psh-card-actions>
                     <psh-button color="primary">Action impossible</psh-button>
                   </div>
                 </psh-card>
@@ -445,7 +445,7 @@
                 <p class="specialized-description">Composant spécialisé pour afficher des métriques avec icône colorée, valeur et indicateur de tendance.</p>
               </div>
             </div>
-            <div card-actions>
+            <div psh-card-actions>
               <a href="/demo/stat-cards">
                 <psh-button color="primary">Voir la documentation</psh-button>
               </a>
@@ -460,7 +460,7 @@
                 <p class="specialized-description">Composant pour afficher des données structurées sous forme de paires label-valeur.</p>
               </div>
             </div>
-            <div card-actions>
+            <div psh-card-actions>
               <a href="/demo/info-cards">
                 <psh-button color="primary">Voir la documentation</psh-button>
               </a>
@@ -475,7 +475,7 @@
                 <p class="specialized-description">Composant pour afficher du contenu avec une image ou un média sur le côté.</p>
               </div>
             </div>
-            <div card-actions>
+            <div psh-card-actions>
               <a href="/demo/horizontal-cards">
                 <psh-button color="primary">Voir la documentation</psh-button>
               </a>

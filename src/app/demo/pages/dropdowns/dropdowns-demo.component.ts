@@ -79,8 +79,8 @@ export class DropdownsDemoComponent {
   }
 
   filledAppearanceCode = `<psh-dropdown appearance="solid" color="primary">
-  <span dropdown-trigger>Menu</span>
-  <div dropdown-menu>
+  <span psh-dropdown-trigger>Menu</span>
+  <div psh-dropdown-menu>
     <button class="dropdown-item">
       Option 1
     </button>
@@ -88,8 +88,8 @@ export class DropdownsDemoComponent {
 </psh-dropdown>`;
 
   outlineAppearanceCode = `<psh-dropdown appearance="outline" color="primary">
-  <span dropdown-trigger>Menu</span>
-  <div dropdown-menu>
+  <span psh-dropdown-trigger>Menu</span>
+  <div psh-dropdown-menu>
     <button class="dropdown-item">
       Option 1
     </button>
@@ -97,8 +97,8 @@ export class DropdownsDemoComponent {
 </psh-dropdown>`;
 
   textAppearanceCode = `<psh-dropdown appearance="ghost" color="primary">
-  <span dropdown-trigger>Menu</span>
-  <div dropdown-menu>
+  <span psh-dropdown-trigger>Menu</span>
+  <div psh-dropdown-menu>
     <button class="dropdown-item">
       Option 1
     </button>
@@ -106,8 +106,8 @@ export class DropdownsDemoComponent {
 </psh-dropdown>`;
 
   iconTriggerCode = `<psh-dropdown icon="dots-three">
-  <span dropdown-trigger>Actions</span>
-  <div dropdown-menu>
+  <span psh-dropdown-trigger>Actions</span>
+  <div psh-dropdown-menu>
     <button class="dropdown-item">
       Option
     </button>
@@ -121,7 +121,7 @@ export class DropdownsDemoComponent {
   appearance="outline"
   color="primary"
 >
-  <div dropdown-menu>
+  <div psh-dropdown-menu>
     <button class="dropdown-item">
       <i class="ph ph-pencil-simple"></i>
       Modifier
@@ -148,8 +148,8 @@ export class DropdownsDemoComponent {
   [disabled]="isFormInvalid"
   (selected)="handleSelect($event)"
 >
-  <span dropdown-trigger>Actions</span>
-  <div dropdown-menu>
+  <span psh-dropdown-trigger>Actions</span>
+  <div psh-dropdown-menu>
     <button
       class="dropdown-item"
       [class.disabled]="!canEdit"
