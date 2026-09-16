@@ -19,21 +19,21 @@ export class CollapseDemoComponent {
   controlledExpanded = signal(false);
 
   defaultVariantCode = `<psh-collapse appearance="flat">
-  <div collapse-header>
+  <div psh-collapse-header>
     Titre de la section
   </div>
   Contenu de la section
 </psh-collapse>`;
 
   outlineVariantCode = `<psh-collapse appearance="outline">
-  <div collapse-header>
+  <div psh-collapse-header>
     Titre de la section
   </div>
   Contenu de la section
 </psh-collapse>`;
 
   customHeaderCode = `<psh-collapse>
-  <div collapse-header>
+  <div psh-collapse-header>
     <i class="ph ph-info"></i>
     Section avec icône
   </div>
@@ -41,7 +41,7 @@ export class CollapseDemoComponent {
 </psh-collapse>`;
 
   controlledCode = `<psh-collapse [(expanded)]="isExpanded">
-  <div collapse-header>
+  <div psh-collapse-header>
     Section contrôlée
   </div>
   Contenu contrôlé
@@ -52,21 +52,21 @@ export class CollapseDemoComponent {
 </button>`;
 
   noAnimationCode = `<psh-collapse [disableAnimation]="true">
-  <div collapse-header>
+  <div psh-collapse-header>
     Collapse sans animation
   </div>
   Contenu
 </psh-collapse>`;
 
   maxHeightCode = `<psh-collapse maxHeight="300px">
-  <div collapse-header>
+  <div psh-collapse-header>
     Contenu avec scroll
   </div>
   Contenu très long...
 </psh-collapse>`;
 
   customIdCode = `<psh-collapse id="terms-conditions">
-  <div collapse-header>
+  <div psh-collapse-header>
     Conditions générales
   </div>
   Contenu
@@ -74,7 +74,7 @@ export class CollapseDemoComponent {
 
   slotsCode = `<psh-collapse>
   <!-- Slot header -->
-  <div collapse-header>
+  <div psh-collapse-header>
     <i class="ph ph-info"></i>
     Titre personnalisé avec icône
   </div>

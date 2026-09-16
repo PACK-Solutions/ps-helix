@@ -210,6 +210,6 @@ export class PshTextareaComponent
   }
 
   protected hasLabelContent(): boolean {
-    return !!this.elementRef.nativeElement.querySelector('[textarea-label]');
+    return !!this.elementRef.nativeElement.querySelector('[psh-textarea-label]');
   }
 }

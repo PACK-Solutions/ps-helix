@@ -18,7 +18,7 @@ import { PshCollapseComponent } from 'ps-helix';
 
 ```html
 <psh-collapse>
-  <div collapse-header>Titre de la section</div>
+  <div psh-collapse-header>Titre de la section</div>
   Contenu de la section
 </psh-collapse>
 ```
@@ -27,7 +27,7 @@ import { PshCollapseComponent } from 'ps-helix';
 
 ```html
 <psh-collapse>
-  <div collapse-header>
+  <div psh-collapse-header>
     <i class="ph ph-info"></i>
     Titre personnalise
   </div>
@@ -39,7 +39,7 @@ import { PshCollapseComponent } from 'ps-helix';
 
 ```html
 <psh-collapse appearance="outline">
-  <div collapse-header>Section avec bordure</div>
+  <div psh-collapse-header>Section avec bordure</div>
   Contenu de la section
 </psh-collapse>
 ```
@@ -48,7 +48,7 @@ import { PshCollapseComponent } from 'ps-helix';
 
 ```html
 <psh-collapse [(expanded)]="isExpanded">
-  <div collapse-header>Section controlee</div>
+  <div psh-collapse-header>Section controlee</div>
   Contenu de la section
 </psh-collapse>
 
@@ -60,7 +60,7 @@ import { PshCollapseComponent } from 'ps-helix';
 
 ```html
 <psh-collapse maxHeight="300px">
-  <div collapse-header>Contenu avec scroll</div>
+  <div psh-collapse-header>Contenu avec scroll</div>
   Contenu tres long...
 </psh-collapse>
 ```
@@ -101,7 +101,7 @@ import { PshCollapseComponent } from 'ps-helix';
 
 | Slot            | Selecteur          | Description                              |
 | --------------- | ------------------ | ---------------------------------------- |
-| collapse-header | [collapse-header]  | Contenu de l'en-tete cliquable           |
+| collapse-header | [psh-collapse-header]  | Contenu de l'en-tete cliquable           |
 | Contenu defaut  | -                  | Contenu principal pliable/depliable      |
 
 ## Accessibilite

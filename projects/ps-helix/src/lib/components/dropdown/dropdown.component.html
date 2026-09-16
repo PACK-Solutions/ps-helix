@@ -30,7 +30,7 @@
         @if (icon()) {
           <i class="ph ph-{{ icon() }}" aria-hidden="true"></i>
         }
-        <ng-content select="[dropdown-trigger]">
+        <ng-content select="[psh-dropdown-trigger]">
           @if (label()) {
             {{ label() }}
           }
@@ -53,7 +53,7 @@
       role="menu"
       (click)="$event.stopPropagation()"
     >
-      <ng-content select="[dropdown-menu]">
+      <ng-content select="[psh-dropdown-menu]">
         @for (item of items(); track item.value; let i = $index) {
           <button
             type="button"

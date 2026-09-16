@@ -76,8 +76,6 @@ userData: InfoCardData[] = [
 | `variant` | `InfoCardVariant` | `'outlined'` | Variante visuelle : `'default'` \| `'elevated'` \| `'outlined'` |
 | `icon` | `string` | `'circle-dashed'` | Nom de l'icone Phosphor (sans le prefixe 'ph-') |
 | `ariaLabel` | `string` | `undefined` | Label ARIA personnalise pour l'accessibilite |
-| `cssClass` | `string` | `''` | Classes CSS additionnelles |
-| `customStyle` | `Record<string, string>` | `{}` | Styles inline personnalises |
 | `interactive` | `boolean` | `false` | Rend la carte cliquable avec cursor pointer et gestion du focus |
 | `hoverable` | `boolean` | `false` | Active l'effet de survol (animation translateY) |
 | `loading` | `boolean` | `false` | Etat de chargement - affiche un skeleton anime |
@@ -121,7 +119,6 @@ const defaultOptions: InfoCardOptions = {
 | `titleIcon` | `Signal<string>` | Classe complete de l'icone Phosphor (avec prefixe 'ph-') |
 | `computedAriaLabel` | `Signal<string>` | Label ARIA calcule automatiquement |
 | `computedClasses` | `Signal<string>` | Classes CSS calculees selon les proprietes |
-| `computedStyles` | `Signal<Record<string, string>>` | Styles inline fusionnes avec `customStyle` |
 | `getActionsClasses` | `Signal<string>` | Classes CSS pour la zone d'actions incluant `mobile-full-width-buttons` sur mobile |
 
 ### Types TypeScript
@@ -164,8 +161,8 @@ Le composant utilise `ng-content` avec des selecteurs pour organiser le contenu.
 
 | Slot | Selecteur | Description | Position |
 |------|-----------|-------------|----------|
-| **Header Actions** | `[card-header-actions]` | Actions dans l'en-tete | En-tete de carte (a droite du titre) |
-| **Actions** | `[card-actions]` | Boutons d'action | Pied de carte |
+| **Header Actions** | `[psh-info-card-header-actions]` | Actions dans l'en-tete | En-tete de carte (a droite du titre) |
+| **Actions** | `[psh-info-card-actions]` | Boutons d'action | Pied de carte |
 
 ### Exemple avec Zone d'Actions Header
 
@@ -175,7 +172,7 @@ Le composant utilise `ng-content` avec des selecteurs pour organiser le contenu.
   [data]="userData"
   icon="user-circle"
 >
-  <div card-header-actions>
+  <div psh-info-card-header-actions>
     <psh-button appearance="ghost" size="small">
       <i class="ph ph-pencil"></i>
     </psh-button>
@@ -194,7 +191,7 @@ Le composant utilise `ng-content` avec des selecteurs pour organiser le contenu.
   [data]="userData"
   icon="user-circle"
 >
-  <div card-actions>
+  <div psh-info-card-actions>
     <psh-button appearance="outline">Modifier</psh-button>
     <psh-button color="primary">Enregistrer</psh-button>
   </div>
@@ -209,10 +206,10 @@ Le composant utilise `ng-content` avec des selecteurs pour organiser le contenu.
   [data]="projectData"
   icon="folder"
 >
-  <div card-header-actions>
+  <div psh-info-card-header-actions>
     <psh-badge color="success">Actif</psh-badge>
   </div>
-  <div card-actions>
+  <div psh-info-card-actions>
     <psh-button appearance="outline">Annuler</psh-button>
     <psh-button color="primary">Sauvegarder</psh-button>
   </div>
@@ -345,7 +342,7 @@ Le composant s'adapte automatiquement aux differentes tailles d'ecran.
   [data]="data"
   [autoFullWidthOnMobile]="true"
 >
-  <div card-actions>
+  <div psh-info-card-actions>
     <!-- Ces boutons seront pleine largeur sur mobile -->
     <psh-button color="primary">Action</psh-button>
   </div>
@@ -486,7 +483,7 @@ userProfile: InfoCardData[] = [
   icon="identification-card"
   appearance="elevated"
 >
-  <div card-actions>
+  <div psh-info-card-actions>
     <psh-button appearance="outline">Modifier</psh-button>
     <psh-button color="primary">Contacter</psh-button>
   </div>
@@ -665,7 +662,10 @@ Le composant utilise `ViewEncapsulation.None`, ce qui permet :
 - Les styles externes peuvent facilement personnaliser l'apparence
 - Les selecteurs CSS du composant ne sont pas encapsules
 
-**Note importante :** Utilisez les classes CSS fournies (`.info-card`, `.variant-elevated`, etc.) ou les inputs (`cssClass`, `customStyle`) pour personnaliser le composant plutot que de cibler directement les elements internes.
+**Note importante :** Depuis la 7.0.0 le composant *est* son élément hôte. Stylez-le avec
+les attributs `class` et `style` natifs, ou avec ses custom properties `--psh-*` ; les
+inputs `cssClass` et `customStyle` n'existent plus, et cibler ses éléments internes reste
+déconseillé.
 
 ## Bonnes Pratiques
 

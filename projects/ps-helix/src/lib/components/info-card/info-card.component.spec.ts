@@ -7,7 +7,7 @@ import { InfoCardData, InfoCardVariant } from './info-card.types';
   changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <psh-info-card [title]="title" [data]="data" [autoFullWidthOnMobile]="autoFullWidthOnMobile">
-      <button card-actions>Action Button</button>
+      <button psh-info-card-actions>Action Button</button>
     </psh-info-card>
   `,
   imports: [PshInfoCardComponent]
@@ -21,8 +21,8 @@ class TestHostComponent {
 describe('PshInfoCardComponent', () => {
   let fixture: ComponentFixture<PshInfoCardComponent>;
 
-  const getRegion = () =>
-    fixture.nativeElement.querySelector('[role="region"]') as HTMLElement;
+  // The info-card *is* the host element now, not a wrapper inside it.
+  const getRegion = () => fixture.nativeElement as HTMLElement;
 
   const getContentList = () =>
     fixture.nativeElement.querySelector('[role="list"]') as HTMLElement;
@@ -559,20 +559,6 @@ describe('PshInfoCardComponent', () => {
 
       expect(clickSpy).not.toHaveBeenCalled();
     });
-
-    it('should apply custom CSS class to container', () => {
-      fixture.componentRef.setInput('cssClass', 'my-custom-class');
-      fixture.detectChanges();
-
-      expect(getRegion().className).toContain('my-custom-class');
-    });
-
-    it('should apply custom inline styles', () => {
-      fixture.componentRef.setInput('customStyle', { 'background-color': 'red' });
-      fixture.detectChanges();
-
-      expect(getRegion().style.backgroundColor).toBe('red');
-    });
   });
 });
 
@@ -813,7 +799,7 @@ describe('PshInfoCardComponent - Content Projection', () => {
     fixture.nativeElement.querySelector('.psh-info-card-actions') as HTMLElement;
 
   const getProjectedButton = () =>
-    fixture.nativeElement.querySelector('[card-actions]') as HTMLElement;
+    fixture.nativeElement.querySelector('[psh-info-card-actions]') as HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -898,24 +884,32 @@ describe('PshInfoCardComponent - Row emphasis / formatting', () => {
     expect(getValue().className).toContain('psh-info-card-value--strikethrough');
   });
 
-  it('applies the matching tone class for each semantic tone', () => {
-    const tones = ['muted', 'primary', 'success', 'warning', 'danger', 'info'] as const;
-    tones.forEach((tone) => {
-      fixture.componentRef.setInput('data', [{ label: 'L', value: 'V', emphasis: { tone } }]);
+  it('applies the matching colour class for every PshColor', () => {
+    const colors = [
+      'neutral',
+      'primary',
+      'secondary',
+      'success',
+      'warning',
+      'danger',
+      'info',
+    ] as const;
+    colors.forEach((color) => {
+      fixture.componentRef.setInput('data', [{ label: 'L', value: 'V', emphasis: { color } }]);
       fixture.detectChanges();
-      expect(getValue().className).toContain(`info-card-value--tone-${tone}`);
+      expect(getValue().className).toContain(`psh-info-card-value--color-${color}`);
     });
   });
 
   it('accumulates multiple emphasis options on the same value', () => {
     fixture.componentRef.setInput('data', [
-      { label: 'L', value: 'V', emphasis: { italic: true, strikethrough: true, tone: 'danger' } }
+      { label: 'L', value: 'V', emphasis: { italic: true, strikethrough: true, color: 'danger' } }
     ]);
     fixture.detectChanges();
     const cls = getValue().className;
     expect(cls).toContain('psh-info-card-value--italic');
     expect(cls).toContain('psh-info-card-value--strikethrough');
-    expect(cls).toContain('psh-info-card-value--tone-danger');
+    expect(cls).toContain('psh-info-card-value--color-danger');
   });
 
   it('auto-mutes nullish values by default (null)', () => {
@@ -923,14 +917,14 @@ describe('PshInfoCardComponent - Row emphasis / formatting', () => {
     fixture.detectChanges();
     const cls = getValue().className;
     expect(cls).toContain('psh-info-card-value--italic');
-    expect(cls).toContain('psh-info-card-value--tone-muted');
+    expect(cls).toContain('psh-info-card-value--color-neutral');
     expect(getValue().textContent?.trim()).toBe('Non renseigné');
   });
 
   it('auto-mutes undefined values by default', () => {
     fixture.componentRef.setInput('data', [{ label: 'L', value: undefined }]);
     fixture.detectChanges();
-    expect(getValue().className).toContain('psh-info-card-value--tone-muted');
+    expect(getValue().className).toContain('psh-info-card-value--color-neutral');
   });
 
   it('does not auto-mute when options.mutedEmptyValues is false', () => {
@@ -938,23 +932,23 @@ describe('PshInfoCardComponent - Row emphasis / formatting', () => {
     fixture.componentRef.setInput('options', { mutedEmptyValues: false });
     fixture.detectChanges();
     const cls = getValue().className;
-    expect(cls).not.toContain('psh-info-card-value--tone-muted');
+    expect(cls).not.toContain('psh-info-card-value--color-neutral');
     expect(cls).not.toContain('psh-info-card-value--italic');
   });
 
   it('gives explicit emphasis priority over auto-muted on nullish values', () => {
-    fixture.componentRef.setInput('data', [{ label: 'L', value: null, emphasis: { tone: 'success' } }]);
+    fixture.componentRef.setInput('data', [{ label: 'L', value: null, emphasis: { color: 'success' } }]);
     fixture.detectChanges();
     const cls = getValue().className;
-    expect(cls).toContain('psh-info-card-value--tone-success');
-    expect(cls).not.toContain('psh-info-card-value--tone-muted');
+    expect(cls).toContain('psh-info-card-value--color-success');
+    expect(cls).not.toContain('psh-info-card-value--color-neutral');
   });
 
   it('does not auto-mute the literal "Non renseigné" string (value not nullish)', () => {
     fixture.componentRef.setInput('data', [{ label: 'L', value: 'Non renseigné' }]);
     fixture.detectChanges();
     const cls = getValue().className;
-    expect(cls).not.toContain('psh-info-card-value--tone-muted');
+    expect(cls).not.toContain('psh-info-card-value--color-neutral');
     expect(cls).not.toContain('psh-info-card-value--italic');
   });
 

@@ -129,6 +129,68 @@ export const DEMOTED_MODELS = {
   'psh-textarea': ['readonly'],
 };
 
+/**
+ * Content-projection slots, now `psh-<component>-<zone>`.
+ *
+ * The prefix is not decoration: a slot is an **attribute selector**, which is exactly how
+ * Angular selects directives. A consumer with their own `[card-footer]` directive had it
+ * instantiated on everything they projected into that slot.
+ *
+ * Keyed by the element the slot is projected *into*, because `[card-actions]` belonged to two
+ * different components and resolves to two different names.
+ */
+export const SLOT_RENAMES = {
+  'psh-card': {
+    'card-header-icon': 'psh-card-header-icon',
+    'card-header-content': 'psh-card-header-content',
+    'card-header-extra': 'psh-card-header-actions', // `extra` and `actions` were one zone
+    'card-footer': 'psh-card-footer',
+    'card-actions': 'psh-card-actions',
+  },
+  'psh-info-card': {
+    'card-header-actions': 'psh-info-card-header-actions',
+    'card-actions': 'psh-info-card-actions',
+  },
+  'psh-horizontal-card': {
+    'horizontal-side': 'psh-horizontal-card-side',
+    'horizontal-header': 'psh-horizontal-card-header',
+    'horizontal-actions': 'psh-horizontal-card-actions',
+  },
+  'psh-collapse': { 'collapse-header': 'psh-collapse-header' },
+  'psh-dropdown': {
+    'dropdown-trigger': 'psh-dropdown-trigger',
+    'dropdown-menu': 'psh-dropdown-menu',
+  },
+  'psh-input': {
+    'input-label': 'psh-input-label',
+    'input-error': 'psh-input-error',
+    'input-success': 'psh-input-success',
+    'input-hint': 'psh-input-hint',
+  },
+  'psh-textarea': {
+    'textarea-label': 'psh-textarea-label',
+    'textarea-error': 'psh-textarea-error',
+    'textarea-success': 'psh-textarea-success',
+    'textarea-hint': 'psh-textarea-hint',
+  },
+  'psh-modal': {
+    'modal-title': 'psh-modal-title',
+    'modal-footer': 'psh-modal-footer',
+  },
+};
+
+/**
+ * `cssClass` / `customStyle` are gone: the four card components are their own host now, so
+ * the platform's `class` and `style` reach them. `styleClass` on modal becomes `panelClass` —
+ * its panel is rendered away from the host, which is the one case a passthrough survives.
+ */
+export const REMOVED_PASSTHROUGH = {
+  'psh-card': ['cssClass', 'customStyle'],
+  'psh-horizontal-card': ['cssClass', 'customStyle'],
+  'psh-info-card': ['cssClass', 'customStyle'],
+  'psh-stat-card': ['cssClass', 'customStyle'],
+};
+
 /** Inputs that became `input.required()`. Reported when the tag does not bind them. */
 export const NEWLY_REQUIRED = {
   'psh-table': ['columns', 'data'],
@@ -137,11 +199,17 @@ export const NEWLY_REQUIRED = {
   'psh-info-card': ['data'],
 };
 
+/** `styleClass` is the one passthrough that survives, under the name the contract gives it. */
+const PANEL_CLASS = { 'psh-modal': { styleClass: 'panelClass' } };
+
 const RENAMES = {};
 for (const [selector, attrs] of Object.entries({ ...COLOR_AXIS })) {
   RENAMES[selector] = { ...attrs };
 }
 for (const [selector, attrs] of Object.entries(APPEARANCE_AXIS)) {
+  RENAMES[selector] = { ...(RENAMES[selector] ?? {}), ...attrs };
+}
+for (const [selector, attrs] of Object.entries(PANEL_CLASS)) {
   RENAMES[selector] = { ...(RENAMES[selector] ?? {}), ...attrs };
 }
 // OUTPUT_AXIS deliberately stays out of RENAMES. `renameInTag` also rewrites the *input*
@@ -188,6 +256,23 @@ function migrateBadgeDisabled(source, warnings) {
  * Toasts are raised through the service, so their colour lives in an options object rather
  * than an attribute — a template-only codemod would miss every call site.
  */
+/**
+ * `info-card`'s row emphasis, the sixth and last name the colour axis had.
+ *
+ * It outlived the other five because it is not an attribute either: it sits in an
+ * `InfoCardEmphasis` object inside a `data` array. The anchor is the `emphasis: { … }`
+ * literal, not the word `tone` — plenty of applications have a `tone` of their own, and
+ * renaming those would be the codemod damaging code it does not own.
+ */
+function migrateInfoCardTone(source) {
+  return source.replace(/\bemphasis\s*:\s*\{[^{}]*\}/g, block =>
+    block
+      .replace(/(^|[\s,{])tone\s*:/g, '$1color:')
+      // `muted` meant "no semantic emphasis", which is what `neutral` means everywhere else.
+      .replace(/(\bcolor\s*:\s*)(['"`])muted\2/g, '$1$2neutral$2'),
+  );
+}
+
 function migrateToastOptions(source) {
   // Bounded by the end of the statement rather than the first closing brace: option
   // objects routinely contain template literals and nested objects, and stopping at `}`
@@ -339,6 +424,64 @@ function migrateOutputsAndModels(source, warnings) {
   return { out, count };
 }
 
+/**
+ * Slots, and the passthrough inputs the host rooting replaced.
+ *
+ * Slots live on *projected children*, so this one needs the element's whole range — the
+ * opening tag is not enough. Components of the same kind do not nest in practice, so a lazy
+ * match from `<psh-card` to the first `</psh-card>` is the right span.
+ */
+function migrateSlotsAndPassthrough(source, warnings) {
+  let out = source;
+  let count = 0;
+
+  for (const [selector, slots] of Object.entries(SLOT_RENAMES)) {
+    const element = new RegExp(`<${selector}(?:\\s[^>]*)?>[\\s\\S]*?</${selector}>`, 'g');
+    out = out.replace(element, block => {
+      let next = block;
+      for (const [from, to] of Object.entries(slots)) {
+        // A bare attribute on a projected child: `<div card-footer>`.
+        next = next.replace(
+          new RegExp(`(?<=<[a-zA-Z][^<>]{0,300}\\s)${from}(?=[\\s>=])`, 'g'),
+          () => { count++; return to; },
+        );
+      }
+      return next;
+    });
+  }
+
+  for (const [selector, names] of Object.entries(REMOVED_PASSTHROUGH)) {
+    out = out.replace(openingTag(selector), (tag, attrs = '') => {
+      let next = tag;
+      const hasClass = /\s\[?class\]?=/.test(attrs ?? '');
+
+      for (const name of names) {
+        const target = name === 'cssClass' ? 'class' : 'style';
+        const staticAttr = new RegExp(`\\s${name}="([^"]*)"`);
+        const boundAttr = new RegExp(`\\s\\[${name}\\]="([^"]*)"`);
+
+        if (!staticAttr.test(next) && !boundAttr.test(next)) continue;
+
+        if (hasClass || /\s\[?style\]?=/.test(attrs ?? '')) {
+          // Merging a passthrough into an attribute the caller already set is their call:
+          // the result depends on which classes are meant to win.
+          warnings.push(
+            `${selector} has both ${name} and a native ${target}: ${name} is gone in 7.0.0 — merge it into ${target} yourself`,
+          );
+          continue;
+        }
+
+        next = next
+          .replace(staticAttr, (m, value) => { count++; return ` ${target}="${value}"`; })
+          .replace(boundAttr, (m, value) => { count++; return ` [${target}]="${value}"`; });
+      }
+      return next;
+    });
+  }
+
+  return { out, count };
+}
+
 export function migrate(source) {
   let out = source;
   let count = 0;
@@ -382,9 +525,17 @@ export function migrate(source) {
   if (afterToast !== out) count++;
   out = afterToast;
 
+  const afterTone = migrateInfoCardTone(out);
+  if (afterTone !== out) count++;
+  out = afterTone;
+
   const outputs = migrateOutputsAndModels(out, warnings);
   out = outputs.out;
   count += outputs.count;
+
+  const slots = migrateSlotsAndPassthrough(out, warnings);
+  out = slots.out;
+  count += slots.count;
 
   return { out, count, warnings };
 }

@@ -17,8 +17,8 @@ import { PshDropdownComponent } from 'ps-helix';
 ### Approche Recommandee (avec contenu personnalise)
 ```typescript
 <psh-dropdown appearance="solid" color="primary">
-  <span dropdown-trigger>{{ 'DROPDOWN.TITLE' | translate }}</span>
-  <div dropdown-menu>
+  <span psh-dropdown-trigger>{{ 'DROPDOWN.TITLE' | translate }}</span>
+  <div psh-dropdown-menu>
     <button class="dropdown-item" (click)="handleSelect('1')">
       {{ 'DROPDOWN.OPTIONS.OPTION1' | translate }}
     </button>
@@ -41,7 +41,7 @@ Transforme le déclencheur en bouton carré compact affichant uniquement une ic�
   appearance="outline"
   color="primary"
 >
-  <div dropdown-menu>
+  <div psh-dropdown-menu>
     <button class="dropdown-item">
       <i class="ph ph-pencil-simple"></i>
       Modifier
@@ -151,8 +151,8 @@ Le dropdown suit la même logique que le bouton : l'`appearance` contrôle la fo
 Fond plein, idéal pour les actions principales.
 ```html
 <psh-dropdown appearance="solid" color="primary">
-  <span dropdown-trigger>Actions</span>
-  <div dropdown-menu>...</div>
+  <span psh-dropdown-trigger>Actions</span>
+  <div psh-dropdown-menu>...</div>
 </psh-dropdown>
 ```
 
@@ -160,8 +160,8 @@ Fond plein, idéal pour les actions principales.
 Bordure sans fond, pour les actions secondaires.
 ```html
 <psh-dropdown appearance="outline" color="primary">
-  <span dropdown-trigger>Actions</span>
-  <div dropdown-menu>...</div>
+  <span psh-dropdown-trigger>Actions</span>
+  <div psh-dropdown-menu>...</div>
 </psh-dropdown>
 ```
 
@@ -169,8 +169,8 @@ Bordure sans fond, pour les actions secondaires.
 Sans fond ni bordure, pour les actions tertiaires et les menus discrets.
 ```html
 <psh-dropdown appearance="ghost" color="primary">
-  <span dropdown-trigger>Actions</span>
-  <div dropdown-menu>...</div>
+  <span psh-dropdown-trigger>Actions</span>
+  <div psh-dropdown-menu>...</div>
 </psh-dropdown>
 ```
 
@@ -179,9 +179,9 @@ Sans fond ni bordure, pour les actions tertiaires et les menus discrets.
 Toutes les apparences acceptent les cinq variantes sémantiques : `primary`, `secondary`, `success`, `warning`, `danger`.
 
 ```html
-<psh-dropdown appearance="solid" color="success"><span dropdown-trigger>Valider</span>...</psh-dropdown>
-<psh-dropdown appearance="outline" color="danger"><span dropdown-trigger>Supprimer</span>...</psh-dropdown>
-<psh-dropdown appearance="ghost" color="warning"><span dropdown-trigger>Attention</span>...</psh-dropdown>
+<psh-dropdown appearance="solid" color="success"><span psh-dropdown-trigger>Valider</span>...</psh-dropdown>
+<psh-dropdown appearance="outline" color="danger"><span psh-dropdown-trigger>Supprimer</span>...</psh-dropdown>
+<psh-dropdown appearance="ghost" color="warning"><span psh-dropdown-trigger>Attention</span>...</psh-dropdown>
 ```
 
 ## Bonnes Pratiques
@@ -239,5 +239,5 @@ Le composant gère automatiquement:
 - `aria-expanded`: État d'ouverture du trigger
 - `aria-haspopup="menu"`: Indique la présence d'un menu sur le trigger
 - `aria-disabled` sur le trigger: reflète l'état `disabled` du composant
-- `aria-disabled` sur les items: appliqué automatiquement uniquement pour les items fournis via l'input `items`. Les items projetés via le slot `[dropdown-menu]` doivent déclarer leurs propres attributs ARIA côté consommateur.
+- `aria-disabled` sur les items: appliqué automatiquement uniquement pour les items fournis via l'input `items`. Les items projetés via le slot `[psh-dropdown-menu]` doivent déclarer leurs propres attributs ARIA côté consommateur.
 - `aria-label`: Label accessible pour le bouton (utilise `ariaLabel`, `iconOnlyText` ou `label` selon la configuration)

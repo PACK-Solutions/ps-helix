@@ -1,64 +1,53 @@
-<div
-  [class]="computedClasses()"
-  [style]="computedStyles()"
-  (click)="handleClick($event)"
-  (keydown)="handleKeydown($event)"
-  role="article"
-  [attr.tabindex]="interactive() && !disabled() ? 0 : null"
-  [attr.aria-disabled]="disabled() ? 'true' : null"
-  [attr.aria-busy]="loading() ? 'true' : null"
->
-  <!--
-    Header : rendu inconditionnel, masqué en CSS s'il est vide
-    (voir .card-header:not(:has(*)) dans card.component.css).
-    Se rend dès que title/description est renseigné OU qu'un slot de header
-    ([card-header-icon] / [card-header-content] / [card-header-extra]) est projeté.
-  -->
-  <div class="psh-card-header" [class.psh-has-divider]="showHeaderDivider()">
-    <!-- Slot pour icône/avatar avant le titre -->
-    <ng-content select="[card-header-icon]"></ng-content>
+<!--
+  Header : rendu inconditionnel, masqué en CSS s'il est vide
+  (voir .card-header:not(:has(*)) dans card.component.css).
+  Se rend dès que title/description est renseigné OU qu'un slot de header
+  ([psh-card-header-icon] / [psh-card-header-content] / [psh-card-header-actions]) est projeté.
+-->
+<div class="psh-card-header" [class.psh-has-divider]="showHeaderDivider()">
+  <!-- Slot pour icône/avatar avant le titre -->
+  <ng-content select="[psh-card-header-icon]"></ng-content>
 
-    <!-- Zone de titre et description -->
-    @if (title() || description()) {
-      <div class="psh-card-header-content">
-        @if (title()) {
-          <h3 class="psh-card-title">{{ title() }}</h3>
-        }
-        @if (description()) {
-          <p class="psh-card-description">{{ description() }}</p>
-        }
-      </div>
-    }
+  <!-- Zone de titre et description -->
+  @if (title() || description()) {
+    <div class="psh-card-header-content">
+      @if (title()) {
+        <h3 class="psh-card-title">{{ title() }}</h3>
+      }
+      @if (description()) {
+        <p class="psh-card-description">{{ description() }}</p>
+      }
+    </div>
+  }
 
-    <!-- Slot pour contenu personnalisé du header -->
-    <ng-content select="[card-header-content]"></ng-content>
+  <!-- Slot pour contenu personnalisé du header -->
+  <ng-content select="[psh-card-header-content]"></ng-content>
 
-    <!-- Slot pour badge/tag ou actions secondaires -->
-    <ng-content select="[card-header-extra]"></ng-content>
-  </div>
+  <!-- Slot pour badge/tag ou actions secondaires -->
+  <ng-content select="[psh-card-header-actions]"></ng-content>
+</div>
 
-  <!-- Body avec contenu principal -->
-  <div class="psh-card-body" [class.psh-no-padding]="!bodyPadding()">
-    <!-- État de chargement -->
-    @if (loading()) {
-      <div class="psh-card-loading">
-        <div class="psh-skeleton-line"></div>
-        <div class="psh-skeleton-line"></div>
-        <div class="psh-skeleton-line psh-short"></div>
-      </div>
-    } @else {
-      <!-- Contenu principal (slot par défaut) -->
-      <ng-content></ng-content>
-    }
-  </div>
+<!-- Body avec contenu principal -->
+<div class="psh-card-body" [class.psh-no-padding]="!bodyPadding()">
+  <!-- État de chargement -->
+  @if (loading()) {
+    <div class="psh-card-loading">
+      <div class="psh-skeleton-line"></div>
+      <div class="psh-skeleton-line"></div>
+      <div class="psh-skeleton-line psh-short"></div>
+    </div>
+  } @else {
+    <!-- Contenu principal (slot par défaut) -->
+    <ng-content></ng-content>
+  }
+</div>
 
-  <!-- Footer optionnel pour métadonnées -->
-  <div class="psh-card-footer" [class.psh-has-divider]="showFooterDivider()">
-    <ng-content select="[card-footer]"></ng-content>
-  </div>
+<!-- Footer optionnel pour métadonnées -->
+<div class="psh-card-footer" [class.psh-has-divider]="showFooterDivider()">
+  <ng-content select="[psh-card-footer]"></ng-content>
+</div>
 
-  <!-- Actions -->
-  <div class="psh-card-actions" [class]="actionsClasses()" [class.psh-has-divider]="showActionsDivider()">
-    <ng-content select="[card-actions]"></ng-content>
-  </div>
+<!-- Actions -->
+<div class="psh-card-actions" [class]="actionsClasses()" [class.psh-has-divider]="showActionsDivider()">
+  <ng-content select="[psh-card-actions]"></ng-content>
 </div>

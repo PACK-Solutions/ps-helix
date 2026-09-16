@@ -70,7 +70,7 @@
               </psh-button>
               <psh-modal #customModal [(open)]="customModalOpen" title="{{ 'MODAL.CUSTOM_FOOTER_TITLE' | translate }}">
                 <p>{{ 'MODAL.CUSTOM_FOOTER_CONTENT' | translate }}</p>
-                <div modal-footer #modalFooter>
+                <div psh-modal-footer #modalFooter>
                   <psh-button appearance="ghost" [fullWidth]="customModal.isMobileScreen()" (clicked)="customModalOpen = false">
                     {{ 'MODAL.CANCEL' | translate }}
                   </psh-button>
@@ -117,7 +117,7 @@
                 Titre Personnalise
               </psh-button>
               <psh-modal [(open)]="customTitleModalOpen">
-                <span modal-title style="display: flex; align-items: center; gap: var(--psh-spacing-sm);">
+                <span psh-modal-title style="display: flex; align-items: center; gap: var(--psh-spacing-sm);">
                   <i class="ph ph-warning" style="color: var(--warning-500);"></i>
                   Attention requise
                 </span>

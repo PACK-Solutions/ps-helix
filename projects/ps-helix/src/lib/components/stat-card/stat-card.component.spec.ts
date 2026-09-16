@@ -5,8 +5,8 @@ import { StatCardVariant, StatCardLayout, StatTagVariant } from './stat-card.typ
 describe('PshStatCardComponent', () => {
   let fixture: ComponentFixture<PshStatCardComponent>;
 
-  const getContainer = () =>
-    fixture.nativeElement.querySelector('[role="article"], [role="button"]') as HTMLElement;
+  // The stat-card *is* the host element now, not a wrapper inside it.
+  const getContainer = () => fixture.nativeElement as HTMLElement;
 
   const getValueElement = () =>
     fixture.nativeElement.querySelector('.psh-stat-value') as HTMLElement;
@@ -207,20 +207,6 @@ describe('PshStatCardComponent', () => {
       fixture.detectChanges();
 
       expect(getContainer().className).toContain('psh-disabled');
-    });
-
-    it('should apply custom CSS class', () => {
-      fixture.componentRef.setInput('cssClass', 'my-custom-class');
-      fixture.detectChanges();
-
-      expect(getContainer().className).toContain('my-custom-class');
-    });
-
-    it('should apply custom inline styles', () => {
-      fixture.componentRef.setInput('customStyle', { 'background-color': 'red' });
-      fixture.detectChanges();
-
-      expect(getContainer().style.backgroundColor).toBe('red');
     });
   });
 

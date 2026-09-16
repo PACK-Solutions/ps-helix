@@ -112,15 +112,15 @@ export class HorizontalCardsDemoComponent {
   [hoverable]="true"
   [sideWidth]="'var(--psh-size-40)'"
 >
-  <div horizontal-side>
+  <div psh-horizontal-card-side>
     <img src="product.jpg" alt="Product">
   </div>
-  <div horizontal-header>
+  <div psh-horizontal-card-header>
     <h4>Casque Audio Premium</h4>
     <psh-tag>En stock</psh-tag>
   </div>
   <p>Description du produit</p>
-  <div horizontal-actions>
+  <div psh-horizontal-card-actions>
     <psh-button>Acheter</psh-button>
   </div>
 </psh-horizontal-card>`;
@@ -130,15 +130,15 @@ export class HorizontalCardsDemoComponent {
   [interactive]="true"
   [sideWidth]="'var(--psh-size-32)'"
 >
-  <div horizontal-side>
+  <div psh-horizontal-card-side>
     <psh-avatar [initials]="'SM'" [size]="'xlarge'"></psh-avatar>
   </div>
-  <div horizontal-header>
+  <div psh-horizontal-card-header>
     <h4>Sophie Martin</h4>
     <psh-tag>Actif</psh-tag>
   </div>
   <p>Lead Designer</p>
-  <div horizontal-actions>
+  <div psh-horizontal-card-actions>
     <psh-button>Contacter</psh-button>
   </div>
 </psh-horizontal-card>`;
@@ -148,25 +148,25 @@ export class HorizontalCardsDemoComponent {
   [interactive]="true"
   [sideWidth]="'var(--psh-size-48)'"
 >
-  <div horizontal-side>
+  <div psh-horizontal-card-side>
     <img src="article.jpg" alt="Article">
   </div>
-  <div horizontal-header>
+  <div psh-horizontal-card-header>
     <psh-tag>Design</psh-tag>
   </div>
   <h4>Guide complet du Design System</h4>
   <p>Découvrez comment créer et maintenir un design system évolutif.</p>
-  <div horizontal-actions>
+  <div psh-horizontal-card-actions>
     <psh-button>Lire l'article</psh-button>
   </div>
 </psh-horizontal-card>`;
 
   statesCode = `<!-- État Loading -->
 <psh-horizontal-card [loading]="true">
-  <div horizontal-side>
+  <div psh-horizontal-card-side>
     <img src="image.jpg" alt="Image">
   </div>
-  <div horizontal-header>
+  <div psh-horizontal-card-header>
     <h4>Titre</h4>
   </div>
   <p>Contenu masqué pendant le chargement</p>
@@ -177,10 +177,10 @@ export class HorizontalCardsDemoComponent {
   [interactive]="true"
   [disabled]="true"
 >
-  <div horizontal-side>
+  <div psh-horizontal-card-side>
     <img src="image.jpg" alt="Image">
   </div>
-  <div horizontal-header>
+  <div psh-horizontal-card-header>
     <h4>Carte désactivée</h4>
   </div>
   <p>Cette carte ne peut pas être cliquée</p>

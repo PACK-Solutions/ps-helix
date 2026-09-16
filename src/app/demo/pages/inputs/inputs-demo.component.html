@@ -18,8 +18,8 @@
                 appearance="outline"
                 placeholder="{{ 'INPUT.PLACEHOLDER.DEFAULT' | translate }}"
               >
-                <span input-label>{{ 'INPUT.LABEL.DEFAULT' | translate }}</span>
-                <span input-hint>{{ 'INPUT.HINT.DEFAULT' | translate }}</span>
+                <span psh-input-label>{{ 'INPUT.LABEL.DEFAULT' | translate }}</span>
+                <span psh-input-hint>{{ 'INPUT.HINT.DEFAULT' | translate }}</span>
               </psh-input>
             </div>
             <div class="variant-info">
@@ -35,8 +35,8 @@
                 appearance="solid"
                 placeholder="{{ 'INPUT.PLACEHOLDER.DEFAULT' | translate }}"
               >
-                <span input-label>{{ 'INPUT.LABEL.FILLED' | translate }}</span>
-                <span input-hint>{{ 'INPUT.HINT.DEFAULT' | translate }}</span>
+                <span psh-input-label>{{ 'INPUT.LABEL.FILLED' | translate }}</span>
+                <span psh-input-hint>{{ 'INPUT.HINT.DEFAULT' | translate }}</span>
               </psh-input>
             </div>
             <div class="variant-info">
@@ -63,7 +63,7 @@
                 size="small"
                 placeholder="{{ 'INPUT.PLACEHOLDER.DEFAULT' | translate }}"
               >
-                <span input-label>{{ 'INPUT.LABEL.DEFAULT' | translate }}</span>
+                <span psh-input-label>{{ 'INPUT.LABEL.DEFAULT' | translate }}</span>
               </psh-input>
             </div>
             <div class="size-info">
@@ -82,7 +82,7 @@
                 size="medium"
                 placeholder="{{ 'INPUT.PLACEHOLDER.DEFAULT' | translate }}"
               >
-                <span input-label>{{ 'INPUT.LABEL.DEFAULT' | translate }}</span>
+                <span psh-input-label>{{ 'INPUT.LABEL.DEFAULT' | translate }}</span>
               </psh-input>
             </div>
             <div class="size-info">
@@ -101,7 +101,7 @@
                 size="large"
                 placeholder="{{ 'INPUT.PLACEHOLDER.DEFAULT' | translate }}"
               >
-                <span input-label>{{ 'INPUT.LABEL.DEFAULT' | translate }}</span>
+                <span psh-input-label>{{ 'INPUT.LABEL.DEFAULT' | translate }}</span>
               </psh-input>
             </div>
             <div class="size-info">
@@ -133,7 +133,7 @@
                   [disabled]="true"
                   placeholder="{{ 'INPUT.PLACEHOLDER.DEFAULT' | translate }}"
                 >
-                  <span input-label>{{ 'INPUT.LABEL.DISABLED' | translate }}</span>
+                  <span psh-input-label>{{ 'INPUT.LABEL.DISABLED' | translate }}</span>
                 </psh-input>
               </div>
               <p class="state-description">Champ temporairement non modifiable. Utilisé pour les données en lecture seule ou les formulaires incomplets.</p>
@@ -146,7 +146,7 @@
                   [readonly]="true"
                   value="Valeur en lecture seule"
                 >
-                  <span input-label>{{ 'INPUT.LABEL.READONLY' | translate }}</span>
+                  <span psh-input-label>{{ 'INPUT.LABEL.READONLY' | translate }}</span>
                 </psh-input>
               </div>
               <p class="state-description">Champ visible mais non modifiable. Permet de copier le contenu tout en empêchant les modifications.</p>
@@ -156,8 +156,8 @@
               <h4>État Erreur</h4>
               <div class="state-examples">
                 <psh-input error="required">
-                  <span input-label>Champ en erreur</span>
-                  <span input-error>
+                  <span psh-input-label>Champ en erreur</span>
+                  <span psh-input-error>
                     <i class="ph ph-warning"></i>
                     {{ 'INPUT.ERROR.REQUIRED' | translate }}
                   </span>
@@ -173,8 +173,8 @@
                   value="contact@exemple.fr"
                   success="valid"
                 >
-                  <span input-label>{{ 'INPUT.LABEL.SUCCESS' | translate }}</span>
-                  <span input-success>{{ 'INPUT.SUCCESS.VALID' | translate }}</span>
+                  <span psh-input-label>{{ 'INPUT.LABEL.SUCCESS' | translate }}</span>
+                  <span psh-input-success>{{ 'INPUT.SUCCESS.VALID' | translate }}</span>
                 </psh-input>
               </div>
               <p class="state-description">Confirme une validation réussie avec un message de succès rassurant pour l'utilisateur.</p>
@@ -187,7 +187,7 @@
                   [loading]="true"
                   placeholder="Vérification en cours..."
                 >
-                  <span input-label>Validation en cours</span>
+                  <span psh-input-label>Validation en cours</span>
                 </psh-input>
               </div>
               <p class="state-description">Affiche un indicateur de chargement pendant une opération asynchrone comme une validation serveur.</p>
@@ -226,7 +226,7 @@
                 placeholder="{{ 'INPUT.PLACEHOLDER.SEARCH' | translate }}"
                 [(value)]="searchValue"
               >
-                <span input-label>{{ 'INPUT.LABEL.SEARCH' | translate }}</span>
+                <span psh-input-label>{{ 'INPUT.LABEL.SEARCH' | translate }}</span>
               </psh-input>
             </div>
             <div class="icon-info">
@@ -245,8 +245,8 @@
                 placeholder="{{ 'INPUT.PLACEHOLDER.EMAIL' | translate }}"
                 [(value)]="emailValue"
               >
-                <span input-label>{{ 'INPUT.LABEL.EMAIL' | translate }}</span>
-                <span input-hint>{{ 'INPUT.HINT.EMAIL' | translate }}</span>
+                <span psh-input-label>{{ 'INPUT.LABEL.EMAIL' | translate }}</span>
+                <span psh-input-hint>{{ 'INPUT.HINT.EMAIL' | translate }}</span>
               </psh-input>
             </div>
             <div class="icon-info">
@@ -264,7 +264,7 @@
                 placeholder="{{ 'INPUT.PLACEHOLDER.PHONE' | translate }}"
                 [(value)]="phoneValue"
               >
-                <span input-label>{{ 'INPUT.LABEL.PHONE' | translate }}</span>
+                <span psh-input-label>{{ 'INPUT.LABEL.PHONE' | translate }}</span>
               </psh-input>
             </div>
             <div class="icon-info">
@@ -281,8 +281,8 @@
                 placeholder="{{ 'INPUT.PLACEHOLDER.PASSWORD' | translate }}"
                 [(value)]="passwordValue"
               >
-                <span input-label>{{ 'INPUT.LABEL.PASSWORD' | translate }}</span>
-                <span input-hint>{{ 'INPUT.HINT.PASSWORD' | translate }}</span>
+                <span psh-input-label>{{ 'INPUT.LABEL.PASSWORD' | translate }}</span>
+                <span psh-input-hint>{{ 'INPUT.HINT.PASSWORD' | translate }}</span>
               </psh-input>
             </div>
             <div class="icon-info">
@@ -312,8 +312,8 @@
                 [suggestions]="cities"
                 (suggestionSelected)="handleCitySelect($event)"
               >
-                <span input-label>Ville</span>
-                <span input-hint>Commencez à taper pour voir les suggestions</span>
+                <span psh-input-label>Ville</span>
+                <span psh-input-hint>Commencez à taper pour voir les suggestions</span>
               </psh-input>
               <p class="autocomplete-description">Liste de suggestions prédéfinies filtrées en temps réel pendant la saisie.</p>
             </div>
@@ -326,8 +326,8 @@
                 [suggestions]="fetchCities"
                 [autocompleteConfig]="{ minLength: 2, debounceTime: 300 }"
               >
-                <span input-label>Ville (avec délai)</span>
-                <span input-hint>Minimum 2 caractères, délai de 300ms</span>
+                <span psh-input-label>Ville (avec délai)</span>
+                <span psh-input-hint>Minimum 2 caractères, délai de 300ms</span>
               </psh-input>
               <p class="autocomplete-description">Suggestions chargées dynamiquement avec debounce pour optimiser les performances.</p>
             </div>
@@ -366,7 +366,7 @@
                 iconStart="envelope"
                 placeholder="votre@email.com"
               >
-                <span input-label>Email</span>
+                <span psh-input-label>Email</span>
               </psh-input>
               @if (loginForm.email().touched() && loginForm.email().invalid()) {
                 <ul class="signal-form-errors">
@@ -382,7 +382,7 @@
                 type="password"
                 placeholder="Mot de passe"
               >
-                <span input-label>Mot de passe</span>
+                <span psh-input-label>Mot de passe</span>
               </psh-input>
               @if (loginForm.password().touched() && loginForm.password().invalid()) {
                 <ul class="signal-form-errors">

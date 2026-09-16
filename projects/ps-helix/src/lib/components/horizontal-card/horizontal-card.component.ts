@@ -24,12 +24,12 @@ import { CommonModule } from '@angular/common';
  *
  * @example
  * <psh-horizontal-card appearance="elevated" sideWidth="var(--psh-size-48)">
- *   <div horizontal-side>
+ *   <div psh-horizontal-card-side>
  *     <img src="image.jpg" alt="Product">
  *   </div>
- *   <h3 horizontal-header>Titre du produit</h3>
+ *   <h3 psh-horizontal-card-header>Titre du produit</h3>
  *   <p>Description du produit</p>
- *   <div horizontal-actions>
+ *   <div psh-horizontal-card-actions>
  *     <psh-button>Voir</psh-button>
  *   </div>
  * </psh-horizontal-card>
@@ -41,6 +41,16 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./horizontal-card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
+  host: {
+    '[class]': 'computedClasses()',
+    '[style]': 'computedStyles()',
+    '(click)': 'handleClick($event)',
+    '(keydown)': 'handleKeydown($event)',
+    role: 'article',
+    '[attr.tabindex]': 'interactive() && !disabled() ? 0 : null',
+    '[attr.aria-disabled]': 'disabled() ? "true" : null',
+    '[attr.aria-busy]': 'loading() ? "true" : null',
+  },
 })
 export class PshHorizontalCardComponent {
 
@@ -59,11 +69,7 @@ export class PshHorizontalCardComponent {
   /** État désactivé */
   disabled = input(false);
 
-  /** Classes CSS additionnelles */
-  cssClass = input<string>('');
 
-  /** Styles inline personnalisés */
-  customStyle = input<Record<string, string>>({});
 
   /** Largeur du contenu latéral (utiliser les tokens de sizing comme var(--psh-size-48)) */
   sideWidth = input<string>('var(--psh-size-48)');
@@ -92,12 +98,18 @@ export class PshHorizontalCardComponent {
     if (this.interactive()) classes.push('psh-interactive');
     if (this.loading()) classes.push('psh-loading');
     if (this.disabled()) classes.push('psh-disabled');
-    if (this.cssClass()) classes.push(this.cssClass());
 
     return classes.join(' ');
   });
 
-  /** Styles calculés */
+  /**
+   * The geometry inputs, as custom properties on the host.
+   *
+   * Unlike the other cards this is not a `customStyle` passthrough in disguise: these five
+   * properties are how `sideWidth`, `gap` and friends reach the stylesheet. The consumer's own
+   * `style` attribute merges with them on the host, so nothing was lost by dropping the
+   * passthrough.
+   */
   computedStyles = computed(() => {
     return {
       '--psh-horizontal-side-width': this.sideWidth(),
@@ -105,7 +117,6 @@ export class PshHorizontalCardComponent {
       '--psh-horizontal-side-padding': this.sidePadding(),
       '--psh-horizontal-content-padding': this.contentPadding(),
       '--psh-horizontal-mobile-height': this.mobileHeight(),
-      ...this.customStyle()
     };
   });
 

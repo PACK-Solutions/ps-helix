@@ -16,7 +16,9 @@ describe('PshCardComponent', () => {
 
     fixture = TestBed.createComponent(PshCardComponent);
     component = fixture.componentInstance;
-    cardElement = fixture.debugElement.query(By.css('[role="article"]'));
+    // The card *is* the host element now, not a wrapper inside it, and
+    // `debugElement.query` only searches descendants.
+    cardElement = fixture.debugElement;
     fixture.detectChanges();
   });
 
@@ -359,37 +361,6 @@ describe('PshCardComponent', () => {
     });
   });
 
-  describe('Custom Classes and Styles', () => {
-    it('should apply custom CSS class', () => {
-      const customClass = 'my-custom-class';
-      fixture.componentRef.setInput('cssClass', customClass);
-      fixture.detectChanges();
-
-      expect(cardElement.nativeElement.className).toContain(customClass);
-    });
-
-    it('should apply multiple custom CSS classes', () => {
-      const customClasses = 'class-one class-two class-three';
-      fixture.componentRef.setInput('cssClass', customClasses);
-      fixture.detectChanges();
-
-      const classes = cardElement.nativeElement.className;
-      expect(classes).toContain('class-one');
-      expect(classes).toContain('class-two');
-      expect(classes).toContain('class-three');
-    });
-
-    it('should apply custom inline styles', () => {
-      const customStyles = { 'background-color': 'red', 'border-radius': '20px' };
-      fixture.componentRef.setInput('customStyle', customStyles);
-      fixture.detectChanges();
-
-      const style = cardElement.nativeElement.style;
-      expect(style.backgroundColor).toBe('red');
-      expect(style.borderRadius).toBe('20px');
-    });
-  });
-
   describe('Click Handling', () => {
     it('should not emit clicked event when not interactive', () => {
       const clickSpy = jest.fn();
@@ -659,14 +630,6 @@ describe('PshCardComponent', () => {
       expect(component.actionsAlignmentClass()).toBe('psh-actions-align-space-between');
     });
 
-    it('should merge custom styles correctly', () => {
-      const customStyles = { color: 'blue', 'font-size': '16px' };
-      fixture.componentRef.setInput('customStyle', customStyles);
-
-      const computedStyles = component.computedStyles();
-      expect(computedStyles).toEqual(customStyles);
-    });
-
     it('should compute actionsClasses with alignment only when not mobile', () => {
       fixture.componentRef.setInput('actionsAlignment', 'center');
       component.isMobile.set(false);
@@ -797,7 +760,6 @@ describe('PshCardComponent', () => {
     it('should handle empty string values correctly', () => {
       fixture.componentRef.setInput('title', '');
       fixture.componentRef.setInput('description', '');
-      fixture.componentRef.setInput('cssClass', '');
       fixture.detectChanges();
 
       expect(component.hasHeader()).toBe(false);
@@ -849,7 +811,7 @@ describe('PshCardComponent', () => {
   imports: [PshCardComponent],
   template: `
     <psh-card>
-      <div card-header-content>
+      <div psh-card-header-content>
         <h3>Titre projeté</h3>
       </div>
     </psh-card>
@@ -863,7 +825,7 @@ class HeaderContentHostComponent {}
   imports: [PshCardComponent],
   template: `
     <psh-card>
-      <i card-header-icon class="ph ph-star" aria-hidden="true"></i>
+      <i psh-card-header-icon class="ph ph-star" aria-hidden="true"></i>
     </psh-card>
   `,
 })
@@ -875,7 +837,7 @@ class HeaderIconHostComponent {}
   imports: [PshCardComponent],
   template: `
     <psh-card>
-      <span card-header-extra>badge</span>
+      <span psh-card-header-actions>badge</span>
     </psh-card>
   `,
 })
@@ -890,7 +852,7 @@ class HeaderExtraHostComponent {}
 class NoHeaderHostComponent {}
 
 describe('PshCardComponent - projected header slots', () => {
-  it('should render the header when only [card-header-content] is projected (no title)', () => {
+  it('should render the header when only [psh-card-header-content] is projected (no title)', () => {
     const fixture = TestBed.createComponent(HeaderContentHostComponent);
     fixture.detectChanges();
 
@@ -899,25 +861,25 @@ describe('PshCardComponent - projected header slots', () => {
     expect(header.nativeElement.children.length).toBeGreaterThan(0);
     // Aucun titre par défaut : le markup vient uniquement du contenu projeté.
     expect(fixture.debugElement.query(By.css('.psh-card-title'))).toBeNull();
-    expect(header.nativeElement.querySelector('[card-header-content]')).toBeTruthy();
+    expect(header.nativeElement.querySelector('[psh-card-header-content]')).toBeTruthy();
   });
 
-  it('should render the header when only [card-header-icon] is projected (no title)', () => {
+  it('should render the header when only [psh-card-header-icon] is projected (no title)', () => {
     const fixture = TestBed.createComponent(HeaderIconHostComponent);
     fixture.detectChanges();
 
     const header = fixture.debugElement.query(By.css('.psh-card-header'));
     expect(header).toBeTruthy();
-    expect(header.nativeElement.querySelector('[card-header-icon]')).toBeTruthy();
+    expect(header.nativeElement.querySelector('[psh-card-header-icon]')).toBeTruthy();
   });
 
-  it('should render the header when only [card-header-extra] is projected (no title)', () => {
+  it('should render the header when only [psh-card-header-actions] is projected (no title)', () => {
     const fixture = TestBed.createComponent(HeaderExtraHostComponent);
     fixture.detectChanges();
 
     const header = fixture.debugElement.query(By.css('.psh-card-header'));
     expect(header).toBeTruthy();
-    expect(header.nativeElement.querySelector('[card-header-extra]')).toBeTruthy();
+    expect(header.nativeElement.querySelector('[psh-card-header-actions]')).toBeTruthy();
   });
 
   it('should keep the header empty (childless) when no title/description nor header slot is provided', () => {

@@ -35,7 +35,7 @@ import { CardDensity, CardActionsAlignment } from './card.types';
  *   appearance="elevated"
  * >
  *   <p>Contenu principal</p>
- *   <div card-actions>
+ *   <div psh-card-actions>
  *     <psh-button color="primary">Action</psh-button>
  *   </div>
  * </psh-card>
@@ -46,8 +46,18 @@ import { CardDensity, CardActionsAlignment } from './card.types';
   styleUrls: ['./card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
+  // Rooted on the host, not on a wrapper `<div>`. The wrapper is why `cssClass` had to
+  // exist: a consumer's `<psh-card class="…">` landed on the host while every style lived
+  // one level down, out of reach. With the card *being* the host, the native `class` and
+  // `style` attributes do the job and the passthrough inputs are gone.
   host: {
-    style: 'display: block;',
+    '[class]': 'computedClasses()',
+    '(click)': 'handleClick($event)',
+    '(keydown)': 'handleKeydown($event)',
+    role: 'article',
+    '[attr.tabindex]': 'interactive() && !disabled() ? 0 : null',
+    '[attr.aria-disabled]': 'disabled() ? "true" : null',
+    '[attr.aria-busy]': 'loading() ? "true" : null',
   },
 })
 export class PshCardComponent implements OnDestroy {
@@ -96,12 +106,6 @@ export class PshCardComponent implements OnDestroy {
   /** Activer/désactiver le padding du body */
   bodyPadding = input<boolean>(true);
 
-  /** Classes CSS additionnelles */
-  cssClass = input<string>('');
-
-  /** Styles inline personnalisés */
-  customStyle = input<Record<string, string>>({});
-
   /** État de chargement - affiche un skeleton */
   loading = input<boolean>(false);
 
@@ -124,14 +128,8 @@ export class PshCardComponent implements OnDestroy {
     if (this.interactive()) classes.push('psh-interactive');
     if (this.loading()) classes.push('psh-loading');
     if (this.disabled()) classes.push('psh-disabled');
-    if (this.cssClass()) classes.push(this.cssClass());
 
     return classes.join(' ');
-  });
-
-  /** Styles calculés */
-  computedStyles = computed(() => {
-    return { ...this.customStyle() };
   });
 
   /** Indique si le header doit être affiché */

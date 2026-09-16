@@ -1,4 +1,4 @@
-import { PshSurfaceAppearance } from '../../types/semantic.types';
+import { PshColor, PshSurfaceAppearance } from '../../types/semantic.types';
 /**
  * Represents a single data row in the info card
  */
@@ -50,12 +50,15 @@ export type InfoCardVariant = PshSurfaceAppearance;
  * Couleurs sémantiques autorisées pour la mise en forme d'une valeur.
  * Jeu fermé, mappé sur les tokens du thème (clair et sombre).
  */
-export type InfoCardTone = 'muted' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+/**
+ * @deprecated Since 7.0.0 — use {@link PshColor}. `muted` is now `neutral`.
+ */
+export type InfoCardTone = PshColor;
 
 /**
  * Mise en forme optionnelle de la valeur d'une ligne.
  * Toutes les options sont indépendantes et **cumulables**
- * (ex. { italic: true, strikethrough: true, tone: 'danger' }).
+ * (ex. { italic: true, strikethrough: true, color: 'danger' }).
  * Jeu volontairement fermé : pas de CSS ni de couleur arbitraire —
  * pour du contenu riche, utiliser psh-table.
  */
@@ -66,6 +69,6 @@ export interface InfoCardEmphasis {
   bold?: boolean;
   /** Barré (line-through). */
   strikethrough?: boolean;
-  /** Couleur sémantique (jeu fermé, tokenisée). */
-  tone?: InfoCardTone;
+  /** Couleur sémantique. Même union que partout ailleurs : {@link PshColor}. */
+  color?: PshColor;
 }

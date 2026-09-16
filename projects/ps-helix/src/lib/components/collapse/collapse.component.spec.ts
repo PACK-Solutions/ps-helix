@@ -8,7 +8,7 @@ import { CollapseVariant, CollapseSize } from './collapse.types';
   changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <psh-collapse>
-      <span collapse-header>Custom Header</span>
+      <span psh-collapse-header>Custom Header</span>
       <p>Projected content</p>
     </psh-collapse>
   `,
@@ -20,7 +20,7 @@ class TestHostComponent {}
   changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <psh-collapse [id]="'custom-collapse'">
-      <span collapse-header>With ID</span>
+      <span psh-collapse-header>With ID</span>
       Content
     </psh-collapse>
   `,
@@ -104,7 +104,7 @@ describe('PshCollapseComponent', () => {
       const hostFixture = TestBed.createComponent(TestHostComponent);
       hostFixture.detectChanges();
 
-      const headerContent = hostFixture.nativeElement.querySelector('[collapse-header]');
+      const headerContent = hostFixture.nativeElement.querySelector('[psh-collapse-header]');
       expect(headerContent.textContent).toContain('Custom Header');
     });
 

@@ -93,8 +93,6 @@ export class MyComponent {}
 |-----|------|--------|-------------|
 | `variant` | `StatCardVariant` | `'elevated'` | Variante visuelle : `'default'` \| `'elevated'` \| `'outlined'` |
 | `iconBackground` | `string` | Auto | Couleur de fond personnalisee pour l'icone (CSS gradient ou couleur). Par defaut, utilise un gradient base sur `tagVariant` |
-| `cssClass` | `string` | `''` | Classes CSS additionnelles |
-| `customStyle` | `Record<string, string>` | `{}` | Styles inline personnalises |
 
 ### Inputs de Disposition
 

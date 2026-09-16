@@ -43,7 +43,7 @@ import { PshModalComponent, PshButtonComponent } from 'ps-helix';
 ```html
 <psh-modal #modal [(open)]="isOpen" title="Actions Multiples">
   <p>Choisissez une action à effectuer.</p>
-  <div modal-footer #modalFooter>
+  <div psh-modal-footer #modalFooter>
     <psh-button
       appearance="ghost"
       [fullWidth]="modal.isMobileScreen()"
@@ -81,7 +81,7 @@ import { PshModalComponent, PshButtonComponent } from 'ps-helix';
 | dismissLabel | string | 'Close' | Label accessible pour le bouton de fermeture |
 | confirmLabel | string | 'Confirm' | Label du bouton de confirmation |
 | cancelLabel | string | 'Cancel' | Label du bouton d'annulation |
-| styleClass | string | '' | Classes CSS personnalisées pour le conteneur |
+| panelClass | string | '' | Classes CSS personnalisées pour le conteneur |
 | backdropClass | string | '' | Classes CSS personnalisées pour l'arrière-plan |
 
 ### Computed Signals (Public)
@@ -191,7 +191,7 @@ Empêche la fermeture via le backdrop et la touche Échap :
 <psh-modal
   [(open)]="isOpen"
   title="Modale Stylisée"
-  styleClass="my-custom-modal highlighted"
+  panelClass="my-custom-modal highlighted"
 >
   <p>Contenu avec style personnalisé.</p>
 </psh-modal>
@@ -248,12 +248,12 @@ Le contenu principal projeté dans la zone scrollable.
 </psh-modal>
 ```
 
-### [modal-title]
+### [psh-modal-title]
 Personnalise le titre avec du HTML ou des composants.
 
 ```html
 <psh-modal [(open)]="isOpen">
-  <span modal-title>
+  <span psh-modal-title>
     <i class="ph ph-warning"></i>
     Titre avec icône
   </span>
@@ -261,13 +261,13 @@ Personnalise le titre avec du HTML ou des composants.
 </psh-modal>
 ```
 
-### [modal-footer]
+### [psh-modal-footer]
 Remplace le footer par défaut. **Nécessite `#modalFooter`** pour la détection automatique.
 
 ```html
 <psh-modal #modal [(open)]="isOpen" title="Actions">
   <p>Contenu</p>
-  <div modal-footer #modalFooter>
+  <div psh-modal-footer #modalFooter>
     <psh-button [fullWidth]="modal.isMobileScreen()">Annuler</psh-button>
     <psh-button [fullWidth]="modal.isMobileScreen()">Confirmer</psh-button>
   </div>
@@ -408,7 +408,7 @@ Pour les footers personnalisés, utilisez toujours `isMobileScreen()` :
 ```html
 <psh-modal #modal [(open)]="isOpen" title="Actions">
   <p>Contenu</p>
-  <div modal-footer #modalFooter>
+  <div psh-modal-footer #modalFooter>
     <psh-button [fullWidth]="modal.isMobileScreen()">Annuler</psh-button>
     <psh-button [fullWidth]="modal.isMobileScreen()">Confirmer</psh-button>
   </div>

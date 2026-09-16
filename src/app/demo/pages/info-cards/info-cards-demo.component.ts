@@ -70,19 +70,19 @@ export class InfoCardsDemoComponent {
 
   emphasisData: InfoCardData[] = [
     { label: 'Nom', value: 'Dupont' },
-    { label: 'Statut', value: 'Actif', emphasis: { bold: true, tone: 'success' } },
-    { label: 'Priorité', value: 'Haute', emphasis: { tone: 'warning' } },
-    { label: 'Ancien IBAN', value: 'FR76 •••• •••• 4521', emphasis: { strikethrough: true, tone: 'danger' } },
-    { label: 'Référence interne', value: 'REF-2025-0042', emphasis: { italic: true, tone: 'info' } },
-    { label: 'Adresse e-mail', value: 'Non renseigné', emphasis: { tone: 'muted', italic: true } },
+    { label: 'Statut', value: 'Actif', emphasis: { bold: true, color: 'success' } },
+    { label: 'Priorité', value: 'Haute', emphasis: { color: 'warning' } },
+    { label: 'Ancien IBAN', value: 'FR76 •••• •••• 4521', emphasis: { strikethrough: true, color: 'danger' } },
+    { label: 'Référence interne', value: 'REF-2025-0042', emphasis: { italic: true, color: 'info' } },
+    { label: 'Adresse e-mail', value: 'Non renseigné', emphasis: { color: 'neutral', italic: true } },
     { label: 'Téléphone', value: null }
   ];
 
   emphasisCode = `// Mise en forme bornee & cumulable de la valeur via 'emphasis'
 const rows: InfoCardData[] = [
   { label: 'Nom', value: 'Dupont' },
-  { label: 'Statut', value: 'Actif', emphasis: { bold: true, tone: 'success' } },
-  { label: 'Ancien IBAN', value: 'FR76…', emphasis: { strikethrough: true, tone: 'danger' } },
+  { label: 'Statut', value: 'Actif', emphasis: { bold: true, color: 'success' } },
+  { label: 'Ancien IBAN', value: 'FR76…', emphasis: { strikethrough: true, color: 'danger' } },
 
   // Valeur nullish -> auto-« muted » (italique + couleur secondaire)
   { label: 'Téléphone', value: null }
@@ -126,7 +126,7 @@ const rows: InfoCardData[] = [
   appearance="elevated"
   icon="user-circle"
 >
-  <div card-header-actions>
+  <div psh-info-card-header-actions>
     <psh-button appearance="ghost" size="small">
       <i class="ph ph-pencil"></i>
     </psh-button>
@@ -139,7 +139,7 @@ const rows: InfoCardData[] = [
   appearance="outline"
   icon="folder"
 >
-  <div card-header-actions>
+  <div psh-info-card-header-actions>
     <psh-badge color="success">Actif</psh-badge>
   </div>
 </psh-info-card>`;
@@ -150,10 +150,10 @@ const rows: InfoCardData[] = [
   appearance="elevated"
   icon="package"
 >
-  <div card-header-actions>
+  <div psh-info-card-header-actions>
     <psh-badge color="warning">En cours</psh-badge>
   </div>
-  <div card-actions>
+  <div psh-info-card-actions>
     <psh-button color="primary">Suivre</psh-button>
   </div>
 </psh-info-card>`;

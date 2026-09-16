@@ -30,6 +30,16 @@ const ICON_GRADIENT_DEFAULTS: Record<PshColor, string> = Object.fromEntries(
   styleUrls: ['./stat-card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
+  host: {
+    '[class]': 'computedClasses()',
+    '(click)': 'handleClick($event)',
+    '(keydown)': 'handleKeydown($event)',
+    '[attr.role]': 'interactive() ? "button" : "article"',
+    '[attr.tabindex]': 'interactive() && !disabled() ? 0 : null',
+    '[attr.aria-label]': 'computedAriaLabel()',
+    '[attr.aria-disabled]': 'disabled() ? "true" : null',
+    '[attr.aria-busy]': 'loading() ? "true" : null',
+  },
 })
 export class PshStatCardComponent {
 
@@ -68,11 +78,7 @@ export class PshStatCardComponent {
   /** État désactivé */
   disabled = input(false);
 
-  /** Classes CSS additionnelles */
-  cssClass = input<string>('');
 
-  /** Styles inline personnalisés */
-  customStyle = input<Record<string, string>>({});
 
   /** Label ARIA pour l'accessibilité */
   ariaLabel = input<string>();
@@ -157,15 +163,10 @@ export class PshStatCardComponent {
     if (this.interactive()) classes.push('psh-interactive');
     if (this.loading()) classes.push('psh-loading');
     if (this.disabled()) classes.push('psh-disabled');
-    if (this.cssClass()) classes.push(this.cssClass());
 
     return classes.join(' ');
   });
 
-  /** Styles calculés */
-  computedStyles = computed(() => {
-    return { ...this.customStyle() };
-  });
 
   // Exposer les valeurs calculées pour le template
   protected get displayValue() { return this.computedValue(); }

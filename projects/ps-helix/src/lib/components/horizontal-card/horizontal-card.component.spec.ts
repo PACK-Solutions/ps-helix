@@ -16,7 +16,8 @@ describe('PshHorizontalCardComponent', () => {
 
     fixture = TestBed.createComponent(PshHorizontalCardComponent);
     component = fixture.componentInstance;
-    cardElement = fixture.debugElement.query(By.css('[role="article"]'));
+    // The card *is* the host element now, and `debugElement.query` searches descendants.
+    cardElement = fixture.debugElement;
     fixture.detectChanges();
   });
 
@@ -193,37 +194,6 @@ describe('PshHorizontalCardComponent', () => {
       fixture.detectChanges();
 
       expect(cardElement.nativeElement.getAttribute('aria-disabled')).toBeNull();
-    });
-  });
-
-  describe('Custom Classes and Styles', () => {
-    it('should apply custom CSS class', () => {
-      const customClass = 'my-custom-class';
-      fixture.componentRef.setInput('cssClass', customClass);
-      fixture.detectChanges();
-
-      expect(cardElement.nativeElement.className).toContain(customClass);
-    });
-
-    it('should apply multiple custom CSS classes', () => {
-      const customClasses = 'class-one class-two class-three';
-      fixture.componentRef.setInput('cssClass', customClasses);
-      fixture.detectChanges();
-
-      const classes = cardElement.nativeElement.className;
-      expect(classes).toContain('class-one');
-      expect(classes).toContain('class-two');
-      expect(classes).toContain('class-three');
-    });
-
-    it('should apply custom inline styles', () => {
-      const customStyles = { 'background-color': 'red', 'border-radius': '20px' };
-      fixture.componentRef.setInput('customStyle', customStyles);
-      fixture.detectChanges();
-
-      const style = cardElement.nativeElement.style;
-      expect(style.backgroundColor).toBe('red');
-      expect(style.borderRadius).toBe('20px');
     });
   });
 

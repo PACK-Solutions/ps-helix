@@ -85,25 +85,25 @@ export class CardsDemoComponent {
 </psh-card>`;
 
   headerIconSlotCode = `<psh-card title="Titre">
-  <div card-header-icon>
+  <div psh-card-header-icon>
     <i class="ph ph-bell"></i>
   </div>
   Contenu
 </psh-card>`;
 
   headerExtraFooterSlotCode = `<psh-card title="Titre">
-  <div card-header-extra>
+  <div psh-card-header-actions>
     <psh-tag>Badge</psh-tag>
   </div>
   Contenu
-  <div card-footer>
+  <div psh-card-footer>
     Métadonnées
   </div>
 </psh-card>`;
 
   cardActionsSlotCode = `<psh-card title="Titre">
   Contenu
-  <div card-actions>
+  <div psh-card-actions>
     <psh-button>Action 1</psh-button>
     <psh-button>Action 2</psh-button>
   </div>
@@ -114,13 +114,13 @@ export class CardsDemoComponent {
   // du composant consommateur (pas de ::ng-deep).
   customHeaderSlotCode = `<psh-card appearance="outline" density="compact">
   <!-- Titre + icône composés par le consommateur -->
-  <div card-header-content class="premium-header">
+  <div psh-card-header-content class="premium-header">
     <i class="ph ph-currency-eur" aria-hidden="true"></i>
     <h3>Versement initial</h3>
   </div>
 
   <!-- Valeur alignée à droite -->
-  <span card-header-extra>
+  <span psh-card-header-actions>
     <psh-tag color="success">1 500 €</psh-tag>
   </span>
 

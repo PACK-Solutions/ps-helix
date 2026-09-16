@@ -52,10 +52,10 @@
               [gap]="'var(--psh-spacing-md)'"
               (clicked)="handleCardClick($event, 'Product ' + product.id)"
             >
-              <div horizontal-side>
+              <div psh-horizontal-card-side>
                 <img [ngSrc]="product.image" [alt]="product.imageAlt" class="product-image" fill loading="lazy">
               </div>
-              <div horizontal-header>
+              <div psh-horizontal-card-header>
                 <div class="product-header">
                   <h4 class="product-title">{{ product.name }}</h4>
                   <psh-tag [color]="product.stock === 'En stock' ? 'success' : 'warning'" [size]="'small'">
@@ -68,7 +68,7 @@
                 <span class="product-category">{{ product.category }}</span>
                 <span class="product-price">{{ product.price }}</span>
               </div>
-              <div horizontal-actions>
+              <div psh-horizontal-card-actions>
                 <psh-button [color]="'primary'">Acheter</psh-button>
                 <psh-button [appearance]="'outline'" [color]="'secondary'">Détails</psh-button>
               </div>
@@ -98,7 +98,7 @@
               [gap]="'var(--psh-spacing-lg)'"
               (clicked)="handleCardClick($event, 'User ' + user.id)"
             >
-              <div horizontal-side>
+              <div psh-horizontal-card-side>
                 <div class="user-avatar-wrapper">
                   <psh-avatar
                     [initials]="user.avatar"
@@ -106,7 +106,7 @@
                   ></psh-avatar>
                 </div>
               </div>
-              <div horizontal-header>
+              <div psh-horizontal-card-header>
                 <div class="user-header">
                   <h4 class="user-name">{{ user.name }}</h4>
                   <psh-tag [color]="user.status === 'Actif' ? 'success' : 'secondary'" [size]="'small'">
@@ -129,7 +129,7 @@
                   <span>{{ user.projects }} projets</span>
                 </div>
               </div>
-              <div horizontal-actions>
+              <div psh-horizontal-card-actions>
                 <psh-button [color]="'primary'">Contacter</psh-button>
                 <psh-button [appearance]="'ghost'" [color]="'secondary'">Voir profil</psh-button>
               </div>
@@ -159,10 +159,10 @@
               [gap]="'var(--psh-spacing-lg)'"
               (clicked)="handleCardClick($event, 'Article ' + article.id)"
             >
-              <div horizontal-side>
+              <div psh-horizontal-card-side>
                 <img [ngSrc]="article.image" [alt]="article.imageAlt" class="article-image" fill loading="lazy">
               </div>
-              <div horizontal-header>
+              <div psh-horizontal-card-header>
                 <div class="article-header">
                   <psh-tag [color]="'primary'" [size]="'small'">{{ article.category }}</psh-tag>
                 </div>
@@ -179,7 +179,7 @@
                   {{ article.readTime }} de lecture
                 </span>
               </div>
-              <div horizontal-actions>
+              <div psh-horizontal-card-actions>
                 <psh-button [color]="'primary'">Lire l'article</psh-button>
                 <psh-button [appearance]="'ghost'" [color]="'secondary'">Partager</psh-button>
               </div>
@@ -203,10 +203,10 @@
           <div class="variant-example">
             <h4>Elevated</h4>
             <psh-horizontal-card [appearance]="'elevated'" [sideWidth]="'var(--psh-size-32)'">
-              <div horizontal-side>
+              <div psh-horizontal-card-side>
                 <div class="demo-side" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
               </div>
-              <div horizontal-header>
+              <div psh-horizontal-card-header>
                 <h5>Carte avec ombre portée</h5>
               </div>
               <p>Idéale pour mettre en avant des contenus importants avec une élévation visuelle claire.</p>
@@ -215,10 +215,10 @@
           <div class="variant-example">
             <h4>Outlined</h4>
             <psh-horizontal-card [appearance]="'outline'" [sideWidth]="'var(--psh-size-32)'">
-              <div horizontal-side>
+              <div psh-horizontal-card-side>
                 <div class="demo-side" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
               </div>
-              <div horizontal-header>
+              <div psh-horizontal-card-header>
                 <h5>Carte avec bordure</h5>
               </div>
               <p>Parfaite pour les interfaces épurées et les contenus secondaires nécessitant moins d'emphase.</p>
@@ -227,10 +227,10 @@
           <div class="variant-example">
             <h4>Default</h4>
             <psh-horizontal-card [appearance]="'flat'" [sideWidth]="'var(--psh-size-32)'">
-              <div horizontal-side>
+              <div psh-horizontal-card-side>
                 <div class="demo-side" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
               </div>
-              <div horizontal-header>
+              <div psh-horizontal-card-header>
                 <h5>Carte style par défaut</h5>
               </div>
               <p>Utilisée pour les contenus intégrés ou les designs minimalistes sans décoration.</p>
@@ -251,10 +251,10 @@
             <h4>État Loading</h4>
             <p class="state-description">Affiche un skeleton animé pendant le chargement des données.</p>
             <psh-horizontal-card [loading]="true" [sideWidth]="'var(--psh-size-32)'">
-              <div horizontal-side>
+              <div psh-horizontal-card-side>
                 <div class="demo-side"></div>
               </div>
-              <div horizontal-header>
+              <div psh-horizontal-card-header>
                 <h5>Contenu masqué</h5>
               </div>
               <p>Ce contenu ne sera pas visible pendant le chargement.</p>
@@ -269,14 +269,14 @@
               [disabled]="true"
               [sideWidth]="'var(--psh-size-32)'"
             >
-              <div horizontal-side>
+              <div psh-horizontal-card-side>
                 <div class="demo-side" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
               </div>
-              <div horizontal-header>
+              <div psh-horizontal-card-header>
                 <h5>Carte désactivée</h5>
               </div>
               <p>Cette carte est désactivée et ne peut pas être cliquée.</p>
-              <div horizontal-actions>
+              <div psh-horizontal-card-actions>
                 <psh-button [color]="'primary'" [disabled]="true">Action</psh-button>
               </div>
             </psh-horizontal-card>

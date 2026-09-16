@@ -148,7 +148,7 @@ export class ModalService {
  * // With custom footer
  * <psh-modal [(open)]="isOpen" title="Confirm Action">
  *   <p>Are you sure?</p>
- *   <div modal-footer #modalFooter>
+ *   <div psh-modal-footer #modalFooter>
  *     <psh-button (clicked)="isOpen = false">Cancel</psh-button>
  *     <psh-button color="primary" (clicked)="handleConfirm()">Confirm</psh-button>
  *   </div>
@@ -236,15 +236,19 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
   cancelLabel = input(this.config.cancelLabel ?? 'Cancel');
 
   /**
-   * Custom CSS class(es) to apply to the modal container
-   * Allows for custom styling without using deep selectors
+   * Custom CSS class(es) for the modal panel.
+   *
+   * The only kind of passthrough that survives 7.0.0: the panel is rendered away from the
+   * host — a backdrop covering the viewport, positioned by the overlay stack — so a class on
+   * `<psh-modal>` cannot reach it. Every component that styles its own host lost its
+   * passthrough instead.
    *
    * @example
    * ```html
-   * <psh-modal styleClass="my-custom-modal" />
+   * <psh-modal panelClass="my-custom-modal" />
    * ```
    */
-  styleClass = input('');
+  panelClass = input('');
 
   /**
    * Custom CSS class(es) to apply to the modal backdrop
