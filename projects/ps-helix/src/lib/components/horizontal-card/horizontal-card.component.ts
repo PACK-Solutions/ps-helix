@@ -47,6 +47,7 @@ import { CommonModule } from '@angular/common';
     '(click)': 'handleClick($event)',
     '(keydown)': 'handleKeydown($event)',
     role: 'article',
+    '[attr.aria-label]': 'ariaLabel() || null',
     '[attr.tabindex]': 'interactive() && !disabled() ? 0 : null',
     '[attr.aria-disabled]': 'disabled() ? "true" : null',
     '[attr.aria-busy]': 'loading() ? "true" : null',
@@ -68,6 +69,9 @@ export class PshHorizontalCardComponent {
 
   /** État désactivé */
   disabled = input(false);
+
+  /** Name of the article, for a card with no visible title. */
+  readonly ariaLabel = input<string>();
 
 
 

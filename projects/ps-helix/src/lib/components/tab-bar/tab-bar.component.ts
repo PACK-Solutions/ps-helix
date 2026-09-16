@@ -35,7 +35,7 @@ export const TAB_BAR_CONFIG = new InjectionToken<Partial<TabBarConfig>>('TAB_BAR
     '[class.psh-top]': 'position() === "top"',
     '[class.psh-animated]': 'animated()',
     'role': 'tablist',
-    '[attr.aria-label]': '"Navigation par onglets"'
+    '[attr.aria-label]': 'ariaLabel()'
   }
 })
 export class PshTabBarComponent {
@@ -50,6 +50,9 @@ export class PshTabBarComponent {
 
   // Regular inputs
   items = input.required<TabBarItem[]>();
+
+  /** Name of the tab bar. Was hard-coded, in French, with no way out. */
+  readonly ariaLabel = input<string>('Navigation par onglets');
 
   /**
    * Replaces the content of every tab.

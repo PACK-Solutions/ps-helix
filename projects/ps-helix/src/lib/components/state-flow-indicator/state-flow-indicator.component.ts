@@ -43,7 +43,7 @@ export const STATE_FLOW_INDICATOR_CONFIG = new InjectionToken<Partial<StateFlowI
     '[class.psh-size-medium]': 'size() === "medium"',
     '[class.psh-size-large]': 'size() === "large"',
     '[attr.role]': '"region"',
-    '[attr.aria-label]': '"Indicateur de progression"'
+    '[attr.aria-label]': 'ariaLabel()'
   }
 })
 export class PshStateFlowIndicatorComponent {
@@ -54,6 +54,9 @@ export class PshStateFlowIndicatorComponent {
   size = input<StateFlowIndicatorSize>('medium');
 
   ariaLabels = input<StateFlowIndicatorAriaLabels>();
+
+  /** Name of the progress landmark. Was hard-coded, in French, with no way out. */
+  readonly ariaLabel = input<string>('Indicateur de progression');
   beforeStepChange = input<(from: number, to: number) => Promise<boolean> | boolean>();
 
   stepChange = output<number>();

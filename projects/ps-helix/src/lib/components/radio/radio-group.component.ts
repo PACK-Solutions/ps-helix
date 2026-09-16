@@ -18,6 +18,7 @@ import { PSH_RADIO_GROUP, PshRadioGroupApi } from './radio-group.token';
 import { RadioSize } from './radio.types';
 import { pshUniqueId } from '../../utils/unique-id';
 import { pshRequiredError } from '../../utils/required-validator';
+import { pshJoinAriaIds } from '../../utils/aria';
 
 export interface RadioGroupConfig {
   size: RadioSize;
@@ -118,6 +119,18 @@ export class PshRadioGroupComponent<T = unknown>
   /** Guidance shown when there is neither an error nor a success message. */
   readonly hint = input<string | null | undefined>(null);
 
+  /**
+   * Extra ids for `aria-describedby`. **Merged** with the control's own — the id of its error,
+   * success or hint message — never replacing them.
+   */
+  readonly ariaDescribedBy = input<string>();
+
+  /**
+   * Ids of the elements that name this control, for the cases a visible `<label>` cannot
+   * cover. Merged with anything the control already points at.
+   */
+  readonly ariaLabelledBy = input<string>();
+
   protected readonly radios = contentChildren(PshRadioComponent);
 
   protected readonly labelId = computed(() =>
@@ -133,8 +146,11 @@ export class PshRadioGroupComponent<T = unknown>
 
   // Same order as the template's @if/@else-if chain: aria-describedby must name the message
   // that is actually rendered, not the first one that happens to be set.
-  protected readonly describedBy = computed(
-    () => this.errorId() ?? this.successId() ?? this.hintId(),
+  protected readonly describedBy = computed(() =>
+    pshJoinAriaIds(
+      this.errorId() ?? this.successId() ?? this.hintId(),
+      this.ariaDescribedBy(),
+    ),
   );
 
   /** Called by a child radio. The group owns the value, so the radio asks rather than sets. */

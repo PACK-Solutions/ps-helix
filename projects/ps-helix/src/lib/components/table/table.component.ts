@@ -81,6 +81,15 @@ export class PshTableComponent {
    */
   rowClass = input<(row: TableRow) => string | undefined>();
 
+  /** Name of the table itself. There was none, so several tables on a page were all "table". */
+  readonly ariaLabel = input<string>();
+  /** Name of the expand column header, which has no visible text. Was a literal. */
+  readonly expandColumnLabel = input<string>('Expand');
+  /** Name of a row's expand toggle. Was a pair of literals. */
+  readonly expandRowLabel = input<string>('Expand row');
+  /** Name of a row's collapse toggle. Was a pair of literals. */
+  readonly collapseRowLabel = input<string>('Collapse row');
+
   sortChange = output<TableSort>();
   globalSearchChange = output<string>();
   rowClicked = output<TableRowClickEvent>();

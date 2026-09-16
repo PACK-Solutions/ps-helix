@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, inject, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, input, OnDestroy } from '@angular/core';
 import { Toast } from './toast.types';
 import { PshColor } from '../../types/semantic.types';
 import { PshToastService } from './toast.service';
@@ -14,6 +14,14 @@ import { TOAST_CONFIG } from './toast.tokens';
   }
 })
 export class PshToastComponent implements OnDestroy {
+  /**
+   * Name of the notifications landmark. Was a literal in the template.
+   *
+   * The first `input()` this component has ever had: it went from zero inputs and zero
+   * outputs on 118 lines to one. The rest of its API is still the service.
+   */
+  readonly ariaLabel = input<string>('Notifications');
+
   private toastService = inject(PshToastService);
   public config = inject(TOAST_CONFIG);
 

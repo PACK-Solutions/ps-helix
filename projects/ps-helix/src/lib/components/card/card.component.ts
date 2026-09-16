@@ -55,6 +55,7 @@ import { CardDensity, CardActionsAlignment } from './card.types';
     '(click)': 'handleClick($event)',
     '(keydown)': 'handleKeydown($event)',
     role: 'article',
+    '[attr.aria-label]': 'ariaLabel() || null',
     '[attr.tabindex]': 'interactive() && !disabled() ? 0 : null',
     '[attr.aria-disabled]': 'disabled() ? "true" : null',
     '[attr.aria-busy]': 'loading() ? "true" : null',
@@ -111,6 +112,12 @@ export class PshCardComponent implements OnDestroy {
 
   /** État désactivé - réduit l'opacité */
   disabled = input<boolean>(false);
+
+  /**
+   * Name of the article, for a card with no visible `title`. A card that has one is already
+   * named by it, so this stays unset by default rather than competing with it.
+   */
+  readonly ariaLabel = input<string>();
 
   // Outputs
   /** Émis lors du clic sur la carte (si interactive) */

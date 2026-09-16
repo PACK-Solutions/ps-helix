@@ -26,11 +26,11 @@
     </div>
   }
 
-  <table role="table">
+  <table role="table" [attr.aria-label]="ariaLabel()">
     <thead>
       <tr>
         @if (expandable()) {
-          <th class="psh-expand-header" scope="col" aria-label="Expand"></th>
+          <th class="psh-expand-header" scope="col" [attr.aria-label]="expandColumnLabel()"></th>
         }
         @for (column of columns(); track column.key) {
           <th
@@ -110,7 +110,7 @@
                     type="button"
                     class="psh-expand-toggle"
                     [attr.aria-expanded]="isRowExpanded(row)"
-                    [attr.aria-label]="isRowExpanded(row) ? 'Collapse row' : 'Expand row'"
+                    [attr.aria-label]="isRowExpanded(row) ? collapseRowLabel() : expandRowLabel()"
                     (click)="toggleRow(row); $event.stopPropagation()"
                   >
                     <i class="ph ph-caret-right"></i>

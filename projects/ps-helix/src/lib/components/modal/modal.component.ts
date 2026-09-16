@@ -252,6 +252,19 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
   panelClass = input('');
 
   /**
+   * Name of the dialog, for the case where no visible title is rendered.
+   *
+   * When it is set it **replaces** `aria-labelledby`, because that attribute wins over
+   * `aria-label` and would make this input silently do nothing. Setting it is therefore the
+   * caller saying "the visible title is absent or unsuitable".
+   */
+  readonly ariaLabel = input<string>();
+
+  protected readonly labelledBy = computed(() =>
+    this.ariaLabel() ? null : `${this.modalDialogId()}-title`,
+  );
+
+  /**
    * Custom CSS class(es) to apply to the modal backdrop
    * Useful for stacked modals with different z-index or opacity
    *

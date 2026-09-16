@@ -128,6 +128,40 @@ describe('aria-describedby points at a rendered element', () => {
 
         expect(described).toEqual([]);
       });
+
+      /**
+       * `aria-describedby` takes a list, and that is the whole reason `ariaDescribedBy`
+       * merges instead of replacing. Before 7.0.0 there was no input at all — zero across
+       * all 33 classes — so attaching extra guidance meant setting the attribute from
+       * outside, which overwrote the id of the control's own error message.
+       */
+      it('merges the caller ids with its own instead of replacing them', () => {
+        const help = document.createElement('p');
+        help.id = 'external-help';
+        help.textContent = 'Extra guidance';
+        document.body.appendChild(help);
+
+        fixture.componentRef.setInput('error', 'Required');
+        fixture.componentRef.setInput('ariaDescribedBy', 'external-help');
+        fixture.detectChanges();
+
+        const el = (fixture.nativeElement as HTMLElement).querySelector('[aria-describedby]');
+        const ids = el?.getAttribute('aria-describedby')?.split(/\s+/) ?? [];
+
+        expect(ids).toContain('external-help');
+        expect(ids.length).toBe(2);
+        expect(danglingIds(fixture)).toEqual([]);
+
+        help.remove();
+      });
+
+      it('publishes the caller ids on their own when it has no message', () => {
+        fixture.componentRef.setInput('ariaDescribedBy', 'a b');
+        fixture.detectChanges();
+
+        const el = (fixture.nativeElement as HTMLElement).querySelector('[aria-describedby]');
+        expect(el?.getAttribute('aria-describedby')).toBe('a b');
+      });
     });
   }
 });
@@ -145,6 +179,7 @@ describe('aria-describedby points at a rendered element', () => {
     PshCheckboxComponent,
     PshSwitchComponent,
     PshRadioComponent,
+    PshSelectComponent,
   ],
   changeDetection: ChangeDetectionStrategy.Eager,
   template: `
@@ -158,6 +193,8 @@ describe('aria-describedby points at a rendered element', () => {
     <psh-switch error="Second" />
     <psh-radio error="First" />
     <psh-radio error="Second" />
+    <psh-select [options]="[]" error="First" />
+    <psh-select [options]="[]" error="Second" />
   `,
 })
 class TwoOfEachHostComponent {}
@@ -174,7 +211,7 @@ describe('aria-describedby is unique per instance', () => {
       .map(el => el.getAttribute('aria-describedby'))
       .filter((v): v is string => !!v);
 
-    expect(described.length).toBe(10);
+    expect(described.length).toBe(12);
     expect(new Set(described).size).toBe(described.length);
     expect(danglingIds(fixture)).toEqual([]);
 

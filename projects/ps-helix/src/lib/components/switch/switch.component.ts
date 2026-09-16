@@ -16,6 +16,7 @@ import type { FormCheckboxControl } from '@angular/forms/signals';
 import { SwitchSize, SwitchConfig } from './switch.types';
 import { pshUniqueId } from '../../utils/unique-id';
 import { pshRequiredError } from '../../utils/required-validator';
+import { pshJoinAriaIds } from '../../utils/aria';
 
 export const SWITCH_CONFIG = new InjectionToken<Partial<SwitchConfig>>('SWITCH_CONFIG', {
   factory: () => ({
@@ -76,6 +77,18 @@ export class PshSwitchComponent implements ControlValueAccessor, FormCheckboxCon
   success = input<string | null | undefined>(null);
   /** Guidance shown when there is neither an error nor a success message. */
   hint = input<string | null | undefined>(null);
+
+  /**
+   * Extra ids for `aria-describedby`. **Merged** with the control's own — the id of its error,
+   * success or hint message — never replacing them.
+   */
+  readonly ariaDescribedBy = input<string>();
+
+  /**
+   * Ids of the elements that name this control, for the cases a visible `<label>` cannot
+   * cover. Merged with anything the control already points at.
+   */
+  readonly ariaLabelledBy = input<string>();
   ariaLabel = input<string>();
   name = input<string>('');
   id = input<string>(this.uniqueId);
@@ -94,7 +107,12 @@ export class PshSwitchComponent implements ControlValueAccessor, FormCheckboxCon
   hintId = computed(() => this.hint() ? `${this.id()}-hint` : null);
   // error, success and hint are mutually exclusive in the template (@if/@else if), so
   // aria-describedby references whichever message is actually rendered — in the same order.
-  describedBy = computed(() => this.errorId() ?? this.successId() ?? this.hintId());
+  describedBy = computed(() =>
+    pshJoinAriaIds(
+      this.errorId() ?? this.successId() ?? this.hintId(),
+      this.ariaDescribedBy(),
+    ),
+  );
 
   toggle(): void {
     if (!this.disabled()) {
