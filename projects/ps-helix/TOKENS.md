@@ -458,7 +458,7 @@ used before 7.0.0 remain available through the opt-in `styles/compat.css`.
 
 ## Component CSS API
 
-87 properties across 13 components. Set any of them on the
+90 properties across 14 components. Set any of them on the
 component element to restyle it without reaching inside:
 
 ```css
@@ -473,6 +473,7 @@ stylesheet and quietly beat the override; a fallback has no specificity to fight
 
 | Property | Default |
 |---|---|
+| `--psh-alert-actions-gap` | `var(--psh-spacing-sm` |
 | `--psh-alert-animation-distance` | `var(--psh-animation-distance-sm` |
 | `--psh-alert-animation-duration` | `var(--psh-animation-duration-fast` |
 | `--psh-alert-dismiss-hover-bg` | `rgba(0, 0, 0, 0.1` |
@@ -499,6 +500,7 @@ stylesheet and quietly beat the override; a fallback has no specificity to fight
 | `--psh-avatar-status-size-md` | `var(--psh-size-3` |
 | `--psh-avatar-status-size-sm` | `var(--psh-size-2-5` |
 | `--psh-avatar-status-size-xl` | `var(--psh-size-4` |
+| `--psh-focus-ring-offset` | `2px` |
 
 ### `psh-badge`
 
@@ -597,6 +599,12 @@ stylesheet and quietly beat the override; a fallback has no specificity to fight
 | `--psh-spinner-size-lg` | `var(--psh-size-12` |
 | `--psh-spinner-size-md` | `var(--psh-size-8` |
 | `--psh-spinner-size-sm` | `var(--psh-size-6` |
+
+### `psh-state-flow-indicator`
+
+| Property | Default |
+|---|---|
+| `--psh-flow-panel-gap` | `var(--psh-spacing-lg` |
 
 ### `psh-tag`
 
