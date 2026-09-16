@@ -482,6 +482,32 @@ function migrateSlotsAndPassthrough(source, warnings) {
   return { out, count };
 }
 
+/**
+ * Radios that are not inside a `psh-radio-group`.
+ *
+ * Reported, never rewritten. Grouping radios is a judgement about *which ones belong
+ * together* — usually, but not always, the ones sharing a `name` — and getting it wrong
+ * merges two unrelated questions into one answer. A script that guesses here produces a form
+ * that compiles and is wrong.
+ */
+function reportUngroupedRadios(source, warnings) {
+  if (!source.includes('<psh-radio')) return;
+
+  // Blank out every group's contents, then see what radios are left.
+  const outside = source.replace(
+    /<psh-radio-group(?:\s[^>]*)?>[\s\S]*?<\/psh-radio-group>/g,
+    '',
+  );
+  const loose = (outside.match(/<psh-radio(?![-\w])/g) ?? []).length;
+  if (loose === 0) return;
+
+  warnings.push(
+    `${loose} <psh-radio> outside a <psh-radio-group>: a lone radio never carried a form contract ` +
+      `(formControlName and [field] did nothing on it), and arrow-key navigation needs the group. ` +
+      `Wrap the ones that answer the same question — [(checked)] still works for a standalone toggle.`,
+  );
+}
+
 export function migrate(source) {
   let out = source;
   let count = 0;
@@ -536,6 +562,8 @@ export function migrate(source) {
   const slots = migrateSlotsAndPassthrough(out, warnings);
   out = slots.out;
   count += slots.count;
+
+  reportUngroupedRadios(out, warnings);
 
   return { out, count, warnings };
 }

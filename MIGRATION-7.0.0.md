@@ -158,7 +158,7 @@ one by file so you can go through them.
 
 ## 5. Every component class is now `psh-`
 
-The 354 classes the components render are namespaced: `.card-body` → `.psh-card-body`,
+The 361 classes the components render are namespaced: `.card-body` → `.psh-card-body`,
 `.stat-value` → `.psh-stat-value`, `.hoverable` → `.psh-hoverable`.
 
 This is not cosmetic. Four components — `psh-card`, `psh-horizontal-card`, `psh-info-card`,
@@ -395,7 +395,90 @@ six-value union simply did not have it. The classes follow:
 
 `InfoCardTone` still compiles, as a deprecated alias of `PshColor`.
 
-## 8. Styling a component from outside
+## 8. Forms: the halves of the contract that were not connected
+
+### 8.1 `psh-radio-group`, the component that was missing
+
+A lone `psh-radio` never carried a form contract, and could not have: the value of a radio in
+a form is not a boolean per button, it is **which one of the set is selected**. There was
+nothing for a control to bind to, so `formControlName`, `[(ngModel)]` and `[formField]` all
+type-checked and silently did nothing. Its arrow-key handlers were two empty methods,
+commented *« Implementation requires radio group context »*.
+
+```html
+<!-- before: three radios and no owner for the value -->
+<psh-radio name="plan" value="free" label="Free" formControlName="plan" />
+<psh-radio name="plan" value="pro"  label="Pro" />
+
+<!-- after -->
+<psh-radio-group formControlName="plan" label="Plan">
+  <psh-radio value="free" label="Free" />
+  <psh-radio value="pro"  label="Pro" />
+</psh-radio-group>
+```
+
+All three binding styles work on the group: `[(value)]`, `formControlName`, `[field]`.
+
+The group also supplies the shared `name`, the arrow-key navigation (wrapping, skipping
+disabled radios, Home/End) and a roving tabindex — one Tab stop for the whole set rather than
+one per radio.
+
+**A standalone radio still works** through `[(checked)]`, for a genuine single toggle.
+
+The codemod **reports** loose radios rather than wrapping them: which radios belong to one
+group is a judgement — usually the ones sharing a `name`, but not always — and getting it
+wrong merges two questions into one answer.
+
+`psh-radio` is also full-signal now: the two `@Input` setters and the last two
+`EventEmitter`s in the library are gone. The stated reason for avoiding `model()` — *« model()
+would auto-emit checkedChange on .set() »* — was not how `model()` behaves: a parent writing
+the input does not emit, only the component writing it does. The real obstacle was that a lone
+radio had no owner for its value.
+
+### 8.2 `required` now validates
+
+`NG_VALIDATORS` appeared nowhere in the library. `required` drew an asterisk and set
+`aria-required`, and that was all — a form of empty required ps-helix fields reported itself
+**valid**, so `form.invalid` guarded nothing and the submit button stayed enabled.
+
+`psh-input`, `psh-textarea`, `psh-select`, `psh-checkbox`, `psh-switch` and
+`psh-radio-group` provide `NG_VALIDATORS` now, with Angular's own `required` error key, so a
+consumer who also declared `Validators.required` gets one error rather than two.
+
+> **This makes forms that were accidentally valid become invalid.** That is the point, and
+> the reason it waited for a major. If you used `required` purely for the asterisk, drop it
+> and set `aria-required` yourself, or keep it and handle the error.
+
+Emptiness is per control, because it has to be: an unticked required checkbox is unfilled, a
+`0` in a required number field is not. Whitespace counts as empty for a text value.
+
+### 8.3 `touch` — the output the `Field` directive actually listens to
+
+`FormUiControl` declares two separate members for touched state: `touched`, an input the field
+pushes **down**, and `touch`, an output the control sends **up**. The six input components
+only had `touched = model(false)`, whose derived output is called `touchedChange` — which
+`Field` does not listen to. Blur-based rules such as `debounce('blur')` never fired.
+
+They emit `touch` now. `touched` stays a model, so `[(touched)]` keeps working.
+
+`psh-checkbox` and `psh-switch` also gained a real blur handler: they marked themselves
+touched on *toggle*, so tabbing through a required checkbox without ticking it never counted
+as having been there — which is exactly when a field wants to show "required".
+
+### 8.4 Generated ids are deterministic
+
+Five strategies became one. Three of them were unsafe:
+
+| Was | Where | Why it broke |
+|---|---|---|
+| `Math.random()` | select, modal, tooltip | different id on server and client, so every `aria-describedby` and `<label for>` baked into the SSR markup pointed at nothing after hydration |
+| `crypto.randomUUID()` | switch, toast | same, **plus** it is undefined in a non-secure context — over plain http, a switch threw on construction |
+| a module counter | input, textarea, checkbox, radio, collapse, pagination | correct, and now the only one |
+
+Ids look like `psh-input-1`, `psh-select-2`. If you asserted on the old shapes in tests,
+they have changed; if you passed your own `id`, nothing has.
+
+## 9. Styling a component from outside
 
 Component custom properties used to be declared on the element that consumed them, so
 setting one on the host did nothing:
@@ -418,7 +501,7 @@ The 82 available properties are listed per component in
 If you were reaching in with `::ng-deep` to work around the old behaviour, check whether a
 property now covers your case.
 
-## 9. Smaller changes
+## 10. Smaller changes
 
 - **Dependencies.** `date-fns` is gone (it had zero usages). `@ngx-translate/core` is an
   optional peer with a `>=15` range — if you were held to `^15` by ps-helix, you no longer
