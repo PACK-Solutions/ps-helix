@@ -172,6 +172,9 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
   private readonly renderer = inject(Renderer2);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly document = inject(DOCUMENT);
+
+  /** Elements this modal marked `inert`, so it only ever undoes its own. */
+  private inertedByThisModal: HTMLElement[] = [];
   private readonly isBrowser = isPlatformBrowser(this.platformId);
   private readonly modalId = this.modalService.generateId();
   private overlayHandle: OverlayHandle | null = null;
@@ -360,6 +363,7 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
     this.zIndex.set(this.overlayHandle.zIndex);
     if (!this.isBrowser) return;
     this.setupScrollLock();
+    this.setBackgroundInert();
     this.addEventListeners();
     // Initial focus + focus trapping + focus restoration are handled by
     // the [pshFocusTrap] directive on the modal container.
@@ -373,7 +377,34 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
     this.releaseOverlay();
     if (!this.isBrowser) return;
     this.removeScrollLock();
+    this.releaseBackgroundInert();
     this.removeEventListeners();
+  }
+
+  /**
+   * Takes the rest of the page out of the accessibility tree while the modal is open.
+   *
+   * The focus trap holds the *keyboard*, and that was all there was: a screen reader's virtual
+   * cursor reads by position, not by focus, so it walked straight through the page behind the
+   * modal. `inert` is the one attribute that stops both.
+   *
+   * It applies to the siblings of the backdrop, which is appended to `document.body` — so the
+   * list depends on the page, and the elements it touched are remembered rather than
+   * recomputed. An element that was already `inert` is left alone and not recorded: it belongs
+   * to whoever set it, most likely a modal underneath this one.
+   */
+  private setBackgroundInert(): void {
+    const backdrop = this.modalBackdrop()?.nativeElement;
+    for (const sibling of Array.from(this.document.body.children)) {
+      if (sibling === backdrop || sibling.hasAttribute('inert')) continue;
+      sibling.setAttribute('inert', '');
+      this.inertedByThisModal.push(sibling as HTMLElement);
+    }
+  }
+
+  private releaseBackgroundInert(): void {
+    for (const element of this.inertedByThisModal) element.removeAttribute('inert');
+    this.inertedByThisModal = [];
   }
 
   /** Releases this modal's overlay layer and clears its z-index. */

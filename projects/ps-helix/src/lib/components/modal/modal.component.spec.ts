@@ -54,11 +54,14 @@ class TestHostWithCustomFooterComponent {
   isOpen = true;
 }
 
-const getDialog = () =>
-  document.body.querySelector('[role="dialog"]') as HTMLElement;
+/**
+ * The full-viewport element behind the panel. It used to carry `role="dialog"`, which is why
+ * so much of this file called it the dialog; the role sits on the panel now, where the APG
+ * puts it.
+ */
+const getBackdrop = () => document.body.querySelector('.psh-modal-backdrop') as HTMLElement;
 
-const getDocument = () =>
-  document.body.querySelector('[role="document"]') as HTMLElement;
+const getDialog = () => document.body.querySelector('[role="dialog"]') as HTMLElement;
 
 const getCloseButton = () =>
   document.body.querySelector('.psh-modal-close') as HTMLButtonElement;
@@ -77,9 +80,9 @@ const getFooterButtonByText = (text: string) => {
 };
 
 const cleanupDialog = () => {
-  const dialog = getDialog();
-  if (dialog) {
-    dialog.remove();
+  const backdrop = getBackdrop();
+  if (backdrop) {
+    backdrop.remove();
   }
 };
 
@@ -141,28 +144,28 @@ describe('PshModalComponent', () => {
       hostComponent.isOpen = false;
       fixture.detectChanges();
 
-      expect(getDialog().getAttribute('data-state')).toBe('closed');
+      expect(getBackdrop().getAttribute('data-state')).toBe('closed');
     });
 
     it('should have data-state="open" when modal is opened', () => {
       hostComponent.isOpen = true;
       fixture.detectChanges();
 
-      expect(getDialog().getAttribute('data-state')).toBe('open');
+      expect(getBackdrop().getAttribute('data-state')).toBe('open');
     });
 
     it('should have aria-hidden="true" when modal is closed', () => {
       hostComponent.isOpen = false;
       fixture.detectChanges();
 
-      expect(getDialog().getAttribute('aria-hidden')).toBe('true');
+      expect(getBackdrop().getAttribute('aria-hidden')).toBe('true');
     });
 
     it('should have aria-hidden="false" when modal is open', () => {
       hostComponent.isOpen = true;
       fixture.detectChanges();
 
-      expect(getDialog().getAttribute('aria-hidden')).toBe('false');
+      expect(getBackdrop().getAttribute('aria-hidden')).toBe('false');
     });
   });
 
@@ -265,7 +268,7 @@ describe('PshModalComponent', () => {
       hostComponent.isOpen = true;
       fixture.detectChanges();
 
-      const backdrop = getDialog();
+      const backdrop = getBackdrop();
       backdrop.click();
       fixture.detectChanges();
 
@@ -277,7 +280,7 @@ describe('PshModalComponent', () => {
       hostComponent.isOpen = true;
       fixture.detectChanges();
 
-      const backdrop = getDialog();
+      const backdrop = getBackdrop();
       backdrop.click();
       fixture.detectChanges();
 
@@ -288,8 +291,8 @@ describe('PshModalComponent', () => {
       hostComponent.isOpen = true;
       fixture.detectChanges();
 
-      const modalDocument = getDocument();
-      modalDocument.click();
+      const panel = getDialog();
+      panel.click();
       fixture.detectChanges();
 
       expect(hostComponent.onClosed).not.toHaveBeenCalled();
@@ -328,8 +331,34 @@ describe('PshModalComponent', () => {
       expect(contentElement).toBeTruthy();
     });
 
-    it('should have role="document" on modal container', () => {
-      expect(getDocument().getAttribute('role')).toBe('document');
+    it('puts role="dialog" on the panel and nothing on the backdrop', () => {
+      // role="dialog" on the backdrop with role="document" inside it is the pre-ARIA-1.1
+      // pattern the APG now advises against: the dialog is the panel, and the backdrop is
+      // decoration that happens to catch clicks.
+      expect(getDialog()).toBe(document.body.querySelector('.psh-modal-container'));
+      expect(getBackdrop().hasAttribute('role')).toBe(false);
+      expect(document.body.querySelector('[role="document"]')).toBeNull();
+    });
+
+    it('takes the rest of the page out of the accessibility tree', () => {
+      // The focus trap only holds the keyboard. A screen reader's virtual cursor reads by
+      // position, so without inert it walked the page behind the modal.
+      const sibling = document.createElement('div');
+      document.body.appendChild(sibling);
+      try {
+        hostComponent.isOpen = false;
+        fixture.detectChanges();
+        hostComponent.isOpen = true;
+        fixture.detectChanges();
+        expect(sibling.hasAttribute('inert')).toBe(true);
+        expect(getBackdrop().hasAttribute('inert')).toBe(false);
+
+        hostComponent.isOpen = false;
+        fixture.detectChanges();
+        expect(sibling.hasAttribute('inert')).toBe(false);
+      } finally {
+        sibling.remove();
+      }
     });
 
     it('should have type="button" on close button', () => {
@@ -345,7 +374,7 @@ describe('PshModalComponent', () => {
         hostComponent.isOpen = true;
         fixture.detectChanges();
 
-        const container = getDocument();
+        const container = getDialog();
         expect(container.classList.contains(`psh-${size}`)).toBe(true);
       }
     );
@@ -385,12 +414,12 @@ describe('PshModalComponent panelClass', () => {
   });
 
   it('should apply custom panelClass to modal container', () => {
-    const container = getDocument();
+    const container = getDialog();
     expect(container.classList.contains('custom-modal-class')).toBe(true);
   });
 
   it('should keep modal-container base class when panelClass is applied', () => {
-    const container = getDocument();
+    const container = getDialog();
     expect(container.classList.contains('psh-modal-container')).toBe(true);
   });
 
@@ -398,7 +427,7 @@ describe('PshModalComponent panelClass', () => {
     hostComponent.panelClass = 'class-one class-two';
     fixture.detectChanges();
 
-    const container = getDocument();
+    const container = getDialog();
     expect(container.classList.contains('class-one')).toBe(true);
     expect(container.classList.contains('class-two')).toBe(true);
   });
@@ -407,7 +436,7 @@ describe('PshModalComponent panelClass', () => {
     hostComponent.panelClass = '';
     fixture.detectChanges();
 
-    const container = getDocument();
+    const container = getDialog();
     expect(container.classList.contains('psh-modal-container')).toBe(true);
   });
 });
@@ -858,8 +887,8 @@ describe('PshModalComponent stacked modals', () => {
 
   afterEach(() => {
     document.body
-      .querySelectorAll('[role="dialog"]')
-      .forEach(dialog => dialog.remove());
+      .querySelectorAll('.psh-modal-backdrop')
+      .forEach(backdrop => backdrop.remove());
     document.body.classList.remove('psh-modal-open');
   });
 
@@ -906,7 +935,7 @@ describe('PshModalComponent stacked modals', () => {
     fixture.detectChanges();
 
     const dialogs = Array.from(
-      document.body.querySelectorAll('[role="dialog"]'),
+      document.body.querySelectorAll('.psh-modal-backdrop'),
     ) as HTMLElement[];
     expect(dialogs.length).toBe(2);
 
