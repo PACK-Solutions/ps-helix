@@ -12,7 +12,6 @@ import {
   linkedSignal,
 } from '@angular/core';
 import { pshResolveConfigValue } from '../../utils/config-value';
-import { CommonModule } from '@angular/common';
 import { PaginationSize, PaginationVariant, PaginationConfig } from './pagination.types';
 import { InjectionToken } from '@angular/core';
 import { pshUniqueId } from '../../utils/unique-id';
@@ -41,7 +40,6 @@ export const PAGINATION_CONFIG = new InjectionToken<Partial<PaginationConfig>>('
 
 @Component({
   selector: 'psh-pagination',
-  imports: [CommonModule],
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

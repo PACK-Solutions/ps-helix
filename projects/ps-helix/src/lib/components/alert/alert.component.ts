@@ -7,7 +7,6 @@ import {
   inject,
 } from '@angular/core';
 import { pshResolveConfigValue } from '../../utils/config-value';
-import { CommonModule } from '@angular/common';
 import { AlertType, IconPosition, AlertSize, AlertRole, AlertLabels } from './alert.types';
 import { ALERT_CONFIG } from './alert.tokens';
 
@@ -34,7 +33,6 @@ const DEFAULT_CONFIG = {
 
 @Component({
   selector: 'psh-alert',
-  imports: [CommonModule],
   templateUrl: './alert.component.html',
   styleUrls: ['./alert.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

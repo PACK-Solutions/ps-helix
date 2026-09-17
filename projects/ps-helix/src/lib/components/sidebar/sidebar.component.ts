@@ -13,7 +13,7 @@ import {
   PLATFORM_ID
 } from '@angular/core';
 import { pshResolveConfigValue } from '../../utils/config-value';
-import { isPlatformBrowser, CommonModule, DOCUMENT } from '@angular/common';
+import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { PshFocusTrapDirective } from '../../a11y/focus-trap.directive';
 import { SidebarMode, SidebarPosition, SidebarConfig } from './sidebar.types';
 
@@ -34,7 +34,7 @@ export const SIDEBAR_CONFIG = new InjectionToken<Partial<SidebarConfig>>('SIDEBA
 
 @Component({
   selector: 'psh-sidebar',
-  imports: [CommonModule, PshFocusTrapDirective],
+  imports: [PshFocusTrapDirective],
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

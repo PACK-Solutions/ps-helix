@@ -2,7 +2,7 @@ import { PshSurfaceAppearance } from '../../types/semantic.types';
 import { pshResolveConfigValue } from '../../utils/config-value';
 import { Component, ChangeDetectionStrategy, computed, input, signal, PLATFORM_ID, inject, output, ViewEncapsulation, ElementRef, AfterContentInit, OnDestroy } from '@angular/core';
 import { PshViewportService } from '../../a11y/viewport.service';
-import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { InfoCardData, InfoCardOptions } from './info-card.types';
 import { INFO_CARD_CONFIG } from './info-card.tokens';
 
@@ -31,7 +31,6 @@ import { INFO_CARD_CONFIG } from './info-card.tokens';
  */
 @Component({
   selector: 'psh-info-card',
-  imports: [CommonModule],
   templateUrl: './info-card.component.html',
   styleUrl: './info-card.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

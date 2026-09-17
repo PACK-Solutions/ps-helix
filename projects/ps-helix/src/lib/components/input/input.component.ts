@@ -18,7 +18,6 @@ import {
   viewChild,
   effect
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
 import { PshPortalService, PshPortalRef } from '../../a11y/portal.service';
@@ -30,7 +29,6 @@ import { INPUT_CONFIG } from './input.tokens';
 
 @Component({
   selector: 'psh-input',
-  imports: [CommonModule],
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.css'],
   providers: [

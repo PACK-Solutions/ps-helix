@@ -1,4 +1,10 @@
 <div class="psh-stepper-header" role="tablist">
+  <!--
+    Tracked by position on purpose. `steps()` maps over the projected `psh-step` children
+    and builds a fresh object each time it recomputes, so tracking by identity would
+    destroy and rebuild every step on each recomputation — the opposite of the intent.
+    Position is the stable key here: a step "moving" means the projected content changed.
+  -->
   @for (step of steps(); track $index; let i = $index) {
     <div
       class="psh-step-header"

@@ -8,7 +8,6 @@ import {
   ViewEncapsulation,
   inject,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { HORIZONTAL_CARD_CONFIG } from './horizontal-card.tokens';
 
 /**
@@ -38,7 +37,6 @@ import { HORIZONTAL_CARD_CONFIG } from './horizontal-card.tokens';
  */
 @Component({
   selector: 'psh-horizontal-card',
-  imports: [CommonModule],
   templateUrl: './horizontal-card.component.html',
   styleUrls: ['./horizontal-card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

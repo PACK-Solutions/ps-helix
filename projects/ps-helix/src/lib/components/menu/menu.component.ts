@@ -10,14 +10,14 @@ import {
   output,
   TemplateRef,
 } from '@angular/core';
-import { CommonModule, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { MenuItem, MenuMode, MenuVariant, MenuItemContext } from './menu.types';
 import { PshTooltipComponent } from '../tooltip/tooltip.component';
 import { MENU_CONFIG } from './menu.tokens';
 
 @Component({
   selector: 'psh-menu',
-  imports: [NgTemplateOutlet, CommonModule, PshTooltipComponent],
+  imports: [NgTemplateOutlet, PshTooltipComponent],
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

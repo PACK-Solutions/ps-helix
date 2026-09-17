@@ -9,7 +9,6 @@ import {
   inject,
 } from '@angular/core';
 import { pshResolveConfigValue } from '../../utils/config-value';
-import { CommonModule } from '@angular/common';
 import { AvatarSize, AvatarShape, AvatarStatus } from './avatar.types';
 import { AVATAR_CONFIG } from './avatar.tokens';
 
@@ -31,7 +30,6 @@ const DEFAULT_STATUS_COLORS: Record<AvatarStatus, string> = {
 
 @Component({
   selector: 'psh-avatar',
-  imports: [CommonModule],
   templateUrl: './avatar.component.html',
   styleUrls: ['./avatar.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

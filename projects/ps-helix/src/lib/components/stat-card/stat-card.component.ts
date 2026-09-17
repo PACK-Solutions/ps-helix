@@ -7,7 +7,6 @@ import {
   ViewEncapsulation,
   inject,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { PshTagComponent } from '../tag/tag.component';
 import { StatCardLayout } from './stat-card.types';
 import { PSH_COLORS, PshColor, PshSurfaceAppearance } from '../../types/semantic.types';
@@ -27,7 +26,7 @@ const ICON_GRADIENT_DEFAULTS: Record<PshColor, string> = Object.fromEntries(
 ) as Record<PshColor, string>;
 @Component({
   selector: 'psh-stat-card',
-  imports: [CommonModule, PshTagComponent],
+  imports: [PshTagComponent],
   templateUrl: './stat-card.component.html',
   styleUrls: ['./stat-card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

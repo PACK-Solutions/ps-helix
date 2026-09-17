@@ -20,7 +20,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { pshResolveConfigValue } from '../../utils/config-value';
-import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { PshButtonComponent } from '../button/button.component';
 import { PshFocusTrapDirective } from '../../a11y/focus-trap.directive';
 import { ModalSize, ModalConfig } from './modal.types';
@@ -162,7 +162,7 @@ export class ModalService {
  */
 @Component({
   selector: 'psh-modal',
-  imports: [CommonModule, PshButtonComponent, PshFocusTrapDirective],
+  imports: [PshButtonComponent, PshFocusTrapDirective],
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

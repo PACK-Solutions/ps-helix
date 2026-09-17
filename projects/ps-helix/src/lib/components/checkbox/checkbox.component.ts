@@ -36,7 +36,6 @@ export const CHECKBOX_CONFIG = new InjectionToken<Partial<CheckboxConfig>>('CHEC
 
 @Component({
   selector: 'psh-checkbox',
-  standalone: true,
   imports: [],
   templateUrl: './checkbox.component.html',
   styleUrls: ['./checkbox.component.css'],

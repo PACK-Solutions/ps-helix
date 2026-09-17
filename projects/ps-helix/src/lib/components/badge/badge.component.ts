@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, computed, input, output , inject} from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { BadgeSize, BadgePosition, BadgeDisplayType } from './badge.types';
 import { PshColor } from '../../types/semantic.types';
 import { BADGE_CONFIG } from './badge.tokens';
@@ -15,7 +14,6 @@ const DEFAULT_CONFIG = {
 
 @Component({
   selector: 'psh-badge',
-  imports: [CommonModule],
   templateUrl: './badge.component.html',
   styleUrls: ['./badge.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

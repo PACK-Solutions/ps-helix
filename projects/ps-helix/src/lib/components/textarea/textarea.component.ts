@@ -13,9 +13,8 @@ import {
   model,
   output,
   signal,
-  ViewChild,
+  viewChild,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
 import { pshIsEmptyValue, pshRequiredError } from '../../utils/required-validator';
@@ -29,7 +28,6 @@ import { TEXTAREA_CONFIG } from './textarea.tokens';
 
 @Component({
   selector: 'psh-textarea',
-  imports: [CommonModule],
   templateUrl: './textarea.component.html',
   styleUrls: ['./textarea.component.css'],
   providers: [
@@ -113,8 +111,7 @@ export class PshTextareaComponent
   focused = output<void>();
   blurred = output<void>();
 
-  @ViewChild('textareaRef')
-  private textareaRef?: ElementRef<HTMLTextAreaElement>;
+  private readonly textareaRef = viewChild<ElementRef<HTMLTextAreaElement>>('textareaRef');
 
   /** Whether the control currently has focus. A state readout; the event is `focused`. */
   readonly isFocused = computed(() => this.focusedSignal());
@@ -250,11 +247,11 @@ export class PshTextareaComponent
   }
 
   focus(): void {
-    this.textareaRef?.nativeElement.focus();
+    this.textareaRef()?.nativeElement.focus();
   }
 
   private applyAutoSize(): void {
-    const el = this.textareaRef?.nativeElement;
+    const el = this.textareaRef()?.nativeElement;
     if (!el) return;
     el.style.height = 'auto';
     el.style.height = `${el.scrollHeight}px`;

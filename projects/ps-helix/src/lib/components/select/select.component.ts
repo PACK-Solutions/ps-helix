@@ -17,7 +17,7 @@ import {
   viewChild,
   effect
 } from '@angular/core';
-import { CommonModule, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { ControlValueAccessor, FormsModule, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
 import { PshClickOutsideDirective } from '../../a11y/click-outside.directive';
@@ -36,7 +36,7 @@ interface FlatOption<T> {
 
 @Component({
   selector: 'psh-select',
-  imports: [NgTemplateOutlet, CommonModule, FormsModule],
+  imports: [NgTemplateOutlet, FormsModule],
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.css'],
   providers: [

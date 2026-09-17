@@ -16,7 +16,7 @@ import {
   ViewContainerRef,
   viewChild,
 } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { PshOverlayPositionService } from '../../a11y/overlay-position.service';
 import { PshClickOutsideDirective } from '../../a11y/click-outside.directive';
 import { PshPortalService, PshPortalRef } from '../../a11y/portal.service';
@@ -25,7 +25,6 @@ import { DROPDOWN_CONFIG } from './dropdown.tokens';
 
 @Component({
   selector: 'psh-dropdown',
-  imports: [CommonModule],
   templateUrl: './dropdown.component.html',
   styleUrls: ['./dropdown.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
