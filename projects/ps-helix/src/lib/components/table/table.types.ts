@@ -141,4 +141,10 @@ export interface TableConfig {
   expandRowLabel?: PshConfigValue<string>;
   /** Accessible name of the control that closes a row */
   collapseRowLabel?: PshConfigValue<string>;
+  /** Announced after a column is sorted ascending, following the column name */
+  sortedAscendingLabel?: PshConfigValue<string>;
+  /** Announced after a column is sorted descending, following the column name */
+  sortedDescendingLabel?: PshConfigValue<string>;
+  /** Announced after filtering, following the number of rows left */
+  resultsFoundLabel?: PshConfigValue<string>;
 }

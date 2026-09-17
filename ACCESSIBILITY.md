@@ -56,6 +56,12 @@ Reusable, headless primitives back the components and are available to consumers
 - `PshFocusTrapDirective` — focus trap with focus restoration (deterministic
   timing via `afterNextRender`).
 - `PshLiveAnnouncerService` — a single shared `aria-live` region (polite/assertive).
+  Used by `psh-table` for sorting and filtering. Most of the library announces
+  **declaratively** instead — toast, alert, spinloader, progressbar, pagination and every
+  field message render their own `aria-live` region, which cannot fall out of step with
+  what is on screen. The table was the exception: sorting a column replaced every row in
+  the body and said nothing, since `aria-sort` only reaches a reader who goes back to the
+  header.
 - `PshOverlayPositionService` — viewport collision detection / flip for popovers
   (prevents dropdown/tooltip overflow).
 - `PshClickOutsideDirective` — dismiss-on-outside-click.

@@ -44,7 +44,7 @@ import { BUTTON_CONFIG } from 'ps-helix';
 @Component({ providers: [{ provide: BUTTON_CONFIG, useValue: { size: 'small' } }] })
 ```
 
-**31 tokens, 223 settable defaults.**
+**31 tokens, 226 settable defaults.**
 
 ---
 
@@ -416,6 +416,9 @@ import { BUTTON_CONFIG } from 'ps-helix';
 | `expandColumnLabel` | `'Expand'` |
 | `expandRowLabel` | `'Expand row'` |
 | `collapseRowLabel` | `'Collapse row'` |
+| `sortedAscendingLabel` | `'sorted ascending'` |
+| `sortedDescendingLabel` | `'sorted descending'` |
+| `resultsFoundLabel` | `'results found'` |
 
 ### `tabs`
 

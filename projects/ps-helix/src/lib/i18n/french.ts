@@ -116,6 +116,9 @@ export const PSH_FRENCH_DEFAULTS: PshComponentDefaults = {
     expandColumnLabel: 'Détail',
     expandRowLabel: 'Afficher le détail',
     collapseRowLabel: 'Masquer le détail',
+    sortedAscendingLabel: 'trié par ordre croissant',
+    sortedDescendingLabel: 'trié par ordre décroissant',
+    resultsFoundLabel: 'résultats',
   },
   tag: {
     closeLabel: 'Supprimer le tag',

@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, output, signal, InjectionToken, TemplateRef } from '@angular/core';
+import { PshLiveAnnouncerService } from '../../a11y/live-announcer.service';
 import { pshResolveConfigValue } from '../../utils/config-value';
 import { NgTemplateOutlet } from '@angular/common';
 import { PshInputComponent } from '../input/input.component';
@@ -23,6 +24,9 @@ const TABLE_DEFAULTS = {
   expandColumnLabel: 'Expand',
   expandRowLabel: 'Expand row',
   collapseRowLabel: 'Collapse row',
+  sortedAscendingLabel: 'sorted ascending',
+  sortedDescendingLabel: 'sorted descending',
+  resultsFoundLabel: 'results found',
 } satisfies Partial<TableConfig>;
 
 export const TABLE_CONFIG = new InjectionToken<Partial<TableConfig>>('TABLE_CONFIG', {
@@ -42,6 +46,7 @@ export const TABLE_CONFIG = new InjectionToken<Partial<TableConfig>>('TABLE_CONF
 })
 export class PshTableComponent {
   private config = inject(TABLE_CONFIG);
+  private readonly announcer = inject(PshLiveAnnouncerService);
 
   appearance = input<'flat' | 'outline'>(this.config.appearance ?? 'flat');
   size = input<'small' | 'medium' | 'large'>(this.config.size ?? 'medium');
@@ -109,6 +114,16 @@ export class PshTableComponent {
     () => this.expandRowLabelInput() ?? pshResolveConfigValue(this.config.expandRowLabel) ?? 'Expand row',
   );
   /** Name of a row's collapse toggle. Was a pair of literals. */
+  readonly sortedAscendingLabel = computed(
+    () => pshResolveConfigValue(this.config.sortedAscendingLabel) ?? 'sorted ascending',
+  );
+  readonly sortedDescendingLabel = computed(
+    () => pshResolveConfigValue(this.config.sortedDescendingLabel) ?? 'sorted descending',
+  );
+  readonly resultsFoundLabel = computed(
+    () => pshResolveConfigValue(this.config.resultsFoundLabel) ?? 'results found',
+  );
+
   readonly collapseRowLabelInput = input<string | undefined>(undefined, { alias: 'collapseRowLabel' });
   readonly collapseRowLabel = computed(
     () => this.collapseRowLabelInput() ?? pshResolveConfigValue(this.config.collapseRowLabel) ?? 'Collapse row',
@@ -228,10 +243,18 @@ export class PshTableComponent {
     const sort: TableSort = { key: column.key, direction };
     this.currentSortSignal.set(sort);
     this.sortChange.emit(sort);
+
+    // `aria-sort` states the new order for a reader that goes back to the header. Nothing
+    // told a user who is not there that the whole body had just been reordered.
+    this.announcer.announce(
+      `${column.label}: ${direction === 'asc' ? this.sortedAscendingLabel() : this.sortedDescendingLabel()}`,
+    );
   }
 
   onSearchValueChange(value: string): void {
     this.globalSearchChange.emit(value);
+    // Filtering replaces the body silently too, and the count is the useful part of it.
+    this.announcer.announce(`${this.filteredData().length} ${this.resultsFoundLabel()}`);
   }
 
   handleRowClick(row: TableRow): void {
