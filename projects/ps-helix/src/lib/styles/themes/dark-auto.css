@@ -233,7 +233,10 @@
     --psh-text-color-disabled: rgba(255, 255, 255, 0.4);
 
     /* Text on colored backgrounds */
-    --psh-text-on-primary: #FFFFFF;
+    /* Primary is lightened for this theme so it reads against a dark surface; that same
+       lightening put white text on it at 3.52:1, under the 4.5:1 floor. Dark ink, like the
+       five semantic fills below already use here. */
+    --psh-text-on-primary: #000000;
     --psh-text-on-secondary: #FFFFFF;
     --psh-text-on-success: #000000;
     --psh-text-on-warning: #000000;

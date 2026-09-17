@@ -39,7 +39,7 @@ used before 7.0.0 remain available through the opt-in `styles/compat.css`.
 | `--psh-text-color-secondary` | `var(--psh-surface-600)` | `rgba(255, 255, 255, 0.75)` |
 | `--psh-text-color-tertiary` | `var(--psh-surface-500)` | `rgba(255, 255, 255, 0.6)` |
 | `--psh-text-color-disabled` | `var(--psh-surface-400)` | `rgba(255, 255, 255, 0.4)` |
-| `--psh-text-on-primary` | `#FFFFFF` | `#FFFFFF` |
+| `--psh-text-on-primary` | `#FFFFFF` | `#000000` |
 | `--psh-text-on-secondary` | `#FFFFFF` | `#FFFFFF` |
 | `--psh-text-on-success` | `#FFFFFF` | `#000000` |
 | `--psh-text-on-warning` | `#FFFFFF` | `#000000` |

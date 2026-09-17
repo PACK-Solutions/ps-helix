@@ -48,6 +48,12 @@ jobs:
       - name: Responsive scale
         run: npm run verify:breakpoints
 
+      # axe's color-contrast rule cannot run under jsdom, so nothing checked the library's
+      # own palette. Dark-theme primary shipped white text at 3.52:1 on every button, tag,
+      # badge and dropdown item until this was in place.
+      - name: Semantic fills are readable
+        run: npm run verify:contrast
+
       # Every settable default, generated from the tokens. A hand-written list of 201
       # defaults drifts, and four of these tokens had already drifted from their own
       # interface before this was in place.
