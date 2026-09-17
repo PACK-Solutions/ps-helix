@@ -71,5 +71,6 @@
 
 /* rowClass, appliquée depuis la donnée de la ligne. */
 :host ::ng-deep .row-suspended {
-  background: var(--psh-warning-color-light, var(--psh-surface-hover));
+  /* Une teinte de la couleur d'avertissement, dérivée plutôt qu'inventée. */
+  background: color-mix(in srgb, var(--psh-warning-color) 12%, transparent);
 }

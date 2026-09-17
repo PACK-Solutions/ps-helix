@@ -42,10 +42,15 @@
   z-index: 150;
 }
 
+/**
+ * The sidebar column is sized in rem, not px: at 150% browser zoom a 280px column keeps its
+ * width while its labels grow, and `overflow-x: hidden` below then cuts them off — "Points
+ * d'extension" lost its end. In rem the column grows with the text.
+ */
 .demo-layout {
   display: grid;
-  grid-template-columns: 280px 1fr;
-  min-height: 100vh;
+  grid-template-columns: 17.5rem 1fr;
+  min-height: 100dvh;
 }
 
 .demo-sidebar {
@@ -68,7 +73,7 @@
 /* Responsive Design */
 @media (max-width: 1400px) {
   .demo-layout {
-    grid-template-columns: 250px 1fr;
+    grid-template-columns: 15.625rem 1fr;
   }
   
   .demo-content {
@@ -78,7 +83,7 @@
 
 @media (max-width: 1024px) {
   .demo-layout {
-    grid-template-columns: 220px 1fr;
+    grid-template-columns: 13.75rem 1fr;
   }
   
   .demo-content {
@@ -88,7 +93,7 @@
 
 @media (max-width: 900px) {
   .demo-layout {
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: 12.5rem 1fr;
   }
   
   .demo-content {

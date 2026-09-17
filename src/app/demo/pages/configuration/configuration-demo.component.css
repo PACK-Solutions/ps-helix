@@ -54,7 +54,7 @@
 .preset-button.active {
   background: var(--psh-primary-color);
   border-color: var(--psh-primary-color);
-  color: var(--psh-primary-text-color);
+  color: var(--psh-text-on-primary);
 }
 
 /* Le code à côté du rendu, empilé sous 48em pour que ni l'un ni l'autre ne rétrécisse. */
