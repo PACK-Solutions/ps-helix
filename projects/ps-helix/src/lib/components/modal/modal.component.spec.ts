@@ -44,7 +44,7 @@ class TestHostComponent {
     <psh-modal [open]="isOpen" [showFooter]="true">
       <p>Content</p>
       <div psh-modal-footer #modalFooter>
-        <button>Custom Action</button>
+        <button type="button">Custom Action</button>
       </div>
     </psh-modal>
   `,
@@ -472,7 +472,7 @@ describe('PshModalComponent with custom footer', () => {
 @Component({
   changeDetection: ChangeDetectionStrategy.Eager,
   template: `
-    <button id="trigger-button" (click)="isOpen = true">Open Modal</button>
+    <button type="button" id="trigger-button" (click)="isOpen = true">Open Modal</button>
     <psh-modal
       [(open)]="isOpen"
       [closeOnEscape]="closeOnEscape"
@@ -480,7 +480,7 @@ describe('PshModalComponent with custom footer', () => {
       (closed)="onClosed()"
     >
       <input id="first-input" type="text" placeholder="First input" />
-      <button id="middle-button">Middle Button</button>
+      <button type="button" id="middle-button">Middle Button</button>
       <input id="last-input" type="text" placeholder="Last input" />
     </psh-modal>
   `,

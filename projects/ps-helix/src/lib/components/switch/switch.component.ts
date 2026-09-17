@@ -52,7 +52,7 @@ export class PshSwitchComponent implements ControlValueAccessor, FormCheckboxCon
   private config = inject(SWITCH_CONFIG);
   private uniqueId = pshUniqueId('switch');
 
-  private switchInput = viewChild<ElementRef<HTMLInputElement>>('switchInput');
+  private readonly switchInput = viewChild<ElementRef<HTMLInputElement>>('switchInput');
 
   private onChange = (_value: boolean) => {};
   private onTouched = () => {};
@@ -60,7 +60,7 @@ export class PshSwitchComponent implements ControlValueAccessor, FormCheckboxCon
 
   readonly checked = model(this.config.checked ?? false);
   readonly disabled = model(this.config.disabled ?? false);
-  touched = model(false);
+  readonly touched = model(false);
 
   /**
    * Emitted when the user finishes interacting with the control.
@@ -70,15 +70,15 @@ export class PshSwitchComponent implements ControlValueAccessor, FormCheckboxCon
    */
   readonly touch = output<void>();
 
-  required = input(this.config.required ?? false);
-  size = input<SwitchSize>(this.config.size ?? 'medium');
-  labelPosition = input<'left' | 'right'>(this.config.labelPosition ?? 'right');
+  readonly required = input(this.config.required ?? false);
+  readonly size = input<SwitchSize>(this.config.size ?? 'medium');
+  readonly labelPosition = input<'left' | 'right'>(this.config.labelPosition ?? 'right');
 
-  label = input('');
-  error = input<string | null | undefined>(null);
-  success = input<string | null | undefined>(null);
+  readonly label = input('');
+  readonly error = input<string | null | undefined>(null);
+  readonly success = input<string | null | undefined>(null);
   /** Guidance shown when there is neither an error nor a success message. */
-  hint = input<string | null | undefined>(null);
+  readonly hint = input<string | null | undefined>(null);
 
   /**
    * Extra ids for `aria-describedby`. **Merged** with the control's own — the id of its error,
@@ -91,11 +91,11 @@ export class PshSwitchComponent implements ControlValueAccessor, FormCheckboxCon
    * cover. Merged with anything the control already points at.
    */
   readonly ariaLabelledBy = input<string>();
-  ariaLabel = input<string>();
-  name = input<string>('');
-  id = input<string>(this.uniqueId);
+  readonly ariaLabel = input<string>();
+  readonly name = input<string>('');
+  readonly id = input<string>(this.uniqueId);
 
-  computedAriaLabel = computed(() => {
+  readonly computedAriaLabel = computed(() => {
     const customLabel = this.ariaLabel();
     if (customLabel) return customLabel;
 
@@ -104,12 +104,12 @@ export class PshSwitchComponent implements ControlValueAccessor, FormCheckboxCon
 
     return 'Switch';
   });
-  errorId = computed(() => this.error() ? `${this.id()}-error` : null);
-  successId = computed(() => this.success() ? `${this.id()}-success` : null);
-  hintId = computed(() => this.hint() ? `${this.id()}-hint` : null);
+  readonly errorId = computed(() => this.error() ? `${this.id()}-error` : null);
+  readonly successId = computed(() => this.success() ? `${this.id()}-success` : null);
+  readonly hintId = computed(() => this.hint() ? `${this.id()}-hint` : null);
   // error, success and hint are mutually exclusive in the template (@if/@else if), so
   // aria-describedby references whichever message is actually rendered — in the same order.
-  describedBy = computed(() =>
+  readonly describedBy = computed(() =>
     pshJoinAriaIds(
       this.errorId() ?? this.successId() ?? this.hintId(),
       this.ariaDescribedBy(),

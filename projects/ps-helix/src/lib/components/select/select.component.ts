@@ -95,16 +95,16 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
    */
   readonly touch = output<void>();
 
-  size = input<SelectSize>(this.config.size ?? 'medium');
-  appearance = input<PshFieldAppearance>(this.config.appearance ?? 'outline');
-  searchable = input(this.config.searchable ?? false);
-  multiple = input(false);
-  clearable = input(this.config.clearable ?? false);
-  loading = input(false);
-  fullWidth = input(this.config.fullWidth ?? false);
-  required = input(false);
+  readonly size = input<SelectSize>(this.config.size ?? 'medium');
+  readonly appearance = input<PshFieldAppearance>(this.config.appearance ?? 'outline');
+  readonly searchable = input(this.config.searchable ?? false);
+  readonly multiple = input(false);
+  readonly clearable = input(this.config.clearable ?? false);
+  readonly loading = input(false);
+  readonly fullWidth = input(this.config.fullWidth ?? false);
+  readonly required = input(false);
 
-  options = input.required<(SelectOption<T> | SelectOptionGroup<T>)[]>();
+  readonly options = input.required<(SelectOption<T> | SelectOptionGroup<T>)[]>();
 
   /**
    * Replaces the content of every option.
@@ -119,18 +119,18 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
    * down with it.
    */
   readonly optionTemplate = input<TemplateRef<SelectOptionContext<T>>>();
-  label = input('');
-  placeholderInput = input<string | undefined>(undefined, { alias: 'placeholder' });
-  placeholder = computed(
+  readonly label = input('');
+  readonly placeholderInput = input<string | undefined>(undefined, { alias: 'placeholder' });
+  readonly placeholder = computed(
     () => this.placeholderInput() ?? pshResolveConfigValue(this.config.placeholder) ?? 'Select an option',
   );
-  multiplePlaceholderInput = input<string | undefined>(undefined, { alias: 'multiplePlaceholder' });
-  multiplePlaceholder = computed(
+  readonly multiplePlaceholderInput = input<string | undefined>(undefined, { alias: 'multiplePlaceholder' });
+  readonly multiplePlaceholder = computed(
     () => this.multiplePlaceholderInput() ?? pshResolveConfigValue(this.config.multiplePlaceholder) ?? 'Select options',
   );
-  error = input<string | null | undefined>(null);
-  success = input<string | null | undefined>(null);
-  hint = input<string | null | undefined>(null);
+  readonly error = input<string | null | undefined>(null);
+  readonly success = input<string | null | undefined>(null);
+  readonly hint = input<string | null | undefined>(null);
 
   /** Shown when the search matches nothing. Was a literal in the template. */
   readonly noResultsTextInput = input<string | undefined>(undefined, { alias: 'noResultsText' });
@@ -149,18 +149,18 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
    * cover. Merged with anything the control already points at.
    */
   readonly ariaLabelledBy = input<string>();
-  ariaLabel = input<string | null>(null);
+  readonly ariaLabel = input<string | null>(null);
   /** Accessible name of the clear button, which renders as a bare icon. */
-  clearLabelInput = input<string | undefined>(undefined, { alias: 'clearLabel' });
-  clearLabel = computed(
+  readonly clearLabelInput = input<string | undefined>(undefined, { alias: 'clearLabel' });
+  readonly clearLabel = computed(
     () => this.clearLabelInput() ?? pshResolveConfigValue(this.config.clearLabel) ?? 'Clear selection',
   );
-  maxSelections = input<number | undefined>(undefined);
-  minSelections = input<number | undefined>(undefined);
-  compareWith = input<(a: T, b: T) => boolean>((a, b) => a === b);
-  searchPlaceholderInput = input<string | undefined>(undefined, { alias: 'searchPlaceholder' });
+  readonly maxSelections = input<number | undefined>(undefined);
+  readonly minSelections = input<number | undefined>(undefined);
+  readonly compareWith = input<(a: T, b: T) => boolean>((a, b) => a === b);
+  readonly searchPlaceholderInput = input<string | undefined>(undefined, { alias: 'searchPlaceholder' });
   /** Placeholder and accessible name of the search field. */
-  searchPlaceholder = computed(
+  readonly searchPlaceholder = computed(
     () =>
       this.searchPlaceholderInput() ??
       pshResolveConfigValue(this.config.searchPlaceholder) ??
@@ -176,22 +176,22 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
   searched = output<string>();
   scrolledToEnd = output<void>();
 
-  isOpen = computed(() => this.isOpenSignal());
-  searchTerm = computed(() => this.searchTermSignal());
+  readonly isOpen = computed(() => this.isOpenSignal());
+  readonly searchTerm = computed(() => this.searchTermSignal());
 
-  state = computed(() => {
+  readonly state = computed(() => {
     if (this.disabled()) return 'disabled';
     if (this.error()) return 'error';
     if (this.success()) return 'success';
     return 'default';
   });
 
-  computedAriaLabel = computed(() => this.ariaLabel() || this.label() || this.placeholder());
+  readonly computedAriaLabel = computed(() => this.ariaLabel() || this.label() || this.placeholder());
 
   // Was the global 'error-message' / 'success-message' / 'hint-message': two selects in
   // error on one page produced duplicate ids, and a screen reader read the first one's
   // message for both. Fixed on `input` in 6.2.5 and never propagated until now.
-  describedBy = computed(() => {
+  readonly describedBy = computed(() => {
     const own = this.error()
       ? `${this.selectId}-error`
       : this.success()
@@ -202,7 +202,7 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
     return pshJoinAriaIds(own, this.ariaDescribedBy());
   });
 
-  flatFilteredOptions = computed<FlatOption<T>[]>(() => {
+  readonly flatFilteredOptions = computed<FlatOption<T>[]>(() => {
     const opts = this.filteredOptions();
     const result: FlatOption<T>[] = [];
     for (const item of opts) {
@@ -217,7 +217,7 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
     return result;
   });
 
-  activeDescendant = computed(() => {
+  readonly activeDescendant = computed(() => {
     const idx = this.focusedIndex();
     const flat = this.flatFilteredOptions();
     if (idx < 0 || idx >= flat.length) return null;
@@ -226,7 +226,7 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
     return `${this.selectId}-${item.option.value}`;
   });
 
-  selectedLabel = computed(() => {
+  readonly selectedLabel = computed(() => {
     const currentValue = this.value();
     const currentOptions = this.flattenOptions(this.options());
 
@@ -245,7 +245,7 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
     return selected ? selected.label : this.placeholder();
   });
 
-  filteredOptions = computed(() => {
+  readonly filteredOptions = computed(() => {
     const term = this.searchTermSignal().toLowerCase();
     const opts = this.options();
     if (!term) return opts;

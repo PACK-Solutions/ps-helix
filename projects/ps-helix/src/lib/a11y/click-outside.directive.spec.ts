@@ -5,9 +5,9 @@ import { PshClickOutsideDirective } from './click-outside.directive';
 @Component({
   changeDetection: ChangeDetectionStrategy.Eager,
   template: `
-    <button id="outside">Outside</button>
+    <button type="button" id="outside">Outside</button>
     <div id="host" pshClickOutside (pshClickOutside)="outsideClicks = outsideClicks + 1">
-      <button id="inside">Inside</button>
+      <button type="button" id="inside">Inside</button>
     </div>
   `,
   imports: [PshClickOutsideDirective],

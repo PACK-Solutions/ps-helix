@@ -48,66 +48,66 @@ export class PshStatCardComponent {
 
   // Inputs principaux
   /** Valeur principale de la statistique (nombre ou texte formaté) */
-  value = input<string | number>();
+  readonly value = input<string | number>();
 
   /** Description de la statistique */
-  description = input<string>();
+  readonly description = input<string>();
 
   /** Nom de l'icône Phosphor (sans le préfixe 'ph-') */
-  icon = input<string>();
+  readonly icon = input<string>();
 
   // Inputs optionnels
   /** Variante du tag d'évolution (détermine la couleur) */
-  tagColor = input<PshColor>();
+  readonly tagColor = input<PshColor>();
 
   /** Label du tag d'évolution (ex: '+12.6%', '-8.1%') */
-  tagLabel = input<string>();
+  readonly tagLabel = input<string>();
 
   /** Couleur de fond personnalisée pour l'icône (CSS gradient ou couleur) */
-  iconBackground = input<string>();
+  readonly iconBackground = input<string>();
 
   /** Variante visuelle de la carte de base */
-  appearance = input<PshSurfaceAppearance>(this.config.appearance ?? 'elevated');
+  readonly appearance = input<PshSurfaceAppearance>(this.config.appearance ?? 'elevated');
 
   /** Carte cliquable avec feedback visuel */
-  interactive = input(this.config.interactive ?? false);
+  readonly interactive = input(this.config.interactive ?? false);
 
   /** Effet de survol */
-  hoverable = input(this.config.hoverable ?? false);
+  readonly hoverable = input(this.config.hoverable ?? false);
 
   /** État de chargement */
-  loading = input(false);
+  readonly loading = input(false);
 
   /** État désactivé */
-  disabled = input(false);
+  readonly disabled = input(false);
 
 
 
   /** Label ARIA pour l'accessibilité */
-  ariaLabel = input<string>();
+  readonly ariaLabel = input<string>();
 
   /** Disposition de la carte: 'horizontal' (icône à gauche) ou 'vertical' (icône en haut) */
-  layout = input<StatCardLayout>(this.config.layout ?? 'horizontal');
+  readonly layout = input<StatCardLayout>(this.config.layout ?? 'horizontal');
 
   /** Active la direction row pour le card-body (icône et contenu côte à côte en flex-row) */
-  rowDirection = input(this.config.rowDirection ?? false);
+  readonly rowDirection = input(this.config.rowDirection ?? false);
 
   // Outputs
   /** Émis lors du clic sur la carte */
   clicked = output<MouseEvent | KeyboardEvent>();
 
   // Computed values
-  private computedValue = computed(() => this.value() ?? '');
+  private readonly computedValue = computed(() => this.value() ?? '');
 
-  private computedDescription = computed(() => this.description() ?? '');
+  private readonly computedDescription = computed(() => this.description() ?? '');
 
-  private computedIcon = computed(() => this.icon() ?? '');
+  private readonly computedIcon = computed(() => this.icon() ?? '');
 
-  private computedTagVariant = computed(() => this.tagColor());
+  private readonly computedTagVariant = computed(() => this.tagColor());
 
-  private computedTagLabel = computed(() => this.tagLabel());
+  private readonly computedTagLabel = computed(() => this.tagLabel());
 
-  private computedIconBackground = computed(() => {
+  private readonly computedIconBackground = computed(() => {
     const customBg = this.iconBackground();
     if (customBg) return customBg;
 
@@ -116,23 +116,23 @@ export class PshStatCardComponent {
   });
 
   /** Style de l'icône avec couleur de fond personnalisée */
-  iconStyle = computed(() => {
+  readonly iconStyle = computed(() => {
     const background = this.computedIconBackground();
     return background ? { background } : null;
   });
 
   /** Vérifie si un tag doit être affiché */
-  hasTag = computed(() =>
+  readonly hasTag = computed(() =>
     !!(this.computedTagVariant() && this.computedTagLabel())
   );
 
   /** Vérifie si une icône doit être affichée */
-  hasIcon = computed(() => !!this.computedIcon());
+  readonly hasIcon = computed(() => !!this.computedIcon());
 
-  useRowDirection = computed(() => this.rowDirection());
+  readonly useRowDirection = computed(() => this.rowDirection());
 
   /** Label ARIA calculé */
-  computedAriaLabel = computed(() => {
+  readonly computedAriaLabel = computed(() => {
     const customLabel = this.ariaLabel();
     if (customLabel) return customLabel;
 
@@ -146,7 +146,7 @@ export class PshStatCardComponent {
   });
 
   /** Classes CSS calculées */
-  computedClasses = computed(() => {
+  readonly computedClasses = computed(() => {
     const classes = ['psh-stat-card'];
     const layout = this.layout();
 

@@ -69,14 +69,14 @@ export class ThemeService {
   private readonly document = inject(DOCUMENT);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
-  private isDarkThemeSignal = signal<boolean>(false);
-  private themeNameSignal = signal<Theme>('light');
-  private lastChangeSignal = signal<Date>(new Date());
+  private readonly isDarkThemeSignal = signal<boolean>(false);
+  private readonly themeNameSignal = signal<Theme>('light');
+  private readonly lastChangeSignal = signal<Date>(new Date());
 
-  isDarkTheme = computed(() => this.isDarkThemeSignal());
-  themeName = computed(() => this.themeNameSignal());
+  readonly isDarkTheme = computed(() => this.isDarkThemeSignal());
+  readonly themeName = computed(() => this.themeNameSignal());
 
-  themeInfo = computed(() => ({
+  readonly themeInfo = computed(() => ({
     isDark: this.isDarkTheme(),
     name: this.themeName(),
     lastChange: this.lastChangeSignal(),

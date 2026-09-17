@@ -32,18 +32,18 @@ export class PshStepComponent {
   protected readonly idPrefix =
     inject(PSH_STEPPER, { optional: true })?.idPrefix ?? pshUniqueId('step');
 
-  title = input.required<string>();
-  subtitle = input<string>();
-  icon = input<string>();
-  disabled = input(false);
-  completed = input(false);
-  loading = input(false);
-  error = input<string | null | undefined>(null);
-  warning = input<string>();
-  success = input<string | null | undefined>(null);
+  readonly title = input.required<string>();
+  readonly subtitle = input<string>();
+  readonly icon = input<string>();
+  readonly disabled = input(false);
+  readonly completed = input(false);
+  readonly loading = input(false);
+  readonly error = input<string | null | undefined>(null);
+  readonly warning = input<string>();
+  readonly success = input<string | null | undefined>(null);
 
-  private _index = signal(0);
-  private _isActive = signal(false);
+  private readonly _index = signal(0);
+  private readonly _isActive = signal(false);
 
   readonly index = this._index.asReadonly();
   readonly isActive = this._isActive.asReadonly();

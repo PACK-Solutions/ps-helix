@@ -90,20 +90,20 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
    */
   readonly touch = output<void>();
 
-  appearance = input<PshFieldAppearance>(this.config.appearance ?? 'outline');
-  size = input<InputSize>(this.config.size ?? 'medium');
-  fullWidth = input(this.config.fullWidth ?? false);
-  required = input(this.config.required ?? false);
-  showLabel = input(this.config.showLabel ?? true);
-  type = input<InputType>(this.config.type ?? 'text');
-  placeholder = input(this.config.placeholder ?? '');
-  label = input(this.config.label ?? '');
-  ariaLabel = input<string | null>(null);
-  iconStart = input<string>();
-  iconEnd = input<string>();
-  error = input<string | null | undefined>(null);
-  success = input<string | null | undefined>(null);
-  hint = input<string | null | undefined>(null);
+  readonly appearance = input<PshFieldAppearance>(this.config.appearance ?? 'outline');
+  readonly size = input<InputSize>(this.config.size ?? 'medium');
+  readonly fullWidth = input(this.config.fullWidth ?? false);
+  readonly required = input(this.config.required ?? false);
+  readonly showLabel = input(this.config.showLabel ?? true);
+  readonly type = input<InputType>(this.config.type ?? 'text');
+  readonly placeholder = input(this.config.placeholder ?? '');
+  readonly label = input(this.config.label ?? '');
+  readonly ariaLabel = input<string | null>(null);
+  readonly iconStart = input<string>();
+  readonly iconEnd = input<string>();
+  readonly error = input<string | null | undefined>(null);
+  readonly success = input<string | null | undefined>(null);
+  readonly hint = input<string | null | undefined>(null);
 
   /**
    * Extra ids for `aria-describedby`. **Merged** with the control's own — the id of its error,
@@ -117,8 +117,8 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
    */
   readonly ariaLabelledBy = input<string>();
   
-  suggestions = input<string[] | ((query: string) => Promise<string[]>)>([]);
-  autocompleteConfig = input<AutocompleteConfig>({
+  readonly suggestions = input<string[] | ((query: string) => Promise<string[]>)>([]);
+  readonly autocompleteConfig = input<AutocompleteConfig>({
     minLength: 1,
     debounceTime: 300
   });
@@ -136,7 +136,7 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
   blurred = output<void>();
   suggestionSelected = output<string>();
 
-  showSuggestions = computed(() => this.suggestionsVisible() && this.filteredSuggestions().length > 0);
+  readonly showSuggestions = computed(() => this.suggestionsVisible() && this.filteredSuggestions().length > 0);
 
   /**
    * The suggestions listbox is announced only when the input can actually produce one.
@@ -156,24 +156,24 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
     const index = this.focusedSuggestionIndex();
     return this.showSuggestions() && index >= 0 ? `${this.listboxId}-option-${index}` : null;
   });
-  filteredSuggestions = computed(() => this.filteredSuggestionsSignal());
+  readonly filteredSuggestions = computed(() => this.filteredSuggestionsSignal());
   /** Whether the control currently has focus. A state readout; the event is `focused`. */
   readonly isFocused = computed(() => this.focusedSignal());
-  passwordVisible = computed(() => this.passwordVisibleSignal());
+  readonly passwordVisible = computed(() => this.passwordVisibleSignal());
   
-  effectiveType = computed(() => {
+  readonly effectiveType = computed(() => {
     if (this.type() === 'password') {
       return this.passwordVisible() ? 'text' : 'password';
     }
     return this.type();
   });
 
-  computedAriaLabel = computed(() => this.ariaLabel() || this.label() || this.placeholder());
-  showPasswordLabel = input<string | undefined>(undefined);
-  hidePasswordLabel = input<string | undefined>(undefined);
+  readonly computedAriaLabel = computed(() => this.ariaLabel() || this.label() || this.placeholder());
+  readonly showPasswordLabel = input<string | undefined>(undefined);
+  readonly hidePasswordLabel = input<string | undefined>(undefined);
 
   /** Name of the reveal control. It flips with the state, so it is one computed, not two. */
-  passwordToggleLabel = computed(() => {
+  readonly passwordToggleLabel = computed(() => {
     // Both are resolved before the choice, not inside it: a branch that is not taken is a
     // configured default nothing reads, and that is exactly what config-tokens.spec looks for.
     const show =
@@ -191,7 +191,7 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
   // 'error-message' / 'success-message' / 'hint-message', so two inputs in error on the
   // same page produced duplicate ids and a screen reader read the first one's message
   // for both. Same shape as textarea's describedBy.
-  describedBy = computed(() => {
+  readonly describedBy = computed(() => {
     const own = this.error()
       ? `${this.inputId}-error`
       : this.success()
@@ -202,7 +202,7 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
     return pshJoinAriaIds(own, this.ariaDescribedBy());
   });
 
-  state = computed(() => this.getState());
+  readonly state = computed(() => this.getState());
 
   private getState(): string {
     if (this.disabled()) return 'disabled';

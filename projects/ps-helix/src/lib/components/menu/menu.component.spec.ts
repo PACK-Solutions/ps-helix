@@ -1240,7 +1240,7 @@ class TestHostComponent {
   ];
   isCollapsed = false;
 
-  menu = viewChild(PshMenuComponent);
+  readonly menu = viewChild(PshMenuComponent);
 
   onItemClick = jest.fn();
 }

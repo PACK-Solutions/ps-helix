@@ -24,10 +24,10 @@ export class PshCollapseComponent {
   private readonly config = inject(COLLAPSE_CONFIG);
 
 
-  expanded = model(false);
+  readonly expanded = model(false);
 
-  disabled = input(false);
-  appearance = input(this.config.appearance ?? ('flat' as PshSurfaceAppearance), {
+  readonly disabled = input(false);
+  readonly appearance = input(this.config.appearance ?? ('flat' as PshSurfaceAppearance), {
     transform: (value: CollapseVariant) => {
       if (!['flat', 'outline'].includes(value)) {
         if (isDevMode()) {
@@ -38,7 +38,7 @@ export class PshCollapseComponent {
       return value;
     }
   });
-  size = input(this.config.size ?? ('medium' as CollapseSize), {
+  readonly size = input(this.config.size ?? ('medium' as CollapseSize), {
     transform: (value: CollapseSize) => {
       if (!['small', 'medium', 'large'].includes(value)) {
         if (isDevMode()) {
@@ -49,8 +49,8 @@ export class PshCollapseComponent {
       return value;
     }
   });
-  icon = input(this.config.icon ?? 'caret-down');
-  id = input<string>();
+  readonly icon = input(this.config.icon ?? 'caret-down');
+  readonly id = input<string>();
   /**
    * Maximum height of the open content. `'auto'` — the default — does not clip.
    *
@@ -58,7 +58,7 @@ export class PshCollapseComponent {
    * with no warning and no way to opt out. A fixed length still works, and is what gives the
    * open/close a height animation; `auto` animates opacity and offset only.
    */
-  maxHeight = input<string>(this.config.maxHeight ?? 'auto');
+  readonly maxHeight = input<string>(this.config.maxHeight ?? 'auto');
 
   /**
    * Fallback header text, used when nothing is projected into `[psh-collapse-header]`.
@@ -73,7 +73,7 @@ export class PshCollapseComponent {
   protected readonly resolvedMaxHeight = computed(() =>
     this.maxHeight() === 'auto' ? 'none' : this.maxHeight(),
   );
-  disableAnimation = input(this.config.disableAnimation ?? false);
+  readonly disableAnimation = input(this.config.disableAnimation ?? false);
 
   opened = output<void>();
   closed = output<void>();

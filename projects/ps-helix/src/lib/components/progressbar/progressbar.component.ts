@@ -35,35 +35,35 @@ export class PshProgressbarComponent {
   private config = inject(PROGRESSBAR_CONFIG);
 
   // Model inputs for two-way binding
-  value = input(this.config.value ?? 0);
-  max = input(this.config.max ?? 100);
+  readonly value = input(this.config.value ?? 0);
+  readonly max = input(this.config.max ?? 100);
 
   // Regular inputs
-  color = input<ProgressbarVariant>(this.config.color ?? 'primary');
-  size = input<ProgressbarSize>(this.config.size ?? 'medium');
-  showLabel = input(this.config.showLabel ?? true);
-  mode = input<ProgressbarMode>(this.config.mode ?? 'default');
-  label = input<string>();
-  labelPosition = input<ProgressbarLabelPosition>(this.config.labelPosition ?? 'top');
-  ariaLabel = input<string>();
+  readonly color = input<ProgressbarVariant>(this.config.color ?? 'primary');
+  readonly size = input<ProgressbarSize>(this.config.size ?? 'medium');
+  readonly showLabel = input(this.config.showLabel ?? true);
+  readonly mode = input<ProgressbarMode>(this.config.mode ?? 'default');
+  readonly label = input<string>();
+  readonly labelPosition = input<ProgressbarLabelPosition>(this.config.labelPosition ?? 'top');
+  readonly ariaLabel = input<string>();
 
   // Outputs
   completed = output<void>();
   thresholdReached = output<number>();
 
   // Computed values
-  percentage = computed(() => {
+  readonly percentage = computed(() => {
     const val = this.value();
     const maxVal = this.max();
     if (maxVal <= 0) return 0;
     return Math.min(100, Math.max(0, (val / maxVal) * 100));
   });
 
-  isIndeterminate = computed(() => this.mode() === 'indeterminate');
-  isStriped = computed(() => this.mode() === 'striped' || this.mode() === 'animated');
-  isAnimated = computed(() => this.mode() === 'animated');
+  readonly isIndeterminate = computed(() => this.mode() === 'indeterminate');
+  readonly isStriped = computed(() => this.mode() === 'striped' || this.mode() === 'animated');
+  readonly isAnimated = computed(() => this.mode() === 'animated');
 
-  computedAriaValueText = computed(() => {
+  readonly computedAriaValueText = computed(() => {
     if (this.ariaLabel()) return this.ariaLabel();
     if (this.isIndeterminate()) {
       return this.label() || 'Loading...';
@@ -71,7 +71,7 @@ export class PshProgressbarComponent {
     return `${Math.round(this.percentage())}%`;
   });
 
-  displayLabel = computed(() => {
+  readonly displayLabel = computed(() => {
     if (this.isIndeterminate()) {
       return this.label() || 'Loading...';
     }

@@ -10,7 +10,8 @@
   @if (useRowDirection()) {
     <div class="psh-stat-card-body">
       @if (hasIcon()) {
-        <div class="psh-stat-icon" [style]="iconStyle()">
+        <!-- eslint-disable-next-line @angular-eslint/template/no-inline-styles -->
+<div class="psh-stat-icon" [style]="iconStyle()">
           <i class="ph ph-{{ displayIcon }}" aria-hidden="true"></i>
         </div>
       }
@@ -28,7 +29,8 @@
     </div>
   } @else {
     @if (hasIcon()) {
-      <div class="psh-stat-icon" [style]="iconStyle()">
+      <!-- eslint-disable-next-line @angular-eslint/template/no-inline-styles -->
+<div class="psh-stat-icon" [style]="iconStyle()">
         <i class="ph ph-{{ displayIcon }}" aria-hidden="true"></i>
       </div>
     }

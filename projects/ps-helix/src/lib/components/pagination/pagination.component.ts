@@ -48,10 +48,10 @@ export class PshPaginationComponent {
   private config = inject(PAGINATION_CONFIG);
   private readonly uniqueId = pshUniqueId('pagination');
 
-  currentPage = model(1);
-  totalPages = input(1);
-  itemsPerPageInput = input(10, { alias: 'itemsPerPage' });
-  itemsPerPage = linkedSignal(this.itemsPerPageInput);
+  readonly currentPage = model(1);
+  readonly totalPages = input(1);
+  readonly itemsPerPageInput = input(10, { alias: 'itemsPerPage' });
+  readonly itemsPerPage = linkedSignal(this.itemsPerPageInput);
 
   /**
    * Number of pages used for rendering and navigation: never below 1, and never

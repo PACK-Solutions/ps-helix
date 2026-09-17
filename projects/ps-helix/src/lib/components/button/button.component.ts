@@ -29,27 +29,27 @@ export class PshButtonComponent implements AfterContentChecked {
   private readonly config = inject(BUTTON_CONFIG);
 
   private elementRef = inject(ElementRef);
-  private projectedText = signal<string | undefined>(undefined);
+  private readonly projectedText = signal<string | undefined>(undefined);
 
-  appearance = input<PshControlAppearance>(this.config.appearance ?? 'solid');
-  color = input<ButtonColor>(this.config.color ?? 'primary');
-  size = input<ButtonSize>(this.config.size ?? 'medium');
-  disabled = input(false);
-  loading = input(false);
-  fullWidth = input(this.config.fullWidth ?? false);
-  iconPosition = input<ButtonIconPosition>(this.config.iconPosition ?? 'left');
-  icon = input<string>();
-  ariaLabel = input<string>();
-  loadingTextInput = input<string | undefined>(undefined, { alias: 'loadingText' });
-  loadingText = computed(
+  readonly appearance = input<PshControlAppearance>(this.config.appearance ?? 'solid');
+  readonly color = input<ButtonColor>(this.config.color ?? 'primary');
+  readonly size = input<ButtonSize>(this.config.size ?? 'medium');
+  readonly disabled = input(false);
+  readonly loading = input(false);
+  readonly fullWidth = input(this.config.fullWidth ?? false);
+  readonly iconPosition = input<ButtonIconPosition>(this.config.iconPosition ?? 'left');
+  readonly icon = input<string>();
+  readonly ariaLabel = input<string>();
+  readonly loadingTextInput = input<string | undefined>(undefined, { alias: 'loadingText' });
+  readonly loadingText = computed(
     () => this.loadingTextInput() ?? pshResolveConfigValue(this.config.loadingText) ?? 'Loading...',
   );
-  disabledTextInput = input<string | undefined>(undefined, { alias: 'disabledText' });
-  disabledText = computed(
+  readonly disabledTextInput = input<string | undefined>(undefined, { alias: 'disabledText' });
+  readonly disabledText = computed(
     () => this.disabledTextInput() ?? pshResolveConfigValue(this.config.disabledText) ?? 'This action is currently unavailable',
   );
-  iconOnlyText = input<string>();
-  type = input<'button' | 'submit' | 'reset'>(this.config.type ?? 'button');
+  readonly iconOnlyText = input<string>();
+  readonly type = input<'button' | 'submit' | 'reset'>(this.config.type ?? 'button');
 
   clicked = output<MouseEvent>();
   disabledClicked = output<MouseEvent>();
@@ -70,7 +70,7 @@ export class PshButtonComponent implements AfterContentChecked {
     }
   }
 
-  computedAriaLabel = computed(() => {
+  readonly computedAriaLabel = computed(() => {
     if (this.ariaLabel()) return this.ariaLabel();
     if (this.loading()) return this.loadingText();
     if (this.disabled()) return this.disabledText();
@@ -82,7 +82,7 @@ export class PshButtonComponent implements AfterContentChecked {
     return undefined;
   });
 
-  state = computed(() => {
+  readonly state = computed(() => {
     if (this.disabled()) return 'disabled';
     if (this.loading()) return 'loading';
     return 'default';

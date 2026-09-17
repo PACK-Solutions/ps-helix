@@ -27,7 +27,7 @@ describe('PshTableComponent', () => {
   const getColumnHeaders = () =>
     Array.from(fixture.nativeElement.querySelectorAll('thead th')) as HTMLTableCellElement[];
 
-  // Sorting now lives on a real <button> inside the <th> so that it is reachable by
+  // Sorting now lives on a real <button type="button"> inside the <th> so that it is reachable by
   // keyboard. "Clicking the header" therefore means clicking whatever is interactive
   // in it, which is the button for a sortable column and the cell itself otherwise.
   const clickHeader = (index: number) => {

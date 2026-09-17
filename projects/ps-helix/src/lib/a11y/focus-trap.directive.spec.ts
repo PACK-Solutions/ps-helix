@@ -5,18 +5,18 @@ import { PshFocusTrapDirective } from './focus-trap.directive';
 @Component({
   changeDetection: ChangeDetectionStrategy.Eager,
   template: `
-    <button id="outside">Outside</button>
+    <button type="button" id="outside">Outside</button>
     <div [pshFocusTrap]="trapped()" [pshFocusTrapAutoFocus]="autoFocus()">
-      <button id="first">First</button>
-      <button id="mid">Mid</button>
-      <button id="last">Last</button>
+      <button type="button" id="first">First</button>
+      <button type="button" id="mid">Mid</button>
+      <button type="button" id="last">Last</button>
     </div>
   `,
   imports: [PshFocusTrapDirective],
 })
 class TestHostComponent {
-  trapped = signal(false);
-  autoFocus = signal(true);
+  readonly trapped = signal(false);
+  readonly autoFocus = signal(true);
 }
 
 const byId = (id: string) => document.getElementById(id) as HTMLButtonElement;

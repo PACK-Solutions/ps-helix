@@ -7,8 +7,8 @@ import { pshUniqueId } from '../../utils/unique-id';
   providedIn: 'root'
 })
 export class PshToastService {
-  private _toasts = signal<Toast[]>([]);
-  private _position = signal<ToastPosition>('top-right');
+  private readonly _toasts = signal<Toast[]>([]);
+  private readonly _position = signal<ToastPosition>('top-right');
   private config = inject(TOAST_CONFIG);
 
   readonly toasts = this._toasts.asReadonly();

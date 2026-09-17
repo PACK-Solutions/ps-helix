@@ -57,26 +57,26 @@ export class PshStepperComponent implements PshStepperApi {
   /** Namespaces every id this stepper renders. Read by its `psh-step` children. */
   readonly idPrefix = pshUniqueId('stepper');
 
-  activeStep = model(0);
-  variant = input<StepperVariant>(this.config.variant ?? 'default');
-  linear = input(this.config.linear ?? true);
+  readonly activeStep = model(0);
+  readonly variant = input<StepperVariant>(this.config.variant ?? 'default');
+  readonly linear = input(this.config.linear ?? true);
 
-  ariaLabels = input<StepperAriaLabels>();
+  readonly ariaLabels = input<StepperAriaLabels>();
 
   /** Name of the stepper landmark. Was hard-coded, in French, with no way out. */
   readonly ariaLabelInput = input<string | undefined>(undefined, { alias: 'ariaLabel' });
   readonly ariaLabel = computed(
     () => this.ariaLabelInput() ?? pshResolveConfigValue(this.config.ariaLabel) ?? 'Navigation par étapes',
   );
-  beforeStepChange = input<(from: number, to: number) => Promise<boolean> | boolean>();
+  readonly beforeStepChange = input<(from: number, to: number) => Promise<boolean> | boolean>();
 
   stepChange = output<number>();
   completed = output<void>();
   navigationError = output<PshNavigationError>();
 
-  stepComponents = contentChildren(PshStepComponent);
+  readonly stepComponents = contentChildren(PshStepComponent);
 
-  steps = computed(() => this.stepComponents().map(step => ({
+  readonly steps = computed(() => this.stepComponents().map(step => ({
     title: step.title(),
     subtitle: step.subtitle(),
     icon: step.icon(),
@@ -88,18 +88,18 @@ export class PshStepperComponent implements PshStepperApi {
     success: step.success()
   })));
 
-  effectiveAriaLabels = computed(() =>
+  readonly effectiveAriaLabels = computed(() =>
     this.ariaLabels() ?? this.config.ariaLabels ?? DEFAULT_ARIA_LABELS
   );
 
-  isFirstStep = computed(() => this.activeStep() === 0);
-  isLastStep = computed(() => this.activeStep() === this.steps().length - 1);
-  progress = computed(() =>
+  readonly isFirstStep = computed(() => this.activeStep() === 0);
+  readonly isLastStep = computed(() => this.activeStep() === this.steps().length - 1);
+  readonly progress = computed(() =>
     this.steps().length > 0
       ? ((this.activeStep() + 1) / this.steps().length) * 100
       : 0
   );
-  completedSteps = computed(() =>
+  readonly completedSteps = computed(() =>
     this.steps().filter(step => step.completed).length
   );
 

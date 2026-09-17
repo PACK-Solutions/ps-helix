@@ -11,7 +11,7 @@ import { InfoCardData, InfoCardVariant } from './info-card.types';
   changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <psh-info-card [title]="title" [data]="data" [autoFullWidthOnMobile]="autoFullWidthOnMobile">
-      <button psh-info-card-actions>Action Button</button>
+      <button type="button" psh-info-card-actions>Action Button</button>
     </psh-info-card>
   `,
   imports: [PshInfoCardComponent]

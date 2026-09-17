@@ -12,6 +12,7 @@
 >
   @if (collapsible()) {
     <button
+      type="button"
       class="psh-menu-collapse-button"
       (click)="toggleCollapse()"
       [attr.aria-expanded]="!collapsed()"

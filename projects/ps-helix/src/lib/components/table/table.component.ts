@@ -48,33 +48,33 @@ export class PshTableComponent {
   private config = inject(TABLE_CONFIG);
   private readonly announcer = inject(PshLiveAnnouncerService);
 
-  appearance = input<'flat' | 'outline'>(this.config.appearance ?? 'flat');
-  size = input<'small' | 'medium' | 'large'>(this.config.size ?? 'medium');
-  striped = input(this.config.striped ?? false);
-  hoverable = input(this.config.hoverable ?? false);
-  bordered = input(this.config.bordered ?? false);
-  loading = input(this.config.loading ?? false);
-  globalSearch = input(this.config.globalSearch ?? false);
-  fullWidth = input(this.config.fullWidth ?? false);
-  columns = input.required<TableColumn[]>();
-  data = input.required<TableRow[]>();
-  emptyMessageInput = input<string | undefined>(undefined, { alias: 'emptyMessage' });
-  emptyMessage = computed(
+  readonly appearance = input<'flat' | 'outline'>(this.config.appearance ?? 'flat');
+  readonly size = input<'small' | 'medium' | 'large'>(this.config.size ?? 'medium');
+  readonly striped = input(this.config.striped ?? false);
+  readonly hoverable = input(this.config.hoverable ?? false);
+  readonly bordered = input(this.config.bordered ?? false);
+  readonly loading = input(this.config.loading ?? false);
+  readonly globalSearch = input(this.config.globalSearch ?? false);
+  readonly fullWidth = input(this.config.fullWidth ?? false);
+  readonly columns = input.required<TableColumn[]>();
+  readonly data = input.required<TableRow[]>();
+  readonly emptyMessageInput = input<string | undefined>(undefined, { alias: 'emptyMessage' });
+  readonly emptyMessage = computed(
     () => this.emptyMessageInput() ?? pshResolveConfigValue(this.config.emptyMessage) ?? 'No data available',
   );
-  noResultsMessageInput = input<string | undefined>(undefined, { alias: 'noResultsMessage' });
-  noResultsMessage = computed(
+  readonly noResultsMessageInput = input<string | undefined>(undefined, { alias: 'noResultsMessage' });
+  readonly noResultsMessage = computed(
     () => this.noResultsMessageInput() ?? pshResolveConfigValue(this.config.noResultsMessage) ?? 'No results found',
   );
-  globalSearchPlaceholderInput = input<string | undefined>(undefined, { alias: 'globalSearchPlaceholder' });
-  globalSearchPlaceholder = computed(
+  readonly globalSearchPlaceholderInput = input<string | undefined>(undefined, { alias: 'globalSearchPlaceholder' });
+  readonly globalSearchPlaceholder = computed(
     () => this.globalSearchPlaceholderInput() ?? pshResolveConfigValue(this.config.globalSearchPlaceholder) ?? 'Search in all columns...',
   );
-  tableLayout = input<'auto' | 'fixed'>(this.config.tableLayout ?? 'auto');
-  truncateText = input(this.config.truncateText ?? false);
-  expandable = input(this.config.expandable ?? false);
-  singleExpand = input(this.config.singleExpand ?? false);
-  expandedRowTemplate = input<TemplateRef<TableExpandedRowContext>>();
+  readonly tableLayout = input<'auto' | 'fixed'>(this.config.tableLayout ?? 'auto');
+  readonly truncateText = input(this.config.truncateText ?? false);
+  readonly expandable = input(this.config.expandable ?? false);
+  readonly singleExpand = input(this.config.singleExpand ?? false);
+  readonly expandedRowTemplate = input<TemplateRef<TableExpandedRowContext>>();
 
   /**
    * Replaces the content of every column header.
@@ -83,7 +83,7 @@ export class PshTableComponent {
    * two-line label meant `::ng-deep` into the `<th>`. The context carries the sort state and
    * a `toggleSort` callback, so the component keeps owning the keyboard path and `aria-sort`.
    */
-  headerTemplate = input<TemplateRef<TableHeaderContext>>();
+  readonly headerTemplate = input<TemplateRef<TableHeaderContext>>();
 
   /**
    * Replaces the empty state.
@@ -91,7 +91,7 @@ export class PshTableComponent {
    * `emptyMessage` and `noResultsMessage` are strings, so an illustration or a "clear the
    * filter" button had nowhere to go. Both inputs still work when no template is given.
    */
-  emptyTemplate = input<TemplateRef<TableEmptyContext>>();
+  readonly emptyTemplate = input<TemplateRef<TableEmptyContext>>();
 
   /**
    * Extra classes for a row, from the row itself.
@@ -99,7 +99,7 @@ export class PshTableComponent {
    * `InfoCardData.customClass` already existed for the same need one component over; a table
    * had no way to mark a row as overdue, selected or archived.
    */
-  rowClass = input<(row: TableRow) => string | undefined>();
+  readonly rowClass = input<(row: TableRow) => string | undefined>();
 
   /** Name of the table itself. There was none, so several tables on a page were all "table". */
   readonly ariaLabel = input<string>();
@@ -135,26 +135,26 @@ export class PshTableComponent {
   rowExpanded = output<TableRowExpandEvent>();
   rowCollapsed = output<TableRowExpandEvent>();
 
-  private currentSortSignal = signal<TableSort | undefined>(undefined);
+  private readonly currentSortSignal = signal<TableSort | undefined>(undefined);
   readonly searchTermSignal = signal('');
-  private expandedRowIds = signal<Set<string | number>>(new Set());
+  private readonly expandedRowIds = signal<Set<string | number>>(new Set());
 
-  currentSort = computed(() => this.currentSortSignal());
-  searchTerm = computed(() => this.searchTermSignal());
+  readonly currentSort = computed(() => this.currentSortSignal());
+  readonly searchTerm = computed(() => this.searchTermSignal());
 
-  computedEmptyMessage = computed(() => {
+  readonly computedEmptyMessage = computed(() => {
     return this.searchTerm()
       ? `${this.noResultsMessage()} "${this.searchTerm()}"`
       : this.emptyMessage();
   });
 
-  state = computed(() => {
+  readonly state = computed(() => {
     if (this.loading()) return 'loading';
     if (this.filteredData().length === 0) return 'empty';
     return 'flat';
   });
 
-  filteredData = computed(() => {
+  readonly filteredData = computed(() => {
     let result = [...this.data()];
 
     if (this.searchTerm()) {
@@ -325,7 +325,7 @@ export class PshTableComponent {
     return this.rowClass()?.(row) ?? '';
   }
 
-  totalColumns = computed(() => this.columns().length + (this.expandable() ? 1 : 0));
+  readonly totalColumns = computed(() => this.columns().length + (this.expandable() ? 1 : 0));
 
   isRowExpandable(row: TableRow): boolean {
     return !!(row.children?.length || this.expandedRowTemplate());

@@ -75,7 +75,7 @@ export class ModalService {
    * Ordered stack of open modal ids (insertion order = visual stacking order).
    * The last entry is the topmost (most recently opened) modal.
    */
-  private modalsSignal = signal<readonly string[]>([]);
+  private readonly modalsSignal = signal<readonly string[]>([]);
 
   /**
    * Computed signal exposing the number of active modals
@@ -192,64 +192,64 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
   /**
    * Controls the visibility of the modal (two-way binding)
    */
-  open = model(false);
+  readonly open = model(false);
 
   /**
    * Size of the modal dialog
    */
-  size = input<ModalSize>(this.config.size ?? 'medium');
+  readonly size = input<ModalSize>(this.config.size ?? 'medium');
 
   /**
    * Whether to show the close button in the header
    */
-  showClose = input(this.config.showClose ?? true);
+  readonly showClose = input(this.config.showClose ?? true);
 
   /**
    * Whether clicking the backdrop closes the modal
    */
-  closeOnBackdrop = input(this.config.closeOnBackdrop ?? true);
+  readonly closeOnBackdrop = input(this.config.closeOnBackdrop ?? true);
 
   /**
    * Whether pressing Escape closes the modal
    */
-  closeOnEscape = input(this.config.closeOnEscape ?? true);
+  readonly closeOnEscape = input(this.config.closeOnEscape ?? true);
 
   /**
    * Whether to prevent scrolling of the page when modal is open
    */
-  preventScroll = input(this.config.preventScroll ?? true);
+  readonly preventScroll = input(this.config.preventScroll ?? true);
 
   /**
    * Whether to show the default footer with action buttons
    */
-  showFooter = input(this.config.showFooter ?? true);
+  readonly showFooter = input(this.config.showFooter ?? true);
 
   /**
    * Title displayed in the modal header
    */
-  title = input('Modal Title');
+  readonly title = input('Modal Title');
 
   /**
    * Accessible label for the close button
    */
-  dismissLabelInput = input<string | undefined>(undefined, { alias: 'dismissLabel' });
-  dismissLabel = computed(
+  readonly dismissLabelInput = input<string | undefined>(undefined, { alias: 'dismissLabel' });
+  readonly dismissLabel = computed(
     () => this.dismissLabelInput() ?? pshResolveConfigValue(this.config.dismissLabel) ?? 'Close',
   );
 
   /**
    * Label for the confirm button in the default footer
    */
-  confirmLabelInput = input<string | undefined>(undefined, { alias: 'confirmLabel' });
-  confirmLabel = computed(
+  readonly confirmLabelInput = input<string | undefined>(undefined, { alias: 'confirmLabel' });
+  readonly confirmLabel = computed(
     () => this.confirmLabelInput() ?? pshResolveConfigValue(this.config.confirmLabel) ?? 'Confirm',
   );
 
   /**
    * Label for the cancel button in the default footer
    */
-  cancelLabelInput = input<string | undefined>(undefined, { alias: 'cancelLabel' });
-  cancelLabel = computed(
+  readonly cancelLabelInput = input<string | undefined>(undefined, { alias: 'cancelLabel' });
+  readonly cancelLabel = computed(
     () => this.cancelLabelInput() ?? pshResolveConfigValue(this.config.cancelLabel) ?? 'Cancel',
   );
 
@@ -266,7 +266,7 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
    * <psh-modal panelClass="my-custom-modal" />
    * ```
    */
-  panelClass = input('');
+  readonly panelClass = input('');
 
   /**
    * Name of the dialog, for the case where no visible title is rendered.
@@ -290,7 +290,7 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
    * <psh-modal backdropClass="higher-z-index" />
    * ```
    */
-  backdropClass = input('');
+  readonly backdropClass = input('');
 
   /**
    * Emitted when the modal is closed
@@ -325,27 +325,27 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
   /**
    * Computed signal indicating if a custom footer is projected
    */
-  hasCustomFooter = computed(() => !!this.customFooter());
+  readonly hasCustomFooter = computed(() => !!this.customFooter());
 
   /**
    * Computed signal for the modal state
    */
-  state = computed(() => this.open() ? 'open' : 'closed');
+  readonly state = computed(() => this.open() ? 'open' : 'closed');
 
   /**
    * Computed signal for the modal dialog ID for accessibility
    */
-  modalDialogId = computed(() => `${this.modalId}-dialog`);
+  readonly modalDialogId = computed(() => `${this.modalId}-dialog`);
 
   /**
    * Computed signal for the modal description ID for accessibility
    */
-  modalDescriptionId = computed(() => `${this.modalId}-description`);
+  readonly modalDescriptionId = computed(() => `${this.modalId}-description`);
 
   /**
    * Computed signal indicating if the screen is mobile-sized
    */
-  isMobileScreen = computed(() => this.isMobileSignal());
+  readonly isMobileScreen = computed(() => this.isMobileSignal());
 
   constructor() {
     effect(() => {

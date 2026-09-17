@@ -77,19 +77,19 @@ export class PshTextareaComponent
    */
   readonly touch = output<void>();
 
-  appearance = input<PshFieldAppearance>(this.config.appearance ?? 'outline');
-  size = input<TextareaSize>(this.config.size ?? 'medium');
-  resize = input<TextareaResize>(this.config.resize ?? 'vertical');
-  rows = input<number>(this.config.rows ?? 4);
-  maxLength = input<number | undefined>(undefined);
-  autoSize = input<boolean>(this.config.autoSize ?? false);
-  showCharacterCount = input<boolean>(this.config.showCharacterCount ?? false);
-  fullWidth = input<boolean>(this.config.fullWidth ?? false);
-  required = input<boolean>(this.config.required ?? false);
-  showLabel = input<boolean>(this.config.showLabel ?? true);
-  label = input<string>(this.config.label ?? '');
-  placeholder = input<string>(this.config.placeholder ?? '');
-  hint = input<string | null | undefined>(null);
+  readonly appearance = input<PshFieldAppearance>(this.config.appearance ?? 'outline');
+  readonly size = input<TextareaSize>(this.config.size ?? 'medium');
+  readonly resize = input<TextareaResize>(this.config.resize ?? 'vertical');
+  readonly rows = input<number>(this.config.rows ?? 4);
+  readonly maxLength = input<number | undefined>(undefined);
+  readonly autoSize = input<boolean>(this.config.autoSize ?? false);
+  readonly showCharacterCount = input<boolean>(this.config.showCharacterCount ?? false);
+  readonly fullWidth = input<boolean>(this.config.fullWidth ?? false);
+  readonly required = input<boolean>(this.config.required ?? false);
+  readonly showLabel = input<boolean>(this.config.showLabel ?? true);
+  readonly label = input<string>(this.config.label ?? '');
+  readonly placeholder = input<string>(this.config.placeholder ?? '');
+  readonly hint = input<string | null | undefined>(null);
 
   /**
    * Extra ids for `aria-describedby`. **Merged** with the control's own — the id of its error,
@@ -102,9 +102,9 @@ export class PshTextareaComponent
    * cover. Merged with anything the control already points at.
    */
   readonly ariaLabelledBy = input<string>();
-  error = input<string | null | undefined>(null);
-  success = input<string | null | undefined>(null);
-  ariaLabel = input<string | null>(null);
+  readonly error = input<string | null | undefined>(null);
+  readonly success = input<string | null | undefined>(null);
+  readonly ariaLabel = input<string | null>(null);
 
   private readonly focusedSignal = signal<boolean>(false);
 
@@ -116,40 +116,40 @@ export class PshTextareaComponent
   /** Whether the control currently has focus. A state readout; the event is `focused`. */
   readonly isFocused = computed(() => this.focusedSignal());
 
-  effectiveResize = computed<TextareaResize>(() =>
+  readonly effectiveResize = computed<TextareaResize>(() =>
     this.autoSize() ? 'none' : this.resize(),
   );
 
-  characterCount = computed(() => ({
+  readonly characterCount = computed(() => ({
     current: (this.value() ?? '').length,
     max: this.maxLength(),
   }));
 
-  isOverLimit = computed(() => {
+  readonly isOverLimit = computed(() => {
     const max = this.maxLength();
     if (max === undefined) return false;
     return this.characterCount().current > max;
   });
 
-  isAtLimit = computed(() => {
+  readonly isAtLimit = computed(() => {
     const max = this.maxLength();
     if (max === undefined) return false;
     return this.characterCount().current >= max;
   });
 
-  shouldShowCount = computed(
+  readonly shouldShowCount = computed(
     () => this.showCharacterCount() || this.maxLength() !== undefined,
   );
 
-  hasError = computed(
+  readonly hasError = computed(
     () => !!this.error() || this.isOverLimit(),
   );
 
-  computedAriaLabel = computed(
+  readonly computedAriaLabel = computed(
     () => this.ariaLabel() || this.label() || this.placeholder() || null,
   );
 
-  describedBy = computed(() => {
+  readonly describedBy = computed(() => {
     const own = this.error()
       ? `${this.textareaId}-error`
       : this.success()
@@ -160,7 +160,7 @@ export class PshTextareaComponent
     return pshJoinAriaIds(own, this.ariaDescribedBy());
   });
 
-  state = computed(() => {
+  readonly state = computed(() => {
     if (this.disabled()) return 'disabled';
     if (this.readonly()) return 'readonly';
     if (this.hasError()) return 'error';
@@ -169,10 +169,10 @@ export class PshTextareaComponent
     return 'default';
   });
 
-  characterCountSuffix = input<string | undefined>(undefined);
+  readonly characterCountSuffix = input<string | undefined>(undefined);
 
   /** Word after the count. A field before 7.0.0, so no application could translate it. */
-  characterCountLabel = computed(
+  readonly characterCountLabel = computed(
     () =>
       this.characterCountSuffix() ??
       pshResolveConfigValue(this.config.characterCountSuffix) ??
