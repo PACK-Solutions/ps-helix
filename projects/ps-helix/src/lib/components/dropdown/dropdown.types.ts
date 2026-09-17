@@ -1,4 +1,5 @@
 import { PshColor, PshControlAppearance } from '../../types/semantic.types';
+import { PshConfigValue } from '../../utils/config-value';
 /**
  * Interface pour un élément du dropdown
  */
@@ -65,5 +66,5 @@ export interface DropdownConfig {
   /** Texte accessible (aria-label) quand iconOnly est actif */
   iconOnlyText?: string;
   /** Libellé du déclencheur */
-  label?: string;
+  label?: PshConfigValue<string>;
 }

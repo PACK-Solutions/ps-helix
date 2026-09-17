@@ -30,10 +30,10 @@ describe('PshMenuComponent', () => {
     fixture.nativeElement.querySelector('nav[role="navigation"]') as HTMLElement;
 
   const getMenubar = () =>
-    fixture.nativeElement.querySelector('ul[role="menubar"]') as HTMLUListElement;
+    fixture.nativeElement.querySelector('ul.psh-menu-list') as HTMLUListElement;
 
   const getMenuItems = () =>
-    Array.from(fixture.nativeElement.querySelectorAll('[role="menuitem"]')) as HTMLElement[];
+    Array.from(fixture.nativeElement.querySelectorAll('.psh-menu-link')) as HTMLElement[];
 
   const getMenuItem = (index: number) =>
     getMenuItems()[index] as HTMLElement;
@@ -45,13 +45,13 @@ describe('PshMenuComponent', () => {
     fixture.nativeElement.querySelector('.psh-menu-collapse-button') as HTMLButtonElement;
 
   const getDividers = () =>
-    Array.from(fixture.nativeElement.querySelectorAll('[role="separator"]')) as HTMLElement[];
+    Array.from(fixture.nativeElement.querySelectorAll('.psh-menu-divider')) as HTMLElement[];
 
   const getBadges = () =>
     Array.from(fixture.nativeElement.querySelectorAll('[role="status"]')) as HTMLElement[];
 
   const getSubmenus = () =>
-    Array.from(fixture.nativeElement.querySelectorAll('[role="menu"]')) as HTMLUListElement[];
+    Array.from(fixture.nativeElement.querySelectorAll('ul.psh-submenu')) as HTMLUListElement[];
 
   const getLabels = () =>
     Array.from(fixture.nativeElement.querySelectorAll('.psh-menu-label')) as HTMLElement[];
@@ -81,8 +81,14 @@ describe('PshMenuComponent', () => {
       expect(getNavigation()).toBeTruthy();
     });
 
-    it('should render a menubar with role="menubar"', () => {
-      expect(getMenubar()).toBeTruthy();
+    it('renders a plain list of links, not a menubar', () => {
+      // A sidebar navigation is a list of links. Claiming `role="menubar"` made it an
+      // application menu, which by the APG has one tab stop and is driven by the arrow keys —
+      // so every link but one would leave the tab order. The roles went rather than the Tab.
+      const list = getMenubar();
+      expect(list).toBeTruthy();
+      expect(list.hasAttribute('role')).toBe(false);
+      expect(fixture.nativeElement.querySelectorAll('[role="menuitem"]').length).toBe(0);
     });
 
     it('should render all provided items', () => {
@@ -126,14 +132,14 @@ describe('PshMenuComponent', () => {
       fixture.componentRef.setInput('items', itemsWithPath);
       fixture.detectChanges();
 
-      const links = fixture.nativeElement.querySelectorAll('a[role="menuitem"]');
+      const links = fixture.nativeElement.querySelectorAll('a.psh-menu-link');
       expect(links.length).toBe(2);
       expect(links[0].getAttribute('href')).toBe('/home');
       expect(links[1].getAttribute('href')).toBe('/about');
     });
 
     it('should render button elements for items without path', () => {
-      const buttons = fixture.nativeElement.querySelectorAll('button[role="menuitem"]');
+      const buttons = fixture.nativeElement.querySelectorAll('button.psh-menu-link');
       expect(buttons.length).toBe(3);
     });
 
@@ -151,7 +157,7 @@ describe('PshMenuComponent', () => {
       expect(badges[1]!.textContent).toBe('42');
     });
 
-    it('should render dividers with role="separator"', () => {
+    it('should render dividers, hidden from assistive technology', () => {
       const itemsWithDivider: MenuItem[] = [
         { id: 'item1', content: 'Item 1' },
         { id: 'divider', content: '', divider: true },
@@ -190,21 +196,14 @@ describe('PshMenuComponent', () => {
         expect(getNavigation().getAttribute('aria-label')).toBe('Navigation menu');
       });
 
-      it('should have role="menubar" on the list', () => {
-        expect(getMenubar().getAttribute('role')).toBe('menubar');
-      });
+      it('leaves the list and its items with their native semantics', () => {
+        expect(getMenubar().hasAttribute('role')).toBe(false);
+        for (const item of getMenuItems()) expect(item.hasAttribute('role')).toBe(false);
 
-      it('should have role="menuitem" on clickable items', () => {
-        getMenuItems().forEach(item => {
-          expect(item.getAttribute('role')).toBe('menuitem');
-        });
-      });
-
-      it('should have role="none" on li container elements', () => {
+        // `role="none"` on the `<li>` only existed to stop a menubar seeing a list item
+        // between itself and its menuitems. With no menubar there is nothing to hide.
         const listItems = fixture.nativeElement.querySelectorAll('.psh-menu-item');
-        listItems.forEach((li: HTMLElement) => {
-          expect(li.getAttribute('role')).toBe('none');
-        });
+        for (const li of listItems) expect((li as HTMLElement).hasAttribute('role')).toBe(false);
       });
 
       it('should have aria-disabled="true" on disabled items', () => {
@@ -292,10 +291,10 @@ describe('PshMenuComponent', () => {
         fixture.detectChanges();
       });
 
-      it('should have role="menu" on submenu lists', () => {
+      it('renders the submenu as a nested list, named by its parent', () => {
         const submenus = getSubmenus();
         expect(submenus.length).toBe(1);
-        expect(submenus[0]!.getAttribute('role')).toBe('menu');
+        expect(submenus[0]!.hasAttribute('role')).toBe(false);
       });
 
       it('should have aria-label on submenu with parent content', () => {
@@ -303,13 +302,14 @@ describe('PshMenuComponent', () => {
         expect(submenu!.getAttribute('aria-label')).toBe('Settings submenu');
       });
 
-      it('should have role="menuitem" on child items', () => {
+      it('leaves child items with their native semantics too', () => {
         const settingsItem = getMenuItemById('settings');
         settingsItem!.click();
         fixture.detectChanges();
 
         const accountItem = getMenuItemById('account');
-        expect(accountItem!.getAttribute('role')).toBe('menuitem');
+        expect(accountItem!.hasAttribute('role')).toBe(false);
+        expect(accountItem!.tagName).toMatch(/^(A|BUTTON)$/);
       });
     });
   });

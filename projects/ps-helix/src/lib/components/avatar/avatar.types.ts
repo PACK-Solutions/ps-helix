@@ -1,3 +1,5 @@
+import { PshConfigValue } from '../../utils/config-value';
+
 /**
  * Tailles disponibles pour l'avatar
  */
@@ -24,7 +26,7 @@ export interface AvatarConfig {
   /** URL de l'image */
   src?: string;
   /** Texte alternatif */
-  alt: string;
+  alt: PshConfigValue<string>;
   /** Initiales à afficher */
   initials?: string;
   /** Icône à afficher */

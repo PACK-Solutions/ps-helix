@@ -10,13 +10,15 @@
  * quietly falling through to the literal in the component.
  */
 import { InjectionToken } from '@angular/core';
-import { InputConfig } from './input.types';
+import { InputConfig, INPUT_LABELS } from './input.types';
 
 const INPUT_DEFAULTS = {
   appearance: 'outline',
   size: 'medium',
   type: 'text',
   required: false,
+  showPasswordLabel: INPUT_LABELS.showPassword,
+  hidePasswordLabel: INPUT_LABELS.hidePassword,
   fullWidth: false,
   showLabel: true,
   label: '',

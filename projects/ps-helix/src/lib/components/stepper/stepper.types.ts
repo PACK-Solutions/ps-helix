@@ -1,3 +1,5 @@
+import { PshConfigValue } from '../../utils/config-value';
+
 /**
  * Type pour les variantes du stepper
  */
@@ -29,6 +31,8 @@ export interface StepperConfig {
   linear: boolean;
   /** Labels ARIA */
   ariaLabels?: StepperAriaLabels;
+  /** Accessible name of the stepper landmark */
+  ariaLabel?: PshConfigValue<string>;
 }
 
 /**

@@ -12,6 +12,7 @@ import {
   InjectionToken,
   PLATFORM_ID
 } from '@angular/core';
+import { pshResolveConfigValue } from '../../utils/config-value';
 import { isPlatformBrowser, CommonModule, DOCUMENT } from '@angular/common';
 import { PshFocusTrapDirective } from '../../a11y/focus-trap.directive';
 import { SidebarMode, SidebarPosition, SidebarConfig } from './sidebar.types';
@@ -63,7 +64,10 @@ export class PshSidebarComponent implements OnDestroy {
   width = input<string>(this.config.width ?? '250px');
   breakpoint = input<string>(this.config.breakpoint ?? '768px');
   autoFocus = input<boolean>(this.config.autoFocus ?? true);
-  ariaLabel = input<string>(this.config.ariaLabel ?? 'Sidebar navigation');
+  ariaLabelInput = input<string | undefined>(undefined, { alias: 'ariaLabel' });
+  ariaLabel = computed(
+    () => this.ariaLabelInput() ?? pshResolveConfigValue(this.config.ariaLabel) ?? 'Sidebar navigation',
+  );
   closeOnBackdrop = input<boolean>(this.config.closeOnBackdrop ?? true);
   closeOnEscape = input<boolean>(this.config.closeOnEscape ?? true);
 

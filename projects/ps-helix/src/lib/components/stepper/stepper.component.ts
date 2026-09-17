@@ -11,6 +11,7 @@ import {
   InjectionToken,
   afterNextRender
 } from '@angular/core';
+import { pshResolveConfigValue } from '../../utils/config-value';
 import { PshNavigationError } from '../../types/semantic.types';
 import { StepperVariant, StepConfig, StepperConfig, StepperAriaLabels } from './stepper.types';
 import { PshStepComponent } from './step.component';
@@ -18,17 +19,18 @@ import { PSH_STEPPER, PshStepperApi } from './stepper.token';
 import { pshUniqueId } from '../../utils/unique-id';
 
 const DEFAULT_ARIA_LABELS: StepperAriaLabels = {
-  step: 'Étape',
-  completed: 'Étape complétée',
-  active: 'Étape active',
-  incomplete: 'Étape incomplète',
-  disabled: 'Étape désactivée'
+  step: 'Step',
+  completed: 'Step completed',
+  active: 'Step active',
+  incomplete: 'Step incomplete',
+  disabled: 'Step disabled'
 };
 
 const STEPPER_DEFAULTS = {
   variant: 'default',
   linear: true,
-  ariaLabels: DEFAULT_ARIA_LABELS
+  ariaLabels: DEFAULT_ARIA_LABELS,
+  ariaLabel: 'Step navigation',
 } satisfies Partial<StepperConfig>;
 
 export const STEPPER_CONFIG = new InjectionToken<Partial<StepperConfig>>('STEPPER_CONFIG', {
@@ -62,7 +64,10 @@ export class PshStepperComponent implements PshStepperApi {
   ariaLabels = input<StepperAriaLabels>();
 
   /** Name of the stepper landmark. Was hard-coded, in French, with no way out. */
-  readonly ariaLabel = input<string>('Navigation par étapes');
+  readonly ariaLabelInput = input<string | undefined>(undefined, { alias: 'ariaLabel' });
+  readonly ariaLabel = computed(
+    () => this.ariaLabelInput() ?? pshResolveConfigValue(this.config.ariaLabel) ?? 'Navigation par étapes',
+  );
   beforeStepChange = input<(from: number, to: number) => Promise<boolean> | boolean>();
 
   stepChange = output<number>();

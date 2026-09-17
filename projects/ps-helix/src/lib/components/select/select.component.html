@@ -55,8 +55,8 @@
         <div class="psh-select-search">
           <i class="ph ph-magnifying-glass psh-select-search-icon" aria-hidden="true"></i>
           <input type="text"
-                 [attr.aria-label]="searchConfig().placeholder"
-                 [placeholder]="searchConfig().placeholder"
+                 [attr.aria-label]="searchPlaceholder()"
+                 [placeholder]="searchPlaceholder()"
                  [value]="searchTerm()"
                  (input)="onSearch($event)"
                  (click)="$event.stopPropagation()">

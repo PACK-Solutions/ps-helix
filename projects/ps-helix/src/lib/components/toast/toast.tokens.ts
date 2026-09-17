@@ -7,7 +7,8 @@ const TOAST_DEFAULTS = {
   maxToasts: 5,
   pauseOnHover: true,
   showIcon: true,
-  showCloseButton: true
+  showCloseButton: true,
+  ariaLabel: 'Notifications',
 } satisfies Partial<ToastConfig>;
 
 export const TOAST_CONFIG = new InjectionToken<Partial<ToastConfig>>('TOAST_CONFIG', {

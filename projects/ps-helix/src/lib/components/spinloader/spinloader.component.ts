@@ -1,11 +1,14 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, input, signal, InjectionToken, PLATFORM_ID } from '@angular/core';
+import {
+  computed, ChangeDetectionStrategy, Component, DestroyRef, inject, input, signal, InjectionToken, PLATFORM_ID } from '@angular/core';
+import { pshResolveConfigValue } from '../../utils/config-value';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { SpinLoaderVariant, SpinLoaderSize, SpinLoaderColor, SpinLoaderConfig } from './spinloader.types';
 
 const SPINLOADER_DEFAULTS = {
   variant: 'circle',
   size: 'medium',
-  color: 'primary'
+  color: 'primary',
+  ariaLabel: 'Loading',
 } satisfies Partial<SpinLoaderConfig>;
 
 export const SPINLOADER_CONFIG = new InjectionToken<Partial<SpinLoaderConfig>>('SPINLOADER_CONFIG', {
@@ -39,7 +42,10 @@ export class PshSpinLoaderComponent {
   size = input<SpinLoaderSize>(this.config.size ?? 'medium');
   color = input<SpinLoaderColor>(this.config.color ?? 'primary');
   label = input<string>();
-  ariaLabel = input<string>('Chargement en cours');
+  ariaLabelInput = input<string | undefined>(undefined, { alias: 'ariaLabel' });
+  ariaLabel = computed(
+    () => this.ariaLabelInput() ?? pshResolveConfigValue(this.config.ariaLabel) ?? 'Chargement en cours',
+  );
   ariaLive = input<'polite' | 'assertive'>('polite');
 
   reduceMotion = signal(false);

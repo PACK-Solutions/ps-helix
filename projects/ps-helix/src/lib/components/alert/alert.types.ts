@@ -1,4 +1,5 @@
 import { PshColor } from '../../types/semantic.types';
+import { PshConfigValue } from '../../utils/config-value';
 /**
  * Types d'alertes disponibles
  */
@@ -26,7 +27,7 @@ export type AlertRole = 'alert' | 'status';
 /** Labels pour l'alerte */
 export interface AlertLabels {
   /** Label pour le bouton de fermeture */
-  dismiss?: string;
+  dismiss?: PshConfigValue<string>;
 }
 
 /**

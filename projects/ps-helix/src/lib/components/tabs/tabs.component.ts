@@ -10,12 +10,14 @@ import {
   InjectionToken,
   linkedSignal,
 } from '@angular/core';
+import { pshResolveConfigValue } from '../../utils/config-value';
 import { TabsVariant, TabsSize, Tab, TabsConfig, TabChangeEvent } from './tabs.types';
 import { PshTabComponent } from './tab.component';
 import { PSH_TABS, PshTabsApi } from './tabs.token';
 import { pshUniqueId } from '../../utils/unique-id';
 
 const TABS_DEFAULTS = {
+  ariaLabel: 'Tab navigation',
   variant: 'default',
   size: 'medium',
   activeIndex: 0,
@@ -35,7 +37,7 @@ export const TABS_CONFIG = new InjectionToken<Partial<TabsConfig>>('TABS_CONFIG'
   host: {
     '[class]': 'hostClasses()',
     role: 'region',
-    '[attr.aria-label]': 'ariaLabel() || "Navigation par onglets"',
+    '[attr.aria-label]': 'ariaLabel()',
   },
 })
 export class PshTabsComponent implements PshTabsApi {
@@ -48,7 +50,10 @@ export class PshTabsComponent implements PshTabsApi {
   size = input<TabsSize>(this.config.size ?? 'medium');
   animated = input(this.config.animated ?? true);
   tabs = input<Tab[]>([]);
-  ariaLabel = input<string>();
+  ariaLabelInput = input<string | undefined>(undefined, { alias: 'ariaLabel' });
+  ariaLabel = computed(
+    () => this.ariaLabelInput() ?? pshResolveConfigValue(this.config.ariaLabel) ?? 'Tab navigation',
+  );
   ariaOrientation = input<'horizontal' | 'vertical'>('horizontal');
 
   activeIndexInput = input(this.config.activeIndex ?? 0, { alias: 'activeIndex' });

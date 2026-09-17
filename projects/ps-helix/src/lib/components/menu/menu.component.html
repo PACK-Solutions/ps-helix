@@ -21,17 +21,16 @@
     </button>
   }
 
-  <ul class="psh-menu-list" role="menubar">
+  <ul class="psh-menu-list">
     @for (item of items(); track item.id; let i = $index) {
       @if (item.divider) {
-        <li class="psh-menu-divider" role="separator"></li>
+        <li class="psh-menu-divider" aria-hidden="true"></li>
       } @else {
         <li
           class="psh-menu-item"
           [class.psh-has-children]="item.children?.length"
           [class.psh-expanded]="isExpanded(item)"
           [class.psh-disabled]="item.disabled"
-          role="none"
         >
           <ng-container
             *ngTemplateOutlet="itemTpl; context: { $implicit: item, index: i, isChild: false }"
@@ -40,11 +39,10 @@
           @if (item.children?.length) {
             <ul
               class="psh-submenu"
-              role="menu"
               [attr.aria-label]="item.content + ' submenu'"
             >
               @for (child of item.children; track child.id) {
-                <li class="psh-menu-item" role="none">
+                <li class="psh-menu-item">
                   @if (child.path) {
                     @if (showTooltip()) {
                       <psh-tooltip [content]="child.content" position="right" [showDelay]="100" [hideDelay]="0">
@@ -59,7 +57,6 @@
                           (click)="toggleItem(child, $event)"
                           (keydown.enter)="toggleItem(child, $event)"
                           (keydown.space)="toggleItem(child, $event)"
-                          role="menuitem"
                           [attr.tabindex]="child.disabled ? -1 : 0"
                         >
                           @if (child.icon) {
@@ -84,7 +81,6 @@
                         (click)="toggleItem(child, $event)"
                         (keydown.enter)="toggleItem(child, $event)"
                         (keydown.space)="toggleItem(child, $event)"
-                        role="menuitem"
                         [attr.tabindex]="child.disabled ? -1 : 0"
                       >
                         @if (child.icon) {
@@ -110,7 +106,6 @@
                           (click)="toggleItem(child, $event)"
                           (keydown.enter)="toggleItem(child, $event)"
                           (keydown.space)="toggleItem(child, $event)"
-                          role="menuitem"
                           [attr.tabindex]="child.disabled ? -1 : 0"
                           [disabled]="child.disabled"
                         >
@@ -136,7 +131,6 @@
                         (click)="toggleItem(child, $event)"
                         (keydown.enter)="toggleItem(child, $event)"
                         (keydown.space)="toggleItem(child, $event)"
-                        role="menuitem"
                         [attr.tabindex]="child.disabled ? -1 : 0"
                         [disabled]="child.disabled"
                       >
@@ -192,7 +186,6 @@
       [attr.aria-label]="getAriaLabel(item)"
       (click)="handleItemClick(item, $event, isChild)"
       (keydown)="handleKeyDown($event, item, index)"
-      role="menuitem"
       [attr.tabindex]="item.disabled ? -1 : 0"
     >
       <ng-container
@@ -211,7 +204,6 @@
       [attr.aria-label]="getAriaLabel(item)"
       (click)="handleItemClick(item, $event, isChild)"
       (keydown)="handleKeyDown($event, item, index)"
-      role="menuitem"
       [attr.tabindex]="item.disabled ? -1 : 0"
       [disabled]="item.disabled"
     >
@@ -225,7 +217,7 @@
 
 <!--
   The item's content, in one place rather than two. `itemTemplate` replaces this, and only
-  this: the surrounding <a>/<button> keeps role="menuitem", aria-expanded, the tabindex and
+  this: the surrounding <a>/<button> keeps aria-expanded, the tabindex and
   the keyboard handling.
 -->
 <ng-template #defaultMenuItem let-item let-withLabel="withLabel">

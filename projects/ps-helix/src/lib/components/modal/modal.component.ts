@@ -18,6 +18,7 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
+import { pshResolveConfigValue } from '../../utils/config-value';
 import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { PshButtonComponent } from '../button/button.component';
 import { PshFocusTrapDirective } from '../../a11y/focus-trap.directive';
@@ -229,17 +230,26 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
   /**
    * Accessible label for the close button
    */
-  dismissLabel = input(this.config.dismissLabel ?? 'Close');
+  dismissLabelInput = input<string | undefined>(undefined, { alias: 'dismissLabel' });
+  dismissLabel = computed(
+    () => this.dismissLabelInput() ?? pshResolveConfigValue(this.config.dismissLabel) ?? 'Close',
+  );
 
   /**
    * Label for the confirm button in the default footer
    */
-  confirmLabel = input(this.config.confirmLabel ?? 'Confirm');
+  confirmLabelInput = input<string | undefined>(undefined, { alias: 'confirmLabel' });
+  confirmLabel = computed(
+    () => this.confirmLabelInput() ?? pshResolveConfigValue(this.config.confirmLabel) ?? 'Confirm',
+  );
 
   /**
    * Label for the cancel button in the default footer
    */
-  cancelLabel = input(this.config.cancelLabel ?? 'Cancel');
+  cancelLabelInput = input<string | undefined>(undefined, { alias: 'cancelLabel' });
+  cancelLabel = computed(
+    () => this.cancelLabelInput() ?? pshResolveConfigValue(this.config.cancelLabel) ?? 'Cancel',
+  );
 
   /**
    * Custom CSS class(es) for the modal panel.

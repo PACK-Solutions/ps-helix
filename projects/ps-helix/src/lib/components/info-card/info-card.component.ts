@@ -1,4 +1,5 @@
 import { PshSurfaceAppearance } from '../../types/semantic.types';
+import { pshResolveConfigValue } from '../../utils/config-value';
 import { Component, ChangeDetectionStrategy, computed, input, signal, PLATFORM_ID, inject, output, ViewEncapsulation, ElementRef, AfterContentInit, OnDestroy } from '@angular/core';
 import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { InfoCardData, InfoCardOptions } from './info-card.types';
@@ -57,10 +58,14 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
   /** Array of label-value pairs to display */
   data = input.required<InfoCardData[]>();
 
-  /** Display options for the card */
+  /**
+   * Display options for the card.
+   *
+   * `emptyStateMessage` is deliberately absent from the default: carrying it here would
+   * shadow the application's configured default, since this object wins over it.
+   */
   options = input<InfoCardOptions>({
     showEmptyState: true,
-    emptyStateMessage: 'Aucune information disponible',
     labelWidth: undefined,
     valueWidth: undefined
   });
@@ -95,10 +100,25 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
   copyable = input<boolean>(this.config.copyable ?? false);
 
   /** Label prefix for the copy button aria-label */
-  copyButtonLabel = input<string>(this.config.copyButtonLabel ?? 'Copier');
+  copyButtonLabelInput = input<string | undefined>(undefined, { alias: 'copyButtonLabel' });
+  copyButtonLabel = computed(
+    () => this.copyButtonLabelInput() ?? pshResolveConfigValue(this.config.copyButtonLabel) ?? 'Copy',
+  );
 
   /** Text shown as feedback after successful copy */
-  copyFeedbackText = input<string>(this.config.copyFeedbackText ?? 'Copié');
+  notProvidedTextInput = input<string | undefined>(undefined, { alias: 'notProvidedText' });
+  /** Stands in for a row value that is null or undefined. */
+  notProvidedText = computed(
+    () =>
+      this.notProvidedTextInput() ??
+      pshResolveConfigValue(this.config.notProvidedText) ??
+      'Not provided',
+  );
+
+  copyFeedbackTextInput = input<string | undefined>(undefined, { alias: 'copyFeedbackText' });
+  copyFeedbackText = computed(
+    () => this.copyFeedbackTextInput() ?? pshResolveConfigValue(this.config.copyFeedbackText) ?? 'Copied',
+  );
 
   /** Emitted when a row value is successfully copied */
   copied = output<InfoCardData>();
@@ -127,10 +147,18 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
     return opts.showEmptyState && (!dataArray || dataArray.length === 0);
   });
 
-  /** Returns the empty state message to display */
-  getEmptyStateMessage = computed(() => {
-    return this.options().emptyStateMessage || 'Aucune information disponible';
-  });
+  /**
+   * The message shown when there is nothing to list.
+   *
+   * Three sources, narrowest first: the `options` input of this card, then the application's
+   * configured default, then the library's own.
+   */
+  getEmptyStateMessage = computed(
+    () =>
+      this.options().emptyStateMessage ||
+      pshResolveConfigValue(this.config.emptyStateMessage) ||
+      'No information available',
+  );
 
   /** Full icon class name for Phosphor icons */
   titleIcon = computed(() => {

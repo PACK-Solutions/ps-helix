@@ -11,6 +11,7 @@ import {
   InjectionToken,
   afterNextRender
 } from '@angular/core';
+import { pshResolveConfigValue } from '../../utils/config-value';
 import { PshNavigationError } from '../../types/semantic.types';
 import { StateFlowIndicatorSize, FlowStepConfig, StateFlowIndicatorConfig, StateFlowIndicatorAriaLabels } from './state-flow-indicator.types';
 import { PshFlowStepComponent } from './flow-step.component';
@@ -18,18 +19,19 @@ import { PSH_STATE_FLOW, PshStateFlowApi } from './state-flow-indicator.token';
 import { pshUniqueId } from '../../utils/unique-id';
 
 const DEFAULT_ARIA_LABELS: StateFlowIndicatorAriaLabels = {
-  step: 'Étape',
-  completed: 'Étape complétée',
-  active: 'Étape active',
-  incomplete: 'Étape incomplète',
-  disabled: 'Étape désactivée',
-  warning: 'Étape avec avertissement',
-  error: 'Étape en erreur'
+  step: 'Step',
+  completed: 'Step completed',
+  active: 'Step active',
+  incomplete: 'Step incomplete',
+  disabled: 'Step disabled',
+  warning: 'Step with warning',
+  error: 'Step in error'
 };
 
 const STATE_FLOW_INDICATOR_DEFAULTS = {
   linear: true,
-  ariaLabels: DEFAULT_ARIA_LABELS
+  ariaLabels: DEFAULT_ARIA_LABELS,
+  ariaLabel: 'Progress indicator',
 } satisfies Partial<StateFlowIndicatorConfig>;
 
 export const STATE_FLOW_INDICATOR_CONFIG = new InjectionToken<Partial<StateFlowIndicatorConfig>>('STATE_FLOW_INDICATOR_CONFIG', {
@@ -66,7 +68,10 @@ export class PshStateFlowIndicatorComponent implements PshStateFlowApi {
   ariaLabels = input<StateFlowIndicatorAriaLabels>();
 
   /** Name of the progress landmark. Was hard-coded, in French, with no way out. */
-  readonly ariaLabel = input<string>('Indicateur de progression');
+  readonly ariaLabelInput = input<string | undefined>(undefined, { alias: 'ariaLabel' });
+  readonly ariaLabel = computed(
+    () => this.ariaLabelInput() ?? pshResolveConfigValue(this.config.ariaLabel) ?? 'Indicateur de progression',
+  );
   beforeStepChange = input<(from: number, to: number) => Promise<boolean> | boolean>();
 
   stepChange = output<number>();

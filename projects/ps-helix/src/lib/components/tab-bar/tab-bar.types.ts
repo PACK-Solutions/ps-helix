@@ -1,3 +1,5 @@
+import { PshConfigValue } from '../../utils/config-value';
+
 /**
  * Interface pour un élément de la barre d'onglets
  */
@@ -24,6 +26,8 @@ export interface TabBarConfig {
   position: 'bottom' | 'top';
   /** Animation activée */
   animated: boolean;
+  /** Accessible name of the tab bar */
+  ariaLabel?: PshConfigValue<string>;
 }
 
 /**

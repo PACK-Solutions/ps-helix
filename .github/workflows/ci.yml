@@ -54,6 +54,11 @@ jobs:
       - name: Configuration reference
         run: npm run verify:config
 
+      # A translation preset that has fallen one string behind is worse than none: the page
+      # looks translated and one label in the middle of it is in English.
+      - name: French preset completeness
+        run: npm run verify:i18n-preset
+
       - name: Unit tests (with coverage gate)
         run: npm run test:coverage
 

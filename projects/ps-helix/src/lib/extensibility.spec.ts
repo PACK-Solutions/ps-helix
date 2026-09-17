@@ -165,8 +165,15 @@ describe('the six cases that used to force ::ng-deep', () => {
       expect(root.querySelector('.test-menu-count')?.textContent).toBe('12');
     });
 
-    it('keeps role="menuitem" on the element around it', () => {
-      expect(root.querySelector('[role="menuitem"] .test-menu-label')).toBeTruthy();
+    it('keeps the link around it, with its href and its keyboard handling', () => {
+      // The rule the template has to respect is unchanged — a template replaces the content
+      // of the item, never the item. What changed is what the item is: `psh-menu` is a
+      // navigation of links, not a menubar, so the element to look for is the link itself.
+      const label = root.querySelector('.test-menu-label');
+      const link = label?.closest('.psh-menu-link');
+      expect(link).toBeTruthy();
+      expect(link!.tagName).toMatch(/^(A|BUTTON)$/);
+      expect(link!.hasAttribute('role')).toBe(false);
     });
   });
 

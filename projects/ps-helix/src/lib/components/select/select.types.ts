@@ -1,4 +1,5 @@
 import { PshFieldAppearance } from '../../types/semantic.types';
+import { PshConfigValue } from '../../utils/config-value';
 export interface SelectOption<T> {
   label: string;
   value: T;
@@ -20,11 +21,6 @@ export type SelectSize = 'small' | 'medium' | 'large';
  */
 export type SelectVariant = PshFieldAppearance;
 
-export interface SearchConfig {
-  debounceTime: number;
-  placeholder: string;
-  minLength: number;
-}
 /**
  * Contexte du template d'option.
  *
@@ -50,8 +46,14 @@ export interface SelectConfig {
   clearable: boolean;
   fullWidth: boolean;
   placeholder: string;
-  multiplePlaceholder: string;
-  noResultsText: string;
-  clearLabel: string;
-  searchConfig: SearchConfig;
+  multiplePlaceholder: PshConfigValue<string>;
+  noResultsText: PshConfigValue<string>;
+  clearLabel: PshConfigValue<string>;
+  /**
+   * Placeholder and accessible name of the search field.
+   *
+   * It used to be a corner of a `searchConfig` object that also declared a debounce and a
+   * minimum length — neither of which the component ever read.
+   */
+  searchPlaceholder: PshConfigValue<string>;
 }

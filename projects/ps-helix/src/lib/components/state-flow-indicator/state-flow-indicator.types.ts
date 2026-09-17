@@ -1,3 +1,5 @@
+import { PshConfigValue } from '../../utils/config-value';
+
 export type StateFlowIndicatorSize = 'small' | 'medium' | 'large';
 
 export interface StateFlowIndicatorAriaLabels {
@@ -13,6 +15,8 @@ export interface StateFlowIndicatorAriaLabels {
 export interface StateFlowIndicatorConfig {
   linear: boolean;
   ariaLabels?: StateFlowIndicatorAriaLabels;
+  /** Accessible name of the indicator landmark */
+  ariaLabel?: PshConfigValue<string>;
 }
 
 export interface FlowStepConfig {

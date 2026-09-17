@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, output, InjectionToken, ElementRef, AfterContentChecked, signal } from '@angular/core';
+import { pshResolveConfigValue } from '../../utils/config-value';
 import { TagVariant, TagSize, TagConfig } from './tag.types';
 
 const TAG_DEFAULTS = {
@@ -7,7 +8,7 @@ const TAG_DEFAULTS = {
   closable: false,
   disabled: false,
   interactive: false,
-  closeLabel: 'Supprimer le tag'
+  closeLabel: 'Remove tag'
 } satisfies Partial<TagConfig>;
 
 export const TAG_CONFIG = new InjectionToken<Partial<TagConfig>>('TAG_CONFIG', {
@@ -31,7 +32,10 @@ export class PshTagComponent implements AfterContentChecked {
   readonly disabled = input(this.config.disabled ?? false);
   readonly interactive = input(this.config.interactive ?? false);
   readonly icon = input<string>();
-  readonly closeLabel = input(this.config.closeLabel ?? 'Supprimer le tag');
+  readonly closeLabelInput = input<string | undefined>(undefined, { alias: 'closeLabel' });
+  readonly closeLabel = computed(
+    () => this.closeLabelInput() ?? pshResolveConfigValue(this.config.closeLabel) ?? 'Remove tag',
+  );
   readonly content = input('Tag');
   readonly ariaLabel = input<string>();
 

@@ -1,4 +1,5 @@
 import { PshColor, PshControlAppearance } from '../../types/semantic.types';
+import { PshConfigValue } from '../../utils/config-value';
 /**
  * Apparences disponibles pour le bouton
  */
@@ -44,7 +45,7 @@ export interface ButtonConfig {
   iconPosition: ButtonIconPosition;
   fullWidth: boolean;
   /** Announced while `loading` is set. */
-  loadingText: string;
+  loadingText: PshConfigValue<string>;
   /** Announced while `disabled` is set. */
-  disabledText: string;
+  disabledText: PshConfigValue<string>;
 }

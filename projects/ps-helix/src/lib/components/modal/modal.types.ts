@@ -1,3 +1,5 @@
+import { PshConfigValue } from '../../utils/config-value';
+
 /**
  * Tailles disponibles pour la modale
  */
@@ -20,9 +22,9 @@ export interface ModalConfig {
   /** Afficher le footer */
   showFooter: boolean;
   /** Label du bouton de fermeture */
-  dismissLabel?: string;
+  dismissLabel?: PshConfigValue<string>;
   /** Label du bouton de confirmation */
-  confirmLabel?: string;
+  confirmLabel?: PshConfigValue<string>;
   /** Label du bouton d'annulation */
-  cancelLabel?: string;
+  cancelLabel?: PshConfigValue<string>;
 }

@@ -1,3 +1,5 @@
+import { PshConfigValue } from '../../utils/config-value';
+
 /**
  * Variantes disponibles pour les onglets
  */
@@ -40,6 +42,8 @@ export interface TabChangeEvent {
  * Configuration complète des onglets
  */
 export interface TabsConfig {
+  /** Accessible name of the tab list */
+  ariaLabel?: PshConfigValue<string>;
   /** Variante visuelle */
   variant: TabsVariant;
   /** Taille des onglets */

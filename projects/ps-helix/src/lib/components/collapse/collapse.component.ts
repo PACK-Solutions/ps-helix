@@ -1,4 +1,5 @@
 import { PshSurfaceAppearance } from '../../types/semantic.types';
+import { pshResolveConfigValue } from '../../utils/config-value';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -63,7 +64,10 @@ export class PshCollapseComponent {
    * Fallback header text, used when nothing is projected into `[psh-collapse-header]`.
    * Was a literal in the template, so a non-French application could not change it.
    */
-  readonly defaultHeaderText = input<string>(this.config.defaultHeaderText ?? 'Section pliable');
+  readonly defaultHeaderTextInput = input<string | undefined>(undefined, { alias: 'defaultHeaderText' });
+  readonly defaultHeaderText = computed(
+    () => this.defaultHeaderTextInput() ?? pshResolveConfigValue(this.config.defaultHeaderText) ?? 'Collapsible section',
+  );
 
   /** `auto` is not a usable `max-height` for the CSS; `none` is the same intent. */
   protected readonly resolvedMaxHeight = computed(() =>

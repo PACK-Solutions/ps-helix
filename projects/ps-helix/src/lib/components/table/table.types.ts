@@ -1,4 +1,5 @@
 import { TemplateRef } from '@angular/core';
+import { PshConfigValue } from '../../utils/config-value';
 
 /**
  * Contexte pour les templates personnalisés de cellule
@@ -117,13 +118,13 @@ export interface TableConfig {
   /** État de chargement */
   loading: boolean;
   /** Message quand vide */
-  emptyMessage: string;
+  emptyMessage: PshConfigValue<string>;
   /** Message quand recherche sans resultat */
-  noResultsMessage: string;
+  noResultsMessage: PshConfigValue<string>;
   /** Recherche globale */
   globalSearch: boolean;
   /** Placeholder de recherche */
-  globalSearchPlaceholder: string;
+  globalSearchPlaceholder: PshConfigValue<string>;
   /** Table layout (auto or fixed for percentage widths) */
   tableLayout: 'auto' | 'fixed';
   /** Truncate text with ellipsis */
@@ -134,4 +135,16 @@ export interface TableConfig {
   expandable: boolean;
   /** Mode accordéon (une seule ligne ouverte à la fois) */
   singleExpand: boolean;
+  /** Header of the expand column */
+  expandColumnLabel?: PshConfigValue<string>;
+  /** Accessible name of the control that opens a row */
+  expandRowLabel?: PshConfigValue<string>;
+  /** Accessible name of the control that closes a row */
+  collapseRowLabel?: PshConfigValue<string>;
+  /** Announced after a column is sorted ascending, following the column name */
+  sortedAscendingLabel?: PshConfigValue<string>;
+  /** Announced after a column is sorted descending, following the column name */
+  sortedDescendingLabel?: PshConfigValue<string>;
+  /** Announced after filtering, following the number of rows left */
+  resultsFoundLabel?: PshConfigValue<string>;
 }

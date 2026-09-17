@@ -6,6 +6,7 @@ import {
   output,
   inject,
 } from '@angular/core';
+import { pshResolveConfigValue } from '../../utils/config-value';
 import { CommonModule } from '@angular/common';
 import { AlertType, IconPosition, AlertSize, AlertRole, AlertLabels } from './alert.types';
 import { ALERT_CONFIG } from './alert.tokens';
@@ -51,7 +52,10 @@ export class PshAlertComponent {
   role = input<AlertRole>();
   icon = input<string>();
   ariaLabel = input<string>();
-  dismissLabel = input(this.config.labels?.dismiss ?? DEFAULT_LABELS.dismiss);
+  dismissLabelInput = input<string | undefined>(undefined, { alias: 'dismissLabel' });
+  dismissLabel = computed(
+    () => this.dismissLabelInput() ?? pshResolveConfigValue(this.config.labels?.dismiss) ?? DEFAULT_LABELS.dismiss,
+  );
   ariaLive = input<'polite' | 'assertive'>();
   content = input('');
   

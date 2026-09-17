@@ -1,4 +1,5 @@
 import { PshFieldAppearance } from '../../types/semantic.types';
+import { PshConfigValue } from '../../utils/config-value';
 /**
  * @deprecated since 7.0.0 — use {@link PshFieldAppearance}. Surface treatment now shares one
  * vocabulary across the library.
@@ -12,6 +13,8 @@ export interface TextareaConfig {
   size: TextareaSize;
   resize: TextareaResize;
   required: boolean;
+  /** Word after the character count, as in "12 / 200 characters" */
+  characterCountSuffix: PshConfigValue<string>;
   fullWidth: boolean;
   showLabel: boolean;
   showCharacterCount: boolean;
@@ -27,6 +30,6 @@ export interface TextareaConfig {
 }
 
 export const TEXTAREA_LABELS = {
-  characterCountSuffix: 'caractères',
+  characterCountSuffix: 'characters',
   characterCountSeparator: '/',
 } as const;

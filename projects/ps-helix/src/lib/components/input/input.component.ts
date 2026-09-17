@@ -1,4 +1,5 @@
 import { PshFieldAppearance } from '../../types/semantic.types';
+import { pshResolveConfigValue } from '../../utils/config-value';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -168,7 +169,23 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
   });
 
   computedAriaLabel = computed(() => this.ariaLabel() || this.label() || this.placeholder());
-  passwordToggleLabel = computed(() => this.passwordVisible() ? INPUT_LABELS.hidePassword : INPUT_LABELS.showPassword);
+  showPasswordLabel = input<string | undefined>(undefined);
+  hidePasswordLabel = input<string | undefined>(undefined);
+
+  /** Name of the reveal control. It flips with the state, so it is one computed, not two. */
+  passwordToggleLabel = computed(() => {
+    // Both are resolved before the choice, not inside it: a branch that is not taken is a
+    // configured default nothing reads, and that is exactly what config-tokens.spec looks for.
+    const show =
+      this.showPasswordLabel() ??
+      pshResolveConfigValue(this.config.showPasswordLabel) ??
+      INPUT_LABELS.showPassword;
+    const hide =
+      this.hidePasswordLabel() ??
+      pshResolveConfigValue(this.config.hidePasswordLabel) ??
+      INPUT_LABELS.hidePassword;
+    return this.passwordVisible() ? hide : show;
+  });
 
   // Derived from the per-instance inputId: the message ids used to be the constants
   // 'error-message' / 'success-message' / 'hint-message', so two inputs in error on the

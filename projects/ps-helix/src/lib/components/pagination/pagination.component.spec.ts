@@ -902,7 +902,7 @@ describe('PshPaginationComponent', () => {
         referencePages
       );
       expect(getLiveRegion().textContent?.trim()).toBe(referenceAnnouncement);
-      expect(getLiveRegion().textContent).toContain('Page 1 sur 1');
+      expect(getLiveRegion().textContent).toContain('Page 1 of 1');
       expect(getNavigation().getAttribute('data-state')).toBe(referenceState);
       expect([
         getFirstButton().disabled,
@@ -950,7 +950,7 @@ describe('PshPaginationComponent', () => {
           expect.stringContaining('Invalid totalPages')
         );
         expect(getPageButtons().length).toBe(1);
-        expect(getLiveRegion().textContent).toContain('Page 1 sur 1');
+        expect(getLiveRegion().textContent).toContain('Page 1 of 1');
         consoleSpy.mockRestore();
       }
     );

@@ -1,4 +1,5 @@
 import {
+  computed,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
@@ -10,6 +11,7 @@ import {
   InjectionToken,
   TemplateRef,
 } from '@angular/core';
+import { pshResolveConfigValue } from '../../utils/config-value';
 import { NgTemplateOutlet } from '@angular/common';
 import { TabBarItem, TabBarConfig, TabBarChangeEvent, TabBarItemContext } from './tab-bar.types';
 
@@ -19,7 +21,8 @@ import { TabBarItem, TabBarConfig, TabBarChangeEvent, TabBarItemContext } from '
 const TAB_BAR_DEFAULTS = {
   disabled: false,
   position: 'bottom',
-  animated: true
+  animated: true,
+  ariaLabel: 'Tab navigation',
 } satisfies Partial<TabBarConfig>;
 
 export const TAB_BAR_CONFIG = new InjectionToken<Partial<TabBarConfig>>('TAB_BAR_CONFIG', {
@@ -54,7 +57,10 @@ export class PshTabBarComponent {
   items = input.required<TabBarItem[]>();
 
   /** Name of the tab bar. Was hard-coded, in French, with no way out. */
-  readonly ariaLabel = input<string>('Navigation par onglets');
+  readonly ariaLabelInput = input<string | undefined>(undefined, { alias: 'ariaLabel' });
+  readonly ariaLabel = computed(
+    () => this.ariaLabelInput() ?? pshResolveConfigValue(this.config.ariaLabel) ?? 'Navigation par onglets',
+  );
 
   /**
    * Replaces the content of every tab.

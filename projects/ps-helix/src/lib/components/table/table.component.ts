@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, output, signal, InjectionToken, TemplateRef } from '@angular/core';
+import { PshLiveAnnouncerService } from '../../a11y/live-announcer.service';
+import { pshResolveConfigValue } from '../../utils/config-value';
 import { NgTemplateOutlet } from '@angular/common';
 import { PshInputComponent } from '../input/input.component';
 import { TableColumn, TableRow, TableSort, TableConfig, TableRowClickEvent, TableRowExpandEvent, TableExpandedRowContext, TableHeaderContext, TableEmptyContext } from './table.types';
@@ -18,7 +20,13 @@ const TABLE_DEFAULTS = {
   truncateText: false,
   fullWidth: false,
   expandable: false,
-  singleExpand: false
+  singleExpand: false,
+  expandColumnLabel: 'Expand',
+  expandRowLabel: 'Expand row',
+  collapseRowLabel: 'Collapse row',
+  sortedAscendingLabel: 'sorted ascending',
+  sortedDescendingLabel: 'sorted descending',
+  resultsFoundLabel: 'results found',
 } satisfies Partial<TableConfig>;
 
 export const TABLE_CONFIG = new InjectionToken<Partial<TableConfig>>('TABLE_CONFIG', {
@@ -38,6 +46,7 @@ export const TABLE_CONFIG = new InjectionToken<Partial<TableConfig>>('TABLE_CONF
 })
 export class PshTableComponent {
   private config = inject(TABLE_CONFIG);
+  private readonly announcer = inject(PshLiveAnnouncerService);
 
   appearance = input<'flat' | 'outline'>(this.config.appearance ?? 'flat');
   size = input<'small' | 'medium' | 'large'>(this.config.size ?? 'medium');
@@ -49,9 +58,18 @@ export class PshTableComponent {
   fullWidth = input(this.config.fullWidth ?? false);
   columns = input.required<TableColumn[]>();
   data = input.required<TableRow[]>();
-  emptyMessage = input<string>(this.config.emptyMessage ?? 'No data available');
-  noResultsMessage = input<string>(this.config.noResultsMessage ?? 'No results found');
-  globalSearchPlaceholder = input(this.config.globalSearchPlaceholder ?? 'Search in all columns...');
+  emptyMessageInput = input<string | undefined>(undefined, { alias: 'emptyMessage' });
+  emptyMessage = computed(
+    () => this.emptyMessageInput() ?? pshResolveConfigValue(this.config.emptyMessage) ?? 'No data available',
+  );
+  noResultsMessageInput = input<string | undefined>(undefined, { alias: 'noResultsMessage' });
+  noResultsMessage = computed(
+    () => this.noResultsMessageInput() ?? pshResolveConfigValue(this.config.noResultsMessage) ?? 'No results found',
+  );
+  globalSearchPlaceholderInput = input<string | undefined>(undefined, { alias: 'globalSearchPlaceholder' });
+  globalSearchPlaceholder = computed(
+    () => this.globalSearchPlaceholderInput() ?? pshResolveConfigValue(this.config.globalSearchPlaceholder) ?? 'Search in all columns...',
+  );
   tableLayout = input<'auto' | 'fixed'>(this.config.tableLayout ?? 'auto');
   truncateText = input(this.config.truncateText ?? false);
   expandable = input(this.config.expandable ?? false);
@@ -86,11 +104,30 @@ export class PshTableComponent {
   /** Name of the table itself. There was none, so several tables on a page were all "table". */
   readonly ariaLabel = input<string>();
   /** Name of the expand column header, which has no visible text. Was a literal. */
-  readonly expandColumnLabel = input<string>('Expand');
+  readonly expandColumnLabelInput = input<string | undefined>(undefined, { alias: 'expandColumnLabel' });
+  readonly expandColumnLabel = computed(
+    () => this.expandColumnLabelInput() ?? pshResolveConfigValue(this.config.expandColumnLabel) ?? 'Expand',
+  );
   /** Name of a row's expand toggle. Was a pair of literals. */
-  readonly expandRowLabel = input<string>('Expand row');
+  readonly expandRowLabelInput = input<string | undefined>(undefined, { alias: 'expandRowLabel' });
+  readonly expandRowLabel = computed(
+    () => this.expandRowLabelInput() ?? pshResolveConfigValue(this.config.expandRowLabel) ?? 'Expand row',
+  );
   /** Name of a row's collapse toggle. Was a pair of literals. */
-  readonly collapseRowLabel = input<string>('Collapse row');
+  readonly sortedAscendingLabel = computed(
+    () => pshResolveConfigValue(this.config.sortedAscendingLabel) ?? 'sorted ascending',
+  );
+  readonly sortedDescendingLabel = computed(
+    () => pshResolveConfigValue(this.config.sortedDescendingLabel) ?? 'sorted descending',
+  );
+  readonly resultsFoundLabel = computed(
+    () => pshResolveConfigValue(this.config.resultsFoundLabel) ?? 'results found',
+  );
+
+  readonly collapseRowLabelInput = input<string | undefined>(undefined, { alias: 'collapseRowLabel' });
+  readonly collapseRowLabel = computed(
+    () => this.collapseRowLabelInput() ?? pshResolveConfigValue(this.config.collapseRowLabel) ?? 'Collapse row',
+  );
 
   sortChange = output<TableSort>();
   globalSearchChange = output<string>();
@@ -206,10 +243,18 @@ export class PshTableComponent {
     const sort: TableSort = { key: column.key, direction };
     this.currentSortSignal.set(sort);
     this.sortChange.emit(sort);
+
+    // `aria-sort` states the new order for a reader that goes back to the header. Nothing
+    // told a user who is not there that the whole body had just been reordered.
+    this.announcer.announce(
+      `${column.label}: ${direction === 'asc' ? this.sortedAscendingLabel() : this.sortedDescendingLabel()}`,
+    );
   }
 
   onSearchValueChange(value: string): void {
     this.globalSearchChange.emit(value);
+    // Filtering replaces the body silently too, and the count is the useful part of it.
+    this.announcer.announce(`${this.filteredData().length} ${this.resultsFoundLabel()}`);
   }
 
   handleRowClick(row: TableRow): void {
