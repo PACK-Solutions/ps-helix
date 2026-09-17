@@ -51,7 +51,7 @@ export class GridDemoComponent {
       description: 'Les espacements garantissent des zones de touch minimales et des marges suffisantes pour une navigation confortable et accessible.',
       icon: 'hand-tap',
       benefits: [
-        'Zones tactiles 44x44px minimum',
+        'Zones tactiles : 44x44px, 24x24px en composant compact',
         'Espacement focus visible',
         'Navigation keyboard optimale',
         'Conformité WCAG'
@@ -157,7 +157,7 @@ export class GridDemoComponent {
         'Réduction des espacements de 20-30%',
         'Layouts en colonne unique',
         'Padding minimal pour maximiser l\'espace',
-        'Cibles tactiles : --psh-touch-target-min (44px), ou --psh-touch-target-compact (24px, le plancher AA) pour un contrôle à l\'intérieur d\'un composant trop compact pour 44'
+        'Cibles tactiles : 44px, ou 24px dans un composant compact'
       ],
       example: {
         container: 'padding: var(--psh-spacing-sm)',
@@ -202,7 +202,7 @@ export class GridDemoComponent {
     {
       name: 'Large Desktop',
       icon: 'monitor',
-      range: '> 1400px',
+      range: '> 80em (1280px)',
       description: 'Écrans larges avec max-width conteneurs et espacements maximaux pour éviter la dispersion',
       strategies: [
         'Max-width: 1400px pour conteneurs',
@@ -264,7 +264,7 @@ export class GridDemoComponent {
       description: 'Garantir des espacements accessibles et utilisables',
       icon: 'wheelchair',
       rules: [
-        'Zones tactiles minimum 44x44px',
+        'Zones tactiles : 44x44px, 24x24px en composant compact',
         'Focus outline visible avec margin suffisant',
         'Espacement entre éléments interactifs',
         'Support zoom jusqu\'à 200%',
