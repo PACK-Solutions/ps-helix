@@ -1,0 +1,158 @@
+<ds-demo-page-layout
+  title="Configuration"
+  introText="Un appel configure le thème et les défauts des trente composants. Avant la 7.0.0, il fallait importer vingt-deux tokens d'injection à la main — pour des noms qu'aucune documentation ne listait."
+  [showTechnicalSection]="true"
+  technicalTitle="Documentation Technique et API"
+>
+  <div demo-content>
+    <section class="config-demo-section">
+      <h3 class="section-title">Démonstration Interactive</h3>
+      <div class="config-demo-intro">
+        <p>
+          Les composants ci-dessous ne changent pas : seuls leurs défauts changent. Le code
+          à droite est ce que vous écririez une fois, au bootstrap.
+        </p>
+      </div>
+
+      <div class="config-demo-card">
+        <div class="demo-controls">
+          <button type="button" class="preset-button" [class.active]="preset() === 'library'" (click)="setPreset('library')">
+            Défauts de la bibliothèque
+          </button>
+          <button type="button" class="preset-button" [class.active]="preset() === 'compact'" (click)="setPreset('compact')">
+            Une app dense
+          </button>
+          <button type="button" class="preset-button" [class.active]="preset() === 'french'" (click)="setPreset('french')">
+            Une app française
+          </button>
+        </div>
+
+        <div class="config-demo-split">
+          <div class="demo-preview">
+            <psh-button
+              [size]="applied().button?.size ?? 'medium'"
+              [appearance]="applied().button?.appearance ?? 'solid'"
+            >Enregistrer</psh-button>
+
+            <psh-tag [size]="applied().tag?.size ?? 'medium'">Étiquette</psh-tag>
+
+            <psh-select
+              [options]="options"
+              [clearable]="true"
+              [size]="applied().select?.size ?? 'medium'"
+              [placeholder]="$any(applied().select?.placeholder) ?? 'Select an option'"
+              [clearLabel]="$any(applied().select?.clearLabel) ?? 'Clear selection'"
+            />
+          </div>
+
+          <pre class="config-snippet"><code>{{ snippet() }}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="config-section">
+      <h3 class="section-title">L'appel</h3>
+      <pre><code>import &#123; bootstrapApplication &#125; from '&#64;angular/platform-browser';
+import &#123; provideHelix &#125; from 'ps-helix';
+
+bootstrapApplication(AppComponent, &#123;
+  providers: [
+    provideHelix(&#123;
+      theme: &#123; targetContrast: 'AAA', customerContext: BrandService &#125;,
+      components: &#123;
+        button: &#123; size: 'large', appearance: 'outline' &#125;,
+        modal: &#123; dismissLabel: 'Fermer', confirmLabel: 'Valider' &#125;,
+        toast: &#123; position: 'bottom-right' &#125;,
+      &#125;,
+    &#125;),
+  ],
+&#125;);</code></pre>
+
+      <p>
+        <strong>Une surcharge partielle reste partielle.</strong> Chaque composant lit
+        <code>this.config.&lt;clé&gt; ?? &lt;son propre littéral&gt;</code>, donc régler la taille
+        d'un bouton ne remet pas sa couleur ni son apparence à zéro.
+      </p>
+      <p>
+        <strong>Un attribut l'emporte toujours.</strong> La configuration fixe le
+        <em>défaut</em> de l'input ; l'écrire sur un élément le surcharge pour cet élément.
+      </p>
+    </section>
+
+    <section class="config-section">
+      <h3 class="section-title">Plus fin</h3>
+      <p>Trois fonctions couvrent une partie chacune, et se mélangent sans dommage :</p>
+      <pre><code>provideHelixTheme(&#123; targetContrast: 'AAA' &#125;)
+provideHelixComponentDefaults(&#123; button: &#123; size: 'large' &#125; &#125;)
+provideHelixToast(&#123; position: 'bottom-right', duration: 3000 &#125;)</code></pre>
+
+      <p>
+        Et chaque token est exporté nommément, pour le cas où un coin de l'application a
+        besoin d'un défaut différent :
+      </p>
+      <pre><code>import &#123; BUTTON_CONFIG &#125; from 'ps-helix';
+
+&#64;Component(&#123; providers: [&#123; provide: BUTTON_CONFIG, useValue: &#123; size: 'small' &#125; &#125;] &#125;)
+export class ToolbarComponent &#123;&#125;</code></pre>
+    </section>
+
+    <section class="config-section">
+      <h3 class="section-title">Une valeur peut être une fonction</h3>
+      <p>
+        Une chaîne est lue une fois, à la construction du composant — ce qu'il faut pour une
+        langue fixée au démarrage. Une <strong>fonction</strong> est relue à chaque besoin,
+        donc un sélecteur de langue met à jour les composants <em>déjà affichés</em>.
+      </p>
+      <pre><code>provideHelix(&#123;
+  components: &#123;
+    select: &#123; placeholder: () =&gt; t.instant('psh.select.placeholder') &#125;,
+  &#125;,
+&#125;)</code></pre>
+      <p>
+        Réservé à la prose : <code>size</code>, <code>appearance</code>,
+        <code>placement</code> et leurs semblables restent des valeurs simples — on ne les
+        traduit pas.
+      </p>
+    </section>
+  </div>
+
+  <div technical-content>
+    <h3>Ce qu'on peut régler</h3>
+    <p>
+      <strong>31 tokens, 226 défauts</strong>, dont 49 traduisibles. La liste exhaustive est
+      dans <code>CONFIGURATION.md</code>, <strong>générée depuis les tokens eux-mêmes</strong> :
+      une valeur par défaut qui bouge dans le code bouge dans la documentation au prochain
+      <code>npm run docs:config</code>, et l'intégration continue échoue si les deux divergent.
+    </p>
+
+    <h3>Pourquoi ce n'est pas une déclaration CSS</h3>
+    <p>
+      Les défauts <em>visuels</em> passent par les custom properties, pas par cette
+      configuration — et elles sont lues en <code>var(--psh-x, défaut)</code> plutôt que
+      déclarées sur <code>:host</code>. Une déclaration sur <code>:host</code> compile en
+      <code>[_nghost-…]</code>, soit une spécificité de (0,1,0), qui bat une règle
+      <code>psh-button &#123; … &#125;</code> écrite dans la feuille de style d'une application.
+      Le défaut gagnait donc contre la surcharge. Un <code>var()</code> de repli n'a aucune
+      spécificité à opposer.
+    </p>
+
+    <h3>Le garde-fou</h3>
+    <p>
+      <code>TOKEN_BY_KEY</code> est vérifié par
+      <code>satisfies Record&lt;keyof Required&lt;PshComponentDefaults&gt;, unknown&gt;</code> :
+      un composant ajouté à l'interface sans token — ou l'inverse — est une erreur de
+      compilation, pas une clé qu'on peut écrire et que rien ne lit. Et une suite de tests
+      passe la configuration de chaque composant à travers un <code>Proxy</code> qui enregistre
+      les lectures : un défaut déclaré que personne ne lit fait échouer la CI. Quatre tokens
+      étaient dans ce cas avant qu'elle existe.
+    </p>
+
+    <h3>Bonnes Pratiques</h3>
+    <ul>
+      <li>Un seul appel à <code>provideHelix()</code> au bootstrap, plutôt qu'un attribut répété sur chaque élément.</li>
+      <li>Ne configurez que ce qui diffère : le reste reste au défaut de la bibliothèque, et suivra ses évolutions.</li>
+      <li>Pour la langue, partez de <code>PSH_FRENCH_DEFAULTS</code> et fusionnez vos écarts — voir la page Internationalisation.</li>
+      <li>Un token par composant (<code>BUTTON_CONFIG</code>…) pour un coin d'application, pas pour l'application entière.</li>
+    </ul>
+  </div>
+</ds-demo-page-layout>

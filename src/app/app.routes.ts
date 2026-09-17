@@ -147,6 +147,14 @@ export const routes: Routes = [
         loadComponent: () => import('./demo/pages/tone-and-voice/tone-and-voice-demo.component').then(m => m.ToneAndVoiceDemoComponent)
       },
       {
+        path: 'templates',
+        loadComponent: () => import('./demo/pages/templates/templates-demo.component').then(m => m.TemplatesDemoComponent)
+      },
+      {
+        path: 'configuration',
+        loadComponent: () => import('./demo/pages/configuration/configuration-demo.component').then(m => m.ConfigurationDemoComponent)
+      },
+      {
         path: 'i18n',
         loadComponent: () => import('./demo/pages/i18n/i18n-demo.component').then(m => m.I18nDemoComponent)
       },

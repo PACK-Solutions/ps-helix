@@ -350,10 +350,15 @@
                 <td>Label du bouton d'annulation dans le footer</td>
               </tr>
               <tr>
-                <td><code>styleClass</code></td>
+                <td><code>panelClass</code></td>
                 <td><code>string</code></td>
                 <td><code>''</code></td>
-                <td>Classes CSS personnalisées à appliquer au conteneur de la modale</td>
+                <td>
+                  Classes appliquées au panneau. Renommé depuis <code>styleClass</code> en
+                  7.0.0, et conservé là où les autres passthrough ont disparu : le panneau
+                  d'une modale est rendu hors de son hôte, donc aucune classe posée sur
+                  <code>&lt;psh-modal&gt;</code> ne peut l'atteindre.
+                </td>
               </tr>
               <tr>
                 <td><code>backdropClass</code></td>
@@ -475,14 +480,14 @@
       &lt;p&gt;Choisissez une action à effectuer.&lt;/p&gt;
       &lt;div modal-footer #modalFooter&gt;
         &lt;psh-button
-          appearance="text"
+          appearance="ghost"
           [fullWidth]="customModal.isMobileScreen()"
           (clicked)="isCustomModalOpen = false"
         &gt;
           Annuler
         &lt;/psh-button&gt;
         &lt;psh-button
-          appearance="filled"
+          appearance="solid"
           variant="success"
           [fullWidth]="customModal.isMobileScreen()"
           (clicked)="handleSave()"
@@ -490,7 +495,7 @@
           Enregistrer
         &lt;/psh-button&gt;
         &lt;psh-button
-          appearance="filled"
+          appearance="solid"
           variant="primary"
           [fullWidth]="customModal.isMobileScreen()"
           (clicked)="handlePublish()"

@@ -369,16 +369,15 @@
                 <td>Hauteur du contenu latéral sur mobile</td>
               </tr>
               <tr>
-                <td><code>cssClass</code></td>
-                <td><code>string</code></td>
-                <td><code>''</code></td>
-                <td>Classes CSS additionnelles</td>
-              </tr>
-              <tr>
-                <td><code>customStyle</code></td>
-                <td><code>Record&lt;string, string&gt;</code></td>
-                <td><code>&#123;&#125;</code></td>
-                <td>Styles inline personnalisés</td>
+                <td><code>class</code> / <code>style</code></td>
+                <td><em>natifs</em></td>
+                <td>—</td>
+                <td>
+                  Le composant <strong>est</strong> son élément hôte depuis la 7.0.0 : écrivez
+                  <code>class</code> et <code>style</code> dessus comme sur n'importe quel élément.
+                  Les inputs <code>cssClass</code> et <code>customStyle</code> n'existaient que
+                  parce qu'une enveloppe interne interceptait les vôtres.
+                </td>
               </tr>
             </tbody>
           </table>
