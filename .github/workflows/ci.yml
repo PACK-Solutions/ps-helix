@@ -76,3 +76,10 @@ jobs:
 
       - name: Bundle size budget
         run: npm run size
+
+      # The demo is the only consumer of the published surface there is, and it was not built
+      # here — so removing the translation service in 7.0.0 left its i18n page importing a
+      # module that no longer exists, and lint, tests, build:lib and every verify script
+      # stayed green. Found by hand, at release time.
+      - name: Demo application builds
+        run: npx ng build
