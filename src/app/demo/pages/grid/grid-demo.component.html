@@ -58,7 +58,13 @@
       <h3 class="section-title">Breakpoints Responsive</h3>
       <div class="breakpoints-container">
         <div class="breakpoints-intro">
-          <p>Notre système définit quatre breakpoints principaux qui dictent comment les espacements et layouts s'adaptent aux différentes tailles d'écran.</p>
+          <p>
+            Quatre paliers d'usage, tirés de l'échelle de la bibliothèque : six valeurs en
+            <code>em</code> — 30 / 40 / 48 / 64 / 80 / 96 —, déclarées dans
+            <code>breakpoints.tokens.css</code> et vérifiées en intégration continue. L'unité
+            compte : un <code>px</code> ne suit pas le zoom du navigateur, donc à 150 % un
+            composant basculerait sans son voisin.
+          </p>
         </div>
         <div class="breakpoints-grid">
           @for (breakpoint of breakpoints; track breakpoint.name) {

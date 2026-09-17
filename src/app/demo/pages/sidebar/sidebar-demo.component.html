@@ -299,12 +299,12 @@
             <div class="config-info">
               <h4>Responsive Breakpoint</h4>
               <p>
-                Largeur en dessous de laquelle la sidebar bascule seule en mode overlay. En
-                <code>em</code> comme toutes les media queries de la bibliothèque, donc le
-                seuil suit le zoom du navigateur : un <code>px</code> ne le suit pas, et à
-                150 % la page avait basculé sans la sidebar. Le pas <code>md</code> vaut
-                <code>47.9375em</code>, exclusif — à exactement 48em, c'est la règle
-                <code>min-width</code> qui s'applique.
+                The width below which the sidebar switches to overlay mode on its own. In
+                <code>em</code>, like every media query the library ships, so the threshold
+                follows browser zoom — a <code>px</code> one does not, and at 150% the page had
+                switched while the sidebar had not. The <code>md</code> step is
+                <code>47.9375em</code>, exclusive: at exactly 48em it is the
+                <code>min-width</code> rule that applies.
               </p>
               <div class="config-example">
                 <code>breakpoint="47.9375em"</code>
@@ -447,9 +447,9 @@
                 <td><code>string</code></td>
                 <td><code>'47.9375em'</code></td>
                 <td>
-                  Largeur sous laquelle la sidebar passe en overlay. N'importe quelle longueur
-                  CSS est acceptée — <code>'768px'</code> fonctionne toujours — mais le défaut
-                  est en <code>em</code> pour suivre le zoom.
+                  Viewport width at which the sidebar switches to overlay mode. Any CSS length
+                  is accepted — <code>'768px'</code> still works — but the default is in
+                  <code>em</code> so the threshold follows browser zoom.
                 </td>
               </tr>
               <tr>
