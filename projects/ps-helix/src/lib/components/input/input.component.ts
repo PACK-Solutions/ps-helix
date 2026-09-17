@@ -136,6 +136,25 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
   suggestionSelected = output<string>();
 
   showSuggestions = computed(() => this.suggestionsVisible() && this.filteredSuggestions().length > 0);
+
+  /**
+   * The suggestions listbox is announced only when the input can actually produce one.
+   *
+   * A `role="combobox"` on a field with no popup tells a screen-reader user to expect one, so
+   * this follows the `suggestions` input rather than being written on unconditionally.
+   */
+  protected readonly hasSuggestions = computed(() => {
+    const source = this.suggestions();
+    return typeof source === 'function' || source.length > 0;
+  });
+
+  protected readonly listboxId = `${this.inputId}-listbox`;
+
+  /** The option the arrow keys are on — what a combobox reports through aria-activedescendant. */
+  protected readonly activeDescendant = computed(() => {
+    const index = this.focusedSuggestionIndex();
+    return this.showSuggestions() && index >= 0 ? `${this.listboxId}-option-${index}` : null;
+  });
   filteredSuggestions = computed(() => this.filteredSuggestionsSignal());
   /** Whether the control currently has focus. A state readout; the event is `focused`. */
   readonly isFocused = computed(() => this.focusedSignal());

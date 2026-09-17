@@ -1,9 +1,12 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  inject,
   input,
   signal
 } from '@angular/core';
+import { PSH_STEPPER } from './stepper.token';
+import { pshUniqueId } from '../../utils/unique-id';
 
 @Component({
   selector: 'psh-step',
@@ -13,13 +16,22 @@ import {
     '[class.psh-step-content]': 'true',
     '[class.psh-active]': 'isActive()',
     '[attr.role]': '"tabpanel"',
-    '[attr.aria-labelledby]': '"step-" + index()',
-    '[attr.id]': '"panel-" + index()',
+    '[attr.aria-labelledby]': 'idPrefix + "-tab-" + index()',
+    '[attr.id]': 'idPrefix + "-panel-" + index()',
     '[attr.tabindex]': 'isActive() ? 0 : -1',
     '[style.display]': 'isActive() ? "block" : "none"'
   }
 })
 export class PshStepComponent {
+  /**
+   * The stepper's id prefix, so the panel's id matches the `aria-controls` of its tab.
+   *
+   * Falls back to an id of its own for a `psh-step` used outside a stepper: a dangling
+   * `aria-labelledby` is worse than an unreferenced panel.
+   */
+  protected readonly idPrefix =
+    inject(PSH_STEPPER, { optional: true })?.idPrefix ?? pshUniqueId('step');
+
   title = input.required<string>();
   subtitle = input<string>();
   icon = input<string>();

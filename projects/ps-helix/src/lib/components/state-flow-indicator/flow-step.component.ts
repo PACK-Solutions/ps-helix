@@ -1,9 +1,12 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  inject,
   input,
   signal
 } from '@angular/core';
+import { PSH_STATE_FLOW } from './state-flow-indicator.token';
+import { pshUniqueId } from '../../utils/unique-id';
 
 /**
  * One step of a `psh-state-flow-indicator`, and the panel that belongs to it.
@@ -24,13 +27,17 @@ import {
     '[class.psh-flow-step-content]': 'true',
     '[class.psh-active]': 'isActive()',
     '[attr.role]': '"tabpanel"',
-    '[attr.aria-labelledby]': '"flow-step-" + index()',
-    '[attr.id]': '"flow-panel-" + index()',
+    '[attr.aria-labelledby]': 'idPrefix + "-tab-" + index()',
+    '[attr.id]': 'idPrefix + "-panel-" + index()',
     '[attr.tabindex]': 'isActive() ? 0 : -1',
     '[style.display]': 'isActive() ? "block" : "none"'
   }
 })
 export class PshFlowStepComponent {
+  /** The indicator's id prefix; see `PshStepComponent` for the fallback. */
+  protected readonly idPrefix =
+    inject(PSH_STATE_FLOW, { optional: true })?.idPrefix ?? pshUniqueId('flow-step');
+
   title = input.required<string>();
   /** Secondary line under the title. Parity with `psh-step`, which had it and this did not. */
   subtitle = input<string>();

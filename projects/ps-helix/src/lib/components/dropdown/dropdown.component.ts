@@ -63,7 +63,11 @@ export class PshDropdownComponent<T = string> {
   // State
   private isOpenSignal = signal(false);
   private selectedItemSignal = signal<DropdownItem<T> | null>(null);
-  private focusedItemIndex = signal(-1);
+  /**
+   * Which item holds focus. Read by the template for the roving tabindex: a `role="menu"`
+   * has one tab stop, and Tab leaves the menu rather than walking its items.
+   */
+  protected readonly focusedItemIndex = signal(-1);
 
   // Placement actually rendered, after viewport collision/flip. Mirrors the
   // `placement` input while closed; recomputed against the viewport on open.

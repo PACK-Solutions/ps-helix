@@ -26,12 +26,26 @@ All interactive components are operable from the keyboard. Highlights:
   Tab / Shift+Tab cycling.
 - **Tabs**, **Dropdown**, **Stepper**, **Pagination**, **Checkbox/Radio/Switch** —
   documented per-component keyboard maps.
+- **A composite widget is one tab stop.** Tabs, tab bar, stepper, state-flow
+  indicator and dropdown carry a roving `tabindex`: Tab reaches the widget and then
+  leaves it, and the arrows move within. Walking past a six-step stepper costs one
+  press of Tab, not six.
 
 ### ARIA & semantics
 - Components expose the relevant roles and ARIA state (`role="dialog"`,
-  `aria-modal`, `role="combobox"/"listbox"/"option"`, `aria-expanded`,
-  `aria-selected`, `aria-sort`, `aria-invalid`, `aria-describedby`, …).
+  `aria-modal`, `role="combobox"/"listbox"/"option"`, `role="switch"`,
+  `aria-expanded`, `aria-selected`, `aria-sort`, `aria-invalid`,
+  `aria-describedby`, …).
 - Error/success messages are associated to their controls via `aria-describedby`.
+- **Every generated id is unique per component instance.** Tab/panel links, and the
+  link from a field to its message, are asserted in CI against a page holding two of
+  each component — including the case of a `psh-tabs` beside a `psh-stepper`.
+- **Modal** puts `role="dialog"` on the panel, not on the backdrop, and marks the
+  rest of the page `inert` while open. The focus trap holds the keyboard; `inert` is
+  what stops a screen reader's virtual cursor reading the page behind the dialog.
+- **Input** announces its autocomplete suggestions as a combobox
+  (`aria-expanded`, `aria-controls`, `aria-activedescendant`) — and only when the
+  field actually has suggestions to offer.
 
 ### Shared a11y primitives
 Reusable, headless primitives back the components and are available to consumers:
@@ -47,9 +61,13 @@ The library renders under server-side rendering: all browser-global access is
 routed through `DOCUMENT` and guarded by `isPlatformBrowser` / `document.defaultView`.
 
 ## How accessibility is tested
-- **Automated:** `jest-axe` asserts zero axe-core violations on components in their
-  default and key states (error, disabled). Keyboard interaction is covered by
-  unit tests for the main interactive components.
+- **Automated:** `jest-axe` asserts zero axe-core violations on **all 31 components**,
+  in their default and key states (error, disabled, and open for the components that
+  open). Keyboard interaction is covered by unit tests for the main interactive
+  components, and four transverse suites assert the rules that cut across them:
+  `described-by` (every referenced id resolves, and no id is rendered twice),
+  `roving-tabindex` (one tab stop per composite widget), `combobox` (the same
+  contract for select and input) and `forms-contract`.
 - **Linting:** `angular-eslint` template accessibility rules run in CI.
 - **Manual:** keyboard-only and screen-reader spot checks during development.
 
@@ -63,8 +81,15 @@ We track these openly; they are reported as warnings by `npm run lint`:
   focus support** (`click-events-have-key-events`, `interactive-supports-focus`).
   Affected today: parts of `card`, `info-card`, `table`, `tabs`, `textarea`,
   `stat-card` demos/components.
-- `jest-axe` coverage is being extended incrementally to every component (it
-  currently covers the form controls and badge).
+- `psh-menu` declares `role="menubar"` over `role="menuitem"` links while being a
+  sidebar navigation. By the letter of the role its links should not be individually
+  reachable with Tab; in practice taking Tab away from a sidebar would be a
+  regression. **The roles are what needs settling**, and that is an open decision
+  rather than a bug.
+- `aria-required-children` does not fire when a required child sits below an
+  intermediate generic element, so axe is silent on a `tablist` whose tabs are
+  grandchildren. It does fire when no tab is present at all. Worth knowing before
+  relying on it.
 - Per-popover flip-on-open is implemented for tooltip and dropdown; select/menu
   panel flipping is planned.
 

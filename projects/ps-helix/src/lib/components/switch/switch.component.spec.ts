@@ -144,6 +144,16 @@ describe('PshSwitchComponent', () => {
   });
 
   describe('Accessibility', () => {
+    it('is announced as a switch, not as a checkbox', () => {
+      // The control is a native checkbox for its keyboard behaviour and its form value, so
+      // without the role a screen reader calls it a checkbox — which is what it had always
+      // been announced as. `role="switch"` is the only thing that changes that, and the
+      // native checked state maps straight through to it.
+      const input = getSwitchInput();
+      expect(input.getAttribute('role')).toBe('switch');
+      expect(input.getAttribute('type')).toBe('checkbox');
+    });
+
     describe('aria-checked attribute', () => {
       it('should have aria-checked="false" when unchecked', () => {
         fixture.componentRef.setInput('checked', false);

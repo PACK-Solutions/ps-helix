@@ -1,10 +1,13 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  inject,
   input,
   signal
 } from '@angular/core';
 import { Tab } from './tabs.types';
+import { PSH_TABS } from './tabs.token';
+import { pshUniqueId } from '../../utils/unique-id';
 
 @Component({
   selector: 'psh-tab',
@@ -14,12 +17,16 @@ import { Tab } from './tabs.types';
     '[class.psh-tab-panel]': 'true',
     '[class.psh-active]': 'isActive()',
     '[attr.role]': '"tabpanel"',
-    '[attr.aria-labelledby]': '"tab-" + index()',
-    '[attr.id]': '"panel-" + index()',
+    '[attr.aria-labelledby]': 'idPrefix + "-tab-" + index()',
+    '[attr.id]': 'idPrefix + "-panel-" + index()',
     '[attr.tabindex]': 'isActive() ? 0 : -1'
   }
 })
 export class PshTabComponent {
+  /** The tabs' id prefix; see `PshStepComponent` for the standalone fallback. */
+  protected readonly idPrefix =
+    inject(PSH_TABS, { optional: true })?.idPrefix ?? pshUniqueId('tab');
+
   header = input.required<string>();
   icon = input<string>();
   disabled = input(false);

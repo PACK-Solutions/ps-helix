@@ -1,17 +1,16 @@
-<!-- Dialog backdrop: pointer dismissal only; the keyboard path is Escape (handled). -->
-<!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events -->
+<!--
+  The backdrop. Pointer dismissal only; the keyboard path is Escape, handled on the document.
+  It carries no role since 7.0.0 — the dialog is the panel inside it — so the two rules that
+  were satisfied by role="dialog" have to be waived explicitly instead.
+-->
+<!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
 <div
   #modalBackdrop
   [class]="'psh-modal-backdrop ' + backdropClass()"
   [class.psh-open]="open()"
   (click)="handleBackdropClick($event)"
-  role="dialog"
-  aria-modal="true"
   [style.z-index]="zIndex()"
   [attr.aria-hidden]="!open()"
-  [attr.aria-labelledby]="labelledBy()"
-  [attr.aria-label]="ariaLabel() || null"
-  [attr.aria-describedby]="modalDescriptionId()"
   [attr.data-state]="state()"
 >
   <div
@@ -20,7 +19,11 @@
     [class.psh-medium]="size() === 'medium'"
     [class.psh-large]="size() === 'large'"
     [attr.id]="modalDialogId()"
-    role="document"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-labelledby]="labelledBy()"
+    [attr.aria-label]="ariaLabel() || null"
+    [attr.aria-describedby]="modalDescriptionId()"
     [pshFocusTrap]="open()"
   >
     <div class="psh-modal-content-wrapper">

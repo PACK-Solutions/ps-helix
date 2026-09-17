@@ -28,6 +28,11 @@
       [attr.aria-invalid]="!!error()"
       [attr.aria-required]="required()"
       [attr.aria-describedby]="describedBy()"
+      [attr.role]="hasSuggestions() ? 'combobox' : null"
+      [attr.aria-autocomplete]="hasSuggestions() ? 'list' : null"
+      [attr.aria-expanded]="hasSuggestions() ? showSuggestions() : null"
+      [attr.aria-controls]="showSuggestions() ? listboxId : null"
+      [attr.aria-activedescendant]="activeDescendant()"
       [disabled]="disabled()"
       [readonly]="readonly()"
       [required]="required()"
@@ -65,13 +70,14 @@
     }
 
     <ng-template #suggestionsTpl>
-      <div class="psh-suggestions-list" role="listbox">
+      <div class="psh-suggestions-list" role="listbox" [id]="listboxId">
         @for (suggestion of filteredSuggestions(); track suggestion; let i = $index) {
           <!-- option in a listbox: keyboard is handled by the input (arrow keys + focusedSuggestionIndex). -->
           <!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
           <div
             class="psh-suggestion-item"
             [class.psh-focused]="i === focusedSuggestionIndex()"
+            [id]="listboxId + '-option-' + i"
             role="option"
             [attr.aria-selected]="i === focusedSuggestionIndex()"
             (click)="handleSuggestionClick(suggestion)"

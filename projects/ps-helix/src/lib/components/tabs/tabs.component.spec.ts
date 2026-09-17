@@ -487,10 +487,11 @@ describe('PshTabsComponent', () => {
     });
 
     it('should have aria-controls linking to panel ID', () => {
-      const button = getTabButton(0);
-      const panelId = button.getAttribute('aria-controls');
-      expect(panelId).toBe('panel-0');
-      expect(getTabPanel(0).getAttribute('id')).toBe('panel-0');
+      // The link, not the spelling: `panel-0` was the literal id on every tabs instance —
+      // and on every stepper too, which used the same string for its own panels.
+      const panelId = getTabButton(0).getAttribute('aria-controls')!;
+      expect(panelId).toBeTruthy();
+      expect(document.getElementById(panelId)).toBe(getTabPanel(0));
     });
 
     it('should have aria-disabled on disabled tabs', () => {
@@ -517,9 +518,9 @@ describe('PshTabsComponent', () => {
     });
 
     it('should have aria-labelledby on panels linking to tab ID', () => {
-      const panel = getTabPanel(0);
-      expect(panel.getAttribute('aria-labelledby')).toBe('tab-0');
-      expect(getTabButton(0).getAttribute('id')).toBe('tab-0');
+      const labelledBy = getTabPanel(0).getAttribute('aria-labelledby')!;
+      expect(labelledBy).toBeTruthy();
+      expect(document.getElementById(labelledBy)).toBe(getTabButton(0));
     });
 
     it('should have active class only on active panel', () => {
