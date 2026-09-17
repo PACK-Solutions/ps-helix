@@ -14,9 +14,12 @@ Versioning policy:
 
 ## [Unreleased]
 
-Every component measured at 320 / 768 / 1024 / 1440. Nothing overflows, nothing is cut: the
-six truncations found are all a deliberate `text-overflow: ellipsis`, and `psh-stepper` even
-stops truncating and wraps below 47.9375em. What the measuring found was elsewhere.
+## [7.0.2] - 2026-09-17
+
+Patch release. Every component measured at 320 / 768 / 1024 / 1440 — nothing overflows and
+nothing is cut. The six truncations found are all a deliberate `text-overflow: ellipsis`, and
+`psh-stepper` even stops truncating and wraps below 47.9375em. What the measuring found was
+elsewhere.
 
 ### Fixed
 
