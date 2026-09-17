@@ -14,7 +14,11 @@ Versioning policy:
 
 ## [Unreleased]
 
-Four defects found by walking the 7.0.0 demo in a real browser — the check jsdom cannot make.
+## [7.0.1] - 2026-09-17
+
+Patch release. Three defects found by walking the 7.0.0 demo in a real browser — the check
+jsdom cannot make, and the one the 7.0.0 release notes said was worth doing. None of them was
+visible to the 2 420 tests, because each only exists in a rendered page.
 
 ### Fixed
 
