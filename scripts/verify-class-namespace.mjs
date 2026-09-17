@@ -118,7 +118,8 @@ const serialised = `${JSON.stringify(map, null, 2)}\n`;
 if (check) {
   let current = null;
   try {
-    current = readFileSync(MAP_FILE, 'utf8');
+    // Normalised for the same reason as TOKENS.md: CRLF on a Windows checkout, LF on write.
+    current = readFileSync(MAP_FILE, 'utf8').replace(/\r\n/g, '\n');
   } catch {
     console.error('✖ scripts/class-map-7.0.0.json is missing — run npm run docs:classes');
     failed = true;
