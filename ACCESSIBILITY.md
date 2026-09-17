@@ -26,6 +26,10 @@ All interactive components are operable from the keyboard. Highlights:
   Tab / Shift+Tab cycling.
 - **Tabs**, **Dropdown**, **Stepper**, **Pagination**, **Checkbox/Radio/Switch** —
   documented per-component keyboard maps.
+- **`psh-menu` is a navigation, not a menubar.** It used to declare `role="menubar"`
+  over `role="menuitem"` links. That role commits a widget to one tab stop and arrow-key
+  navigation, which is not what anyone expects of a sidebar, so the roles went and the links
+  keep their native semantics — Tab reaches each of them, and the arrow keys still work.
 - **A composite widget is one tab stop.** Tabs, tab bar, stepper, state-flow
   indicator and dropdown carry a roving `tabindex`: Tab reaches the widget and then
   leaves it, and the arrows move within. Walking past a six-step stepper costs one
@@ -81,11 +85,6 @@ We track these openly; they are reported as warnings by `npm run lint`:
   focus support** (`click-events-have-key-events`, `interactive-supports-focus`).
   Affected today: parts of `card`, `info-card`, `table`, `tabs`, `textarea`,
   `stat-card` demos/components.
-- `psh-menu` declares `role="menubar"` over `role="menuitem"` links while being a
-  sidebar navigation. By the letter of the role its links should not be individually
-  reachable with Tab; in practice taking Tab away from a sidebar would be a
-  regression. **The roles are what needs settling**, and that is an open decision
-  rather than a bug.
 - `aria-required-children` does not fire when a required child sits below an
   intermediate generic element, so axe is silent on a `tablist` whose tabs are
   grandchildren. It does fire when no tab is present at all. Worth knowing before
