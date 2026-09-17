@@ -54,6 +54,12 @@ jobs:
       - name: Semantic fills are readable
         run: npm run verify:contrast
 
+      # What a stylesheet decides about a 320px screen and a thumb. It cannot decide rendered
+      # sizes — that is scripts/probe-responsive.html, which found three undersized controls
+      # this catches the return of, and missed a fourth that this one found.
+      - name: Layout floors
+        run: npm run verify:layout
+
       # Every settable default, generated from the tokens. A hand-written list of 201
       # defaults drifts, and four of these tokens had already drifted from their own
       # interface before this was in place.

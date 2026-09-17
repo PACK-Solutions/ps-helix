@@ -32,9 +32,12 @@
   flex-shrink: 0;
 }
 
+/* The field was 21px tall: `padding: 0` with the box on the wrapper. The wrapper still draws
+   the frame, but the input carries the height, so the target is the whole control. */
 .search-input {
   flex: 1;
   min-width: 0;
+  min-height: var(--psh-touch-target-compact);
   border: none;
   background: transparent;
   color: var(--psh-text-color);

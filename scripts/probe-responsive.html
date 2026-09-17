@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Sonde responsive — ps-helix</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { margin: 0; font: 14px/1.5 system-ui, sans-serif; }
+  header { padding: 12px 16px; border-bottom: 1px solid #8884; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  button { font: inherit; padding: 4px 10px; cursor: pointer; }
+  #out { padding: 12px 16px; white-space: pre-wrap; font-family: ui-monospace, monospace; font-size: 12px; }
+  iframe { border: 0; border-top: 1px solid #8884; display: block; height: 900px; }
+</style>
+</head>
+<body>
+<!--
+  Measures what a stylesheet cannot tell you: the size things actually come out at.
+
+  `npm test` runs on jsdom, which has no layout — every box it reports is zero — and axe's
+  own size and contrast rules are disabled there for the same reason. `verify:layout` holds
+  the line on what a stylesheet decides; this measures the rest.
+
+  Each page is loaded in an iframe of an exact width, so its media queries resolve against
+  that width. It reaches 320px, which the Chrome window cannot be dragged to.
+
+  Usage:  npm start,  then open  http://localhost:4200/assets/probe-responsive.html
+  (the file is copied into src/assets by `npm run probe:responsive`, and is not published:
+  it belongs to the demo application, not to the library.)
+-->
+<header>
+  <strong>Sonde responsive</strong>
+  <span>largeur&nbsp;:</span>
+  <button data-width="320">320</button>
+  <button data-width="768">768</button>
+  <button data-width="1024">1024</button>
+  <button data-width="1440">1440</button>
+  <button id="all">Tout mesurer</button>
+  <label><input type="checkbox" id="zoom"> racine à 24px (zoom 150 %)</label>
+</header>
+<pre id="out">Choisissez une largeur.</pre>
+<iframe id="frame" width="320"></iframe>
+
+<script>
+const PAGES = [
+  'buttons', 'inputs', 'textareas', 'select', 'checkboxes', 'radios', 'switches', 'tags',
+  'badges', 'avatar', 'alerts', 'collapse', 'dropdowns', 'menu', 'tabs', 'tab-bar',
+  'cards', 'horizontal-cards', 'info-cards', 'stat-cards', 'tables', 'pagination',
+  'stepper', 'state-flow-indicator', 'progressbar', 'spinloader', 'tooltips', 'toasts',
+  'modals', 'sidebar',
+];
+
+const frame = document.getElementById('frame');
+const out = document.getElementById('out');
+
+function scrolls(el) {
+  const cs = el.ownerDocument.defaultView.getComputedStyle(el);
+  return /auto|scroll/.test(cs.overflowX) || /auto|scroll/.test(cs.overflowY);
+}
+
+function inScroller(el) {
+  for (let e = el.parentElement; e; e = e.parentElement) if (scrolls(e)) return true;
+  return false;
+}
+
+function label(el) {
+  const cls = String(el.className || '').trim().split(/\s+/).filter(Boolean).slice(0, 2).join('.');
+  return el.tagName.toLowerCase() + (cls ? '.' + cls : '');
+}
+
+/** The nearest library element above, so a finding names a component rather than a div. */
+function owner(el) {
+  for (let e = el; e; e = e.parentElement) if (/^PSH-/.test(e.tagName)) return e.tagName.toLowerCase();
+  return 'demo';
+}
+
+const MIN_TARGET = 24;
+
+/**
+ * Whether the pointer still lands on this control `size/2` away from its centre, all round.
+ *
+ * The control is scrolled into view first, and that is not a detail: `elementFromPoint` takes
+ * viewport coordinates, so anything below the fold answers `null` and every control on a long
+ * page reads as unhittable. This probe reported two false positives before it did so — on the
+ * two controls that carry their target on a pseudo-element, which is exactly what it exists
+ * to tell apart.
+ */
+function hittableAcross(el, doc, size) {
+  el.scrollIntoView({ block: 'center', inline: 'center' });
+  const rect = el.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2;
+  const reach = size / 2 - 1;
+  return [[0, 0], [reach, 0], [-reach, 0], [0, reach], [0, -reach]].every(([dx, dy]) => {
+    const hit = doc.elementFromPoint(cx + dx, cy + dy);
+    return hit === el || el.contains(hit);
+  });
+}
+
+function measure() {
+  const doc = frame.contentDocument;
+  const win = frame.contentWindow;
+  const width = win.innerWidth;
+  const found = { overflow: 0, past: [], clipped: [], small: [] };
+  const seen = new Set();
+
+  found.overflow = doc.documentElement.scrollWidth - doc.documentElement.clientWidth;
+
+  // Overflow and clipping are read first, from the page as it loaded: hit-testing scrolls, and
+  // a measurement taken after a scroll is a measurement of a different page.
+  const candidates = [];
+
+  for (const el of doc.querySelectorAll('body *')) {
+    const rect = el.getBoundingClientRect();
+    if (rect.width === 0 || rect.height === 0) continue;
+    const key = owner(el) + '|' + label(el);
+
+    if (rect.right > width + 1 && !inScroller(el) && !seen.has('p' + key)) {
+      seen.add('p' + key);
+      found.past.push(`${owner(el)} ${label(el)} → ${Math.round(rect.right)}px`);
+    }
+
+    const cs = win.getComputedStyle(el);
+    const hides = cs.overflow === 'hidden' || cs.overflowX === 'hidden' || cs.textOverflow === 'ellipsis';
+    const text = (el.textContent || '').trim();
+    // A screen-reader-only region is clipped on purpose; ellipsis is a design decision, so it
+    // is reported rather than failed — read the list, do not count it.
+    if (hides && text && !el.children.length && !/psh-sr-only/.test(el.className)
+        && el.scrollWidth > el.clientWidth + 1 && !seen.has('c' + key)) {
+      seen.add('c' + key);
+      found.clipped.push(`${owner(el)} ${label(el)} −${el.scrollWidth - el.clientWidth}px « ${text.slice(0, 26)} »`);
+    }
+
+    const target = /^(BUTTON|A|INPUT|SELECT)$/.test(el.tagName) || el.getAttribute('role') === 'button';
+    if (target && (rect.width < 24 || rect.height < 24) && !seen.has('s' + key)) {
+      seen.add('s' + key);
+      candidates.push({ el, size: `${Math.round(rect.width)}×${Math.round(rect.height)}` });
+    }
+  }
+
+  // The box is not the target. A control can carry a hit area on a pseudo-element, which is
+  // what `psh-alert`, `psh-tag` and `psh-select` do rather than grow and throw their component
+  // out of proportion — so ask the document what is actually under the point.
+  for (const { el, size } of candidates) {
+    if (!hittableAcross(el, doc, MIN_TARGET)) {
+      found.small.push(`${owner(el)} ${label(el)} ${size}`);
+    }
+  }
+
+  return found;
+}
+
+function load(path, width) {
+  frame.width = width;
+  return new Promise((resolve) => {
+    frame.onload = () => {
+      if (document.getElementById('zoom').checked) {
+        frame.contentDocument.documentElement.style.fontSize = '24px';
+      }
+      setTimeout(resolve, 1300);
+    };
+    frame.src = path;
+  });
+}
+
+async function run(width) {
+  const lines = [];
+  let clean = 0;
+  for (const page of PAGES) {
+    out.textContent = `mesure ${page} à ${width}px…`;
+    await load('/demo/' + page, width);
+    const f = measure();
+    const bad = f.overflow > 0 || f.past.length || f.small.length;
+    if (!bad && !f.clipped.length) { clean += 1; continue; }
+    lines.push(`\n${page} — ${width}px`);
+    if (f.overflow > 0) lines.push(`  DÉBORDEMENT de page : ${f.overflow}px`);
+    for (const x of f.past) lines.push(`  dépasse : ${x}`);
+    for (const x of f.small) lines.push(`  cible < 24px : ${x}`);
+    for (const x of f.clipped) lines.push(`  tronqué (vérifier si voulu) : ${x}`);
+  }
+  return [`${width}px — ${clean}/${PAGES.length} pages sans rien à signaler`, ...lines].join('\n');
+}
+
+for (const button of document.querySelectorAll('[data-width]')) {
+  button.addEventListener('click', async () => {
+    out.textContent = await run(Number(button.dataset.width));
+  });
+}
+
+document.getElementById('all').addEventListener('click', async () => {
+  const reports = [];
+  for (const width of [320, 768, 1024, 1440]) reports.push(await run(width));
+  out.textContent = reports.join('\n\n');
+});
+</script>
+</body>
+</html>
