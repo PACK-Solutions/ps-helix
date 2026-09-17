@@ -1,5 +1,4 @@
 import {
-  NgZone,
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
@@ -25,6 +24,7 @@ import { PshButtonComponent } from '../button/button.component';
 import { PshFocusTrapDirective } from '../../a11y/focus-trap.directive';
 import { ModalSize, ModalConfig } from './modal.types';
 import { PshOverlayService, OverlayHandle } from '../../a11y/overlay.service';
+import { PshViewportService } from '../../a11y/viewport.service';
 import { pshUniqueId } from '../../utils/unique-id';
 
 /**
@@ -173,7 +173,6 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
   private readonly overlay = inject(PshOverlayService);
   private readonly renderer = inject(Renderer2);
   private readonly platformId = inject(PLATFORM_ID);
-  private readonly zone = inject(NgZone);
   private readonly document = inject(DOCUMENT);
 
   /** Elements this modal marked `inert`, so it only ever undoes its own. */
@@ -185,9 +184,17 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
   protected readonly zIndex = signal<number | null>(null);
   private modalElement?: ElementRef<HTMLElement>;
   private isAttachedToBody = false;
-  private resizeListener?: () => void;
-  private readonly isMobileSignal = signal(false);
-  private readonly mobileBreakpoint = 768;
+  /**
+   * Read from the shared `matchMedia`, on the same `md` step the stylesheet uses.
+   *
+   * It was `innerWidth < 768` behind a resize listener per modal — a pixel breakpoint written
+   * in TypeScript, which no amount of `verify:breakpoints` could see because that script reads
+   * stylesheets. It also did not follow browser zoom: at 150% the stylesheet switched at an
+   * effective 1150px while this stayed at 768, so the modal was in its mobile layout while
+   * `isMobileScreen()` still said no, and a consumer binding it — the demo does, for full-width
+   * footer buttons — got desktop buttons in a mobile dialog.
+   */
+  private readonly isMobile = inject(PshViewportService).below('md');
 
   /**
    * Controls the visibility of the modal (two-way binding)
@@ -345,7 +352,7 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
   /**
    * Computed signal indicating if the screen is mobile-sized
    */
-  readonly isMobileScreen = computed(() => this.isMobileSignal());
+  readonly isMobileScreen = this.isMobile;
 
   constructor() {
     effect(() => {
@@ -355,15 +362,10 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
         this.onModalClose();
       }
     });
-
-    if (isPlatformBrowser(this.platformId)) {
-      this.checkScreenSize();
-    }
   }
 
   ngAfterViewInit(): void {
     this.attachModalToBody();
-    this.setupResizeListener();
   }
 
   /**
@@ -426,38 +428,6 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
       this.overlayHandle = null;
     }
     this.zIndex.set(null);
-  }
-
-  /**
-   * Checks if the current screen size is mobile
-   */
-  private checkScreenSize(): void {
-    const view = this.document.defaultView;
-    if (view) {
-      this.isMobileSignal.set(view.innerWidth < this.mobileBreakpoint);
-    }
-  }
-
-  /**
-   * Sets up resize listener to detect screen size changes
-   */
-  private setupResizeListener(): void {
-    const view = this.document.defaultView;
-    if (view) {
-      this.resizeListener = () => this.checkScreenSize();
-      // Outside Angular: resize fires continuously while a window is dragged, and the
-      // handler only writes a signal — which schedules its own refresh when it changes.
-      this.zone.runOutsideAngular(() => view.addEventListener('resize', this.resizeListener!));
-    }
-  }
-
-  /**
-   * Removes resize listener
-   */
-  private removeResizeListener(): void {
-    if (this.resizeListener) {
-      this.document.defaultView?.removeEventListener('resize', this.resizeListener);
-    }
   }
 
   /**
@@ -556,7 +526,6 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.removeScrollLock();
     this.removeEventListeners();
-    this.removeResizeListener();
     this.modalService.unregister(this.modalId);
     this.releaseOverlay();
     this.detachModalFromBody();

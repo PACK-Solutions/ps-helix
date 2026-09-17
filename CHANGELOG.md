@@ -14,6 +14,29 @@ Versioning policy:
 
 ## [Unreleased]
 
+Every component measured at 320 / 768 / 1024 / 1440. Nothing overflows, nothing is cut: the
+six truncations found are all a deliberate `text-overflow: ellipsis`, and `psh-stepper` even
+stops truncating and wraps below 47.9375em. What the measuring found was elsewhere.
+
+### Fixed
+
+- **`psh-alert`, `psh-tag`, `psh-table`, `psh-select`** — four controls under the 24×24 floor
+  of WCAG 2.2 SC 2.5.8: the alert dismiss at 16×16, the tag close at 20×20, the sort button at
+  27×17, and the select's clear button. The alert's shrank further inside a `max-width` query,
+  so it was smallest on the screens where it is hit with a thumb. None of them grows: the
+  target is carried on a pseudo-element, except the sort button, which becomes its header cell.
+  New `--psh-touch-target-compact` (24px) for a control inside a component too compact for 44.
+- **`psh-modal`** — reads `PshViewportService.below('md')` instead of comparing `innerWidth`
+  to a hardcoded `768` behind its own resize listener. A pixel does not follow browser zoom:
+  at 150% the stylesheet switched at an effective 1150px while the number stayed at 768, so
+  the modal was in its mobile layout while `isMobileScreen()` still said no.
+
+### Changed
+
+- **`psh-sidebar`** — `breakpoint` now defaults to `'47.9375em'` rather than `'768px'`: the
+  `md` step of the library's scale, exclusive like every other max it ships. The input still
+  accepts any CSS length, so `'768px'` keeps working.
+
 ## [7.0.1] - 2026-09-17
 
 Patch release. Three defects found by walking the 7.0.0 demo in a real browser — the check

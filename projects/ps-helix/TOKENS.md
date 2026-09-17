@@ -3,7 +3,7 @@
 > **Generated from the stylesheets — do not edit by hand.**
 > Run `npm run docs:tokens` after changing anything under `src/lib/styles/`.
 
-**407 tokens** across 8 files.
+**408 tokens** across 8 files.
 
 Every custom property the library exposes is namespaced `--psh-*`. The unprefixed names
 used before 7.0.0 remain available through the opt-in `styles/compat.css`.
@@ -406,6 +406,7 @@ used before 7.0.0 remain available through the opt-in `styles/compat.css`.
 | `--psh-control-height-md` | `2.5rem` | 40px |
 | `--psh-control-height-lg` | `3rem` | 48px |
 | `--psh-touch-target-min` | `2.75rem` | 44px |
+| `--psh-touch-target-compact` | `1.5rem` | 24px |
 | `--psh-scrollbar-width` | `0` |  |
 
 ## Spacing

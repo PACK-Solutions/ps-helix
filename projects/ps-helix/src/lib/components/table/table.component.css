@@ -134,11 +134,18 @@ th.psh-sortable:hover .psh-sort-icon-neutral {
    These rules already existed but targeted a class the template never rendered, so the
    focus style was dead code. The sortable header is now a real button carrying both
    .psh-th-content (layout) and .psh-sort-button (button-chrome reset). */
+/* The button is the whole header cell, so the target is the cell: it was 17px tall inside a
+   49px `th` whose padding belonged to the cell rather than to the control. The padding moves
+   onto the button; nothing shifts on screen. */
+th.psh-sortable {
+  padding: 0;
+}
+
 .psh-sort-button {
   width: 100%;
   background: transparent;
   border: none;
-  padding: 0;
+  padding: var(--psh-spacing-md);
   font: inherit;
   color: inherit;
   text-align: left;
