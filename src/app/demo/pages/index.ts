@@ -20,6 +20,8 @@ export * from './checkboxes/checkboxes-demo.component';
 export * from './radios/radios-demo.component';
 export * from './switches/switches-demo.component';
 export * from './tone-and-voice/tone-and-voice-demo.component';
+export * from './configuration/configuration-demo.component';
+export * from './templates/templates-demo.component';
 export * from './i18n/i18n-demo.component';
 export * from './terminology/terminology-demo.component';
 export * from './sidebar/sidebar-demo.component';

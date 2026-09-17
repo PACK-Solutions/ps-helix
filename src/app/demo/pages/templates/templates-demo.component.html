@@ -1,0 +1,167 @@
+<ds-demo-page-layout
+  title="Points d'extension"
+  introText="Sept endroits où vous fournissez le contenu, là où il n'y en avait qu'un sur trente composants. Chacun remplace le contenu d'un élément, jamais l'élément : le rôle ARIA, le clavier et le tri restent au composant."
+  [showTechnicalSection]="true"
+  technicalTitle="Documentation Technique et API"
+>
+  <div demo-content>
+    <section class="tpl-section">
+      <h3 class="section-title">La règle</h3>
+      <p class="tpl-rule">
+        Un <code>TemplateRef</code> remplace le <strong>contenu</strong> d'un élément, jamais
+        l'élément. <code>role="option"</code>, <code>aria-selected</code>,
+        <code>aria-sort</code>, le roving tabindex et le clavier restent au composant — et un
+        en-tête personnalisé reçoit <code>toggleSort</code> <em>en callback</em> plutôt que de
+        câbler le tri lui-même. Sans cela, le mode d'échec est un consommateur qui livre un
+        <code>&lt;div&gt;</code> ne répondant qu'à la souris.
+      </p>
+    </section>
+
+    <section class="tpl-section">
+      <h3 class="section-title">select.optionTemplate</h3>
+      <p>
+        Le rendu d'une option était figé : icône, label, description, et rien d'autre. Afficher
+        un avatar ou un badge imposait <code>::ng-deep</code>.
+      </p>
+
+      <div class="tpl-demo">
+        <psh-select
+          [options]="people"
+          [(value)]="assignee"
+          label="Assigné à"
+          [clearable]="true"
+          [optionTemplate]="personOption"
+        />
+
+        <ng-template #personOption let-option let-selected="selected">
+          <span class="person">
+            <psh-avatar size="small" [initials]="initials(option.label)" />
+            <span class="person-text">
+              <span class="person-name">{{ option.label }}</span>
+              <span class="person-role">{{ option.description }}</span>
+            </span>
+            @if (selected) {
+              <psh-badge color="success" content="assigné" />
+            }
+          </span>
+        </ng-template>
+      </div>
+
+      <pre><code>{{ selectSnippet }}</code></pre>
+    </section>
+
+    <section class="tpl-section">
+      <h3 class="section-title">table — headerTemplate, emptyTemplate, rowClass</h3>
+      <p>
+        L'en-tête était figé, l'état vide limité à une <code>string</code>, et styler une ligne
+        conditionnellement passait par un sélecteur <code>nth-child</code> deviné de
+        l'extérieur.
+      </p>
+
+      <div class="tpl-demo">
+        <psh-table
+          [columns]="columns"
+          [data]="rows"
+          [globalSearch]="true"
+          [rowClass]="rowClass"
+          [headerTemplate]="header"
+          [emptyTemplate]="empty"
+        />
+
+        <ng-template #header let-column let-sort="sort" let-toggleSort="toggleSort">
+          <span class="th">
+            {{ column.label }}
+            @if (sort) {
+              <i class="ph" [class.ph-sort-ascending]="sort === 'asc'" [class.ph-sort-descending]="sort === 'desc'" aria-hidden="true"></i>
+            }
+          </span>
+        </ng-template>
+
+        <ng-template #empty let-message let-searchTerm="searchTerm">
+          <div class="empty-state">
+            <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
+            <p>{{ message }}</p>
+            @if (searchTerm) {
+              <p class="empty-hint">Aucune ligne ne contient « {{ searchTerm }} ».</p>
+            }
+          </div>
+        </ng-template>
+      </div>
+
+      <p class="tpl-note">
+        Tapez dans la recherche pour voir l'état vide, et triez : le bouton de tri reste
+        accessible au clavier et <code>aria-sort</code> reste posé, alors que l'en-tête est
+        entièrement le vôtre.
+      </p>
+
+      <pre><code>{{ tableSnippet }}</code></pre>
+    </section>
+
+    <section class="tpl-section">
+      <h3 class="section-title">alert — le slot d'action</h3>
+      <p>
+        Une alerte n'avait qu'une zone de message. Un bouton « Réessayer » aligné à droite,
+        le motif le plus courant qui soit, était impossible.
+      </p>
+
+      <div class="tpl-demo">
+        <psh-alert color="danger" [closable]="true" content="La synchronisation a échoué.">
+          <psh-button psh-alert-actions size="small" appearance="outline" (clicked)="retried.set(true)">
+            {{ retried() ? 'Relancé' : 'Réessayer' }}
+          </psh-button>
+        </psh-alert>
+      </div>
+
+      <pre><code>{{ alertSnippet }}</code></pre>
+    </section>
+
+    <section class="tpl-section">
+      <h3 class="section-title">menu et tab-bar — itemTemplate</h3>
+      <p>
+        Les items de <code>psh-menu</code> et <code>psh-tab-bar</code> étaient entièrement
+        figés par leurs interfaces. Ils reçoivent le même traitement :
+      </p>
+      <pre><code>{{ menuSnippet }}</code></pre>
+      <p class="tpl-note">
+        <code>withLabel</code> est faux quand le menu est replié en mode icônes : le contexte
+        vous dit ce que le composant sait, pour que votre template n'ait pas à le deviner.
+      </p>
+    </section>
+  </div>
+
+  <div technical-content>
+    <h3>Les sept</h3>
+    <ul>
+      <li><code>select.optionTemplate</code> — contexte : l'option, <code>selected</code>, <code>disabled</code>.</li>
+      <li><code>table.headerTemplate</code> — la colonne, <code>sort</code>, <code>toggleSort</code>.</li>
+      <li><code>table.emptyTemplate</code> — le message résolu, <code>searchTerm</code>.</li>
+      <li><code>table.rowClass</code> — une fonction de la ligne vers une classe.</li>
+      <li><code>menu.itemTemplate</code> — l'item, <code>index</code>, <code>withLabel</code>, <code>expanded</code>.</li>
+      <li><code>tab-bar.itemTemplate</code> — l'item, <code>index</code>, <code>active</code>.</li>
+      <li>Slot <code>[psh-alert-actions]</code> — projection, pas template.</li>
+    </ul>
+
+    <h3>Pourquoi le composant garde l'enveloppe</h3>
+    <p>
+      Un template qui remplacerait l'élément entier remplacerait aussi son
+      <code>role</code>, son <code>aria-selected</code>, son <code>tabindex</code> et ses
+      gestionnaires clavier. Le mode d'échec n'est pas théorique : le tri de
+      <code>psh-table</code> n'était pas atteignable au clavier avant la 6.2.5, et rendre le
+      <code>&lt;th&gt;</code> lui-même templatable aurait rouvert exactement ce défaut chez
+      chaque consommateur. D'où <code>toggleSort</code> passé en callback.
+    </p>
+    <p>
+      La suite de tests <code>extensibility.spec.ts</code> asserte <strong>les deux
+      moitiés</strong> pour chacun : que le contenu personnalisé est bien rendu,
+      <em>et</em> que l'ARIA a survécu.
+    </p>
+
+    <h3>Bonnes Pratiques</h3>
+    <ul>
+      <li>Servez-vous du contexte plutôt que de recalculer : <code>selected</code>, <code>sort</code>, <code>withLabel</code> sont ce que le composant sait déjà.</li>
+      <li>Ne posez pas de <code>role</code> dans un template : celui de l'enveloppe est déjà correct, et un second le casserait.</li>
+      <li><code>rowClass</code> est une fonction pure de la ligne — elle est appelée à chaque rendu.</li>
+      <li>Pour la couleur d'un badge ou d'un tag hors des sept valeurs sémantiques, passez par la custom property du composant plutôt que par un template.</li>
+    </ul>
+  </div>
+</ds-demo-page-layout>

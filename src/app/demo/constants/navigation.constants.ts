@@ -20,6 +20,16 @@ export const NAVIGATION_SECTIONS: NavigationSection[] = [
         keywords: ['ton', 'voix', 'writing', 'ecriture', 'redaction', 'style', 'communication', 'langage', 'language', 'content', 'contenu']
       },
       {
+        path: '/demo/templates',
+        label: 'NAVIGATION.TEMPLATES',
+        keywords: ['template', 'templates', 'extension', 'personnalisation', 'customisation', 'optionTemplate', 'headerTemplate', 'rowClass', 'slot', 'projection', 'ng-template']
+      },
+      {
+        path: '/demo/configuration',
+        label: 'NAVIGATION.CONFIGURATION',
+        keywords: ['configuration', 'provideHelix', 'defauts', 'defaults', 'tokens', 'theme', 'providers', 'bootstrap', 'parametrage', 'settings']
+      },
+      {
         path: '/demo/i18n',
         label: 'NAVIGATION.I18N',
         keywords: ['traduction', 'translation', 'langue', 'language', 'internationalisation', 'multilingual', 'multilingue', 'localization', 'localisation', 'translate']

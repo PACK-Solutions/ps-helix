@@ -1,0 +1,90 @@
+.config-demo-section,
+.config-section {
+  width: 100%;
+  margin-bottom: var(--psh-spacing-4xl);
+}
+
+.config-demo-intro {
+  text-align: center;
+  margin-bottom: var(--psh-spacing-xl);
+  color: var(--psh-text-color-secondary);
+  font-size: var(--psh-font-size-lg);
+  line-height: var(--psh-line-height-relaxed);
+}
+
+.config-demo-card {
+  background: var(--psh-surface-card);
+  border: 1px solid var(--psh-surface-border);
+  border-radius: var(--psh-radius-xl);
+  padding: var(--psh-spacing-xl);
+}
+
+.demo-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--psh-spacing-md);
+  justify-content: center;
+  margin-bottom: var(--psh-spacing-xl);
+}
+
+.preset-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--psh-spacing-sm);
+  min-height: var(--psh-touch-target-min);
+  padding: var(--psh-spacing-sm) var(--psh-spacing-lg);
+  border: 1px solid var(--psh-surface-border);
+  border-radius: var(--psh-radius-lg);
+  background: var(--psh-surface-ground);
+  color: var(--psh-text-color);
+  font: inherit;
+  cursor: pointer;
+  transition: background var(--psh-animation-duration-normal) var(--psh-animation-easing-default);
+}
+
+.preset-button:hover {
+  background: var(--psh-surface-hover);
+}
+
+.preset-button:focus-visible {
+  outline: var(--psh-focus-ring-width) solid var(--psh-focus-ring-color);
+  outline-offset: 2px;
+}
+
+.preset-button.active {
+  background: var(--psh-primary-color);
+  border-color: var(--psh-primary-color);
+  color: var(--psh-primary-text-color);
+}
+
+/* Le code à côté du rendu, empilé sous 48em pour que ni l'un ni l'autre ne rétrécisse. */
+.config-demo-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--psh-spacing-xl);
+  align-items: start;
+}
+
+@media (max-width: 47.9375em) {
+  .config-demo-split {
+    grid-template-columns: 1fr;
+  }
+}
+
+.demo-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--psh-spacing-lg);
+}
+
+.config-snippet {
+  margin: 0;
+  overflow-x: auto;
+  background: var(--psh-surface-ground);
+  border: 1px solid var(--psh-surface-border);
+  border-radius: var(--psh-radius-lg);
+  padding: var(--psh-spacing-lg);
+  font-size: var(--psh-font-size-sm);
+  line-height: var(--psh-line-height-relaxed);
+}
