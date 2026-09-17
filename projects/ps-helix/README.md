@@ -18,7 +18,7 @@ A comprehensive Angular component library built with Angular 22+ featuring moder
   - [Global Styles](#global-styles)
   - [Phosphor Icons Setup](#phosphor-icons-setup)
   - [Theme Service](#theme-service)
-  - [Translation Service](#translation-service)
+  - [Internationalization](#internationalization)
   - [Scroll Service](#scroll-service)
 - [Core Concepts](#core-concepts)
   - [Standalone Components](#standalone-components)
@@ -30,7 +30,6 @@ A comprehensive Angular component library built with Angular 22+ featuring moder
   - [ThemeService](#themeservice)
   - [ToastService](#toastservice)
   - [ScrollService](#scrollservice)
-  - [TranslationService](#translationservice)
 - [Exported Types](#exported-types)
 - [Theming](#theming)
 - [Best Practices](#best-practices)
@@ -52,7 +51,7 @@ Helix is a production-ready design system that provides:
 - **Complete Type Exports** - All component types and enums exported for type-safe development
 - **Customizable Theming** - Light/dark modes with brand color customization
 - **Phosphor Icons** - 6000+ icons with multiple weight variants
-- **i18n Support** - Built-in internationalization with ngx-translate
+- **i18n Support** - Every visible string is a configurable default, with a French preset included
 - **Responsive Design** - Mobile-first approach with comprehensive breakpoint system
 - **Modern Architecture** - Built with Angular 22 standalone components and signals
 
@@ -73,7 +72,6 @@ Before installing Helix, ensure your development environment meets these require
   "@angular/common": "^22.0.0",
   "@angular/core": "^22.0.0",
   "@angular/forms": "^22.0.0",
-  "@ngx-translate/core": "^15.0.0",
   "rxjs": "^7.8.0"
 }
 ```
@@ -85,8 +83,9 @@ The following dependencies are bundled with ps-helix:
 - **@phosphor-icons/web**: 2.0.3 - Icon library
 - **tslib**: ^2.6.0 - TypeScript runtime library
 
-`@ngx-translate/core` is an **optional** peer dependency: it is only needed if you
-use `TranslationService`. No component depends on it.
+The library has no i18n dependency. Every string it renders is a configurable default —
+see [Internationalization](#internationalization) — so you translate it with whatever your
+application already uses, or with nothing at all.
 
 ## Installation
 
@@ -99,7 +98,7 @@ npm install ps-helix
 All peer dependencies should be automatically installed. If not, install them manually:
 
 ```bash
-npm install @angular/common@^22.0.0 @angular/core@^22.0.0 @angular/forms@^22.0.0 @ngx-translate/core@^15.0.0 rxjs@^7.8.0
+npm install @angular/common@^22.0.0 @angular/core@^22.0.0 @angular/forms@^22.0.0 rxjs@^7.8.0
 ```
 
 ### Verify Installation
@@ -177,7 +176,7 @@ import { PshButtonComponent } from 'ps-helix';
   imports: [PshButtonComponent],
   template: `
     <psh-button
-      variant="primary"
+      color="primary"
       size="medium"
       (clicked)="handleClick()">
       Click Me
@@ -231,8 +230,8 @@ import { PshButtonComponent, PshCardComponent, PshAlertComponent } from 'ps-heli
   template: `
     <psh-card>
       <h2>Helix Design System</h2>
-      <psh-alert type="success" message="Installation successful!" />
-      <psh-button variant="primary">Test Button</psh-button>
+      <psh-alert color="success" message="Installation successful!" />
+      <psh-button color="primary">Test Button</psh-button>
     </psh-card>
   `
 })
@@ -348,66 +347,63 @@ export class AppComponent {
 
 For complete theming documentation including custom brand colors, see [THEME.md](./THEME.md).
 
-### Translation Service
+### Internationalization
 
-Configure internationalization with ngx-translate:
+Every string the library renders — placeholders, button labels, `aria-label`s — is a
+configurable default. There is no i18n dependency: you set them from whatever your
+application already uses.
+
+The defaults are English. `PSH_FRENCH_DEFAULTS` puts all 46 of them back into French:
 
 ```typescript
-// src/main.ts
 import { bootstrapApplication } from '@angular/platform-browser';
-import { provideHttpClient } from '@angular/common/http';
-import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient } from '@angular/common/http';
-import { AppComponent } from './app/app.component';
-
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
+import { provideHelix, PSH_FRENCH_DEFAULTS } from 'ps-helix';
 
 bootstrapApplication(AppComponent, {
-  providers: [
-    provideHttpClient(),
-    ...TranslateModule.forRoot({
-      defaultLanguage: 'en',
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    }).providers || []
-  ]
-}).then(ref => {
-  const translateService = ref.injector.get(TranslateService);
-  translateService.use('en');
+  providers: [provideHelix({ components: PSH_FRENCH_DEFAULTS })],
 });
 ```
 
-#### Using TranslationService in Components
+Merge your own on top rather than replacing it:
 
 ```typescript
-import { Component, inject } from '@angular/core';
-import { TranslationService } from 'ps-helix';
-
-@Component({
-  selector: 'app-example',
-  template: `
-    <select (change)="changeLanguage($event)">
-      <option value="en">English</option>
-      <option value="fr">Français</option>
-      <option value="es">Español</option>
-    </select>
-  `
+provideHelix({
+  components: {
+    ...PSH_FRENCH_DEFAULTS,
+    modal: { ...PSH_FRENCH_DEFAULTS.modal, confirmLabel: 'Envoyer' },
+  },
 })
-export class ExampleComponent {
-  private translationService = inject(TranslationService);
-
-  changeLanguage(event: Event) {
-    const lang = (event.target as HTMLSelectElement).value;
-    this.translationService.setLanguage(lang);
-  }
-}
 ```
+
+#### Another language, or a language that changes
+
+Pass the strings from your own catalogue. A **function** is re-read whenever it changes, so a
+language switcher updates the labels of components that are already on screen:
+
+```typescript
+const t = inject(TranslateService);   // ngx-translate, transloco, $localize, your own…
+
+provideHelix({
+  components: {
+    select: { placeholder: () => t.instant('psh.select.placeholder') },
+    modal: { dismissLabel: () => t.instant('psh.modal.close') },
+  },
+})
+```
+
+A plain string is read once, when a component is built — right for a language fixed at
+startup, and the common case. A function is read every time the value is needed, so anything
+it reads that is a signal makes the label follow.
+
+Per element, bind the input as you would any other:
+
+```html
+<psh-select [placeholder]="'psh.select.placeholder' | translate" />
+```
+
+An input always wins over the configuration.
+
+The full list of configurable strings is in [CONFIGURATION.md](./CONFIGURATION.md).
 
 ### Scroll Service
 
@@ -461,7 +457,7 @@ import {
   template: `
     <psh-card>
       <psh-input label="Email" />
-      <psh-button variant="primary">Submit</psh-button>
+      <psh-button color="primary">Submit</psh-button>
     </psh-card>
   `
 })
@@ -714,42 +710,6 @@ export class MyComponent {
   closeModal() {
     this.scrollService.enableScroll();
     // Hide modal
-  }
-}
-```
-
-### TranslationService
-
-Wrapper service for ngx-translate functionality.
-
-**Methods:**
-- `setLanguage(lang: string)` - Change application language
-- `getTranslation(key: string)` - Get translation for a key
-- `instant(key: string)` - Get instant translation (synchronous)
-
-**Example:**
-
-```typescript
-import { Component, inject } from '@angular/core';
-import { TranslationService } from 'ps-helix';
-
-@Component({
-  selector: 'app-language-selector',
-  template: `
-    <select (change)="changeLanguage($event)">
-      <option value="en">English</option>
-      <option value="fr">Français</option>
-      <option value="es">Español</option>
-      <option value="de">Deutsch</option>
-    </select>
-  `
-})
-export class LanguageSelectorComponent {
-  private translationService = inject(TranslationService);
-
-  changeLanguage(event: Event) {
-    const selectedLang = (event.target as HTMLSelectElement).value;
-    this.translationService.setLanguage(selectedLang);
   }
 }
 ```
@@ -1166,7 +1126,7 @@ See [THEME.md](./THEME.md) for complete theming documentation.
 1. Check browser console for specific error messages
 2. Verify all required services are provided
 3. Ensure ThemeService is initialized if using custom themes
-4. Check that ngx-translate is properly configured if using i18n
+4. Check that the strings you expect are set through `provideHelix` — see CONFIGURATION.md
 
 ## Browser Support
 
@@ -1225,7 +1185,6 @@ Copyright (c) 2025 PACK Solutions
 - **Phosphor Icons**: [https://phosphoricons.com/](https://phosphoricons.com/)
 - **Angular Documentation**: [https://angular.dev/](https://angular.dev/)
 - **TypeScript Documentation**: [https://www.typescriptlang.org/](https://www.typescriptlang.org/)
-- **ngx-translate**: [https://github.com/ngx-translate/core](https://github.com/ngx-translate/core)
 
 ---
 

@@ -91,8 +91,6 @@ export * from './lib/components/tooltip/tooltip.types';
 
 export * from './lib/services/theme/theme.service';
 export * from './lib/services/theme/types/theme.types';
-export * from './lib/services/translation/translation.service';
-export * from './lib/services/translation/types/i18n.types';
 export * from './lib/services/scroll.service';
 
 // Headless a11y / overlay primitives
