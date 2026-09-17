@@ -21,7 +21,7 @@ const SIDEBAR_DEFAULTS = {
   mode: 'fixed',
   position: 'left',
   width: '250px',
-  breakpoint: '768px',
+  breakpoint: '47.9375em',
   autoFocus: true,
   ariaLabel: 'Sidebar navigation',
   closeOnBackdrop: true,
@@ -62,7 +62,17 @@ export class PshSidebarComponent implements OnDestroy {
   readonly mode = input<SidebarMode>(this.config.mode ?? 'fixed');
   readonly position = input<SidebarPosition>(this.config.position ?? 'left');
   readonly width = input<string>(this.config.width ?? '250px');
-  readonly breakpoint = input<string>(this.config.breakpoint ?? '768px');
+  /**
+   * The width below which the sidebar becomes an overlay.
+   *
+   * Defaults to the `md` step of the library's scale, in `em` like every media query it ships:
+   * a px breakpoint does not follow browser zoom, so at 150% the rest of the page had switched
+   * to its narrow layout while the sidebar was still docked. It is also exclusive — `768px` was
+   * true at exactly 768px, where a `min-width: 48em` rule is true as well.
+   *
+   * Any CSS length is still accepted, so `'768px'` keeps working.
+   */
+  readonly breakpoint = input<string>(this.config.breakpoint ?? '47.9375em');
   readonly autoFocus = input<boolean>(this.config.autoFocus ?? true);
   readonly ariaLabelInput = input<string | undefined>(undefined, { alias: 'ariaLabel' });
   readonly ariaLabel = computed(

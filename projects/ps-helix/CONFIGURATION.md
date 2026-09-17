@@ -319,7 +319,7 @@ import { BUTTON_CONFIG } from 'ps-helix';
 | `mode` | `'fixed'` |
 | `position` | `'left'` |
 | `width` | `'250px'` |
-| `breakpoint` | `'768px'` |
+| `breakpoint` | `'47.9375em'` |
 | `autoFocus` | `true` |
 | `ariaLabel` | `'Sidebar navigation'` |
 | `closeOnBackdrop` | `true` |
