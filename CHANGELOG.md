@@ -14,6 +14,144 @@ Versioning policy:
 
 ## [Unreleased]
 
+## [7.0.0] - 2026-09-17
+
+Major release — the 6.2.4 quality audit, delivered in eight lots (PR #19 → #35).
+
+A codemod covers the renames — `node node_modules/ps-helix/scripts/codemod-7.0.0.mjs src`,
+see `MIGRATION-7.0.0.md` — which rewrites templates, stylesheets, two-way bindings, projection slots and
+option objects, and reports — without touching — the cases it cannot decide.
+
+### Breaking
+
+- **One name per notion.** Six inputs meant "semantic colour" (`variant`, `color`,
+  `type`, `colorVariant`, `tagVariant`, `tone`); they are all `color`, typed by a
+  single `PshColor` union. `variant` no longer doubles as a surface treatment:
+  that is `appearance`, drawn from one lexicon (`solid`, `soft`, `outline`,
+  `ghost`, `elevated`, `flat`). `outlined`/`filled`/`text` follow.
+- **Outputs**: six conventions became two — `xChange` for two-way state, past
+  participle for everything else. Seventeen renames, `navigationError` unified on
+  a typed `PshNavigationError` with a `reason` you can branch on, and
+  `badge.valueChange` removed (it was never emitted).
+- **Class names**: the 365 classes components render are namespaced `psh-`. The
+  four card components render with `ViewEncapsulation.None` — which they need, to
+  style projected content — so `.card`, `.card-header`, `.card-body` and the rest
+  were injected into the consuming document, colliding with Bootstrap's.
+- **Custom properties**: the 407 design tokens are namespaced `--psh-*`.
+  `styles/compat.css` restores the previous names, opt-in.
+- **CSS reset is opt-in**: `styles.css` no longer imports `reset.css` and
+  `global.css` — importing a component library used to zero every margin in your
+  application and paint a gradient on your `<body>`. `styles-full.css` keeps the
+  old behaviour. The `forced-colors` and `prefers-reduced-motion` guards, and the
+  modal scroll lock, still ship unconditionally.
+- **`cssClass` / `customStyle` removed** from the four card components: they
+  existed only because those components rendered an inner wrapper, so the
+  consumer's `class` landed on the host one level above. The wrapper is gone and
+  `class`/`style` work natively. `modal.styleClass` → `panelClass`, which keeps
+  its reason: a modal's panel is rendered outside its host.
+- **Projection slots** follow one scheme, `psh-<component>-<zone>`. The prefix is
+  not cosmetic — a slot is an attribute selector, so a consumer with their own
+  `[card-footer]` directive saw it instantiated on whatever they projected.
+- **Default strings are English**, and `PSH_FRENCH_DEFAULTS` restores all 49 in a
+  line. They used to be half French and half English, decided component by
+  component.
+- **`TRANSLATION_PROVIDER`, `NgxTranslateProvider` and `provideTranslation()`
+  removed**, along with the `@ngx-translate/core` peer dependency. No component
+  ever injected them; the package sat in every consumer's dependency graph for a
+  service the library did not use. Translation goes through `provideHelix()` now.
+- **`select.searchConfig` removed** — it declared `debounceTime` and `minLength`
+  that the component read neither of. The placeholder is `searchPlaceholder`.
+- **`psh-menu` no longer claims `role="menubar"`** over `role="menuitem"` links.
+  It is a sidebar navigation: Tab reaches each link, as anyone would expect.
+- **Modal**: `role="dialog"` moved from the backdrop to the panel, and
+  `role="document"` is gone — the pre-ARIA-1.1 pattern the APG advises against.
+- **`ToastComponent`**, the pre-7.0.0 alias, is removed.
+
+### Added
+
+- **`provideHelix()`** — one call configures the theme, the customer context and
+  every component default, in `makeEnvironmentProviders`. With
+  `provideHelixTheme()`, `provideHelixComponentDefaults()` and
+  `provideHelixToast()` for one part at a time. The library had 22 injection
+  tokens and one `provide*` function, which returned a bare `Provider`.
+- **A config token for all 30 components** (14 had none): an application can now
+  impose a default on `psh-button`, not only on `psh-tag`. 226 settable defaults,
+  documented in the generated `CONFIGURATION.md`.
+- **A configured default may be a function**, re-read on each evaluation, so a
+  language switcher updates components that are already on screen.
+- **`psh-radio-group`** — the component that carries the form contract
+  `psh-radio` could not: `ControlValueAccessor` **and** `FormValueControl`,
+  single selection, `name`, roving tabindex and arrow navigation.
+- **`NG_VALIDATORS` on the six input components**: `required` used to draw an
+  asterisk and set `aria-required`, and a form of empty required fields declared
+  itself valid.
+- **Seven extension points** where there had been one across thirty components:
+  `select.optionTemplate`, `table.headerTemplate` / `emptyTemplate` / `rowClass`,
+  `menu.itemTemplate`, `tab-bar.itemTemplate`, and an `[psh-alert-actions]` slot.
+  Each replaces the *content* of an element, never the element, so roles,
+  `aria-sort`, the roving tabindex and the keyboard stay with the component.
+- **82 CSS custom properties** published per component, read as `var()` fallbacks
+  rather than declared — a declaration on `:host` outranks a plain
+  `psh-button { … }` rule from a consumer's stylesheet and quietly wins.
+- **`ariaDescribedBy` / `ariaLabelledBy`** on the input components, which
+  **merge** with the ids the control already publishes rather than replacing them.
+- **`themes/dark-auto.css`** — the dark tokens behind `prefers-color-scheme`, so
+  the stylesheet is correct without `ThemeService` and on the SSR first paint.
+- **`PshViewportService`** — one media query per breakpoint for the whole
+  application, replacing a `ResizeObserver` per card instance.
+- **Nine CI guards**: `verify:tokens`, `verify:classes`, `verify:breakpoints`,
+  `verify:auto-dark`, `verify:config`, `verify:public-api`, `verify:i18n-preset`,
+  `verify:bundle` and the size budget. Every convention this release introduces
+  arrives with the script that enforces it.
+
+### Fixed
+
+- **`psh-radio-group` was not in the published package.** It was listed in an
+  internal barrel the demo imports and absent from the entry point: 2 299 tests
+  passed and no application could have imported it.
+- **Tab and panel ids were global** — `tab-0`, `panel-0`, `error-0`. Two steppers
+  on a page published the same ids, and `psh-tabs` and `psh-stepper` used the
+  *same string* for their panels, so a page holding one of each cross-wired two
+  unrelated widgets.
+- **A composite widget is one tab stop.** Stepper, state-flow indicator and
+  dropdown gave every item `tabindex="0"`, so walking past a six-step stepper
+  cost six presses of Tab.
+- **The page behind a modal is `inert`.** The focus trap only ever held the
+  keyboard; a screen reader's virtual cursor read straight through it.
+- **`psh-switch` is announced as a switch**, not as a checkbox.
+- **`psh-input` announces its suggestions** — it teleported a `role="listbox"`
+  into the body while its `<input>` had no `role`, no `aria-expanded` and no
+  `aria-activedescendant`.
+- **An AAA contrast target returned 6.98:1.** `ensureContrast` searched in
+  floating-point RGB while the value that reaches the stylesheet is a rounded hex.
+- **`psh-select` was quadratic**: each option asked for its position in the
+  flattened list with a scan *of that list*, and allocated a fresh template
+  context every change-detection cycle.
+- **`psh-tooltip` announced that it had closed** on construction, having never
+  opened — `closed` came from an effect, and an effect runs once on creation.
+- **Four defaults that nothing read**: renaming `variant` to `color` and
+  `appearance` in this release reached the interfaces and the inputs, and not the
+  tokens' default objects.
+- **Four strings were unreachable**: the password toggle's label, the textarea's
+  character-count suffix, the info-card's "not provided" placeholder, and
+  pagination's `Page 2 of 7` — built in French in a component whose every other
+  label was an English input.
+- **Capture-phase scroll listeners left the zone**: three components register one,
+  so every scroll of every ancestor triggered a full change-detection pass.
+- **14 dead `CommonModule` imports** and the last three pre-signal APIs
+  (`@HostListener`, `@ViewChild`, `standalone: true`).
+
+### Accessibility
+
+- `jest-axe` covers all 31 components, in their default, error, disabled and
+  **open** states. Five transverse suites assert what cuts across them: every
+  referenced id resolves and no id is rendered twice; one tab stop per composite
+  widget; the same combobox contract for select and input; the host is stylable;
+  the three form bindings work on every input component.
+- Touch targets meet 44 px through `--psh-touch-target-min`, and a
+  `forced-colors` guard restores the focus ring that a `box-shadow` cannot draw
+  under Windows high contrast.
+
 ## [6.2.4] - 2026-09-08
 
 Patch release.
