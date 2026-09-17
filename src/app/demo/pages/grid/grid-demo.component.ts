@@ -151,13 +151,13 @@ export class GridDemoComponent {
     {
       name: 'Mobile',
       icon: 'device-mobile',
-      range: '< 768px',
+      range: '< 48em (768px)',
       description: 'Optimisation pour smartphones avec espacements réduits et layouts en colonne unique',
       strategies: [
         'Réduction des espacements de 20-30%',
         'Layouts en colonne unique',
         'Padding minimal pour maximiser l\'espace',
-        'Touch targets minimum 44x44px'
+        'Cibles tactiles : --psh-touch-target-min (44px), ou --psh-touch-target-compact (24px, le plancher AA) pour un contrôle à l\'intérieur d\'un composant trop compact pour 44'
       ],
       example: {
         container: 'padding: var(--psh-spacing-sm)',
@@ -168,7 +168,7 @@ export class GridDemoComponent {
     {
       name: 'Tablette',
       icon: 'device-tablet',
-      range: '768px - 1024px',
+      range: '48em - 64em (768px - 1024px)',
       description: 'Zone intermédiaire avec layouts adaptables en 2 colonnes et espacements moyens',
       strategies: [
         'Espacements standards du système',
@@ -185,7 +185,7 @@ export class GridDemoComponent {
     {
       name: 'Desktop',
       icon: 'desktop',
-      range: '1024px - 1400px',
+      range: '64em - 80em (1024px - 1280px)',
       description: 'Layouts multi-colonnes avec espacements généreux et densité d\'information optimale',
       strategies: [
         'Espacements complets du système',
@@ -252,8 +252,9 @@ export class GridDemoComponent {
       rules: [
         'Réduire les espacements sur mobile (20-30%)',
         'Utiliser clamp() pour espacements fluides',
-        'Breakpoints: 768px, 1024px, 1400px',
-        'Touch targets minimum 44x44px',
+        'Six breakpoints, en em : 30 / 40 / 48 / 64 / 80 / 96em — un px ne suit pas le zoom',
+        'Un max est exclusif : 47.9375em, pas 48em, sinon les deux règles sont vraies à 768px',
+        'Cibles tactiles : 44px, ou 24px dans un composant compact',
         'Tester sur devices réels',
         'Priorité au contenu sur mobile'
       ]

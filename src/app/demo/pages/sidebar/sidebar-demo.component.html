@@ -298,9 +298,16 @@
             </div>
             <div class="config-info">
               <h4>Responsive Breakpoint</h4>
-              <p>Define the viewport width at which the sidebar automatically switches to overlay mode on mobile devices. Ensures optimal mobile experience.</p>
+              <p>
+                Largeur en dessous de laquelle la sidebar bascule seule en mode overlay. En
+                <code>em</code> comme toutes les media queries de la bibliothèque, donc le
+                seuil suit le zoom du navigateur : un <code>px</code> ne le suit pas, et à
+                150 % la page avait basculé sans la sidebar. Le pas <code>md</code> vaut
+                <code>47.9375em</code>, exclusif — à exactement 48em, c'est la règle
+                <code>min-width</code> qui s'applique.
+              </p>
               <div class="config-example">
-                <code>breakpoint="768px"</code>
+                <code>breakpoint="47.9375em"</code>
               </div>
             </div>
           </div>
@@ -438,8 +445,12 @@
               <tr>
                 <td><code>breakpoint</code></td>
                 <td><code>string</code></td>
-                <td><code>'768px'</code></td>
-                <td>Viewport width at which sidebar switches to overlay mode on mobile</td>
+                <td><code>'47.9375em'</code></td>
+                <td>
+                  Largeur sous laquelle la sidebar passe en overlay. N'importe quelle longueur
+                  CSS est acceptée — <code>'768px'</code> fonctionne toujours — mais le défaut
+                  est en <code>em</code> pour suivre le zoom.
+                </td>
               </tr>
               <tr>
                 <td><code>autoFocus</code></td>
@@ -517,7 +528,7 @@
       mode="overlay"
       position="left"
       width="280px"
-      breakpoint="768px"
+      breakpoint="47.9375em"
       [autoFocus]="true"
       [closeOnBackdrop]="true"
       [closeOnEscape]="true"
@@ -580,7 +591,7 @@ bootstrapApplication(AppComponent, &#123;
         mode: 'fixed',
         position: 'left',
         width: '280px',
-        breakpoint: '1024px',
+        breakpoint: '63.9375em',
         autoFocus: true,
         ariaLabel: 'Application navigation',
         closeOnBackdrop: true,

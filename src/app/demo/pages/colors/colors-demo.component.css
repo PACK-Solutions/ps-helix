@@ -476,6 +476,16 @@
   margin: 0;
 }
 
+/* Le second paragraphe explique le garde-fou : plus dense que l'accroche, et aligné à gauche
+   parce qu'il se lit, alors que la phrase au-dessus s'annonce. */
+.accessibility-intro .accessibility-note {
+  margin-top: var(--psh-spacing-lg);
+  padding-top: var(--psh-spacing-lg);
+  border-top: 1px solid var(--psh-surface-border);
+  font-size: var(--psh-font-size-base);
+  text-align: left;
+}
+
 .accessibility-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
