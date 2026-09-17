@@ -6,6 +6,7 @@ import {
   Component,
   computed,
   effect,
+  afterRenderEffect,
   ElementRef,
   inject,
   input,
@@ -189,12 +190,15 @@ export class PshTextareaComponent
       this.onValidatorChange();
     });
 
-    effect(() => {
+    // After render, not during it: auto-sizing measures `scrollHeight` and then writes
+    // `style.height`, which is a DOM read followed by a DOM write. As a plain `effect` it ran
+    // before the DOM had caught up with the new value, hence the `queueMicrotask` — a hand-
+    // rolled version of what `afterRenderEffect` does properly.
+    afterRenderEffect(() => {
       this.value();
-      this.autoSize();
       this.rows();
       if (this.autoSize()) {
-        queueMicrotask(() => this.applyAutoSize());
+        this.applyAutoSize();
       }
     });
   }
