@@ -135,6 +135,89 @@
       </div>
     </section>
 
+    <!-- Un formulaire dans une modale : le cas que jsdom ne peut pas vérifier -->
+    <section class="modal-types-section">
+      <h3 class="section-title">Un formulaire dans une modale</h3>
+      <div class="types-container">
+        <div class="types-intro">
+          <p>
+            Le panneau de <code>psh-select</code> est téléporté dans le
+            <code>&lt;body&gt;</code>, donc hors de la modale qui l'a ouvert. C'est ce qui lui
+            permet de dépasser du cadre sans être rogné — et c'est la pile d'overlay, pas un
+            <code>z-index</code> écrit à la main, qui le place au-dessus. Un test jsdom ne peut
+            pas le vérifier : il faut un vrai rendu.
+          </p>
+        </div>
+        <div class="types-grid">
+          <div class="type-card">
+            <div class="type-preview">
+              <psh-button appearance="solid" color="primary" (clicked)="formModalOpen = true">
+                Ouvrir le formulaire
+              </psh-button>
+              <psh-modal
+                [(open)]="formModalOpen"
+                title="Affecter le dossier"
+                confirmLabel="Valider"
+                cancelLabel="Annuler"
+                (confirmed)="formModalOpen = false"
+              >
+                <div class="modal-form">
+                  <psh-input label="Référence" placeholder="DOS-2026-…" />
+                  <psh-select
+                    label="Assigné à"
+                    [options]="assignees"
+                    [(value)]="assignee"
+                    [clearable]="true"
+                    [searchable]="true"
+                  />
+                  <psh-select label="Priorité" [options]="priorities" [(value)]="priority" />
+                </div>
+              </psh-modal>
+            </div>
+            <div class="type-info">
+              <h4>Select dans une modale</h4>
+              <p>
+                Ouvrez la liste, tapez pour filtrer, puis fermez à l'<kbd>Échap</kbd> : le
+                premier <kbd>Échap</kbd> ferme la liste, le second la modale. Le piège à focus
+                de la modale ne retient pas un panneau qui vit dans le <code>body</code> — le
+                composant lui rend la main explicitement.
+              </p>
+              <ds-code-snippet [code]="selectInModalCode" />
+            </div>
+          </div>
+
+          <div class="type-card">
+            <div class="type-preview">
+              <psh-button appearance="outline" color="primary" (clicked)="scrollModalOpen = true">
+                Contenu long
+              </psh-button>
+              <psh-modal [(open)]="scrollModalOpen" title="Conditions" confirmLabel="J'ai lu">
+                <div class="modal-scroller">
+                  @for (paragraph of longContent; track $index) {
+                    <p>{{ paragraph }}</p>
+                  }
+                  <psh-select
+                    label="Votre choix"
+                    [options]="priorities"
+                    [(value)]="priority"
+                  />
+                </div>
+              </psh-modal>
+            </div>
+            <div class="type-info">
+              <h4>Conteneur scrollable</h4>
+              <p>
+                Le corps de la modale défile ; le panneau du select est positionné en
+                <code>fixed</code> et se repositionne au défilement de l'ancêtre. L'écouteur
+                est en phase de capture — c'est la seule façon d'entendre le défilement d'un
+                conteneur intermédiaire — et depuis la 7.0.0 il est hors zone Angular.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Tailles de Modales - Section Pleine Largeur -->
     <section class="modal-sizes-section">
       <h3 class="section-title">Tailles Disponibles</h3>

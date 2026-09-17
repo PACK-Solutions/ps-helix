@@ -25,6 +25,7 @@
     "docs:auto-dark": "node scripts/generate-auto-dark.mjs",
     "verify:auto-dark": "node scripts/generate-auto-dark.mjs --check",
     "verify:breakpoints": "node scripts/verify-breakpoints.mjs",
+    "verify:contrast": "node scripts/verify-contrast.mjs",
     "verify:public-api": "node scripts/verify-public-api.mjs",
     "verify:i18n-preset": "node scripts/verify-i18n-preset.mjs",
     "docs:config": "node scripts/generate-config-reference.mjs",

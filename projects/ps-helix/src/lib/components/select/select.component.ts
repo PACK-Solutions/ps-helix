@@ -445,7 +445,14 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
         this.focusLast();
         break;
       case 'Escape':
-        this.close();
+        // Only when there is a panel to dismiss, and then the event stops here: a modal
+        // listens for Escape on the document, so letting it through would close the whole
+        // dialog — the user's form — for someone who only wanted the list gone.
+        if (this.isOpen()) {
+          event.preventDefault();
+          event.stopPropagation();
+          this.close();
+        }
         break;
       case 'Tab':
         this.close();

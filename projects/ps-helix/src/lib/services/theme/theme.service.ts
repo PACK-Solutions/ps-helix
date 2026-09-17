@@ -87,14 +87,16 @@ export class ThemeService {
     afterNextRender(() => this.applyCustomerTheme());
   }
 
+  /**
+   * Switches theme *and* remembers the choice — the two halves of what a theme toggle
+   * means. They used to be split across two methods: `setDarkTheme` wrote `data-theme`
+   * without persisting, `updateTheme` persisted without writing `data-theme`. Whichever
+   * one a consumer picked, half the job was missing, and the demo's own toggle reverted
+   * on every reload.
+   */
   setDarkTheme(isDark: boolean): void {
-    if (this.isBrowser) {
-      this.document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-    }
-    this.isDarkThemeSignal.set(isDark);
-    this.themeNameSignal.set(isDark ? 'dark' : 'light');
-    this.lastChangeSignal.set(new Date());
-    this.applyCustomerTheme();
+    this.applyTheme(isDark);
+    this.saveThemePreference(isDark ? 'dark' : 'light');
   }
 
   toggleTheme(): void {
@@ -102,10 +104,17 @@ export class ThemeService {
   }
 
   updateTheme(name: Theme): void {
-    this.themeNameSignal.set(name);
-    this.isDarkThemeSignal.set(name === 'dark');
+    this.setDarkTheme(name === 'dark');
+  }
+
+  /** The visible half: the attribute the stylesheets read, and the derived palette. */
+  private applyTheme(isDark: boolean): void {
+    if (this.isBrowser) {
+      this.document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    }
+    this.isDarkThemeSignal.set(isDark);
+    this.themeNameSignal.set(isDark ? 'dark' : 'light');
     this.lastChangeSignal.set(new Date());
-    this.saveThemePreference(name);
     this.applyCustomerTheme();
   }
 
@@ -216,7 +225,9 @@ export class ThemeService {
     const isValid = savedTheme === 'light' || savedTheme === 'dark';
     // No stored preference → honour the OS "prefers-color-scheme" setting.
     const initial: Theme = isValid ? (savedTheme as Theme) : this.prefersDarkScheme() ? 'dark' : 'light';
-    this.setDarkTheme(initial === 'dark');
+    // Applied, not saved: with nothing stored the theme follows the OS, and writing the
+    // first value read would pin it there forever.
+    this.applyTheme(initial === 'dark');
   }
 
   /** True when the OS/browser requests a dark colour scheme. */

@@ -136,6 +136,7 @@ export class PshCollapseComponent {
       case 'Escape':
         if (this.expanded()) {
           event.preventDefault();
+          event.stopPropagation();
           this.close();
         }
         break;

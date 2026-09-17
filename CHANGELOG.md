@@ -14,6 +14,27 @@ Versioning policy:
 
 ## [Unreleased]
 
+Four defects found by walking the 7.0.0 demo in a real browser — the check jsdom cannot make.
+
+### Fixed
+
+- **`PshThemeService`** — `setDarkTheme()` and `toggleTheme()` now persist the choice, and
+  `updateTheme()` now writes `data-theme`. The two halves were split across the two methods,
+  so a theme toggle built on either one did half the job and the theme reverted on reload.
+  Reading the OS preference still does not persist it: nothing stored means the theme keeps
+  following the OS.
+- **Dark theme, `primary`** — `--psh-text-on-primary` is dark ink. Primary is lightened for
+  this theme so it reads against a dark surface, and white text on it measured **3.52:1**,
+  under the 4.5:1 floor, on every `psh-button`, `psh-tag`, `psh-badge` and dropdown item.
+  Now 5.96:1. `npm run verify:contrast` checks all fourteen semantic fill/ink pairs in CI —
+  axe's `color-contrast` rule cannot run under jsdom, so nothing checked the palette before.
+- **`psh-select`, `psh-dropdown`, `psh-input`, `psh-collapse`, `psh-menu`** — a component that
+  dismisses something on Escape now stops the event there. `psh-modal` and `psh-sidebar`
+  listen for Escape on the document, so a select opened inside a modal cost the user the whole
+  form: one keypress closed the list *and* the dialog behind it. The rule is narrow — a
+  component that did not act lets the event through, so Escape on a closed select still
+  reaches the modal.
+
 ## [7.0.0] - 2026-09-17
 
 Major release — the 6.2.4 quality audit, delivered in eight lots (PR #19 → #35).
