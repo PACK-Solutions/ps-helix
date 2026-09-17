@@ -93,13 +93,44 @@ describe('ThemeService', () => {
       expect(service.isDarkTheme()).toBe(before);
     });
 
-    it('updateTheme is the one that remembers', () => {
+    /**
+     * This suite used to say `updateTheme is the one that remembers`, which asserted the
+     * bug: switching and remembering were split across two methods, so a toggle built on
+     * either one did half the job. Both halves are now the contract, whichever entry
+     * point the consumer reaches for.
+     */
+    const entryPoints: ReadonlyArray<[string, (s: ThemeService) => void]> = [
+      ['setDarkTheme', (s) => s.setDarkTheme(true)],
+      ['toggleTheme', (s) => s.toggleTheme()],
+      ['updateTheme', (s) => s.updateTheme('dark')],
+    ];
+
+    it.each(entryPoints)('%s both writes data-theme and remembers', (_name, act) => {
       TestBed.configureTestingModule({});
       const service = TestBed.inject(ThemeService);
 
-      service.updateTheme('dark');
+      act(service);
+
+      expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
       expect(localStorage.getItem(STORAGE_KEY)).toBe('dark');
       expect(service.themeInfo().isDark).toBe(true);
+    });
+
+    it('survives the round trip a reload makes', () => {
+      TestBed.configureTestingModule({});
+      TestBed.inject(ThemeService).toggleTheme();
+
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({});
+
+      expect(TestBed.inject(ThemeService).isDarkTheme()).toBe(true);
+    });
+
+    it('does not pin the OS preference it merely followed', () => {
+      TestBed.configureTestingModule({});
+      TestBed.inject(ThemeService).themeName();
+
+      expect(localStorage.getItem(STORAGE_KEY)).toBeNull();
     });
   });
 
