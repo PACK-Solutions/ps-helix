@@ -77,17 +77,17 @@
                 <div class="psh-select-option"
                      role="option"
                      [id]="selectId + '-' + opt.value"
-                     [attr.aria-selected]="isSelected(opt)"
-                     [attr.aria-disabled]="(item.disabled || opt.disabled) ? true : null"
-                     [attr.tabindex]="(item.disabled || opt.disabled) ? -1 : null"
-                     [class.psh-selected]="isSelected(opt)"
-                     [class.psh-disabled]="item.disabled || opt.disabled"
-                     [class.psh-focused]="getFlatIndex(opt) === focusedIndex()"
+                     [attr.aria-selected]="optionView(opt).selected"
+                     [attr.aria-disabled]="optionView(opt).disabled ? true : null"
+                     [attr.tabindex]="optionView(opt).disabled ? -1 : null"
+                     [class.psh-selected]="optionView(opt).selected"
+                     [class.psh-disabled]="optionView(opt).disabled"
+                     [class.psh-focused]="optionView(opt).index === focusedIndex()"
                      (click)="select(opt, !!item.disabled)">
                   @if (optionTemplate()) {
                     <ng-container
                       [ngTemplateOutlet]="optionTemplate()!"
-                      [ngTemplateOutletContext]="optionContext(opt, !!(item.disabled || opt.disabled))"
+                      [ngTemplateOutletContext]="optionView(opt).context"
                     ></ng-container>
                   } @else {
                     @if (opt.icon) { <i [class]="'ph ph-' + opt.icon" aria-hidden="true"></i> }
@@ -105,17 +105,17 @@
             <div class="psh-select-option"
                  role="option"
                  [id]="selectId + '-' + item.value"
-                 [attr.aria-selected]="isSelected(item)"
-                 [attr.aria-disabled]="item.disabled ? true : null"
-                 [attr.tabindex]="item.disabled ? -1 : null"
-                 [class.psh-selected]="isSelected(item)"
-                 [class.psh-disabled]="item.disabled"
-                 [class.psh-focused]="getFlatIndex(item) === focusedIndex()"
+                 [attr.aria-selected]="optionView(item).selected"
+                 [attr.aria-disabled]="optionView(item).disabled ? true : null"
+                 [attr.tabindex]="optionView(item).disabled ? -1 : null"
+                 [class.psh-selected]="optionView(item).selected"
+                 [class.psh-disabled]="optionView(item).disabled"
+                 [class.psh-focused]="optionView(item).index === focusedIndex()"
                  (click)="select(item)">
               @if (optionTemplate()) {
                 <ng-container
                   [ngTemplateOutlet]="optionTemplate()!"
-                  [ngTemplateOutletContext]="optionContext(item, !!item.disabled)"
+                  [ngTemplateOutletContext]="optionView(item).context"
                 ></ng-container>
               } @else {
                 @if (item.icon) { <i [class]="'ph ph-' + item.icon" aria-hidden="true"></i> }

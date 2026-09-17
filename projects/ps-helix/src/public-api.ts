@@ -97,6 +97,10 @@ export * from './lib/services/scroll.service';
 export * from './lib/a11y/focus-trap.directive';
 export * from './lib/a11y/click-outside.directive';
 export * from './lib/a11y/live-announcer.service';
+export * from './lib/a11y/viewport.service';
+// The test double for the above: a consumer testing a component that embeds a psh-card
+// needs to drive the viewport too, and jsdom has no layout to drive it with.
+export * from './lib/a11y/viewport.testing';
 export * from './lib/a11y/overlay-position.service';
 export * from './lib/a11y/overlay.service';
 export * from './lib/a11y/portal.service';

@@ -1,4 +1,8 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
+import {
+  FakePshViewport,
+  providePshViewportForTesting,
+} from '../../a11y/viewport.testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PshInfoCardComponent } from './info-card.component';
 import { InfoCardData, InfoCardVariant } from './info-card.types';
@@ -17,6 +21,9 @@ class TestHostComponent {
   data: InfoCardData[] = [];
   autoFullWidthOnMobile = true;
 }
+
+// jsdom has no layout, so the viewport is driven rather than measured.
+const viewport = new FakePshViewport();
 
 describe('PshInfoCardComponent', () => {
   let fixture: ComponentFixture<PshInfoCardComponent>;
@@ -43,8 +50,10 @@ describe('PshInfoCardComponent', () => {
     fixture.nativeElement.querySelector('[aria-hidden="true"]') as HTMLElement;
 
   beforeEach(async () => {
+    viewport.mobile.set(false);
     await TestBed.configureTestingModule({
-      imports: [PshInfoCardComponent]
+      imports: [PshInfoCardComponent],
+      providers: [providePshViewportForTesting(viewport)]
     }).compileComponents();
 
     fixture = TestBed.createComponent(PshInfoCardComponent);
@@ -573,7 +582,8 @@ describe('PshInfoCardComponent - Copy Feature', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PshInfoCardComponent]
+      imports: [PshInfoCardComponent],
+      providers: [providePshViewportForTesting(viewport)]
     }).compileComponents();
 
     fixture = TestBed.createComponent(PshInfoCardComponent);
@@ -803,7 +813,8 @@ describe('PshInfoCardComponent - Content Projection', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TestHostComponent]
+      imports: [TestHostComponent],
+      providers: [providePshViewportForTesting(viewport)]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestHostComponent);
@@ -824,7 +835,7 @@ describe('PshInfoCardComponent - Content Projection', () => {
   it('should apply mobile-full-width-buttons class when mobile and autoFullWidthOnMobile is true', () => {
     const infoCardDebugEl = fixture.debugElement.children[0];
     const infoCard = infoCardDebugEl?.componentInstance as PshInfoCardComponent;
-    infoCard.isMobile.set(true);
+    viewport.mobile.set(true);
     fixture.detectChanges();
 
     expect(getActionsContainer().className).toContain('psh-mobile-full-width-buttons');
@@ -834,7 +845,7 @@ describe('PshInfoCardComponent - Content Projection', () => {
     hostComponent.autoFullWidthOnMobile = false;
     const infoCardDebugEl = fixture.debugElement.children[0];
     const infoCard = infoCardDebugEl?.componentInstance as PshInfoCardComponent;
-    infoCard.isMobile.set(true);
+    viewport.mobile.set(true);
     fixture.detectChanges();
 
     expect(getActionsContainer().className).not.toContain('psh-mobile-full-width-buttons');
@@ -843,7 +854,7 @@ describe('PshInfoCardComponent - Content Projection', () => {
   it('should not apply mobile-full-width-buttons class when not mobile', () => {
     const infoCardDebugEl = fixture.debugElement.children[0];
     const infoCard = infoCardDebugEl?.componentInstance as PshInfoCardComponent;
-    infoCard.isMobile.set(false);
+    viewport.mobile.set(false);
     fixture.detectChanges();
 
     expect(getActionsContainer().className).not.toContain('psh-mobile-full-width-buttons');
@@ -858,7 +869,8 @@ describe('PshInfoCardComponent - Row emphasis / formatting', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PshInfoCardComponent]
+      imports: [PshInfoCardComponent],
+      providers: [providePshViewportForTesting(viewport)]
     }).compileComponents();
 
     fixture = TestBed.createComponent(PshInfoCardComponent);

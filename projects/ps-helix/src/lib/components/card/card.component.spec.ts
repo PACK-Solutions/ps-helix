@@ -1,8 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  FakePshViewport,
+  providePshViewportForTesting,
+} from '../../a11y/viewport.testing';
 import { PshCardComponent } from './card.component';
 import { ChangeDetectionStrategy, Component, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { CardVariant, CardColorVariant, CardDensity, CardActionsAlignment } from './card.types';
+
+// jsdom has no layout, so the viewport is driven rather than measured.
+const viewport = new FakePshViewport();
 
 describe('PshCardComponent', () => {
   let component: PshCardComponent;
@@ -10,8 +17,10 @@ describe('PshCardComponent', () => {
   let cardElement: DebugElement;
 
   beforeEach(async () => {
+    viewport.mobile.set(false);
     await TestBed.configureTestingModule({
       imports: [PshCardComponent],
+      providers: [providePshViewportForTesting(viewport)],
     }).compileComponents();
 
     fixture = TestBed.createComponent(PshCardComponent);
@@ -632,7 +641,7 @@ describe('PshCardComponent', () => {
 
     it('should compute actionsClasses with alignment only when not mobile', () => {
       fixture.componentRef.setInput('actionsAlignment', 'center');
-      component.isMobile.set(false);
+      viewport.mobile.set(false);
 
       const classes = component.actionsClasses();
       expect(classes).toBe('psh-actions-align-center');
@@ -641,7 +650,7 @@ describe('PshCardComponent', () => {
 
     it('should compute actionsClasses with mobile-full-width-buttons when mobile', () => {
       fixture.componentRef.setInput('actionsAlignment', 'right');
-      component.isMobile.set(true);
+      viewport.mobile.set(true);
 
       const classes = component.actionsClasses();
       expect(classes).toContain('psh-actions-align-right');
@@ -662,7 +671,7 @@ describe('PshCardComponent', () => {
         value: 500,
       });
 
-      component.isMobile.set(true);
+      viewport.mobile.set(true);
       fixture.detectChanges();
 
       expect(component.isMobile()).toBe(true);
@@ -675,14 +684,14 @@ describe('PshCardComponent', () => {
         value: 800,
       });
 
-      component.isMobile.set(false);
+      viewport.mobile.set(false);
       fixture.detectChanges();
 
       expect(component.isMobile()).toBe(false);
     });
 
     it('should add mobile-full-width-buttons class when isMobile is true', () => {
-      component.isMobile.set(true);
+      viewport.mobile.set(true);
       fixture.detectChanges();
 
       const actionsElement = fixture.debugElement.query(By.css('.psh-card-actions'));
@@ -690,7 +699,7 @@ describe('PshCardComponent', () => {
     });
 
     it('should not have mobile-full-width-buttons class when isMobile is false', () => {
-      component.isMobile.set(false);
+      viewport.mobile.set(false);
       fixture.detectChanges();
 
       const actionsElement = fixture.debugElement.query(By.css('.psh-card-actions'));
@@ -699,26 +708,22 @@ describe('PshCardComponent', () => {
   });
 
   describe('Lifecycle Hooks', () => {
-    it('should setup ResizeObserver on init in browser environment', () => {
+    it('reads the viewport from the shared service, not from an observer of its own', () => {
+      // Every card asked the same question — is the viewport narrow? — through a
+      // ResizeObserver on document.documentElement, so fifty cards meant fifty observers
+      // firing on every resize frame. One media query answers all of them.
       const newFixture = TestBed.createComponent(PshCardComponent);
       const newComponent = newFixture.componentInstance;
       newFixture.detectChanges();
 
-      expect(newComponent['resizeObserver']).toBeDefined();
-      newFixture.destroy();
-    });
+      expect(newComponent['resizeObserver']).toBeUndefined();
 
-    it('should disconnect ResizeObserver on destroy', () => {
-      const newFixture = TestBed.createComponent(PshCardComponent);
-      const newComponent = newFixture.componentInstance;
-      newFixture.detectChanges();
-
-      const resizeObserver = newComponent['resizeObserver'];
-      const disconnectSpy = jest.spyOn(resizeObserver!, 'disconnect');
+      viewport.mobile.set(true);
+      expect(newComponent.isMobile()).toBe(true);
+      viewport.mobile.set(false);
+      expect(newComponent.isMobile()).toBe(false);
 
       newFixture.destroy();
-
-      expect(disconnectSpy).toHaveBeenCalled();
     });
   });
 

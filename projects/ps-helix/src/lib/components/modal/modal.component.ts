@@ -1,4 +1,5 @@
 import {
+  NgZone,
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
@@ -172,6 +173,7 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
   private readonly overlay = inject(PshOverlayService);
   private readonly renderer = inject(Renderer2);
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly zone = inject(NgZone);
   private readonly document = inject(DOCUMENT);
 
   /** Elements this modal marked `inert`, so it only ever undoes its own. */
@@ -443,7 +445,9 @@ export class PshModalComponent implements AfterViewInit, OnDestroy {
     const view = this.document.defaultView;
     if (view) {
       this.resizeListener = () => this.checkScreenSize();
-      view.addEventListener('resize', this.resizeListener);
+      // Outside Angular: resize fires continuously while a window is dragged, and the
+      // handler only writes a signal — which schedules its own refresh when it changes.
+      this.zone.runOutsideAngular(() => view.addEventListener('resize', this.resizeListener!));
     }
   }
 

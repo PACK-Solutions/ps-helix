@@ -1,6 +1,7 @@
 import { PshControlAppearance } from '../../types/semantic.types';
 import { pshResolveConfigValue } from '../../utils/config-value';
 import {
+  NgZone,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -31,6 +32,7 @@ import { DROPDOWN_CONFIG } from './dropdown.tokens';
   hostDirectives: [PshClickOutsideDirective]
 })
 export class PshDropdownComponent<T = string> {
+  private readonly zone = inject(NgZone);
   private readonly config = inject(DROPDOWN_CONFIG);
 
   private elementRef = inject(ElementRef);
@@ -126,8 +128,14 @@ export class PshDropdownComponent<T = string> {
     this.portalRef = this.portal.attach(tpl, this.viewContainer);
     this.reposition();
     const view = (this.elementRef.nativeElement as HTMLElement).ownerDocument.defaultView;
-    view?.addEventListener('scroll', this.repositionHandler, true);
-    view?.addEventListener('resize', this.repositionHandler);
+    // Registered outside Angular: a capture-phase scroll listener fires on every scroll of
+    // every ancestor, and each one triggered a full change-detection pass. Repositioning
+    // writes to the DOM and to a signal, and a signal write schedules its own refresh — the
+    // zone was doing the work twice.
+    this.zone.runOutsideAngular(() => {
+      view?.addEventListener('scroll', this.repositionHandler, true);
+      view?.addEventListener('resize', this.repositionHandler);
+    });
   }
 
   private closePanel(): void {

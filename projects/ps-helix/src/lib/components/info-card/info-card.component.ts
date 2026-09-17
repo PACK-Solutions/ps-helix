@@ -1,6 +1,7 @@
 import { PshSurfaceAppearance } from '../../types/semantic.types';
 import { pshResolveConfigValue } from '../../utils/config-value';
 import { Component, ChangeDetectionStrategy, computed, input, signal, PLATFORM_ID, inject, output, ViewEncapsulation, ElementRef, AfterContentInit, OnDestroy } from '@angular/core';
+import { PshViewportService } from '../../a11y/viewport.service';
 import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { InfoCardData, InfoCardOptions } from './info-card.types';
 import { INFO_CARD_CONFIG } from './info-card.tokens';
@@ -133,11 +134,9 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
   autoFullWidthOnMobile = input<boolean>(this.config.autoFullWidthOnMobile ?? true);
 
   /** Signal to track if viewport is mobile */
-  isMobile = signal<boolean>(false);
 
   private platformId = inject(PLATFORM_ID);
   private readonly document = inject(DOCUMENT);
-  private resizeObserver?: ResizeObserver;
   private feedbackTimeout?: ReturnType<typeof setTimeout>;
 
   /** Determines if the empty state should be shown */
@@ -198,18 +197,8 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
 
   private elementRef = inject(ElementRef);
 
-  constructor() {
-    if (isPlatformBrowser(this.platformId)) {
-      this.checkMobileViewport();
-
-      if (this.document.defaultView) {
-        this.resizeObserver = new ResizeObserver(() => {
-          this.checkMobileViewport();
-        });
-        this.resizeObserver.observe(this.document.documentElement);
-      }
-    }
-  }
+  /** Shared with every other card on the page. See `PshViewportService`. */
+  readonly isMobile = inject(PshViewportService).below('sm');
 
   ngAfterContentInit(): void {
     this.checkHeaderActionsContent();
@@ -223,18 +212,8 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.resizeObserver) {
-      this.resizeObserver.disconnect();
-    }
     if (this.feedbackTimeout) {
       clearTimeout(this.feedbackTimeout);
-    }
-  }
-
-  private checkMobileViewport(): void {
-    const view = this.document.defaultView;
-    if (view) {
-      this.isMobile.set(view.innerWidth <= 640);
     }
   }
 

@@ -261,8 +261,23 @@ export class PshTableComponent {
     this.rowClicked.emit({ id: row.id, row });
   }
 
+  /**
+   * The path of each column, split once instead of once per cell.
+   *
+   * `getCellValue` runs rows × columns times per change-detection cycle and used to split the
+   * path string on every one of them. The split depends on the columns, not on the data.
+   */
+  private readonly columnPaths = computed(
+    () => new Map(this.columns().map(column => [column, (column.path || column.key).split('.')])),
+  );
+
   protected getCellValue(row: TableRow, column: TableColumn): unknown {
-    return this.getNestedValue(row, column.path || column.key);
+    const path = this.columnPaths().get(column) ?? (column.path || column.key).split('.');
+    return path.reduce<unknown>(
+      (acc, part) =>
+        acc != null && typeof acc === 'object' ? (acc as Record<string, unknown>)[part] : undefined,
+      row,
+    );
   }
 
   /**
@@ -272,18 +287,39 @@ export class PshTableComponent {
    * `aria-sort` and the keyboard path, so a custom header cannot accidentally ship a `<div>`
    * that only responds to a mouse — which is the bug B1 fixed on the default header.
    */
-  protected headerContext(column: TableColumn): TableHeaderContext {
+  private readonly headerContexts = computed(() => {
     const sort = this.currentSort();
-    return {
-      $implicit: column,
-      sort: sort?.key === column.key ? sort.direction : null,
-      toggleSort: () => this.handleSort(column),
-    };
+    return new Map<TableColumn, TableHeaderContext>(
+      this.columns().map(column => [
+        column,
+        {
+          $implicit: column,
+          sort: sort?.key === column.key ? sort.direction : null,
+          toggleSort: () => this.handleSort(column),
+        },
+      ]),
+    );
+  });
+
+  /**
+   * Built once per render rather than once per cycle. The object used to be new every cycle —
+   * and `toggleSort` a new closure with it — so `NgTemplateOutlet` saw a changed context each
+   * time and re-rendered every custom header for nothing.
+   */
+  protected headerContext(column: TableColumn): TableHeaderContext {
+    return (
+      this.headerContexts().get(column) ?? {
+        $implicit: column,
+        sort: null,
+        toggleSort: () => this.handleSort(column),
+      }
+    );
   }
 
-  protected emptyContext(): TableEmptyContext {
-    return { $implicit: this.computedEmptyMessage(), searchTerm: this.searchTerm() };
-  }
+  protected readonly emptyContext = computed<TableEmptyContext>(() => ({
+    $implicit: this.computedEmptyMessage(),
+    searchTerm: this.searchTerm(),
+  }));
 
   protected rowClasses(row: TableRow): string {
     return this.rowClass()?.(row) ?? '';

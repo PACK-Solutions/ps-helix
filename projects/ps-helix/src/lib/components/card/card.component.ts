@@ -5,13 +5,12 @@ import {
   computed,
   inject,
   input,
-  OnDestroy,
   output,
   PLATFORM_ID,
-  signal,
   ViewEncapsulation
 } from '@angular/core';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { PshViewportService } from '../../a11y/viewport.service';
+import { DOCUMENT } from '@angular/common';
 import { CardDensity, CardActionsAlignment } from './card.types';
 import { CARD_CONFIG } from './card.tokens';
 
@@ -62,14 +61,12 @@ import { CARD_CONFIG } from './card.tokens';
     '[attr.aria-busy]': 'loading() ? "true" : null',
   },
 })
-export class PshCardComponent implements OnDestroy {
+export class PshCardComponent {
   private readonly config = inject(CARD_CONFIG);
 
   private platformId = inject(PLATFORM_ID);
   private readonly document = inject(DOCUMENT);
-  private resizeObserver?: ResizeObserver;
 
-  isMobile = signal<boolean>(false);
   // Model inputs - propriétés modifiables
   /** Variante visuelle de la carte (default, elevated, outlined) */
   // input(), not model(): the card never writes its own appearance back, so a model()
@@ -160,31 +157,11 @@ export class PshCardComponent implements OnDestroy {
     return classes.join(' ');
   });
 
-  constructor() {
-    if (isPlatformBrowser(this.platformId)) {
-      this.checkMobileViewport();
-
-      if (this.document.defaultView) {
-        this.resizeObserver = new ResizeObserver(() => {
-          this.checkMobileViewport();
-        });
-        this.resizeObserver.observe(this.document.documentElement);
-      }
-    }
-  }
-
-  ngOnDestroy(): void {
-    if (this.resizeObserver) {
-      this.resizeObserver.disconnect();
-    }
-  }
-
-  private checkMobileViewport(): void {
-    const view = this.document.defaultView;
-    if (view) {
-      this.isMobile.set(view.innerWidth <= 640);
-    }
-  }
+  /**
+   * Shared with every other card on the page — one media query, not one `ResizeObserver` per
+   * instance on `document.documentElement`.
+   */
+  protected readonly isMobile = inject(PshViewportService).below('sm');
 
   /**
    * Gère le clic sur la carte

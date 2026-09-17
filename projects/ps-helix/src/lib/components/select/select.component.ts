@@ -1,6 +1,7 @@
 import { PshFieldAppearance } from '../../types/semantic.types';
 import { pshResolveConfigValue } from '../../utils/config-value';
 import {
+  NgZone,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -22,7 +23,7 @@ import type { FormValueControl } from '@angular/forms/signals';
 import { PshClickOutsideDirective } from '../../a11y/click-outside.directive';
 import { PshOverlayPositionService } from '../../a11y/overlay-position.service';
 import { PshPortalService, PshPortalRef } from '../../a11y/portal.service';
-import { SelectOption, SelectOptionGroup, SelectSize, SelectOptionContext } from './select.types';
+import { SelectOption, SelectOptionGroup, SelectSize, SelectOptionContext, SelectOptionView } from './select.types';
 import { pshUniqueId } from '../../utils/unique-id';
 import { pshIsEmptyValue, pshRequiredError } from '../../utils/required-validator';
 import { pshJoinAriaIds } from '../../utils/aria';
@@ -63,6 +64,7 @@ interface FlatOption<T> {
   }
 })
 export class PshSelectComponent<T = unknown> implements ControlValueAccessor, FormValueControl<T | T[] | null>, Validator {
+  private readonly zone = inject(NgZone);
   private readonly config = inject(SELECT_CONFIG);
 
   private readonly elementRef = inject(ElementRef);
@@ -297,8 +299,14 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
     this.reposition();
     const view = (this.elementRef.nativeElement as HTMLElement).ownerDocument.defaultView;
     // Capture phase so inner (e.g. modal body) scrolls keep the panel aligned.
-    view?.addEventListener('scroll', this.repositionHandler, true);
-    view?.addEventListener('resize', this.repositionHandler);
+    // Registered outside Angular: a capture-phase scroll listener fires on every scroll of
+    // every ancestor, and each one triggered a full change-detection pass. Repositioning
+    // writes to the DOM and to a signal, and a signal write schedules its own refresh — the
+    // zone was doing the work twice.
+    this.zone.runOutsideAngular(() => {
+      view?.addEventListener('scroll', this.repositionHandler, true);
+      view?.addEventListener('resize', this.repositionHandler);
+    });
   }
 
   private closePanel(): void {
@@ -449,10 +457,6 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
     return 'options' in item;
   }
 
-  protected optionContext(option: SelectOption<T>, disabled: boolean): SelectOptionContext<T> {
-    return { $implicit: option, selected: this.isSelected(option), disabled };
-  }
-
   protected getOptionKey(item: SelectOption<T> | SelectOptionGroup<T>): string {
     return this.isOptionGroup(item) ? `g-${item.label}` : `o-${item.label}`;
   }
@@ -471,8 +475,43 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
     return val !== null && val !== undefined;
   }
 
-  protected getFlatIndex(option: SelectOption<T>): number {
-    return this.flatFilteredOptions().findIndex(item => item.option === option);
+  /**
+   * Everything the template needs about one option, computed once per render.
+   *
+   * It used to ask four questions per option per change-detection cycle, and one of them —
+   * "what is this option's position in the flattened list?" — was a `findIndex` over that
+   * list. Two hundred options meant forty thousand comparisons every cycle, plus a fresh
+   * context object per option, which also defeats `NgTemplateOutlet`'s own caching: a new
+   * context is a changed context.
+   *
+   * One pass over the flat list answers all four, and the context object is stable between
+   * renders as long as nothing it holds has changed.
+   */
+  private readonly optionViews = computed(() => {
+    const flat = this.flatFilteredOptions();
+    const views = new Map<SelectOption<T>, SelectOptionView<T>>();
+    flat.forEach(({ option, effectiveDisabled }, index) => {
+      const selected = this.isSelected(option);
+      views.set(option, {
+        index,
+        selected,
+        disabled: effectiveDisabled,
+        context: { $implicit: option, selected, disabled: effectiveDisabled },
+      });
+    });
+    return views;
+  });
+
+  /** O(1). An option the current render does not contain gets a view that says so. */
+  protected optionView(option: SelectOption<T>): SelectOptionView<T> {
+    return (
+      this.optionViews().get(option) ?? {
+        index: -1,
+        selected: false,
+        disabled: false,
+        context: { $implicit: option, selected: false, disabled: false },
+      }
+    );
   }
 
   protected focusSelect(): void {

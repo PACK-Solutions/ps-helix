@@ -1,6 +1,7 @@
 import { PshFieldAppearance } from '../../types/semantic.types';
 import { pshResolveConfigValue } from '../../utils/config-value';
 import {
+  NgZone,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -58,6 +59,7 @@ import { INPUT_CONFIG } from './input.tokens';
   }
 })
 export class PshInputComponent implements ControlValueAccessor, FormValueControl<string>, Validator {
+  private readonly zone = inject(NgZone);
   private readonly config = inject(INPUT_CONFIG);
 
   private readonly elementRef = inject(ElementRef);
@@ -246,8 +248,14 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
     this.reposition();
     const view = (this.elementRef.nativeElement as HTMLElement).ownerDocument.defaultView;
     // Capture phase so inner (e.g. modal body) scrolls keep the panel aligned.
-    view?.addEventListener('scroll', this.repositionHandler, true);
-    view?.addEventListener('resize', this.repositionHandler);
+    // Registered outside Angular: a capture-phase scroll listener fires on every scroll of
+    // every ancestor, and each one triggered a full change-detection pass. Repositioning
+    // writes to the DOM and to a signal, and a signal write schedules its own refresh — the
+    // zone was doing the work twice.
+    this.zone.runOutsideAngular(() => {
+      view?.addEventListener('scroll', this.repositionHandler, true);
+      view?.addEventListener('resize', this.repositionHandler);
+    });
   }
 
   private closePanel(): void {
