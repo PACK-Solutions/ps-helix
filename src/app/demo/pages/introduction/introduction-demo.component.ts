@@ -108,7 +108,7 @@ export class AppComponent implements OnInit {
     // Le thème est initialisé automatiquement
   }
 }`,
-      note: 'Le service est providedIn: \'root\' - aucune configuration nécessaire'
+      note: 'Le service est providedIn: \'root\' — aucune configuration nécessaire. Depuis la 7.0.1, basculer le thème le mémorise : le choix survit au rechargement, quel que soit le point d\'entrée (toggleTheme, setDarkTheme, updateTheme). Sans choix enregistré, le thème suit celui du système.'
     },
     {
       number: 6,

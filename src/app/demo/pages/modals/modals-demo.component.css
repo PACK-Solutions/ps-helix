@@ -1,3 +1,12 @@
+/* La règle de propagation d'Échap, en aparté sous la démonstration qui la met en œuvre. */
+.modal-rule-note {
+  margin-top: var(--psh-spacing-md);
+  padding-left: var(--psh-spacing-md);
+  border-left: var(--psh-border-width-2) solid var(--psh-surface-border);
+  color: var(--psh-text-color-secondary);
+  line-height: var(--psh-line-height-relaxed);
+}
+
 /* Un formulaire dans une modale : les champs empilés, et un corps qui déborde pour de vrai. */
 .modal-form {
   display: flex;

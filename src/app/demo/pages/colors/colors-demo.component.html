@@ -103,6 +103,17 @@
       <div class="accessibility-container">
         <div class="accessibility-intro">
           <p>Notre système respecte rigoureusement les standards WCAG 2.1 AA et intègre les meilleures pratiques d'accessibilité pour garantir une expérience inclusive.</p>
+          <p class="accessibility-note">
+            <strong>Et c'est vérifié à chaque intégration continue, depuis la 7.0.1.</strong>
+            La règle <code>color-contrast</code> d'axe ne peut pas s'exécuter sous jsdom — elle
+            n'y résout aucune couleur calculée —, donc rien ne contrôlait la palette de la
+            bibliothèque elle-même : la seule garantie couvrait les couleurs de marque
+            <em>client</em>, dérivées par le service de thème. <code>verify:contrast</code> lit
+            désormais les quatorze paires fond/encre dans les feuilles de thème — les valeurs
+            publiées — et échoue sous 4,5:1. Il a trouvé du blanc sur le primaire du thème
+            sombre à <strong>3,52:1</strong>, soit chaque bouton, tag, badge et item de
+            dropdown solide en mode sombre.
+          </p>
         </div>
         <div class="accessibility-grid">
           @for (rule of accessibilityRules; track rule.category) {
