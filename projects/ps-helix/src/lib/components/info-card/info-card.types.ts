@@ -1,4 +1,5 @@
 import { PshColor, PshSurfaceAppearance } from '../../types/semantic.types';
+import { PshConfigValue } from '../../utils/config-value';
 /**
  * Represents a single data row in the info card
  */
@@ -79,7 +80,7 @@ export interface InfoCardConfig {
   hoverable: boolean;
   interactive: boolean;
   copyable: boolean;
-  copyButtonLabel: string;
-  copyFeedbackText: string;
+  copyButtonLabel: PshConfigValue<string>;
+  copyFeedbackText: PshConfigValue<string>;
   autoFullWidthOnMobile: boolean;
 }

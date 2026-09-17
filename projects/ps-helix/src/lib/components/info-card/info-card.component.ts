@@ -1,4 +1,5 @@
 import { PshSurfaceAppearance } from '../../types/semantic.types';
+import { pshResolveConfigValue } from '../../utils/config-value';
 import { Component, ChangeDetectionStrategy, computed, input, signal, PLATFORM_ID, inject, output, ViewEncapsulation, ElementRef, AfterContentInit, OnDestroy } from '@angular/core';
 import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { InfoCardData, InfoCardOptions } from './info-card.types';
@@ -95,10 +96,16 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
   copyable = input<boolean>(this.config.copyable ?? false);
 
   /** Label prefix for the copy button aria-label */
-  copyButtonLabel = input<string>(this.config.copyButtonLabel ?? 'Copier');
+  copyButtonLabelInput = input<string | undefined>(undefined, { alias: 'copyButtonLabel' });
+  copyButtonLabel = computed(
+    () => this.copyButtonLabelInput() ?? pshResolveConfigValue(this.config.copyButtonLabel) ?? 'Copier',
+  );
 
   /** Text shown as feedback after successful copy */
-  copyFeedbackText = input<string>(this.config.copyFeedbackText ?? 'Copié');
+  copyFeedbackTextInput = input<string | undefined>(undefined, { alias: 'copyFeedbackText' });
+  copyFeedbackText = computed(
+    () => this.copyFeedbackTextInput() ?? pshResolveConfigValue(this.config.copyFeedbackText) ?? 'Copié',
+  );
 
   /** Emitted when a row value is successfully copied */
   copied = output<InfoCardData>();

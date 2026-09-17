@@ -1,4 +1,5 @@
 import { PshSurfaceAppearance } from '../../types/semantic.types';
+import { PshConfigValue } from '../../utils/config-value';
 /**
  * Variantes disponibles pour le collapse
  */
@@ -20,6 +21,6 @@ export interface CollapseConfig {
   /** `auto` measures the content; any CSS length caps it. */
   maxHeight: string;
   /** Accessible name used when the header has no text of its own. */
-  defaultHeaderText: string;
+  defaultHeaderText: PshConfigValue<string>;
   disableAnimation: boolean;
 }

@@ -1,3 +1,5 @@
+import { PshConfigValue } from '../../utils/config-value';
+
 /**
  * Display modes for the sidebar
  */
@@ -23,7 +25,7 @@ export interface SidebarConfig {
   /** Enable auto-focus on open */
   autoFocus: boolean;
   /** ARIA label for the sidebar */
-  ariaLabel: string;
+  ariaLabel: PshConfigValue<string>;
   /** Close sidebar when clicking the backdrop (overlay mode only) */
   closeOnBackdrop: boolean;
   /** Close sidebar when pressing Escape key (overlay mode only) */

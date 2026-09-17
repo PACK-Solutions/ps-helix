@@ -23,7 +23,7 @@
  * without that the test reports a key that is in fact wired, which is a worse failure than
  * the one it is looking for.
  */
-import { InjectionToken, Type, isSignal } from '@angular/core';
+import { InjectionToken, Type, isSignal, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { PshAlertComponent } from './components/alert/alert.component';
@@ -239,6 +239,53 @@ describe('component config tokens', () => {
     it('provideHelixToast sets the toast config alone', () => {
       TestBed.configureTestingModule({ providers: [provideHelixToast({ maxToasts: 2 })] });
       expect(TestBed.inject(TOAST_CONFIG).maxToasts).toBe(2);
+    });
+  });
+
+  describe('a prose default may be a function', () => {
+    afterEach(() => TestBed.resetTestingModule());
+
+    it('reads it, rather than storing what it returned once', () => {
+      const language = signal('fr');
+      const placeholder = () =>
+        language() === 'fr' ? 'Sélectionner une option' : 'Select an option';
+
+      TestBed.configureTestingModule({
+        imports: [PshSelectComponent],
+        providers: [provideHelix({ components: { select: { placeholder } } })],
+      });
+      const fixture = TestBed.createComponent(PshSelectComponent);
+      fixture.componentRef.setInput('options', []);
+
+      expect(fixture.componentInstance.placeholder()).toBe('Sélectionner une option');
+
+      // The whole reason the thunk form exists: an application that switches language
+      // after the component is on screen.
+      language.set('en');
+      expect(fixture.componentInstance.placeholder()).toBe('Select an option');
+    });
+
+    it('still accepts a plain string, unchanged', () => {
+      TestBed.configureTestingModule({
+        imports: [PshSelectComponent],
+        providers: [provideHelix({ components: { select: { placeholder: 'Choisir' } } })],
+      });
+      const fixture = TestBed.createComponent(PshSelectComponent);
+      fixture.componentRef.setInput('options', []);
+
+      expect(fixture.componentInstance.placeholder()).toBe('Choisir');
+    });
+
+    it('lets the element override whatever the configuration says', () => {
+      TestBed.configureTestingModule({
+        imports: [PshSelectComponent],
+        providers: [provideHelix({ components: { select: { placeholder: () => 'from config' } } })],
+      });
+      const fixture = TestBed.createComponent(PshSelectComponent);
+      fixture.componentRef.setInput('options', []);
+      fixture.componentRef.setInput('placeholder', 'from the element');
+
+      expect(fixture.componentInstance.placeholder()).toBe('from the element');
     });
   });
 

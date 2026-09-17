@@ -1,4 +1,5 @@
 import { PshControlAppearance } from '../../types/semantic.types';
+import { pshResolveConfigValue } from '../../utils/config-value';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -51,7 +52,10 @@ export class PshDropdownComponent<T = string> {
   size = input<DropdownSize>(this.config.size ?? 'medium');
   placement = input<DropdownPlacement>(this.config.placement ?? 'bottom-start');
   items = input<DropdownItem<T>[]>([]);
-  label = input(this.config.label ?? 'Dropdown Menu');
+  labelInput = input<string | undefined>(undefined, { alias: 'label' });
+  label = computed(
+    () => this.labelInput() ?? pshResolveConfigValue(this.config.label) ?? 'Dropdown Menu',
+  );
   icon = input<string>();
   ariaLabel = input<string>();
   iconOnly = input<boolean>(this.config.iconOnly ?? false);

@@ -1,4 +1,5 @@
 import { PshFieldAppearance } from '../../types/semantic.types';
+import { pshResolveConfigValue } from '../../utils/config-value';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -117,14 +118,23 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
    */
   readonly optionTemplate = input<TemplateRef<SelectOptionContext<T>>>();
   label = input('');
-  placeholder = input<string>(this.config.placeholder ?? 'Sélectionner une option');
-  multiplePlaceholder = input<string>(this.config.multiplePlaceholder ?? 'Sélectionner des options');
+  placeholderInput = input<string | undefined>(undefined, { alias: 'placeholder' });
+  placeholder = computed(
+    () => this.placeholderInput() ?? pshResolveConfigValue(this.config.placeholder) ?? 'Sélectionner une option',
+  );
+  multiplePlaceholderInput = input<string | undefined>(undefined, { alias: 'multiplePlaceholder' });
+  multiplePlaceholder = computed(
+    () => this.multiplePlaceholderInput() ?? pshResolveConfigValue(this.config.multiplePlaceholder) ?? 'Sélectionner des options',
+  );
   error = input<string | null | undefined>(null);
   success = input<string | null | undefined>(null);
   hint = input<string | null | undefined>(null);
 
   /** Shown when the search matches nothing. Was a literal in the template. */
-  readonly noResultsText = input<string>(this.config.noResultsText ?? 'Aucun résultat');
+  readonly noResultsTextInput = input<string | undefined>(undefined, { alias: 'noResultsText' });
+  readonly noResultsText = computed(
+    () => this.noResultsTextInput() ?? pshResolveConfigValue(this.config.noResultsText) ?? 'Aucun résultat',
+  );
 
   /**
    * Extra ids for `aria-describedby`. **Merged** with the control's own — the id of its error,
@@ -139,7 +149,10 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
   readonly ariaLabelledBy = input<string>();
   ariaLabel = input<string | null>(null);
   /** Accessible name of the clear button, which renders as a bare icon. */
-  clearLabel = input<string>(this.config.clearLabel ?? 'Effacer la sélection');
+  clearLabelInput = input<string | undefined>(undefined, { alias: 'clearLabel' });
+  clearLabel = computed(
+    () => this.clearLabelInput() ?? pshResolveConfigValue(this.config.clearLabel) ?? 'Effacer la sélection',
+  );
   maxSelections = input<number | undefined>(undefined);
   minSelections = input<number | undefined>(undefined);
   compareWith = input<(a: T, b: T) => boolean>((a, b) => a === b);

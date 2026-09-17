@@ -1,4 +1,5 @@
 import { PshFieldAppearance } from '../../types/semantic.types';
+import { PshConfigValue } from '../../utils/config-value';
 export interface SelectOption<T> {
   label: string;
   value: T;
@@ -22,7 +23,7 @@ export type SelectVariant = PshFieldAppearance;
 
 export interface SearchConfig {
   debounceTime: number;
-  placeholder: string;
+  placeholder: PshConfigValue<string>;
   minLength: number;
 }
 /**
@@ -50,8 +51,8 @@ export interface SelectConfig {
   clearable: boolean;
   fullWidth: boolean;
   placeholder: string;
-  multiplePlaceholder: string;
-  noResultsText: string;
-  clearLabel: string;
+  multiplePlaceholder: PshConfigValue<string>;
+  noResultsText: PshConfigValue<string>;
+  clearLabel: PshConfigValue<string>;
   searchConfig: SearchConfig;
 }

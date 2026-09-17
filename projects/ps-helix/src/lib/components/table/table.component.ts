@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, output, signal, InjectionToken, TemplateRef } from '@angular/core';
+import { pshResolveConfigValue } from '../../utils/config-value';
 import { NgTemplateOutlet } from '@angular/common';
 import { PshInputComponent } from '../input/input.component';
 import { TableColumn, TableRow, TableSort, TableConfig, TableRowClickEvent, TableRowExpandEvent, TableExpandedRowContext, TableHeaderContext, TableEmptyContext } from './table.types';
@@ -49,9 +50,18 @@ export class PshTableComponent {
   fullWidth = input(this.config.fullWidth ?? false);
   columns = input.required<TableColumn[]>();
   data = input.required<TableRow[]>();
-  emptyMessage = input<string>(this.config.emptyMessage ?? 'No data available');
-  noResultsMessage = input<string>(this.config.noResultsMessage ?? 'No results found');
-  globalSearchPlaceholder = input(this.config.globalSearchPlaceholder ?? 'Search in all columns...');
+  emptyMessageInput = input<string | undefined>(undefined, { alias: 'emptyMessage' });
+  emptyMessage = computed(
+    () => this.emptyMessageInput() ?? pshResolveConfigValue(this.config.emptyMessage) ?? 'No data available',
+  );
+  noResultsMessageInput = input<string | undefined>(undefined, { alias: 'noResultsMessage' });
+  noResultsMessage = computed(
+    () => this.noResultsMessageInput() ?? pshResolveConfigValue(this.config.noResultsMessage) ?? 'No results found',
+  );
+  globalSearchPlaceholderInput = input<string | undefined>(undefined, { alias: 'globalSearchPlaceholder' });
+  globalSearchPlaceholder = computed(
+    () => this.globalSearchPlaceholderInput() ?? pshResolveConfigValue(this.config.globalSearchPlaceholder) ?? 'Search in all columns...',
+  );
   tableLayout = input<'auto' | 'fixed'>(this.config.tableLayout ?? 'auto');
   truncateText = input(this.config.truncateText ?? false);
   expandable = input(this.config.expandable ?? false);

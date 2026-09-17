@@ -1,4 +1,5 @@
 import { PshColor } from '../../types/semantic.types';
+import { PshConfigValue } from '../../utils/config-value';
 /**
  * Variantes disponibles pour le tag
  */
@@ -23,5 +24,5 @@ export interface TagConfig {
   closable: boolean;
   disabled: boolean;
   interactive?: boolean;
-  closeLabel?: string;
+  closeLabel?: PshConfigValue<string>;
 }

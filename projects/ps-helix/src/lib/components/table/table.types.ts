@@ -1,4 +1,5 @@
 import { TemplateRef } from '@angular/core';
+import { PshConfigValue } from '../../utils/config-value';
 
 /**
  * Contexte pour les templates personnalisés de cellule
@@ -117,13 +118,13 @@ export interface TableConfig {
   /** État de chargement */
   loading: boolean;
   /** Message quand vide */
-  emptyMessage: string;
+  emptyMessage: PshConfigValue<string>;
   /** Message quand recherche sans resultat */
-  noResultsMessage: string;
+  noResultsMessage: PshConfigValue<string>;
   /** Recherche globale */
   globalSearch: boolean;
   /** Placeholder de recherche */
-  globalSearchPlaceholder: string;
+  globalSearchPlaceholder: PshConfigValue<string>;
   /** Table layout (auto or fixed for percentage widths) */
   tableLayout: 'auto' | 'fixed';
   /** Truncate text with ellipsis */

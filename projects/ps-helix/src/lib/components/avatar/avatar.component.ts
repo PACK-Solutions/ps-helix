@@ -8,6 +8,7 @@ import {
   signal,
   inject,
 } from '@angular/core';
+import { pshResolveConfigValue } from '../../utils/config-value';
 import { CommonModule } from '@angular/common';
 import { AvatarSize, AvatarShape, AvatarStatus } from './avatar.types';
 import { AVATAR_CONFIG } from './avatar.tokens';
@@ -43,7 +44,10 @@ export class PshAvatarComponent {
   size = input<AvatarSize>(this.config.size ?? DEFAULT_CONFIG.size);
   shape = input<AvatarShape>(this.config.shape ?? DEFAULT_CONFIG.shape);
   src = input<string | undefined>();
-  alt = input<string>(this.config.alt ?? DEFAULT_CONFIG.alt);
+  altInput = input<string | undefined>(undefined, { alias: 'alt' });
+  alt = computed(
+    () => this.altInput() ?? pshResolveConfigValue(this.config.alt) ?? DEFAULT_CONFIG.alt,
+  );
 
   // Regular inputs
   initials = input('');

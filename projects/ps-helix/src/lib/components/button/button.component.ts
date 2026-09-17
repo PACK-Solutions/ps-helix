@@ -1,4 +1,5 @@
 import { PshControlAppearance } from '../../types/semantic.types';
+import { pshResolveConfigValue } from '../../utils/config-value';
 import {
   AfterContentChecked,
   ChangeDetectionStrategy,
@@ -39,8 +40,14 @@ export class PshButtonComponent implements AfterContentChecked {
   iconPosition = input<ButtonIconPosition>(this.config.iconPosition ?? 'left');
   icon = input<string>();
   ariaLabel = input<string>();
-  loadingText = input(this.config.loadingText ?? 'Loading...');
-  disabledText = input(this.config.disabledText ?? 'This action is currently unavailable');
+  loadingTextInput = input<string | undefined>(undefined, { alias: 'loadingText' });
+  loadingText = computed(
+    () => this.loadingTextInput() ?? pshResolveConfigValue(this.config.loadingText) ?? 'Loading...',
+  );
+  disabledTextInput = input<string | undefined>(undefined, { alias: 'disabledText' });
+  disabledText = computed(
+    () => this.disabledTextInput() ?? pshResolveConfigValue(this.config.disabledText) ?? 'This action is currently unavailable',
+  );
   iconOnlyText = input<string>();
   type = input<'button' | 'submit' | 'reset'>(this.config.type ?? 'button');
 
