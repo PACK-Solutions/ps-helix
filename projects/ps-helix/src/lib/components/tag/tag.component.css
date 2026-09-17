@@ -31,7 +31,15 @@
   vertical-align: middle;
 }
 
+/**
+ * 24px of pointer target, which is the 2.5.8 floor, without the tag growing.
+ *
+ * 44px is the library's target size, and it is the wrong one here twice over: a 44px button
+ * would make every tag 44px tall, and its hit area would reach past the tag and take clicks
+ * meant for the next one — targets that overlap do not meet the criterion either.
+ */
 .psh-tag-close {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -44,6 +52,18 @@
   transition: opacity var(--psh-animation-duration-normal) var(--psh-animation-easing-default);
   border-radius: var(--psh-radius-lg);
   margin-left: var(--psh-spacing-xs);
+}
+
+.psh-tag-close::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: 100%;
+  height: 100%;
+  min-width: var(--psh-touch-target-compact);
+  min-height: var(--psh-touch-target-compact);
 }
 
 .psh-tag-close:hover:not(:disabled) {

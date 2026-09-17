@@ -71,13 +71,34 @@
   flex-shrink: 0;
 }
 
+/**
+ * 24px of pointer target inside the field, without widening the trigger.
+ *
+ * `padding: 0` left this at the size of its icon. It sits beside the chevron in a 40px-tall
+ * trigger, so 44px would both overflow the field and reach across to the chevron — the compact
+ * floor is the one that fits. Found by `verify:layout`, not by the visual tour: the button only
+ * exists once a value is selected, and no demo select had one when it was measured.
+ */
 .psh-select-clear {
+  position: relative;
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
   color: var(--psh-text-color-secondary);
   display: flex;
+}
+
+.psh-select-clear::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: 100%;
+  height: 100%;
+  min-width: var(--psh-touch-target-compact);
+  min-height: var(--psh-touch-target-compact);
 }
 
 .psh-select-clear:hover { color: var(--psh-danger-color); }

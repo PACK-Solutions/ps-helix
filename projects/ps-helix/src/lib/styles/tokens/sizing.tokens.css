@@ -99,6 +99,16 @@
    */
   --psh-touch-target-min: 2.75rem; /* 44px */
 
+  /**
+   * The AA floor, for a control that lives *inside* a compact component.
+   *
+   * 44px is right for a standalone control. It is wrong for the close button of a tag: the
+   * tag would either grow to 44px, or its hit area would spill over the neighbouring tag and
+   * swallow clicks meant for it — and 2.5.8 is only met when targets do not overlap. 24px
+   * clears the floor without either.
+   */
+  --psh-touch-target-compact: 1.5rem; /* 24px */
+
   /* Scrollbar width compensation */
   --psh-scrollbar-width: 0;
 
