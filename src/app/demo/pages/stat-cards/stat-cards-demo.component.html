@@ -447,8 +447,8 @@
             </thead>
             <tbody>
               <tr>
-                <td><code>tagVariant</code></td>
-                <td><code>StatTagVariant</code></td>
+                <td><code>tagColor</code></td>
+                <td><code>PshColor</code></td>
                 <td><code>undefined</code></td>
                 <td>'success' | 'danger' | 'warning' | 'primary'</td>
               </tr>
@@ -513,16 +513,15 @@
                 <td>Active la direction row pour le card-body (icône et contenu en flex-row)</td>
               </tr>
               <tr>
-                <td><code>cssClass</code></td>
-                <td><code>string</code></td>
-                <td><code>''</code></td>
-                <td>Classes CSS additionnelles à appliquer</td>
-              </tr>
-              <tr>
-                <td><code>customStyle</code></td>
-                <td><code>Record&lt;string, string&gt;</code></td>
-                <td><code>&#123;&#125;</code></td>
-                <td>Styles inline personnalisés</td>
+                <td><code>class</code> / <code>style</code></td>
+                <td><em>natifs</em></td>
+                <td>—</td>
+                <td>
+                  Le composant <strong>est</strong> son élément hôte depuis la 7.0.0 : écrivez
+                  <code>class</code> et <code>style</code> dessus comme sur n'importe quel élément.
+                  Les inputs <code>cssClass</code> et <code>customStyle</code> n'existaient que
+                  parce qu'une enveloppe interne interceptait les vôtres.
+                </td>
               </tr>
             </tbody>
           </table>
@@ -562,7 +561,7 @@
         value="8,430€"
         description="Revenu des 30 derniers jours"
         icon="coins"
-        tagVariant="success"
+        tagColor="success"
         tagLabel="+12.6%"
         [interactive]="true"
         [hoverable]="true"
@@ -575,7 +574,7 @@
         description="Total des produits"
         icon="package"
         iconBackground="linear-gradient(135deg, #A78BFA, #7C3AED)"
-        variant="outlined"
+        appearance="outline"
       &gt;&lt;/psh-stat-card&gt;
 
       &lt;!-- Variante outlined, non interactive --&gt;
@@ -583,9 +582,9 @@
         value="24h"
         description="Temps de réponse moyen"
         icon="timer"
-        tagVariant="primary"
+        tagColor="primary"
         tagLabel="Stable"
-        variant="outlined"
+        appearance="outline"
         ariaLabel="Temps de réponse moyen: 24 heures, statut stable"
       &gt;&lt;/psh-stat-card&gt;
     &lt;/div&gt;
@@ -603,9 +602,9 @@ export class DashboardComponent &#123;
           <h4>Bonnes Pratiques</h4>
           <ul class="best-practices-list">
             <li><strong>Inputs individuels</strong> : Utilisez les inputs individuels pour une API simple et typee</li>
-            <li><strong>Gradients auto</strong> : Laissez le composant générer les gradients automatiquement à partir de <code>tagVariant</code></li>
+            <li><strong>Gradients auto</strong> : Laissez le composant générer les gradients automatiquement à partir de <code>tagColor</code></li>
             <li><strong>Gradients personnalisés</strong> : Utilisez <code>iconBackground</code> uniquement pour des identités visuelles spécifiques</li>
-            <li><strong>Tags optionnels</strong> : Les tags d'évolution sont optionnels, omettez <code>tagVariant</code> et <code>tagLabel</code> pour les métriques neutres</li>
+            <li><strong>Tags optionnels</strong> : Les tags d'évolution sont optionnels, omettez <code>tagColor</code> et <code>tagLabel</code> pour les métriques neutres</li>
             <li><strong>Interactivité</strong> : Combinez <code>[interactive]="true"</code> et <code>[hoverable]="true"</code> pour les cartes cliquables avec feedback visuel</li>
             <li><strong>Accessibilité</strong> : Le label ARIA est généré automatiquement, mais vous pouvez le personnaliser avec <code>ariaLabel</code></li>
             <li><strong>Grilles responsives</strong> : Utilisez des grilles CSS pour organiser vos stat-cards (ex: <code>display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))</code>)</li>

@@ -512,10 +512,10 @@
                 <td>'default' | 'elevated' | 'outlined'</td>
               </tr>
               <tr>
-                <td><code>colorVariant</code></td>
-                <td><code>CardColorVariant</code></td>
-                <td><code>'default'</code></td>
-                <td>'default' | 'info' | 'success' | 'warning' | 'danger'</td>
+                <td><code>color</code></td>
+                <td><code>PshColor</code></td>
+                <td><code>'neutral'</code></td>
+                <td>'neutral' | 'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'danger'</td>
               </tr>
               <tr>
                 <td><code>density</code></td>
@@ -656,7 +656,7 @@
       title="Mon Projet"
       description="Description du projet"
       variant="elevated"
-      colorVariant="default"
+      color="neutral"
       density="normal"
       [interactive]="true"
       [hoverable]="true"
@@ -703,7 +703,7 @@ export class MyComponent &#123;
             <li><strong>Titre et description</strong> : Privilégiez <code>title</code> et <code>description</code> pour un rendu cohérent et accessible dans les cas standard</li>
             <li><strong>Header personnalisé</strong> : Quand le rendu par défaut du titre ne convient pas, composez votre header via les slots (sans <code>title</code>) et stylez-le dans la portée de votre composant, <code>sans ::ng-deep</code>. Conservez un élément de titre (<code>&lt;h3&gt;</code>) pour préserver la hiérarchie a11y</li>
             <li><strong>Densité par défaut</strong> : Privilégiez <code>density="normal"</code> pour la plupart des cas d'usage</li>
-            <li><strong>Variantes de couleur</strong> : Réservez les colorVariant (info, success, warning, danger) pour les messages d'état importants</li>
+            <li><strong>Couleur sémantique</strong> : réservez <code>color</code> (info, success, warning, danger) aux messages d'état ; <code>neutral</code> est le défaut, et c'est le bon pour une carte de contenu</li>
             <li><strong>Interactivité</strong> : Ajoutez <code>[interactive]="true"</code> uniquement si la carte doit être cliquable dans son ensemble</li>
             <li><strong>Effet de survol</strong> : Combinez <code>[hoverable]="true"</code> avec interactive pour un feedback visuel clair</li>
             <li><strong>État de chargement</strong> : Utilisez <code>[loading]="true"</code> pendant les opérations asynchrones pour améliorer l'expérience utilisateur</li>
