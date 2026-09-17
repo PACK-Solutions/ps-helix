@@ -58,10 +58,14 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
   /** Array of label-value pairs to display */
   data = input.required<InfoCardData[]>();
 
-  /** Display options for the card */
+  /**
+   * Display options for the card.
+   *
+   * `emptyStateMessage` is deliberately absent from the default: carrying it here would
+   * shadow the application's configured default, since this object wins over it.
+   */
   options = input<InfoCardOptions>({
     showEmptyState: true,
-    emptyStateMessage: 'Aucune information disponible',
     labelWidth: undefined,
     valueWidth: undefined
   });
@@ -98,13 +102,22 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
   /** Label prefix for the copy button aria-label */
   copyButtonLabelInput = input<string | undefined>(undefined, { alias: 'copyButtonLabel' });
   copyButtonLabel = computed(
-    () => this.copyButtonLabelInput() ?? pshResolveConfigValue(this.config.copyButtonLabel) ?? 'Copier',
+    () => this.copyButtonLabelInput() ?? pshResolveConfigValue(this.config.copyButtonLabel) ?? 'Copy',
   );
 
   /** Text shown as feedback after successful copy */
+  notProvidedTextInput = input<string | undefined>(undefined, { alias: 'notProvidedText' });
+  /** Stands in for a row value that is null or undefined. */
+  notProvidedText = computed(
+    () =>
+      this.notProvidedTextInput() ??
+      pshResolveConfigValue(this.config.notProvidedText) ??
+      'Not provided',
+  );
+
   copyFeedbackTextInput = input<string | undefined>(undefined, { alias: 'copyFeedbackText' });
   copyFeedbackText = computed(
-    () => this.copyFeedbackTextInput() ?? pshResolveConfigValue(this.config.copyFeedbackText) ?? 'Copié',
+    () => this.copyFeedbackTextInput() ?? pshResolveConfigValue(this.config.copyFeedbackText) ?? 'Copied',
   );
 
   /** Emitted when a row value is successfully copied */
@@ -134,10 +147,18 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
     return opts.showEmptyState && (!dataArray || dataArray.length === 0);
   });
 
-  /** Returns the empty state message to display */
-  getEmptyStateMessage = computed(() => {
-    return this.options().emptyStateMessage || 'Aucune information disponible';
-  });
+  /**
+   * The message shown when there is nothing to list.
+   *
+   * Three sources, narrowest first: the `options` input of this card, then the application's
+   * configured default, then the library's own.
+   */
+  getEmptyStateMessage = computed(
+    () =>
+      this.options().emptyStateMessage ||
+      pshResolveConfigValue(this.config.emptyStateMessage) ||
+      'No information available',
+  );
 
   /** Full icon class name for Phosphor icons */
   titleIcon = computed(() => {

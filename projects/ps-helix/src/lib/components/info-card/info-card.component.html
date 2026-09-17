@@ -62,7 +62,7 @@
                 [class]="getValueClasses(item)"
                 [attr.data-value]="item.value"
                 [title]="item.value?.toString() || ''"
-              >{{ item.value ?? 'Non renseigné' }}</span>
+              >{{ item.value ?? notProvidedText() }}</span>
               @if (isRowCopyable(item) && hasNonEmptyValue(item)) {
                 <button
                   type="button"

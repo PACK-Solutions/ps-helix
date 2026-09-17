@@ -1,4 +1,6 @@
-import { ChangeDetectionStrategy, Component, effect, inject, input, OnDestroy } from '@angular/core';
+import {
+  computed, ChangeDetectionStrategy, Component, effect, inject, input, OnDestroy } from '@angular/core';
+import { pshResolveConfigValue } from '../../utils/config-value';
 import { Toast } from './toast.types';
 import { PshColor } from '../../types/semantic.types';
 import { PshToastService } from './toast.service';
@@ -20,7 +22,10 @@ export class PshToastComponent implements OnDestroy {
    * The first `input()` this component has ever had: it went from zero inputs and zero
    * outputs on 118 lines to one. The rest of its API is still the service.
    */
-  readonly ariaLabel = input<string>('Notifications');
+  readonly ariaLabelInput = input<string | undefined>(undefined, { alias: 'ariaLabel' });
+  readonly ariaLabel = computed(
+    () => this.ariaLabelInput() ?? pshResolveConfigValue(this.config.ariaLabel) ?? 'Notifications',
+  );
 
   private toastService = inject(PshToastService);
   public config = inject(TOAST_CONFIG);

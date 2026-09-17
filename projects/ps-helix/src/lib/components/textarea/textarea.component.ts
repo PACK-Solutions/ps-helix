@@ -1,4 +1,5 @@
 import { PshFieldAppearance } from '../../types/semantic.types';
+import { pshResolveConfigValue } from '../../utils/config-value';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -170,7 +171,15 @@ export class PshTextareaComponent
     return 'default';
   });
 
-  characterCountLabel = TEXTAREA_LABELS.characterCountSuffix;
+  characterCountSuffix = input<string | undefined>(undefined);
+
+  /** Word after the count. A field before 7.0.0, so no application could translate it. */
+  characterCountLabel = computed(
+    () =>
+      this.characterCountSuffix() ??
+      pshResolveConfigValue(this.config.characterCountSuffix) ??
+      TEXTAREA_LABELS.characterCountSuffix,
+  );
 
   constructor() {
     // A value change revalidates by itself; a change to `required` does not — Angular has

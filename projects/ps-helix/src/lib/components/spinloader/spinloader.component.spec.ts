@@ -41,8 +41,8 @@ describe('PshSpinLoaderComponent', () => {
       expect(getHostElement().getAttribute('role')).toBe('status');
     });
 
-    it('should have default aria-label "Chargement en cours"', () => {
-      expect(getHostElement().getAttribute('aria-label')).toBe('Chargement en cours');
+    it('should have default aria-label "Loading"', () => {
+      expect(getHostElement().getAttribute('aria-label')).toBe('Loading');
     });
 
     it('should use custom ariaLabel when provided', () => {

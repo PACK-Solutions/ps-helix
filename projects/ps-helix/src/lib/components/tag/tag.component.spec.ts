@@ -219,7 +219,7 @@ describe('PshTagComponent', () => {
     });
 
     it('should have correct aria-label on close button', () => {
-      expect(getCloseButton().getAttribute('aria-label')).toBe('Supprimer le tag');
+      expect(getCloseButton().getAttribute('aria-label')).toBe('Remove tag');
     });
 
     it('should use custom closeLabel when provided', () => {

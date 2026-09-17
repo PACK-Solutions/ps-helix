@@ -1,4 +1,5 @@
 import { PshFieldAppearance } from '../../types/semantic.types';
+import { PshConfigValue } from '../../utils/config-value';
 export type InputType = 'text' | 'password' | 'email' | 'tel' | 'url' | 'search' | 'date' | 'number';
 /**
  * @deprecated since 7.0.0 — use {@link PshFieldAppearance}. Surface treatment now shares one
@@ -17,6 +18,10 @@ export interface InputConfig {
   appearance: InputVariant;
   size: InputSize;
   required: boolean;
+  /** Accessible name of the password toggle while the password is hidden */
+  showPasswordLabel: PshConfigValue<string>;
+  /** Accessible name of the password toggle while the password is shown */
+  hidePasswordLabel: PshConfigValue<string>;
   fullWidth: boolean;
   showLabel: boolean;
   label: string;
@@ -33,6 +38,6 @@ export interface SuggestionResult {
 }
 
 export const INPUT_LABELS = {
-  showPassword: 'Afficher le mot de passe',
-  hidePassword: 'Masquer le mot de passe'
+  showPassword: 'Show password',
+  hidePassword: 'Hide password'
 } as const;

@@ -17,7 +17,7 @@ const COLLAPSE_DEFAULTS = {
   size: 'medium',
   icon: 'caret-down',
   maxHeight: 'auto',
-  defaultHeaderText: 'Section pliable',
+  defaultHeaderText: 'Collapsible section',
   disableAnimation: false,
 } satisfies Partial<CollapseConfig>;
 

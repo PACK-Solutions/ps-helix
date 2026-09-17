@@ -83,4 +83,8 @@ export interface InfoCardConfig {
   copyButtonLabel: PshConfigValue<string>;
   copyFeedbackText: PshConfigValue<string>;
   autoFullWidthOnMobile: boolean;
+  /** Shown when the card has no rows to display */
+  emptyStateMessage?: PshConfigValue<string>;
+  /** Shown in place of a row value that is null or undefined */
+  notProvidedText?: PshConfigValue<string>;
 }

@@ -8,7 +8,7 @@ const TAG_DEFAULTS = {
   closable: false,
   disabled: false,
   interactive: false,
-  closeLabel: 'Supprimer le tag'
+  closeLabel: 'Remove tag'
 } satisfies Partial<TagConfig>;
 
 export const TAG_CONFIG = new InjectionToken<Partial<TagConfig>>('TAG_CONFIG', {
@@ -34,7 +34,7 @@ export class PshTagComponent implements AfterContentChecked {
   readonly icon = input<string>();
   readonly closeLabelInput = input<string | undefined>(undefined, { alias: 'closeLabel' });
   readonly closeLabel = computed(
-    () => this.closeLabelInput() ?? pshResolveConfigValue(this.config.closeLabel) ?? 'Supprimer le tag',
+    () => this.closeLabelInput() ?? pshResolveConfigValue(this.config.closeLabel) ?? 'Remove tag',
   );
   readonly content = input('Tag');
   readonly ariaLabel = input<string>();

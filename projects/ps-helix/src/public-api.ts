@@ -1,6 +1,9 @@
 // One call to configure the whole design system, plus the finer-grained providers.
 export * from './lib/provide-helix';
 
+// Every default string in French, for an application that wants them back.
+export * from './lib/i18n/french';
+
 // The vocabulary every component shares. Import PshColor rather than a per-component
 // alias: the aliases are deprecated and exist only to ease the 7.0.0 migration.
 export * from './lib/types/semantic.types';

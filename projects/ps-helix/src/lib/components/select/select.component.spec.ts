@@ -202,7 +202,7 @@ describe('PshSelectComponent', () => {
 
     it('should display placeholder text when no value is selected', () => {
       const combobox = getCombobox();
-      expect(combobox.textContent).toContain('Sélectionner une option');
+      expect(combobox.textContent).toContain('Select an option');
     });
 
     it('should display custom placeholder when provided', () => {
@@ -255,7 +255,7 @@ describe('PshSelectComponent', () => {
       expect(options[1]!.textContent).toContain('A yellow fruit');
     });
 
-    it('should display "Aucun résultat" when no options match search', () => {
+    it('should display "No results" when no options match search', () => {
       fixture.componentRef.setInput('searchable', true);
       fixture.detectChanges();
       openSelect();
@@ -266,7 +266,7 @@ describe('PshSelectComponent', () => {
       fixture.detectChanges();
 
       expect(getNoResultsMessage()).toBeTruthy();
-      expect(getNoResultsMessage().textContent).toContain('Aucun résultat');
+      expect(getNoResultsMessage().textContent).toContain('No results');
     });
 
     it('should display error message with alert role', () => {
@@ -433,7 +433,7 @@ describe('PshSelectComponent', () => {
       fixture.detectChanges();
 
       expect(fixture.componentInstance.value()).toBeNull();
-      expect(getCombobox().textContent).toContain('Sélectionner une option');
+      expect(getCombobox().textContent).toContain('Select an option');
     });
 
     it('should keep dropdown open after selection in multiple mode', () => {
@@ -508,7 +508,7 @@ describe('PshSelectComponent', () => {
       fixture.detectChanges();
 
       expect(fixture.componentInstance.value()).toBeNull();
-      expect(getCombobox().textContent).toContain('Sélectionner une option');
+      expect(getCombobox().textContent).toContain('Select an option');
     });
 
     it('should clear to empty array in multiple mode', () => {

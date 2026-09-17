@@ -249,7 +249,7 @@ describe('PshTabBarComponent', () => {
     });
 
     it('should have aria-label on host', () => {
-      expect(getTabList().getAttribute('aria-label')).toBe('Navigation par onglets');
+      expect(getTabList().getAttribute('aria-label')).toBe('Tab navigation');
     });
 
     it('should have role="tab" on each tab button', () => {

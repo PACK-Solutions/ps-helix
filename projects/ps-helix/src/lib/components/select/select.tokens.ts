@@ -18,11 +18,11 @@ const SELECT_DEFAULTS = {
   searchable: false,
   clearable: false,
   fullWidth: false,
-  placeholder: 'Sélectionner une option',
-  multiplePlaceholder: 'Sélectionner des options',
-  noResultsText: 'Aucun résultat',
-  clearLabel: 'Effacer la sélection',
-  searchConfig: { debounceTime: 300, placeholder: 'Rechercher...', minLength: 1 },
+  placeholder: 'Select an option',
+  multiplePlaceholder: 'Select options',
+  noResultsText: 'No results',
+  clearLabel: 'Clear selection',
+  searchPlaceholder: 'Search...',
 } satisfies Partial<SelectConfig>;
 
 export const SELECT_CONFIG = new InjectionToken<Partial<SelectConfig>>('SELECT_CONFIG', {

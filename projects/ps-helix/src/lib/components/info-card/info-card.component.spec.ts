@@ -97,8 +97,8 @@ describe('PshInfoCardComponent', () => {
       const rows = getListItems();
       const firstRow = rows[0] as HTMLElement;
       const secondRow = rows[1] as HTMLElement;
-      expect(firstRow.textContent).toContain('Non renseigné');
-      expect(secondRow.textContent).toContain('Non renseigné');
+      expect(firstRow.textContent).toContain('Not provided');
+      expect(secondRow.textContent).toContain('Not provided');
     });
 
     it('should show empty state when data array is empty', () => {
@@ -107,7 +107,7 @@ describe('PshInfoCardComponent', () => {
 
       const emptyState = getEmptyState();
       expect(emptyState).toBeTruthy();
-      expect(emptyState.textContent).toContain('Aucune information disponible');
+      expect(emptyState.textContent).toContain('No information available');
     });
 
     it('should display custom empty state message from options', () => {
@@ -650,7 +650,7 @@ describe('PshInfoCardComponent - Copy Feature', () => {
       fixture.detectChanges();
 
       const btn = getCopyButtons()[0];
-      expect(btn.getAttribute('aria-label')).toBe('Copier Email');
+      expect(btn.getAttribute('aria-label')).toBe('Copy Email');
     });
 
     it('should use custom copyButtonLabel in aria-label', () => {
@@ -918,7 +918,7 @@ describe('PshInfoCardComponent - Row emphasis / formatting', () => {
     const cls = getValue().className;
     expect(cls).toContain('psh-info-card-value--italic');
     expect(cls).toContain('psh-info-card-value--color-neutral');
-    expect(getValue().textContent?.trim()).toBe('Non renseigné');
+    expect(getValue().textContent?.trim()).toBe('Not provided');
   });
 
   it('auto-mutes undefined values by default', () => {
@@ -944,8 +944,8 @@ describe('PshInfoCardComponent - Row emphasis / formatting', () => {
     expect(cls).not.toContain('psh-info-card-value--color-neutral');
   });
 
-  it('does not auto-mute the literal "Non renseigné" string (value not nullish)', () => {
-    fixture.componentRef.setInput('data', [{ label: 'L', value: 'Non renseigné' }]);
+  it('does not auto-mute the literal "Not provided" string (value not nullish)', () => {
+    fixture.componentRef.setInput('data', [{ label: 'L', value: 'Not provided' }]);
     fixture.detectChanges();
     const cls = getValue().className;
     expect(cls).not.toContain('psh-info-card-value--color-neutral');

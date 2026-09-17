@@ -448,7 +448,7 @@ describe('PshTabsComponent', () => {
     });
 
     it('should have default aria-label on host when not provided', () => {
-      expect(getTabsHost().getAttribute('aria-label')).toBe('Navigation par onglets');
+      expect(getTabsHost().getAttribute('aria-label')).toBe('Tab navigation');
     });
 
     it('should use custom aria-label when provided', () => {

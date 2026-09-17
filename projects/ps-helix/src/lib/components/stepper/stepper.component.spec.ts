@@ -650,7 +650,7 @@ describe('PshStepperComponent', () => {
     });
 
     it('should have aria-label on host', () => {
-      expect(getStepperHost().getAttribute('aria-label')).toBe('Navigation par étapes');
+      expect(getStepperHost().getAttribute('aria-label')).toBe('Step navigation');
     });
 
     it('should have role="tablist" on header container', () => {
@@ -865,9 +865,9 @@ describe('PshStepperComponent', () => {
       const step = getStepper().steps()[0]!;
       const label = getStepper().getStepAriaLabel(step, 0);
 
-      expect(label).toContain('Étape 1');
       expect(label).toContain('Step 1');
-      expect(label).toContain('Étape complétée');
+      expect(label).toContain('Step 1');
+      expect(label).toContain('Step completed');
     });
 
     it('should return correct label for active step', () => {
@@ -876,9 +876,9 @@ describe('PshStepperComponent', () => {
       const step = getStepper().steps()[0]!;
       const label = getStepper().getStepAriaLabel(step, 0);
 
-      expect(label).toContain('Étape 1');
       expect(label).toContain('Step 1');
-      expect(label).toContain('Étape active');
+      expect(label).toContain('Step 1');
+      expect(label).toContain('Step active');
     });
 
     it('should return correct label for disabled step', () => {
@@ -888,8 +888,8 @@ describe('PshStepperComponent', () => {
       const step = getStepper().steps()[1]!;
       const label = getStepper().getStepAriaLabel(step, 1);
 
-      expect(label).toContain('Étape 2');
-      expect(label).toContain('Étape désactivée');
+      expect(label).toContain('Step 2');
+      expect(label).toContain('Step disabled');
     });
 
     it('should return correct label for incomplete step', () => {
@@ -898,8 +898,8 @@ describe('PshStepperComponent', () => {
       const step = getStepper().steps()[1]!;
       const label = getStepper().getStepAriaLabel(step, 1);
 
-      expect(label).toContain('Étape 2');
-      expect(label).toContain('Étape incomplète');
+      expect(label).toContain('Step 2');
+      expect(label).toContain('Step incomplete');
     });
   });
 

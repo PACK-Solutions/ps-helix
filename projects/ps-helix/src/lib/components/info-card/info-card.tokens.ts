@@ -18,9 +18,11 @@ const INFO_CARD_DEFAULTS = {
   hoverable: false,
   interactive: false,
   copyable: false,
-  copyButtonLabel: 'Copier',
-  copyFeedbackText: 'Copié',
+  copyButtonLabel: 'Copy',
+  copyFeedbackText: 'Copied',
   autoFullWidthOnMobile: true,
+  emptyStateMessage: 'No information available',
+  notProvidedText: 'Not provided',
 } satisfies Partial<InfoCardConfig>;
 
 export const INFO_CARD_CONFIG = new InjectionToken<Partial<InfoCardConfig>>('INFO_CARD_CONFIG', {

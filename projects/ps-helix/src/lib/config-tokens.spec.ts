@@ -248,7 +248,7 @@ describe('component config tokens', () => {
     it('reads it, rather than storing what it returned once', () => {
       const language = signal('fr');
       const placeholder = () =>
-        language() === 'fr' ? 'Sélectionner une option' : 'Select an option';
+        language() === 'fr' ? 'Select an option' : 'Select an option';
 
       TestBed.configureTestingModule({
         imports: [PshSelectComponent],
@@ -257,7 +257,7 @@ describe('component config tokens', () => {
       const fixture = TestBed.createComponent(PshSelectComponent);
       fixture.componentRef.setInput('options', []);
 
-      expect(fixture.componentInstance.placeholder()).toBe('Sélectionner une option');
+      expect(fixture.componentInstance.placeholder()).toBe('Select an option');
 
       // The whole reason the thunk form exists: an application that switches language
       // after the component is on screen.

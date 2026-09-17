@@ -66,7 +66,7 @@ export class PshCollapseComponent {
    */
   readonly defaultHeaderTextInput = input<string | undefined>(undefined, { alias: 'defaultHeaderText' });
   readonly defaultHeaderText = computed(
-    () => this.defaultHeaderTextInput() ?? pshResolveConfigValue(this.config.defaultHeaderText) ?? 'Section pliable',
+    () => this.defaultHeaderTextInput() ?? pshResolveConfigValue(this.config.defaultHeaderText) ?? 'Collapsible section',
   );
 
   /** `auto` is not a usable `max-height` for the CSS; `none` is the same intent. */

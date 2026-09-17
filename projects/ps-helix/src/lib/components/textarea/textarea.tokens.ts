@@ -10,7 +10,7 @@
  * quietly falling through to the literal in the component.
  */
 import { InjectionToken } from '@angular/core';
-import { TextareaConfig } from './textarea.types';
+import { TextareaConfig, TEXTAREA_LABELS } from './textarea.types';
 
 const TEXTAREA_DEFAULTS = {
   appearance: 'outline',
@@ -18,6 +18,7 @@ const TEXTAREA_DEFAULTS = {
   resize: 'vertical',
   rows: 4,
   required: false,
+  characterCountSuffix: TEXTAREA_LABELS.characterCountSuffix,
   fullWidth: false,
   showLabel: true,
   showCharacterCount: false,

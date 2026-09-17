@@ -19,7 +19,10 @@ const TABLE_DEFAULTS = {
   truncateText: false,
   fullWidth: false,
   expandable: false,
-  singleExpand: false
+  singleExpand: false,
+  expandColumnLabel: 'Expand',
+  expandRowLabel: 'Expand row',
+  collapseRowLabel: 'Collapse row',
 } satisfies Partial<TableConfig>;
 
 export const TABLE_CONFIG = new InjectionToken<Partial<TableConfig>>('TABLE_CONFIG', {
@@ -96,11 +99,20 @@ export class PshTableComponent {
   /** Name of the table itself. There was none, so several tables on a page were all "table". */
   readonly ariaLabel = input<string>();
   /** Name of the expand column header, which has no visible text. Was a literal. */
-  readonly expandColumnLabel = input<string>('Expand');
+  readonly expandColumnLabelInput = input<string | undefined>(undefined, { alias: 'expandColumnLabel' });
+  readonly expandColumnLabel = computed(
+    () => this.expandColumnLabelInput() ?? pshResolveConfigValue(this.config.expandColumnLabel) ?? 'Expand',
+  );
   /** Name of a row's expand toggle. Was a pair of literals. */
-  readonly expandRowLabel = input<string>('Expand row');
+  readonly expandRowLabelInput = input<string | undefined>(undefined, { alias: 'expandRowLabel' });
+  readonly expandRowLabel = computed(
+    () => this.expandRowLabelInput() ?? pshResolveConfigValue(this.config.expandRowLabel) ?? 'Expand row',
+  );
   /** Name of a row's collapse toggle. Was a pair of literals. */
-  readonly collapseRowLabel = input<string>('Collapse row');
+  readonly collapseRowLabelInput = input<string | undefined>(undefined, { alias: 'collapseRowLabel' });
+  readonly collapseRowLabel = computed(
+    () => this.collapseRowLabelInput() ?? pshResolveConfigValue(this.config.collapseRowLabel) ?? 'Collapse row',
+  );
 
   sortChange = output<TableSort>();
   globalSearchChange = output<string>();

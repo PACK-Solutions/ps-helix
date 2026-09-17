@@ -1,3 +1,5 @@
+import { PshConfigValue } from '../../utils/config-value';
+
 /**
  * Variantes disponibles pour le spinner
  */
@@ -23,4 +25,6 @@ export interface SpinLoaderConfig {
   size: SpinLoaderSize;
   /** Couleur du spinner */
   color: SpinLoaderColor;
+  /** Accessible name announced while loading */
+  ariaLabel?: PshConfigValue<string>;
 }

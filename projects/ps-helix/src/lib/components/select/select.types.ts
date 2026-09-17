@@ -21,11 +21,6 @@ export type SelectSize = 'small' | 'medium' | 'large';
  */
 export type SelectVariant = PshFieldAppearance;
 
-export interface SearchConfig {
-  debounceTime: number;
-  placeholder: PshConfigValue<string>;
-  minLength: number;
-}
 /**
  * Contexte du template d'option.
  *
@@ -54,5 +49,11 @@ export interface SelectConfig {
   multiplePlaceholder: PshConfigValue<string>;
   noResultsText: PshConfigValue<string>;
   clearLabel: PshConfigValue<string>;
-  searchConfig: SearchConfig;
+  /**
+   * Placeholder and accessible name of the search field.
+   *
+   * It used to be a corner of a `searchConfig` object that also declared a debounce and a
+   * minimum length — neither of which the component ever read.
+   */
+  searchPlaceholder: PshConfigValue<string>;
 }

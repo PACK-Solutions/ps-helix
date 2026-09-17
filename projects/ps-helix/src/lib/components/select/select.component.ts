@@ -22,7 +22,7 @@ import type { FormValueControl } from '@angular/forms/signals';
 import { PshClickOutsideDirective } from '../../a11y/click-outside.directive';
 import { PshOverlayPositionService } from '../../a11y/overlay-position.service';
 import { PshPortalService, PshPortalRef } from '../../a11y/portal.service';
-import { SelectOption, SelectOptionGroup, SelectSize, SearchConfig , SelectOptionContext } from './select.types';
+import { SelectOption, SelectOptionGroup, SelectSize, SelectOptionContext } from './select.types';
 import { pshUniqueId } from '../../utils/unique-id';
 import { pshIsEmptyValue, pshRequiredError } from '../../utils/required-validator';
 import { pshJoinAriaIds } from '../../utils/aria';
@@ -120,11 +120,11 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
   label = input('');
   placeholderInput = input<string | undefined>(undefined, { alias: 'placeholder' });
   placeholder = computed(
-    () => this.placeholderInput() ?? pshResolveConfigValue(this.config.placeholder) ?? 'Sélectionner une option',
+    () => this.placeholderInput() ?? pshResolveConfigValue(this.config.placeholder) ?? 'Select an option',
   );
   multiplePlaceholderInput = input<string | undefined>(undefined, { alias: 'multiplePlaceholder' });
   multiplePlaceholder = computed(
-    () => this.multiplePlaceholderInput() ?? pshResolveConfigValue(this.config.multiplePlaceholder) ?? 'Sélectionner des options',
+    () => this.multiplePlaceholderInput() ?? pshResolveConfigValue(this.config.multiplePlaceholder) ?? 'Select options',
   );
   error = input<string | null | undefined>(null);
   success = input<string | null | undefined>(null);
@@ -133,7 +133,7 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
   /** Shown when the search matches nothing. Was a literal in the template. */
   readonly noResultsTextInput = input<string | undefined>(undefined, { alias: 'noResultsText' });
   readonly noResultsText = computed(
-    () => this.noResultsTextInput() ?? pshResolveConfigValue(this.config.noResultsText) ?? 'Aucun résultat',
+    () => this.noResultsTextInput() ?? pshResolveConfigValue(this.config.noResultsText) ?? 'No results',
   );
 
   /**
@@ -151,17 +151,18 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
   /** Accessible name of the clear button, which renders as a bare icon. */
   clearLabelInput = input<string | undefined>(undefined, { alias: 'clearLabel' });
   clearLabel = computed(
-    () => this.clearLabelInput() ?? pshResolveConfigValue(this.config.clearLabel) ?? 'Effacer la sélection',
+    () => this.clearLabelInput() ?? pshResolveConfigValue(this.config.clearLabel) ?? 'Clear selection',
   );
   maxSelections = input<number | undefined>(undefined);
   minSelections = input<number | undefined>(undefined);
   compareWith = input<(a: T, b: T) => boolean>((a, b) => a === b);
-  searchConfig = input<SearchConfig>(
-    this.config.searchConfig ?? {
-      debounceTime: 300,
-      placeholder: 'Rechercher...',
-      minLength: 1,
-    },
+  searchPlaceholderInput = input<string | undefined>(undefined, { alias: 'searchPlaceholder' });
+  /** Placeholder and accessible name of the search field. */
+  searchPlaceholder = computed(
+    () =>
+      this.searchPlaceholderInput() ??
+      pshResolveConfigValue(this.config.searchPlaceholder) ??
+      'Search...',
   );
 
   private readonly isOpenSignal = signal(false);

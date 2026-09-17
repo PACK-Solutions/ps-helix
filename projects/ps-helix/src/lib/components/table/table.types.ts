@@ -135,4 +135,10 @@ export interface TableConfig {
   expandable: boolean;
   /** Mode accordéon (une seule ligne ouverte à la fois) */
   singleExpand: boolean;
+  /** Header of the expand column */
+  expandColumnLabel?: PshConfigValue<string>;
+  /** Accessible name of the control that opens a row */
+  expandRowLabel?: PshConfigValue<string>;
+  /** Accessible name of the control that closes a row */
+  collapseRowLabel?: PshConfigValue<string>;
 }

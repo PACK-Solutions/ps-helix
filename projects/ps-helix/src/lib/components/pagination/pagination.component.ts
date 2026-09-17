@@ -11,6 +11,7 @@ import {
   output,
   linkedSignal,
 } from '@angular/core';
+import { pshResolveConfigValue } from '../../utils/config-value';
 import { CommonModule } from '@angular/common';
 import { PaginationSize, PaginationVariant, PaginationConfig } from './pagination.types';
 import { InjectionToken } from '@angular/core';
@@ -24,6 +25,14 @@ const PAGINATION_DEFAULTS = {
   maxVisiblePages: 5,
   showItemsPerPage: false,
   itemsPerPageOptions: [5, 10, 25, 50],
+  firstLabel: 'First',
+  previousLabel: 'Previous',
+  nextLabel: 'Next',
+  lastLabel: 'Last',
+  pageLabel: 'Page',
+  itemsLabel: 'items',
+  itemsPerPageLabel: 'Items per page',
+  ariaLabel: 'Pagination navigation',
 } satisfies Partial<PaginationConfig>;
 
 export const PAGINATION_CONFIG = new InjectionToken<Partial<PaginationConfig>>('PAGINATION_CONFIG', {
@@ -126,15 +135,45 @@ export class PshPaginationComponent {
   readonly itemsPerPageOptions = input<number[]>(
     this.config.itemsPerPageOptions ?? [5, 10, 25, 50],
   );
-  readonly firstLabel = input('First');
-  readonly previousLabel = input('Previous');
-  readonly nextLabel = input('Next');
-  readonly lastLabel = input('Last');
-  readonly pageLabel = input('Page');
-  readonly itemsLabel = input('items');
-  readonly itemsPerPageLabel = input('Items per page');
+  readonly firstLabelInput = input<string | undefined>(undefined, { alias: 'firstLabel' });
+  readonly firstLabel = computed(
+    () => this.firstLabelInput() ?? pshResolveConfigValue(this.config.firstLabel) ?? 'First',
+  );
+  readonly previousLabelInput = input<string | undefined>(undefined, { alias: 'previousLabel' });
+  readonly previousLabel = computed(
+    () => this.previousLabelInput() ?? pshResolveConfigValue(this.config.previousLabel) ?? 'Previous',
+  );
+  readonly nextLabelInput = input<string | undefined>(undefined, { alias: 'nextLabel' });
+  readonly nextLabel = computed(
+    () => this.nextLabelInput() ?? pshResolveConfigValue(this.config.nextLabel) ?? 'Next',
+  );
+  readonly lastLabelInput = input<string | undefined>(undefined, { alias: 'lastLabel' });
+  readonly lastLabel = computed(
+    () => this.lastLabelInput() ?? pshResolveConfigValue(this.config.lastLabel) ?? 'Last',
+  );
+  readonly ofLabelInput = input<string | undefined>(undefined, { alias: 'ofLabel' });
+  /** Between the current page and the total. Its own word, because word order is not. */
+  readonly ofLabel = computed(
+    () => this.ofLabelInput() ?? pshResolveConfigValue(this.config.ofLabel) ?? 'of',
+  );
+
+  readonly pageLabelInput = input<string | undefined>(undefined, { alias: 'pageLabel' });
+  readonly pageLabel = computed(
+    () => this.pageLabelInput() ?? pshResolveConfigValue(this.config.pageLabel) ?? 'Page',
+  );
+  readonly itemsLabelInput = input<string | undefined>(undefined, { alias: 'itemsLabel' });
+  readonly itemsLabel = computed(
+    () => this.itemsLabelInput() ?? pshResolveConfigValue(this.config.itemsLabel) ?? 'items',
+  );
+  readonly itemsPerPageLabelInput = input<string | undefined>(undefined, { alias: 'itemsPerPageLabel' });
+  readonly itemsPerPageLabel = computed(
+    () => this.itemsPerPageLabelInput() ?? pshResolveConfigValue(this.config.itemsPerPageLabel) ?? 'Items per page',
+  );
   readonly id = input<string>();
-  readonly ariaLabel = input<string>('Pagination navigation');
+  readonly ariaLabelInput = input<string | undefined>(undefined, { alias: 'ariaLabel' });
+  readonly ariaLabel = computed(
+    () => this.ariaLabelInput() ?? pshResolveConfigValue(this.config.ariaLabel) ?? 'Pagination navigation',
+  );
 
   pageChange = output<number>();
   itemsPerPageChange = output<number>();
@@ -172,7 +211,7 @@ export class PshPaginationComponent {
   );
 
   protected readonly currentPageAnnouncement = computed(() => {
-    return `Page ${this.currentPage()} sur ${this.effectiveTotalPages()}`;
+    return `${this.pageLabel()} ${this.currentPage()} ${this.ofLabel()} ${this.effectiveTotalPages()}`;
   });
 
   private getState(): string {

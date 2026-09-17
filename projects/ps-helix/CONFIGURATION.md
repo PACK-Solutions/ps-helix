@@ -44,7 +44,7 @@ import { BUTTON_CONFIG } from 'ps-helix';
 @Component({ providers: [{ provide: BUTTON_CONFIG, useValue: { size: 'small' } }] })
 ```
 
-**31 tokens, 201 settable defaults.**
+**31 tokens, 223 settable defaults.**
 
 ---
 
@@ -143,7 +143,7 @@ import { BUTTON_CONFIG } from 'ps-helix';
 | `size` | `'medium'` |
 | `icon` | `'caret-down'` |
 | `maxHeight` | `'auto'` |
-| `defaultHeaderText` | `'Section pliable'` |
+| `defaultHeaderText` | `'Collapsible section'` |
 | `disableAnimation` | `false` |
 
 ### `dropdown`
@@ -186,9 +186,11 @@ import { BUTTON_CONFIG } from 'ps-helix';
 | `hoverable` | `false` |
 | `interactive` | `false` |
 | `copyable` | `false` |
-| `copyButtonLabel` | `'Copier'` |
-| `copyFeedbackText` | `'Copié'` |
+| `copyButtonLabel` | `'Copy'` |
+| `copyFeedbackText` | `'Copied'` |
 | `autoFullWidthOnMobile` | `true` |
+| `emptyStateMessage` | `'No information available'` |
+| `notProvidedText` | `'Not provided'` |
 
 ### `input`
 
@@ -200,6 +202,8 @@ import { BUTTON_CONFIG } from 'ps-helix';
 | `size` | `'medium'` |
 | `type` | `'text'` |
 | `required` | `false` |
+| `showPasswordLabel` | `INPUT_LABELS.showPassword` |
+| `hidePasswordLabel` | `INPUT_LABELS.hidePassword` |
 | `fullWidth` | `false` |
 | `showLabel` | `true` |
 | `label` | `''` |
@@ -244,6 +248,14 @@ import { BUTTON_CONFIG } from 'ps-helix';
 | `maxVisiblePages` | `5` |
 | `showItemsPerPage` | `false` |
 | `itemsPerPageOptions` | `[5, 10, 25, 50]` |
+| `firstLabel` | `'First'` |
+| `previousLabel` | `'Previous'` |
+| `nextLabel` | `'Next'` |
+| `lastLabel` | `'Last'` |
+| `pageLabel` | `'Page'` |
+| `itemsLabel` | `'items'` |
+| `itemsPerPageLabel` | `'Items per page'` |
+| `ariaLabel` | `'Pagination navigation'` |
 
 ### `progressbar`
 
@@ -292,11 +304,11 @@ import { BUTTON_CONFIG } from 'ps-helix';
 | `searchable` | `false` |
 | `clearable` | `false` |
 | `fullWidth` | `false` |
-| `placeholder` | `'Sélectionner une option'` |
-| `multiplePlaceholder` | `'Sélectionner des options'` |
-| `noResultsText` | `'Aucun résultat'` |
-| `clearLabel` | `'Effacer la sélection'` |
-| `searchConfig` | `{ debounceTime: 300, placeholder: 'Rechercher...', minLength: 1 }` |
+| `placeholder` | `'Select an option'` |
+| `multiplePlaceholder` | `'Select options'` |
+| `noResultsText` | `'No results'` |
+| `clearLabel` | `'Clear selection'` |
+| `searchPlaceholder` | `'Search...'` |
 
 ### `sidebar`
 
@@ -322,6 +334,7 @@ import { BUTTON_CONFIG } from 'ps-helix';
 | `variant` | `'circle'` |
 | `size` | `'medium'` |
 | `color` | `'primary'` |
+| `ariaLabel` | `'Loading'` |
 
 ### `statCard`
 
@@ -343,6 +356,7 @@ import { BUTTON_CONFIG } from 'ps-helix';
 |---|---|
 | `linear` | `true` |
 | `ariaLabels` | `DEFAULT_ARIA_LABELS` |
+| `ariaLabel` | `'Progress indicator'` |
 
 ### `stepper`
 
@@ -353,6 +367,7 @@ import { BUTTON_CONFIG } from 'ps-helix';
 | `variant` | `'default'` |
 | `linear` | `true` |
 | `ariaLabels` | `DEFAULT_ARIA_LABELS` |
+| `ariaLabel` | `'Step navigation'` |
 
 ### `switch`
 
@@ -375,6 +390,7 @@ import { BUTTON_CONFIG } from 'ps-helix';
 | `disabled` | `false` |
 | `position` | `'bottom'` |
 | `animated` | `true` |
+| `ariaLabel` | `'Tab navigation'` |
 
 ### `table`
 
@@ -397,6 +413,9 @@ import { BUTTON_CONFIG } from 'ps-helix';
 | `fullWidth` | `false` |
 | `expandable` | `false` |
 | `singleExpand` | `false` |
+| `expandColumnLabel` | `'Expand'` |
+| `expandRowLabel` | `'Expand row'` |
+| `collapseRowLabel` | `'Collapse row'` |
 
 ### `tabs`
 
@@ -404,6 +423,7 @@ import { BUTTON_CONFIG } from 'ps-helix';
 
 | Key | Default |
 |---|---|
+| `ariaLabel` | `'Tab navigation'` |
 | `variant` | `'default'` |
 | `size` | `'medium'` |
 | `activeIndex` | `0` |
@@ -420,7 +440,7 @@ import { BUTTON_CONFIG } from 'ps-helix';
 | `closable` | `false` |
 | `disabled` | `false` |
 | `interactive` | `false` |
-| `closeLabel` | `'Supprimer le tag'` |
+| `closeLabel` | `'Remove tag'` |
 
 ### `textarea`
 
@@ -433,6 +453,7 @@ import { BUTTON_CONFIG } from 'ps-helix';
 | `resize` | `'vertical'` |
 | `rows` | `4` |
 | `required` | `false` |
+| `characterCountSuffix` | `TEXTAREA_LABELS.characterCountSuffix` |
 | `fullWidth` | `false` |
 | `showLabel` | `true` |
 | `showCharacterCount` | `false` |
@@ -452,6 +473,7 @@ import { BUTTON_CONFIG } from 'ps-helix';
 | `pauseOnHover` | `true` |
 | `showIcon` | `true` |
 | `showCloseButton` | `true` |
+| `ariaLabel` | `'Notifications'` |
 
 ### `tooltip`
 
