@@ -354,10 +354,15 @@ export class PshInputComponent implements ControlValueAccessor, FormValueControl
         }
         break;
       case 'Escape':
-        event.preventDefault();
-        this.suggestionsVisible.set(false);
-        this.focusedSuggestionIndex.set(-1);
-        this.syncPanel();
+        // Only when suggestions are showing. Otherwise the keypress belongs to whatever
+        // encloses the field — a modal, most often — and must reach it.
+        if (this.suggestionsVisible()) {
+          event.preventDefault();
+          event.stopPropagation();
+          this.suggestionsVisible.set(false);
+          this.focusedSuggestionIndex.set(-1);
+          this.syncPanel();
+        }
         break;
     }
   }

@@ -228,8 +228,10 @@ export class PshDropdownComponent<T = string> {
         break;
 
       case 'Escape':
+        // Consumed here, so an enclosing modal does not also close on the same keypress.
         if (this.isOpen()) {
           event.preventDefault();
+          event.stopPropagation();
           this.close();
         }
         break;
@@ -266,6 +268,7 @@ export class PshDropdownComponent<T = string> {
 
       case 'Escape':
         event.preventDefault();
+        event.stopPropagation();
         this.close();
         break;
 

@@ -213,6 +213,7 @@ export class PshMenuComponent<T = string> {
       case 'Escape':
         if (this.collapsible() && !this.collapsed()) {
           event.preventDefault();
+          event.stopPropagation();
           this.toggleCollapse();
         }
         break;
