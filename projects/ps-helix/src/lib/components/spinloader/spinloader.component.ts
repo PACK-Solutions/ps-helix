@@ -38,17 +38,17 @@ export class PshSpinLoaderComponent {
   private readonly destroyRef = inject(DestroyRef);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
-  variant = input<SpinLoaderVariant>(this.config.variant ?? 'circle');
-  size = input<SpinLoaderSize>(this.config.size ?? 'medium');
-  color = input<SpinLoaderColor>(this.config.color ?? 'primary');
-  label = input<string>();
-  ariaLabelInput = input<string | undefined>(undefined, { alias: 'ariaLabel' });
-  ariaLabel = computed(
+  readonly variant = input<SpinLoaderVariant>(this.config.variant ?? 'circle');
+  readonly size = input<SpinLoaderSize>(this.config.size ?? 'medium');
+  readonly color = input<SpinLoaderColor>(this.config.color ?? 'primary');
+  readonly label = input<string>();
+  readonly ariaLabelInput = input<string | undefined>(undefined, { alias: 'ariaLabel' });
+  readonly ariaLabel = computed(
     () => this.ariaLabelInput() ?? pshResolveConfigValue(this.config.ariaLabel) ?? 'Chargement en cours',
   );
-  ariaLive = input<'polite' | 'assertive'>('polite');
+  readonly ariaLive = input<'polite' | 'assertive'>('polite');
 
-  reduceMotion = signal(false);
+  readonly reduceMotion = signal(false);
 
   constructor() {
     // Read the media query once at construction so the very first browser render is

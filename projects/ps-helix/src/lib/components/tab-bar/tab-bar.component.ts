@@ -48,13 +48,13 @@ export class PshTabBarComponent {
   private readonly tabButtons = viewChildren<ElementRef<HTMLButtonElement>>('tabButton');
 
   // Model inputs with defaults from config
-  disabled = input(this.config.disabled ?? false);
-  position = input<'bottom' | 'top'>(this.config.position ?? 'bottom');
-  animated = input(this.config.animated ?? true);
-  activeIndex = model(0);
+  readonly disabled = input(this.config.disabled ?? false);
+  readonly position = input<'bottom' | 'top'>(this.config.position ?? 'bottom');
+  readonly animated = input(this.config.animated ?? true);
+  readonly activeIndex = model(0);
 
   // Regular inputs
-  items = input.required<TabBarItem[]>();
+  readonly items = input.required<TabBarItem[]>();
 
   /** Name of the tab bar. Was hard-coded, in French, with no way out. */
   readonly ariaLabelInput = input<string | undefined>(undefined, { alias: 'ariaLabel' });

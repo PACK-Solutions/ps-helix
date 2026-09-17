@@ -1,6 +1,7 @@
 import { PshControlAppearance } from '../../types/semantic.types';
 import { pshResolveConfigValue } from '../../utils/config-value';
 import {
+  NgZone,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -15,7 +16,7 @@ import {
   ViewContainerRef,
   viewChild,
 } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { PshOverlayPositionService } from '../../a11y/overlay-position.service';
 import { PshClickOutsideDirective } from '../../a11y/click-outside.directive';
 import { PshPortalService, PshPortalRef } from '../../a11y/portal.service';
@@ -24,13 +25,13 @@ import { DROPDOWN_CONFIG } from './dropdown.tokens';
 
 @Component({
   selector: 'psh-dropdown',
-  imports: [CommonModule],
   templateUrl: './dropdown.component.html',
   styleUrls: ['./dropdown.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   hostDirectives: [PshClickOutsideDirective]
 })
 export class PshDropdownComponent<T = string> {
+  private readonly zone = inject(NgZone);
   private readonly config = inject(DROPDOWN_CONFIG);
 
   private elementRef = inject(ElementRef);
@@ -47,26 +48,26 @@ export class PshDropdownComponent<T = string> {
   private readonly repositionHandler = (): void => this.reposition();
 
   // Regular inputs
-  appearance = input<PshControlAppearance>(this.config.appearance ?? 'solid');
-  color = input<DropdownColor>(this.config.color ?? 'primary');
-  size = input<DropdownSize>(this.config.size ?? 'medium');
-  placement = input<DropdownPlacement>(this.config.placement ?? 'bottom-start');
-  items = input<DropdownItem<T>[]>([]);
-  labelInput = input<string | undefined>(undefined, { alias: 'label' });
-  label = computed(
+  readonly appearance = input<PshControlAppearance>(this.config.appearance ?? 'solid');
+  readonly color = input<DropdownColor>(this.config.color ?? 'primary');
+  readonly size = input<DropdownSize>(this.config.size ?? 'medium');
+  readonly placement = input<DropdownPlacement>(this.config.placement ?? 'bottom-start');
+  readonly items = input<DropdownItem<T>[]>([]);
+  readonly labelInput = input<string | undefined>(undefined, { alias: 'label' });
+  readonly label = computed(
     () => this.labelInput() ?? pshResolveConfigValue(this.config.label) ?? 'Dropdown Menu',
   );
-  icon = input<string>();
-  ariaLabel = input<string>();
-  iconOnly = input<boolean>(this.config.iconOnly ?? false);
-  iconOnlyText = input<string>();
+  readonly icon = input<string>();
+  readonly ariaLabel = input<string>();
+  readonly iconOnly = input<boolean>(this.config.iconOnly ?? false);
+  readonly iconOnlyText = input<string>();
 
   // Model inputs
-  disabled = input(this.config.disabled ?? false);
+  readonly disabled = input(this.config.disabled ?? false);
 
   // State
-  private isOpenSignal = signal(false);
-  private selectedItemSignal = signal<DropdownItem<T> | null>(null);
+  private readonly isOpenSignal = signal(false);
+  private readonly selectedItemSignal = signal<DropdownItem<T> | null>(null);
   /**
    * Which item holds focus. Read by the template for the roving tabindex: a `role="menu"`
    * has one tab stop, and Tab leaves the menu rather than walking its items.
@@ -83,19 +84,19 @@ export class PshDropdownComponent<T = string> {
   closed = output<void>();
 
   // Computed values
-  isOpen = computed(() => this.isOpenSignal());
-  selectedItem = computed(() => this.selectedItemSignal());
+  readonly isOpen = computed(() => this.isOpenSignal());
+  readonly selectedItem = computed(() => this.selectedItemSignal());
 
-  isIconOnly = computed(() => this.iconOnly() && !!this.icon());
+  readonly isIconOnly = computed(() => this.iconOnly() && !!this.icon());
 
-  computedAriaLabel = computed(() => {
+  readonly computedAriaLabel = computed(() => {
     if (this.isIconOnly()) {
       return this.iconOnlyText() || this.ariaLabel() || 'Toggle dropdown menu';
     }
     return this.ariaLabel() || 'Toggle dropdown menu';
   });
 
-  state = computed(() => this.getState());
+  readonly state = computed(() => this.getState());
 
   private getState(): string {
     if (this.disabled()) return 'disabled';
@@ -126,8 +127,14 @@ export class PshDropdownComponent<T = string> {
     this.portalRef = this.portal.attach(tpl, this.viewContainer);
     this.reposition();
     const view = (this.elementRef.nativeElement as HTMLElement).ownerDocument.defaultView;
-    view?.addEventListener('scroll', this.repositionHandler, true);
-    view?.addEventListener('resize', this.repositionHandler);
+    // Registered outside Angular: a capture-phase scroll listener fires on every scroll of
+    // every ancestor, and each one triggered a full change-detection pass. Repositioning
+    // writes to the DOM and to a signal, and a signal write schedules its own refresh — the
+    // zone was doing the work twice.
+    this.zone.runOutsideAngular(() => {
+      view?.addEventListener('scroll', this.repositionHandler, true);
+      view?.addEventListener('resize', this.repositionHandler);
+    });
   }
 
   private closePanel(): void {

@@ -29,6 +29,17 @@ export type SelectVariant = PshFieldAppearance;
  * l'enveloppe — `role="option"`, l'`id`, `aria-selected`, le clic — et ne cède que son
  * contenu : un template ne peut donc pas casser l'accessibilité de la listbox.
  */
+/** What `psh-select` precomputes for each rendered option, once per render. */
+export interface SelectOptionView<T> {
+  /** Position in the flattened list — what the roving focus compares against. */
+  index: number;
+  selected: boolean;
+  /** Disabled by itself or by its group. */
+  disabled: boolean;
+  /** Stable between renders, so `NgTemplateOutlet` does not re-render on identity alone. */
+  context: SelectOptionContext<T>;
+}
+
 export interface SelectOptionContext<T> {
   /** L'option rendue. */
   $implicit: SelectOption<T>;

@@ -27,13 +27,13 @@ export class PshTabComponent {
   protected readonly idPrefix =
     inject(PSH_TABS, { optional: true })?.idPrefix ?? pshUniqueId('tab');
 
-  header = input.required<string>();
-  icon = input<string>();
-  disabled = input(false);
-  ariaLabel = input<string>();
+  readonly header = input.required<string>();
+  readonly icon = input<string>();
+  readonly disabled = input(false);
+  readonly ariaLabel = input<string>();
 
-  private _index = signal(0);
-  private _isActive = signal(false);
+  private readonly _index = signal(0);
+  private readonly _isActive = signal(false);
 
   readonly index = this._index.asReadonly();
   readonly isActive = this._isActive.asReadonly();

@@ -36,7 +36,6 @@ export const CHECKBOX_CONFIG = new InjectionToken<Partial<CheckboxConfig>>('CHEC
 
 @Component({
   selector: 'psh-checkbox',
-  standalone: true,
   imports: [],
   templateUrl: './checkbox.component.html',
   styleUrls: ['./checkbox.component.css'],
@@ -85,12 +84,12 @@ export class PshCheckboxComponent
    */
   readonly touch = output<void>();
 
-  required = input(this.config.required ?? false);
-  label = input(this.config.label ?? '');
-  error = input<string | null | undefined>(this.config.error);
-  success = input<string | null | undefined>(this.config.success);
+  readonly required = input(this.config.required ?? false);
+  readonly label = input(this.config.label ?? '');
+  readonly error = input<string | null | undefined>(this.config.error);
+  readonly success = input<string | null | undefined>(this.config.success);
   /** Guidance shown when there is neither an error nor a success message. */
-  hint = input<string | null | undefined>(null);
+  readonly hint = input<string | null | undefined>(null);
 
   /**
    * Extra ids for `aria-describedby`. **Merged** with the control's own — the id of its error,
@@ -103,18 +102,18 @@ export class PshCheckboxComponent
    * cover. Merged with anything the control already points at.
    */
   readonly ariaLabelledBy = input<string>();
-  ariaLabel = input<string | undefined>(this.config.ariaLabel);
-  size = input<CheckboxSize>(this.config.size ?? 'medium');
-  labelPosition = input<CheckboxLabelPosition>(this.config.labelPosition ?? 'right');
+  readonly ariaLabel = input<string | undefined>(this.config.ariaLabel);
+  readonly size = input<CheckboxSize>(this.config.size ?? 'medium');
+  readonly labelPosition = input<CheckboxLabelPosition>(this.config.labelPosition ?? 'right');
 
-  ariaChecked = computed(() => this.indeterminate() ? 'mixed' : (this.checked() ? 'true' : 'false'));
-  computedAriaLabel = computed(() => this.ariaLabel() || undefined);
+  readonly ariaChecked = computed(() => this.indeterminate() ? 'mixed' : (this.checked() ? 'true' : 'false'));
+  readonly computedAriaLabel = computed(() => this.ariaLabel() || undefined);
 
   // Error, success and hint are mutually exclusive in the template (@if/@else if), so
   // aria-describedby references whichever message is actually rendered — in the same order.
   // Pointing at an id the template did not render leaves a dangling reference that no test
   // in this repository would catch.
-  describedBy = computed(() => {
+  readonly describedBy = computed(() => {
     const own = this.error()
       ? `${this.uniqueId}-error`
       : this.success()
@@ -125,7 +124,7 @@ export class PshCheckboxComponent
     return pshJoinAriaIds(own, this.ariaDescribedBy());
   });
 
-  state = computed(() => {
+  readonly state = computed(() => {
     if (this.disabled()) return 'disabled';
     if (this.indeterminate()) return 'indeterminate';
     if (this.error()) return 'error';

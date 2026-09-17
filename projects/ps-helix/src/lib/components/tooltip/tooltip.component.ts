@@ -5,8 +5,8 @@ import {
   inject,
   input,
   signal,
+  linkedSignal,
   output,
-  effect,
   InjectionToken,
   ElementRef,
   OnDestroy,
@@ -53,10 +53,10 @@ export class PshTooltipComponent implements OnDestroy {
   private readonly overlayPosition = inject(PshOverlayPositionService);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
 
-  variant = input<TooltipVariant>(this.config.variant ?? 'dark');
-  position = input<TooltipPosition>(this.config.position ?? 'top');
-  showDelay = input<number>(this.config.showDelay ?? 200);
-  hideDelay = input<number>(this.config.hideDelay ?? 100);
+  readonly variant = input<TooltipVariant>(this.config.variant ?? 'dark');
+  readonly position = input<TooltipPosition>(this.config.position ?? 'top');
+  readonly showDelay = input<number>(this.config.showDelay ?? 200);
+  readonly hideDelay = input<number>(this.config.hideDelay ?? 100);
   /**
    * Any CSS length: `'200px'`, `'20rem'`, `'min(90vw, 24rem)'`.
    *
@@ -64,42 +64,35 @@ export class PshTooltipComponent implements OnDestroy {
    * `horizontal-card.sideWidth` were already strings — three treatments for one notion, and
    * this was the one that could not express a relative width.
    */
-  maxWidth = input<string>(`${this.config.maxWidth ?? 200}px`);
-  autoFlip = input<boolean>(this.config.autoFlip ?? true);
+  readonly maxWidth = input<string>(`${this.config.maxWidth ?? 200}px`);
+  readonly autoFlip = input<boolean>(this.config.autoFlip ?? true);
 
-  content = input<string>('');
-  disabled = input<boolean>(false);
-  id = input<string>(this.generateUniqueId());
+  readonly content = input<string>('');
+  readonly disabled = input<boolean>(false);
+  readonly id = input<string>(this.generateUniqueId());
 
   opened = output<void>();
   closed = output<void>();
 
-  isVisible = signal(false);
-  computedPosition = signal<TooltipPosition>('top');
+  readonly isVisible = signal(false);
+
+  /**
+   * The side the tooltip is drawn on: the requested one, until collision detection moves it.
+   *
+   * A `linkedSignal` rather than a `signal` kept in step by an effect — it follows
+   * `position()` by construction, and `updatePosition()` overwrites it when `autoFlip` has
+   * something to say. The effect that used to do this was a derivation written the long way.
+   */
+  readonly computedPosition = linkedSignal<TooltipPosition>(() => this.position());
 
   private showTimeout: ReturnType<typeof setTimeout> | null = null;
   private hideTimeout: ReturnType<typeof setTimeout> | null = null;
   private resizeObserver: ResizeObserver | null = null;
 
-  tooltipId = computed(() => `${this.id()}-tooltip`);
-  triggerId = computed(() => `${this.id()}-trigger`);
+  readonly tooltipId = computed(() => `${this.id()}-tooltip`);
+  readonly triggerId = computed(() => `${this.id()}-trigger`);
 
   constructor() {
-    effect(() => {
-      if (this.isVisible()) {
-        this.opened.emit();
-      } else {
-        this.closed.emit();
-      }
-    });
-
-    effect(() => {
-      const pos = this.position();
-      if (!this.autoFlip()) {
-        this.computedPosition.set(pos);
-      }
-    });
-
     // ResizeObserver is a browser-only global, absent from the platform-server runtime.
     // It used to be constructed from ngAfterViewInit, which Angular also runs on the
     // server, so every SSR render of a tooltip threw. afterNextRender moves it out of the
@@ -141,7 +134,7 @@ export class PshTooltipComponent implements OnDestroy {
         } else {
           this.computedPosition.set(this.position());
         }
-        this.isVisible.set(true);
+        this.setVisible(true);
         this.showTimeout = null;
       }, this.showDelay());
     }
@@ -155,7 +148,7 @@ export class PshTooltipComponent implements OnDestroy {
 
     if (this.isVisible() && !this.hideTimeout) {
       this.hideTimeout = setTimeout(() => {
-        this.isVisible.set(false);
+        this.setVisible(false);
         this.hideTimeout = null;
       }, this.hideDelay());
     }
@@ -170,7 +163,22 @@ export class PshTooltipComponent implements OnDestroy {
       clearTimeout(this.hideTimeout);
       this.hideTimeout = null;
     }
-    this.isVisible.set(false);
+    this.setVisible(false);
+  }
+
+  /**
+   * The one place visibility changes, and therefore the one place `opened` and `closed` are
+   * emitted.
+   *
+   * They used to come from an effect on `isVisible`, which runs once on creation — so every
+   * tooltip on the page emitted `closed` before it had ever been shown. An output is a
+   * consequence of a transition, not of a state.
+   */
+  private setVisible(next: boolean): void {
+    if (this.isVisible() === next) return;
+    this.isVisible.set(next);
+    if (next) this.opened.emit();
+    else this.closed.emit();
   }
 
   private updatePosition(): void {

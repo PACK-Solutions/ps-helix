@@ -45,7 +45,12 @@ function linearToSrgb(value: number): number {
   const scaled = clamped <= 0.0031308
     ? 12.92 * clamped
     : 1.055 * Math.pow(clamped, 1 / 2.4) - 0.055;
-  return scaled * 255;
+  // Rounded to the channel a screen can actually show.
+  //
+  // It used to return a float, so `ensureContrast` searched for a lightness whose *unrounded*
+  // colour hit the target, and the hex written to the stylesheet — rounded — could then miss
+  // it. With an AAA target and a pale brand blue the result was 6.98:1, announced as 7.
+  return Math.round(scaled * 255);
 }
 
 export function relativeLuminance(rgb: Rgb): number {

@@ -4,7 +4,6 @@ import {
   Directive,
   effect,
   ElementRef,
-  HostListener,
   inject,
   Injector,
   input,
@@ -32,6 +31,9 @@ import { DOCUMENT, isPlatformBrowser } from '@angular/common';
  */
 @Directive({
   selector: '[pshFocusTrap]',
+  host: {
+    '(keydown)': 'onKeydown($event)',
+  },
 })
 export class PshFocusTrapDirective {
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
@@ -68,7 +70,6 @@ export class PshFocusTrapDirective {
     inject(DestroyRef).onDestroy(() => this.restoreFocus(true));
   }
 
-  @HostListener('keydown', ['$event'])
   protected onKeydown(event: KeyboardEvent): void {
     if (!this.active || event.key !== 'Tab') return;
 

@@ -53,6 +53,37 @@ describe('PshTooltipComponent', () => {
   });
 
   describe('Initial state', () => {
+    it('emits nothing before it has ever been shown', () => {
+      // `opened`/`closed` used to come from an effect on `isVisible`, and an effect runs once
+      // on creation — so every tooltip on the page announced that it had closed, having never
+      // opened. A subscriber counting dismissals counted one per tooltip rendered.
+      const opened = jest.fn();
+      const closed = jest.fn();
+
+      const fresh = TestBed.createComponent(PshTooltipComponent);
+      fresh.componentRef.setInput('content', 'Tip');
+      fresh.componentInstance.opened.subscribe(opened);
+      fresh.componentInstance.closed.subscribe(closed);
+      fresh.detectChanges();
+
+      expect(opened).not.toHaveBeenCalled();
+      expect(closed).not.toHaveBeenCalled();
+    });
+
+    it('does not emit closed twice when hidden immediately after hiding', fakeAsync(() => {
+      const closed = jest.fn();
+      fixture.componentInstance.closed.subscribe(closed);
+
+      fixture.componentInstance.show();
+      tick(1000);
+      fixture.componentInstance.hide();
+      tick(1000);
+      fixture.componentInstance.hideImmediate();
+      tick(1000);
+
+      expect(closed).toHaveBeenCalledTimes(1);
+    }));
+
     it('should not display tooltip by default', () => {
       expect(getTooltip()).toBeFalsy();
     });

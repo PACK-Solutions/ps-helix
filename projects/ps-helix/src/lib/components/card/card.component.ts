@@ -5,13 +5,12 @@ import {
   computed,
   inject,
   input,
-  OnDestroy,
   output,
   PLATFORM_ID,
-  signal,
   ViewEncapsulation
 } from '@angular/core';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { PshViewportService } from '../../a11y/viewport.service';
+import { DOCUMENT } from '@angular/common';
 import { CardDensity, CardActionsAlignment } from './card.types';
 import { CARD_CONFIG } from './card.tokens';
 
@@ -62,59 +61,57 @@ import { CARD_CONFIG } from './card.tokens';
     '[attr.aria-busy]': 'loading() ? "true" : null',
   },
 })
-export class PshCardComponent implements OnDestroy {
+export class PshCardComponent {
   private readonly config = inject(CARD_CONFIG);
 
   private platformId = inject(PLATFORM_ID);
   private readonly document = inject(DOCUMENT);
-  private resizeObserver?: ResizeObserver;
 
-  isMobile = signal<boolean>(false);
   // Model inputs - propriétés modifiables
   /** Variante visuelle de la carte (default, elevated, outlined) */
   // input(), not model(): the card never writes its own appearance back, so a model()
   // only added a `variantChange` output that could never fire.
-  appearance = input<PshSurfaceAppearance>(this.config.appearance ?? 'flat');
+  readonly appearance = input<PshSurfaceAppearance>(this.config.appearance ?? 'flat');
 
   /** Effet de survol activé (animation translateY) */
-  hoverable = input(this.config.hoverable ?? false);
+  readonly hoverable = input(this.config.hoverable ?? false);
 
   /** Carte cliquable (ajoute cursor pointer et gestion du focus) */
-  interactive = input(this.config.interactive ?? false);
+  readonly interactive = input(this.config.interactive ?? false);
 
   // Regular inputs - propriétés en lecture seule
   /** Titre principal de la carte */
-  title = input<string>('');
+  readonly title = input<string>('');
 
   /** Description/sous-titre optionnel */
-  description = input<string>('');
+  readonly description = input<string>('');
 
   /** Couleur sémantique de la carte. `neutral` = aucune emphase (l'ancien `flat`). */
-  color = input<PshColor>(this.config.color ?? 'neutral');
+  readonly color = input<PshColor>(this.config.color ?? 'neutral');
 
   /** Niveau de densité du spacing (compact, normal, spacious) */
-  density = input<CardDensity>(this.config.density ?? 'normal');
+  readonly density = input<CardDensity>(this.config.density ?? 'normal');
 
   /** Afficher le divider entre header et body */
-  showHeaderDivider = input<boolean>(this.config.showHeaderDivider ?? true);
+  readonly showHeaderDivider = input<boolean>(this.config.showHeaderDivider ?? true);
 
   /** Afficher le divider entre body et footer */
-  showFooterDivider = input<boolean>(this.config.showFooterDivider ?? true);
+  readonly showFooterDivider = input<boolean>(this.config.showFooterDivider ?? true);
 
   /** Afficher le divider entre footer et actions */
-  showActionsDivider = input<boolean>(this.config.showActionsDivider ?? true);
+  readonly showActionsDivider = input<boolean>(this.config.showActionsDivider ?? true);
 
   /** Alignement des actions dans la zone card-actions */
-  actionsAlignment = input<CardActionsAlignment>(this.config.actionsAlignment ?? 'right');
+  readonly actionsAlignment = input<CardActionsAlignment>(this.config.actionsAlignment ?? 'right');
 
   /** Activer/désactiver le padding du body */
-  bodyPadding = input<boolean>(this.config.bodyPadding ?? true);
+  readonly bodyPadding = input<boolean>(this.config.bodyPadding ?? true);
 
   /** État de chargement - affiche un skeleton */
-  loading = input<boolean>(false);
+  readonly loading = input<boolean>(false);
 
   /** État désactivé - réduit l'opacité */
-  disabled = input<boolean>(false);
+  readonly disabled = input<boolean>(false);
 
   /**
    * Name of the article, for a card with no visible `title`. A card that has one is already
@@ -128,7 +125,7 @@ export class PshCardComponent implements OnDestroy {
 
   // Computed values
   /** Classes CSS calculées selon les propriétés */
-  computedClasses = computed(() => {
+  readonly computedClasses = computed(() => {
     const classes = ['psh-card'];
     classes.push(`psh-appearance-${this.appearance()}`);
     classes.push(`psh-color-${this.color()}`);
@@ -143,16 +140,16 @@ export class PshCardComponent implements OnDestroy {
   });
 
   /** Indique si le header doit être affiché */
-  hasHeader = computed(() => {
+  readonly hasHeader = computed(() => {
     return !!(this.title() || this.description());
   });
 
   /** Classe d'alignement pour la zone d'actions */
-  actionsAlignmentClass = computed(() => {
+  readonly actionsAlignmentClass = computed(() => {
     return `psh-actions-align-${this.actionsAlignment()}`;
   });
 
-  actionsClasses = computed(() => {
+  readonly actionsClasses = computed(() => {
     const classes = [this.actionsAlignmentClass()];
     if (this.isMobile()) {
       classes.push('psh-mobile-full-width-buttons');
@@ -160,31 +157,11 @@ export class PshCardComponent implements OnDestroy {
     return classes.join(' ');
   });
 
-  constructor() {
-    if (isPlatformBrowser(this.platformId)) {
-      this.checkMobileViewport();
-
-      if (this.document.defaultView) {
-        this.resizeObserver = new ResizeObserver(() => {
-          this.checkMobileViewport();
-        });
-        this.resizeObserver.observe(this.document.documentElement);
-      }
-    }
-  }
-
-  ngOnDestroy(): void {
-    if (this.resizeObserver) {
-      this.resizeObserver.disconnect();
-    }
-  }
-
-  private checkMobileViewport(): void {
-    const view = this.document.defaultView;
-    if (view) {
-      this.isMobile.set(view.innerWidth <= 640);
-    }
-  }
+  /**
+   * Shared with every other card on the page — one media query, not one `ResizeObserver` per
+   * instance on `document.documentElement`.
+   */
+  protected readonly isMobile = inject(PshViewportService).below('sm');
 
   /**
    * Gère le clic sur la carte

@@ -1,7 +1,8 @@
 import { PshSurfaceAppearance } from '../../types/semantic.types';
 import { pshResolveConfigValue } from '../../utils/config-value';
 import { Component, ChangeDetectionStrategy, computed, input, signal, PLATFORM_ID, inject, output, ViewEncapsulation, ElementRef, AfterContentInit, OnDestroy } from '@angular/core';
-import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { PshViewportService } from '../../a11y/viewport.service';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { InfoCardData, InfoCardOptions } from './info-card.types';
 import { INFO_CARD_CONFIG } from './info-card.tokens';
 
@@ -30,7 +31,6 @@ import { INFO_CARD_CONFIG } from './info-card.tokens';
  */
 @Component({
   selector: 'psh-info-card',
-  imports: [CommonModule],
   templateUrl: './info-card.component.html',
   styleUrl: './info-card.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -50,13 +50,13 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
   private readonly config = inject(INFO_CARD_CONFIG);
 
 
-  hasHeaderActions = signal<boolean>(false);
+  readonly hasHeaderActions = signal<boolean>(false);
 
   /** Title displayed in the card header */
-  title = input<string>('');
+  readonly title = input<string>('');
 
   /** Array of label-value pairs to display */
-  data = input.required<InfoCardData[]>();
+  readonly data = input.required<InfoCardData[]>();
 
   /**
    * Display options for the card.
@@ -64,59 +64,59 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
    * `emptyStateMessage` is deliberately absent from the default: carrying it here would
    * shadow the application's configured default, since this object wins over it.
    */
-  options = input<InfoCardOptions>({
+  readonly options = input<InfoCardOptions>({
     showEmptyState: true,
     labelWidth: undefined,
     valueWidth: undefined
   });
 
   /** Base card variant style */
-  appearance = input<PshSurfaceAppearance>(this.config.appearance ?? 'outline');
+  readonly appearance = input<PshSurfaceAppearance>(this.config.appearance ?? 'outline');
 
   /** Icon to display in the header (Phosphor icon name without 'ph-' prefix) */
-  icon = input<string>(this.config.icon ?? 'circle-dashed');
+  readonly icon = input<string>(this.config.icon ?? 'circle-dashed');
 
   /** Custom ARIA label for accessibility */
-  ariaLabel = input<string>();
+  readonly ariaLabel = input<string>();
 
 
 
   /** Whether the card should be interactive/clickable */
-  interactive = input<boolean>(this.config.interactive ?? false);
+  readonly interactive = input<boolean>(this.config.interactive ?? false);
 
   /** Whether to show hover effects */
-  hoverable = input<boolean>(this.config.hoverable ?? false);
+  readonly hoverable = input<boolean>(this.config.hoverable ?? false);
 
   /** Indicates if data is loading */
-  loading = input<boolean>(false);
+  readonly loading = input<boolean>(false);
 
   /** Whether the card is disabled */
-  disabled = input<boolean>(false);
+  readonly disabled = input<boolean>(false);
 
   /** Emitted when card is clicked */
   clicked = output<MouseEvent | KeyboardEvent>();
 
   /** Whether to show copy buttons on rows (opt-in) */
-  copyable = input<boolean>(this.config.copyable ?? false);
+  readonly copyable = input<boolean>(this.config.copyable ?? false);
 
   /** Label prefix for the copy button aria-label */
-  copyButtonLabelInput = input<string | undefined>(undefined, { alias: 'copyButtonLabel' });
-  copyButtonLabel = computed(
+  readonly copyButtonLabelInput = input<string | undefined>(undefined, { alias: 'copyButtonLabel' });
+  readonly copyButtonLabel = computed(
     () => this.copyButtonLabelInput() ?? pshResolveConfigValue(this.config.copyButtonLabel) ?? 'Copy',
   );
 
   /** Text shown as feedback after successful copy */
-  notProvidedTextInput = input<string | undefined>(undefined, { alias: 'notProvidedText' });
+  readonly notProvidedTextInput = input<string | undefined>(undefined, { alias: 'notProvidedText' });
   /** Stands in for a row value that is null or undefined. */
-  notProvidedText = computed(
+  readonly notProvidedText = computed(
     () =>
       this.notProvidedTextInput() ??
       pshResolveConfigValue(this.config.notProvidedText) ??
       'Not provided',
   );
 
-  copyFeedbackTextInput = input<string | undefined>(undefined, { alias: 'copyFeedbackText' });
-  copyFeedbackText = computed(
+  readonly copyFeedbackTextInput = input<string | undefined>(undefined, { alias: 'copyFeedbackText' });
+  readonly copyFeedbackText = computed(
     () => this.copyFeedbackTextInput() ?? pshResolveConfigValue(this.config.copyFeedbackText) ?? 'Copied',
   );
 
@@ -127,21 +127,19 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
   copyFailed = output<InfoCardData>();
 
   /** Tracks the row index currently showing success feedback */
-  copiedRowIndex = signal<number | null>(null);
+  readonly copiedRowIndex = signal<number | null>(null);
 
   /** Whether to auto-enable full width buttons on mobile (default: true) */
-  autoFullWidthOnMobile = input<boolean>(this.config.autoFullWidthOnMobile ?? true);
+  readonly autoFullWidthOnMobile = input<boolean>(this.config.autoFullWidthOnMobile ?? true);
 
   /** Signal to track if viewport is mobile */
-  isMobile = signal<boolean>(false);
 
   private platformId = inject(PLATFORM_ID);
   private readonly document = inject(DOCUMENT);
-  private resizeObserver?: ResizeObserver;
   private feedbackTimeout?: ReturnType<typeof setTimeout>;
 
   /** Determines if the empty state should be shown */
-  shouldShowEmptyState = computed(() => {
+  readonly shouldShowEmptyState = computed(() => {
     const opts = this.options();
     const dataArray = this.data();
     return opts.showEmptyState && (!dataArray || dataArray.length === 0);
@@ -153,7 +151,7 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
    * Three sources, narrowest first: the `options` input of this card, then the application's
    * configured default, then the library's own.
    */
-  getEmptyStateMessage = computed(
+  readonly getEmptyStateMessage = computed(
     () =>
       this.options().emptyStateMessage ||
       pshResolveConfigValue(this.config.emptyStateMessage) ||
@@ -161,20 +159,20 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
   );
 
   /** Full icon class name for Phosphor icons */
-  titleIcon = computed(() => {
+  readonly titleIcon = computed(() => {
     const iconName = this.icon();
     return iconName ? `ph-${iconName}` : '';
   });
 
   /** Computed ARIA label for the component */
-  computedAriaLabel = computed(() => {
+  readonly computedAriaLabel = computed(() => {
     const customLabel = this.ariaLabel();
     const titleText = this.title();
     return customLabel || (titleText ? `Information card: ${titleText}` : 'Information card');
   });
 
   /** Computed CSS classes */
-  computedClasses = computed(() => {
+  readonly computedClasses = computed(() => {
     const classes = ['psh-info-card'];
     classes.push(`psh-appearance-${this.appearance()}`);
 
@@ -188,7 +186,7 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
 
 
   /** Gets CSS classes for card-actions based on mobile state */
-  getActionsClasses = computed(() => {
+  readonly getActionsClasses = computed(() => {
     const classes: string[] = [];
     if (this.autoFullWidthOnMobile() && this.isMobile()) {
       classes.push('psh-mobile-full-width-buttons');
@@ -198,18 +196,8 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
 
   private elementRef = inject(ElementRef);
 
-  constructor() {
-    if (isPlatformBrowser(this.platformId)) {
-      this.checkMobileViewport();
-
-      if (this.document.defaultView) {
-        this.resizeObserver = new ResizeObserver(() => {
-          this.checkMobileViewport();
-        });
-        this.resizeObserver.observe(this.document.documentElement);
-      }
-    }
-  }
+  /** Shared with every other card on the page. See `PshViewportService`. */
+  readonly isMobile = inject(PshViewportService).below('sm');
 
   ngAfterContentInit(): void {
     this.checkHeaderActionsContent();
@@ -223,18 +211,8 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.resizeObserver) {
-      this.resizeObserver.disconnect();
-    }
     if (this.feedbackTimeout) {
       clearTimeout(this.feedbackTimeout);
-    }
-  }
-
-  private checkMobileViewport(): void {
-    const view = this.document.defaultView;
-    if (view) {
-      this.isMobile.set(view.innerWidth <= 640);
     }
   }
 

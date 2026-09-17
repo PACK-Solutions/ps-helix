@@ -8,7 +8,6 @@ import {
   ViewEncapsulation,
   inject,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { HORIZONTAL_CARD_CONFIG } from './horizontal-card.tokens';
 
 /**
@@ -38,7 +37,6 @@ import { HORIZONTAL_CARD_CONFIG } from './horizontal-card.tokens';
  */
 @Component({
   selector: 'psh-horizontal-card',
-  imports: [CommonModule],
   templateUrl: './horizontal-card.component.html',
   styleUrls: ['./horizontal-card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -60,19 +58,19 @@ export class PshHorizontalCardComponent {
 
 
   /** Variante de la carte de base */
-  appearance = input<PshSurfaceAppearance>(this.config.appearance ?? 'elevated');
+  readonly appearance = input<PshSurfaceAppearance>(this.config.appearance ?? 'elevated');
 
   /** Carte cliquable */
-  interactive = input(this.config.interactive ?? false);
+  readonly interactive = input(this.config.interactive ?? false);
 
   /** Effet de survol */
-  hoverable = input(this.config.hoverable ?? false);
+  readonly hoverable = input(this.config.hoverable ?? false);
 
   /** État de chargement */
-  loading = input(false);
+  readonly loading = input(false);
 
   /** État désactivé */
-  disabled = input(false);
+  readonly disabled = input(false);
 
   /** Name of the article, for a card with no visible title. */
   readonly ariaLabel = input<string>();
@@ -80,25 +78,25 @@ export class PshHorizontalCardComponent {
 
 
   /** Largeur du contenu latéral (utiliser les tokens de sizing comme var(--psh-size-48)) */
-  sideWidth = input<string>(this.config.sideWidth ?? 'var(--psh-size-48)');
+  readonly sideWidth = input<string>(this.config.sideWidth ?? 'var(--psh-size-48)');
 
   /** Gap entre le contenu latéral et principal */
-  gap = input<string>(this.config.gap ?? 'var(--psh-spacing-md)');
+  readonly gap = input<string>(this.config.gap ?? 'var(--psh-spacing-md)');
 
   /** Padding du contenu latéral */
-  sidePadding = input<string>(this.config.sidePadding ?? '0');
+  readonly sidePadding = input<string>(this.config.sidePadding ?? '0');
 
   /** Padding du contenu principal */
-  contentPadding = input<string>(this.config.contentPadding ?? 'var(--psh-spacing-md)');
+  readonly contentPadding = input<string>(this.config.contentPadding ?? 'var(--psh-spacing-md)');
 
   /** Hauteur du contenu latéral sur mobile (utiliser les tokens de sizing) */
-  mobileHeight = input<string>(this.config.mobileHeight ?? 'var(--psh-size-48)');
+  readonly mobileHeight = input<string>(this.config.mobileHeight ?? 'var(--psh-size-48)');
 
   /** Émis lors du clic sur la carte */
   clicked = output<MouseEvent | KeyboardEvent>();
 
   /** Classes CSS calculées selon les propriétés */
-  computedClasses = computed(() => {
+  readonly computedClasses = computed(() => {
     const classes = ['psh-horizontal-card'];
     classes.push(`psh-appearance-${this.appearance()}`);
 
@@ -118,7 +116,7 @@ export class PshHorizontalCardComponent {
    * `style` attribute merges with them on the host, so nothing was lost by dropping the
    * passthrough.
    */
-  computedStyles = computed(() => {
+  readonly computedStyles = computed(() => {
     return {
       '--psh-horizontal-side-width': this.sideWidth(),
       '--psh-horizontal-gap': this.gap(),

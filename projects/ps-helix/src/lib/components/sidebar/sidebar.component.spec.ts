@@ -21,9 +21,9 @@ import { SidebarMode, SidebarPosition } from './sidebar.types';
       (closed)="onClosed()"
       (transitionStarted)="onTransitionStart($event)"
     >
-      <button id="first-button">First Button</button>
+      <button type="button" id="first-button">First Button</button>
       <a href="#" id="sidebar-link">Sidebar Link</a>
-      <button id="last-button">Last Button</button>
+      <button type="button" id="last-button">Last Button</button>
     </psh-sidebar>
   `,
   imports: [PshSidebarComponent]

@@ -8,8 +8,10 @@
     role="tablist"
     [attr.aria-orientation]="ariaOrientation()"
   >
+    <!-- Tracked by position: see psh-stepper. `tabsToDisplay()` rebuilds its objects. -->
     @for (tab of tabsToDisplay(); track $index; let i = $index) {
       <button
+        type="button"
         class="psh-tab-button"
         role="tab"
         [class.psh-active]="i === activeIndex()"

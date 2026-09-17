@@ -30,6 +30,9 @@ import { PshStatCardComponent } from './components/stat-card/stat-card.component
   ],
   changeDetection: ChangeDetectionStrategy.Eager,
   template: `
+    <!-- The literal style attribute is the contract under test: a consumer must be able to
+         style the host element directly, which is what removing the inner wrapper bought. -->
+    <!-- eslint-disable @angular-eslint/template/no-inline-styles -->
     <psh-card class="mine one two" style="background-color: red" appearance="elevated" />
     <psh-horizontal-card class="mine one two" style="background-color: red" appearance="elevated" />
     <psh-info-card [data]="[]" class="mine one two" style="background-color: red" appearance="elevated" />

@@ -9,7 +9,6 @@ import {
   inject,
 } from '@angular/core';
 import { pshResolveConfigValue } from '../../utils/config-value';
-import { CommonModule } from '@angular/common';
 import { AvatarSize, AvatarShape, AvatarStatus } from './avatar.types';
 import { AVATAR_CONFIG } from './avatar.tokens';
 
@@ -31,7 +30,6 @@ const DEFAULT_STATUS_COLORS: Record<AvatarStatus, string> = {
 
 @Component({
   selector: 'psh-avatar',
-  imports: [CommonModule],
   templateUrl: './avatar.component.html',
   styleUrls: ['./avatar.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -41,21 +39,21 @@ export class PshAvatarComponent {
 
 
   // Model inputs with defaults
-  size = input<AvatarSize>(this.config.size ?? DEFAULT_CONFIG.size);
-  shape = input<AvatarShape>(this.config.shape ?? DEFAULT_CONFIG.shape);
-  src = input<string | undefined>();
-  altInput = input<string | undefined>(undefined, { alias: 'alt' });
-  alt = computed(
+  readonly size = input<AvatarSize>(this.config.size ?? DEFAULT_CONFIG.size);
+  readonly shape = input<AvatarShape>(this.config.shape ?? DEFAULT_CONFIG.shape);
+  readonly src = input<string | undefined>();
+  readonly altInput = input<string | undefined>(undefined, { alias: 'alt' });
+  readonly alt = computed(
     () => this.altInput() ?? pshResolveConfigValue(this.config.alt) ?? DEFAULT_CONFIG.alt,
   );
 
   // Regular inputs
-  initials = input('');
-  icon = input<string>(this.config.icon ?? DEFAULT_CONFIG.icon);
-  status = input<AvatarStatus | undefined>();
-  ariaLabel = input<string>();
+  readonly initials = input('');
+  readonly icon = input<string>(this.config.icon ?? DEFAULT_CONFIG.icon);
+  readonly status = input<AvatarStatus | undefined>();
+  readonly ariaLabel = input<string>();
   /** Makes the avatar interactive: adds a button role, a tab stop and a focus ring. */
-  interactive = input(false);
+  readonly interactive = input(false);
 
   /**
    * Emitted on click or Enter/Space, but only when `interactive` is set.
@@ -93,9 +91,9 @@ export class PshAvatarComponent {
   }
 
   // Computed values
-  hasImage = computed(() => !!this.src() && !this.loadFailed());
-  hasInitials = computed(() => !!this.initials() && !this.hasImage());
-  hasIcon = computed(() => !this.hasImage() && !this.hasInitials());
+  readonly hasImage = computed(() => !!this.src() && !this.loadFailed());
+  readonly hasInitials = computed(() => !!this.initials() && !this.hasImage());
+  readonly hasIcon = computed(() => !this.hasImage() && !this.hasInitials());
 
   protected handleImageError(event: Event): void {
     this.loadFailed.set(true);
@@ -114,13 +112,13 @@ export class PshAvatarComponent {
     }
   }
 
-  computedAriaLabel = computed(() => this.ariaLabel() || this.alt());
+  readonly computedAriaLabel = computed(() => this.ariaLabel() || this.alt());
 
-  statusColor = computed(() => {
+  readonly statusColor = computed(() => {
     const currentStatus = this.status();
     if (!currentStatus) return undefined;
     return DEFAULT_STATUS_COLORS[currentStatus];
   });
 
-  state = computed(() => this.status() || 'default');
+  readonly state = computed(() => this.status() || 'default');
 }

@@ -10,14 +10,14 @@ import {
   output,
   TemplateRef,
 } from '@angular/core';
-import { CommonModule, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { MenuItem, MenuMode, MenuVariant, MenuItemContext } from './menu.types';
 import { PshTooltipComponent } from '../tooltip/tooltip.component';
 import { MENU_CONFIG } from './menu.tokens';
 
 @Component({
   selector: 'psh-menu',
-  imports: [NgTemplateOutlet, CommonModule, PshTooltipComponent],
+  imports: [NgTemplateOutlet, PshTooltipComponent],
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,17 +28,17 @@ export class PshMenuComponent<T = string> {
   private readonly elementRef = inject(ElementRef<HTMLElement>);
   private focusTimeout: ReturnType<typeof setTimeout> | null = null;
 
-  mode = input<MenuMode>(this.config.mode ?? 'vertical');
-  variant = input<MenuVariant>(this.config.variant ?? 'default');
-  collapsible = input(this.config.collapsible ?? false);
-  ariaLabels = input<Record<string, string>>({
+  readonly mode = input<MenuMode>(this.config.mode ?? 'vertical');
+  readonly variant = input<MenuVariant>(this.config.variant ?? 'default');
+  readonly collapsible = input(this.config.collapsible ?? false);
+  readonly ariaLabels = input<Record<string, string>>({
     disabled: 'Disabled',
     submenu: 'Submenu',
     expand: 'Expand menu',
     collapse: 'Collapse menu'
   });
 
-  items = input.required<MenuItem<T>[]>();
+  readonly items = input.required<MenuItem<T>[]>();
 
   /**
    * Replaces the content of every menu item.
@@ -58,17 +58,17 @@ export class PshMenuComponent<T = string> {
     return { $implicit: item, index, withLabel, expanded: this.isExpanded(item) };
   }
 
-  collapsed = model(false);
-  expandedItemIds = model<string[]>([]);
+  readonly collapsed = model(false);
+  readonly expandedItemIds = model<string[]>([]);
 
   itemClicked = output<MenuItem<T>>();
   submenuToggled = output<{ item: MenuItem<T>; expanded: boolean }>();
 
-  protected expandedItemsSet = computed(() => new Set(this.expandedItemIds()));
+  protected readonly expandedItemsSet = computed(() => new Set(this.expandedItemIds()));
 
-  state = computed(() => this.getState());
+  readonly state = computed(() => this.getState());
 
-  showTooltip = computed(() => this.collapsed() && this.mode() === 'vertical');
+  readonly showTooltip = computed(() => this.collapsed() && this.mode() === 'vertical');
 
   constructor() {
     inject(DestroyRef).onDestroy(() => {

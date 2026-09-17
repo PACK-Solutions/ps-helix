@@ -7,7 +7,6 @@ import {
   inject,
 } from '@angular/core';
 import { pshResolveConfigValue } from '../../utils/config-value';
-import { CommonModule } from '@angular/common';
 import { AlertType, IconPosition, AlertSize, AlertRole, AlertLabels } from './alert.types';
 import { ALERT_CONFIG } from './alert.tokens';
 
@@ -34,7 +33,6 @@ const DEFAULT_CONFIG = {
 
 @Component({
   selector: 'psh-alert',
-  imports: [CommonModule],
   templateUrl: './alert.component.html',
   styleUrls: ['./alert.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -44,37 +42,37 @@ export class PshAlertComponent {
 
 
   // Inputs
-  color = input<AlertType>(this.config.color ?? DEFAULT_CONFIG.type);
-  iconPosition = input<IconPosition>(this.config.iconPosition ?? DEFAULT_CONFIG.iconPosition);
-  closable = input(this.config.closable ?? DEFAULT_CONFIG.closable);
-  size = input<AlertSize>(this.config.size ?? DEFAULT_CONFIG.size);
-  showIcon = input(this.config.showIcon ?? DEFAULT_CONFIG.showIcon);
-  role = input<AlertRole>();
-  icon = input<string>();
-  ariaLabel = input<string>();
-  dismissLabelInput = input<string | undefined>(undefined, { alias: 'dismissLabel' });
-  dismissLabel = computed(
+  readonly color = input<AlertType>(this.config.color ?? DEFAULT_CONFIG.type);
+  readonly iconPosition = input<IconPosition>(this.config.iconPosition ?? DEFAULT_CONFIG.iconPosition);
+  readonly closable = input(this.config.closable ?? DEFAULT_CONFIG.closable);
+  readonly size = input<AlertSize>(this.config.size ?? DEFAULT_CONFIG.size);
+  readonly showIcon = input(this.config.showIcon ?? DEFAULT_CONFIG.showIcon);
+  readonly role = input<AlertRole>();
+  readonly icon = input<string>();
+  readonly ariaLabel = input<string>();
+  readonly dismissLabelInput = input<string | undefined>(undefined, { alias: 'dismissLabel' });
+  readonly dismissLabel = computed(
     () => this.dismissLabelInput() ?? pshResolveConfigValue(this.config.labels?.dismiss) ?? DEFAULT_LABELS.dismiss,
   );
-  ariaLive = input<'polite' | 'assertive'>();
-  content = input('');
+  readonly ariaLive = input<'polite' | 'assertive'>();
+  readonly content = input('');
   
   // Outputs
   closed = output<void>();
 
   // Computed values
-  defaultIcon = computed(() => DEFAULT_ICONS[this.color()] || 'info');
-  getIcon = computed(() => this.icon() || this.defaultIcon());
+  readonly defaultIcon = computed(() => DEFAULT_ICONS[this.color()] || 'info');
+  readonly getIcon = computed(() => this.icon() || this.defaultIcon());
 
-  computedAriaLive = computed(() => 
+  readonly computedAriaLive = computed(() => 
     this.ariaLive() || (['warning', 'danger'].includes(this.color()) ? 'assertive' : 'polite')
   );
 
-  computedRole = computed(() => 
+  readonly computedRole = computed(() => 
     this.role() || (['warning', 'danger'].includes(this.color()) ? 'alert' : 'status')
   );
 
-  state = computed(() => {
+  readonly state = computed(() => {
     if (this.closable()) return 'closable';
     return this.color();
   });

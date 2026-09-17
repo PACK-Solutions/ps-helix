@@ -958,7 +958,7 @@ describe('PshDropdownComponent', () => {
   template: `
     <psh-dropdown label="Menu">
       <div psh-dropdown-menu>
-        <button class="custom-item">Projected Item</button>
+        <button type="button" class="custom-item">Projected Item</button>
       </div>
     </psh-dropdown>
   `,

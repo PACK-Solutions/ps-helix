@@ -13,7 +13,7 @@ import {
   PLATFORM_ID
 } from '@angular/core';
 import { pshResolveConfigValue } from '../../utils/config-value';
-import { isPlatformBrowser, CommonModule, DOCUMENT } from '@angular/common';
+import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { PshFocusTrapDirective } from '../../a11y/focus-trap.directive';
 import { SidebarMode, SidebarPosition, SidebarConfig } from './sidebar.types';
 
@@ -34,7 +34,7 @@ export const SIDEBAR_CONFIG = new InjectionToken<Partial<SidebarConfig>>('SIDEBA
 
 @Component({
   selector: 'psh-sidebar',
-  imports: [CommonModule, PshFocusTrapDirective],
+  imports: [PshFocusTrapDirective],
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -58,18 +58,18 @@ export class PshSidebarComponent implements OnDestroy {
   private pendingFrame: number | null = null;
   private mediaQueryHandler: ((e: MediaQueryListEvent) => void) | null = null;
 
-  open = model(false);
-  mode = input<SidebarMode>(this.config.mode ?? 'fixed');
-  position = input<SidebarPosition>(this.config.position ?? 'left');
-  width = input<string>(this.config.width ?? '250px');
-  breakpoint = input<string>(this.config.breakpoint ?? '768px');
-  autoFocus = input<boolean>(this.config.autoFocus ?? true);
-  ariaLabelInput = input<string | undefined>(undefined, { alias: 'ariaLabel' });
-  ariaLabel = computed(
+  readonly open = model(false);
+  readonly mode = input<SidebarMode>(this.config.mode ?? 'fixed');
+  readonly position = input<SidebarPosition>(this.config.position ?? 'left');
+  readonly width = input<string>(this.config.width ?? '250px');
+  readonly breakpoint = input<string>(this.config.breakpoint ?? '768px');
+  readonly autoFocus = input<boolean>(this.config.autoFocus ?? true);
+  readonly ariaLabelInput = input<string | undefined>(undefined, { alias: 'ariaLabel' });
+  readonly ariaLabel = computed(
     () => this.ariaLabelInput() ?? pshResolveConfigValue(this.config.ariaLabel) ?? 'Sidebar navigation',
   );
-  closeOnBackdrop = input<boolean>(this.config.closeOnBackdrop ?? true);
-  closeOnEscape = input<boolean>(this.config.closeOnEscape ?? true);
+  readonly closeOnBackdrop = input<boolean>(this.config.closeOnBackdrop ?? true);
+  readonly closeOnEscape = input<boolean>(this.config.closeOnEscape ?? true);
 
   // Was `toggle`, the only infinitive output in the library and a native event name, which
   // needed an eslint exemption to exist. `toggled` matches collapse — same idea, same word —
@@ -82,9 +82,9 @@ export class PshSidebarComponent implements OnDestroy {
   private readonly mobileSignal = signal(false);
   private previousOpenState: boolean | null = null;
 
-  isMobile = computed(() => this.mobileSignal());
-  effectiveMode = computed(() => this.isMobile() ? 'overlay' : this.mode());
-  state = computed(() => this.getState());
+  readonly isMobile = computed(() => this.mobileSignal());
+  readonly effectiveMode = computed(() => this.isMobile() ? 'overlay' : this.mode());
+  readonly state = computed(() => this.getState());
 
   private readonly escapeHandler = (event: KeyboardEvent) => {
     if (event.key === 'Escape' && this.closeOnEscape() && this.effectiveMode() === 'overlay') {

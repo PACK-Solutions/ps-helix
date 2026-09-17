@@ -70,8 +70,8 @@ export class PshRadioComponent<T = unknown> implements AfterViewInit {
   private styles = inject(RADIO_STYLES, { optional: true }) ?? [];
   private uniqueId = pshUniqueId('radio');
   /** Holds the `label` input or the projected content — whichever provides the visible label. */
-  private labelSlot = viewChild<ElementRef<HTMLElement>>('labelSlot');
-  private radioInput = viewChild<ElementRef<HTMLInputElement>>('radioInput');
+  private readonly labelSlot = viewChild<ElementRef<HTMLElement>>('labelSlot');
+  private readonly radioInput = viewChild<ElementRef<HTMLInputElement>>('radioInput');
 
   /**
    * The group this radio belongs to, if any. Injected through a token rather than the
@@ -84,14 +84,14 @@ export class PshRadioComponent<T = unknown> implements AfterViewInit {
   readonly checked = model(this.config.checked ?? false);
   readonly disabled = model(this.config.disabled ?? false);
 
-  required = input(this.config.required ?? false);
+  readonly required = input(this.config.required ?? false);
 
   // Regular inputs
-  label = input('');
-  error = input<string | null | undefined>(null);
-  success = input<string | null | undefined>(null);
+  readonly label = input('');
+  readonly error = input<string | null | undefined>(null);
+  readonly success = input<string | null | undefined>(null);
   /** Guidance shown when there is neither an error nor a success message. */
-  hint = input<string | null | undefined>(null);
+  readonly hint = input<string | null | undefined>(null);
 
   /**
    * Extra ids for `aria-describedby`. **Merged** with the control's own — the id of its error,
@@ -104,14 +104,14 @@ export class PshRadioComponent<T = unknown> implements AfterViewInit {
    * cover. Merged with anything the control already points at.
    */
   readonly ariaLabelledBy = input<string>();
-  name = input('');
-  value = input<T | undefined>(undefined);
-  ariaLabel = input<string>();
-  size = input<RadioSize>(this.config.size ?? 'medium');
-  labelPosition = input<'left' | 'right'>(this.config.labelPosition ?? 'right');
+  readonly name = input('');
+  readonly value = input<T | undefined>(undefined);
+  readonly ariaLabel = input<string>();
+  readonly size = input<RadioSize>(this.config.size ?? 'medium');
+  readonly labelPosition = input<'left' | 'right'>(this.config.labelPosition ?? 'right');
 
   // Content projection tracking
-  protected hasProjectedContent = signal(false);
+  protected readonly hasProjectedContent = signal(false);
 
   readonly valueChange = output<T | undefined>();
 
@@ -146,11 +146,11 @@ export class PshRadioComponent<T = unknown> implements AfterViewInit {
   });
 
   // Computed values
-  customStyles = computed(() => Object.assign({}, ...this.styles));
+  readonly customStyles = computed(() => Object.assign({}, ...this.styles));
 
-  state = computed(() => this.getState());
+  readonly state = computed(() => this.getState());
 
-  computedAriaLabel = computed(() => {
+  readonly computedAriaLabel = computed(() => {
     const customLabel = this.ariaLabel();
     if (customLabel) return customLabel;
 
@@ -163,21 +163,21 @@ export class PshRadioComponent<T = unknown> implements AfterViewInit {
     return undefined;
   });
 
-  errorMessageId = computed(() =>
+  readonly errorMessageId = computed(() =>
     this.error() ? `${this.uniqueId}-error` : undefined
   );
 
-  successMessageId = computed(() =>
+  readonly successMessageId = computed(() =>
     this.success() ? `${this.uniqueId}-success` : undefined
   );
 
-  hintMessageId = computed(() =>
+  readonly hintMessageId = computed(() =>
     this.hint() ? `${this.uniqueId}-hint` : undefined
   );
 
   // error, success and hint are mutually exclusive in the template (@if/@else if), so
   // aria-describedby references whichever message is actually rendered — in the same order.
-  describedBy = computed(() =>
+  readonly describedBy = computed(() =>
     pshJoinAriaIds(
       this.errorMessageId() ?? this.successMessageId() ?? this.hintMessageId(),
       this.ariaDescribedBy(),

@@ -38,21 +38,21 @@ export class PshFlowStepComponent {
   protected readonly idPrefix =
     inject(PSH_STATE_FLOW, { optional: true })?.idPrefix ?? pshUniqueId('flow-step');
 
-  title = input.required<string>();
+  readonly title = input.required<string>();
   /** Secondary line under the title. Parity with `psh-step`, which had it and this did not. */
-  subtitle = input<string>();
+  readonly subtitle = input<string>();
   /** Phosphor icon name, shown instead of the state icon. Parity with `psh-step`. */
-  icon = input<string>();
-  disabled = input(false);
-  completed = input(false);
-  loading = input(false);
-  error = input<string | null | undefined>(null);
-  warning = input<string | null | undefined>(null);
+  readonly icon = input<string>();
+  readonly disabled = input(false);
+  readonly completed = input(false);
+  readonly loading = input(false);
+  readonly error = input<string | null | undefined>(null);
+  readonly warning = input<string | null | undefined>(null);
   /** Parity with `psh-step`. */
-  success = input<string | null | undefined>(null);
+  readonly success = input<string | null | undefined>(null);
 
-  private _index = signal(0);
-  private _isActive = signal(false);
+  private readonly _index = signal(0);
+  private readonly _isActive = signal(false);
 
   readonly index = this._index.asReadonly();
   readonly isActive = this._isActive.asReadonly();

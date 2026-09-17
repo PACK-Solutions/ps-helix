@@ -46,22 +46,22 @@ export class PshTabsComponent implements PshTabsApi {
 
   private config = inject(TABS_CONFIG);
 
-  variant = input<TabsVariant>(this.config.variant ?? 'default');
-  size = input<TabsSize>(this.config.size ?? 'medium');
-  animated = input(this.config.animated ?? true);
-  tabs = input<Tab[]>([]);
-  ariaLabelInput = input<string | undefined>(undefined, { alias: 'ariaLabel' });
-  ariaLabel = computed(
+  readonly variant = input<TabsVariant>(this.config.variant ?? 'default');
+  readonly size = input<TabsSize>(this.config.size ?? 'medium');
+  readonly animated = input(this.config.animated ?? true);
+  readonly tabs = input<Tab[]>([]);
+  readonly ariaLabelInput = input<string | undefined>(undefined, { alias: 'ariaLabel' });
+  readonly ariaLabel = computed(
     () => this.ariaLabelInput() ?? pshResolveConfigValue(this.config.ariaLabel) ?? 'Tab navigation',
   );
-  ariaOrientation = input<'horizontal' | 'vertical'>('horizontal');
+  readonly ariaOrientation = input<'horizontal' | 'vertical'>('horizontal');
 
-  activeIndexInput = input(this.config.activeIndex ?? 0, { alias: 'activeIndex' });
-  activeIndex = linkedSignal(this.activeIndexInput);
+  readonly activeIndexInput = input(this.config.activeIndex ?? 0, { alias: 'activeIndex' });
+  readonly activeIndex = linkedSignal(this.activeIndexInput);
 
-  tabComponents = contentChildren(PshTabComponent);
+  readonly tabComponents = contentChildren(PshTabComponent);
 
-  tabsToDisplay = computed(() => {
+  readonly tabsToDisplay = computed(() => {
     const components = this.tabComponents();
     if (components.length > 0) {
       return components.map(c => c.toTabData());
@@ -69,12 +69,12 @@ export class PshTabsComponent implements PshTabsApi {
     return this.tabs();
   });
 
-  hasContentProjection = computed(() => this.tabComponents().length > 0);
+  readonly hasContentProjection = computed(() => this.tabComponents().length > 0);
 
   activeIndexChange = output<number>();
   tabChange = output<TabChangeEvent>();
 
-  hostClasses = computed(() => {
+  readonly hostClasses = computed(() => {
     const classes = ['psh-tabs-wrapper'];
     const size = this.size();
     const variant = this.variant();

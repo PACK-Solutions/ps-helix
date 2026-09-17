@@ -40,7 +40,7 @@
           {{ getEmptyStateMessage() }}
         </div>
       } @else {
-        @for (item of data(); track $index) {
+        @for (item of data(); track item) {
           <div
             class="psh-info-card-row"
             role="listitem"

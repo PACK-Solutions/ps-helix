@@ -1,6 +1,7 @@
 import { PshFieldAppearance } from '../../types/semantic.types';
 import { pshResolveConfigValue } from '../../utils/config-value';
 import {
+  NgZone,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -16,13 +17,13 @@ import {
   viewChild,
   effect
 } from '@angular/core';
-import { CommonModule, NgTemplateOutlet } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
 import { ControlValueAccessor, FormsModule, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 import type { FormValueControl } from '@angular/forms/signals';
 import { PshClickOutsideDirective } from '../../a11y/click-outside.directive';
 import { PshOverlayPositionService } from '../../a11y/overlay-position.service';
 import { PshPortalService, PshPortalRef } from '../../a11y/portal.service';
-import { SelectOption, SelectOptionGroup, SelectSize, SelectOptionContext } from './select.types';
+import { SelectOption, SelectOptionGroup, SelectSize, SelectOptionContext, SelectOptionView } from './select.types';
 import { pshUniqueId } from '../../utils/unique-id';
 import { pshIsEmptyValue, pshRequiredError } from '../../utils/required-validator';
 import { pshJoinAriaIds } from '../../utils/aria';
@@ -35,7 +36,7 @@ interface FlatOption<T> {
 
 @Component({
   selector: 'psh-select',
-  imports: [NgTemplateOutlet, CommonModule, FormsModule],
+  imports: [NgTemplateOutlet, FormsModule],
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.css'],
   providers: [
@@ -63,6 +64,7 @@ interface FlatOption<T> {
   }
 })
 export class PshSelectComponent<T = unknown> implements ControlValueAccessor, FormValueControl<T | T[] | null>, Validator {
+  private readonly zone = inject(NgZone);
   private readonly config = inject(SELECT_CONFIG);
 
   private readonly elementRef = inject(ElementRef);
@@ -93,16 +95,16 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
    */
   readonly touch = output<void>();
 
-  size = input<SelectSize>(this.config.size ?? 'medium');
-  appearance = input<PshFieldAppearance>(this.config.appearance ?? 'outline');
-  searchable = input(this.config.searchable ?? false);
-  multiple = input(false);
-  clearable = input(this.config.clearable ?? false);
-  loading = input(false);
-  fullWidth = input(this.config.fullWidth ?? false);
-  required = input(false);
+  readonly size = input<SelectSize>(this.config.size ?? 'medium');
+  readonly appearance = input<PshFieldAppearance>(this.config.appearance ?? 'outline');
+  readonly searchable = input(this.config.searchable ?? false);
+  readonly multiple = input(false);
+  readonly clearable = input(this.config.clearable ?? false);
+  readonly loading = input(false);
+  readonly fullWidth = input(this.config.fullWidth ?? false);
+  readonly required = input(false);
 
-  options = input.required<(SelectOption<T> | SelectOptionGroup<T>)[]>();
+  readonly options = input.required<(SelectOption<T> | SelectOptionGroup<T>)[]>();
 
   /**
    * Replaces the content of every option.
@@ -117,18 +119,18 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
    * down with it.
    */
   readonly optionTemplate = input<TemplateRef<SelectOptionContext<T>>>();
-  label = input('');
-  placeholderInput = input<string | undefined>(undefined, { alias: 'placeholder' });
-  placeholder = computed(
+  readonly label = input('');
+  readonly placeholderInput = input<string | undefined>(undefined, { alias: 'placeholder' });
+  readonly placeholder = computed(
     () => this.placeholderInput() ?? pshResolveConfigValue(this.config.placeholder) ?? 'Select an option',
   );
-  multiplePlaceholderInput = input<string | undefined>(undefined, { alias: 'multiplePlaceholder' });
-  multiplePlaceholder = computed(
+  readonly multiplePlaceholderInput = input<string | undefined>(undefined, { alias: 'multiplePlaceholder' });
+  readonly multiplePlaceholder = computed(
     () => this.multiplePlaceholderInput() ?? pshResolveConfigValue(this.config.multiplePlaceholder) ?? 'Select options',
   );
-  error = input<string | null | undefined>(null);
-  success = input<string | null | undefined>(null);
-  hint = input<string | null | undefined>(null);
+  readonly error = input<string | null | undefined>(null);
+  readonly success = input<string | null | undefined>(null);
+  readonly hint = input<string | null | undefined>(null);
 
   /** Shown when the search matches nothing. Was a literal in the template. */
   readonly noResultsTextInput = input<string | undefined>(undefined, { alias: 'noResultsText' });
@@ -147,18 +149,18 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
    * cover. Merged with anything the control already points at.
    */
   readonly ariaLabelledBy = input<string>();
-  ariaLabel = input<string | null>(null);
+  readonly ariaLabel = input<string | null>(null);
   /** Accessible name of the clear button, which renders as a bare icon. */
-  clearLabelInput = input<string | undefined>(undefined, { alias: 'clearLabel' });
-  clearLabel = computed(
+  readonly clearLabelInput = input<string | undefined>(undefined, { alias: 'clearLabel' });
+  readonly clearLabel = computed(
     () => this.clearLabelInput() ?? pshResolveConfigValue(this.config.clearLabel) ?? 'Clear selection',
   );
-  maxSelections = input<number | undefined>(undefined);
-  minSelections = input<number | undefined>(undefined);
-  compareWith = input<(a: T, b: T) => boolean>((a, b) => a === b);
-  searchPlaceholderInput = input<string | undefined>(undefined, { alias: 'searchPlaceholder' });
+  readonly maxSelections = input<number | undefined>(undefined);
+  readonly minSelections = input<number | undefined>(undefined);
+  readonly compareWith = input<(a: T, b: T) => boolean>((a, b) => a === b);
+  readonly searchPlaceholderInput = input<string | undefined>(undefined, { alias: 'searchPlaceholder' });
   /** Placeholder and accessible name of the search field. */
-  searchPlaceholder = computed(
+  readonly searchPlaceholder = computed(
     () =>
       this.searchPlaceholderInput() ??
       pshResolveConfigValue(this.config.searchPlaceholder) ??
@@ -174,22 +176,22 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
   searched = output<string>();
   scrolledToEnd = output<void>();
 
-  isOpen = computed(() => this.isOpenSignal());
-  searchTerm = computed(() => this.searchTermSignal());
+  readonly isOpen = computed(() => this.isOpenSignal());
+  readonly searchTerm = computed(() => this.searchTermSignal());
 
-  state = computed(() => {
+  readonly state = computed(() => {
     if (this.disabled()) return 'disabled';
     if (this.error()) return 'error';
     if (this.success()) return 'success';
     return 'default';
   });
 
-  computedAriaLabel = computed(() => this.ariaLabel() || this.label() || this.placeholder());
+  readonly computedAriaLabel = computed(() => this.ariaLabel() || this.label() || this.placeholder());
 
   // Was the global 'error-message' / 'success-message' / 'hint-message': two selects in
   // error on one page produced duplicate ids, and a screen reader read the first one's
   // message for both. Fixed on `input` in 6.2.5 and never propagated until now.
-  describedBy = computed(() => {
+  readonly describedBy = computed(() => {
     const own = this.error()
       ? `${this.selectId}-error`
       : this.success()
@@ -200,7 +202,7 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
     return pshJoinAriaIds(own, this.ariaDescribedBy());
   });
 
-  flatFilteredOptions = computed<FlatOption<T>[]>(() => {
+  readonly flatFilteredOptions = computed<FlatOption<T>[]>(() => {
     const opts = this.filteredOptions();
     const result: FlatOption<T>[] = [];
     for (const item of opts) {
@@ -215,7 +217,7 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
     return result;
   });
 
-  activeDescendant = computed(() => {
+  readonly activeDescendant = computed(() => {
     const idx = this.focusedIndex();
     const flat = this.flatFilteredOptions();
     if (idx < 0 || idx >= flat.length) return null;
@@ -224,7 +226,7 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
     return `${this.selectId}-${item.option.value}`;
   });
 
-  selectedLabel = computed(() => {
+  readonly selectedLabel = computed(() => {
     const currentValue = this.value();
     const currentOptions = this.flattenOptions(this.options());
 
@@ -243,7 +245,7 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
     return selected ? selected.label : this.placeholder();
   });
 
-  filteredOptions = computed(() => {
+  readonly filteredOptions = computed(() => {
     const term = this.searchTermSignal().toLowerCase();
     const opts = this.options();
     if (!term) return opts;
@@ -297,8 +299,14 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
     this.reposition();
     const view = (this.elementRef.nativeElement as HTMLElement).ownerDocument.defaultView;
     // Capture phase so inner (e.g. modal body) scrolls keep the panel aligned.
-    view?.addEventListener('scroll', this.repositionHandler, true);
-    view?.addEventListener('resize', this.repositionHandler);
+    // Registered outside Angular: a capture-phase scroll listener fires on every scroll of
+    // every ancestor, and each one triggered a full change-detection pass. Repositioning
+    // writes to the DOM and to a signal, and a signal write schedules its own refresh — the
+    // zone was doing the work twice.
+    this.zone.runOutsideAngular(() => {
+      view?.addEventListener('scroll', this.repositionHandler, true);
+      view?.addEventListener('resize', this.repositionHandler);
+    });
   }
 
   private closePanel(): void {
@@ -449,10 +457,6 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
     return 'options' in item;
   }
 
-  protected optionContext(option: SelectOption<T>, disabled: boolean): SelectOptionContext<T> {
-    return { $implicit: option, selected: this.isSelected(option), disabled };
-  }
-
   protected getOptionKey(item: SelectOption<T> | SelectOptionGroup<T>): string {
     return this.isOptionGroup(item) ? `g-${item.label}` : `o-${item.label}`;
   }
@@ -471,8 +475,43 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
     return val !== null && val !== undefined;
   }
 
-  protected getFlatIndex(option: SelectOption<T>): number {
-    return this.flatFilteredOptions().findIndex(item => item.option === option);
+  /**
+   * Everything the template needs about one option, computed once per render.
+   *
+   * It used to ask four questions per option per change-detection cycle, and one of them —
+   * "what is this option's position in the flattened list?" — was a `findIndex` over that
+   * list. Two hundred options meant forty thousand comparisons every cycle, plus a fresh
+   * context object per option, which also defeats `NgTemplateOutlet`'s own caching: a new
+   * context is a changed context.
+   *
+   * One pass over the flat list answers all four, and the context object is stable between
+   * renders as long as nothing it holds has changed.
+   */
+  private readonly optionViews = computed(() => {
+    const flat = this.flatFilteredOptions();
+    const views = new Map<SelectOption<T>, SelectOptionView<T>>();
+    flat.forEach(({ option, effectiveDisabled }, index) => {
+      const selected = this.isSelected(option);
+      views.set(option, {
+        index,
+        selected,
+        disabled: effectiveDisabled,
+        context: { $implicit: option, selected, disabled: effectiveDisabled },
+      });
+    });
+    return views;
+  });
+
+  /** O(1). An option the current render does not contain gets a view that says so. */
+  protected optionView(option: SelectOption<T>): SelectOptionView<T> {
+    return (
+      this.optionViews().get(option) ?? {
+        index: -1,
+        selected: false,
+        disabled: false,
+        context: { $implicit: option, selected: false, disabled: false },
+      }
+    );
   }
 
   protected focusSelect(): void {
