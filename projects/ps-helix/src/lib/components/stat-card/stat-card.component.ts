@@ -4,12 +4,14 @@ import {
   computed,
   input,
   output,
-  ViewEncapsulation
+  ViewEncapsulation,
+  inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PshTagComponent } from '../tag/tag.component';
 import { StatCardLayout } from './stat-card.types';
 import { PSH_COLORS, PshColor, PshSurfaceAppearance } from '../../types/semantic.types';
+import { STAT_CARD_CONFIG } from './stat-card.tokens';
 
 /**
  * Icon background per semantic colour. These were four hardcoded hex pairs that ignored
@@ -42,6 +44,8 @@ const ICON_GRADIENT_DEFAULTS: Record<PshColor, string> = Object.fromEntries(
   },
 })
 export class PshStatCardComponent {
+  private readonly config = inject(STAT_CARD_CONFIG);
+
 
   // Inputs principaux
   /** Valeur principale de la statistique (nombre ou texte formaté) */
@@ -64,13 +68,13 @@ export class PshStatCardComponent {
   iconBackground = input<string>();
 
   /** Variante visuelle de la carte de base */
-  appearance = input<PshSurfaceAppearance>('elevated');
+  appearance = input<PshSurfaceAppearance>(this.config.appearance ?? 'elevated');
 
   /** Carte cliquable avec feedback visuel */
-  interactive = input(false);
+  interactive = input(this.config.interactive ?? false);
 
   /** Effet de survol */
-  hoverable = input(false);
+  hoverable = input(this.config.hoverable ?? false);
 
   /** État de chargement */
   loading = input(false);
@@ -84,10 +88,10 @@ export class PshStatCardComponent {
   ariaLabel = input<string>();
 
   /** Disposition de la carte: 'horizontal' (icône à gauche) ou 'vertical' (icône en haut) */
-  layout = input<StatCardLayout>('horizontal');
+  layout = input<StatCardLayout>(this.config.layout ?? 'horizontal');
 
   /** Active la direction row pour le card-body (icône et contenu côte à côte en flex-row) */
-  rowDirection = input(false);
+  rowDirection = input(this.config.rowDirection ?? false);
 
   // Outputs
   /** Émis lors du clic sur la carte */

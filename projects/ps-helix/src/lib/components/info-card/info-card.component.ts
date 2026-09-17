@@ -2,6 +2,7 @@ import { PshSurfaceAppearance } from '../../types/semantic.types';
 import { Component, ChangeDetectionStrategy, computed, input, signal, PLATFORM_ID, inject, output, ViewEncapsulation, ElementRef, AfterContentInit, OnDestroy } from '@angular/core';
 import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { InfoCardData, InfoCardOptions } from './info-card.types';
+import { INFO_CARD_CONFIG } from './info-card.tokens';
 
 /**
  * Info Card Component - Autonomous
@@ -45,6 +46,8 @@ import { InfoCardData, InfoCardOptions } from './info-card.types';
   },
 })
 export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
+  private readonly config = inject(INFO_CARD_CONFIG);
+
 
   hasHeaderActions = signal<boolean>(false);
 
@@ -63,10 +66,10 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
   });
 
   /** Base card variant style */
-  appearance = input<PshSurfaceAppearance>('outline');
+  appearance = input<PshSurfaceAppearance>(this.config.appearance ?? 'outline');
 
   /** Icon to display in the header (Phosphor icon name without 'ph-' prefix) */
-  icon = input<string>('circle-dashed');
+  icon = input<string>(this.config.icon ?? 'circle-dashed');
 
   /** Custom ARIA label for accessibility */
   ariaLabel = input<string>();
@@ -74,10 +77,10 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
 
 
   /** Whether the card should be interactive/clickable */
-  interactive = input<boolean>(false);
+  interactive = input<boolean>(this.config.interactive ?? false);
 
   /** Whether to show hover effects */
-  hoverable = input<boolean>(false);
+  hoverable = input<boolean>(this.config.hoverable ?? false);
 
   /** Indicates if data is loading */
   loading = input<boolean>(false);
@@ -89,13 +92,13 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
   clicked = output<MouseEvent | KeyboardEvent>();
 
   /** Whether to show copy buttons on rows (opt-in) */
-  copyable = input<boolean>(false);
+  copyable = input<boolean>(this.config.copyable ?? false);
 
   /** Label prefix for the copy button aria-label */
-  copyButtonLabel = input<string>('Copier');
+  copyButtonLabel = input<string>(this.config.copyButtonLabel ?? 'Copier');
 
   /** Text shown as feedback after successful copy */
-  copyFeedbackText = input<string>('Copié');
+  copyFeedbackText = input<string>(this.config.copyFeedbackText ?? 'Copié');
 
   /** Emitted when a row value is successfully copied */
   copied = output<InfoCardData>();
@@ -107,7 +110,7 @@ export class PshInfoCardComponent implements AfterContentInit, OnDestroy {
   copiedRowIndex = signal<number | null>(null);
 
   /** Whether to auto-enable full width buttons on mobile (default: true) */
-  autoFullWidthOnMobile = input<boolean>(true);
+  autoFullWidthOnMobile = input<boolean>(this.config.autoFullWidthOnMobile ?? true);
 
   /** Signal to track if viewport is mobile */
   isMobile = signal<boolean>(false);

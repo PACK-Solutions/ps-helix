@@ -25,6 +25,7 @@ import { SelectOption, SelectOptionGroup, SelectSize, SearchConfig , SelectOptio
 import { pshUniqueId } from '../../utils/unique-id';
 import { pshIsEmptyValue, pshRequiredError } from '../../utils/required-validator';
 import { pshJoinAriaIds } from '../../utils/aria';
+import { SELECT_CONFIG } from './select.tokens';
 
 interface FlatOption<T> {
   option: SelectOption<T>;
@@ -61,6 +62,8 @@ interface FlatOption<T> {
   }
 })
 export class PshSelectComponent<T = unknown> implements ControlValueAccessor, FormValueControl<T | T[] | null>, Validator {
+  private readonly config = inject(SELECT_CONFIG);
+
   private readonly elementRef = inject(ElementRef);
   private readonly destroyRef = inject(DestroyRef);
   private readonly overlayPosition = inject(PshOverlayPositionService);
@@ -89,13 +92,13 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
    */
   readonly touch = output<void>();
 
-  size = input<SelectSize>('medium');
-  appearance = input<PshFieldAppearance>('outline');
-  searchable = input(false);
+  size = input<SelectSize>(this.config.size ?? 'medium');
+  appearance = input<PshFieldAppearance>(this.config.appearance ?? 'outline');
+  searchable = input(this.config.searchable ?? false);
   multiple = input(false);
-  clearable = input(false);
+  clearable = input(this.config.clearable ?? false);
   loading = input(false);
-  fullWidth = input(false);
+  fullWidth = input(this.config.fullWidth ?? false);
   required = input(false);
 
   options = input.required<(SelectOption<T> | SelectOptionGroup<T>)[]>();
@@ -114,14 +117,14 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
    */
   readonly optionTemplate = input<TemplateRef<SelectOptionContext<T>>>();
   label = input('');
-  placeholder = input<string>('Sélectionner une option');
-  multiplePlaceholder = input<string>('Sélectionner des options');
+  placeholder = input<string>(this.config.placeholder ?? 'Sélectionner une option');
+  multiplePlaceholder = input<string>(this.config.multiplePlaceholder ?? 'Sélectionner des options');
   error = input<string | null | undefined>(null);
   success = input<string | null | undefined>(null);
   hint = input<string | null | undefined>(null);
 
   /** Shown when the search matches nothing. Was a literal in the template. */
-  readonly noResultsText = input<string>('Aucun résultat');
+  readonly noResultsText = input<string>(this.config.noResultsText ?? 'Aucun résultat');
 
   /**
    * Extra ids for `aria-describedby`. **Merged** with the control's own — the id of its error,
@@ -136,15 +139,17 @@ export class PshSelectComponent<T = unknown> implements ControlValueAccessor, Fo
   readonly ariaLabelledBy = input<string>();
   ariaLabel = input<string | null>(null);
   /** Accessible name of the clear button, which renders as a bare icon. */
-  clearLabel = input<string>('Effacer la sélection');
+  clearLabel = input<string>(this.config.clearLabel ?? 'Effacer la sélection');
   maxSelections = input<number | undefined>(undefined);
   minSelections = input<number | undefined>(undefined);
   compareWith = input<(a: T, b: T) => boolean>((a, b) => a === b);
-  searchConfig = input<SearchConfig>({
-    debounceTime: 300,
-    placeholder: 'Rechercher...',
-    minLength: 1
-  });
+  searchConfig = input<SearchConfig>(
+    this.config.searchConfig ?? {
+      debounceTime: 300,
+      placeholder: 'Rechercher...',
+      minLength: 1,
+    },
+  );
 
   private readonly isOpenSignal = signal(false);
   private readonly searchTermSignal = signal('');

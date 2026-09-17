@@ -48,11 +48,23 @@ jobs:
       - name: Responsive scale
         run: npm run verify:breakpoints
 
+      # Every settable default, generated from the tokens. A hand-written list of 201
+      # defaults drifts, and four of these tokens had already drifted from their own
+      # interface before this was in place.
+      - name: Configuration reference
+        run: npm run verify:config
+
       - name: Unit tests (with coverage gate)
         run: npm run test:coverage
 
       - name: Build library
         run: npm run build:lib
+
+      # psh-radio-group was built to carry the form contract and shipped unreachable:
+      # listed in a barrel the demo imports and the entry point does not. Reads the
+      # generated .d.ts, because that file is the contract a consumer actually gets.
+      - name: Public API reachability
+        run: npm run verify:public-api
 
       - name: Bundle smoke test (import-cycle guard)
         run: npm run verify:bundle

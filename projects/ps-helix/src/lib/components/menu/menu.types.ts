@@ -47,3 +47,10 @@ export interface MenuItemContext<T = unknown> {
   /** Sous-menu déplié. */
   expanded: boolean;
 }
+
+/** Application-wide defaults for `psh-menu`, provided through `MENU_CONFIG`. */
+export interface MenuConfig {
+  mode: MenuMode;
+  variant: MenuVariant;
+  collapsible: boolean;
+}

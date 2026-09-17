@@ -6,10 +6,12 @@ import {
   input,
   isDevMode,
   model,
-  output
+  output,
+  inject,
 } from '@angular/core';
 import { CollapseVariant, CollapseSize } from './collapse.types';
 import { pshUniqueId } from '../../utils/unique-id';
+import { COLLAPSE_CONFIG } from './collapse.tokens';
 
 @Component({
   selector: 'psh-collapse',
@@ -18,11 +20,13 @@ import { pshUniqueId } from '../../utils/unique-id';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PshCollapseComponent {
+  private readonly config = inject(COLLAPSE_CONFIG);
+
 
   expanded = model(false);
 
   disabled = input(false);
-  appearance = input('flat' as PshSurfaceAppearance, {
+  appearance = input(this.config.appearance ?? ('flat' as PshSurfaceAppearance), {
     transform: (value: CollapseVariant) => {
       if (!['flat', 'outline'].includes(value)) {
         if (isDevMode()) {
@@ -33,7 +37,7 @@ export class PshCollapseComponent {
       return value;
     }
   });
-  size = input('medium' as CollapseSize, {
+  size = input(this.config.size ?? ('medium' as CollapseSize), {
     transform: (value: CollapseSize) => {
       if (!['small', 'medium', 'large'].includes(value)) {
         if (isDevMode()) {
@@ -44,7 +48,7 @@ export class PshCollapseComponent {
       return value;
     }
   });
-  icon = input('caret-down');
+  icon = input(this.config.icon ?? 'caret-down');
   id = input<string>();
   /**
    * Maximum height of the open content. `'auto'` — the default — does not clip.
@@ -53,19 +57,19 @@ export class PshCollapseComponent {
    * with no warning and no way to opt out. A fixed length still works, and is what gives the
    * open/close a height animation; `auto` animates opacity and offset only.
    */
-  maxHeight = input<string>('auto');
+  maxHeight = input<string>(this.config.maxHeight ?? 'auto');
 
   /**
    * Fallback header text, used when nothing is projected into `[psh-collapse-header]`.
    * Was a literal in the template, so a non-French application could not change it.
    */
-  readonly defaultHeaderText = input<string>('Section pliable');
+  readonly defaultHeaderText = input<string>(this.config.defaultHeaderText ?? 'Section pliable');
 
   /** `auto` is not a usable `max-height` for the CSS; `none` is the same intent. */
   protected readonly resolvedMaxHeight = computed(() =>
     this.maxHeight() === 'auto' ? 'none' : this.maxHeight(),
   );
-  disableAnimation = input(false);
+  disableAnimation = input(this.config.disableAnimation ?? false);
 
   opened = output<void>();
   closed = output<void>();

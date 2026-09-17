@@ -6,9 +6,11 @@ import {
   input,
   output,
   signal,
+  inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AvatarSize, AvatarShape, AvatarStatus } from './avatar.types';
+import { AVATAR_CONFIG } from './avatar.tokens';
 
 // Default configuration
 const DEFAULT_CONFIG = {
@@ -34,16 +36,18 @@ const DEFAULT_STATUS_COLORS: Record<AvatarStatus, string> = {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PshAvatarComponent {
+  private readonly config = inject(AVATAR_CONFIG);
+
 
   // Model inputs with defaults
-  size = input<AvatarSize>(DEFAULT_CONFIG.size);
-  shape = input<AvatarShape>(DEFAULT_CONFIG.shape);
+  size = input<AvatarSize>(this.config.size ?? DEFAULT_CONFIG.size);
+  shape = input<AvatarShape>(this.config.shape ?? DEFAULT_CONFIG.shape);
   src = input<string | undefined>();
-  alt = input<string>(DEFAULT_CONFIG.alt);
+  alt = input<string>(this.config.alt ?? DEFAULT_CONFIG.alt);
 
   // Regular inputs
   initials = input('');
-  icon = input<string>(DEFAULT_CONFIG.icon);
+  icon = input<string>(this.config.icon ?? DEFAULT_CONFIG.icon);
   status = input<AvatarStatus | undefined>();
   ariaLabel = input<string>();
   /** Makes the avatar interactive: adds a button role, a tab stop and a focus ring. */

@@ -41,3 +41,17 @@ export interface SelectOptionContext<T> {
   /** Désactivée, par elle-même ou par son groupe. */
   disabled: boolean;
 }
+
+/** Application-wide defaults for `psh-select`, provided through `SELECT_CONFIG`. */
+export interface SelectConfig {
+  appearance: SelectVariant;
+  size: SelectSize;
+  searchable: boolean;
+  clearable: boolean;
+  fullWidth: boolean;
+  placeholder: string;
+  multiplePlaceholder: string;
+  noResultsText: string;
+  clearLabel: string;
+  searchConfig: SearchConfig;
+}

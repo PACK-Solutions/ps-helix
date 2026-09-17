@@ -14,6 +14,7 @@ A comprehensive Angular component library built with Angular 22+ featuring moder
 - [Installation](#installation)
 - [Quick Start](#quick-start)
 - [Configuration](#configuration)
+  - [`provideHelix()`](#providehelix)
   - [Global Styles](#global-styles)
   - [Phosphor Icons Setup](#phosphor-icons-setup)
   - [Theme Service](#theme-service)
@@ -239,6 +240,43 @@ export class TestComponent {}
 ```
 
 ## Configuration
+
+### `provideHelix()`
+
+One call sets the theme and every component default. Full list of the 201 settable defaults:
+[CONFIGURATION.md](./CONFIGURATION.md).
+
+```typescript
+import { bootstrapApplication } from '@angular/platform-browser';
+import { provideHelix } from 'ps-helix';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideHelix({
+      theme: { targetContrast: 'AAA', customerContext: BrandService },
+      components: {
+        button: { size: 'large', appearance: 'outline' },
+        modal: { dismissLabel: 'Fermer', confirmLabel: 'Valider', cancelLabel: 'Annuler' },
+        toast: { position: 'bottom-right', duration: 3000 },
+      },
+    }),
+  ],
+});
+```
+
+A partial override stays partial — `{ button: { size: 'large' } }` leaves the button's colour
+and appearance where they were — and an attribute written on an element always wins over the
+configuration.
+
+`provideHelixTheme()`, `provideHelixComponentDefaults()` and `provideHelixToast()` cover one
+part each, and every token is exported by name for a component-level override:
+
+```typescript
+import { BUTTON_CONFIG } from 'ps-helix';
+
+@Component({ providers: [{ provide: BUTTON_CONFIG, useValue: { size: 'small' } }] })
+export class ToolbarComponent {}
+```
 
 ### Global Styles
 

@@ -3,10 +3,12 @@ import {
   Component,
   computed,
   input,
-  output
+  output,
+  inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AlertType, IconPosition, AlertSize, AlertRole, AlertLabels } from './alert.types';
+import { ALERT_CONFIG } from './alert.tokens';
 
 // Default alert labels
 const DEFAULT_LABELS: AlertLabels = {
@@ -37,17 +39,19 @@ const DEFAULT_CONFIG = {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PshAlertComponent {
+  private readonly config = inject(ALERT_CONFIG);
+
 
   // Inputs
-  color = input<AlertType>(DEFAULT_CONFIG.type);
-  iconPosition = input<IconPosition>(DEFAULT_CONFIG.iconPosition);
-  closable = input(DEFAULT_CONFIG.closable);
-  size = input<AlertSize>(DEFAULT_CONFIG.size);
-  showIcon = input(DEFAULT_CONFIG.showIcon);
+  color = input<AlertType>(this.config.color ?? DEFAULT_CONFIG.type);
+  iconPosition = input<IconPosition>(this.config.iconPosition ?? DEFAULT_CONFIG.iconPosition);
+  closable = input(this.config.closable ?? DEFAULT_CONFIG.closable);
+  size = input<AlertSize>(this.config.size ?? DEFAULT_CONFIG.size);
+  showIcon = input(this.config.showIcon ?? DEFAULT_CONFIG.showIcon);
   role = input<AlertRole>();
   icon = input<string>();
   ariaLabel = input<string>();
-  dismissLabel = input(DEFAULT_LABELS.dismiss);
+  dismissLabel = input(this.config.labels?.dismiss ?? DEFAULT_LABELS.dismiss);
   ariaLive = input<'polite' | 'assertive'>();
   content = input('');
   

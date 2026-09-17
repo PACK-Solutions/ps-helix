@@ -23,12 +23,14 @@ const DEFAULT_ARIA_LABELS: StepperAriaLabels = {
   disabled: 'Étape désactivée'
 };
 
+const STEPPER_DEFAULTS = {
+  variant: 'default',
+  linear: true,
+  ariaLabels: DEFAULT_ARIA_LABELS
+} satisfies Partial<StepperConfig>;
+
 export const STEPPER_CONFIG = new InjectionToken<Partial<StepperConfig>>('STEPPER_CONFIG', {
-  factory: () => ({
-    variant: 'default',
-    linear: true,
-    ariaLabels: DEFAULT_ARIA_LABELS
-  })
+  factory: () => STEPPER_DEFAULTS,
 });
 
 @Component({

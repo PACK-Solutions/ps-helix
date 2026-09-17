@@ -8,12 +8,10 @@ export type TextareaSize = 'small' | 'medium' | 'large';
 export type TextareaResize = 'none' | 'vertical' | 'horizontal' | 'both';
 
 export interface TextareaConfig {
-  variant: TextareaVariant;
+  appearance: TextareaVariant;
   size: TextareaSize;
   resize: TextareaResize;
-  disabled: boolean;
   required: boolean;
-  readonly: boolean;
   fullWidth: boolean;
   showLabel: boolean;
   showCharacterCount: boolean;

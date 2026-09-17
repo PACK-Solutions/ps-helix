@@ -72,3 +72,14 @@ export interface InfoCardEmphasis {
   /** Couleur sémantique. Même union que partout ailleurs : {@link PshColor}. */
   color?: PshColor;
 }
+/** Application-wide defaults for `psh-info-card`, provided through `INFO_CARD_CONFIG`. */
+export interface InfoCardConfig {
+  appearance: InfoCardVariant;
+  icon: string;
+  hoverable: boolean;
+  interactive: boolean;
+  copyable: boolean;
+  copyButtonLabel: string;
+  copyFeedbackText: string;
+  autoFullWidthOnMobile: boolean;
+}

@@ -1,16 +1,18 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, input, output, InjectionToken } from '@angular/core';
 import { ProgressbarVariant, ProgressbarSize, ProgressbarMode, ProgressbarLabelPosition, ProgressbarConfig } from './progressbar.types';
 
+const PROGRESSBAR_DEFAULTS = {
+  value: 0,
+  max: 100,
+  color: 'primary',
+  size: 'medium',
+  showLabel: true,
+  mode: 'default',
+  labelPosition: 'top'
+} satisfies Partial<ProgressbarConfig>;
+
 export const PROGRESSBAR_CONFIG = new InjectionToken<Partial<ProgressbarConfig>>('PROGRESSBAR_CONFIG', {
-  factory: () => ({
-    value: 0,
-    max: 100,
-    variant: 'primary',
-    size: 'medium',
-    showLabel: true,
-    mode: 'default',
-    labelPosition: 'top'
-  })
+  factory: () => PROGRESSBAR_DEFAULTS,
 });
 
 @Component({

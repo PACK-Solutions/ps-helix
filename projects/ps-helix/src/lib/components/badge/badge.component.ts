@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output , inject} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BadgeSize, BadgePosition, BadgeDisplayType } from './badge.types';
 import { PshColor } from '../../types/semantic.types';
+import { BADGE_CONFIG } from './badge.tokens';
 
 const DEFAULT_CONFIG = {
   color: 'primary' as PshColor,
@@ -20,24 +21,26 @@ const DEFAULT_CONFIG = {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PshBadgeComponent<T = number> {
+  private readonly config = inject(BADGE_CONFIG);
 
-  readonly color = input<PshColor>(DEFAULT_CONFIG.color);
+
+  readonly color = input<PshColor>(this.config.color ?? DEFAULT_CONFIG.color);
 
   /**
    * Disabled is a state, not a colour. It used to be the seventh value of the colour union
    * — `variant="disabled"` — which meant a disabled badge could not also be a danger
    * badge, and which is not how `disabled` is spelled anywhere else in the library.
    */
-  readonly disabled = input(false);
-  readonly size = input<BadgeSize>(DEFAULT_CONFIG.size);
-  readonly displayType = input<BadgeDisplayType>(DEFAULT_CONFIG.displayType);
+  readonly disabled = input(this.config.disabled ?? false);
+  readonly size = input<BadgeSize>(this.config.size ?? DEFAULT_CONFIG.size);
+  readonly displayType = input<BadgeDisplayType>(this.config.displayType ?? DEFAULT_CONFIG.displayType);
   readonly content = input<string>('');
   readonly visible = input(true);
   readonly value = input<T>();
-  readonly max = input(DEFAULT_CONFIG.max);
-  readonly showZero = input(DEFAULT_CONFIG.showZero);
-  readonly position = input<BadgePosition>(DEFAULT_CONFIG.position);
-  readonly overlap = input(false);
+  readonly max = input(this.config.max ?? DEFAULT_CONFIG.max);
+  readonly showZero = input(this.config.showZero ?? DEFAULT_CONFIG.showZero);
+  readonly position = input<BadgePosition>(this.config.position ?? DEFAULT_CONFIG.position);
+  readonly overlap = input(this.config.overlap ?? false);
   readonly ariaLabel = input<string>();
   readonly formatter = input<((value: T) => string) | undefined>();
 

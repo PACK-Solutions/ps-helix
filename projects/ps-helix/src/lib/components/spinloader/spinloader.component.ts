@@ -2,12 +2,14 @@ import { ChangeDetectionStrategy, Component, DestroyRef, inject, input, signal, 
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { SpinLoaderVariant, SpinLoaderSize, SpinLoaderColor, SpinLoaderConfig } from './spinloader.types';
 
+const SPINLOADER_DEFAULTS = {
+  variant: 'circle',
+  size: 'medium',
+  color: 'primary'
+} satisfies Partial<SpinLoaderConfig>;
+
 export const SPINLOADER_CONFIG = new InjectionToken<Partial<SpinLoaderConfig>>('SPINLOADER_CONFIG', {
-  factory: () => ({
-    variant: 'circle',
-    size: 'medium',
-    color: 'primary'
-  })
+  factory: () => SPINLOADER_DEFAULTS,
 });
 
 @Component({

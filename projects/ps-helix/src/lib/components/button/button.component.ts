@@ -11,6 +11,7 @@ import {
   signal,
 } from '@angular/core';
 import { ButtonColor, ButtonSize, ButtonIconPosition } from './button.types';
+import { BUTTON_CONFIG } from './button.tokens';
 
 @Component({
   selector: 'psh-button',
@@ -24,22 +25,24 @@ import { ButtonColor, ButtonSize, ButtonIconPosition } from './button.types';
   },
 })
 export class PshButtonComponent implements AfterContentChecked {
+  private readonly config = inject(BUTTON_CONFIG);
+
   private elementRef = inject(ElementRef);
   private projectedText = signal<string | undefined>(undefined);
 
-  appearance = input<PshControlAppearance>('solid');
-  color = input<ButtonColor>('primary');
-  size = input<ButtonSize>('medium');
+  appearance = input<PshControlAppearance>(this.config.appearance ?? 'solid');
+  color = input<ButtonColor>(this.config.color ?? 'primary');
+  size = input<ButtonSize>(this.config.size ?? 'medium');
   disabled = input(false);
   loading = input(false);
-  fullWidth = input(false);
-  iconPosition = input<ButtonIconPosition>('left');
+  fullWidth = input(this.config.fullWidth ?? false);
+  iconPosition = input<ButtonIconPosition>(this.config.iconPosition ?? 'left');
   icon = input<string>();
   ariaLabel = input<string>();
-  loadingText = input('Loading...');
-  disabledText = input('This action is currently unavailable');
+  loadingText = input(this.config.loadingText ?? 'Loading...');
+  disabledText = input(this.config.disabledText ?? 'This action is currently unavailable');
   iconOnlyText = input<string>();
-  type = input<'button' | 'submit' | 'reset'>('button');
+  type = input<'button' | 'submit' | 'reset'>(this.config.type ?? 'button');
 
   clicked = output<MouseEvent>();
   disabledClicked = output<MouseEvent>();

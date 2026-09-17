@@ -13,13 +13,15 @@ import {
 import { TabsVariant, TabsSize, Tab, TabsConfig, TabChangeEvent } from './tabs.types';
 import { PshTabComponent } from './tab.component';
 
+const TABS_DEFAULTS = {
+  variant: 'default',
+  size: 'medium',
+  activeIndex: 0,
+  animated: true,
+} satisfies Partial<TabsConfig>;
+
 export const TABS_CONFIG = new InjectionToken<Partial<TabsConfig>>('TABS_CONFIG', {
-  factory: () => ({
-    variant: 'default',
-    size: 'medium',
-    activeIndex: 0,
-    animated: true,
-  }),
+  factory: () => TABS_DEFAULTS,
 });
 
 @Component({

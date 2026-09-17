@@ -13,6 +13,7 @@ import {
 } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { CardDensity, CardActionsAlignment } from './card.types';
+import { CARD_CONFIG } from './card.tokens';
 
 /**
  * Composant carte métier - conteneur structuré pour contenu professionnel
@@ -62,6 +63,8 @@ import { CardDensity, CardActionsAlignment } from './card.types';
   },
 })
 export class PshCardComponent implements OnDestroy {
+  private readonly config = inject(CARD_CONFIG);
+
   private platformId = inject(PLATFORM_ID);
   private readonly document = inject(DOCUMENT);
   private resizeObserver?: ResizeObserver;
@@ -71,13 +74,13 @@ export class PshCardComponent implements OnDestroy {
   /** Variante visuelle de la carte (default, elevated, outlined) */
   // input(), not model(): the card never writes its own appearance back, so a model()
   // only added a `variantChange` output that could never fire.
-  appearance = input<PshSurfaceAppearance>('flat');
+  appearance = input<PshSurfaceAppearance>(this.config.appearance ?? 'flat');
 
   /** Effet de survol activé (animation translateY) */
-  hoverable = input(false);
+  hoverable = input(this.config.hoverable ?? false);
 
   /** Carte cliquable (ajoute cursor pointer et gestion du focus) */
-  interactive = input(false);
+  interactive = input(this.config.interactive ?? false);
 
   // Regular inputs - propriétés en lecture seule
   /** Titre principal de la carte */
@@ -87,25 +90,25 @@ export class PshCardComponent implements OnDestroy {
   description = input<string>('');
 
   /** Couleur sémantique de la carte. `neutral` = aucune emphase (l'ancien `flat`). */
-  color = input<PshColor>('neutral');
+  color = input<PshColor>(this.config.color ?? 'neutral');
 
   /** Niveau de densité du spacing (compact, normal, spacious) */
-  density = input<CardDensity>('normal');
+  density = input<CardDensity>(this.config.density ?? 'normal');
 
   /** Afficher le divider entre header et body */
-  showHeaderDivider = input<boolean>(true);
+  showHeaderDivider = input<boolean>(this.config.showHeaderDivider ?? true);
 
   /** Afficher le divider entre body et footer */
-  showFooterDivider = input<boolean>(true);
+  showFooterDivider = input<boolean>(this.config.showFooterDivider ?? true);
 
   /** Afficher le divider entre footer et actions */
-  showActionsDivider = input<boolean>(true);
+  showActionsDivider = input<boolean>(this.config.showActionsDivider ?? true);
 
   /** Alignement des actions dans la zone card-actions */
-  actionsAlignment = input<CardActionsAlignment>('right');
+  actionsAlignment = input<CardActionsAlignment>(this.config.actionsAlignment ?? 'right');
 
   /** Activer/désactiver le padding du body */
-  bodyPadding = input<boolean>(true);
+  bodyPadding = input<boolean>(this.config.bodyPadding ?? true);
 
   /** État de chargement - affiche un skeleton */
   loading = input<boolean>(false);

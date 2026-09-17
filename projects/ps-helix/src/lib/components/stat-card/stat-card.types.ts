@@ -14,3 +14,12 @@ export type StatCardLayout = 'horizontal' | 'vertical';
  * vocabulary across the library.
  */
 export type StatCardVariant = PshSurfaceAppearance;
+
+/** Application-wide defaults for `psh-stat-card`, provided through `STAT_CARD_CONFIG`. */
+export interface StatCardConfig {
+  appearance: StatCardVariant;
+  layout: StatCardLayout;
+  hoverable: boolean;
+  interactive: boolean;
+  rowDirection: boolean;
+}

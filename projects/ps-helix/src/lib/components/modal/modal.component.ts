@@ -42,18 +42,20 @@ import { pshUniqueId } from '../../utils/unique-id';
  * ]
  * ```
  */
+const MODAL_DEFAULTS = {
+  size: 'medium',
+  showClose: true,
+  closeOnBackdrop: true,
+  closeOnEscape: true,
+  preventScroll: true,
+  showFooter: true,
+  dismissLabel: 'Close',
+  confirmLabel: 'Confirm',
+  cancelLabel: 'Cancel'
+} satisfies Partial<ModalConfig>;
+
 export const MODAL_CONFIG = new InjectionToken<Partial<ModalConfig>>('MODAL_CONFIG', {
-  factory: () => ({
-    size: 'medium',
-    showClose: true,
-    closeOnBackdrop: true,
-    closeOnEscape: true,
-    preventScroll: true,
-    showFooter: true,
-    dismissLabel: 'Close',
-    confirmLabel: 'Confirm',
-    cancelLabel: 'Cancel'
-  })
+  factory: () => MODAL_DEFAULTS,
 });
 
 /**

@@ -26,3 +26,16 @@ export type CardDensity = 'compact' | 'normal' | 'spacious';
  * Alignement des actions dans la zone card-actions
  */
 export type CardActionsAlignment = 'left' | 'center' | 'right' | 'space-between';
+/** Application-wide defaults for `psh-card`, provided through `CARD_CONFIG`. */
+export interface CardConfig {
+  appearance: CardVariant;
+  color: CardColorVariant;
+  density: CardDensity;
+  hoverable: boolean;
+  interactive: boolean;
+  bodyPadding: boolean;
+  showHeaderDivider: boolean;
+  showFooterDivider: boolean;
+  showActionsDivider: boolean;
+  actionsAlignment: CardActionsAlignment;
+}
