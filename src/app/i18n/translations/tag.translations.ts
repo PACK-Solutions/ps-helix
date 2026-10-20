@@ -15,7 +15,9 @@ export const tagTranslations = {
         SECONDARY: 'Secondary',
         SUCCESS: 'Success',
         WARNING: 'Warning',
-        DANGER: 'Danger'
+        DANGER: 'Danger',
+        INFO: 'Info',
+        NEUTRAL: 'Neutral'
       },
       STATES: {
         VERIFIED: 'Verified',
@@ -46,7 +48,9 @@ export const tagTranslations = {
         SECONDARY: 'Secondaire',
         SUCCESS: 'Succès',
         WARNING: 'Attention',
-        DANGER: 'Danger'
+        DANGER: 'Danger',
+        INFO: 'Info',
+        NEUTRAL: 'Neutre'
       },
       STATES: {
         VERIFIED: 'Vérifié',

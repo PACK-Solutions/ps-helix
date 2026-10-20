@@ -53,6 +53,18 @@ export class AlertsDemoComponent {
   Erreur critique
 </psh-alert>`;
 
+  primaryCode = `<psh-alert color="primary">
+  Une nouvelle version est disponible
+</psh-alert>`;
+
+  secondaryCode = `<psh-alert color="secondary">
+  Cette page a été mise à jour hier
+</psh-alert>`;
+
+  neutralCode = `<psh-alert color="neutral">
+  Brouillon enregistré
+</psh-alert>`;
+
   dismissibleCode = `<psh-alert
   color="info"
   [closable]="true"
