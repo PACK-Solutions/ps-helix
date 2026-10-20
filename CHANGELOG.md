@@ -14,6 +14,101 @@ Versioning policy:
 
 ## [Unreleased]
 
+## [7.1.0] - 2026-10-20
+
+Minor release. `psh-alert` lines up on its message's first line — icon, actions and dismiss
+button — follows its `size` down to the text, and styles all seven colours at WCAG AA in both
+themes, now held by `verify:contrast`. `psh-tag` and `psh-collapse` honour their documented CSS
+properties at every size and mode, and `TOKENS.md` prints its defaults whole. Measured in a
+browser at 320, 600 and 1024px. No input or output changes; the alert's icon is now wrapped in a
+`span.psh-alert-icon`.
+
+### Added
+
+- **`psh-alert` theme tokens for every colour** — `--psh-alert-<colour>-bg`, `-border-color` and
+  `-text-color` for primary, secondary, success, warning, danger and neutral, in the light and
+  the dark theme (18 tokens; info already had its three). They derive from the colour tokens, so
+  a customer primary or secondary carries through. Override one to restyle a single alert colour.
+
+### Changed
+
+- **`psh-card` — the density carriers are private: `--psh-card-density-*` → `--_psh-card-density-*`.**
+  They looked like the documented `--psh-card-*` override surface, but the card declares them for
+  each density, so one set on `psh-card` from a stylesheet was ignored. They were never in
+  `TOKENS.md`. To restyle a zone, set its public property — `--psh-card-header-padding`,
+  `--psh-card-header-gap`, `--psh-card-body-padding`, `--psh-card-body-gap`,
+  `--psh-card-footer-padding`, `--psh-card-actions-padding` — which already took precedence over
+  the density. An inline `style="--psh-card-density-…"` on `psh-card` no longer has any effect.
+
+### Fixed
+
+- **`psh-alert` — `color="primary"`, `"secondary"` and `"neutral"` rendered unstyled.** All three
+  are in the input's type; the stylesheet had no rule for them, so the alert had no background,
+  no border and the page's text colour. They now have their tokens and their rule. `primary`
+  looks close to `info`, which has always been drawn in the brand colour.
+- **`psh-alert` — success, warning and danger text was under 4.5:1 in the light theme.** The text
+  was the bare colour on its own 10% tint: 3.97:1, 4.24:1 and 4.05:1 over a page. It is now
+  darkened just enough — 4.71:1, 5.01:1 and 4.80:1 — and the dark theme's danger (4.59:1) and the
+  new primary (4.49:1) and secondary (2.47:1) are lightened the same way. Every colour now reads
+  at 4.71:1 or more in both themes, over a page and over a card. `npm run verify:contrast` now
+  holds these 14 pairs to 4.5:1 in CI: it resolves the alert tokens as a browser does — `var()`
+  with its fallbacks, the `rgba()` tint over each surface, `color-mix()` for the ink — and its
+  figures match the ones measured in the browser to the hundredth. It holds the alert's border to
+  3:1 against the page and a card too (WCAG 1.4.11): the dark secondary border, at 2.53:1 on the
+  bare colour, is lightened like its text; every border now reads at 3.62:1 or more.
+- **`psh-tag` — `color="info"` and `color="neutral"` rendered unstyled.** Both are in the input's
+  type and both have their rule in the stylesheet since 7.0.0, but the template only put the
+  colour class on for the five older colours, and the spec only tested those five. The class is
+  now set for all seven, the spec iterates `PSH_COLORS`, and the demo shows both. Contrast,
+  measured: 6.09:1 and 6.28:1 in the light theme, 7.58:1 and 8.03:1 in the dark one.
+- **`psh-tag` — `--psh-tag-padding-x`, `-padding-y`, `-font-size` and `-icon-size` were ignored on
+  small and large tags.** The sizes set those public properties themselves, on the tag's inner
+  element, so `psh-tag { --psh-tag-padding-x: 20px }` reached a medium tag and lost to the size
+  everywhere else — the very example `TAG.md` gave. The sizes now set private carriers
+  (`--_psh-tag-*`) read after the public property: an override applies at every size, and a tag
+  without one renders as before (measured on the 16 tags of the demo).
+- **`psh-collapse` — the no-animation mode no longer declares `--psh-collapse-transition-duration`.**
+  It set the public property to `0s` on the collapse to beat the expanded state's transition;
+  `transition: none` now comes after that rule and wins by order. Nothing visible changes:
+  without animation nothing transitions, with or without an override, and with animation the
+  override still applies.
+- **`TOKENS.md` — 70 of the 96 component defaults were cut short.** The generator read each
+  `var()` fallback up to the first `)`, so a default that is itself a `var()` lost its closing
+  parenthesis: `var(--psh-spacing-sm` for `var(--psh-spacing-sm)`. It now pairs the parentheses;
+  every default in the table matches its stylesheet verbatim.
+
+- **`psh-alert` — the icon sat above the text.** The alert aligned the icon and the message by
+  their top, and the icon font sets `line-height: 1`, so the icon was its glyph's height against
+  a 1.75 line of text: 4px high at the default size, 6px at `small`, 2px at `large`, and 2–4px on
+  narrow screens — 8px when the projected content opened with a `<p>` and its margin. The icon
+  now lines up with the message's first line by baseline, centred in a line of the message text:
+  on plain text at every size and width, below a top margin, and within 2px of a larger title.
+  A message that wraps still keeps it at the top. The dismiss button and the actions slot do
+  not move. The icon is now wrapped in a `span.psh-alert-icon`, which carries `aria-hidden`.
+- **`psh-alert` — `size="small"` and `size="large"` did not reach the text.** Both set
+  `font-size` on the alert, and the message re-declared the base size over it: a small alert
+  was 14px with a 16px message, a large one 18px with a 16px message. The message now follows
+  the size — **14px at `small`, 18px at `large`** — which makes a one-line small alert 3.5px
+  shorter and a large one 3.5px taller, except a closable large alert, whose 32px dismiss button
+  already set its height (82px before and after). Narrow screens are unchanged: every size
+  already went to `sm`, then `xs`.
+- **`psh-alert` — the actions slot took a text size the message did not have.** A size set the
+  alert's `font-size` beside the message's, and below 47.9375em only the message followed: plain
+  text in `[psh-alert-actions]` stayed at 18px in a large alert whose message was 14px, and a
+  medium alert took the page's size. The size is now set once, on the alert, and everything in
+  it inherits it. `psh-button` sets its own size and does not move; a plain-text action follows
+  the message, which makes a one-line large alert with a text action 42px instead of 58.6px at
+  320px.
+- **`psh-alert` — the actions and the dismiss button sat off the message's first line.** The
+  alert aligned them by their top, so a 40px button hung 4.5–10px below the line it belongs to,
+  and the dismiss button stayed put when the message opened with a `<p>` and its margin, 6–8px
+  above the text. The alert now lines up its content, actions and dismiss button on the
+  message's first line, as it does the icon: an action's label sits on that line (within 1.7px),
+  and so does the dismiss icon. One-line alerts keep their height. A message that wraps beside
+  an action taller than its line now starts lower, so that its first line is centred on the
+  action: 3–8px taller on wide screens, 11px at 320px. The dismiss button now inherits the
+  alert's font, which it needs to carry a line of its text.
+
 ## [7.0.2] - 2026-09-17
 
 Patch release. Every component measured at 320 / 768 / 1024 / 1440 — nothing overflows and
