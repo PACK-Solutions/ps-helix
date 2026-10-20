@@ -50,8 +50,10 @@ jobs:
 
       # axe's color-contrast rule cannot run under jsdom, so nothing checked the library's
       # own palette. Dark-theme primary shipped white text at 3.52:1 on every button, tag,
-      # badge and dropdown item until this was in place.
-      - name: Semantic fills are readable
+      # badge and dropdown item until this was in place. It also holds psh-alert's text on its
+      # own tint (4.5:1) and its border against the page (3:1), over the page and over a card:
+      # success, warning and danger text shipped under 4.5:1 in the light theme.
+      - name: Semantic fills, alert text and alert borders are readable
         run: npm run verify:contrast
 
       # What a stylesheet decides about a 320px screen and a thumb. It cannot decide rendered

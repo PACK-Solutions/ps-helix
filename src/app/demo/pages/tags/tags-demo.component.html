@@ -9,7 +9,7 @@
       <h3 class="section-title">Variantes de Tags</h3>
       <div class="variants-container">
         <div class="variants-intro">
-          <p>Les tags offrent cinq variantes visuelles pour communiquer différents niveaux d'importance et de sémantique adaptés à chaque contexte.</p>
+          <p>Les tags offrent sept couleurs pour communiquer différents niveaux d'importance et de sémantique adaptés à chaque contexte.</p>
         </div>
         <div class="variants-grid">
           <div class="variant-card">
@@ -64,6 +64,28 @@
               <h4>Danger</h4>
               <p>Pour les erreurs, les alertes critiques et les états négatifs.</p>
               <ds-code-snippet [code]="dangerTagCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-tag color="info">{{ 'TAG.VARIANTS.INFO' | translate }}</psh-tag>
+            </div>
+            <div class="variant-info">
+              <h4>Info</h4>
+              <p>Pour les messages informatifs : nouveautés, conseils, contexte.</p>
+              <ds-code-snippet [code]="infoTagCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-tag color="neutral">{{ 'TAG.VARIANTS.NEUTRAL' | translate }}</psh-tag>
+            </div>
+            <div class="variant-info">
+              <h4>Neutral</h4>
+              <p>Pour les étiquettes sans connotation : archivé, brouillon, inactif.</p>
+              <ds-code-snippet [code]="neutralTagCode" />
             </div>
           </div>
         </div>
@@ -246,10 +268,10 @@
             </thead>
             <tbody>
               <tr>
-                <td><code>variant</code></td>
-                <td><code>TagVariant</code></td>
+                <td><code>color</code></td>
+                <td><code>PshColor</code></td>
                 <td><code>'primary'</code></td>
-                <td>'primary' | 'secondary' | 'success' | 'warning' | 'danger'</td>
+                <td>'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info' | 'neutral'</td>
               </tr>
               <tr>
                 <td><code>size</code></td>

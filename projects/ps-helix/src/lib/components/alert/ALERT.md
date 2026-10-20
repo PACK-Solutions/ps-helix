@@ -38,7 +38,7 @@ import { PshAlertComponent } from 'ps-helix';
 ### Inputs
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
-| type | AlertType | 'info' | Type d'alerte |
+| color | PshColor | 'info' | Couleur de l'alerte : 'info', 'success', 'warning', 'danger', 'primary', 'secondary' ou 'neutral' |
 | iconPosition | IconPosition | 'left' | Position de l'icône |
 | closable | boolean | false | Affiche un bouton de fermeture |
 | size | AlertSize | 'medium' | Taille de l'alerte |
@@ -53,7 +53,7 @@ import { PshAlertComponent } from 'ps-helix';
 ### Outputs
 | Nom | Type | Description |
 |-----|------|-------------|
-| closed | EventEmitter<void> | Émis lors de la fermeture |
+| closed | OutputEmitterRef<void> | Émis lors de la fermeture |
 
 ### Types
 
@@ -123,12 +123,44 @@ const DEFAULT_ICONS = {
 - Actions destructives
 - Problèmes critiques
 
+### Primary, Secondary et Neutral
+**Description**: Pour les messages sans sémantique de statut : annonce aux couleurs de la marque
+(`primary`), information secondaire (`secondary`), note sans emphase (`neutral`). Icône `info` par
+défaut, rôle `status`.
+
+> `primary` et `info` se ressemblent : l'alerte info est dessinée aux couleurs de la marque depuis
+> toujours. Choisissez `info` pour un message informatif, `primary` pour une annonce de marque.
+
+### Couleurs et contraste
+
+Chaque couleur lit trois tokens de thème, `--psh-alert-<couleur>-bg`, `-border-color` et
+`-text-color`, définis dans le thème clair et le thème sombre. Le texte est la couleur elle-même
+quand elle atteint 4,5:1 sur sa teinte, assombrie (clair) ou éclaircie (sombre) juste assez sinon :
+les sept couleurs passent WCAG AA dans les deux thèmes, sur fond de page comme de carte.
+La bordure, elle, se détache de la page et d'une carte à 3:1 au moins (WCAG 1.4.11).
+`npm run verify:contrast` vérifie les deux en CI : un texte d'alerte sous 4,5:1 ou une bordure sous
+3:1 fait échouer le build.
+
 ## États et Modificateurs
 
 ### Tailles
-- `small`: Pour les messages courts et discrets
-- `medium`: Taille par défaut
-- `large`: Pour les messages importants
+- `small`: Pour les messages courts et discrets — texte `--psh-font-size-sm`, icône `--psh-icon-size-sm`
+- `medium`: Taille par défaut — texte `--psh-font-size-base`, icône `--psh-icon-size-md`
+- `large`: Pour les messages importants — texte `--psh-font-size-lg`, icône `--psh-icon-size-lg`
+
+La taille s'applique au texte comme à l'icône et au padding. Sous `47.9375em`, toutes les
+tailles passent au texte `sm`, puis `xs` sous `29.9375em`. Le texte simple projeté dans
+`[psh-alert-actions]` hérite de la même taille que le message ; un `psh-button` garde la sienne.
+
+L'icône est centrée sur la **première ligne** du message, quelle que soit la taille : elle
+s'aligne sur sa ligne de base. Elle suit donc un contenu projeté qui commence par un `<p>` avec
+sa marge, ou par un titre plus grand (à 2px près). Sur un message de plusieurs lignes, elle
+reste en haut.
+
+Les actions et le bouton de fermeture s'alignent sur la même première ligne : le libellé d'un
+bouton d'action est sur la ligne du message. Une action plus haute que cette ligne (un bouton de
+40px à côté d'une ligne de 28px) y centre la ligne ; un message de plusieurs lignes commence
+alors un peu plus bas, pour que sa première ligne reste en face de l'action.
 
 ### Positions d'Icône
 - `left`: Icône à gauche du texte (défaut)

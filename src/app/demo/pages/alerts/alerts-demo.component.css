@@ -50,7 +50,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--psh-spacing-2xl);
+  /* lg, as the size previews: 2xl left a 300px card's message too narrow for "informative". */
+  padding: var(--psh-spacing-lg);
   background: var(--psh-surface-ground);
   border-radius: var(--psh-radius-lg);
   margin-bottom: var(--psh-spacing-lg);
@@ -92,7 +93,9 @@
 
 .icons-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  /* 300px, as the variants: at 280px a third column fitted from 1280px and left the message
+     85px, too narrow for "notification". */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: var(--psh-spacing-xl);
 }
 
@@ -114,7 +117,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--psh-spacing-2xl);
+  /* lg, as the size previews: 2xl broke words in a 280px card. */
+  padding: var(--psh-spacing-lg);
   background: var(--psh-surface-ground);
   border-radius: var(--psh-radius-lg);
   margin-bottom: var(--psh-spacing-lg);
@@ -150,7 +154,8 @@
 
 .sizes-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  /* 300px, as the variants and icons: see .icons-grid. */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: var(--psh-spacing-xl);
 }
 
@@ -172,7 +177,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--psh-spacing-2xl);
+  /* Not 2xl: in a two-column grid that left the large alert's message 61px, and its 18px text
+     broke "grande" in two. */
+  padding: var(--psh-spacing-lg);
   background: var(--psh-surface-ground);
   border-radius: var(--psh-radius-lg);
   margin-bottom: var(--psh-spacing-lg);

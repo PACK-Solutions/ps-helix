@@ -68,6 +68,18 @@ export class TagsDemoComponent {
   Erreur
 </psh-tag>`;
 
+  infoTagCode = `<psh-tag
+  color="info"
+>
+  Info
+</psh-tag>`;
+
+  neutralTagCode = `<psh-tag
+  color="neutral"
+>
+  Archivé
+</psh-tag>`;
+
   closableTagCode = `<psh-tag
   color="success"
   [closable]="true"

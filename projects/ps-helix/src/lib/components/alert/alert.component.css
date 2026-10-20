@@ -1,8 +1,28 @@
 /* Component-Specific Design Tokens */
+/**
+ * `--_psh-alert-text-size` is the alert's text size, and the only place it is set: the sizes and
+ * the narrow-screen queries change the property, and everything in the alert inherits the one
+ * `font-size` it feeds, with the one line-height beside it — the message, the icon box, the
+ * dismiss button and plain text in the actions slot.
+ *
+ * It is private, and the leading underscore says so. `--psh-alert-*` is the component's
+ * documented override surface (TOKENS.md), read with a `var()` fallback so a rule on the
+ * `psh-alert` element wins. This one is declared per size on the inner element instead, so a
+ * consumer who set it on `psh-alert` would be silently ignored — a public-looking name invited
+ * exactly that.
+ *
+ * Everything in the alert lines up on the message's first line. The alert aligns the content,
+ * the actions and the dismiss button by `first baseline`, as the content row does the icon and
+ * the message: an action's label sits on that line, and an action taller than the line — a 40px
+ * button beside a 28px line — centres the line on itself rather than hanging below it. Aligned
+ * by their top, the actions sat 4–10px low.
+ */
 .psh-alert {
-
+  --_psh-alert-text-size: var(--psh-font-size-base);
+  font-size: var(--_psh-alert-text-size);
+  line-height: var(--psh-line-height-relaxed);
   display: flex;
-  align-items: flex-start;
+  align-items: first baseline;
   justify-content: space-between;
   gap: var(--psh-spacing-md);
   padding: var(--psh-spacing-md) var(--psh-spacing-lg);
@@ -11,9 +31,17 @@
   animation: slideIn var(--psh-alert-animation-duration, var(--psh-animation-duration-fast)) var(--psh-animation-easing-default);
 }
 
+/*
+ * The icon sits on the message's first line, whatever that line is. The icon box carries one
+ * invisible character of the alert's text, so its baseline is a line of message text, and
+ * `first baseline` lines it up with the message's own first line: a top margin on a projected
+ * `<p>` or a larger title moves the icon with it, and a message that wraps keeps it at the top.
+ * The icon is centred in that line. Aligning the boxes by their top could only centre it on a
+ * line of plain text — and the icon font's `line-height: 1` put it 2–6px high even there.
+ */
 .psh-alert-content {
   display: flex;
-  align-items: flex-start;
+  align-items: first baseline;
   flex-direction: row;
   gap: var(--psh-spacing-md);
   flex: 1;
@@ -28,15 +56,30 @@
   flex-shrink: 0;
 }
 
+.psh-alert-icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* A zero-width space in the inherited text: one line of message text, height and baseline. */
+.psh-alert-icon::before {
+  content: '\200b';
+  align-self: baseline;
+}
+
 .psh-alert-message {
   color: inherit;
-  font-size: var(--psh-font-size-base);
-  line-height: var(--psh-line-height-relaxed);
   word-break: break-word;
   overflow-wrap: break-word;
 }
 
-/* Variants */
+/*
+ * Colours. Every value of PshColor has its three theme tokens (light.css, dark.css), where the
+ * text colour is chosen to read at 4.5:1 on its own tint. Only info had them; success, warning
+ * and danger set the bare colour as text, below 4.5:1 in the light theme, and primary, secondary
+ * and neutral — accepted by `color` — had no rule at all and rendered unstyled.
+ */
 .psh-alert.psh-info {
   background: var(--psh-alert-info-bg);
   border-color: var(--psh-alert-info-border-color);
@@ -44,27 +87,46 @@
 }
 
 .psh-alert.psh-success {
-  background: rgba(var(--psh-success-color-rgb), 0.1);
-  border-color: var(--psh-success-color);
-  color: var(--psh-success-color);
+  background: var(--psh-alert-success-bg);
+  border-color: var(--psh-alert-success-border-color);
+  color: var(--psh-alert-success-text-color);
 }
 
 .psh-alert.psh-warning {
-  background: rgba(var(--psh-warning-color-rgb), 0.1);
-  border-color: var(--psh-warning-color);
-  color: var(--psh-warning-color);
+  background: var(--psh-alert-warning-bg);
+  border-color: var(--psh-alert-warning-border-color);
+  color: var(--psh-alert-warning-text-color);
 }
 
 .psh-alert.psh-danger {
-  background: rgba(var(--psh-danger-color-rgb), 0.1);
-  border-color: var(--psh-danger-color);
-  color: var(--psh-danger-color);
+  background: var(--psh-alert-danger-bg);
+  border-color: var(--psh-alert-danger-border-color);
+  color: var(--psh-alert-danger-text-color);
 }
 
-/* Sizes */
+.psh-alert.psh-primary {
+  background: var(--psh-alert-primary-bg);
+  border-color: var(--psh-alert-primary-border-color);
+  color: var(--psh-alert-primary-text-color);
+}
+
+.psh-alert.psh-secondary {
+  background: var(--psh-alert-secondary-bg);
+  border-color: var(--psh-alert-secondary-border-color);
+  color: var(--psh-alert-secondary-text-color);
+}
+
+.psh-alert.psh-neutral {
+  background: var(--psh-alert-neutral-bg);
+  border-color: var(--psh-alert-neutral-border-color);
+  color: var(--psh-alert-neutral-text-color);
+}
+
+/* Sizes — the size reaches the text through `--_psh-alert-text-size`. Setting `font-size` here
+   did not: the message re-declares its own, so small and large changed everything but the text. */
 .psh-alert.psh-small {
+  --_psh-alert-text-size: var(--psh-font-size-sm);
   padding: var(--psh-spacing-sm) var(--psh-spacing-md);
-  font-size: var(--psh-font-size-sm);
 }
 
 .psh-alert.psh-small i {
@@ -72,8 +134,8 @@
 }
 
 .psh-alert.psh-large {
+  --_psh-alert-text-size: var(--psh-font-size-lg);
   padding: var(--psh-spacing-lg) var(--psh-spacing-xl);
-  font-size: var(--psh-font-size-lg);
 }
 
 .psh-alert.psh-large i {
@@ -84,12 +146,16 @@
 /**
  * The pointer target reaches 44px without the button growing.
  *
- * The alert lays its children out with `align-items: flex-start`, so a 44px button would set
- * the flex line and make every one-line alert a third taller. The pseudo-element takes the
- * pointer instead: it is part of the button, so it *is* the target 2.5.5 measures, and it
- * paints nothing. Nothing else in the alert's corner can overlap it.
+ * A 44px button would set the alert's flex line and make every one-line alert a third taller.
+ * The pseudo-element takes the pointer instead: it is part of the button, so it *is* the target
+ * 2.5.5 measures, and it paints nothing. Nothing else in the alert's corner can overlap it.
+ *
+ * The button has no text to put on the message's first line, so, like the icon box, it carries
+ * one invisible character — hence `font: inherit`, which a button does not do on its own, and
+ * which `reset.css` is not there to do in every application.
  */
 .psh-alert-dismiss {
+  font: inherit;
   position: relative;
   background: transparent;
   border: none;
@@ -103,6 +169,15 @@
   align-items: center;
   justify-content: center;
   z-index: 2;
+}
+
+/* One line of message text, its baseline the button's. The negative margin is the button's
+   padding: the line then spans the button's whole height, so the icon centred in the button is
+   centred on the line. */
+.psh-alert-dismiss::before {
+  content: '\200b';
+  align-self: baseline;
+  margin-block: calc(-1 * var(--psh-spacing-xs));
 }
 
 .psh-alert-dismiss::after {
@@ -144,10 +219,11 @@
     gap: var(--psh-spacing-sm);
   }
 
-  .psh-alert-message {
-    font-size: var(--psh-font-size-sm);
-    word-break: break-word;
-    overflow-wrap: break-word;
+  /* Every size, as before: the size selectors are listed so they do not outrank the query. */
+  .psh-alert,
+  .psh-alert.psh-small,
+  .psh-alert.psh-large {
+    --_psh-alert-text-size: var(--psh-font-size-sm);
   }
 
   .psh-alert i {
@@ -173,8 +249,10 @@
     gap: var(--psh-spacing-xs);
   }
 
-  .psh-alert-message {
-    font-size: var(--psh-font-size-xs);
+  .psh-alert,
+  .psh-alert.psh-small,
+  .psh-alert.psh-large {
+    --_psh-alert-text-size: var(--psh-font-size-xs);
   }
 
   .psh-alert i {
@@ -202,7 +280,9 @@
 }
 /*
   The actions slot. Collapsed to nothing when unused — `:empty` rather than a conditional in
-  the template, so projected content does not need a query to be detected.
+  the template, so projected content does not need a query to be detected. Its baseline is its
+  first action's — a button's label, a link's text — and that is what the alert puts on the
+  message's first line.
 */
 .psh-alert-actions {
   display: flex;

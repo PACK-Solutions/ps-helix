@@ -3,9 +3,10 @@
   display: inline-flex;
   align-items: center;
   gap: var(--psh-spacing-xs);
-  padding: var(--psh-tag-padding-y, var(--psh-spacing-xs)) var(--psh-tag-padding-x, var(--psh-spacing-sm));
+  padding: var(--psh-tag-padding-y, var(--_psh-tag-padding-y, var(--psh-spacing-xs)))
+    var(--psh-tag-padding-x, var(--_psh-tag-padding-x, var(--psh-spacing-sm)));
   border-radius: var(--psh-radius-lg);
-  font-size: var(--psh-tag-font-size, var(--psh-font-size-sm));
+  font-size: var(--psh-tag-font-size, var(--_psh-tag-font-size, var(--psh-font-size-sm)));
   font-weight: var(--psh-font-weight-medium);
   line-height: var(--psh-line-height-tight);
   cursor: default;
@@ -23,7 +24,7 @@
 }
 
 .psh-tag i {
-  font-size: var(--psh-tag-icon-size, var(--psh-icon-size-sm));
+  font-size: var(--psh-tag-icon-size, var(--_psh-tag-icon-size, var(--psh-icon-size-sm)));
 }
 
 .psh-tag-content {
@@ -112,18 +113,25 @@
   color: var(--psh-text-on-neutral);
 }
 
+/*
+ * The sizes set private carriers, read after the public property and before the medium default:
+ *   font-size: var(--psh-tag-font-size, var(--_psh-tag-font-size, var(--psh-font-size-sm)));
+ * They used to set the public `--psh-tag-*` properties themselves, on the inner element, so a
+ * `psh-tag { --psh-tag-padding-x: 1rem }` from the application lost to them: it worked on a
+ * medium tag and was ignored on a small or a large one.
+ */
 .psh-tag.psh-small {
-  --psh-tag-padding-y: calc(var(--psh-spacing-xs) * 0.5);
-  --psh-tag-padding-x: var(--psh-spacing-xs);
-  --psh-tag-font-size: var(--psh-font-size-xs);
-  --psh-tag-icon-size: var(--psh-icon-size-xs);
+  --_psh-tag-padding-y: calc(var(--psh-spacing-xs) * 0.5);
+  --_psh-tag-padding-x: var(--psh-spacing-xs);
+  --_psh-tag-font-size: var(--psh-font-size-xs);
+  --_psh-tag-icon-size: var(--psh-icon-size-xs);
 }
 
 .psh-tag.psh-large {
-  --psh-tag-padding-y: var(--psh-spacing-sm);
-  --psh-tag-padding-x: var(--psh-spacing-md);
-  --psh-tag-font-size: var(--psh-font-size-base);
-  --psh-tag-icon-size: var(--psh-icon-size-md);
+  --_psh-tag-padding-y: var(--psh-spacing-sm);
+  --_psh-tag-padding-x: var(--psh-spacing-md);
+  --_psh-tag-font-size: var(--psh-font-size-base);
+  --_psh-tag-icon-size: var(--psh-icon-size-md);
 }
 
 .psh-tag.psh-disabled {

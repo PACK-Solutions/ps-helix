@@ -61,7 +61,7 @@ export class ExampleComponent {}
 
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
-| variant | `TagVariant` | `'primary'` | Style visuel du tag (`primary`, `secondary`, `success`, `warning`, `danger`) |
+| color | `PshColor` | `'primary'` | Couleur du tag (`primary`, `secondary`, `success`, `warning`, `danger`, `info`, `neutral`) |
 | size | `TagSize` | `'medium'` | Taille du tag (`small`, `medium`, `large`) |
 | closable | `boolean` | `false` | Affiche un bouton de fermeture |
 | disabled | `boolean` | `false` | Désactive le tag |
@@ -81,7 +81,8 @@ export class ExampleComponent {}
 ### Types
 
 ```typescript
-type TagVariant = 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
+/** @deprecated since 7.0.0 — use PshColor. */
+type TagVariant = PshColor; // 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info' | 'neutral'
 type TagSize = 'small' | 'medium' | 'large';
 
 interface TagConfig {
@@ -105,6 +106,8 @@ interface TagConfig {
 <psh-tag color="success">Success</psh-tag>
 <psh-tag color="warning">Warning</psh-tag>
 <psh-tag color="danger">Danger</psh-tag>
+<psh-tag color="info">Info</psh-tag>
+<psh-tag color="neutral">Neutral</psh-tag>
 ```
 
 ### Tailles
@@ -253,14 +256,20 @@ export class AppComponent {}
 
 ## Variables CSS Personnalisables
 
-Le composant Tag utilise des variables CSS que vous pouvez surcharger:
+Le composant Tag lit des variables CSS que vous pouvez poser sur l'élément `psh-tag`. Une
+variable posée vaut pour toutes les tailles ; sans elle, chaque taille garde sa valeur :
+
+| Variable | small | medium (défaut) | large |
+|----------|-------|-----------------|-------|
+| `--psh-tag-padding-y` | `calc(var(--psh-spacing-xs) * 0.5)` | `var(--psh-spacing-xs)` | `var(--psh-spacing-sm)` |
+| `--psh-tag-padding-x` | `var(--psh-spacing-xs)` | `var(--psh-spacing-sm)` | `var(--psh-spacing-md)` |
+| `--psh-tag-font-size` | `var(--psh-font-size-xs)` | `var(--psh-font-size-sm)` | `var(--psh-font-size-base)` |
+| `--psh-tag-icon-size` | `var(--psh-icon-size-xs)` | `var(--psh-icon-size-sm)` | `var(--psh-icon-size-md)` |
+
+Et, quelle que soit la taille :
 
 ```css
-.tag {
-  --psh-tag-padding-y: var(--psh-spacing-xs);
-  --psh-tag-padding-x: var(--psh-spacing-sm);
-  --psh-tag-font-size: var(--psh-font-size-sm);
-  --psh-tag-icon-size: var(--psh-icon-size-sm);
+psh-tag {
   --psh-tag-close-padding: var(--psh-spacing-xxs);
   --psh-tag-close-opacity: 0.7;
   --psh-tag-close-opacity-hover: 1;
@@ -268,6 +277,9 @@ Le composant Tag utilise des variables CSS que vous pouvez surcharger:
   --psh-tag-transition: all var(--psh-animation-duration-normal) var(--psh-animation-easing-default);
 }
 ```
+
+Les tailles passent par des variables privées `--_psh-tag-*`, lues après les vôtres : ne les
+posez pas, elles ne font pas partie de l'API.
 
 ### Exemple de Personnalisation
 
@@ -363,7 +375,7 @@ Vérifiez que l'événement `closed` est bien géré et que le tag n'est pas `di
 
 ### Styles personnalisés non appliqués
 
-Les variables CSS doivent être définies au niveau du composant parent:
+Les variables CSS se posent sur l'élément `psh-tag` lui-même :
 
 ```css
 /* ✅ Correct */
@@ -371,8 +383,9 @@ Les variables CSS doivent être définies au niveau du composant parent:
   --psh-tag-padding-x: 20px;
 }
 
-/* ❌ Incorrect - trop spécifique */
-psh-tag .tag {
+/* ❌ Incorrect depuis la feuille d'un composant : l'encapsulation de vue
+   n'atteint pas l'élément interne du tag */
+psh-tag .psh-tag {
   --psh-tag-padding-x: 20px;
 }
 ```

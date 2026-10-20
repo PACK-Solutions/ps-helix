@@ -7,7 +7,7 @@ Reference documentation for the Helix Design System Angular component library. T
 ## Overview
 
 - **Library**: `ps-helix`
-- **Version**: 7.0.2
+- **Version**: 7.1.0
 - **Framework**: Angular 22+
 - **Prefix**: `psh-` (all components)
 - **Import**: `import { ComponentName } from 'ps-helix';`
@@ -231,7 +231,7 @@ Control: `.psh-animate-fast`, `.psh-animate-slow`, `.psh-animate-smooth`
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
-| `type` | `'info' \| 'success' \| 'warning' \| 'danger'` | `'info'` | Alert type |
+| `color` | `'info' \| 'success' \| 'warning' \| 'danger' \| 'primary' \| 'secondary' \| 'neutral'` | `'info'` | Alert colour |
 | `size` | `'small' \| 'medium' \| 'large'` | `'medium'` | Alert size |
 | `closable` | `boolean` | `false` | Show close button |
 | `showIcon` | `boolean` | `true` | Show icon |
@@ -876,7 +876,7 @@ hiding the pager on an empty list is the consumer's decision.
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
-| `variant` | `'primary' \| 'secondary' \| 'success' \| 'warning' \| 'danger'` | `'primary'` | Tag variant |
+| `color` | `'primary' \| 'secondary' \| 'success' \| 'warning' \| 'danger' \| 'info' \| 'neutral'` | `'primary'` | Tag colour |
 | `size` | `'small' \| 'medium' \| 'large'` | `'medium'` | Tag size |
 | `icon` | `string` | - | Phosphor icon |
 | `closable` | `boolean` | `false` | Show close button |

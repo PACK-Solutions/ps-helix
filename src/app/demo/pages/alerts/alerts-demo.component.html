@@ -75,6 +75,39 @@
               <ds-code-snippet [code]="dangerCode" />
             </div>
           </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-alert color="primary">{{ 'ALERT.PRIMARY' | translate }}</psh-alert>
+            </div>
+            <div class="variant-info">
+              <h4>Primary</h4>
+              <p>Annonces aux couleurs de la marque. Proche d'info, qui est dessinée sur la même couleur.</p>
+              <ds-code-snippet [code]="primaryCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-alert color="secondary">{{ 'ALERT.SECONDARY' | translate }}</psh-alert>
+            </div>
+            <div class="variant-info">
+              <h4>Secondary</h4>
+              <p>Informations secondaires, sans statut particulier.</p>
+              <ds-code-snippet [code]="secondaryCode" />
+            </div>
+          </div>
+
+          <div class="variant-card">
+            <div class="variant-preview">
+              <psh-alert color="neutral">{{ 'ALERT.NEUTRAL' | translate }}</psh-alert>
+            </div>
+            <div class="variant-info">
+              <h4>Neutral</h4>
+              <p>Notes sans emphase : brouillon, archivage, état inactif.</p>
+              <ds-code-snippet [code]="neutralCode" />
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -157,7 +190,7 @@
       <h3 class="section-title">Tailles Disponibles</h3>
       <div class="sizes-container">
         <div class="sizes-intro">
-          <p>Trois tailles sont disponibles pour s'adapter à différents contextes d'utilisation, des interfaces denses aux messages critiques mis en avant.</p>
+          <p>Trois tailles sont disponibles pour s'adapter à différents contextes d'utilisation, des interfaces denses aux messages critiques mis en avant. Les valeurs indiquées valent sur grand écran. En dessous de 768px, les trois tailles passent à un texte de 14px, puis de 12px en dessous de 480px.</p>
         </div>
         <div class="sizes-grid">
           <div class="size-card">
@@ -171,7 +204,7 @@
             <div class="size-info">
               <h4>Small</h4>
               <div class="size-specs">
-                <span class="size-dimension">32px de hauteur</span>
+                <span class="size-dimension">Texte 14px, icône 16px</span>
                 <code class="size-code">size="small"</code>
               </div>
               <p class="size-usage">Idéal pour les interfaces denses, les notifications discrètes ou les messages système compacts.</p>
@@ -189,7 +222,7 @@
             <div class="size-info">
               <h4>Medium (Défaut)</h4>
               <div class="size-specs">
-                <span class="size-dimension">40px de hauteur</span>
+                <span class="size-dimension">Texte 16px, icône 20px</span>
                 <code class="size-code">size="medium"</code>
               </div>
               <p class="size-usage">Taille par défaut, équilibrée pour la plupart des cas d'usage et messages standards.</p>
@@ -207,7 +240,7 @@
             <div class="size-info">
               <h4>Large</h4>
               <div class="size-specs">
-                <span class="size-dimension">48px de hauteur</span>
+                <span class="size-dimension">Texte 18px, icône 24px</span>
                 <code class="size-code">size="large"</code>
               </div>
               <p class="size-usage">Pour les messages critiques, les notifications importantes ou le contenu riche nécessitant plus d'espace.</p>
@@ -279,10 +312,10 @@
             </thead>
             <tbody>
               <tr>
-                <td><code>type</code></td>
-                <td><code>AlertType</code></td>
+                <td><code>color</code></td>
+                <td><code>PshColor</code></td>
                 <td><code>'info'</code></td>
-                <td>'info' | 'success' | 'warning' | 'danger'</td>
+                <td>'info' | 'success' | 'warning' | 'danger' | 'primary' | 'secondary' | 'neutral'</td>
               </tr>
               <tr>
                 <td><code>icon</code></td>
@@ -361,7 +394,7 @@
             <tbody>
               <tr>
                 <td><code>closed</code></td>
-                <td><code>EventEmitter&lt;void&gt;</code></td>
+                <td><code>OutputEmitterRef&lt;void&gt;</code></td>
                 <td>Émis lorsque l'alerte est fermée par l'utilisateur</td>
               </tr>
             </tbody>

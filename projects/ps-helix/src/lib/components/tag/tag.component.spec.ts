@@ -1,7 +1,11 @@
+/// <reference types="node" />
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { PshTagComponent, TAG_CONFIG } from './tag.component';
 import { TagVariant, TagSize, TagConfig } from './tag.types';
+import { PSH_COLORS } from '../../types/semantic.types';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -67,15 +71,11 @@ describe('PshTagComponent', () => {
   });
 
   describe('Variant classes', () => {
-    const allVariants: TagVariant[] = ['primary', 'secondary', 'success', 'warning', 'danger'];
+    // Every colour the input accepts. The list used to stop at five, which is how `info` and
+    // `neutral` went unstyled: their CSS existed, the template never put their class on.
+    const allVariants: readonly TagVariant[] = PSH_COLORS;
 
-    it.each<[TagVariant]>([
-      ['primary'],
-      ['secondary'],
-      ['success'],
-      ['warning'],
-      ['danger']
-    ])('should apply "%s" variant class', (variant) => {
+    it.each(allVariants.map((variant) => [variant]))('should apply "%s" variant class', (variant) => {
       fixture.componentRef.setInput('color', variant);
       fixture.detectChanges();
 
@@ -104,13 +104,7 @@ describe('PshTagComponent', () => {
       expect(activeVariants[0]).toBe('success');
     });
 
-    it.each<[TagVariant]>([
-      ['primary'],
-      ['secondary'],
-      ['success'],
-      ['warning'],
-      ['danger']
-    ])('should ensure mutual exclusivity when switching to "%s"', (targetVariant) => {
+    it.each(allVariants.map((variant) => [variant]))('should ensure mutual exclusivity when switching to "%s"', (targetVariant) => {
       allVariants.forEach(initialVariant => {
         fixture.componentRef.setInput('color', initialVariant);
         fixture.detectChanges();
@@ -935,5 +929,31 @@ describe('PshTagComponent keyboard navigation with closable', () => {
 
     getCloseButton().focus();
     expect(document.activeElement).toBe(getCloseButton());
+  });
+});
+
+/**
+ * The tag's CSS API. Each metric reads its public `--psh-tag-*` property first, then a private
+ * carrier that the small and large sizes set, then the medium default. The sizes used to set the
+ * public properties themselves, on the inner element, so `psh-tag { --psh-tag-padding-x: … }`
+ * from the application was ignored on every small and large tag.
+ */
+describe('PshTagComponent stylesheet', () => {
+  const css = readFileSync(join(__dirname, 'tag.component.css'), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+  const declaredProperties = (source: string) => [...source.matchAll(/(--[\w-]+)\s*:/g)].map(([, property]) => property);
+  const METRICS = ['padding-y', 'padding-x', 'font-size', 'icon-size'];
+
+  it('declares no `--psh-*` property: the public ones are only read, with a fallback', () => {
+    expect(declaredProperties(css).filter((property) => property.startsWith('--psh-'))).toEqual([]);
+  });
+
+  it.each(METRICS)('reads --psh-tag-%s first, then its private carrier, then the medium default', (metric) => {
+    expect(css).toMatch(new RegExp(`var\\(--psh-tag-${metric}, var\\(--_psh-tag-${metric}, var\\(--psh-[\\w-]+\\)\\)\\)`));
+  });
+
+  it.each(['small', 'large'])('sets every carrier at the %s size', (size) => {
+    const [, body = ''] = css.match(new RegExp(`(?:^|\\})\\s*\\.psh-tag\\.psh-${size}\\s*\\{([^}]*)\\}`)) ?? [];
+
+    expect(declaredProperties(body).sort()).toEqual(METRICS.map((metric) => `--_psh-tag-${metric}`).sort());
   });
 });
