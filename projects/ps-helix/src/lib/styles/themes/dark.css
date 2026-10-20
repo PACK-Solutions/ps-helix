@@ -205,10 +205,29 @@
   --psh-surface-ground: var(--psh-surface-0);
   --psh-surface-section: var(--psh-surface-50);
   
-  /* Alert Colors */
+  /* Alert Colors — one set per colour. The text is the colour itself where it reads at 4.5:1 on
+     its tint, over the page and over a card; where it does not, it is lightened just enough. */
   --psh-alert-info-bg: rgba(107, 95, 227, 0.15);
   --psh-alert-info-border-color: #6B5FE3;
   --psh-alert-info-text-color: #A5B4FC;
+  --psh-alert-primary-bg: rgba(var(--psh-primary-color-rgb), 0.1);
+  --psh-alert-primary-border-color: var(--psh-primary-color);
+  --psh-alert-primary-text-color: color-mix(in srgb, var(--psh-primary-color) 95%, white); /* 4.49:1 as is */
+  --psh-alert-secondary-bg: rgba(var(--psh-secondary-color-rgb), 0.1);
+  --psh-alert-secondary-border-color: color-mix(in srgb, var(--psh-secondary-color) 70%, white); /* 2.53:1 against the page as is */
+  --psh-alert-secondary-text-color: color-mix(in srgb, var(--psh-secondary-color) 70%, white); /* 2.47:1 as is */
+  --psh-alert-success-bg: rgba(var(--psh-success-color-rgb), 0.1);
+  --psh-alert-success-border-color: var(--psh-success-color);
+  --psh-alert-success-text-color: var(--psh-success-color);
+  --psh-alert-warning-bg: rgba(var(--psh-warning-color-rgb), 0.1);
+  --psh-alert-warning-border-color: var(--psh-warning-color);
+  --psh-alert-warning-text-color: var(--psh-warning-color);
+  --psh-alert-danger-bg: rgba(var(--psh-danger-color-rgb), 0.1);
+  --psh-alert-danger-border-color: var(--psh-danger-color);
+  --psh-alert-danger-text-color: color-mix(in srgb, var(--psh-danger-color) 95%, white); /* 4.59:1 as is */
+  --psh-alert-neutral-bg: rgba(var(--psh-neutral-color-rgb), 0.1);
+  --psh-alert-neutral-border-color: var(--psh-neutral-color);
+  --psh-alert-neutral-text-color: var(--psh-neutral-color);
   
   --psh-surface-card: var(--psh-surface-50);
   --psh-surface-overlay: var(--psh-surface-200);

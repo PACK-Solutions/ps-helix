@@ -10,7 +10,7 @@
 >
   <div class="psh-alert-content" [class.psh-icon-right]="iconPosition() === 'right'">
     @if (showIcon()) {
-      <i class="ph ph-{{ getIcon() }}" aria-hidden="true"></i>
+      <span class="psh-alert-icon" aria-hidden="true"><i class="ph ph-{{ getIcon() }}"></i></span>
     }
     <div class="psh-alert-message">
       <ng-content>{{ content() }}</ng-content>
