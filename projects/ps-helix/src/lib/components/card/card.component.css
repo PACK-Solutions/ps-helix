@@ -78,38 +78,45 @@
   background: color-mix(in srgb, var(--psh-secondary-color) 5%, transparent);
 }
 
+/*
+ * Density carriers. Each density sets them, and each zone reads its public property first:
+ *   padding: var(--psh-card-body-padding, var(--_psh-card-density-body-padding));
+ * They are private, and the leading underscore says so. Declared on the card, they would ignore
+ * a consumer who set them on `psh-card`, so they must not look like the documented `--psh-card-*`
+ * override surface — the public properties are the ones to set.
+ */
 .psh-card.psh-density-compact {
-  --psh-card-density-header-padding: var(--psh-size-3) var(--psh-size-4);
-  --psh-card-density-body-padding: var(--psh-size-4);
-  --psh-card-density-footer-padding: var(--psh-size-3) var(--psh-size-4);
-  --psh-card-density-actions-padding: var(--psh-size-3) var(--psh-size-4);
-  --psh-card-density-header-gap: var(--psh-spacing-sm);
-  --psh-card-density-body-gap: var(--psh-size-3);
+  --_psh-card-density-header-padding: var(--psh-size-3) var(--psh-size-4);
+  --_psh-card-density-body-padding: var(--psh-size-4);
+  --_psh-card-density-footer-padding: var(--psh-size-3) var(--psh-size-4);
+  --_psh-card-density-actions-padding: var(--psh-size-3) var(--psh-size-4);
+  --_psh-card-density-header-gap: var(--psh-spacing-sm);
+  --_psh-card-density-body-gap: var(--psh-size-3);
 }
 
 .psh-card.psh-density-normal {
-  --psh-card-density-header-padding: var(--psh-size-4) var(--psh-size-5);
-  --psh-card-density-body-padding: var(--psh-size-6);
-  --psh-card-density-footer-padding: var(--psh-size-4) var(--psh-size-5);
-  --psh-card-density-actions-padding: var(--psh-size-4) var(--psh-size-5);
-  --psh-card-density-header-gap: var(--psh-size-3);
-  --psh-card-density-body-gap: var(--psh-size-4);
+  --_psh-card-density-header-padding: var(--psh-size-4) var(--psh-size-5);
+  --_psh-card-density-body-padding: var(--psh-size-6);
+  --_psh-card-density-footer-padding: var(--psh-size-4) var(--psh-size-5);
+  --_psh-card-density-actions-padding: var(--psh-size-4) var(--psh-size-5);
+  --_psh-card-density-header-gap: var(--psh-size-3);
+  --_psh-card-density-body-gap: var(--psh-size-4);
 }
 
 .psh-card.psh-density-spacious {
-  --psh-card-density-header-padding: var(--psh-size-6) var(--psh-size-7);
-  --psh-card-density-body-padding: var(--psh-size-8);
-  --psh-card-density-footer-padding: var(--psh-size-5) var(--psh-size-7);
-  --psh-card-density-actions-padding: var(--psh-size-5) var(--psh-size-7);
-  --psh-card-density-header-gap: var(--psh-size-4);
-  --psh-card-density-body-gap: var(--psh-size-5);
+  --_psh-card-density-header-padding: var(--psh-size-6) var(--psh-size-7);
+  --_psh-card-density-body-padding: var(--psh-size-8);
+  --_psh-card-density-footer-padding: var(--psh-size-5) var(--psh-size-7);
+  --_psh-card-density-actions-padding: var(--psh-size-5) var(--psh-size-7);
+  --_psh-card-density-header-gap: var(--psh-size-4);
+  --_psh-card-density-body-gap: var(--psh-size-5);
 }
 
 .psh-card-header {
-  padding: var(--psh-card-header-padding, var(--psh-card-density-header-padding));
+  padding: var(--psh-card-header-padding, var(--_psh-card-density-header-padding));
   display: flex;
   align-items: flex-start;
-  gap: var(--psh-card-header-gap, var(--psh-card-density-header-gap));
+  gap: var(--psh-card-header-gap, var(--_psh-card-density-header-gap));
   background: var(--psh-surface-ground);
   position: relative;
 }
@@ -173,11 +180,11 @@
 }
 
 .psh-card-body {
-  padding: var(--psh-card-body-padding, var(--psh-card-density-body-padding));
+  padding: var(--psh-card-body-padding, var(--_psh-card-density-body-padding));
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: var(--psh-card-body-gap, var(--psh-card-density-body-gap));
+  gap: var(--psh-card-body-gap, var(--_psh-card-density-body-gap));
   color: var(--psh-text-color);
   line-height: 1.6;
   overflow: hidden;
@@ -220,7 +227,7 @@
 }
 
 .psh-card-footer {
-  padding: var(--psh-card-footer-padding, var(--psh-card-density-footer-padding));
+  padding: var(--psh-card-footer-padding, var(--_psh-card-density-footer-padding));
   background: var(--psh-surface-ground);
   display: flex;
   align-items: center;
@@ -239,7 +246,7 @@
 }
 
 .psh-card-actions {
-  padding: var(--psh-card-actions-padding, var(--psh-card-density-actions-padding));
+  padding: var(--psh-card-actions-padding, var(--_psh-card-density-actions-padding));
   background: var(--psh-surface-ground);
   display: flex;
   align-items: center;
@@ -348,33 +355,33 @@
 
 @media (max-width: 63.9375em) {
   .psh-card.psh-density-spacious {
-    --psh-card-density-header-padding: var(--psh-size-5) var(--psh-size-6);
-    --psh-card-density-body-padding: var(--psh-size-7);
-    --psh-card-density-footer-padding: var(--psh-size-4-5) var(--psh-size-6);
-    --psh-card-density-actions-padding: var(--psh-size-4-5) var(--psh-size-6);
+    --_psh-card-density-header-padding: var(--psh-size-5) var(--psh-size-6);
+    --_psh-card-density-body-padding: var(--psh-size-7);
+    --_psh-card-density-footer-padding: var(--psh-size-4-5) var(--psh-size-6);
+    --_psh-card-density-actions-padding: var(--psh-size-4-5) var(--psh-size-6);
   }
 }
 
 @media (max-width: 47.9375em) {
   .psh-card.psh-density-compact {
-    --psh-card-density-header-padding: var(--psh-size-2-5) var(--psh-size-3);
-    --psh-card-density-body-padding: var(--psh-size-3);
-    --psh-card-density-footer-padding: var(--psh-size-2-5) var(--psh-size-3);
-    --psh-card-density-actions-padding: var(--psh-size-2-5) var(--psh-size-3);
+    --_psh-card-density-header-padding: var(--psh-size-2-5) var(--psh-size-3);
+    --_psh-card-density-body-padding: var(--psh-size-3);
+    --_psh-card-density-footer-padding: var(--psh-size-2-5) var(--psh-size-3);
+    --_psh-card-density-actions-padding: var(--psh-size-2-5) var(--psh-size-3);
   }
 
   .psh-card.psh-density-normal {
-    --psh-card-density-header-padding: var(--psh-size-3) var(--psh-size-4);
-    --psh-card-density-body-padding: var(--psh-size-4);
-    --psh-card-density-footer-padding: var(--psh-size-3) var(--psh-size-4);
-    --psh-card-density-actions-padding: var(--psh-size-3) var(--psh-size-4);
+    --_psh-card-density-header-padding: var(--psh-size-3) var(--psh-size-4);
+    --_psh-card-density-body-padding: var(--psh-size-4);
+    --_psh-card-density-footer-padding: var(--psh-size-3) var(--psh-size-4);
+    --_psh-card-density-actions-padding: var(--psh-size-3) var(--psh-size-4);
   }
 
   .psh-card.psh-density-spacious {
-    --psh-card-density-header-padding: var(--psh-size-4) var(--psh-size-5);
-    --psh-card-density-body-padding: var(--psh-size-5);
-    --psh-card-density-footer-padding: var(--psh-size-4) var(--psh-size-5);
-    --psh-card-density-actions-padding: var(--psh-size-4) var(--psh-size-5);
+    --_psh-card-density-header-padding: var(--psh-size-4) var(--psh-size-5);
+    --_psh-card-density-body-padding: var(--psh-size-5);
+    --_psh-card-density-footer-padding: var(--psh-size-4) var(--psh-size-5);
+    --_psh-card-density-actions-padding: var(--psh-size-4) var(--psh-size-5);
   }
 
   .psh-card-title {
@@ -405,24 +412,24 @@
 
 @media (max-width: 29.9375em) {
   .psh-card.psh-density-compact {
-    --psh-card-density-header-padding: var(--psh-spacing-sm) var(--psh-size-3);
-    --psh-card-density-body-padding: var(--psh-size-3);
-    --psh-card-density-footer-padding: var(--psh-spacing-sm) var(--psh-size-3);
-    --psh-card-density-actions-padding: var(--psh-spacing-sm) var(--psh-size-3);
+    --_psh-card-density-header-padding: var(--psh-spacing-sm) var(--psh-size-3);
+    --_psh-card-density-body-padding: var(--psh-size-3);
+    --_psh-card-density-footer-padding: var(--psh-spacing-sm) var(--psh-size-3);
+    --_psh-card-density-actions-padding: var(--psh-spacing-sm) var(--psh-size-3);
   }
 
   .psh-card.psh-density-normal {
-    --psh-card-density-header-padding: var(--psh-size-2-5) var(--psh-size-3);
-    --psh-card-density-body-padding: var(--psh-size-3);
-    --psh-card-density-footer-padding: var(--psh-size-2-5) var(--psh-size-3);
-    --psh-card-density-actions-padding: var(--psh-size-2-5) var(--psh-size-3);
+    --_psh-card-density-header-padding: var(--psh-size-2-5) var(--psh-size-3);
+    --_psh-card-density-body-padding: var(--psh-size-3);
+    --_psh-card-density-footer-padding: var(--psh-size-2-5) var(--psh-size-3);
+    --_psh-card-density-actions-padding: var(--psh-size-2-5) var(--psh-size-3);
   }
 
   .psh-card.psh-density-spacious {
-    --psh-card-density-header-padding: var(--psh-size-3) var(--psh-size-4);
-    --psh-card-density-body-padding: var(--psh-size-4);
-    --psh-card-density-footer-padding: var(--psh-size-3) var(--psh-size-4);
-    --psh-card-density-actions-padding: var(--psh-size-3) var(--psh-size-4);
+    --_psh-card-density-header-padding: var(--psh-size-3) var(--psh-size-4);
+    --_psh-card-density-body-padding: var(--psh-size-4);
+    --_psh-card-density-footer-padding: var(--psh-size-3) var(--psh-size-4);
+    --_psh-card-density-actions-padding: var(--psh-size-3) var(--psh-size-4);
   }
 
   .psh-card-header {

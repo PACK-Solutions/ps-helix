@@ -1,3 +1,6 @@
+/// <reference types="node" />
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { PshSurfaceAppearance } from '../../types/semantic.types';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component, ChangeDetectionStrategy } from '@angular/core';
@@ -798,5 +801,43 @@ describe('PshCollapseComponent', () => {
         expect(content.hasAttribute('inert')).toBe(!expanded);
       }
     });
+  });
+});
+
+/**
+ * Without animation nothing transitions, and `--psh-collapse-transition-duration` stays the
+ * consumer's: the collapse no longer declares it to `0s` to get there. What makes `none` win is
+ * order — `.psh-expanded` re-declares the content's transition at the same specificity — so the
+ * no-animation rule has to come after every rule that sets a transition on an animated part.
+ */
+describe('PshCollapseComponent stylesheet', () => {
+  const css = readFileSync(join(__dirname, 'collapse.component.css'), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+  const rules = [...css.matchAll(/([^{}]+)\{([^{}]*)\}/g)].map(([, selector, body], index) => ({
+    index,
+    selectors: selector.split(',').map((s) => s.trim().replace(/\s+/g, ' ')),
+    body,
+  }));
+  const ANIMATED = ['.psh-collapse-content', '.psh-content-wrapper', '.psh-collapse-header i'];
+
+  it('declares no `--psh-*` property: the public ones are only read, with a fallback', () => {
+    const declared = [...css.matchAll(/(--[\w-]+)\s*:/g)].map(([, property]) => property);
+    expect(declared.filter((property) => property.startsWith('--psh-'))).toEqual([]);
+  });
+
+  it('turns every transition off without animation, after any rule that sets one', () => {
+    const off = rules.filter(
+      (rule) => rule.selectors.some((s) => s.startsWith('.psh-collapse.psh-no-animation ')) && /transition:\s*none/.test(rule.body),
+    );
+    expect(off).toHaveLength(1);
+    const [noAnimation] = off;
+    expect(noAnimation.selectors).toEqual(ANIMATED.map((part) => `.psh-collapse.psh-no-animation ${part}`));
+
+    const setters = rules.filter(
+      (rule) => rule !== noAnimation && /(^|[;\s])transition\s*:/.test(rule.body) && rule.selectors.some((s) => ANIMATED.some((part) => s.endsWith(part))),
+    );
+    expect(setters.length).toBeGreaterThan(0);
+    for (const setter of setters) {
+      expect(setter.index).toBeLessThan(noAnimation.index);
+    }
   });
 });

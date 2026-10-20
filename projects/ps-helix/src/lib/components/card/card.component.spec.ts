@@ -1,3 +1,6 @@
+/// <reference types="node" />
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   FakePshViewport,
@@ -895,5 +898,37 @@ describe('PshCardComponent - projected header slots', () => {
     expect(header).toBeTruthy();
     // Header vide → masqué en CSS via `.psh-card-header:not(:has(*))`.
     expect(header.nativeElement.children.length).toBe(0);
+  });
+});
+
+/**
+ * The card's CSS API. Each zone reads a public `--psh-card-*` property, with the density's value
+ * as its fallback, carried by a private `--_psh-card-density-*` property that each density sets.
+ * A carrier with a public-looking name would be declared on the card and so ignore a consumer who
+ * set it on `psh-card` — the trap the leading underscore is there to close.
+ */
+describe('PshCardComponent stylesheet', () => {
+  const css = readFileSync(join(__dirname, 'card.component.css'), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+  const declaredProperties = [...css.matchAll(/(--[\w-]+)\s*:/g)].map(([, property]) => property);
+  const reads = [
+    ...css.matchAll(/var\(\s*(--psh-card-[\w-]+)\s*,\s*var\(\s*(--_?psh-card-density-[\w-]+)\s*\)\s*\)/g),
+  ].map(([, publicProperty, carrier]) => ({ publicProperty, carrier }));
+
+  it('declares no `--psh-*` property: the public ones are only read, with a fallback', () => {
+    expect(declaredProperties.filter((property) => property.startsWith('--psh-'))).toEqual([]);
+  });
+
+  it('reads each zone through its public property, then its private density carrier', () => {
+    expect(reads).toHaveLength(6);
+    for (const { publicProperty, carrier } of reads) {
+      expect(carrier).toBe(publicProperty.replace('--psh-card-', '--_psh-card-density-'));
+    }
+  });
+
+  it.each(['compact', 'normal', 'spacious'])('sets every carrier at the %s density', (density) => {
+    const [, body = ''] = css.match(new RegExp(`\\.psh-card\\.psh-density-${density}\\s*\\{([^}]*)\\}`)) ?? [];
+    const set = [...body.matchAll(/(--[\w-]+)\s*:/g)].map(([, property]) => property);
+
+    expect([...set].sort()).toEqual(reads.map(({ carrier }) => carrier).sort());
   });
 });

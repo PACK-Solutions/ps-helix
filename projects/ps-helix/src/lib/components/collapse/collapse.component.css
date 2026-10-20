@@ -6,16 +6,6 @@
   overflow: hidden;
 }
 
-.psh-collapse.psh-no-animation {
-  --psh-collapse-transition-duration: 0s;
-}
-
-.psh-collapse.psh-no-animation .psh-collapse-content,
-.psh-collapse.psh-no-animation .psh-content-wrapper,
-.psh-collapse.psh-no-animation .psh-collapse-header i {
-  transition: none;
-}
-
 .psh-collapse.psh-outline {
   background: transparent;
   border: 1px solid var(--psh-surface-border);
@@ -103,6 +93,19 @@
   opacity: 1;
   max-height: var(--psh-collapse-max-height);
   overflow-y: auto;
+}
+
+/*
+ * No animation: nothing transitions, whatever `--psh-collapse-transition-duration` says. This
+ * comes after the expanded rules on purpose — at the same specificity, `.psh-expanded` above
+ * re-declares the content's transition, and only order lets `none` win over it. It used to win
+ * by declaring the public property to `0s` on the collapse instead, which put a documented
+ * override point under a declaration the consumer could not reach.
+ */
+.psh-collapse.psh-no-animation .psh-collapse-content,
+.psh-collapse.psh-no-animation .psh-content-wrapper,
+.psh-collapse.psh-no-animation .psh-collapse-header i {
+  transition: none;
 }
 
 /* Sizes */
