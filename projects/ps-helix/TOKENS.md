@@ -3,14 +3,14 @@
 > **Generated from the stylesheets — do not edit by hand.**
 > Run `npm run docs:tokens` after changing anything under `src/lib/styles/`.
 
-**408 tokens** across 8 files.
+**426 tokens** across 8 files.
 
 Every custom property the library exposes is namespaced `--psh-*`. The unprefixed names
 used before 7.0.0 remain available through the opt-in `styles/compat.css`.
 
 ## Theme
 
-229 semantic tokens. Each one is redefined in `dark.css`; the two themes are kept symmetrical, and this generator fails if they drift apart.
+247 semantic tokens. Each one is redefined in `dark.css`; the two themes are kept symmetrical, and this generator fails if they drift apart.
 
 | Token | Light | Dark |
 |---|---|---|
@@ -31,6 +31,24 @@ used before 7.0.0 remain available through the opt-in `styles/compat.css`.
 | `--psh-alert-info-bg` | `rgba(11, 1, 145, 0.1)` | `rgba(107, 95, 227, 0.15)` |
 | `--psh-alert-info-border-color` | `#0B0191` | `#6B5FE3` |
 | `--psh-alert-info-text-color` | `#0B0191` | `#A5B4FC` |
+| `--psh-alert-primary-bg` | `rgba(var(--psh-primary-color-rgb), 0.1)` | `rgba(var(--psh-primary-color-rgb), 0.1)` |
+| `--psh-alert-primary-border-color` | `var(--psh-primary-color)` | `var(--psh-primary-color)` |
+| `--psh-alert-primary-text-color` | `var(--psh-primary-color)` | `color-mix(in srgb, var(--psh-primary-color) 95%, white)` |
+| `--psh-alert-secondary-bg` | `rgba(var(--psh-secondary-color-rgb), 0.1)` | `rgba(var(--psh-secondary-color-rgb), 0.1)` |
+| `--psh-alert-secondary-border-color` | `var(--psh-secondary-color)` | `color-mix(in srgb, var(--psh-secondary-color) 70%, white)` |
+| `--psh-alert-secondary-text-color` | `var(--psh-secondary-color)` | `color-mix(in srgb, var(--psh-secondary-color) 70%, white)` |
+| `--psh-alert-success-bg` | `rgba(var(--psh-success-color-rgb), 0.1)` | `rgba(var(--psh-success-color-rgb), 0.1)` |
+| `--psh-alert-success-border-color` | `var(--psh-success-color)` | `var(--psh-success-color)` |
+| `--psh-alert-success-text-color` | `color-mix(in srgb, var(--psh-success-color) 90%, black)` | `var(--psh-success-color)` |
+| `--psh-alert-warning-bg` | `rgba(var(--psh-warning-color-rgb), 0.1)` | `rgba(var(--psh-warning-color-rgb), 0.1)` |
+| `--psh-alert-warning-border-color` | `var(--psh-warning-color)` | `var(--psh-warning-color)` |
+| `--psh-alert-warning-text-color` | `color-mix(in srgb, var(--psh-warning-color) 90%, black)` | `var(--psh-warning-color)` |
+| `--psh-alert-danger-bg` | `rgba(var(--psh-danger-color-rgb), 0.1)` | `rgba(var(--psh-danger-color-rgb), 0.1)` |
+| `--psh-alert-danger-border-color` | `var(--psh-danger-color)` | `var(--psh-danger-color)` |
+| `--psh-alert-danger-text-color` | `color-mix(in srgb, var(--psh-danger-color) 90%, black)` | `color-mix(in srgb, var(--psh-danger-color) 95%, white)` |
+| `--psh-alert-neutral-bg` | `rgba(var(--psh-neutral-color-rgb), 0.1)` | `rgba(var(--psh-neutral-color-rgb), 0.1)` |
+| `--psh-alert-neutral-border-color` | `var(--psh-neutral-color)` | `var(--psh-neutral-color)` |
+| `--psh-alert-neutral-text-color` | `var(--psh-neutral-color)` | `var(--psh-neutral-color)` |
 | `--psh-surface-card` | `var(--psh-surface-0)` | `var(--psh-surface-50)` |
 | `--psh-surface-overlay` | `var(--psh-surface-0)` | `var(--psh-surface-200)` |
 | `--psh-surface-border` | `var(--psh-surface-200)` | `var(--psh-surface-300)` |
@@ -475,46 +493,46 @@ stylesheet and quietly beat the override; a fallback has no specificity to fight
 
 | Property | Default |
 |---|---|
-| `--psh-alert-actions-gap` | `var(--psh-spacing-sm` |
-| `--psh-alert-animation-distance` | `var(--psh-animation-distance-sm` |
-| `--psh-alert-animation-duration` | `var(--psh-animation-duration-fast` |
-| `--psh-alert-dismiss-hover-bg` | `rgba(0, 0, 0, 0.1` |
-| `--psh-alert-icon-size` | `var(--psh-icon-size-md` |
-| `--psh-alert-icon-size-lg` | `var(--psh-icon-size-lg` |
-| `--psh-alert-icon-size-sm` | `var(--psh-icon-size-sm` |
+| `--psh-alert-actions-gap` | `var(--psh-spacing-sm)` |
+| `--psh-alert-animation-distance` | `var(--psh-animation-distance-sm)` |
+| `--psh-alert-animation-duration` | `var(--psh-animation-duration-fast)` |
+| `--psh-alert-dismiss-hover-bg` | `rgba(0, 0, 0, 0.1)` |
+| `--psh-alert-icon-size` | `var(--psh-icon-size-md)` |
+| `--psh-alert-icon-size-lg` | `var(--psh-icon-size-lg)` |
+| `--psh-alert-icon-size-sm` | `var(--psh-icon-size-sm)` |
 
 ### `psh-avatar`
 
 | Property | Default |
 |---|---|
-| `--psh-avatar-icon-size-lg` | `var(--psh-icon-size-lg` |
-| `--psh-avatar-icon-size-sm` | `var(--psh-icon-size-sm` |
-| `--psh-avatar-icon-size-xl` | `var(--psh-icon-size-xl` |
-| `--psh-avatar-size-lg` | `var(--psh-size-12` |
-| `--psh-avatar-size-md` | `var(--psh-size-10` |
-| `--psh-avatar-size-sm` | `var(--psh-size-8` |
-| `--psh-avatar-size-xl` | `var(--psh-size-16` |
-| `--psh-avatar-status-border` | `var(--psh-border-width-2` |
-| `--psh-avatar-status-offset-md` | `calc(-1 * var(--psh-border-width-2` |
-| `--psh-avatar-status-offset-sm` | `calc(-1 * var(--psh-size-px` |
-| `--psh-avatar-status-offset-xl` | `calc(-1 * var(--psh-size-1` |
-| `--psh-avatar-status-size-lg` | `var(--psh-size-3-5` |
-| `--psh-avatar-status-size-md` | `var(--psh-size-3` |
-| `--psh-avatar-status-size-sm` | `var(--psh-size-2-5` |
-| `--psh-avatar-status-size-xl` | `var(--psh-size-4` |
+| `--psh-avatar-icon-size-lg` | `var(--psh-icon-size-lg)` |
+| `--psh-avatar-icon-size-sm` | `var(--psh-icon-size-sm)` |
+| `--psh-avatar-icon-size-xl` | `var(--psh-icon-size-xl)` |
+| `--psh-avatar-size-lg` | `var(--psh-size-12)` |
+| `--psh-avatar-size-md` | `var(--psh-size-10)` |
+| `--psh-avatar-size-sm` | `var(--psh-size-8)` |
+| `--psh-avatar-size-xl` | `var(--psh-size-16)` |
+| `--psh-avatar-status-border` | `var(--psh-border-width-2)` |
+| `--psh-avatar-status-offset-md` | `calc(-1 * var(--psh-border-width-2))` |
+| `--psh-avatar-status-offset-sm` | `calc(-1 * var(--psh-size-px))` |
+| `--psh-avatar-status-offset-xl` | `calc(-1 * var(--psh-size-1))` |
+| `--psh-avatar-status-size-lg` | `var(--psh-size-3-5)` |
+| `--psh-avatar-status-size-md` | `var(--psh-size-3)` |
+| `--psh-avatar-status-size-sm` | `var(--psh-size-2-5)` |
+| `--psh-avatar-status-size-xl` | `var(--psh-size-4)` |
 | `--psh-focus-ring-offset` | `2px` |
 
 ### `psh-badge`
 
 | Property | Default |
 |---|---|
-| `--psh-badge-dot-shadow` | `0 0 0 var(--psh-border-width-2` |
-| `--psh-badge-height` | `var(--psh-size-5` |
-| `--psh-badge-height-lg` | `var(--psh-size-6` |
-| `--psh-badge-height-sm` | `var(--psh-size-4` |
-| `--psh-badge-width` | `var(--psh-size-5` |
-| `--psh-badge-width-lg` | `var(--psh-size-6` |
-| `--psh-badge-width-sm` | `var(--psh-size-4` |
+| `--psh-badge-dot-shadow` | `0 0 0 var(--psh-border-width-2)` |
+| `--psh-badge-height` | `var(--psh-size-5)` |
+| `--psh-badge-height-lg` | `var(--psh-size-6)` |
+| `--psh-badge-height-sm` | `var(--psh-size-4)` |
+| `--psh-badge-width` | `var(--psh-size-5)` |
+| `--psh-badge-width-lg` | `var(--psh-size-6)` |
+| `--psh-badge-width-sm` | `var(--psh-size-4)` |
 
 ### `psh-button`
 
@@ -525,41 +543,41 @@ stylesheet and quietly beat the override; a fallback has no specificity to fight
 | `--psh-btn-min-width-lg` | `8.75rem` |
 | `--psh-btn-min-width-md` | `7.5rem` |
 | `--psh-btn-min-width-sm` | `6rem` |
-| `--psh-btn-transition` | `all var(--psh-animation-duration-normal) var(--psh-animation-easing-default` |
+| `--psh-btn-transition` | `all var(--psh-animation-duration-normal) var(--psh-animation-easing-default)` |
 
 ### `psh-card`
 
 | Property | Default |
 |---|---|
-| `--psh-card-actions-padding` | `var(--psh-card-density-actions-padding` |
-| `--psh-card-body-gap` | `var(--psh-card-density-body-gap` |
-| `--psh-card-body-padding` | `var(--psh-card-density-body-padding` |
-| `--psh-card-footer-padding` | `var(--psh-card-density-footer-padding` |
-| `--psh-card-header-gap` | `var(--psh-card-density-header-gap` |
-| `--psh-card-header-padding` | `var(--psh-card-density-header-padding` |
+| `--psh-card-actions-padding` | `var(--_psh-card-density-actions-padding)` |
+| `--psh-card-body-gap` | `var(--_psh-card-density-body-gap)` |
+| `--psh-card-body-padding` | `var(--_psh-card-density-body-padding)` |
+| `--psh-card-footer-padding` | `var(--_psh-card-density-footer-padding)` |
+| `--psh-card-header-gap` | `var(--_psh-card-density-header-gap)` |
+| `--psh-card-header-padding` | `var(--_psh-card-density-header-padding)` |
 
 ### `psh-collapse`
 
 | Property | Default |
 |---|---|
-| `--psh-collapse-transition-duration` | `var(--psh-animation-duration-default` |
-| `--psh-collapse-transition-timing` | `var(--psh-animation-easing-smooth` |
+| `--psh-collapse-transition-duration` | `var(--psh-animation-duration-default)` |
+| `--psh-collapse-transition-timing` | `var(--psh-animation-easing-smooth)` |
 
 ### `psh-dropdown`
 
 | Property | Default |
 |---|---|
-| `--psh-dropdown-max-width` | `calc(100vw - var(--psh-spacing-lg) * 2` |
+| `--psh-dropdown-max-width` | `calc(100vw - var(--psh-spacing-lg) * 2)` |
 | `--psh-dropdown-min-width` | `12.5rem` |
 
 ### `psh-horizontal-card`
 
 | Property | Default |
 |---|---|
-| `--psh-horizontal-content-padding` | `var(--psh-spacing-md` |
-| `--psh-horizontal-gap` | `var(--psh-spacing-md` |
-| `--psh-horizontal-mobile-height` | `var(--psh-size-48` |
-| `--psh-horizontal-side-width` | `var(--psh-size-48` |
+| `--psh-horizontal-content-padding` | `var(--psh-spacing-md)` |
+| `--psh-horizontal-gap` | `var(--psh-spacing-md)` |
+| `--psh-horizontal-mobile-height` | `var(--psh-size-48)` |
+| `--psh-horizontal-side-width` | `var(--psh-size-48)` |
 
 ### `psh-input`
 
@@ -583,9 +601,9 @@ stylesheet and quietly beat the override; a fallback has no specificity to fight
 
 | Property | Default |
 |---|---|
-| `--psh-progressbar-height-lg` | `var(--psh-size-3` |
-| `--psh-progressbar-height-md` | `var(--psh-size-2` |
-| `--psh-progressbar-height-sm` | `var(--psh-size-1` |
+| `--psh-progressbar-height-lg` | `var(--psh-size-3)` |
+| `--psh-progressbar-height-md` | `var(--psh-size-2)` |
+| `--psh-progressbar-height-sm` | `var(--psh-size-1)` |
 | `--psh-progressbar-stripe-opacity` | `0.15` |
 
 ### `psh-radio-group`
@@ -593,10 +611,10 @@ stylesheet and quietly beat the override; a fallback has no specificity to fight
 | Property | Default |
 |---|---|
 | `--psh-radio-group-disabled-opacity` | `0.6` |
-| `--psh-radio-group-gap` | `var(--psh-spacing-sm` |
-| `--psh-radio-group-gap-horizontal` | `var(--psh-spacing-lg` |
-| `--psh-radio-group-label-gap` | `var(--psh-spacing-xs` |
-| `--psh-radio-group-message-gap` | `var(--psh-spacing-xs` |
+| `--psh-radio-group-gap` | `var(--psh-spacing-sm)` |
+| `--psh-radio-group-gap-horizontal` | `var(--psh-spacing-lg)` |
+| `--psh-radio-group-label-gap` | `var(--psh-spacing-xs)` |
+| `--psh-radio-group-message-gap` | `var(--psh-spacing-xs)` |
 
 ### `psh-select`
 
@@ -614,38 +632,38 @@ stylesheet and quietly beat the override; a fallback has no specificity to fight
 
 | Property | Default |
 |---|---|
-| `--psh-spinner-dot-size-lg` | `var(--psh-size-3` |
-| `--psh-spinner-dot-size-md` | `var(--psh-size-2` |
-| `--psh-spinner-dot-size-sm` | `var(--psh-size-1-5` |
-| `--psh-spinner-pulse-height-lg` | `var(--psh-size-12` |
-| `--psh-spinner-pulse-height-md` | `var(--psh-size-8` |
-| `--psh-spinner-pulse-height-sm` | `var(--psh-size-6` |
-| `--psh-spinner-pulse-width-lg` | `var(--psh-size-3` |
-| `--psh-spinner-pulse-width-md` | `var(--psh-size-2` |
-| `--psh-spinner-pulse-width-sm` | `var(--psh-size-1-5` |
-| `--psh-spinner-size-lg` | `var(--psh-size-12` |
-| `--psh-spinner-size-md` | `var(--psh-size-8` |
-| `--psh-spinner-size-sm` | `var(--psh-size-6` |
+| `--psh-spinner-dot-size-lg` | `var(--psh-size-3)` |
+| `--psh-spinner-dot-size-md` | `var(--psh-size-2)` |
+| `--psh-spinner-dot-size-sm` | `var(--psh-size-1-5)` |
+| `--psh-spinner-pulse-height-lg` | `var(--psh-size-12)` |
+| `--psh-spinner-pulse-height-md` | `var(--psh-size-8)` |
+| `--psh-spinner-pulse-height-sm` | `var(--psh-size-6)` |
+| `--psh-spinner-pulse-width-lg` | `var(--psh-size-3)` |
+| `--psh-spinner-pulse-width-md` | `var(--psh-size-2)` |
+| `--psh-spinner-pulse-width-sm` | `var(--psh-size-1-5)` |
+| `--psh-spinner-size-lg` | `var(--psh-size-12)` |
+| `--psh-spinner-size-md` | `var(--psh-size-8)` |
+| `--psh-spinner-size-sm` | `var(--psh-size-6)` |
 
 ### `psh-state-flow-indicator`
 
 | Property | Default |
 |---|---|
-| `--psh-flow-panel-gap` | `var(--psh-spacing-lg` |
+| `--psh-flow-panel-gap` | `var(--psh-spacing-lg)` |
 
 ### `psh-tag`
 
 | Property | Default |
 |---|---|
-| `--psh-tag-close-hover-bg` | `rgba(0, 0, 0, 0.1` |
+| `--psh-tag-close-hover-bg` | `rgba(0, 0, 0, 0.1)` |
 | `--psh-tag-close-opacity` | `0.7` |
 | `--psh-tag-close-opacity-hover` | `1` |
-| `--psh-tag-close-padding` | `var(--psh-spacing-xxs` |
-| `--psh-tag-font-size` | `var(--psh-font-size-sm` |
-| `--psh-tag-icon-size` | `var(--psh-icon-size-sm` |
-| `--psh-tag-padding-x` | `var(--psh-spacing-sm` |
-| `--psh-tag-padding-y` | `var(--psh-spacing-xs` |
-| `--psh-tag-transition` | `all var(--psh-animation-duration-normal) var(--psh-animation-easing-default` |
+| `--psh-tag-close-padding` | `var(--psh-spacing-xxs)` |
+| `--psh-tag-font-size` | `var(--_psh-tag-font-size, var(--psh-font-size-sm))` |
+| `--psh-tag-icon-size` | `var(--_psh-tag-icon-size, var(--psh-icon-size-sm))` |
+| `--psh-tag-padding-x` | `var(--_psh-tag-padding-x, var(--psh-spacing-sm))` |
+| `--psh-tag-padding-y` | `var(--_psh-tag-padding-y, var(--psh-spacing-xs))` |
+| `--psh-tag-transition` | `all var(--psh-animation-duration-normal) var(--psh-animation-easing-default)` |
 
 ### `psh-textarea`
 

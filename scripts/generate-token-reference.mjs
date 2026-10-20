@@ -109,24 +109,45 @@ const fileCount = [...byFile.keys()].filter(f => basename(f) !== 'dark.css').len
 /* ---------------------------------------------------------- component CSS API */
 
 // A component's overridable properties are the ones it reads with a default:
-//   padding: var(--psh-card-body-padding, var(--psh-card-density-body-padding));
+//   padding: var(--psh-card-body-padding, var(--_psh-card-density-body-padding));
 // Declaring them instead would put them in a specificity fight with the consumer, so the
 // fallback *is* the default and this is the only place they are written down.
-const API_USE = /var\(\s*(--psh-[a-z0-9-]+)\s*,\s*([^;]+?)\)\s*[;,)]/g;
+const API_USE = /var\(\s*(--psh-[a-z0-9-]+)\s*,/g;
+
+/**
+ * The fallback of a `var()`, from just after its comma to its own closing parenthesis.
+ *
+ * Counted, not matched: a default is usually another `var()`, and a pattern cannot pair
+ * parentheses. The one this replaces stopped at the first `)` and wrote 70 of the 96 defaults
+ * below as `var(--psh-spacing-sm`, without the parenthesis that closes it.
+ */
+function fallbackFrom(src, start) {
+  let depth = 0;
+  for (let i = start; i < src.length; i++) {
+    if (src[i] === '(') depth++;
+    else if (src[i] === ')') {
+      if (depth === 0) return src.slice(start, i).replace(/\s+/g, ' ').trim();
+      depth--;
+    }
+  }
+  throw new Error(`Unclosed var() at offset ${start}`);
+}
+
 const globalNames = new Set([...byFile.values()].flat().map(r => r.token));
 
 const componentApi = new Map(); // component -> Map(prop -> default)
 
 for (const file of walk(COMPONENTS)) {
   const component = basename(file).replace('.component.css', '');
-  const src = readFileSync(file, 'utf8');
+  // Comments quote rules (the card's density note does), and a quoted `var()` is not a read.
+  const src = readFileSync(file, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
   for (const m of src.matchAll(API_USE)) {
-    const [, prop, fallback] = m;
-    // Global tokens are always defined and documented above; internal density carriers
-    // are an implementation detail behind a public name.
-    if (globalNames.has(prop) || prop.includes('-density-')) continue;
+    const [whole, prop] = m;
+    // Global tokens are always defined and documented above. Internal carriers — the card's
+    // densities, the alert's text size — take the private `--_psh-` prefix and never match.
+    if (globalNames.has(prop)) continue;
     if (!componentApi.has(component)) componentApi.set(component, new Map());
-    componentApi.get(component).set(prop, fallback.trim());
+    componentApi.get(component).set(prop, fallbackFrom(src, m.index + whole.length));
   }
 }
 
