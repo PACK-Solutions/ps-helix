@@ -38,7 +38,7 @@ export const CHECKBOX_CONFIG = new InjectionToken<Partial<CheckboxConfig>>('CHEC
   selector: 'psh-checkbox',
   imports: [],
   templateUrl: './checkbox.component.html',
-  styleUrls: ['./checkbox.component.css'],
+  styleUrls: ['./checkbox.component.css', '../shared/required-mark.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     { provide: NG_VALIDATORS, useExisting: PshCheckboxComponent, multi: true },{

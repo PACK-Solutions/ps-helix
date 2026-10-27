@@ -29,7 +29,7 @@ import { TEXTAREA_CONFIG } from './textarea.tokens';
 @Component({
   selector: 'psh-textarea',
   templateUrl: './textarea.component.html',
-  styleUrls: ['./textarea.component.css'],
+  styleUrls: ['./textarea.component.css', '../shared/required-mark.css'],
   providers: [
     { provide: NG_VALIDATORS, useExisting: PshTextareaComponent, multi: true },
     {

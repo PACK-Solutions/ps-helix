@@ -25,11 +25,17 @@
     >
       <span class="psh-radio-dot"></span>
     </span>
-    <span class="psh-radio-text" #labelSlot>
-      @if (label()) {
-        {{ label() }}
-      } @else {
-        <ng-content></ng-content>
+    <span class="psh-radio-text">
+      <!-- The label alone: its text decides whether there is a visible label, so the mark stays out. -->
+      <span #labelSlot>
+        <!-- `}}}` on purpose: a line break after the label would render as a space before the mark. -->
+        @if (label()) {
+          {{ label() }}} @else {
+          <ng-content></ng-content>
+        }
+      </span>
+      @if (showsRequiredMark()) {
+        <span class="psh-required-mark" aria-hidden="true">*</span>
       }
     </span>
   </label>

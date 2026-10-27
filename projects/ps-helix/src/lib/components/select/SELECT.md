@@ -95,7 +95,7 @@ selectedCountry: string | null = null;
 | clearable | `boolean` | `false` | Permet d'effacer la sélection |
 | loading | `boolean` | `false` | État de chargement |
 | fullWidth | `boolean` | `false` | Largeur complète du conteneur |
-| required | `boolean` | `false` | Champ requis |
+| required | `boolean` | `false` | Champ requis : `aria-required`, validation, et un astérisque `.psh-required-mark` après le libellé, masqué aux lecteurs d'écran |
 | maxSelections | `number \| undefined` | `undefined` | Nombre maximum de sélections (mode multiple) |
 | minSelections | `number \| undefined` | `undefined` | Nombre minimum de sélections (mode multiple) |
 | compareWith | `(a: T, b: T) => boolean` | `(a, b) => a === b` | Fonction de comparaison personnalisée |

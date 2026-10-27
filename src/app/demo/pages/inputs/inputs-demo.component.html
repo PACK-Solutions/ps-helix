@@ -411,6 +411,28 @@
       </div>
     </section>
 
+    <!-- Champs obligatoires - Section -->
+    <section class="input-required-section">
+      <h3 class="section-title">Champs obligatoires</h3>
+      <div class="autocomplete-container">
+        <div class="autocomplete-intro">
+          <p>Les sept composants qui acceptent <code>required</code> affichent la même marque : un astérisque dans la couleur de danger, collé au libellé. Il est masqué aux lecteurs d'écran, qui reçoivent déjà <code>aria-required</code>. Dans un groupe de boutons radio, c'est le libellé du groupe qui le porte, pas chaque bouton.</p>
+        </div>
+        <div class="required-grid">
+          <psh-input [required]="true" label="Nom" placeholder="Dupont" />
+          <psh-textarea [required]="true" label="Message" />
+          <psh-select [required]="true" label="Pays" placeholder="Choisissez un pays" [options]="countryOptions" />
+          <psh-checkbox [required]="true" label="J'accepte les conditions" />
+          <psh-switch [required]="true" label="Notifications" />
+          <psh-radio [required]="true" value="oui" label="Je certifie l'exactitude" />
+          <psh-radio-group [required]="true" label="Formule">
+            <psh-radio value="essentiel" label="Essentiel" />
+            <psh-radio value="premium" label="Premium" />
+          </psh-radio-group>
+        </div>
+      </div>
+    </section>
+
     <!-- Documentation API - Section Pleine Largeur -->
     <section class="api-section">
       <h3 class="section-title">Documentation API</h3>

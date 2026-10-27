@@ -74,7 +74,7 @@ control = new FormControl('', {
 | `variant`            | `'outlined' \| 'filled'`                          | `'outlined'` | Variante visuelle                                          |
 | `size`               | `'small' \| 'medium' \| 'large'`                  | `'medium'`   | Taille du champ                                            |
 | `fullWidth`          | `boolean`                                         | `false`      | Occupe 100% du conteneur parent                            |
-| `required`           | `boolean`                                         | `false`      | Marque le champ comme requis (visuel + ARIA)               |
+| `required`           | `boolean`                                         | `false`      | Marque le champ comme requis : `aria-required`, validation, et un astérisque `.psh-required-mark` après le libellé, masqué aux lecteurs d'écran |
 | `readonly`           | `boolean`                                         | `false`      | Lecture seule                                              |
 | `disabled`           | `boolean`                                         | `false`      | Desactive le champ                                         |
 | `showLabel`          | `boolean`                                         | `true`       | Affiche le label                                           |

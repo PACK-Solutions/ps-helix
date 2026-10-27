@@ -38,7 +38,7 @@ interface FlatOption<T> {
   selector: 'psh-select',
   imports: [NgTemplateOutlet, FormsModule],
   templateUrl: './select.component.html',
-  styleUrls: ['./select.component.css'],
+  styleUrls: ['./select.component.css', '../shared/required-mark.css'],
   providers: [
     { provide: NG_VALIDATORS, useExisting: PshSelectComponent, multi: true },
     {

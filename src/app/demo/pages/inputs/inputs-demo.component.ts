@@ -3,12 +3,31 @@ import { JsonPipe } from '@angular/common';
 import { form, FormField, required, email } from '@angular/forms/signals';
 import { TranslateModule } from '@ngx-translate/core';
 import { PshInputComponent } from '@lib/components/input/input.component';
+import { PshTextareaComponent } from '@lib/components/textarea/textarea.component';
+import { PshSelectComponent } from '@lib/components/select/select.component';
+import { PshCheckboxComponent } from '@lib/components/checkbox/checkbox.component';
+import { PshSwitchComponent } from '@lib/components/switch/switch.component';
+import { PshRadioComponent } from '@lib/components/radio/radio.component';
+import { PshRadioGroupComponent } from '@lib/components/radio/radio-group.component';
 import { DemoPageLayoutComponent } from '../../layout/demo-page-layout.component';
 import { CodeSnippetComponent } from '../../shared/code-snippet.component';
 
 @Component({
   selector: 'ds-inputs-demo',
-  imports: [TranslateModule, PshInputComponent, DemoPageLayoutComponent, CodeSnippetComponent, JsonPipe, FormField],
+  imports: [
+    TranslateModule,
+    PshInputComponent,
+    PshTextareaComponent,
+    PshSelectComponent,
+    PshCheckboxComponent,
+    PshSwitchComponent,
+    PshRadioComponent,
+    PshRadioGroupComponent,
+    DemoPageLayoutComponent,
+    CodeSnippetComponent,
+    JsonPipe,
+    FormField,
+  ],
   templateUrl: './inputs-demo.component.html',
   styleUrls: ['./inputs-demo.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -18,6 +37,12 @@ export class InputsDemoComponent {
   phoneValue = '';
   searchValue = '';
   passwordValue = '';
+
+  countryOptions = [
+    { value: 'fr', label: 'France' },
+    { value: 'be', label: 'Belgique' },
+    { value: 'ch', label: 'Suisse' },
+  ];
 
   loginModel = signal({ email: '', password: '' });
   loginForm = form(this.loginModel, (p) => {

@@ -110,7 +110,7 @@ export class StandaloneFormControlComponent {
 ### Regular Inputs
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
-| required | boolean | false | État requis |
+| required | boolean | false | État requis : `aria-required`, validation, et un astérisque `.psh-required-mark` après le libellé, masqué aux lecteurs d'écran |
 | label | string | '' | Label de la checkbox |
 | error | string | '' | Message d'erreur |
 | success | string | '' | Message de succès |

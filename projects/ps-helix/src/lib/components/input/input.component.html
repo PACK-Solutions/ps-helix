@@ -9,8 +9,11 @@
       [class.psh-required]="required()"
     >
       <ng-content select="[psh-input-label]"></ng-content>
+      <!-- `}}}` on purpose: a line break after the label would render as a space before the mark. -->
       @if (!hasLabelContent()) {
-        {{ label() }}
+        {{ label() }}}
+      @if (required()) {
+        <span class="psh-required-mark" aria-hidden="true">*</span>
       }
     </label>
   }

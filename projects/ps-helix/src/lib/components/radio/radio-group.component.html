@@ -1,7 +1,7 @@
 @if (label()) {
   <span [id]="labelId()" class="psh-radio-group-label">
-    {{ label() }}
-    @if (required()) {
+    <!-- No line break after the label: it would render as a space before the mark. -->
+    {{ label() }}@if (required()) {
       <span class="psh-required-mark" aria-hidden="true">*</span>
     }
   </span>

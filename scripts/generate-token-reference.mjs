@@ -11,12 +11,15 @@
  *
  * Also asserts light/dark parity: a token defined in one theme and not the other is a
  * contract the other theme cannot honour, and exits non-zero if that happens again.
+ *
+ * And that the library reads no property nothing declares (see "reads of nothing" below).
  */
 import { readFileSync, writeFileSync, readdirSync, statSync, existsSync } from 'node:fs';
-import { join, extname, basename, dirname } from 'node:path';
+import { join, extname, basename, dirname, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+const LIB = join(ROOT, 'projects/ps-helix/src/lib');
 const STYLES = join(ROOT, 'projects/ps-helix/src/lib/styles');
 const COMPONENTS = join(ROOT, 'projects/ps-helix/src/lib/components');
 const TARGET = join(ROOT, 'projects/ps-helix/TOKENS.md');
@@ -37,20 +40,18 @@ const SECTION_TITLE = {
   'light.css': 'Theme',
 };
 
-function walk(dir, out = []) {
+// Both are generated restatements of tokens declared elsewhere, not sources: compat.css
+// aliases the pre-7.0.0 names, and dark-auto.css is dark.css again behind
+// prefers-color-scheme. Counting either would double the reference and break the
+// light/dark parity check against a file that is, by construction, only dark.
+const isTokenSource = (entry) =>
+  extname(entry) === '.css' && !['compat.css', 'dark-auto.css'].includes(basename(entry));
+
+function walk(dir, keep = isTokenSource, out = []) {
   for (const entry of readdirSync(dir)) {
     const p = join(dir, entry);
-    if (statSync(p).isDirectory()) walk(p, out);
-    // Both are generated restatements of tokens declared elsewhere, not sources: compat.css
-    // aliases the pre-7.0.0 names, and dark-auto.css is dark.css again behind
-    // prefers-color-scheme. Counting either would double the reference and break the
-    // light/dark parity check against a file that is, by construction, only dark.
-    else if (
-      extname(entry) === '.css' &&
-      !['compat.css', 'dark-auto.css'].includes(basename(entry))
-    ) {
-      out.push(p);
-    }
+    if (statSync(p).isDirectory()) walk(p, keep, out);
+    else if (keep(entry)) out.push(p);
   }
   return out;
 }
@@ -199,6 +200,63 @@ if (missingInDark.length || missingInLight.length) {
   console.error('✖ theme parity broken');
   if (missingInDark.length) console.error(`  light-only: ${missingInDark.join(', ')}`);
   if (missingInLight.length) console.error(`  dark-only:  ${missingInLight.join(', ')}`);
+  process.exit(1);
+}
+
+/* -------------------------------------------------------------- reads of nothing */
+
+// A `var()` with no fallback that names a property nothing declares is invalid at
+// computed-value time: the declaration is dropped and the property falls back to its initial
+// value, silently — no lint, build or test notices. That is how `radio-group` shipped
+// `margin-left: var(--psh-spacing-2xs)` (the scale is `xxs` … `2xl`) and lost its margin.
+//
+// Read means a `var()` in a library stylesheet, and in the library's code too: a template's
+// `style="…"`, a value a component hands to a binding (avatar's status colours), or an inline
+// `styles: […]` should one appear. A name built at run time (`var(--psh-${color}-color)`) is
+// skipped: it cannot be resolved here.
+//
+// Declared means a `--psh-x:` or `--_psh-x:` declaration in a library stylesheet, or a
+// property the code sets at run time: a `[style.--psh-x]` binding (collapse, toast), a
+// `'--psh-x': …` key of a `[style]` object (horizontal-card), a `setProperty('--psh-x', …)`
+// (modal). compat.css is left out by `walk`: its aliases point at the public override
+// properties, which components read with a fallback and nothing declares, by design.
+const READ = /var\(\s*(--_?psh-[a-z0-9-]+)(?![\w$-])\s*(,)?/g;
+const DECLARED = /(--_?psh-[a-z0-9-]+)\s*:/g;
+const SET =
+  /\[style\.(--_?psh-[a-z0-9-]+)\]|['"](--_?psh-[a-z0-9-]+)['"]\s*:|setProperty\(\s*['"`](--_?psh-[a-z0-9-]+)['"`]/g;
+
+// Comments quote rules and names ("was `var(--psh-spacing-2xs)`"); a quoted read is not a read.
+const uncommented = (file) =>
+  readFileSync(file, 'utf8')
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/<!--[\s\S]*?-->/g, '')
+    .replace(/^\s*\/\/.*$/gm, '');
+
+const declaredNames = new Set();
+const unfallbacked = [];
+const readsIn = (file, text) => {
+  for (const [, name, fallback] of text.matchAll(READ)) {
+    if (!fallback) unfallbacked.push({ file, name });
+  }
+};
+for (const file of walk(LIB)) {
+  const css = uncommented(file);
+  for (const [, name] of css.matchAll(DECLARED)) declaredNames.add(name);
+  readsIn(file, css);
+}
+for (const file of walk(LIB, (entry) => /\.(html|ts)$/.test(entry) && !entry.endsWith('.spec.ts'))) {
+  const code = uncommented(file);
+  for (const m of code.matchAll(SET)) declaredNames.add(m[1] ?? m[2] ?? m[3]);
+  readsIn(file, code);
+}
+
+const dangling = unfallbacked.filter(({ name }) => !declaredNames.has(name));
+if (dangling.length) {
+  console.error('✖ the library reads a property that nothing declares, with no fallback:');
+  for (const { file, name } of dangling) {
+    console.error(`  ${name}  ${relative(ROOT, file).replace(/\\/g, '/')}`);
+  }
+  console.error('  The declaration is invalid and silently dropped. Fix the name, or give it a fallback.');
   process.exit(1);
 }
 

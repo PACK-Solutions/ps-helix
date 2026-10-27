@@ -61,7 +61,7 @@ export const RADIO_GROUP_CONFIG = new InjectionToken<Partial<RadioGroupConfig>>(
 @Component({
   selector: 'psh-radio-group',
   templateUrl: './radio-group.component.html',
-  styleUrls: ['./radio-group.component.css'],
+  styleUrls: ['./radio-group.component.css', '../shared/required-mark.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     { provide: NG_VALIDATORS, useExisting: PshRadioGroupComponent, multi: true },
