@@ -127,7 +127,7 @@ Propriétés de configuration (unidirectionnelles).
 | hint | string | undefined | Texte d'aide |
 | error | string | undefined | Message d'erreur |
 | success | string | undefined | Message de succès |
-| required | boolean | false | Champ requis |
+| required | boolean | false | Champ requis : `aria-required`, validation, et un astérisque `.psh-required-mark` après le libellé, masqué aux lecteurs d'écran |
 | suggestions | string[] \| ((query: string) => Promise<string[]>) | [] | Liste ou fonction de suggestions |
 | autocompleteConfig | AutocompleteConfig | { minLength: 1, debounceTime: 300 } | Config autocomplétion |
 

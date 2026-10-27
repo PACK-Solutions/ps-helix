@@ -70,7 +70,7 @@ export class ExampleComponent {
 #### Regular Inputs
 | Nom | Type | Défaut | Description |
 |-----|------|---------|-------------|
-| required | boolean | false | État requis |
+| required | boolean | false | État requis : `aria-required`, validation, et un astérisque `.psh-required-mark` après le libellé — sur un radio seul uniquement : dans un `psh-radio-group`, c'est le libellé du groupe qui le porte |
 | label | string | '' | Label du radio. À défaut, projetez-le : `<psh-radio>Mon libellé</psh-radio>`. Sans l'un des deux (ni `ariaLabel`), le radio n'a **aucun nom accessible** et un avertissement est émis en mode dev |
 | error | string | '' | Message d'erreur |
 | success | string | '' | Message de succès |
@@ -135,6 +135,7 @@ export class ExampleComponent {
 
 ### Bonnes Pratiques
 - Labels descriptifs
+- Groupe obligatoire : donnez-lui un `label`. L'astérisque est porté par le libellé du `psh-radio-group`, jamais par ses boutons. Un groupe obligatoire sans `label` — nommé par `ariaLabel` ou `ariaLabelledBy` — reste `aria-required` mais n'affiche **aucune marque visible** : signalez l'obligation dans le titre que vous lui fournissez
 - Support du clavier
 - États visuels distincts
 - Messages d'erreur/succès clairs

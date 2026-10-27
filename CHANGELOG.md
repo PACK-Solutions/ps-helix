@@ -14,6 +14,39 @@ Versioning policy:
 
 ## [Unreleased]
 
+### Changed
+
+- **The required-field mark is one element, one rule, on all seven form components.**
+  `required` on `psh-input`, `psh-textarea`, `psh-select`, `psh-checkbox`, `psh-switch`,
+  `psh-radio` and `psh-radio-group` now renders the same
+  `<span class="psh-required-mark" aria-hidden="true">*</span>` right after the label text, styled
+  by one rule compiled into each component: `--psh-danger-color`, `--psh-spacing-xxs` from the
+  label. `required` and `aria-required` are unchanged.
+  - **`psh-input`, `psh-textarea` — the asterisk is an element, no longer `::after` content.** A
+    consumer rule on `.psh-input-label.psh-required::after` or
+    `.psh-textarea-label.psh-required::after` no longer applies; target `.psh-required-mark`.
+  - **`psh-checkbox`, `psh-switch` and a standalone `psh-radio` now show the mark.** They showed
+    none. A `psh-radio` inside a `psh-radio-group` does not: the group's label carries it, so a
+    required group of three buttons shows one asterisk, not four — and a required group with no
+    `label` (named by `ariaLabel` or `ariaLabelledBy`) shows none.
+  - `.psh-required` stays on the input, textarea and select labels. The library no longer styles
+    it, but an application may.
+
+### Fixed
+
+- **`psh-select` — the required asterisk took the label's colour and was read aloud.** The select
+  rendered the span but had no rule for it and no `aria-hidden`. It is now red and hidden from
+  screen readers like the others. Applications that coloured it themselves
+  (`.psh-required-mark { color: var(--psh-danger-color) }` in a global stylesheet) can drop that
+  rule.
+- **`psh-radio-group` — the required asterisk sat a word space from its label, not the spacing
+  token.** Its margin read `--psh-spacing-2xs`, a token that does not exist, so the declaration
+  was invalid and the margin 0; the gap was the line break in the template, rendered as a space.
+  `npm run verify:tokens` now fails when the library reads, without a fallback, a `--psh-…`
+  name nothing declares — in a stylesheet, a template or a component's code. A property the
+  code sets at run time (`[style.--psh-…]`, a `[style]` object key, `setProperty`) counts as
+  declared.
+
 ## [7.1.0] - 2026-10-20
 
 Minor release. `psh-alert` lines up on its message's first line — icon, actions and dismiss

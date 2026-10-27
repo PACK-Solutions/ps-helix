@@ -7,8 +7,17 @@
 .input-states-section,
 .input-icons-section,
 .input-autocomplete-section,
-.input-signal-forms-section {
+.input-signal-forms-section,
+.input-required-section {
   margin-bottom: var(--psh-spacing-3xl);
+}
+
+/* The seven required controls side by side, to compare their marks at a glance. */
+.required-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--psh-spacing-lg);
+  align-items: start;
 }
 
 .signal-form-errors {

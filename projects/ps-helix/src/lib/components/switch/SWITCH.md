@@ -102,7 +102,7 @@ Ces inputs supportent le two-way binding avec la syntaxe `[(prop)]`.
 
 | Nom | Type | Defaut | Description |
 |-----|------|---------|-------------|
-| required | boolean | false | Etat requis |
+| required | boolean | false | État requis : `aria-required`, validation, et un astérisque `.psh-required-mark` après le libellé, masqué aux lecteurs d'écran |
 | size | SwitchSize | 'medium' | Taille du switch |
 | labelPosition | 'left' \| 'right' | 'right' | Position du label |
 | label | string | '' | Label du switch |
