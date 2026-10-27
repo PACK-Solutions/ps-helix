@@ -30,7 +30,7 @@ import { INPUT_CONFIG } from './input.tokens';
 @Component({
   selector: 'psh-input',
   templateUrl: './input.component.html',
-  styleUrls: ['./input.component.css'],
+  styleUrls: ['./input.component.css', '../shared/required-mark.css'],
   providers: [
     { provide: NG_VALIDATORS, useExisting: PshInputComponent, multi: true },
     {

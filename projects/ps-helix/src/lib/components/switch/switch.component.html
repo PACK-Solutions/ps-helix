@@ -26,10 +26,13 @@
       <span class="psh-switch-thumb"></span>
     </span>
     <span class="psh-switch-text">
+      <!-- `}}}` on purpose: a line break after the label would render as a space before the mark. -->
       @if (label()) {
-        {{ label() }}
-      } @else {
+        {{ label() }}} @else {
         <ng-content>Switch</ng-content>
+      }
+      @if (required()) {
+        <span class="psh-required-mark" aria-hidden="true">*</span>
       }
     </span>
   </label>

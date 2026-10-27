@@ -54,7 +54,7 @@ export const RADIO_STYLES = new InjectionToken<Record<string, string>[]>('RADIO_
   selector: 'psh-radio',
   imports: [],
   templateUrl: './radio.component.html',
-  styleUrls: ['./radio.component.css'],
+  styleUrls: ['./radio.component.css', '../shared/required-mark.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[class.psh-radio-disabled]': 'isDisabled()',
@@ -132,6 +132,13 @@ export class PshRadioComponent<T = unknown> implements AfterViewInit {
   protected readonly effectiveRequired = computed(
     () => this.group?.required() ?? this.required(),
   );
+
+  /**
+   * The visible mark, on a radio of its own only. In a group the requirement is the group's,
+   * and its label already carries the mark: one per radio would put four asterisks on a
+   * required group of three. `aria-required` still follows {@link effectiveRequired}.
+   */
+  protected readonly showsRequiredMark = computed(() => !this.group && this.required());
 
   /**
    * Roving tabindex: one Tab stop per group rather than one per radio, which is what makes a

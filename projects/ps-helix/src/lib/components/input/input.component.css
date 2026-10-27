@@ -28,12 +28,6 @@
   cursor: pointer;
 }
 
-.psh-input-label.psh-required::after {
-  content: '*';
-  color: var(--psh-danger-color);
-  margin-left: 0.125rem; /* var(--psh-spacing-xxs) */
-}
-
 /* --- Wrapper & Input Base --- */
 .psh-input-wrapper {
   position: relative;

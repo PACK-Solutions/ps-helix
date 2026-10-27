@@ -33,7 +33,7 @@ export const SWITCH_CONFIG = new InjectionToken<Partial<SwitchConfig>>('SWITCH_C
 @Component({
   selector: 'psh-switch',
   templateUrl: './switch.component.html',
-  styleUrls: ['./switch.component.css'],
+  styleUrls: ['./switch.component.css', '../shared/required-mark.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     { provide: NG_VALIDATORS, useExisting: PshSwitchComponent, multi: true },{

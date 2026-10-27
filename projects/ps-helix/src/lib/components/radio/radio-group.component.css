@@ -17,11 +17,6 @@
   color: var(--psh-text-color);
 }
 
-.psh-radio-group-label .psh-required-mark {
-  margin-left: var(--psh-spacing-2xs);
-  color: var(--psh-danger-color);
-}
-
 .psh-radio-group-items {
   display: flex;
   flex-direction: column;

@@ -1,0 +1,20 @@
+/*
+ * The required-field mark — one rule for the seven form components that accept `required`:
+ * input, textarea, select, checkbox, switch, radio and radio-group. Each lists this file in its
+ * `styleUrls`, so the rule is compiled into every one of them under emulated encapsulation and
+ * nothing is imposed on the host page.
+ *
+ * It used to be three mechanisms: a `::after` on the input and textarea labels, a span on the
+ * select and the radio group — whose rule the select never got, so its asterisk took the label's
+ * colour — and nothing at all on checkbox, radio and switch. One rule in one file is the only
+ * form of it that cannot drift; seven copies are how the select lost its own.
+ *
+ * The mark itself is `<span class="psh-required-mark" aria-hidden="true">*</span>`: an element,
+ * so `aria-hidden` keeps it out of the accessible name — the control already says
+ * `aria-required` — where generated `::after` content is read by some screen readers and not by
+ * others.
+ */
+.psh-required-mark {
+  margin-inline-start: var(--psh-spacing-xxs);
+  color: var(--psh-danger-color);
+}

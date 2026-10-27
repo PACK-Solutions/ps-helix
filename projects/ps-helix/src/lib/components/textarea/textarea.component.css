@@ -28,12 +28,6 @@
   cursor: pointer;
 }
 
-.psh-textarea-label.psh-required::after {
-  content: '*';
-  color: var(--psh-danger-color);
-  margin-left: 0.125rem;
-}
-
 /* --- Wrapper & Textarea Base --- */
 .psh-textarea-wrapper {
   position: relative;
