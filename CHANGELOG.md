@@ -14,6 +14,15 @@ Versioning policy:
 
 ## [Unreleased]
 
+## [7.2.0] - 2026-10-28
+
+Minor release. `required` draws the same mark on the seven form components — a red asterisk
+right after the label, hidden from screen readers — where it was drawn three ways and not at all
+on checkbox, radio and switch. Measured in a browser, light and dark: the same colour and a 2px
+gap on all seven. `npm run verify:tokens` now fails on a read of a property nothing declares.
+No input or output changes. Applications that styled `.psh-input-label.psh-required::after`, or
+coloured `.psh-required-mark` themselves, should read the entries below.
+
 ### Changed
 
 - **The required-field mark is one element, one rule, on all seven form components.**
